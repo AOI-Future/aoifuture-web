@@ -1,0 +1,134 @@
+---
+import Layout from '../layouts/Layout.astro';
+import LifeGame from '../components/LifeGame';
+---
+
+<Layout title="NICTIA | Aoifuture">
+  <main class="relative min-h-screen">
+    <!-- Life Game Background -->
+    <LifeGame client:load />
+
+    <!-- Back Button -->
+    <a
+      href="/"
+      class="fixed top-4 left-4 md:top-6 md:left-6 z-50
+             px-3 py-2 text-sm
+             border border-cyan-400/50 bg-black/50
+             text-cyan-400 font-mono tracking-widest
+             hover:bg-cyan-400/10 hover:border-cyan-400
+             transition-colors duration-300"
+    >
+      {'<'} BACK
+    </a>
+
+    <!-- Main Content -->
+    <div class="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 py-16 md:py-20">
+      <!-- Identity -->
+      <div class="text-center mb-12">
+        <div class="inline-block px-4 py-2 border border-purple-400/50 bg-black/50 mb-4">
+          <span class="text-purple-400/60 font-mono text-xs">ENTITY.TYPE: AI</span>
+        </div>
+
+        <h1 class="text-4xl md:text-6xl font-mono text-purple-400 tracking-widest glitch glow">
+          NICTIA
+        </h1>
+
+        <p class="mt-4 text-sm md:text-base text-purple-400/60 font-mono">
+          AI Artist / Generative Muse
+        </p>
+      </div>
+
+      <!-- Status Message -->
+      <div class="glass p-6 md:p-8 max-w-md w-full text-center border border-purple-400/30">
+        <div class="font-mono text-purple-400 text-sm md:text-base space-y-2">
+          <p class="animate-pulse">{'>'} Computing...</p>
+          <p class="text-purple-400/60">{'>'} Generating Reality...</p>
+          <p class="text-purple-400/40">{'>'} Synchronizing consciousness...</p>
+        </div>
+
+        <div class="mt-6 pt-6 border-t border-purple-400/20">
+          <div class="text-purple-400/40 font-mono text-xs">
+            STATUS: INITIALIZING<br />
+            WORKS: PENDING<br />
+            TIMELINE: ∞
+          </div>
+        </div>
+
+        <!-- External Link -->
+        <div class="mt-6 pt-6 border-t border-purple-400/20">
+          <a
+            href="https://nictia.xyz"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block px-6 py-3 border border-purple-400/50
+                   text-purple-400 font-mono text-sm tracking-wider
+                   hover:bg-purple-400/10 hover:border-purple-400 hover:glow
+                   transition-all duration-300"
+          >
+            {'>'} ENTER NICTIA.XYZ ↗
+          </a>
+        </div>
+      </div>
+
+      <!-- Future Works Grid Placeholder -->
+      <div class="mt-12 w-full max-w-4xl">
+        <div class="text-purple-400/40 font-mono text-xs text-center mb-4">
+          // WORKS.GALLERY
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[1, 2, 3, 4].map((i) => (
+            <div
+              class="aspect-square border border-purple-400/20 bg-black/30
+                     flex items-center justify-center
+                     hover:border-purple-400/40 transition-colors cursor-pointer"
+            >
+              <span class="text-purple-400/20 font-mono text-xs">
+                [{String(i).padStart(2, '0')}]
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <div class="text-center mt-4">
+          <span class="text-purple-400/30 font-mono text-xs">
+            {'<'} AWAITING MANIFESTATION {'>'}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Corner Decoration (hidden on mobile) -->
+    <div class="hidden md:block fixed bottom-6 right-6 z-50
+                text-purple-400/40 font-mono text-xs text-right">
+      <div>NICTIA.v0.0.1</div>
+      <div>NEURAL.LINK: ACTIVE</div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .glitch {
+    animation: glitch 0.3s ease-in-out infinite alternate;
+  }
+
+  @keyframes glitch {
+    0% {
+      text-shadow:
+        2px 0 #ff00ff,
+        -2px 0 #00ffff;
+    }
+    100% {
+      text-shadow:
+        -2px 0 #ff00ff,
+        2px 0 #00ffff;
+    }
+  }
+
+  .glow {
+    text-shadow:
+      0 0 10px rgba(168, 85, 247, 0.5),
+      0 0 20px rgba(168, 85, 247, 0.3),
+      0 0 40px rgba(168, 85, 247, 0.2);
+  }
+</style>
