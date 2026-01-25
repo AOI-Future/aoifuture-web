@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import LifeGame from '../components/LifeGame';
 import HUDOverlay from '../components/HUDOverlay';
+import AmbientSound from '../components/AmbientSound';
 ---
 
 <Layout title="Aoifuture | Digital Creative Label">
@@ -11,6 +12,9 @@ import HUDOverlay from '../components/HUDOverlay';
 
     <!-- HUD Overlay -->
     <HUDOverlay client:load />
+
+    <!-- Ambient Sound Control -->
+    <AmbientSound client:load />
 
     <!-- Center Content -->
     <div class="fixed inset-0 flex items-center justify-center pointer-events-none z-10">
