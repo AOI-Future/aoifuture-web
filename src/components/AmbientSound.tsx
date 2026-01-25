@@ -6,11 +6,18 @@ interface AudioNodes {
   drone1: OscillatorNode;
   drone2: OscillatorNode;
   drone3: OscillatorNode;
-  lfo: OscillatorNode;
-  lfoGain: GainNode;
   filter: BiquadFilterNode;
   reverb: ConvolverNode;
+  reverbGain: GainNode;
+  pulseGain: GainNode;
 }
+
+// Base frequencies for C minor chord
+const BASE_FREQ = {
+  drone1: 65.41,  // C2
+  drone2: 98.00,  // G2
+  drone3: 130.81, // C3
+};
 
 // Create impulse response for reverb
 function createReverb(context: AudioContext, duration: number, decay: number): ConvolverNode {
@@ -32,12 +39,12 @@ function createReverb(context: AudioContext, duration: number, decay: number): C
 
 export default function AmbientSound() {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
   const audioRef = useRef<AudioNodes | null>(null);
-  const animationRef = useRef<number>(0);
+  const densityRef = useRef(0);
+  const lastPulseRef = useRef(0);
 
   const initAudio = useCallback(() => {
-    if (audioRef.current) return;
+    if (audioRef.current) return audioRef.current;
 
     const context = new AudioContext();
 
@@ -46,46 +53,40 @@ export default function AmbientSound() {
     masterGain.gain.value = 0;
 
     // Reverb
-    const reverb = createReverb(context, 3, 2);
+    const reverb = createReverb(context, 4, 2.5);
     const reverbGain = context.createGain();
-    reverbGain.gain.value = 0.4;
+    reverbGain.gain.value = 0.5;
 
-    // Filter for warmth
+    // Filter - will be modulated by cell density
     const filter = context.createBiquadFilter();
     filter.type = 'lowpass';
-    filter.frequency.value = 800;
-    filter.Q.value = 1;
+    filter.frequency.value = 400;
+    filter.Q.value = 2;
 
-    // LFO for subtle movement
-    const lfo = context.createOscillator();
-    const lfoGain = context.createGain();
-    lfo.type = 'sine';
-    lfo.frequency.value = 0.1;
-    lfoGain.gain.value = 50;
-    lfo.connect(lfoGain);
-    lfoGain.connect(filter.frequency);
-    lfo.start();
-
-    // Drone oscillators (C minor ambient chord)
+    // Drone oscillators
     const drone1 = context.createOscillator();
     drone1.type = 'sine';
-    drone1.frequency.value = 65.41; // C2
+    drone1.frequency.value = BASE_FREQ.drone1;
 
     const drone2 = context.createOscillator();
     drone2.type = 'sine';
-    drone2.frequency.value = 98.00; // G2
+    drone2.frequency.value = BASE_FREQ.drone2;
 
     const drone3 = context.createOscillator();
     drone3.type = 'triangle';
-    drone3.frequency.value = 130.81; // C3
+    drone3.frequency.value = BASE_FREQ.drone3;
 
-    // Individual gains for mixing
+    // Individual gains
     const gain1 = context.createGain();
-    gain1.gain.value = 0.3;
+    gain1.gain.value = 0.25;
     const gain2 = context.createGain();
-    gain2.gain.value = 0.2;
+    gain2.gain.value = 0.15;
     const gain3 = context.createGain();
-    gain3.gain.value = 0.15;
+    gain3.gain.value = 0.1;
+
+    // Pulse oscillator for interaction feedback
+    const pulseGain = context.createGain();
+    pulseGain.gain.value = 0;
 
     // Connect drone chain
     drone1.connect(gain1);
@@ -96,13 +97,14 @@ export default function AmbientSound() {
     gain2.connect(filter);
     gain3.connect(filter);
 
-    // Dry path
+    // Dry + Wet paths
     filter.connect(masterGain);
-
-    // Wet path (reverb)
     filter.connect(reverb);
     reverb.connect(reverbGain);
     reverbGain.connect(masterGain);
+
+    // Pulse path
+    pulseGain.connect(reverb);
 
     masterGain.connect(context.destination);
 
@@ -111,71 +113,120 @@ export default function AmbientSound() {
     drone2.start();
     drone3.start();
 
-    audioRef.current = {
+    const nodes: AudioNodes = {
       context,
       masterGain,
       drone1,
       drone2,
       drone3,
-      lfo,
-      lfoGain,
       filter,
       reverb,
+      reverbGain,
+      pulseGain,
     };
 
-    setIsInitialized(true);
+    audioRef.current = nodes;
+    return nodes;
   }, []);
 
-  const startAudio = useCallback(() => {
-    if (!audioRef.current) {
-      initAudio();
-    }
-
+  // Play a short pulse tone based on density
+  const playPulse = useCallback((density: number) => {
     const audio = audioRef.current;
-    if (!audio) return;
+    if (!audio || !isPlaying) return;
+
+    const now = audio.context.currentTime;
+
+    // Throttle pulses
+    if (now - lastPulseRef.current < 0.1) return;
+    lastPulseRef.current = now;
+
+    // Create pulse oscillator
+    const pulse = audio.context.createOscillator();
+    const pulseEnv = audio.context.createGain();
+
+    // Higher density = higher pitch
+    pulse.type = 'sine';
+    pulse.frequency.value = 200 + density * 800;
+
+    pulseEnv.gain.value = 0;
+    pulseEnv.gain.setValueAtTime(0, now);
+    pulseEnv.gain.linearRampToValueAtTime(0.03 + density * 0.05, now + 0.02);
+    pulseEnv.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+
+    pulse.connect(pulseEnv);
+    pulseEnv.connect(audio.filter);
+
+    pulse.start(now);
+    pulse.stop(now + 0.4);
+  }, [isPlaying]);
+
+  // Handle density updates from LifeGame
+  useEffect(() => {
+    const handleDensity = (e: CustomEvent<{ density: number; cellCount: number }>) => {
+      const { density } = e.detail;
+      const audio = audioRef.current;
+
+      if (!audio || !isPlaying) return;
+
+      const time = audio.context.currentTime;
+
+      // Map density (0-0.3 typical range) to audio parameters
+      const normalizedDensity = Math.min(density * 4, 1); // Scale up for more range
+
+      // Filter frequency: 300Hz (empty) to 1500Hz (dense)
+      const targetFreq = 300 + normalizedDensity * 1200;
+      audio.filter.frequency.setTargetAtTime(targetFreq, time, 0.3);
+
+      // Drone pitch shift: subtle rise with density
+      const pitchShift = normalizedDensity * 50; // cents
+      audio.drone2.detune.setTargetAtTime(pitchShift, time, 0.5);
+      audio.drone3.detune.setTargetAtTime(pitchShift * 1.5, time, 0.5);
+
+      // Volume swell with density
+      const targetGain = 0.1 + normalizedDensity * 0.1;
+      audio.masterGain.gain.setTargetAtTime(targetGain, time, 0.3);
+
+      // Reverb increases with density
+      audio.reverbGain.gain.setTargetAtTime(0.3 + normalizedDensity * 0.4, time, 0.5);
+
+      // Trigger pulse on significant density change
+      const densityDelta = Math.abs(density - densityRef.current);
+      if (densityDelta > 0.01) {
+        playPulse(normalizedDensity);
+      }
+
+      densityRef.current = density;
+    };
+
+    window.addEventListener('lifegame-density', handleDensity as EventListener);
+    return () => window.removeEventListener('lifegame-density', handleDensity as EventListener);
+  }, [isPlaying, playPulse]);
+
+  const startAudio = useCallback(() => {
+    const audio = initAudio();
 
     if (audio.context.state === 'suspended') {
       audio.context.resume();
     }
 
     // Fade in
-    audio.masterGain.gain.cancelScheduledValues(audio.context.currentTime);
-    audio.masterGain.gain.setValueAtTime(audio.masterGain.gain.value, audio.context.currentTime);
-    audio.masterGain.gain.linearRampToValueAtTime(0.15, audio.context.currentTime + 2);
+    const time = audio.context.currentTime;
+    audio.masterGain.gain.cancelScheduledValues(time);
+    audio.masterGain.gain.setValueAtTime(0, time);
+    audio.masterGain.gain.linearRampToValueAtTime(0.1, time + 2);
 
     setIsPlaying(true);
-
-    // Subtle random modulation
-    const modulate = () => {
-      if (!audioRef.current || !isPlaying) return;
-
-      const audio = audioRef.current;
-      const time = audio.context.currentTime;
-
-      // Slowly shift filter frequency
-      const newFreq = 600 + Math.sin(time * 0.05) * 200 + Math.random() * 100;
-      audio.filter.frequency.setTargetAtTime(newFreq, time, 2);
-
-      // Slight detune for organic feel
-      audio.drone2.detune.setTargetAtTime(Math.sin(time * 0.1) * 10, time, 1);
-      audio.drone3.detune.setTargetAtTime(Math.cos(time * 0.08) * 15, time, 1);
-
-      animationRef.current = requestAnimationFrame(modulate);
-    };
-
-    modulate();
-  }, [initAudio, isPlaying]);
+  }, [initAudio]);
 
   const stopAudio = useCallback(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    // Fade out
-    audio.masterGain.gain.cancelScheduledValues(audio.context.currentTime);
-    audio.masterGain.gain.setValueAtTime(audio.masterGain.gain.value, audio.context.currentTime);
-    audio.masterGain.gain.linearRampToValueAtTime(0, audio.context.currentTime + 1);
+    const time = audio.context.currentTime;
+    audio.masterGain.gain.cancelScheduledValues(time);
+    audio.masterGain.gain.setValueAtTime(audio.masterGain.gain.value, time);
+    audio.masterGain.gain.linearRampToValueAtTime(0, time + 1);
 
-    cancelAnimationFrame(animationRef.current);
     setIsPlaying(false);
   }, []);
 
@@ -187,10 +238,9 @@ export default function AmbientSound() {
     }
   }, [isPlaying, startAudio, stopAudio]);
 
-  // Cleanup on unmount
+  // Cleanup
   useEffect(() => {
     return () => {
-      cancelAnimationFrame(animationRef.current);
       if (audioRef.current) {
         audioRef.current.context.close();
       }

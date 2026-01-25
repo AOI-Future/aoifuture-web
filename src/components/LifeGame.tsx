@@ -155,13 +155,15 @@ export default function LifeGame() {
         gridRef.current = newGrid;
       }
 
-      // Draw
+      // Draw and count cells
       ctx.fillStyle = COLORS.bg;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+      let cellCount = 0;
       for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
           if (gridRef.current[i]?.[j]) {
+            cellCount++;
             const colorIndex = (i + j + frameCount) % COLORS.cell.length;
             ctx.fillStyle = COLORS.cell[colorIndex];
             ctx.shadowBlur = 8;
@@ -176,6 +178,13 @@ export default function LifeGame() {
         }
       }
       ctx.shadowBlur = 0;
+
+      // Emit cell density for sound sync (every 6 frames)
+      if (frameCount % 6 === 0) {
+        const totalCells = cols * rows;
+        const density = cellCount / totalCells;
+        window.dispatchEvent(new CustomEvent('lifegame-density', { detail: { density, cellCount } }));
+      }
 
       frameCount++;
       animationRef.current = requestAnimationFrame(animate);
