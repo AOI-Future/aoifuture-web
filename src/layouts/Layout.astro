@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import PageTransition from '../components/PageTransition';
 
 interface Props {
   title: string;
@@ -30,6 +31,9 @@ const { title } = Astro.props;
       Endpoint: https://nozaki.com/contact
       Status: Waiting for your signal.
     </div>
+
+    <!-- Page Transition Effect -->
+    <PageTransition client:load />
 
     <slot />
   </body>

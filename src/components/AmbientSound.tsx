@@ -171,27 +171,30 @@ export default function AmbientSound() {
       const time = audio.context.currentTime;
 
       // Map density (0-0.3 typical range) to audio parameters
-      const normalizedDensity = Math.min(density * 4, 1); // Scale up for more range
+      const normalizedDensity = Math.min(density * 5, 1); // More aggressive scaling
 
-      // Filter frequency: 300Hz (empty) to 1500Hz (dense)
-      const targetFreq = 300 + normalizedDensity * 1200;
-      audio.filter.frequency.setTargetAtTime(targetFreq, time, 0.3);
+      // Filter frequency: 150Hz (empty) to 2500Hz (dense) - wider range
+      const targetFreq = 150 + normalizedDensity * 2350;
+      audio.filter.frequency.setTargetAtTime(targetFreq, time, 0.15); // Faster response
 
-      // Drone pitch shift: subtle rise with density
-      const pitchShift = normalizedDensity * 50; // cents
-      audio.drone2.detune.setTargetAtTime(pitchShift, time, 0.5);
-      audio.drone3.detune.setTargetAtTime(pitchShift * 1.5, time, 0.5);
+      // Drone pitch shift: more dramatic rise with density
+      const pitchShift = normalizedDensity * 200; // cents (was 50)
+      audio.drone2.detune.setTargetAtTime(pitchShift, time, 0.2);
+      audio.drone3.detune.setTargetAtTime(pitchShift * 2, time, 0.2);
 
-      // Volume swell with density
-      const targetGain = 0.1 + normalizedDensity * 0.1;
-      audio.masterGain.gain.setTargetAtTime(targetGain, time, 0.3);
+      // Volume swell with density - bigger range
+      const targetGain = 0.08 + normalizedDensity * 0.18;
+      audio.masterGain.gain.setTargetAtTime(targetGain, time, 0.15);
+
+      // Filter Q increases with density for more resonance
+      audio.filter.Q.setTargetAtTime(1 + normalizedDensity * 6, time, 0.2);
 
       // Reverb increases with density
-      audio.reverbGain.gain.setTargetAtTime(0.3 + normalizedDensity * 0.4, time, 0.5);
+      audio.reverbGain.gain.setTargetAtTime(0.2 + normalizedDensity * 0.6, time, 0.3);
 
-      // Trigger pulse on significant density change
+      // Trigger pulse more often
       const densityDelta = Math.abs(density - densityRef.current);
-      if (densityDelta > 0.01) {
+      if (densityDelta > 0.005) {
         playPulse(normalizedDensity);
       }
 
@@ -237,6 +240,27 @@ export default function AmbientSound() {
       startAudio();
     }
   }, [isPlaying, startAudio, stopAudio]);
+
+  // Handle page transition - fade out smoothly
+  useEffect(() => {
+    const handleTransition = () => {
+      const audio = audioRef.current;
+      if (!audio || !isPlaying) return;
+
+      const time = audio.context.currentTime;
+
+      // Quick but smooth fade out
+      audio.masterGain.gain.cancelScheduledValues(time);
+      audio.masterGain.gain.setValueAtTime(audio.masterGain.gain.value, time);
+      audio.masterGain.gain.exponentialRampToValueAtTime(0.001, time + 0.5);
+
+      // Also fade filter down for "shutting down" effect
+      audio.filter.frequency.setTargetAtTime(100, time, 0.1);
+    };
+
+    window.addEventListener('page-transition-start', handleTransition);
+    return () => window.removeEventListener('page-transition-start', handleTransition);
+  }, [isPlaying]);
 
   // Cleanup
   useEffect(() => {
