@@ -77,14 +77,16 @@ export default function HUDOverlay() {
         <button
           onClick={() => setIsModalOpen(true)}
           className="pointer-events-auto absolute top-4 left-4 md:top-6 md:left-6
-                     px-3 py-2 text-sm md:text-base
+                     px-2 py-1.5 md:px-3 md:py-2 text-sm md:text-base
                      border border-cyan-400/50 bg-black/50
                      text-cyan-400 font-mono tracking-widest
                      blink glow-box cursor-pointer
                      hover:bg-cyan-400/10 hover:border-cyan-400
-                     transition-colors duration-300"
+                     transition-colors duration-300
+                     flex items-center gap-2"
         >
-          [ :: Aoifuture :: ]
+          <img src="/logo.svg" alt="" className="h-5 md:h-6 w-auto" />
+          <span className="hidden md:inline">Aoifuture</span>
         </button>
 
         {/* Top Right - Status (hidden on mobile) */}
