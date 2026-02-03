@@ -1,0 +1,574 @@
+---
+import Layout from '../layouts/Layout.astro';
+import LifeGame from '../components/LifeGame';
+
+const lastUpdated = '2026-01-31';
+const version = '1.0.0';
+---
+
+<Layout title="Legal Notice | Aoifuture">
+  <main class="relative min-h-screen">
+    <!-- Life Game Background -->
+    <LifeGame client:load />
+
+    <!-- Back Button -->
+    <a
+      href="/"
+      class="fixed top-4 left-4 md:top-6 md:left-6 z-50
+             px-3 py-2 text-sm
+             border border-cyan-400/50 bg-black/50
+             text-cyan-400 font-mono tracking-widest
+             hover:bg-cyan-400/10 hover:border-cyan-400
+             transition-colors duration-300"
+    >
+      {'<'} BACK
+    </a>
+
+    <!-- Main Content -->
+    <div class="relative z-10 min-h-screen flex flex-col items-center px-4 py-20">
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <div class="inline-block px-4 py-2 border border-cyan-400/50 bg-black/50 mb-4">
+          <span class="text-cyan-400/60 font-mono text-xs">SYSTEM.LEGAL</span>
+        </div>
+
+        <h1 class="text-3xl md:text-5xl font-mono text-cyan-400 tracking-widest glow">
+          LEGAL NOTICE
+        </h1>
+        <p class="text-xl md:text-2xl font-mono text-cyan-400/60 mt-2">
+          法的通知
+        </p>
+      </div>
+
+      <!-- Table of Contents -->
+      <nav class="glass p-4 md:p-6 max-w-4xl w-full border border-cyan-400/30 mb-8">
+        <h2 class="text-cyan-400 font-mono text-sm mb-4 flex items-center gap-2">
+          <span class="text-cyan-400/40">//</span> INDEX
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 font-mono text-sm">
+          <a href="#ai-disclosure" class="text-cyan-400/60 hover:text-cyan-400 transition-colors">01. AI-Generated Content</a>
+          <a href="#copyright" class="text-cyan-400/60 hover:text-cyan-400 transition-colors">02. Copyright & Licensing</a>
+          <a href="#trademark" class="text-cyan-400/60 hover:text-cyan-400 transition-colors">03. Trademark Information</a>
+          <a href="#ai-tech" class="text-cyan-400/60 hover:text-cyan-400 transition-colors">04. AI Technology & Data</a>
+          <a href="#disclaimer" class="text-cyan-400/60 hover:text-cyan-400 transition-colors">05. Disclaimer</a>
+          <a href="#governing-law" class="text-cyan-400/60 hover:text-cyan-400 transition-colors">06. Governing Law</a>
+          <a href="#contact" class="text-cyan-400/60 hover:text-cyan-400 transition-colors">07. Contact Information</a>
+        </div>
+      </nav>
+
+      <!-- Intro -->
+      <div class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-8">
+        <p class="text-cyan-400/80 font-mono text-sm md:text-base leading-relaxed mb-4">
+          <strong class="text-cyan-400">AOI Future</strong> is an independent music label operated by Shugo Otsuka, dedicated to AI-collaborative music creation.
+        </p>
+        <p class="text-cyan-400/60 font-mono text-sm md:text-base leading-relaxed">
+          <strong class="text-cyan-400/80">AOI Future</strong>は大塚修悟が運営する独立系音楽レーベルで、AI協働音楽制作に特化しています。
+        </p>
+      </div>
+
+      <!-- Section 1: AI-Generated Content -->
+      <section id="ai-disclosure" class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-6">
+        <h2 class="text-cyan-400 font-mono text-lg mb-6 flex items-center gap-2">
+          <span class="text-cyan-400/40">01 //</span> AI-GENERATED CONTENT DISCLOSURE
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- English -->
+          <div class="space-y-4">
+            <h3 class="text-cyan-400/80 font-mono text-sm border-b border-cyan-400/20 pb-2">ENGLISH</h3>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">NATURE OF OUR MUSIC</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                All music released under the AOI Future label incorporates AI-generated elements created using commercially available AI music generation services, including but not limited to Suno AI and Udio AI. However, these works are not purely AI-generated outputs.
+              </p>
+            </div>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">HUMAN CREATIVE CONTRIBUTION</h4>
+              <ul class="text-cyan-400/70 font-mono text-xs leading-relaxed space-y-1">
+                <li>• Musical Concept & Direction</li>
+                <li>• Prompt Engineering</li>
+                <li>• Selection & Curation</li>
+                <li>• Post-Processing (mixing, mastering)</li>
+                <li>• Arrangement & Composition</li>
+                <li>• Final Artistic Decisions</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">COPYRIGHT POSITION</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                Under current copyright law in Japan, the United States, and the European Union, works created with substantial human creative contribution using AI as a tool may be eligible for copyright protection. AOI Future claims copyright in our musical works to the extent human authorship is present.
+              </p>
+            </div>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">THIRD-PARTY AI SERVICE NOTICE</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                The AI music generation services we use are operated by third-party providers. We have no control over or knowledge of the specific training data used by these services.
+              </p>
+            </div>
+          </div>
+
+          <!-- Japanese -->
+          <div class="space-y-4" lang="ja">
+            <h3 class="text-cyan-400/80 font-mono text-sm border-b border-cyan-400/20 pb-2">日本語</h3>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">音楽の性質</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                AOI Futureレーベルから発表される全ての音楽は、Suno AIやUdio AIなどの商用AI音楽生成サービスを使用したAI生成要素を含んでいます。ただし、これらの作品は純粋なAI生成物ではありません。
+              </p>
+            </div>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">人間の創作的寄与</h4>
+              <ul class="text-cyan-400/70 font-mono text-xs leading-relaxed space-y-1">
+                <li>• 音楽コンセプト・方向性</li>
+                <li>• プロンプトエンジニアリング</li>
+                <li>• 選択・キュレーション</li>
+                <li>• 後処理（ミキシング、マスタリング）</li>
+                <li>• アレンジ・作曲</li>
+                <li>• 最終的な芸術的決定</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">著作権に関する立場</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                日本、米国、EUの現行著作権法において、AIをツールとして使用し実質的な人間の創作的寄与を伴って制作された作品は、著作権保護の対象となる可能性があります。AOI Futureは、人間の創作性が存在する範囲において音楽作品の著作権を主張します。
+              </p>
+            </div>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">第三者AIサービスに関する通知</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                当レーベルが使用するAI音楽生成サービスは第三者プロバイダーにより運営されています。これらのサービスが使用する具体的な学習データについて、当レーベルは管理権限も知見も有していません。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Copyright & Licensing -->
+      <section id="copyright" class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-6">
+        <h2 class="text-cyan-400 font-mono text-lg mb-6 flex items-center gap-2">
+          <span class="text-cyan-400/40">02 //</span> COPYRIGHT & LICENSING
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- English -->
+          <div class="space-y-4">
+            <h3 class="text-cyan-400/80 font-mono text-sm border-b border-cyan-400/20 pb-2">ENGLISH</h3>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">COPYRIGHT OWNERSHIP</h4>
+              <p class="text-cyan-400 font-mono text-xs leading-relaxed mb-2">
+                © 2024-2026 AOI Future / Shugo Otsuka. All rights reserved.
+              </p>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                All original musical works, album artwork, promotional materials, and website content are protected by copyright law.
+              </p>
+            </div>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">DIGITAL DISTRIBUTION</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                Our music is distributed through DistroKid to major streaming platforms (Spotify, Apple Music, etc.) and digital stores.
+              </p>
+            </div>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">DOWNLOAD SALES</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed mb-2">
+                Music available for purchase on Bandcamp is licensed for personal, non-commercial use. Purchasers may:
+              </p>
+              <ul class="text-cyan-400/70 font-mono text-xs space-y-1">
+                <li class="text-green-400/70">✓ Download and store for personal use</li>
+                <li class="text-green-400/70">✓ Transfer to personal devices</li>
+                <li class="text-green-400/70">✓ Create backup copies</li>
+              </ul>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed mt-2 mb-2">
+                Purchasers may NOT:
+              </p>
+              <ul class="text-cyan-400/70 font-mono text-xs space-y-1">
+                <li class="text-red-400/70">✗ Redistribute or resell</li>
+                <li class="text-red-400/70">✗ Use in commercial projects</li>
+                <li class="text-red-400/70">✗ Remove copyright notices</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">COMMERCIAL LICENSING</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                For sync licensing (film, TV, advertising), contact:
+                <a href="mailto:legal@aoifuture.com" class="text-cyan-400 hover:glow">legal@aoifuture.com</a>
+              </p>
+            </div>
+          </div>
+
+          <!-- Japanese -->
+          <div class="space-y-4" lang="ja">
+            <h3 class="text-cyan-400/80 font-mono text-sm border-b border-cyan-400/20 pb-2">日本語</h3>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">著作権の帰属</h4>
+              <p class="text-cyan-400 font-mono text-xs leading-relaxed mb-2">
+                © 2024-2026 AOI Future / 大塚修悟 All rights reserved.
+              </p>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                全てのオリジナル音楽作品、アルバムアートワーク、プロモーション素材、ウェブサイトコンテンツは著作権法により保護されています。
+              </p>
+            </div>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">デジタル配信</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                当レーベルの音楽はDistroKidを通じて主要ストリーミングプラットフォーム（Spotify、Apple Musicなど）で配信されています。
+              </p>
+            </div>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">ダウンロード販売</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed mb-2">
+                Bandcampで購入可能な音楽は、個人的非商用利用のためにライセンスされています：
+              </p>
+              <ul class="text-cyan-400/70 font-mono text-xs space-y-1">
+                <li class="text-green-400/70">✓ 個人使用のためのダウンロードと保存</li>
+                <li class="text-green-400/70">✓ 個人デバイスへの転送</li>
+                <li class="text-green-400/70">✓ バックアップコピーの作成</li>
+              </ul>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed mt-2 mb-2">
+                禁止事項：
+              </p>
+              <ul class="text-cyan-400/70 font-mono text-xs space-y-1">
+                <li class="text-red-400/70">✗ 再配布・再販売</li>
+                <li class="text-red-400/70">✗ 商業プロジェクトでの使用</li>
+                <li class="text-red-400/70">✗ 著作権表示の削除</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">商用ライセンス</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                シンクライセンス（映画、テレビ、広告）についてはこちら:
+                <a href="mailto:legal@aoifuture.com" class="text-cyan-400 hover:glow">legal@aoifuture.com</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Trademark -->
+      <section id="trademark" class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-6">
+        <h2 class="text-cyan-400 font-mono text-lg mb-6 flex items-center gap-2">
+          <span class="text-cyan-400/40">03 //</span> TRADEMARK INFORMATION
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- English -->
+          <div class="space-y-4">
+            <h3 class="text-cyan-400/80 font-mono text-sm border-b border-cyan-400/20 pb-2">ENGLISH</h3>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">PENDING TRADEMARK APPLICATIONS</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed mb-2">
+                "NICTIA" is a pending trademark of AOI Future in the following classes:
+              </p>
+              <ul class="text-cyan-400/70 font-mono text-xs space-y-1">
+                <li>• <strong class="text-cyan-400/80">Class 9:</strong> Downloadable music files, recorded music</li>
+                <li>• <strong class="text-cyan-400/80">Class 41:</strong> Providing music, music performance services</li>
+              </ul>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed mt-2">
+                "AOI FUTURE" trademark registration is under consideration.
+              </p>
+            </div>
+          </div>
+
+          <!-- Japanese -->
+          <div class="space-y-4" lang="ja">
+            <h3 class="text-cyan-400/80 font-mono text-sm border-b border-cyan-400/20 pb-2">日本語</h3>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">商標出願中</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed mb-2">
+                「NICTIA」は以下の区分においてAOI Futureの商標出願中です：
+              </p>
+              <ul class="text-cyan-400/70 font-mono text-xs space-y-1">
+                <li>• <strong class="text-cyan-400/80">第9類:</strong> ダウンロード可能な音楽ファイル、録音済み音楽</li>
+                <li>• <strong class="text-cyan-400/80">第41類:</strong> 音楽の提供、音楽演奏サービス</li>
+              </ul>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed mt-2">
+                「AOI FUTURE」の商標登録も検討中です。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: AI Technology & Data -->
+      <section id="ai-tech" class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-6">
+        <h2 class="text-cyan-400 font-mono text-lg mb-6 flex items-center gap-2">
+          <span class="text-cyan-400/40">04 //</span> AI TECHNOLOGY & DATA PROCESSING
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- English -->
+          <div class="space-y-4">
+            <h3 class="text-cyan-400/80 font-mono text-sm border-b border-cyan-400/20 pb-2">ENGLISH</h3>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">AI SERVICES USED</h4>
+              <ul class="text-cyan-400/70 font-mono text-xs space-y-1">
+                <li>• Suno AI (suno.ai)</li>
+                <li>• Udio AI (udio.com)</li>
+                <li>• Other commercially available AI music generation tools</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">DATA PROCESSING NOTICE</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                When you interact with our websites (aoifuture.com, nictia.xyz), we do not collect personal data beyond standard web server logs. We do not use cookies or tracking technologies for marketing purposes.
+              </p>
+            </div>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">EU AI ACT COMPLIANCE</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                AOI Future monitors compliance developments related to the EU Artificial Intelligence Act (Regulation 2024/1689). As AI service users rather than providers, we await transparency disclosures from our AI service providers.
+              </p>
+            </div>
+          </div>
+
+          <!-- Japanese -->
+          <div class="space-y-4" lang="ja">
+            <h3 class="text-cyan-400/80 font-mono text-sm border-b border-cyan-400/20 pb-2">日本語</h3>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">使用AIサービス</h4>
+              <ul class="text-cyan-400/70 font-mono text-xs space-y-1">
+                <li>• Suno AI (suno.ai)</li>
+                <li>• Udio AI (udio.com)</li>
+                <li>• その他の商用AI音楽生成ツール</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">データ処理に関する通知</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                当レーベルのウェブサイト（aoifuture.com、nictia.xyz）にアクセスする際、標準的なウェブサーバーログ以外の個人データは収集しません。マーケティング目的でのクッキーやトラッキング技術は使用していません。
+              </p>
+            </div>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">EU AI法への対応</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                AOI Futureは、EU人工知能規則（規則2024/1689）に関連するコンプライアンスの動向を監視しています。AIサービス提供者ではなく利用者として、AIサービスプロバイダーからの透明性開示を待っています。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5: Disclaimer -->
+      <section id="disclaimer" class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-6">
+        <h2 class="text-cyan-400 font-mono text-lg mb-6 flex items-center gap-2">
+          <span class="text-cyan-400/40">05 //</span> DISCLAIMER OF WARRANTIES
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- English -->
+          <div class="space-y-4">
+            <h3 class="text-cyan-400/80 font-mono text-sm border-b border-cyan-400/20 pb-2">ENGLISH</h3>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">NO WARRANTY</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                Our music and all related materials are provided "as is" without warranty of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement.
+              </p>
+            </div>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">LIMITATION OF LIABILITY</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                To the maximum extent permitted by law, AOI Future and Shugo Otsuka shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or related to the use of our music.
+              </p>
+            </div>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">AI-RELATED RISKS</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                While we endeavor to ensure the originality of our music, we cannot guarantee that AI-generated elements do not inadvertently resemble existing copyrighted works. Users license our music at their own risk.
+              </p>
+            </div>
+          </div>
+
+          <!-- Japanese -->
+          <div class="space-y-4" lang="ja">
+            <h3 class="text-cyan-400/80 font-mono text-sm border-b border-cyan-400/20 pb-2">日本語</h3>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">無保証</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                当レーベルの音楽および全ての関連素材は、商品性、特定目的への適合性、非侵害性の保証を含むがこれに限定されない、明示的または黙示的ないかなる種類の保証もなく「現状のまま」提供されます。
+              </p>
+            </div>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">責任の制限</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                法律で許可される最大限の範囲において、AOI Futureおよび大塚修悟は、当レーベルの音楽の使用から生じる間接的、付随的、特別、結果的、または懲罰的損害について責任を負わないものとします。
+              </p>
+            </div>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">AI関連リスク</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                音楽の独創性確保に努めていますが、AI生成要素が既存の著作権で保護された作品に意図せず類似しないことを保証することはできません。利用者は自己の責任において当レーベルの音楽をライセンスするものとします。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6: Governing Law -->
+      <section id="governing-law" class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-6">
+        <h2 class="text-cyan-400 font-mono text-lg mb-6 flex items-center gap-2">
+          <span class="text-cyan-400/40">06 //</span> GOVERNING LAW & JURISDICTION
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- English -->
+          <div class="space-y-4">
+            <h3 class="text-cyan-400/80 font-mono text-sm border-b border-cyan-400/20 pb-2">ENGLISH</h3>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">GOVERNING LAW</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                These terms and any disputes arising out of or related to our music or services shall be governed by and construed in accordance with the laws of Japan.
+              </p>
+            </div>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">JURISDICTION</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                Any legal action or proceeding arising under these terms shall be brought exclusively in the courts of Tokyo, Japan.
+              </p>
+            </div>
+          </div>
+
+          <!-- Japanese -->
+          <div class="space-y-4" lang="ja">
+            <h3 class="text-cyan-400/80 font-mono text-sm border-b border-cyan-400/20 pb-2">日本語</h3>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">準拠法</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                本規約および当レーベルの音楽またはサービスから生じる紛争は、日本国法に準拠し、これに従って解釈されるものとします。
+              </p>
+            </div>
+
+            <div>
+              <h4 class="text-cyan-400/60 font-mono text-xs mb-2">管轄</h4>
+              <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+                本規約に基づいて生じる法的措置または訴訟は、日本国東京の裁判所にのみ提起されるものとします。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 7: Contact -->
+      <section id="contact" class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-6">
+        <h2 class="text-cyan-400 font-mono text-lg mb-6 flex items-center gap-2">
+          <span class="text-cyan-400/40">07 //</span> CONTACT INFORMATION
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- English -->
+          <div class="space-y-4">
+            <h3 class="text-cyan-400/80 font-mono text-sm border-b border-cyan-400/20 pb-2">ENGLISH</h3>
+
+            <div class="space-y-2 font-mono text-xs">
+              <div class="flex">
+                <span class="text-cyan-400/40 w-28 shrink-0">LEGAL:</span>
+                <a href="mailto:legal@aoifuture.com" class="text-cyan-400 hover:glow">legal@aoifuture.com</a>
+              </div>
+              <div class="flex">
+                <span class="text-cyan-400/40 w-28 shrink-0">WEBSITE:</span>
+                <a href="https://aoifuture.com" class="text-cyan-400 hover:glow">https://aoifuture.com</a>
+              </div>
+              <div class="flex">
+                <span class="text-cyan-400/40 w-28 shrink-0">ARTIST SITE:</span>
+                <a href="https://nictia.xyz" class="text-cyan-400 hover:glow">https://nictia.xyz</a>
+              </div>
+              <div class="flex">
+                <span class="text-cyan-400/40 w-28 shrink-0">STRUCTURE:</span>
+                <span class="text-cyan-400/70">Sole Proprietorship (個人事業) - Japan</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Japanese -->
+          <div class="space-y-4" lang="ja">
+            <h3 class="text-cyan-400/80 font-mono text-sm border-b border-cyan-400/20 pb-2">日本語</h3>
+
+            <div class="space-y-2 font-mono text-xs">
+              <div class="flex">
+                <span class="text-cyan-400/40 w-28 shrink-0">法的お問い合わせ:</span>
+                <a href="mailto:legal@aoifuture.com" class="text-cyan-400 hover:glow">legal@aoifuture.com</a>
+              </div>
+              <div class="flex">
+                <span class="text-cyan-400/40 w-28 shrink-0">ウェブサイト:</span>
+                <a href="https://aoifuture.com" class="text-cyan-400 hover:glow">https://aoifuture.com</a>
+              </div>
+              <div class="flex">
+                <span class="text-cyan-400/40 w-28 shrink-0">アーティスト:</span>
+                <a href="https://nictia.xyz" class="text-cyan-400 hover:glow">https://nictia.xyz</a>
+              </div>
+              <div class="flex">
+                <span class="text-cyan-400/40 w-28 shrink-0">事業構造:</span>
+                <span class="text-cyan-400/70">個人事業（日本国内）</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <div class="text-center mt-8 space-y-2">
+        <div class="text-cyan-400/40 font-mono text-xs">
+          VERSION: {version} | DOC.ID: AOI-LEGAL-2026-01
+        </div>
+        <div class="text-cyan-400/30 font-mono text-xs">
+          {'<'} LAST.UPDATED: {lastUpdated} {'>'}
+        </div>
+        <div class="text-cyan-400/50 font-mono text-xs mt-4">
+          © 2024-2026 AOI Future / Shugo Otsuka
+        </div>
+      </div>
+    </div>
+
+    <!-- Corner Decoration -->
+    <div class="hidden md:block fixed bottom-6 right-6 z-50
+                text-cyan-400/40 font-mono text-xs text-right">
+      <div>LEGAL.PAGE</div>
+      <div>STATUS: PUBLIC</div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .glow {
+    text-shadow:
+      0 0 10px rgba(0, 255, 255, 0.5),
+      0 0 20px rgba(0, 255, 255, 0.3),
+      0 0 40px rgba(0, 255, 255, 0.2);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

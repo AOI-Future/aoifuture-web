@@ -173,8 +173,8 @@ export default function HUDOverlay() {
               ))}
             </div>
 
-            {/* About Link */}
-            <div className="mt-6 pt-4 border-t border-cyan-400/20">
+            {/* About & Legal Links */}
+            <div className="mt-6 pt-4 border-t border-cyan-400/20 space-y-3">
               <a
                 href="/about"
                 className="block p-4 border border-cyan-400/20
@@ -187,6 +187,17 @@ export default function HUDOverlay() {
                 </div>
                 <div className="text-cyan-400/40 font-mono text-xs mt-1">
                   LABEL.INFO
+                </div>
+              </a>
+              <a
+                href="/legal"
+                className="block p-3 border border-cyan-400/20
+                           hover:border-cyan-400/60 hover:bg-cyan-400/5
+                           transition-all duration-300 group text-center"
+              >
+                <div className="text-cyan-400/60 font-mono text-xs md:text-sm
+                                group-hover:text-cyan-400 group-hover:glow transition-all tracking-wider">
+                  {'>'} LEGAL NOTICE
                 </div>
               </a>
             </div>
