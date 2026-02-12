@@ -6,7 +6,8 @@ const R = 12;
 const DT = 0.15;
 // Lenia growth function parameters (base values, modulated over time)
 const MU_BASE = 0.15;
-const SIGMA_BASE = 0.017;
+const SIGMA_BASE = 0.025;
+const SPONTANEOUS_INTERVAL = 90; // inject a blob every ~90 steps to prevent stagnation
 
 // Colormap: value 0→transparent black, low→deep purple, mid→cyan, high→magenta/white
 function valueToRGBA(v: number): [number, number, number, number] {
@@ -195,11 +196,20 @@ export default function LifeGame() {
     }
 
     // --- Simulation step ---
+    let stepCount = 0;
     const step = (time: number) => {
-      // Time-varying parameters (breathing)
+      // Time-varying parameters (breathing) — wider swing to prevent equilibrium
       const t = time * 0.001;
-      const mu = MU_BASE + 0.02 * Math.sin(t * 0.7) + 0.01 * Math.sin(t * 1.3);
-      const sigma = SIGMA_BASE + 0.003 * Math.sin(t * 0.5 + 1.0);
+      const mu = MU_BASE + 0.035 * Math.sin(t * 0.7) + 0.02 * Math.sin(t * 1.3) + 0.01 * Math.sin(t * 2.1);
+      const sigma = SIGMA_BASE + 0.008 * Math.sin(t * 0.5 + 1.0) + 0.004 * Math.sin(t * 1.7);
+
+      // Spontaneous blob injection to prevent stagnation
+      stepCount++;
+      if (stepCount % SPONTANEOUS_INTERVAL === 0) {
+        const cx = Math.random() * N;
+        const cy = Math.random() * N;
+        injectBlob(gridA, cx, cy, 4 + Math.random() * 4, 0.4 + Math.random() * 0.4);
+      }
 
       // Flow vector
       let fx: number, fy: number;
@@ -279,10 +289,13 @@ export default function LifeGame() {
       render();
 
       // Emit density every 6 frames
+      // Scale up density to match AmbientSound's expected range (~0.05-0.25)
+      // Lenia average values are typically much lower than boolean GoL
       if (frameCount % 6 === 0) {
         let sum = 0;
         for (let i = 0; i < N * N; i++) sum += gridA[i];
-        const density = sum / (N * N);
+        const rawDensity = sum / (N * N);
+        const density = Math.min(rawDensity * 4, 0.35);
         window.dispatchEvent(
           new CustomEvent('lifegame-density', {
             detail: { density, cellCount: Math.round(sum) },
