@@ -186,8 +186,8 @@ export default function LifeGame() {
 
     // Gyroscope
     const handleOrientation = (e: DeviceOrientationEvent) => {
-      gyroX = (e.gamma || 0) / 45;  // normalized ±1 at 45°
-      gyroY = (e.beta || 0) / 45;
+      gyroX = (e.gamma || 0) / 25;  // normalized ±1 at 25°
+      gyroY = (e.beta || 0) / 25;
       hasGyro = true;
     };
 
@@ -214,8 +214,8 @@ export default function LifeGame() {
       // Flow vector
       let fx: number, fy: number;
       if (hasGyro) {
-        fx = gyroX * 0.8;
-        fy = gyroY * 0.8;
+        fx = gyroX * 2.0;
+        fy = gyroY * 2.0;
       } else {
         autoFlowAngle += 0.003;
         const flowStrength = 0.15 + 0.1 * Math.sin(t * 0.2);
