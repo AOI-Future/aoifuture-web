@@ -211,6 +211,13 @@ export default function LifeGame() {
         injectBlob(gridA, cx, cy, 4 + Math.random() * 4, 0.4 + Math.random() * 0.4);
       }
 
+      // Sparse random mutations — ~0.3% of cells get a small nudge each step
+      const mutationCount = Math.floor(N * N * 0.003);
+      for (let m = 0; m < mutationCount; m++) {
+        const idx = Math.floor(Math.random() * N * N);
+        gridA[idx] = Math.min(gridA[idx] + 0.05 + Math.random() * 0.1, 1);
+      }
+
       // Flow vector
       let fx: number, fy: number;
       if (hasGyro) {
@@ -223,8 +230,15 @@ export default function LifeGame() {
         fy = Math.sin(autoFlowAngle) * flowStrength;
       }
 
+      // Local turbulence — occasional vortex that disrupts uniform flow
+      let turbX = 0, turbY = 0;
+      if (stepCount % 40 === 0) {
+        turbX = (Math.random() - 0.5) * 3.0;
+        turbY = (Math.random() - 0.5) * 3.0;
+      }
+
       // Apply advection (flow shift via bilinear interpolation)
-      const shifted = sampleBilinear(gridA, fx, fy);
+      const shifted = sampleBilinear(gridA, fx + turbX, fy + turbY);
 
       // Convolution + growth
       for (let y = 0; y < N; y++) {
