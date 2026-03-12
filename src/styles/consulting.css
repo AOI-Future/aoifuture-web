@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+/* Consulting page - Clean professional theme */
+/* Intentionally separate from global.css cyberpunk theme */
+
+@theme {
+  --color-brand: #1a1a2e;
+  --color-brand-light: #16213e;
+  --color-accent: #0f3460;
+  --color-accent-warm: #e94560;
+  --color-surface: #fafafa;
+  --color-surface-alt: #f0f0f3;
+  --color-text: #2d2d3a;
+  --color-text-muted: #6b6b80;
+  --color-text-light: #9999aa;
+  --color-border: #e0e0e8;
+  --font-sans: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+}

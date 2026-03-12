@@ -1,0 +1,593 @@
+---
+import '../styles/consulting.css';
+
+const FORM_URL = '#'; // TODO: GoogleフォームURLに差し替え
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="AIエージェント運用設計の相談 — 野崎秀吾（Shugo）" />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <title>AI運用設計の相談 | Shugo Nozaki</title>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Shugo Nozaki - AI運用設計",
+      "provider": {
+        "@type": "Person",
+        "name": "Shugo Nozaki",
+        "alternateName": "野崎秀吾"
+      },
+      "description": "AIエージェントの運用設計・業務改善コンサルティング",
+      "areaServed": "JP",
+      "availableLanguage": ["ja", "en"]
+    }
+    </script>
+  </head>
+
+  <body class="bg-[var(--color-surface)] text-[var(--color-text)] font-[var(--font-sans)] leading-relaxed antialiased">
+
+    <!-- ======================== HERO ======================== -->
+    <section class="min-h-[90vh] flex flex-col justify-center px-6 md:px-12 lg:px-20 max-w-4xl mx-auto">
+      <div class="mb-8">
+        <span class="inline-block text-xs tracking-widest text-[var(--color-text-light)] uppercase mb-6">
+          Shugo Nozaki
+        </span>
+      </div>
+
+      <h1 class="text-3xl md:text-[2.75rem] md:leading-[1.35] font-bold text-[var(--color-brand)] mb-8">
+        AIエージェントを<br class="hidden md:inline" />「動かしている人間」に、<br />
+        設計を相談してください。
+      </h1>
+
+      <p class="text-base md:text-lg text-[var(--color-text-muted)] max-w-2xl leading-loose mb-12">
+        ChatGPTを導入した。Copilotも試した。社内研修もやった。<br />
+        でも半年後、使っているのは最初から興味があった一人だけ。<br /><br />
+        「AIを入れる」ことはできた。<br />
+        でも「AIが業務に溶け込む」ことは、まだできていない。<br /><br />
+        それはツールの問題ではない。<span class="text-[var(--color-brand)] font-medium">設計の問題だ。</span>
+      </p>
+
+      <a
+        href={FORM_URL}
+        class="inline-flex items-center gap-2 bg-[var(--color-brand)] text-white
+               px-8 py-4 text-sm font-medium tracking-wide
+               hover:bg-[var(--color-brand-light)] transition-colors duration-300
+               w-fit"
+      >
+        無料相談を申し込む
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+    </section>
+
+
+    <!-- ======================== DIVIDER ======================== -->
+    <div class="max-w-4xl mx-auto px-6 md:px-12 lg:px-20">
+      <hr class="border-[var(--color-border)]" />
+    </div>
+
+
+    <!-- ======================== DIFFERENCE ======================== -->
+    <section class="px-6 md:px-12 lg:px-20 max-w-4xl mx-auto py-24 md:py-32">
+      <h2 class="text-2xl md:text-3xl font-bold text-[var(--color-brand)] mb-10">
+        「使えるAI」と「動くAI」は違う
+      </h2>
+
+      <div class="space-y-6 text-[var(--color-text-muted)] leading-loose">
+        <p>
+          ChatGPTは使える。すごい。<br />
+          でも、あれは「呼びかけたら答えてくれるAI」だ。
+        </p>
+        <p>
+          私がやっているのは、<span class="text-[var(--color-text)] font-medium">呼びかけなくても動くAI</span>を設計することだ。
+        </p>
+        <p>
+          毎朝、私が起きる前に、AIが論文を読んでいる。<br />
+          私が出社する前に、AIがニュースをまとめている。<br />
+          私が指示を出す前に、AIが昨日の失敗を記録して、今日の動き方を更新している。
+        </p>
+        <p>
+          これは自動化ではない。<span class="text-[var(--color-text)] font-medium">チームマネジメント</span>だ。
+        </p>
+      </div>
+
+      <!-- Stats -->
+      <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="border-l-2 border-[var(--color-accent)] pl-6">
+          <div class="text-3xl font-bold text-[var(--color-brand)] mb-2">15体</div>
+          <div class="text-sm text-[var(--color-text-muted)]">並列稼働中のAIエージェント</div>
+        </div>
+        <div class="border-l-2 border-[var(--color-accent)] pl-6">
+          <div class="text-3xl font-bold text-[var(--color-brand)] mb-2">25+</div>
+          <div class="text-sm text-[var(--color-text-muted)]">VPS上のDockerコンテナ</div>
+        </div>
+        <div class="border-l-2 border-[var(--color-accent)] pl-6">
+          <div class="text-3xl font-bold text-[var(--color-brand)] mb-2">20年+</div>
+          <div class="text-sm text-[var(--color-text-muted)]">技術ブログの執筆経験</div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================== DIVIDER ======================== -->
+    <div class="max-w-4xl mx-auto px-6 md:px-12 lg:px-20">
+      <hr class="border-[var(--color-border)]" />
+    </div>
+
+
+    <!-- ======================== ABOUT ======================== -->
+    <section class="px-6 md:px-12 lg:px-20 max-w-4xl mx-auto py-24 md:py-32">
+      <span class="text-xs tracking-widest text-[var(--color-text-light)] uppercase mb-6 block">
+        About
+      </span>
+
+      <h2 class="text-2xl md:text-3xl font-bold text-[var(--color-brand)] mb-10">
+        私はこんな人間です
+      </h2>
+
+      <div class="space-y-6 text-[var(--color-text-muted)] leading-loose">
+        <p>
+          野崎秀吾（Shugo）。
+        </p>
+        <p>
+          チームマネジメントとプロダクト設計を本業に、AIエージェントの運用設計を個人プロジェクトで続けている。20年以上、技術ブログを書いてきた。AIが登場する前から、「人間がどう仕事をするか」を考え続けてきた。
+        </p>
+        <p>
+          だから気づいた。
+        </p>
+
+        <blockquote class="border-l-2 border-[var(--color-accent-warm)] pl-6 py-2 my-8">
+          <p class="text-[var(--color-text)] font-medium leading-loose">
+            AIエージェントに指示を出すことと、<br />
+            人間のチームに仕事を渡すことは、構造が同じだ。
+          </p>
+        </blockquote>
+
+        <p>
+          指示が曖昧だと、AIも人間も迷う。<br />
+          完了の定義がないと、AIも人間も「やった」で終わる。<br />
+          視点を渡さないと、AIも人間も「言われたこと」しかやらない。
+        </p>
+        <p>
+          チームマネジメントの経験が、AIエージェント設計に直結した。<br />
+          AIエージェント設計の経験が、チームマネジメントをさらに鋭くした。
+        </p>
+        <p class="text-[var(--color-text)] font-medium">
+          この両方を持っている人間に、相談できる場所を作った。
+        </p>
+      </div>
+    </section>
+
+
+    <!-- ======================== PROBLEMS ======================== -->
+    <section class="bg-[var(--color-surface-alt)] py-24 md:py-32">
+      <div class="px-6 md:px-12 lg:px-20 max-w-4xl mx-auto">
+        <span class="text-xs tracking-widest text-[var(--color-text-light)] uppercase mb-6 block">
+          Use Cases
+        </span>
+
+        <h2 class="text-2xl md:text-3xl font-bold text-[var(--color-brand)] mb-12">
+          こんな悩みに対応します
+        </h2>
+
+        <div class="space-y-10">
+          <div>
+            <h3 class="text-base font-medium text-[var(--color-brand)] mb-3">
+              AIを導入したいが、何から始めればいいかわからない
+            </h3>
+            <p class="text-sm text-[var(--color-text-muted)] leading-relaxed pl-0 md:pl-4">
+              業務の棚卸しから一緒にやります。「これはAIに任せられる」「これは人間がやる」の境界線を引くところから。
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-base font-medium text-[var(--color-brand)] mb-3">
+              AIツールを入れてみたが、使われなくなった
+            </h3>
+            <p class="text-sm text-[var(--color-text-muted)] leading-relaxed pl-0 md:pl-4">
+              定着しない理由を診断します。ツールの問題か、設計の問題か、運用の問題か。
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-base font-medium text-[var(--color-brand)] mb-3">
+              繰り返しの作業を自動化したいが、外注すると高い
+            </h3>
+            <p class="text-sm text-[var(--color-text-muted)] leading-relaxed pl-0 md:pl-4">
+              自社で動かせる最小構成を設計します。月数万円のAPI費用で回る仕組みを、自分たちで持てる形で。
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-base font-medium text-[var(--color-brand)] mb-3">
+              AIエージェントを作ったが、思い通りに動かない
+            </h3>
+            <p class="text-sm text-[var(--color-text-muted)] leading-relaxed pl-0 md:pl-4">
+              プロンプト設計・記憶の設計・タスクの渡し方を一緒に見直します。
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-base font-medium text-[var(--color-brand)] mb-3">
+              AIに何をどう任せるべきか、判断基準がない
+            </h3>
+            <p class="text-sm text-[var(--color-text-muted)] leading-relaxed pl-0 md:pl-4">
+              「任せてはいけない仕事」と「任せた方がいい仕事」の判断軸を一緒に作ります。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================== PRICING ======================== -->
+    <section class="px-6 md:px-12 lg:px-20 max-w-4xl mx-auto py-24 md:py-32">
+      <span class="text-xs tracking-widest text-[var(--color-text-light)] uppercase mb-6 block">
+        Services
+      </span>
+
+      <h2 class="text-2xl md:text-3xl font-bold text-[var(--color-brand)] mb-12">
+        サービス内容
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Spot -->
+        <div class="border border-[var(--color-border)] p-8 flex flex-col">
+          <h3 class="text-sm font-medium text-[var(--color-text-light)] uppercase tracking-wider mb-4">
+            Spot
+          </h3>
+          <div class="text-2xl font-bold text-[var(--color-brand)] mb-1">
+            ¥30,000
+          </div>
+          <div class="text-xs text-[var(--color-text-muted)] mb-6">1回 / 60分</div>
+
+          <p class="text-sm text-[var(--color-text-muted)] leading-relaxed mb-8 flex-1">
+            「今すぐこの問題を解決したい」<br />
+            「方向性だけ確認したい」という方向け。
+          </p>
+
+          <ul class="text-sm text-[var(--color-text-muted)] space-y-2">
+            <li class="flex items-start gap-2">
+              <span class="text-[var(--color-accent)] mt-0.5 shrink-0">&mdash;</span>
+              業務課題のヒアリング
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-[var(--color-accent)] mt-0.5 shrink-0">&mdash;</span>
+              AI活用の切り分け
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-[var(--color-accent)] mt-0.5 shrink-0">&mdash;</span>
+              次のアクション提案
+            </li>
+          </ul>
+        </div>
+
+        <!-- Monthly -->
+        <div class="border-2 border-[var(--color-brand)] p-8 flex flex-col relative">
+          <div class="absolute -top-3 left-6 bg-[var(--color-brand)] text-white text-[10px] tracking-wider uppercase px-3 py-1">
+            Recommended
+          </div>
+
+          <h3 class="text-sm font-medium text-[var(--color-text-light)] uppercase tracking-wider mb-4">
+            Monthly
+          </h3>
+          <div class="text-2xl font-bold text-[var(--color-brand)] mb-1">
+            ¥50,000〜
+          </div>
+          <div class="text-xs text-[var(--color-text-muted)] mb-6">月額 / セッション2回</div>
+
+          <p class="text-sm text-[var(--color-text-muted)] leading-relaxed mb-8 flex-1">
+            「継続的に伴走してほしい」<br />
+            「設計から運用まで一緒に」という方向け。
+          </p>
+
+          <ul class="text-sm text-[var(--color-text-muted)] space-y-2">
+            <li class="flex items-start gap-2">
+              <span class="text-[var(--color-accent)] mt-0.5 shrink-0">&mdash;</span>
+              月2回のセッション（各60分）
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-[var(--color-accent)] mt-0.5 shrink-0">&mdash;</span>
+              Slackでの非同期相談
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-[var(--color-accent)] mt-0.5 shrink-0">&mdash;</span>
+              設計レビュー・導入判断
+            </li>
+          </ul>
+        </div>
+
+        <!-- Custom -->
+        <div class="border border-[var(--color-border)] p-8 flex flex-col">
+          <h3 class="text-sm font-medium text-[var(--color-text-light)] uppercase tracking-wider mb-4">
+            Custom
+          </h3>
+          <div class="text-2xl font-bold text-[var(--color-brand)] mb-1">
+            個別見積もり
+          </div>
+          <div class="text-xs text-[var(--color-text-muted)] mb-6">要件に応じて</div>
+
+          <p class="text-sm text-[var(--color-text-muted)] leading-relaxed mb-8 flex-1">
+            「具体的に動くものを作りたい」<br />
+            「特定の業務を自動化したい」という方向け。
+          </p>
+
+          <ul class="text-sm text-[var(--color-text-muted)] space-y-2">
+            <li class="flex items-start gap-2">
+              <span class="text-[var(--color-accent)] mt-0.5 shrink-0">&mdash;</span>
+              要件定義
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-[var(--color-accent)] mt-0.5 shrink-0">&mdash;</span>
+              実装・運用設計
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-[var(--color-accent)] mt-0.5 shrink-0">&mdash;</span>
+              エージェント構築
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================== DIVIDER ======================== -->
+    <div class="max-w-4xl mx-auto px-6 md:px-12 lg:px-20">
+      <hr class="border-[var(--color-border)]" />
+    </div>
+
+
+    <!-- ======================== FIT / NOT FIT ======================== -->
+    <section class="px-6 md:px-12 lg:px-20 max-w-4xl mx-auto py-24 md:py-32">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
+        <div>
+          <h3 class="text-lg font-bold text-[var(--color-brand)] mb-6">向いている方</h3>
+          <ul class="space-y-4 text-sm text-[var(--color-text-muted)] leading-relaxed">
+            <li class="flex items-start gap-3">
+              <span class="text-[var(--color-accent)] shrink-0 mt-0.5">&#10003;</span>
+              現場のマネージャーで、自分のチームにAIを使いたい方
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-[var(--color-accent)] shrink-0 mt-0.5">&#10003;</span>
+              小規模事業者・個人事業主で、一人でできる範囲を広げたい方
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-[var(--color-accent)] shrink-0 mt-0.5">&#10003;</span>
+              AIエージェントを作ってみたが、うまく動かない方
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-[var(--color-accent)] shrink-0 mt-0.5">&#10003;</span>
+              「AIに何を任せていいか」の判断軸がほしい方
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-bold text-[var(--color-text-muted)] mb-6">向いていない方</h3>
+          <ul class="space-y-4 text-sm text-[var(--color-text-light)] leading-relaxed">
+            <li class="flex items-start gap-3">
+              <span class="shrink-0 mt-0.5">&times;</span>
+              AIツールの操作方法を教えてほしい方
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="shrink-0 mt-0.5">&times;</span>
+              システム開発の外注先を探している方
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="shrink-0 mt-0.5">&times;</span>
+              「AIで一発逆転したい」という方
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================== CTA ======================== -->
+    <section class="bg-[var(--color-brand)] py-24 md:py-32">
+      <div class="px-6 md:px-12 lg:px-20 max-w-4xl mx-auto text-center">
+        <h2 class="text-2xl md:text-3xl font-bold text-white mb-8">
+          まず、話しましょう
+        </h2>
+
+        <div class="max-w-xl mx-auto space-y-6 text-white/70 text-sm leading-loose mb-12">
+          <p>
+            「相談していいレベルかわからない」で大丈夫です。
+          </p>
+          <p>
+            私自身、今でもAIエージェントの設計で失敗しながら進んでいます。<br />
+            うちのAI社員（クロちゃん）は先週も自分のボスの名前を間違えて記事を公開しました。
+          </p>
+          <p class="text-white/90 font-medium">
+            完璧なシステムを売っているわけではない。<br />
+            一緒に考える人間がいることを、売っています。
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          <a
+            href={FORM_URL}
+            class="inline-flex items-center gap-2 bg-white text-[var(--color-brand)]
+                   px-10 py-4 text-sm font-medium tracking-wide
+                   hover:bg-white/90 transition-colors duration-300"
+          >
+            無料相談を申し込む（30分）
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+          <p class="text-white/40 text-xs">
+            最初の30分は無料です。お気軽にどうぞ。
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================== NOTE LINK ======================== -->
+    <section class="px-6 md:px-12 lg:px-20 max-w-4xl mx-auto py-16">
+      <div class="text-center">
+        <p class="text-sm text-[var(--color-text-muted)] mb-4">
+          「AIと働く」という感覚の解像度を上げたい方は
+        </p>
+        <div class="space-y-2">
+          <a
+            href="https://zenn.dev/aoikuro"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block text-sm text-[var(--color-accent)] hover:text-[var(--color-brand)] transition-colors duration-300 underline underline-offset-4"
+          >
+            クロちゃん（AI社員）のZenn →
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================== FOOTER / LEGAL ======================== -->
+    <footer class="border-t border-[var(--color-border)] bg-[var(--color-surface)]">
+      <div class="px-6 md:px-12 lg:px-20 max-w-4xl mx-auto py-16">
+
+        <!-- Legal accordion -->
+        <details class="group mb-8">
+          <summary class="text-xs text-[var(--color-text-light)] uppercase tracking-wider cursor-pointer hover:text-[var(--color-text-muted)] transition-colors select-none flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 transition-transform group-open:rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+            免責事項・特定商取引法に基づく表記
+          </summary>
+
+          <div class="mt-8 space-y-8 text-xs text-[var(--color-text-light)] leading-relaxed">
+
+            <!-- 免責 -->
+            <div>
+              <h4 class="font-medium text-[var(--color-text-muted)] mb-3">免責事項</h4>
+              <p class="mb-2">
+                本サービスは、野崎秀吾が個人として提供するものです。いかなる企業・団体とも関係ありません。
+              </p>
+              <p class="mb-2">
+                本サービスは、業務改善・AI活用に関する相談および情報提供を行うものです。特定の成果（売上向上・コスト削減・業務時間の短縮等）を保証するものではありません。セッションで提案した内容の実施および結果については、ご自身の判断と責任のもとで行ってください。
+              </p>
+              <p class="mb-2">
+                提供する情報・アドバイスは、提供時点での知識・経験に基づくものです。AI技術・関連ツールの仕様は頻繁に変更されるため、情報の正確性・完全性・最新性を保証しません。法務・税務・労務・投資に関するアドバイスは行いません。
+              </p>
+              <p class="mb-2">
+                本サービスの利用によって生じた損害（直接・間接を問わず）について、提供者は責任を負いません。ただし、提供者の故意または重大な過失による場合はこの限りではありません。
+              </p>
+              <p>
+                セッション中にご共有いただいた業務情報・個人情報は、サービス提供の目的以外には使用しません。第三者への開示は行いません（法令により開示が義務付けられる場合を除く）。
+              </p>
+            </div>
+
+            <!-- 特商法 -->
+            <div>
+              <h4 class="font-medium text-[var(--color-text-muted)] mb-3">特定商取引法に基づく表記</h4>
+              <div class="space-y-1.5">
+                <div class="flex flex-col sm:flex-row sm:gap-4">
+                  <span class="text-[var(--color-text-muted)] sm:w-36 shrink-0">販売者</span>
+                  <span>野崎秀吾</span>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:gap-4">
+                  <span class="text-[var(--color-text-muted)] sm:w-36 shrink-0">所在地</span>
+                  <span>お申し込み後に開示します</span>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:gap-4">
+                  <span class="text-[var(--color-text-muted)] sm:w-36 shrink-0">連絡先</span>
+                  <span>お申し込みフォームよりご連絡ください</span>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:gap-4">
+                  <span class="text-[var(--color-text-muted)] sm:w-36 shrink-0">サービス内容</span>
+                  <span>AIエージェント活用に関するオンライン相談・伴走サービス</span>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:gap-4">
+                  <span class="text-[var(--color-text-muted)] sm:w-36 shrink-0">料金</span>
+                  <span>各プランの料金に記載（税別）</span>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:gap-4">
+                  <span class="text-[var(--color-text-muted)] sm:w-36 shrink-0">支払方法</span>
+                  <span>銀行振込 / クレジットカード</span>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:gap-4">
+                  <span class="text-[var(--color-text-muted)] sm:w-36 shrink-0">支払時期</span>
+                  <span>請求書発行後、翌月末までにお支払い</span>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:gap-4">
+                  <span class="text-[var(--color-text-muted)] sm:w-36 shrink-0">提供時期</span>
+                  <span>お申し込み・入金確認後、日程調整の上で開始</span>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:gap-4">
+                  <span class="text-[var(--color-text-muted)] sm:w-36 shrink-0">キャンセル</span>
+                  <span>開始48時間前まで全額返金。それ以降は返金不可。月額プランは当月分返金不可、翌月以降の解約は月末までに申し出</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 利用規約 -->
+            <div>
+              <h4 class="font-medium text-[var(--color-text-muted)] mb-3">利用規約（主要事項）</h4>
+              <p class="mb-2">
+                <span class="text-[var(--color-text-muted)]">禁止事項：</span>競合サービスの調査目的での利用、セッション内容の無断録音・録画・第三者への開示、違法行為または公序良俗に反する業務への活用。
+              </p>
+              <p class="mb-2">
+                <span class="text-[var(--color-text-muted)]">知的財産：</span>セッション中に提供するフレームワーク・テンプレート・資料の著作権は提供者に帰属します。ご自身の業務への活用は自由ですが、第三者への販売・配布はご遠慮ください。
+              </p>
+              <p>
+                本規約は予告なく変更する場合があります。
+              </p>
+            </div>
+
+          </div>
+        </details>
+
+        <!-- Copyright -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-xs text-[var(--color-text-light)]">
+          <div>
+            &copy; 2026 Shugo Nozaki
+          </div>
+          <div>
+            最終更新：2026年3月
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </body>
+</html>
+
+<style>
+  /* Smooth scroll for anchor links */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Override any inherited cyberpunk styles */
+  body::before {
+    display: none !important;
+  }
+
+  /* Clean selection color */
+  ::selection {
+    background: var(--color-accent);
+    color: white;
+  }
+
+  /* Details/summary reset */
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+  details summary::marker {
+    display: none;
+    content: '';
+  }
+</style>
