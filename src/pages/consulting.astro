@@ -1,5 +1,6 @@
 ---
 import '../styles/consulting.css';
+import Analytics from '@vercel/analytics/astro';
 
 const FORM_URL = '#'; // TODO: GoogleフォームURLに差し替え
 ---
@@ -562,6 +563,7 @@ const FORM_URL = '#'; // TODO: GoogleフォームURLに差し替え
       </div>
     </footer>
 
+    <Analytics />
   </body>
 </html>
 

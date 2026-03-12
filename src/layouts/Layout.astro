@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import PageTransition from '../components/PageTransition';
+import Analytics from '@vercel/analytics/astro';
 
 interface Props {
   title: string;
@@ -70,5 +71,6 @@ const { title } = Astro.props;
     <PageTransition client:load />
 
     <slot />
+    <Analytics />
   </body>
 </html>
