@@ -1,8 +1,6 @@
 ---
 import '../styles/consulting.css';
 import Analytics from '@vercel/analytics/astro';
-
-const FORM_URL = '#'; // TODO: GoogleフォームURLに差し替え
 ---
 
 <!doctype html>
@@ -17,6 +15,15 @@ const FORM_URL = '#'; // TODO: GoogleフォームURLに差し替え
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <title>AI運用設計の相談 | Shugo Nozaki</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-44419Y68H7"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag("js", new Date());
+      gtag("config", "G-44419Y68H7");
+    </script>
 
     <script type="application/ld+json">
     {
@@ -59,7 +66,7 @@ const FORM_URL = '#'; // TODO: GoogleフォームURLに差し替え
       </p>
 
       <a
-        href={FORM_URL}
+        href="#consulting-chat"
         class="inline-flex items-center gap-2 bg-[var(--color-brand)] text-white
                px-8 py-4 text-sm font-medium tracking-wide
                hover:bg-[var(--color-brand-light)] transition-colors duration-300
@@ -416,21 +423,48 @@ const FORM_URL = '#'; // TODO: GoogleフォームURLに差し替え
           </p>
         </div>
 
-        <div class="space-y-4">
-          <a
-            href={FORM_URL}
-            class="inline-flex items-center gap-2 bg-white text-[var(--color-brand)]
-                   px-10 py-4 text-sm font-medium tracking-wide
-                   hover:bg-white/90 transition-colors duration-300"
-          >
-            無料相談を申し込む（30分）
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
-          <p class="text-white/40 text-xs">
-            最初の30分は無料です。お気軽にどうぞ。
-          </p>
+        <div id="consulting-chat" class="mx-auto max-w-2xl rounded-sm border border-white/20 bg-white/8 p-6 text-left backdrop-blur-sm">
+          <div class="mb-5">
+            <p class="text-xs uppercase tracking-[0.24em] text-white/50">Quick Contact</p>
+            <h3 class="mt-2 text-xl font-bold text-white">無料相談を申し込む（30分）</h3>
+            <p class="mt-3 text-sm leading-loose text-white/70">
+              相談したい内容をそのまま送ってください。受け取り後、折り返し連絡します。
+            </p>
+          </div>
+
+          <form id="consulting-chat-form" class="space-y-4">
+            <label class="block">
+              <span class="mb-2 block text-sm font-medium text-white">相談内容</span>
+              <textarea
+                id="consulting-chat-message"
+                name="message"
+                rows="6"
+                required
+                minlength="5"
+                placeholder="例: 生成AIの導入は進めたものの、現場で定着しません。どこから見直すべきか相談したいです。"
+                class="w-full rounded-sm border border-white/20 bg-white px-4 py-3 text-sm leading-relaxed text-[var(--color-text)] placeholder:text-[var(--color-text-light)] outline-none transition focus:border-white/60"
+              ></textarea>
+            </label>
+
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <button
+                id="consulting-chat-submit"
+                type="submit"
+                class="inline-flex items-center justify-center gap-2 bg-white px-10 py-4 text-sm font-medium tracking-wide text-[var(--color-brand)] transition-colors duration-300 hover:bg-white/90 disabled:cursor-not-allowed disabled:bg-white/60"
+              >
+                <span data-submit-label>送信する</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </button>
+
+              <p class="text-xs text-white/40">
+                最初の30分は無料です。お気軽にどうぞ。
+              </p>
+            </div>
+
+            <p id="consulting-chat-status" class="min-h-6 text-sm leading-relaxed text-white/70" role="status" aria-live="polite"></p>
+          </form>
         </div>
       </div>
     </section>
@@ -562,6 +596,81 @@ const FORM_URL = '#'; // TODO: GoogleフォームURLに差し替え
         </div>
       </div>
     </footer>
+
+    <script is:inline>
+      const form = document.querySelector('#consulting-chat-form');
+
+      if (form instanceof HTMLFormElement) {
+        const textarea = form.querySelector('#consulting-chat-message');
+        const submitButton = form.querySelector('#consulting-chat-submit');
+        const submitLabel = form.querySelector('[data-submit-label]');
+        const status = form.querySelector('#consulting-chat-status');
+
+        const setStatus = (message, tone = 'default') => {
+          if (!(status instanceof HTMLElement)) return;
+          status.textContent = message;
+          status.classList.remove('text-white/70', 'text-emerald-200', 'text-red-200');
+
+          if (tone === 'success') {
+            status.classList.add('text-emerald-200');
+            return;
+          }
+
+          if (tone === 'error') {
+            status.classList.add('text-red-200');
+            return;
+          }
+
+          status.classList.add('text-white/70');
+        };
+
+        form.addEventListener('submit', async (event) => {
+          event.preventDefault();
+
+          if (!(textarea instanceof HTMLTextAreaElement) || !(submitButton instanceof HTMLButtonElement) || !(submitLabel instanceof HTMLElement)) {
+            return;
+          }
+
+          const message = textarea.value.trim();
+
+          if (!message) {
+            setStatus('相談内容を入力してください。', 'error');
+            textarea.focus();
+            return;
+          }
+
+          submitButton.disabled = true;
+          submitLabel.textContent = '送信中...';
+          setStatus('送信しています...');
+
+          try {
+            const response = await fetch('/api/v1/messages', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                to: 'channel:1479016713445048391',
+                message,
+              }),
+            });
+
+            if (!response.ok) {
+              throw new Error(`Request failed: ${response.status}`);
+            }
+
+            textarea.value = '';
+            setStatus('送信しました。内容を確認し、折り返し連絡します。', 'success');
+          } catch (error) {
+            console.error(error);
+            setStatus('送信に失敗しました。時間をおいて再度お試しください。', 'error');
+          } finally {
+            submitButton.disabled = false;
+            submitLabel.textContent = '送信する';
+          }
+        });
+      }
+    </script>
 
     <Analytics />
   </body>
