@@ -1,5 +1,7 @@
 import type { APIRoute } from 'astro';
 
+export const prerender = false;
+
 const DEFAULT_BRIDGE_URL = 'https://www.aoifuture.com/api/v1/messages-bridge';
 const WEBCHAT_SHARED_SECRET = import.meta.env.WEBCHAT_SHARED_SECRET || '';
 
