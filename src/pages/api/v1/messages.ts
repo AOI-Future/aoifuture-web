@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 
-const DEFAULT_BRIDGE_URL = 'https://aoifuture.com/api/v1/messages-bridge';
+const DEFAULT_BRIDGE_URL = 'https://www.aoifuture.com/api/v1/messages-bridge';
+const WEBCHAT_SHARED_SECRET = import.meta.env.WEBCHAT_SHARED_SECRET || '';
 
 const json = (body: Record<string, string>, status: number) =>
   new Response(JSON.stringify(body), {
@@ -34,11 +35,17 @@ export const POST: APIRoute = async ({ request }) => {
 
   const bridgeUrl = import.meta.env.WEBCHAT_BRIDGE_URL || DEFAULT_BRIDGE_URL;
 
+  if (!WEBCHAT_SHARED_SECRET) {
+    return json({ error: 'Server configuration is incomplete.' }, 500);
+  }
+
   try {
     const upstreamResponse = await fetch(bridgeUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'X-Webchat-Secret': WEBCHAT_SHARED_SECRET,
+        Origin: 'https://www.aoifuture.com',
       },
       body: JSON.stringify({
         to: to.trim(),
