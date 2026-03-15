@@ -665,6 +665,8 @@ const AGENT_CHAT_ENDPOINT = 'https://factory-p1.aoifuture.com/api/v1/messages';
 
     <script is:inline>
       const form = document.querySelector('#consulting-chat-form');
+      const consultingChatEndpoint = 'https://factory-p1.aoifuture.com/api/v1/messages';
+      const consultingChatTarget = 'public-webchat-intake';
 
       if (form instanceof HTMLFormElement) {
         const textarea = form.querySelector('#consulting-chat-message');
@@ -710,26 +712,29 @@ const AGENT_CHAT_ENDPOINT = 'https://factory-p1.aoifuture.com/api/v1/messages';
           setStatus('送信しています...');
 
           try {
-            const response = await fetch('/api/v1/messages', {
+            const response = await fetch(consultingChatEndpoint, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
-                to: 'channel:1479016713445048391',
+                to: consultingChatTarget,
                 message,
               }),
             });
 
+            const payload = await response.json().catch(() => null);
+
             if (!response.ok) {
-              throw new Error(`Request failed: ${response.status}`);
+              const errorMessage = payload?.message ?? payload?.error ?? `Request failed: ${response.status}`;
+              throw new Error(errorMessage);
             }
 
             textarea.value = '';
-            setStatus('送信しました。内容を確認し、折り返し連絡します。', 'success');
+            setStatus(payload?.output_text ?? '受け取りました。AIエージェントからの返答を表示しています。', 'success');
           } catch (error) {
             console.error(error);
-            setStatus('送信に失敗しました。時間をおいて再度お試しください。', 'error');
+            setStatus(error instanceof Error ? error.message : '送信に失敗しました。時間をおいて再度お試しください。', 'error');
           } finally {
             submitButton.disabled = false;
             submitLabel.textContent = '送信する';
