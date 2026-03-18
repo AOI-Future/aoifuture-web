@@ -525,10 +525,10 @@ const AGENT_CHAT_ENDPOINT = 'https://factory-p1.aoifuture.com/api/v1/webchat';
           <div class="flex items-end gap-2">
             <textarea
               id="agent-chat-input"
-              class="flex-1 min-h-[2.5rem] max-h-24 border border-[var(--color-border)] bg-transparent px-3 py-2 text-sm leading-relaxed outline-none focus:border-[var(--color-accent)] transition-colors resize-none"
+              class="flex-1 min-h-[3.5rem] max-h-32 border border-[var(--color-border)] bg-transparent px-3 py-2 text-sm leading-relaxed outline-none focus:border-[var(--color-accent)] transition-colors resize-none"
               placeholder="メッセージを入力..."
               maxlength={AGENT_CHAT_MAX_LENGTH}
-              rows="1"
+              rows="2"
               style="border-radius: 20px;"
             ></textarea>
             <button
@@ -851,13 +851,7 @@ const AGENT_CHAT_ENDPOINT = 'https://factory-p1.aoifuture.com/api/v1/webchat';
         input.style.height = Math.min(input.scrollHeight, 96) + 'px';
       });
 
-      // Enter to send (Shift+Enter for newline)
-      input?.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' && !event.shiftKey) {
-          event.preventDefault();
-          submit?.click();
-        }
-      });
+      // Enter is for newline (default textarea behavior)
 
       let firstMessage = true;
 
