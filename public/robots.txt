@@ -1,29 +1,53 @@
 # AOI Future - AI-Collaborative Music Label
-# We welcome AI crawlers
+# We welcome AI crawlers on most pages
 
 User-agent: *
 Allow: /
+Disallow: /consulting
 
-# AI Search Crawlers - Explicitly Welcome
+# AI Search Crawlers - Welcome on main site, blocked on /consulting
 User-agent: GPTBot
 Allow: /
+Disallow: /consulting
 
 User-agent: ChatGPT-User
 Allow: /
+Disallow: /consulting
 
 User-agent: Claude-Web
 Allow: /
+Disallow: /consulting
 
 User-agent: ClaudeBot
 Allow: /
+Disallow: /consulting
 
 User-agent: PerplexityBot
 Allow: /
+Disallow: /consulting
 
 User-agent: Applebot
 Allow: /
+Disallow: /consulting
 
 User-agent: GoogleOther
 Allow: /
+Disallow: /consulting
+
+# Common AI training crawlers - block consulting
+User-agent: CCBot
+Disallow: /consulting
+
+User-agent: Google-Extended
+Disallow: /consulting
+
+User-agent: FacebookBot
+Disallow: /consulting
+
+User-agent: Bytespider
+Disallow: /consulting
+
+User-agent: cohere-ai
+Disallow: /consulting
 
 Sitemap: https://aoifuture.com/sitemap.xml
