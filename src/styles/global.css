@@ -126,3 +126,32 @@ body::before {
   background: var(--color-cyber-primary);
   color: var(--color-cyber-bg);
 }
+
+/* Sound Umwelt Domain Colors */
+.glow-voice {
+  text-shadow: 0 0 5px rgba(255, 77, 106, 0.5), 0 0 10px rgba(255, 77, 106, 0.3);
+}
+.glow-piano {
+  text-shadow: 0 0 5px rgba(255, 176, 48, 0.5), 0 0 10px rgba(255, 176, 48, 0.3);
+}
+.glow-room {
+  text-shadow: 0 0 5px rgba(77, 127, 255, 0.5), 0 0 10px rgba(77, 127, 255, 0.3);
+}
+.glow-env {
+  text-shadow: 0 0 5px rgba(64, 255, 128, 0.5), 0 0 10px rgba(64, 255, 128, 0.3);
+}
+
+.border-voice { border-color: rgba(255, 77, 106, 0.5); }
+.border-piano { border-color: rgba(255, 176, 48, 0.5); }
+.border-room { border-color: rgba(77, 127, 255, 0.5); }
+.border-env { border-color: rgba(64, 255, 128, 0.5); }
+
+.bg-voice { background-color: rgba(255, 77, 106, 0.1); }
+.bg-piano { background-color: rgba(255, 176, 48, 0.1); }
+.bg-room { background-color: rgba(77, 127, 255, 0.1); }
+.bg-env { background-color: rgba(64, 255, 128, 0.1); }
+
+.text-voice { color: #ff4d6a; }
+.text-piano { color: #ffb030; }
+.text-room { color: #4d7fff; }
+.text-env { color: #40ff80; }

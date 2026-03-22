@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SoundUmwelt from '../components/sound-umwelt/SoundUmwelt';
+---
+
+<Layout title="Sound Umwelt — 音を調える、4つの世界 | AOIFUTURE">
+  <Fragment slot="head">
+    <meta name="description" content="調音・整音の4つの意味を体験するインタラクティブ音響シミュレーター。音声学、ピアノ、建築音響、福祉の世界を横断し、すべてがUmwelt（環世界）の設計であることを体感する。" />
+    <meta property="og:title" content="Sound Umwelt — 音を調える、4つの世界" />
+    <meta property="og:description" content="4領域の「音の調整」を体験するインタラクティブWebアプリ" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </Fragment>
+  <SoundUmwelt client:load />
+</Layout>

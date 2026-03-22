@@ -173,8 +173,35 @@ export default function HUDOverlay() {
               ))}
             </div>
 
-            {/* About & Legal Links */}
+            {/* Projects */}
             <div className="mt-6 pt-4 border-t border-cyan-400/20 space-y-3">
+              <a
+                href="/sound-umwelt"
+                className="block p-4 border border-cyan-400/20
+                           hover:border-cyan-400/60 hover:bg-cyan-400/5
+                           transition-all duration-300 group"
+              >
+                <div className="flex items-center gap-3">
+                  <svg viewBox="0 0 16 16" className="w-8 h-8 text-cyan-400" style={{ imageRendering: 'pixelated' }}>
+                    <rect x="2" y="7" width="2" height="6" fill="currentColor" />
+                    <rect x="5" y="4" width="2" height="9" fill="currentColor" />
+                    <rect x="8" y="2" width="2" height="12" fill="currentColor" />
+                    <rect x="11" y="5" width="2" height="8" fill="currentColor" />
+                  </svg>
+                  <div>
+                    <div className="text-cyan-400 font-mono text-sm
+                                    group-hover:glow transition-all">
+                      Sound Umwelt
+                    </div>
+                    <div className="text-cyan-400/40 font-mono text-[10px] mt-0.5">
+                      INTERACTIVE ACOUSTIC SIMULATOR
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+            {/* About & Legal Links */}
+            <div className="space-y-3">
               <a
                 href="/about"
                 className="block p-4 border border-cyan-400/20
@@ -200,6 +227,8 @@ export default function HUDOverlay() {
                   {'>'} LEGAL NOTICE
                 </div>
               </a>
+            </div>
+
             </div>
 
             {/* Footer */}

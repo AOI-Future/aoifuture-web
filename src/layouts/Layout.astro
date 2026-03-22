@@ -23,6 +23,7 @@ const { title } = Astro.props;
     <meta name="human-contribution" content="substantial" />
     <link rel="canonical" href="https://aoifuture.com" />
     <title>{title}</title>
+    <slot name="head" />
 
     <!-- Google tag (gtag.js) - loaded only after consent -->
     <script is:inline>
