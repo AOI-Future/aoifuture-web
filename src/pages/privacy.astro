@@ -1,0 +1,329 @@
+---
+import Layout from '../layouts/Layout.astro';
+import LifeGame from '../components/LifeGame';
+
+const lastUpdated = '2026-03-22';
+---
+
+<Layout title="Privacy Policy | Aoifuture">
+  <main class="relative min-h-screen">
+    <LifeGame client:load />
+
+    <a
+      href="/"
+      class="fixed top-4 left-4 md:top-6 md:left-6 z-50
+             px-3 py-2 text-sm
+             border border-cyan-400/50 bg-black/50
+             text-cyan-400 font-mono tracking-widest
+             hover:bg-cyan-400/10 hover:border-cyan-400
+             transition-colors duration-300"
+    >
+      {'<'} BACK
+    </a>
+
+    <div class="relative z-10 min-h-screen flex flex-col items-center px-4 py-20">
+      <div class="text-center mb-8">
+        <div class="inline-block px-4 py-2 border border-cyan-400/50 bg-black/50 mb-4">
+          <span class="text-cyan-400/60 font-mono text-xs">SYSTEM.PRIVACY</span>
+        </div>
+
+        <h1 class="text-3xl md:text-5xl font-mono text-cyan-400 tracking-widest glow">
+          PRIVACY POLICY
+        </h1>
+        <p class="text-xl md:text-2xl font-mono text-cyan-400/60 mt-2">
+          プライバシーポリシー
+        </p>
+        <p class="text-cyan-400/40 font-mono text-xs mt-4">
+          Last updated: {lastUpdated}
+        </p>
+      </div>
+
+      <!-- TOC -->
+      <nav class="glass p-4 md:p-6 max-w-4xl w-full border border-cyan-400/30 mb-8">
+        <h2 class="text-cyan-400 font-mono text-sm mb-4 flex items-center gap-2">
+          <span class="text-cyan-400/40">//</span> INDEX
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 font-mono text-sm">
+          <a href="#controller" class="text-cyan-400/60 hover:text-cyan-400 transition-colors">01. 個人情報取扱事業者</a>
+          <a href="#collection" class="text-cyan-400/60 hover:text-cyan-400 transition-colors">02. 収集する情報</a>
+          <a href="#purpose" class="text-cyan-400/60 hover:text-cyan-400 transition-colors">03. 利用目的</a>
+          <a href="#cookies" class="text-cyan-400/60 hover:text-cyan-400 transition-colors">04. Cookie・アクセス解析</a>
+          <a href="#ai" class="text-cyan-400/60 hover:text-cyan-400 transition-colors">05. AI技術の利用</a>
+          <a href="#third-party" class="text-cyan-400/60 hover:text-cyan-400 transition-colors">06. 第三者提供・外部サービス</a>
+          <a href="#consulting" class="text-cyan-400/60 hover:text-cyan-400 transition-colors">07. コンサルティングサービス</a>
+          <a href="#retention" class="text-cyan-400/60 hover:text-cyan-400 transition-colors">08. データの保管と保存期間</a>
+          <a href="#rights" class="text-cyan-400/60 hover:text-cyan-400 transition-colors">09. お客さまの権利</a>
+          <a href="#international" class="text-cyan-400/60 hover:text-cyan-400 transition-colors">10. 国際的なデータ移転</a>
+          <a href="#children" class="text-cyan-400/60 hover:text-cyan-400 transition-colors">11. 未成年者の利用</a>
+          <a href="#changes" class="text-cyan-400/60 hover:text-cyan-400 transition-colors">12. ポリシーの変更</a>
+          <a href="#contact" class="text-cyan-400/60 hover:text-cyan-400 transition-colors">13. お問い合わせ</a>
+        </div>
+      </nav>
+
+      <!-- Intro -->
+      <div class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-8">
+        <p class="text-cyan-400/80 font-mono text-sm leading-relaxed mb-4">
+          AOI Future（以下「当方」）は、お客さまの個人情報の保護を重要な責務と考えています。本プライバシーポリシーは、当方が運営するウェブサイト（aoifuture.com、nictia.xyz）およびこれに付随するサービスにおける個人情報の取扱いについて定めるものです。
+        </p>
+        <p class="text-cyan-400/60 font-mono text-sm leading-relaxed">
+          AOI Future ("we", "us") takes the protection of your personal information seriously. This Privacy Policy describes how we collect, use, and protect information through our websites (aoifuture.com, nictia.xyz) and associated services.
+        </p>
+      </div>
+
+      <!-- 01. Controller -->
+      <section id="controller" class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-6">
+        <h2 class="text-cyan-400 font-mono text-lg mb-6 flex items-center gap-2">
+          <span class="text-cyan-400/40">01 //</span> 個人情報取扱事業者
+        </h2>
+        <div class="space-y-2 text-cyan-400/70 font-mono text-xs leading-relaxed">
+          <p><span class="text-cyan-400/50">事業者名:</span> AOI Future / 野崎秀吾（個人事業）</p>
+          <p><span class="text-cyan-400/50">所在地:</span> 東京都（詳細はお取引開始時に開示いたします）</p>
+          <p><span class="text-cyan-400/50">お問い合わせ:</span> <a href="mailto:legal@aoifuture.com" class="text-cyan-400 hover:underline">legal@aoifuture.com</a></p>
+        </div>
+      </section>
+
+      <!-- 02. Collection -->
+      <section id="collection" class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-6">
+        <h2 class="text-cyan-400 font-mono text-lg mb-6 flex items-center gap-2">
+          <span class="text-cyan-400/40">02 //</span> 収集する情報
+        </h2>
+        <div class="space-y-6 text-cyan-400/70 font-mono text-xs leading-relaxed">
+          <div>
+            <h3 class="text-cyan-400/80 text-sm mb-2">a. 自動的に収集される情報</h3>
+            <ul class="space-y-1 ml-4">
+              <li>- IPアドレス、ブラウザ種別、OS、参照元URL</li>
+              <li>- ページ閲覧履歴、滞在時間、クリック等の行動データ（Google Analytics / Vercel Analytics経由）</li>
+              <li>- Cookie識別子（_ga、_gid 等）</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-cyan-400/80 text-sm mb-2">b. お客さまが提供する情報</h3>
+            <ul class="space-y-1 ml-4">
+              <li>- チャットウィジェットを通じた相談内容（テキスト）</li>
+              <li>- メールアドレス、お名前（任意でご提供いただいた場合）</li>
+              <li>- コンサルティングセッションでの業務情報</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-cyan-400/80 text-sm mb-2">c. 端末に保存される情報</h3>
+            <ul class="space-y-1 ml-4">
+              <li>- チャットセッションID（localStorage、ブラウザ内のみ保存）</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 03. Purpose -->
+      <section id="purpose" class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-6">
+        <h2 class="text-cyan-400 font-mono text-lg mb-6 flex items-center gap-2">
+          <span class="text-cyan-400/40">03 //</span> 利用目的
+        </h2>
+        <div class="text-cyan-400/70 font-mono text-xs leading-relaxed space-y-1 ml-4">
+          <p>- サービスの提供および改善</p>
+          <p>- お問い合わせへの対応、セッションのご案内</p>
+          <p>- ウェブサイトのアクセス状況の分析</p>
+          <p>- サービスの安全性確保（不正アクセスの検出・防止）</p>
+          <p>- 法令上の義務の履行</p>
+        </div>
+        <p class="text-cyan-400/60 font-mono text-xs leading-relaxed mt-4">
+          上記以外の目的で個人情報を利用する場合は、事前にお客さまの同意を得ます。
+        </p>
+      </section>
+
+      <!-- 04. Cookies -->
+      <section id="cookies" class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-6">
+        <h2 class="text-cyan-400 font-mono text-lg mb-6 flex items-center gap-2">
+          <span class="text-cyan-400/40">04 //</span> COOKIE・アクセス解析
+        </h2>
+        <div class="space-y-6 text-cyan-400/70 font-mono text-xs leading-relaxed">
+          <p>当方のウェブサイトでは、以下のCookieおよび解析ツールを使用しています。</p>
+          <div>
+            <h3 class="text-cyan-400/80 text-sm mb-2">Google Analytics（GA4）</h3>
+            <p>Googleが提供するアクセス解析サービスです。Cookieを使用してウェブサイトの利用状況を分析します。収集されたデータはGoogleのプライバシーポリシーに基づいて管理されます。</p>
+            <p class="mt-1">オプトアウト: <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline">Google Analytics オプトアウトアドオン</a></p>
+          </div>
+          <div>
+            <h3 class="text-cyan-400/80 text-sm mb-2">Vercel Analytics</h3>
+            <p>ホスティングプロバイダーVercelが提供するパフォーマンス分析ツールです。ページ読み込み速度等の技術的な指標を収集します。</p>
+          </div>
+          <div>
+            <h3 class="text-cyan-400/80 text-sm mb-2">localStorage</h3>
+            <p>チャットウィジェットのセッション管理にlocalStorageを使用します。Cookieとは異なり、サーバーには自動送信されません。ブラウザの設定から削除できます。</p>
+          </div>
+          <div>
+            <h3 class="text-cyan-400/80 text-sm mb-2">Cookieの無効化</h3>
+            <p>ブラウザの設定によりCookieを無効にできます。ただし、一部の機能が正常に動作しなくなる場合があります。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 05. AI -->
+      <section id="ai" class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-6">
+        <h2 class="text-cyan-400 font-mono text-lg mb-6 flex items-center gap-2">
+          <span class="text-cyan-400/40">05 //</span> AI技術の利用
+        </h2>
+        <div class="space-y-4 text-cyan-400/70 font-mono text-xs leading-relaxed">
+          <div>
+            <h3 class="text-cyan-400/80 text-sm mb-2">チャットウィジェット</h3>
+            <p>コンサルティングページのチャットウィジェットでは、AIエージェントが事前ヒアリングを行います。お客さまが入力した相談内容はAI（大規模言語モデル）によって処理され、応答が生成されます。</p>
+            <p class="mt-1">入力された内容はAIモデルの学習には使用されません。</p>
+          </div>
+          <div>
+            <h3 class="text-cyan-400/80 text-sm mb-2">音楽制作</h3>
+            <p>NICTIAプロジェクトでは、Suno AI、Udio AI等のAI音楽生成ツールを使用しています。音楽制作においてお客さまの個人情報は使用しません。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 06. Third Party -->
+      <section id="third-party" class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-6">
+        <h2 class="text-cyan-400 font-mono text-lg mb-6 flex items-center gap-2">
+          <span class="text-cyan-400/40">06 //</span> 第三者提供・外部サービス
+        </h2>
+        <div class="space-y-4 text-cyan-400/70 font-mono text-xs leading-relaxed">
+          <p>当方は、お客さまの個人情報を、以下の場合を除き第三者に提供しません。</p>
+          <ul class="space-y-1 ml-4">
+            <li>- お客さまの同意がある場合</li>
+            <li>- 法令に基づく場合</li>
+            <li>- 人の生命、身体または財産の保護のために必要な場合</li>
+          </ul>
+          <div class="mt-4">
+            <h3 class="text-cyan-400/80 text-sm mb-2">利用している外部サービス</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead>
+                  <tr class="border-b border-cyan-400/20">
+                    <th class="py-2 pr-4 text-cyan-400/60">サービス</th>
+                    <th class="py-2 pr-4 text-cyan-400/60">提供者</th>
+                    <th class="py-2 text-cyan-400/60">目的</th>
+                  </tr>
+                </thead>
+                <tbody class="text-cyan-400/70">
+                  <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">Google Analytics</td><td class="pr-4">Google LLC</td><td>アクセス解析</td></tr>
+                  <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">Vercel Analytics</td><td class="pr-4">Vercel Inc.</td><td>パフォーマンス分析</td></tr>
+                  <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">Google Fonts</td><td class="pr-4">Google LLC</td><td>フォント配信</td></tr>
+                  <tr><td class="py-2 pr-4">Vercel</td><td class="pr-4">Vercel Inc.</td><td>ウェブサイトホスティング</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="mt-2">各サービスのプライバシーポリシーについては、各社のウェブサイトをご確認ください。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07. Consulting -->
+      <section id="consulting" class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-6">
+        <h2 class="text-cyan-400 font-mono text-lg mb-6 flex items-center gap-2">
+          <span class="text-cyan-400/40">07 //</span> コンサルティングサービスにおけるデータの取扱い
+        </h2>
+        <div class="space-y-4 text-cyan-400/70 font-mono text-xs leading-relaxed">
+          <div>
+            <h3 class="text-cyan-400/80 text-sm mb-2">チャットでの相談</h3>
+            <p>チャットウィジェットで入力された相談内容は、AIエージェントによる応答生成のために処理されます。相談の確度が高いと判断された場合、担当者への通知のために会話内容の要約が社内ツール（Discord）に送信されることがあります。</p>
+          </div>
+          <div>
+            <h3 class="text-cyan-400/80 text-sm mb-2">セッションでの業務情報</h3>
+            <p>セッション中にご共有いただいた業務情報・企業情報は、サービス提供の目的のみに使用します。第三者への開示は行いません（法令により義務付けられる場合を除く）。</p>
+          </div>
+          <div>
+            <h3 class="text-cyan-400/80 text-sm mb-2">ツール・成果物のデータ管理</h3>
+            <p>当方はツールと運用設計をお渡しする形でサービスを提供します。お客さまの業務データの管理・保管はお客さまの環境で行っていただきます。当方がお客さまのデータをお預かりすることはありません。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 08. Retention -->
+      <section id="retention" class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-6">
+        <h2 class="text-cyan-400 font-mono text-lg mb-6 flex items-center gap-2">
+          <span class="text-cyan-400/40">08 //</span> データの保管と保存期間
+        </h2>
+        <div class="space-y-2 text-cyan-400/70 font-mono text-xs leading-relaxed">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead>
+                <tr class="border-b border-cyan-400/20">
+                  <th class="py-2 pr-4 text-cyan-400/60">データ種別</th>
+                  <th class="py-2 pr-4 text-cyan-400/60">保存期間</th>
+                  <th class="py-2 text-cyan-400/60">保管場所</th>
+                </tr>
+              </thead>
+              <tbody class="text-cyan-400/70">
+                <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">アクセスログ</td><td class="pr-4">14ヶ月（GA4デフォルト）</td><td>Google</td></tr>
+                <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">チャット会話データ</td><td class="pr-4">30日</td><td>当方サーバー</td></tr>
+                <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">エスカレーション通知</td><td class="pr-4">90日</td><td>Discord</td></tr>
+                <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">セッション記録</td><td class="pr-4">契約終了後6ヶ月</td><td>当方管理環境</td></tr>
+                <tr><td class="py-2 pr-4">メールアドレス</td><td class="pr-4">お取引終了後1年</td><td>当方管理環境</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="mt-2">保存期間経過後、個人情報は速やかに削除または匿名化します。</p>
+        </div>
+      </section>
+
+      <!-- 09. Rights -->
+      <section id="rights" class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-6">
+        <h2 class="text-cyan-400 font-mono text-lg mb-6 flex items-center gap-2">
+          <span class="text-cyan-400/40">09 //</span> お客さまの権利
+        </h2>
+        <div class="space-y-4 text-cyan-400/70 font-mono text-xs leading-relaxed">
+          <div>
+            <h3 class="text-cyan-400/80 text-sm mb-2">個人情報保護法（APPI）に基づく権利</h3>
+            <p>お客さまは、当方が保有する個人データについて、開示・訂正・削除・利用停止を請求する権利を有します。請求は <a href="mailto:legal@aoifuture.com" class="text-cyan-400 hover:underline">legal@aoifuture.com</a> までご連絡ください。</p>
+          </div>
+          <div>
+            <h3 class="text-cyan-400/80 text-sm mb-2">EEA/UK にお住まいの方（GDPR）</h3>
+            <p>以下の追加的な権利を有します: アクセス権、訂正権、消去権（忘れられる権利）、処理制限権、データポータビリティ権、異議申立権。処理の法的根拠は、正当な利益（サービス改善）または同意（Cookie利用）です。</p>
+          </div>
+          <div>
+            <h3 class="text-cyan-400/80 text-sm mb-2">カリフォルニア州にお住まいの方（CCPA）</h3>
+            <p>個人情報の収集・利用について知る権利、削除を求める権利、販売のオプトアウトの権利を有します。当方はお客さまの個人情報を販売しません。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 10. International -->
+      <section id="international" class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-6">
+        <h2 class="text-cyan-400 font-mono text-lg mb-6 flex items-center gap-2">
+          <span class="text-cyan-400/40">10 //</span> 国際的なデータ移転
+        </h2>
+        <div class="text-cyan-400/70 font-mono text-xs leading-relaxed space-y-2">
+          <p>当方は日本国内で事業を運営していますが、利用する外部サービス（Google Analytics、Vercel等）のサーバーが海外に所在する場合があります。これらのサービスへのデータ移転は、各サービス提供者の適切な保護措置に基づいて行われます。</p>
+          <p>EEAからのデータ移転については、日本が欧州委員会より十分性認定を受けていることを根拠とします。</p>
+        </div>
+      </section>
+
+      <!-- 11. Children -->
+      <section id="children" class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-6">
+        <h2 class="text-cyan-400 font-mono text-lg mb-6 flex items-center gap-2">
+          <span class="text-cyan-400/40">11 //</span> 未成年者の利用
+        </h2>
+        <div class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+          <p>当方のサービスは16歳未満の方を対象としていません。16歳未満の方の個人情報を意図的に収集することはありません。16歳未満の方の個人情報が収集されたことが判明した場合、速やかに削除します。</p>
+        </div>
+      </section>
+
+      <!-- 12. Changes -->
+      <section id="changes" class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-6">
+        <h2 class="text-cyan-400 font-mono text-lg mb-6 flex items-center gap-2">
+          <span class="text-cyan-400/40">12 //</span> ポリシーの変更
+        </h2>
+        <div class="text-cyan-400/70 font-mono text-xs leading-relaxed">
+          <p>本ポリシーは、法令の改正やサービス内容の変更に応じて更新されることがあります。重要な変更がある場合は、ウェブサイト上で通知します。</p>
+        </div>
+      </section>
+
+      <!-- 13. Contact -->
+      <section id="contact" class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-6">
+        <h2 class="text-cyan-400 font-mono text-lg mb-6 flex items-center gap-2">
+          <span class="text-cyan-400/40">13 //</span> お問い合わせ
+        </h2>
+        <div class="text-cyan-400/70 font-mono text-xs leading-relaxed space-y-2">
+          <p>個人情報の取扱いに関するお問い合わせ、開示・訂正・削除等のご請求は、以下までご連絡ください。</p>
+          <p class="text-cyan-400"><a href="mailto:legal@aoifuture.com" class="hover:underline">legal@aoifuture.com</a></p>
+          <p class="mt-4 text-cyan-400/40">原則として2週間以内に回答いたします。</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</Layout>

@@ -22,14 +22,22 @@ const AGENT_CHAT_ENDPOINT = 'https://factory-p1.aoifuture.com/api/v1/webchat';
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <title>AI運用設計の相談 | AOIFUTURE</title>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-44419Y68H7"></script>
+    <!-- Google tag (gtag.js) - loaded only after consent -->
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      gtag("consent", "default", {
+        analytics_storage: "denied",
+        ad_storage: "denied",
+        wait_for_update: 500
+      });
+      if (localStorage.getItem("cookie-consent") === "accepted") {
+        gtag("consent", "update", { analytics_storage: "granted" });
+      }
       gtag("js", new Date());
       gtag("config", "G-44419Y68H7");
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-44419Y68H7"></script>
 
     <script type="application/ld+json">
     {
