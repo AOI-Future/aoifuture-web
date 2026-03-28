@@ -1,158 +1,31 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import LifeGame from '../components/LifeGame';
+import HUDOverlay from '../components/HUDOverlay';
+import AmbientSound from '../components/AmbientSound';
 ---
 
-<!doctype html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="DevOps/SREが1週間でSovereign AI組織を構築。OpenClawエージェント/Kuro-Purplex/MCPの実装ログと知見をNoteで共有 (¥1,000)。無料サンプルあり。" />
-    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet" />
-    <title>1週間でSovereign AI組織構築 | AOIFUTURE</title>
+<Layout title="Aoifuture | Digital Creative Label">
+  <main class="relative min-h-screen">
+    <!-- Life Game Background -->
+    <LifeGame client:load />
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-44419Y68H7"></script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag("js", new Date());
-      gtag("config", "G-44419Y68H7");
-    </script>
-  </head>
+    <!-- HUD Overlay -->
+    <HUDOverlay client:load />
 
-  <body class="bg-white text-gray-900 font-['Noto_Sans_JP'] leading-relaxed antialiased max-w-4xl mx-auto px-6 md:px-12 lg:px-20 py-12">
-    
-    <!-- Hero -->
-    <section class="min-h-[80vh] flex flex-col justify-center mb-24">
-      <span class="inline-block text-xs tracking-widest text-gray-500 uppercase mb-8">
-        Shugo Nozaki
-      </span>
-      <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-8 leading-tight">
-        1週間でSovereign AI組織を構築する
-      </h1>
-      <p class="text-xl md:text-2xl text-gray-600 max-w-2xl leading-loose mb-12">
-        DevOpsの現場でAIインフラを自前で回したいのに、クラウド依存の罠にハマっていないか。月収50-100万のフリーランスDevOpsが抜け出す道がある。オープンソースOpenClawを基盤に、エージェント+MCPで「Sovereign AI」を1週間で立ち上げる方法がある。俺、shugoはこれをすでに実装済み。ローカルMacからVPSまで3つのエージェントを動かし、セキュリティフィードとナレッジグラフをリアルタイムで回す組織を構築した。ゼロから再現可能で、月額コストを抑えつつ、フルコントロールを手に入れた。
-      </p>
-      <p class="text-xl md:text-2xl text-gray-600 max-w-2xl leading-loose mb-12">
-        VPS + Tailscale + OpenClawで、外部依存ゼロのAIインフラを立ち上げる。  
-        DevOps/SRE視点の実装ログと運用知見を、Noteでまとめました。
-      </p>
-      <div class="space-y-4">
-        <a href="https://note.com/aoifuture/n/n[paid-note-link]" class="inline-block bg-blue-600 text-white px-8 py-4 text-lg font-medium hover:bg-blue-700 transition-colors">
-          有料Noteを購入 (¥1,000)
-        </a>
-        <p class="text-sm text-gray-500 max-w-xl">
-          相談が必要なら ¥5,000 で個別セッション。まずは無料サンプルから。
+    <!-- Ambient Sound Control -->
+    <AmbientSound client:load />
+
+    <!-- Center Content -->
+    <div class="fixed inset-0 flex items-center justify-center pointer-events-none z-10">
+      <div class="text-center">
+        <h1 class="text-4xl md:text-6xl font-mono text-cyan-400/20 tracking-[0.3em] select-none">
+          AOIFUTURE
+        </h1>
+        <p class="mt-4 text-sm text-cyan-400/10 font-mono tracking-widest">
+          CREATING DIGITAL REALITIES
         </p>
       </div>
-    </section>
-
-    <hr class="border-gray-200 mb-24" />
-
-    <!-- Features -->
-    <section class="mb-24">
-      <h2 class="text-3xl font-bold text-gray-900 mb-12">OpenClawエージェント群</h2>
-      <div class="space-y-8 text-lg text-gray-700 leading-loose">
-        <p>
-          OpenClawを基盤に、論文処理・インテル収集・コードレビューを並列稼働。  
-          15体以上のエージェントが、朝のルーチンから戦略立案までカバー。  
-          Tailscaleでセキュア接続、VPS上でDockerコンテナ化してスケール。
-        </p>
-        <p>
-          実装例: papersエージェントがarXiv新着を毎日処理、strategic intelエージェントがニュースを要約。  
-          失敗ログをメモリに蓄積し、次回動作を改善。
-        </p>
-      </div>
-    </section>
-
-    <section class="mb-24">
-      <h2 class="text-3xl font-bold text-gray-900 mb-12">Kuro-Purplex: 紫の複合体</h2>
-      <div class="space-y-8 text-lg text-gray-700 leading-loose">
-        <p>
-          OpenClaw拡張で生まれた、MCP (Multi-Chain Prompting) 対応の紫エージェント群。  
-          複雑タスクをチェーン分解、並列実行で高速化。
-        </p>
-        <p>
-          例: GitHubイシュー自動解決 – gh-issuesスキルでバグ検知→subagent spawn→PR作成。  
-          実運用で1日10イシュー処理、レビュー対応まで自動化。
-        </p>
-      </div>
-    </section>
-
-    <section class="mb-24">
-      <h2 class="text-3xl font-bold text-gray-900 mb-12">MCP実装ログ</h2>
-      <div class="space-y-8 text-lg text-gray-700 leading-loose">
-        <p>
-          Multi-Chain Promptingのフル実装。プロンプトチェーンを動的に構築、ツールコール連鎖。  
-          OpenClawのprocess/sessions_yieldでサブエージェント管理。
-        </p>
-        <p>
-          成果: 1週間でVPSに25+コンテナ展開。月運用コスト¥5k以内に収束。
-        </p>
-      </div>
-    </section>
-
-    <hr class="border-gray-200 mb-24" />
-
-    <!-- Proof -->
-    <section class="mb-24">
-      <h2 class="text-3xl font-bold text-gray-900 mb-12">実績とスクショ</h2>
-      <div class="grid md:grid-cols-2 gap-8">
-        <div>
-          <img src="/screenshots/papers-agent.png" alt="papersエージェントがarXiv論文を処理中" class="w-full rounded-lg shadow-lg" />
-          <p class="mt-4 text-sm text-gray-600">arXiv新着100本/日を分類・要約</p>
-        </div>
-        <div>
-          <img src="/screenshots/kuro-purplex-chain.png" alt="Kuro-PurplexのMCPチェーン実行ログ" class="w-full rounded-lg shadow-lg" />
-          <p class="mt-4 text-sm text-gray-600">GitHub PR自動生成とレビュー</p>
-        </div>
-        <div>
-          <img src="/screenshots/openclaw-dashboard.png" alt="OpenClawエージェントダッシュボード" class="w-full rounded-lg shadow-lg" />
-          <p class="mt-4 text-sm text-gray-600">15+エージェント並列稼働</p>
-        </div>
-        <div>
-          <img src="/screenshots/vps-setup.png" alt="VPS/Tailscaleインフラ構成" class="w-full rounded-lg shadow-lg" />
-          <p class="mt-4 text-sm text-gray-600">1週間構築完了のインフラ</p>
-        </div>
-      </div>
-    </section>
-
-    <hr class="border-gray-200 mb-24" />
-
-    <!-- Free Note Sample -->
-    <section class="mb-24">
-      <h2 class="text-3xl font-bold text-gray-900 mb-12">無料Noteサンプル</h2>
-      <div class="bg-gray-50 p-8 rounded-lg">
-        <p class="text-lg text-gray-700 mb-6">Day1: OpenClawインストールと初エージェントspawn</p>
-        <iframe src="https://note.com/aoifuture/n/n[free-sample-embed]" class="w-full h-96 border-0 rounded"></iframe>
-        <a href="https://note.com/aoifuture/n/n[free-sample-link]" class="inline-block mt-6 bg-green-600 text-white px-6 py-3 text-lg font-medium hover:bg-green-700 transition-colors">
-          無料サンプル全文を読む
-        </a>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="bg-blue-600 text-white py-20 text-center rounded-lg">
-      <h2 class="text-3xl md:text-4xl font-bold mb-8">今すぐ始める</h2>
-      <div class="space-y-6 max-w-2xl mx-auto">
-        <p class="text-xl leading-loose">有料Note (¥1,000): フル実装ガイドとスクリプト</p>
-        <a href="https://note.com/aoifuture/n/n[paid-note-link]" class="inline-block bg-white text-blue-600 px-12 py-6 text-xl font-bold hover:bg-gray-100 transition-colors block mx-auto mb-4 w-fit">
-          Noteを購入 (¥1,000)
-        </a>
-        <p class="text-lg">個別相談 (¥5,000 / 60分): あなたの環境に合わせたカスタム</p>
-        <a href="mailto:shugo@aoifuture.com?subject=AI組織相談" class="inline-block bg-white text-blue-600 px-12 py-6 text-xl font-bold hover:bg-gray-100 transition-colors block mx-auto w-fit">
-          相談を申し込む (¥5,000)
-        </a>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="mt-24 pt-12 border-t border-gray-200 text-sm text-gray-500 text-center">
-      <p>&copy; 2026 Shugo Nozaki. AOIFUTURE.</p>
-    </footer>
-
-  </body>
-</html>
+    </div>
+  </main>
+</Layout>
