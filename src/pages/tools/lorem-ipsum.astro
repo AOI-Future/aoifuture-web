@@ -1,0 +1,186 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="LOREM IPSUM | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 021</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">LOREM IPSUM</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">ダミーテキストを生成</p>
+      </div>
+
+      <div class="mb-5">
+        <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">LANGUAGE</label>
+        <div class="flex gap-6">
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-cyan-400/70">
+            <input type="radio" name="lang" value="en" id="lang-en" checked class="accent-cyan-400" />
+            English
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-cyan-400/70">
+            <input type="radio" name="lang" value="ja" id="lang-ja" class="accent-cyan-400" />
+            日本語
+          </label>
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">UNIT</label>
+        <div class="flex gap-6">
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-cyan-400/70">
+            <input type="radio" name="unit" value="words" id="unit-words" class="accent-cyan-400" />
+            Words
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-cyan-400/70">
+            <input type="radio" name="unit" value="sentences" id="unit-sentences" checked class="accent-cyan-400" />
+            Sentences
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-cyan-400/70">
+            <input type="radio" name="unit" value="paragraphs" id="unit-paragraphs" class="accent-cyan-400" />
+            Paragraphs
+          </label>
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <label for="lorem-count" class="text-xs tracking-widest text-cyan-400/60 block mb-2">COUNT</label>
+        <input
+          type="number"
+          id="lorem-count"
+          min="1"
+          max="100"
+          value="3"
+          class="w-32 bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono"
+        />
+      </div>
+
+      <div class="mb-5">
+        <button id="generate-btn" class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer">GENERATE</button>
+      </div>
+
+      <div class="mb-4">
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-xs tracking-widest text-cyan-400/60">OUTPUT</label>
+          <button id="copy-btn" class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer">COPY</button>
+        </div>
+        <textarea
+          id="lorem-output"
+          readonly
+          class="w-full bg-black border border-cyan-400/20 text-cyan-400/80 text-sm p-3 font-mono h-48 resize-none"
+        ></textarea>
+        <p id="copy-feedback" class="text-xs text-cyan-400/40 mt-1 transition-opacity opacity-0">Copied.</p>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const loremEnWords = "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum".split(' ');
+
+  const loremEnSentences = [
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+    "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.",
+    "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.",
+    "Nulla facilisi morbi tempus iaculis urna id volutpat lacus.",
+    "Pellentesque habitant morbi tristique senectus et netus et malesuada fames.",
+    "Amet volutpat consequat mauris nunc congue nisi vitae suscipit.",
+    "Arcu cursus euismod quis viverra nibh cras pulvinar.",
+    "Feugiat in fermentum posuere urna nec tincidunt praesent semper.",
+  ];
+
+  const loremJaWords = [
+    '吾輩', '猫', '名前', '薄暗い', '記憶', '山路', '智恵', '情', '意地',
+    '人世', '住処', '流れ', '羅生門', '下人', '老婆', '火事', '夕暮れ',
+    '静寂', '闇', '光', '夢', '希望', '未来', '過去', '現在', '自然',
+    '風景', '言葉', '物語', '時代', '旅', '空', '海', '山', '川', '春',
+    '夏', '秋', '冬', '花', '月', '星', '宇宙', '心', '魂', '命', '道',
+  ];
+
+  const loremJaSentences = [
+    '吾輩は猫である。名前はまだ無い。',
+    'どこで生れたかとんと見当がつかぬ。',
+    '何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。',
+    '山路を登りながら、こう考えた。',
+    '智に働けば角が立つ。情に棹させば流される。意地を通せば窮屈だ。',
+    'とかくに人の世は住みにくい。',
+    '羅生門の下で雨やみを待っていた。',
+    '夕暮れ時、老婆はひとり火に当たっていた。',
+    '静かな夜に、遠くから鐘の音が聞こえてきた。',
+    '春の光の中で、花びらがゆっくりと舞い落ちた。',
+    '海の向こうに、見知らぬ島影が浮かんでいた。',
+    '長い旅の果てに、彼はようやく故郷へと辿り着いた。',
+  ];
+
+  const loremJaParagraphs = [
+    '吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。',
+    '山路を登りながら、こう考えた。智に働けば角が立つ。情に棹させば流される。意地を通せば窮屈だ。とかくに人の世は住みにくい。',
+    '羅生門の下で雨やみを待っていた下人は、さっきから、ぼんやり、雨の降るのを見ていた。広い門の下には、この男のほかに誰もいない。ただ、所々丹塗の剥げた、大きな円柱に、蟋蟀が一匹とまっている。',
+    '春の夜の夢のごとく、はかないものが人の世の常である。風の前の塵に同じく、散り消えることを恐れるな。時は川の流れのように、絶えず変わりゆくものだ。',
+    '遠い山の向こうに、静かな村があった。そこでは人々が穏やかに暮らし、季節の移ろいを丁寧に感じながら日々を送っていた。春には桜が咲き、夏には緑が濃く、秋には紅葉が山を染め、冬には雪が静かに降り積もった。',
+  ];
+
+  function pickRandom<T>(arr: T[]): T {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  function generateLorem(lang: string, unit: string, count: number): string {
+    if (lang === 'en') {
+      if (unit === 'words') {
+        const result: string[] = [];
+        for (let i = 0; i < count; i++) result.push(pickRandom(loremEnWords));
+        return result.join(' ');
+      } else if (unit === 'sentences') {
+        const result: string[] = [];
+        for (let i = 0; i < count; i++) result.push(pickRandom(loremEnSentences));
+        return result.join(' ');
+      } else {
+        const result: string[] = [];
+        for (let i = 0; i < count; i++) {
+          const numSentences = 3 + Math.floor(Math.random() * 3);
+          const para: string[] = [];
+          for (let j = 0; j < numSentences; j++) para.push(pickRandom(loremEnSentences));
+          result.push(para.join(' '));
+        }
+        return result.join('\n\n');
+      }
+    } else {
+      if (unit === 'words') {
+        const result: string[] = [];
+        for (let i = 0; i < count; i++) result.push(pickRandom(loremJaWords));
+        return result.join('　');
+      } else if (unit === 'sentences') {
+        const result: string[] = [];
+        for (let i = 0; i < count; i++) result.push(pickRandom(loremJaSentences));
+        return result.join('');
+      } else {
+        const result: string[] = [];
+        for (let i = 0; i < count; i++) result.push(pickRandom(loremJaParagraphs));
+        return result.join('\n\n');
+      }
+    }
+  }
+
+  const generateBtn = document.getElementById('generate-btn')!;
+  const copyBtn = document.getElementById('copy-btn')!;
+  const output = document.getElementById('lorem-output') as HTMLTextAreaElement;
+  const copyFeedback = document.getElementById('copy-feedback')!;
+  const countInput = document.getElementById('lorem-count') as HTMLInputElement;
+
+  generateBtn.addEventListener('click', () => {
+    const lang = (document.querySelector('input[name="lang"]:checked') as HTMLInputElement)?.value || 'en';
+    const unit = (document.querySelector('input[name="unit"]:checked') as HTMLInputElement)?.value || 'sentences';
+    const count = parseInt(countInput.value) || 3;
+    output.value = generateLorem(lang, unit, Math.min(count, 100));
+  });
+
+  copyBtn.addEventListener('click', () => {
+    if (!output.value) return;
+    navigator.clipboard.writeText(output.value).then(() => {
+      copyFeedback.style.opacity = '1';
+      setTimeout(() => { copyFeedback.style.opacity = '0'; }, 1500);
+    });
+  });
+</script>

@@ -1,0 +1,217 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="GRADIENT GENERATOR | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 009</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">GRADIENT GENERATOR</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">CSSグラデーションを生成</p>
+      </div>
+
+      <!-- Preview -->
+      <div id="gradient-preview" class="w-full h-32 mb-6 border border-cyan-400/20"></div>
+
+      <!-- Type -->
+      <div class="mb-4 flex items-center gap-6">
+        <label class="text-xs tracking-widest text-cyan-400/60">TYPE:</label>
+        <label class="flex items-center gap-2 text-sm text-cyan-400/70 cursor-pointer">
+          <input type="radio" name="grad-type" value="linear" checked class="accent-cyan-400" />
+          Linear
+        </label>
+        <label class="flex items-center gap-2 text-sm text-cyan-400/70 cursor-pointer">
+          <input type="radio" name="grad-type" value="radial" class="accent-cyan-400" />
+          Radial
+        </label>
+      </div>
+
+      <!-- Direction (linear only) -->
+      <div id="direction-section" class="mb-4">
+        <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">DIRECTION</label>
+        <div class="flex items-center gap-3 flex-wrap">
+          <div class="flex items-center gap-2">
+            <input
+              type="number"
+              id="angle-input"
+              value="135"
+              min="0"
+              max="360"
+              class="w-20 bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-2 focus:outline-none focus:border-cyan-400/70 font-mono"
+            />
+            <span class="text-cyan-400/40 text-sm">deg</span>
+          </div>
+          <div class="flex gap-1">
+            {['↑', '→', '↓', '←', '↗', '↘'].map((arrow, i) => (
+              <button
+                class="preset-dir px-2 py-1 text-sm border border-cyan-400/20 text-cyan-400/50 hover:border-cyan-400/50 hover:text-cyan-400/80 transition-colors cursor-pointer"
+                data-angle={[0, 90, 180, 270, 45, 135][i]}
+              >{arrow}</button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Color Stops -->
+      <div class="mb-4">
+        <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">COLOR STOPS</label>
+        <div id="stops-list" class="space-y-2"></div>
+        <button id="add-stop-btn" class="mt-2 px-4 py-2 text-sm border border-cyan-400/20 text-cyan-400/50 hover:border-cyan-400/50 hover:text-cyan-400/80 transition-colors tracking-widest cursor-pointer">+ ADD COLOR</button>
+      </div>
+
+      <!-- Output -->
+      <div class="mb-4">
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-xs tracking-widest text-cyan-400/60">CSS OUTPUT</label>
+          <button id="copy-btn" class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer">COPY CSS</button>
+        </div>
+        <textarea
+          id="css-output"
+          readonly
+          class="w-full bg-black border border-cyan-400/20 text-cyan-400/80 text-sm p-3 font-mono resize-none"
+          rows="2"
+        ></textarea>
+        <p id="copy-feedback" class="text-xs text-cyan-400/40 mt-1 transition-opacity opacity-0">Copied.</p>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  interface Stop { color: string; position: number; }
+
+  let stops: Stop[] = [
+    { color: '#000000', position: 0 },
+    { color: '#22d3ee', position: 100 },
+  ];
+
+  const preview = document.getElementById('gradient-preview')!;
+  const stopsList = document.getElementById('stops-list')!;
+  const addStopBtn = document.getElementById('add-stop-btn')!;
+  const angleInput = document.getElementById('angle-input') as HTMLInputElement;
+  const cssOutput = document.getElementById('css-output') as HTMLTextAreaElement;
+  const copyBtn = document.getElementById('copy-btn')!;
+  const copyFeedback = document.getElementById('copy-feedback')!;
+  const dirSection = document.getElementById('direction-section')!;
+
+  function getType(): string {
+    const checked = document.querySelector('input[name="grad-type"]:checked') as HTMLInputElement;
+    return checked ? checked.value : 'linear';
+  }
+
+  function generateCSS(): string {
+    const type = getType();
+    const stopsStr = stops.map(s => `${s.color} ${s.position}%`).join(', ');
+    if (type === 'radial') {
+      return `background: radial-gradient(circle, ${stopsStr});`;
+    }
+    return `background: linear-gradient(${angleInput.value}deg, ${stopsStr});`;
+  }
+
+  function renderStops() {
+    stopsList.innerHTML = '';
+    stops.forEach((stop, idx) => {
+      const row = document.createElement('div');
+      row.className = 'flex items-center gap-2';
+      row.innerHTML = `
+        <input type="color" value="${stop.color}" data-idx="${idx}" data-field="color"
+          class="stop-color bg-black border border-cyan-400/30 h-10 w-16 cursor-pointer p-0.5" />
+        <input type="text" value="${stop.color}" data-idx="${idx}" data-field="colortext"
+          class="stop-colortext w-24 bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-2 focus:outline-none focus:border-cyan-400/70 font-mono" maxlength="7" />
+        <input type="number" value="${stop.position}" min="0" max="100" data-idx="${idx}" data-field="position"
+          class="stop-position w-20 bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-2 focus:outline-none focus:border-cyan-400/70 font-mono" />
+        <span class="text-cyan-400/40 text-sm">%</span>
+        ${stops.length > 2 ? `<button class="remove-stop px-2 py-1 text-xs border border-red-400/20 text-red-400/50 hover:border-red-400/50 hover:text-red-400/80 transition-colors cursor-pointer" data-idx="${idx}">✕</button>` : ''}
+      `;
+      stopsList.appendChild(row);
+    });
+
+    stopsList.querySelectorAll<HTMLInputElement>('.stop-color').forEach(el => {
+      el.addEventListener('input', () => {
+        const idx = parseInt(el.dataset.idx!);
+        stops[idx].color = el.value;
+        const textInput = stopsList.querySelector<HTMLInputElement>(`.stop-colortext[data-idx="${idx}"]`);
+        if (textInput) textInput.value = el.value;
+        updateOutput();
+      });
+    });
+
+    stopsList.querySelectorAll<HTMLInputElement>('.stop-colortext').forEach(el => {
+      el.addEventListener('input', () => {
+        const idx = parseInt(el.dataset.idx!);
+        if (/^#[0-9a-fA-F]{6}$/.test(el.value)) {
+          stops[idx].color = el.value;
+          const colorPicker = stopsList.querySelector<HTMLInputElement>(`.stop-color[data-idx="${idx}"]`);
+          if (colorPicker) colorPicker.value = el.value;
+          updateOutput();
+        }
+      });
+    });
+
+    stopsList.querySelectorAll<HTMLInputElement>('.stop-position').forEach(el => {
+      el.addEventListener('input', () => {
+        const idx = parseInt(el.dataset.idx!);
+        stops[idx].position = parseInt(el.value) || 0;
+        updateOutput();
+      });
+    });
+
+    stopsList.querySelectorAll<HTMLButtonElement>('.remove-stop').forEach(el => {
+      el.addEventListener('click', () => {
+        const idx = parseInt(el.dataset.idx!);
+        stops.splice(idx, 1);
+        renderStops();
+        updateOutput();
+      });
+    });
+  }
+
+  function updateOutput() {
+    const css = generateCSS();
+    cssOutput.value = css;
+    // Apply to preview
+    const type = getType();
+    const stopsStr = stops.map(s => `${s.color} ${s.position}%`).join(', ');
+    if (type === 'radial') {
+      preview.style.background = `radial-gradient(circle, ${stopsStr})`;
+    } else {
+      preview.style.background = `linear-gradient(${angleInput.value}deg, ${stopsStr})`;
+    }
+  }
+
+  addStopBtn.addEventListener('click', () => {
+    if (stops.length >= 6) return;
+    stops.push({ color: '#ffffff', position: 100 });
+    renderStops();
+    updateOutput();
+  });
+
+  angleInput.addEventListener('input', updateOutput);
+
+  document.querySelectorAll<HTMLButtonElement>('.preset-dir').forEach(btn => {
+    btn.addEventListener('click', () => {
+      angleInput.value = btn.dataset.angle!;
+      updateOutput();
+    });
+  });
+
+  document.querySelectorAll('input[name="grad-type"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const isLinear = getType() === 'linear';
+      dirSection.style.display = isLinear ? 'block' : 'none';
+      updateOutput();
+    });
+  });
+
+  copyBtn.addEventListener('click', () => {
+    if (!cssOutput.value) return;
+    navigator.clipboard.writeText(cssOutput.value).then(() => {
+      copyFeedback.style.opacity = '1';
+      setTimeout(() => { copyFeedback.style.opacity = '0'; }, 1500);
+    });
+  });
+
+  renderStops();
+  updateOutput();
+</script>

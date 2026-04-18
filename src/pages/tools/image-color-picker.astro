@@ -1,0 +1,142 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Image Color Picker | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 027</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">IMAGE COLOR PICKER</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">画像をクリックしてカラーコードを取得</p>
+      </div>
+
+      <!-- Drop zone -->
+      <div id="drop-zone" class="h-32 border-2 border-dashed border-cyan-400/30 hover:border-cyan-400/60 flex items-center justify-center text-cyan-400/40 text-sm mb-4 transition-colors cursor-pointer">
+        <span id="drop-label">画像をドロップ または クリックして選択</span>
+        <input id="file-input" type="file" accept="image/*" class="hidden">
+      </div>
+
+      <!-- Canvas -->
+      <div id="canvas-wrap" class="hidden mb-4">
+        <div class="relative inline-block w-full">
+          <canvas id="canvas" class="w-full border border-cyan-400/20 cursor-crosshair block"></canvas>
+        </div>
+      </div>
+
+      <!-- Live color preview -->
+      <div id="live-info" class="hidden flex items-center gap-3 mb-6 p-3 border border-cyan-400/20">
+        <div id="live-swatch" class="w-10 h-10 border border-cyan-400/20 shrink-0"></div>
+        <div>
+          <p id="live-hex" class="text-cyan-300 text-sm">—</p>
+          <p id="live-rgb" class="text-cyan-400/50 text-xs">—</p>
+          <p id="live-pos" class="text-cyan-400/30 text-xs">x: — y: —</p>
+        </div>
+        <p class="text-cyan-400/30 text-xs ml-auto">クリックで履歴に追加</p>
+      </div>
+
+      <!-- History -->
+      <div id="history-section" class="hidden">
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-xs tracking-widest text-cyan-400/60">PICKED COLORS</label>
+          <button id="clear-btn" class="text-xs px-3 py-1 border border-cyan-400/20 text-cyan-400/40 hover:border-cyan-400/50 hover:text-cyan-400/70 transition-colors tracking-widest cursor-pointer">CLEAR</button>
+        </div>
+        <div id="history" class="space-y-1"></div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const dropZone = document.getElementById('drop-zone')!;
+  const fileInput = document.getElementById('file-input') as HTMLInputElement;
+  const canvasWrap = document.getElementById('canvas-wrap')!;
+  const canvas = document.getElementById('canvas') as HTMLCanvasElement;
+  const ctx = canvas.getContext('2d')!;
+  const liveInfo = document.getElementById('live-info')!;
+  const liveSwatch = document.getElementById('live-swatch')!;
+  const liveHex = document.getElementById('live-hex')!;
+  const liveRgb = document.getElementById('live-rgb')!;
+  const livePos = document.getElementById('live-pos')!;
+  const historySection = document.getElementById('history-section')!;
+  const historyEl = document.getElementById('history')!;
+  const colors: string[] = [];
+
+  function rgbToHex(r: number, g: number, b: number): string {
+    return '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+  }
+
+  function loadImage(file: File) {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      ctx.drawImage(img, 0, 0);
+      canvasWrap.classList.remove('hidden');
+      liveInfo.classList.remove('hidden');
+      document.getElementById('drop-label')!.textContent = file.name;
+      URL.revokeObjectURL(url);
+    };
+    img.src = url;
+  }
+
+  dropZone.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', () => { if (fileInput.files?.[0]) loadImage(fileInput.files[0]); });
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('border-cyan-400/70'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-cyan-400/70'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('border-cyan-400/70');
+    if (e.dataTransfer?.files[0]) loadImage(e.dataTransfer.files[0]);
+  });
+
+  canvas.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    const x = Math.floor((e.clientX - rect.left) * (canvas.width / rect.width));
+    const y = Math.floor((e.clientY - rect.top) * (canvas.height / rect.height));
+    const [r, g, b] = ctx.getImageData(x, y, 1, 1).data;
+    const hex = rgbToHex(r, g, b);
+    liveSwatch.style.background = hex;
+    liveHex.textContent = hex.toUpperCase();
+    liveRgb.textContent = `rgb(${r}, ${g}, ${b})`;
+    livePos.textContent = `x: ${x}  y: ${y}`;
+  });
+
+  canvas.addEventListener('click', e => {
+    const rect = canvas.getBoundingClientRect();
+    const x = Math.floor((e.clientX - rect.left) * (canvas.width / rect.width));
+    const y = Math.floor((e.clientY - rect.top) * (canvas.height / rect.height));
+    const [r, g, b] = ctx.getImageData(x, y, 1, 1).data;
+    const hex = rgbToHex(r, g, b).toUpperCase();
+    if (colors.length >= 10) colors.shift();
+    colors.push(hex);
+    renderHistory();
+  });
+
+  function renderHistory() {
+    historySection.classList.remove('hidden');
+    historyEl.innerHTML = colors.map(hex => `
+      <div class="flex items-center gap-3 p-2 border border-cyan-400/10 hover:border-cyan-400/30 transition-colors cursor-pointer group" data-hex="${hex}">
+        <div class="w-8 h-8 border border-cyan-400/20 shrink-0" style="background:${hex}"></div>
+        <span class="text-cyan-400/80 text-sm flex-1">${hex}</span>
+        <span class="text-cyan-400/30 text-xs group-hover:text-cyan-400/60 transition-colors">COPY</span>
+      </div>
+    `).join('');
+    historyEl.querySelectorAll<HTMLElement>('[data-hex]').forEach(el => {
+      el.addEventListener('click', async () => {
+        await navigator.clipboard.writeText(el.dataset.hex!);
+        const span = el.querySelector('span:last-child')!;
+        span.textContent = 'Copied.';
+        setTimeout(() => span.textContent = 'COPY', 1500);
+      });
+    });
+  }
+
+  document.getElementById('clear-btn')!.addEventListener('click', () => {
+    colors.length = 0;
+    historyEl.innerHTML = '';
+    historySection.classList.add('hidden');
+  });
+</script>

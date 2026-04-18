@@ -1,0 +1,114 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="MARKDOWN PREVIEW | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-5xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 004</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">MARKDOWN PREVIEW</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">Markdownをリアルタイムプレビュー</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-4">
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">MARKDOWN INPUT</label>
+          <textarea
+            id="md-input"
+            class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono h-96 resize-none"
+          ></textarea>
+        </div>
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">PREVIEW</label>
+          <div
+            id="md-preview"
+            class="h-96 overflow-y-auto border border-cyan-400/20 p-3"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  #md-preview :global(h1),
+  #md-preview :global(h2),
+  #md-preview :global(h3) {
+    color: #67e8f9;
+    margin-bottom: 0.5rem;
+  }
+  #md-preview :global(p) {
+    color: rgba(103,232,249,0.7);
+    margin-bottom: 0.75rem;
+    font-size: 0.875rem;
+  }
+  #md-preview :global(code) {
+    background: rgba(103,232,249,0.1);
+    padding: 0 0.25rem;
+    font-family: monospace;
+  }
+  #md-preview :global(pre) {
+    background: rgba(103,232,249,0.05);
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+    overflow-x: auto;
+  }
+  #md-preview :global(ul),
+  #md-preview :global(ol) {
+    color: rgba(103,232,249,0.7);
+    padding-left: 1.5rem;
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+  }
+  #md-preview :global(a) {
+    color: #67e8f9;
+    text-decoration: underline;
+  }
+  #md-preview :global(blockquote) {
+    border-left: 2px solid rgba(103,232,249,0.3);
+    padding-left: 0.75rem;
+    color: rgba(103,232,249,0.5);
+  }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
+<script>
+  const defaultMarkdown = `# Hello, Markdown!
+
+## Features
+
+- **Bold text** and *italic text*
+- Inline \`code\` and code blocks
+- [Links](https://aoifuture.com) and blockquotes
+
+## Code Block
+
+\`\`\`javascript
+const greet = (name) => \`Hello, \${name}!\`;
+console.log(greet('AOI'));
+\`\`\`
+
+> This is a blockquote.
+> It can span multiple lines.
+
+## Ordered List
+
+1. First item
+2. Second item
+3. Third item
+`;
+
+  const mdInput = document.getElementById('md-input') as HTMLTextAreaElement;
+  const mdPreview = document.getElementById('md-preview')!;
+
+  function updatePreview() {
+    // @ts-ignore
+    mdPreview.innerHTML = marked.parse(mdInput.value);
+  }
+
+  mdInput.value = defaultMarkdown;
+  updatePreview();
+
+  mdInput.addEventListener('input', updatePreview);
+</script>

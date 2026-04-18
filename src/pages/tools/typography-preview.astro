@@ -1,0 +1,138 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Typography Preview | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 029</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">TYPOGRAPHY PREVIEW</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">フォントプロパティをリアルタイムで調整</p>
+      </div>
+
+      <!-- Preview -->
+      <div class="mb-6">
+        <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">PREVIEW</label>
+        <div id="preview" class="bg-black border border-cyan-400/20 p-6 min-h-32 break-words text-white">
+          The quick brown fox<br>じゃあ行くよ、準備はいい？<br>ABCDEFGH 0123456789
+        </div>
+      </div>
+
+      <!-- Preview text input -->
+      <div class="mb-6">
+        <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">PREVIEW TEXT</label>
+        <textarea id="preview-text" rows="3"
+          class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono resize-none"
+          >The quick brown fox\nじゃあ行くよ、準備はいい？\nABCDEFGH 0123456789</textarea>
+      </div>
+
+      <!-- Controls -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+        <!-- Font Size -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">FONT SIZE — <span id="fs-val">32px</span></label>
+          <input id="font-size" type="range" min="8" max="96" value="32" class="w-full accent-cyan-400 cursor-pointer">
+        </div>
+        <!-- Font Weight -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">FONT WEIGHT</label>
+          <select id="font-weight" class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none font-mono">
+            {[100,200,300,400,500,600,700,800,900].map(w => (
+              <option value={w} selected={w === 400}>{w}</option>
+            ))}
+          </select>
+        </div>
+        <!-- Line Height -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">LINE HEIGHT — <span id="lh-val">1.5</span></label>
+          <input id="line-height" type="range" min="80" max="300" value="150" class="w-full accent-cyan-400 cursor-pointer">
+        </div>
+        <!-- Letter Spacing -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">LETTER SPACING — <span id="ls-val">0em</span></label>
+          <input id="letter-spacing" type="range" min="-10" max="50" value="0" class="w-full accent-cyan-400 cursor-pointer">
+        </div>
+        <!-- Font Family -->
+        <div class="md:col-span-2">
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">FONT FAMILY</label>
+          <select id="font-family" class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none font-mono">
+            <option value="system-ui, sans-serif">System Sans</option>
+            <option value="Georgia, serif">System Serif</option>
+            <option value="monospace">Monospace</option>
+            <option value="'Noto Sans JP', sans-serif" data-gf="Noto+Sans+JP">Noto Sans JP</option>
+            <option value="'Noto Serif JP', serif" data-gf="Noto+Serif+JP">Noto Serif JP</option>
+            <option value="'Inter', sans-serif" data-gf="Inter">Inter</option>
+            <option value="'Roboto', sans-serif" data-gf="Roboto">Roboto</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- CSS Output -->
+      <div class="mb-2">
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-xs tracking-widest text-cyan-400/60">CSS OUTPUT</label>
+          <button id="copy-btn" class="text-xs px-3 py-1 border border-cyan-400/30 text-cyan-400/60 hover:border-cyan-400/60 hover:text-cyan-400 transition-colors tracking-widest cursor-pointer">COPY</button>
+        </div>
+        <textarea id="css-output" readonly rows="5"
+          class="w-full bg-black border border-cyan-400/20 text-cyan-400/80 text-sm p-3 font-mono focus:outline-none resize-none"></textarea>
+        <p id="copy-msg" class="text-xs text-cyan-400/40 mt-1 opacity-0 transition-opacity">Copied.</p>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const preview    = document.getElementById('preview')!;
+  const textInput  = document.getElementById('preview-text') as HTMLTextAreaElement;
+  const fsSlider   = document.getElementById('font-size') as HTMLInputElement;
+  const lhSlider   = document.getElementById('line-height') as HTMLInputElement;
+  const lsSlider   = document.getElementById('letter-spacing') as HTMLInputElement;
+  const fwSelect   = document.getElementById('font-weight') as HTMLSelectElement;
+  const ffSelect   = document.getElementById('font-family') as HTMLSelectElement;
+  const cssOutput  = document.getElementById('css-output') as HTMLTextAreaElement;
+  const copyMsg    = document.getElementById('copy-msg')!;
+  const loadedFonts = new Set<string>();
+
+  function loadGoogleFont(name: string) {
+    if (loadedFonts.has(name)) return;
+    loadedFonts.add(name);
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = `https://fonts.googleapis.com/css2?family=${name}:wght@100;300;400;500;700;900&display=swap`;
+    document.head.appendChild(link);
+  }
+
+  function update() {
+    const fs = +fsSlider.value;
+    const lh = +lhSlider.value / 100;
+    const ls = +lsSlider.value / 100;
+    const fw = fwSelect.value;
+    const ff = ffSelect.value;
+    const gf = ffSelect.selectedOptions[0]?.dataset.gf;
+    if (gf) loadGoogleFont(gf);
+
+    const text = textInput.value.replace(/\\n/g, '\n');
+    preview.innerHTML = text.split('\n').map(l => `<span style="display:block">${l || '&nbsp;'}</span>`).join('');
+    preview.style.cssText += `font-size:${fs}px;font-weight:${fw};line-height:${lh};letter-spacing:${ls}em;font-family:${ff}`;
+
+    document.getElementById('fs-val')!.textContent = `${fs}px`;
+    document.getElementById('lh-val')!.textContent = String(lh.toFixed(1));
+    document.getElementById('ls-val')!.textContent = `${ls.toFixed(2)}em`;
+
+    cssOutput.value = `font-size: ${fs}px;\nfont-weight: ${fw};\nline-height: ${lh.toFixed(1)};\nletter-spacing: ${ls.toFixed(2)}em;\nfont-family: ${ff};`;
+  }
+
+  [fsSlider, lhSlider, lsSlider].forEach(el => el.addEventListener('input', update));
+  [fwSelect, ffSelect, textInput].forEach(el => el.addEventListener('change', update));
+  textInput.addEventListener('input', update);
+
+  document.getElementById('copy-btn')!.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(cssOutput.value);
+    copyMsg.style.opacity = '1';
+    setTimeout(() => copyMsg.style.opacity = '0', 1500);
+  });
+
+  update();
+</script>

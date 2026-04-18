@@ -1,0 +1,111 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="PX / REM CONVERTER | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 012</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">PX / REM CONVERTER</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">px・rem・em・pt の相互変換</p>
+      </div>
+
+      <div class="space-y-6">
+        <!-- Base Font Size -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">BASE FONT SIZE (px)</label>
+          <input type="number" id="base-size" value="16" min="1" step="0.5"
+            class="bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-2 focus:outline-none focus:border-cyan-400/70 font-mono w-24" />
+        </div>
+
+        <!-- Conversion Fields -->
+        <div class="space-y-4">
+          <div>
+            <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">PX</label>
+            <input type="number" id="input-px" value="16" step="any"
+              class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono" />
+          </div>
+          <div>
+            <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">REM</label>
+            <input type="number" id="input-rem" value="1" step="any"
+              class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono" />
+          </div>
+          <div>
+            <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">EM</label>
+            <input type="number" id="input-em" value="1" step="any"
+              class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono" />
+          </div>
+          <div>
+            <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">PT</label>
+            <input type="number" id="input-pt" value="12" step="any"
+              class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono" />
+          </div>
+        </div>
+
+        <!-- Quick Fill -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-3">QUICK FILL (px)</label>
+          <div class="flex flex-wrap gap-2">
+            {[12, 14, 16, 18, 20, 24, 32, 48, 64].map(size => (
+              <button class="quick-fill px-3 py-1.5 text-xs border border-cyan-400/20 text-cyan-400/50 hover:border-cyan-400/50 hover:text-cyan-400/80 transition-colors tracking-widest cursor-pointer" data-px={size}>
+                {size}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  let updating = false;
+
+  function getBase(): number {
+    return parseFloat((document.getElementById('base-size') as HTMLInputElement).value) || 16;
+  }
+
+  function updateFromPx(px: number) {
+    if (updating) return;
+    updating = true;
+    const base = getBase();
+    (document.getElementById('input-px') as HTMLInputElement).value = px.toString();
+    (document.getElementById('input-rem') as HTMLInputElement).value = (px / base).toFixed(4);
+    (document.getElementById('input-em') as HTMLInputElement).value = (px / base).toFixed(4);
+    (document.getElementById('input-pt') as HTMLInputElement).value = (px * 0.75).toFixed(4);
+    updating = false;
+  }
+
+  document.getElementById('input-px')?.addEventListener('input', (e) => {
+    const val = parseFloat((e.target as HTMLInputElement).value);
+    if (!isNaN(val)) updateFromPx(val);
+  });
+
+  document.getElementById('input-rem')?.addEventListener('input', (e) => {
+    const val = parseFloat((e.target as HTMLInputElement).value);
+    if (!isNaN(val)) updateFromPx(val * getBase());
+  });
+
+  document.getElementById('input-em')?.addEventListener('input', (e) => {
+    const val = parseFloat((e.target as HTMLInputElement).value);
+    if (!isNaN(val)) updateFromPx(val * getBase());
+  });
+
+  document.getElementById('input-pt')?.addEventListener('input', (e) => {
+    const val = parseFloat((e.target as HTMLInputElement).value);
+    if (!isNaN(val)) updateFromPx(val / 0.75);
+  });
+
+  document.getElementById('base-size')?.addEventListener('input', () => {
+    const px = parseFloat((document.getElementById('input-px') as HTMLInputElement).value) || 16;
+    updateFromPx(px);
+  });
+
+  document.querySelectorAll('.quick-fill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const px = parseFloat((btn as HTMLElement).dataset.px || '16');
+      updateFromPx(px);
+    });
+  });
+</script>

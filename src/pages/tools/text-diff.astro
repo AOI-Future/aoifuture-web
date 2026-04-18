@@ -1,0 +1,159 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="TEXT DIFF | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-5xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 024</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">TEXT DIFF</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">2つのテキストの差分を表示</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">ORIGINAL</label>
+          <textarea
+            id="diff-original"
+            class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono h-48 resize-none"
+            placeholder="元のテキストを入力..."
+          ></textarea>
+        </div>
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">MODIFIED</label>
+          <textarea
+            id="diff-modified"
+            class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono h-48 resize-none"
+            placeholder="変更後のテキストを入力..."
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="flex gap-2 mb-6">
+        <button id="compare-btn" class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer">COMPARE DIFF</button>
+        <button id="clear-btn" class="px-4 py-2 text-sm border border-cyan-400/20 text-cyan-400/50 hover:border-cyan-400/50 hover:text-cyan-400/80 transition-colors tracking-widest cursor-pointer">CLEAR</button>
+      </div>
+
+      <div id="diff-stats" class="text-xs text-cyan-400/40 mb-3 hidden"></div>
+
+      <div id="diff-output" class="border border-cyan-400/20 text-sm overflow-auto hidden">
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  interface DiffLine {
+    type: 'same' | 'add' | 'del';
+    text: string;
+    lineNumA: number | null;
+    lineNumB: number | null;
+  }
+
+  function diffLines(a: string, b: string): DiffLine[] {
+    const aLines = a === '' ? [] : a.split('\n');
+    const bLines = b === '' ? [] : b.split('\n');
+    const m = aLines.length;
+    const n = bLines.length;
+
+    // LCS DP
+    const dp: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+    for (let i = 1; i <= m; i++) {
+      for (let j = 1; j <= n; j++) {
+        if (aLines[i - 1] === bLines[j - 1]) {
+          dp[i][j] = dp[i - 1][j - 1] + 1;
+        } else {
+          dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+        }
+      }
+    }
+
+    // Backtrack
+    const result: DiffLine[] = [];
+    let i = m, j = n;
+    let lineA = m, lineB = n;
+
+    function prepend(line: DiffLine) { result.unshift(line); }
+
+    while (i > 0 || j > 0) {
+      if (i > 0 && j > 0 && aLines[i - 1] === bLines[j - 1]) {
+        prepend({ type: 'same', text: aLines[i - 1], lineNumA: i, lineNumB: j });
+        i--; j--;
+      } else if (j > 0 && (i === 0 || dp[i][j - 1] >= dp[i - 1][j])) {
+        prepend({ type: 'add', text: bLines[j - 1], lineNumA: null, lineNumB: j });
+        j--;
+      } else {
+        prepend({ type: 'del', text: aLines[i - 1], lineNumA: i, lineNumB: null });
+        i--;
+      }
+    }
+
+    return result;
+  }
+
+  const compareBtn = document.getElementById('compare-btn')!;
+  const clearBtn = document.getElementById('clear-btn')!;
+  const originalTA = document.getElementById('diff-original') as HTMLTextAreaElement;
+  const modifiedTA = document.getElementById('diff-modified') as HTMLTextAreaElement;
+  const diffOutput = document.getElementById('diff-output')!;
+  const diffStats = document.getElementById('diff-stats')!;
+
+  compareBtn.addEventListener('click', () => {
+    const a = originalTA.value;
+    const b = modifiedTA.value;
+    const lines = diffLines(a, b);
+
+    let added = 0, deleted = 0;
+    let html = '';
+
+    lines.forEach((line) => {
+      let rowClass = '';
+      let lineNumAStr = '';
+      let lineNumBStr = '';
+
+      if (line.type === 'add') {
+        rowClass = 'bg-green-950 border-l-2 border-green-500 text-green-300';
+        lineNumAStr = '';
+        lineNumBStr = String(line.lineNumB);
+        added++;
+      } else if (line.type === 'del') {
+        rowClass = 'bg-red-950 border-l-2 border-red-500 text-red-300';
+        lineNumAStr = String(line.lineNumA);
+        lineNumBStr = '';
+        deleted++;
+      } else {
+        rowClass = 'text-cyan-400/40';
+        lineNumAStr = String(line.lineNumA);
+        lineNumBStr = String(line.lineNumB);
+      }
+
+      const escaped = line.text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+
+      const prefix = line.type === 'add' ? '+' : line.type === 'del' ? '-' : ' ';
+
+      html += `<div class="flex ${rowClass}">
+        <span class="w-10 text-right pr-2 text-xs opacity-40 select-none shrink-0 py-1">${lineNumAStr}</span>
+        <span class="w-10 text-right pr-2 text-xs opacity-40 select-none shrink-0 py-1">${lineNumBStr}</span>
+        <span class="w-4 text-xs opacity-60 select-none shrink-0 py-1">${prefix}</span>
+        <span class="flex-1 py-1 px-2 whitespace-pre-wrap break-all">${escaped || '&nbsp;'}</span>
+      </div>`;
+    });
+
+    diffOutput.innerHTML = html;
+    diffOutput.classList.remove('hidden');
+    diffStats.textContent = `+${added}行 追加, -${deleted}行 削除`;
+    diffStats.classList.remove('hidden');
+  });
+
+  clearBtn.addEventListener('click', () => {
+    originalTA.value = '';
+    modifiedTA.value = '';
+    diffOutput.innerHTML = '';
+    diffOutput.classList.add('hidden');
+    diffStats.classList.add('hidden');
+  });
+</script>

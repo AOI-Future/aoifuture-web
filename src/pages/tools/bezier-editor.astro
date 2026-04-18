@@ -1,0 +1,216 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="BEZIER EDITOR | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 022</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">BEZIER EDITOR</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">CSS cubic-bezierをビジュアルで編集</p>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-8 mb-6">
+        <!-- SVG Canvas -->
+        <div class="flex-shrink-0">
+          <svg id="bezier-svg" width="300" height="300" class="border border-cyan-400/20 bg-black cursor-crosshair select-none">
+            <!-- Grid -->
+            <defs>
+              <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse" x="30" y="30">
+                <path d="M 24 0 L 0 0 0 24" fill="none" stroke="rgba(0,255,255,0.06)" stroke-width="0.5"/>
+              </pattern>
+            </defs>
+            <rect x="30" y="30" width="240" height="240" fill="url(#grid)"/>
+
+            <!-- Axes -->
+            <line x1="30" y1="270" x2="270" y2="270" stroke="rgba(0,255,255,0.2)" stroke-width="1"/>
+            <line x1="30" y1="30" x2="30" y2="270" stroke="rgba(0,255,255,0.2)" stroke-width="1"/>
+
+            <!-- Guide lines -->
+            <line id="line-p1" x1="30" y1="270" x2="102" y2="222" stroke="rgba(0,255,255,0.2)" stroke-width="1" stroke-dasharray="4,4"/>
+            <line id="line-p2" x1="270" y1="30" x2="198" y2="78" stroke="rgba(0,255,255,0.2)" stroke-width="1" stroke-dasharray="4,4"/>
+
+            <!-- Bezier curve -->
+            <path id="bezier-curve" d="M 30 270 C 102 222, 198 78, 270 30" fill="none" stroke="#22d3ee" stroke-width="2"/>
+
+            <!-- Fixed endpoints -->
+            <circle cx="30" cy="270" r="4" fill="#000" stroke="#22d3ee" stroke-width="1.5"/>
+            <circle cx="270" cy="30" r="4" fill="#000" stroke="#22d3ee" stroke-width="1.5"/>
+
+            <!-- Control points -->
+            <circle id="cp1" cx="102" cy="222" r="7" fill="#22d3ee" fill-opacity="0.8" stroke="#22d3ee" stroke-width="1" class="cursor-grab"/>
+            <circle id="cp2" cx="198" cy="78" r="7" fill="#22d3ee" fill-opacity="0.8" stroke="#22d3ee" stroke-width="1" class="cursor-grab"/>
+          </svg>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex-1 space-y-4">
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-xs tracking-widest text-cyan-400/60 block mb-1">X1</label>
+              <input type="number" id="x1" value="0.3" min="0" max="1" step="0.01" class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-2 focus:outline-none focus:border-cyan-400/70 font-mono"/>
+            </div>
+            <div>
+              <label class="text-xs tracking-widest text-cyan-400/60 block mb-1">Y1</label>
+              <input type="number" id="y1" value="0.2" min="-1" max="2" step="0.01" class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-2 focus:outline-none focus:border-cyan-400/70 font-mono"/>
+            </div>
+            <div>
+              <label class="text-xs tracking-widest text-cyan-400/60 block mb-1">X2</label>
+              <input type="number" id="x2" value="0.7" min="0" max="1" step="0.01" class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-2 focus:outline-none focus:border-cyan-400/70 font-mono"/>
+            </div>
+            <div>
+              <label class="text-xs tracking-widest text-cyan-400/60 block mb-1">Y2</label>
+              <input type="number" id="y2" value="0.8" min="-1" max="2" step="0.01" class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-2 focus:outline-none focus:border-cyan-400/70 font-mono"/>
+            </div>
+          </div>
+
+          <div>
+            <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">PRESETS</label>
+            <div class="flex flex-wrap gap-2">
+              <button class="preset-btn px-3 py-1 text-xs border border-cyan-400/30 hover:border-cyan-400/60 text-cyan-400/60 hover:text-cyan-400/80 transition-colors cursor-pointer" data-values="0.25,0.1,0.25,1">ease</button>
+              <button class="preset-btn px-3 py-1 text-xs border border-cyan-400/30 hover:border-cyan-400/60 text-cyan-400/60 hover:text-cyan-400/80 transition-colors cursor-pointer" data-values="0.42,0,1,1">ease-in</button>
+              <button class="preset-btn px-3 py-1 text-xs border border-cyan-400/30 hover:border-cyan-400/60 text-cyan-400/60 hover:text-cyan-400/80 transition-colors cursor-pointer" data-values="0,0,0.58,1">ease-out</button>
+              <button class="preset-btn px-3 py-1 text-xs border border-cyan-400/30 hover:border-cyan-400/60 text-cyan-400/60 hover:text-cyan-400/80 transition-colors cursor-pointer" data-values="0.42,0,0.58,1">ease-in-out</button>
+              <button class="preset-btn px-3 py-1 text-xs border border-cyan-400/30 hover:border-cyan-400/60 text-cyan-400/60 hover:text-cyan-400/80 transition-colors cursor-pointer" data-values="0,0,1,1">linear</button>
+            </div>
+          </div>
+
+          <div>
+            <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">CSS OUTPUT</label>
+            <div class="flex items-center gap-2">
+              <input type="text" id="css-output" readonly class="flex-1 bg-black border border-cyan-400/20 text-cyan-400/80 text-sm p-2 font-mono"/>
+              <button id="copy-btn" class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer">COPY</button>
+            </div>
+            <p id="copy-feedback" class="text-xs text-cyan-400/40 mt-1 transition-opacity opacity-0">Copied.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Animation Preview -->
+      <div class="mb-4">
+        <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">ANIMATION PREVIEW</label>
+        <div id="anim-track" class="relative h-10 bg-cyan-400/10 border border-cyan-400/20 mb-3 overflow-hidden">
+          <div id="anim-ball" class="absolute top-1 left-1 w-8 h-8 bg-cyan-400 rounded-full"></div>
+        </div>
+        <button id="play-btn" class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer">PLAY</button>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  let x1 = 0.3, y1 = 0.2, x2 = 0.7, y2 = 0.8;
+
+  const svgEl = document.getElementById('bezier-svg') as unknown as SVGSVGElement;
+  const cp1El = document.getElementById('cp1') as unknown as SVGCircleElement;
+  const cp2El = document.getElementById('cp2') as unknown as SVGCircleElement;
+  const curveEl = document.getElementById('bezier-curve') as unknown as SVGPathElement;
+  const line1El = document.getElementById('line-p1') as unknown as SVGLineElement;
+  const line2El = document.getElementById('line-p2') as unknown as SVGLineElement;
+  const cssOutput = document.getElementById('css-output') as HTMLInputElement;
+  const copyBtn = document.getElementById('copy-btn')!;
+  const copyFeedback = document.getElementById('copy-feedback')!;
+  const playBtn = document.getElementById('play-btn')!;
+  const animBall = document.getElementById('anim-ball')!;
+
+  const x1Input = document.getElementById('x1') as HTMLInputElement;
+  const y1Input = document.getElementById('y1') as HTMLInputElement;
+  const x2Input = document.getElementById('x2') as HTMLInputElement;
+  const y2Input = document.getElementById('y2') as HTMLInputElement;
+
+  function toSvgX(v: number) { return 30 + v * 240; }
+  function toSvgY(v: number) { return 270 - v * 240; }
+  function fromSvgX(s: number) { return (s - 30) / 240; }
+  function fromSvgY(s: number) { return (270 - s) / 240; }
+
+  function updateUI() {
+    const sx1 = toSvgX(x1), sy1 = toSvgY(y1);
+    const sx2 = toSvgX(x2), sy2 = toSvgY(y2);
+
+    cp1El.setAttribute('cx', String(sx1));
+    cp1El.setAttribute('cy', String(sy1));
+    cp2El.setAttribute('cx', String(sx2));
+    cp2El.setAttribute('cy', String(sy2));
+
+    curveEl.setAttribute('d', `M 30 270 C ${sx1} ${sy1}, ${sx2} ${sy2}, 270 30`);
+
+    line1El.setAttribute('x2', String(sx1));
+    line1El.setAttribute('y2', String(sy1));
+    line2El.setAttribute('x2', String(sx2));
+    line2El.setAttribute('y2', String(sy2));
+
+    const r = (v: number) => Math.round(v * 100) / 100;
+    cssOutput.value = `cubic-bezier(${r(x1)}, ${r(y1)}, ${r(x2)}, ${r(y2)})`;
+
+    x1Input.value = String(r(x1));
+    y1Input.value = String(r(y1));
+    x2Input.value = String(r(x2));
+    y2Input.value = String(r(y2));
+  }
+
+  // Drag logic
+  let dragging: 'cp1' | 'cp2' | null = null;
+
+  function getSvgPoint(e: MouseEvent) {
+    const rect = (svgEl as unknown as Element).getBoundingClientRect();
+    return {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    };
+  }
+
+  cp1El.addEventListener('mousedown', (e) => { dragging = 'cp1'; e.preventDefault(); });
+  cp2El.addEventListener('mousedown', (e) => { dragging = 'cp2'; e.preventDefault(); });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    const pt = getSvgPoint(e);
+    const nx = Math.max(0, Math.min(1, fromSvgX(pt.x)));
+    const ny = fromSvgY(pt.y);
+    if (dragging === 'cp1') { x1 = nx; y1 = ny; }
+    else { x2 = nx; y2 = ny; }
+    updateUI();
+  });
+
+  document.addEventListener('mouseup', () => { dragging = null; });
+
+  // Number inputs
+  [x1Input, y1Input, x2Input, y2Input].forEach((inp) => {
+    inp.addEventListener('input', () => {
+      x1 = Math.max(0, Math.min(1, parseFloat(x1Input.value) || 0));
+      y1 = parseFloat(y1Input.value) || 0;
+      x2 = Math.max(0, Math.min(1, parseFloat(x2Input.value) || 0));
+      y2 = parseFloat(y2Input.value) || 0;
+      updateUI();
+    });
+  });
+
+  // Presets
+  document.querySelectorAll('.preset-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const vals = (btn as HTMLElement).dataset.values!.split(',').map(Number);
+      [x1, y1, x2, y2] = vals;
+      updateUI();
+    });
+  });
+
+  // Copy
+  copyBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(cssOutput.value).then(() => {
+      copyFeedback.style.opacity = '1';
+      setTimeout(() => { copyFeedback.style.opacity = '0'; }, 1500);
+    });
+  });
+
+  // Play animation
+  playBtn.addEventListener('click', () => {
+    const r = (v: number) => Math.round(v * 100) / 100;
+    animBall.animate(
+      [{ left: '4px' }, { left: 'calc(100% - 36px)' }],
+      { duration: 1000, easing: `cubic-bezier(${r(x1)},${r(y1)},${r(x2)},${r(y2)})`, fill: 'both' }
+    );
+  });
+
+  updateUI();
+</script>

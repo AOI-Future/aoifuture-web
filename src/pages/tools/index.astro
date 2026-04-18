@@ -2,51 +2,63 @@
 import Layout from '../../layouts/Layout.astro';
 
 const tools = [
-  {
-    id: '001',
-    name: 'URL EXTRACTOR',
-    desc: 'テキストからhttp/https URLを抽出',
-    href: '/tools/url-extractor',
-  },
+  { id: '001', slug: 'url-extractor',          name: 'URL EXTRACTOR',        desc: 'テキストからhttp/https URLを抽出' },
+  { id: '002', slug: 'char-counter',            name: 'CHAR COUNTER',         desc: '文字数・単語数・行数をカウント' },
+  { id: '003', slug: 'json-formatter',          name: 'JSON FORMATTER',       desc: 'JSON整形・バリデーション・minify' },
+  { id: '004', slug: 'markdown-preview',        name: 'MARKDOWN PREVIEW',     desc: 'Markdownをリアルタイムプレビュー' },
+  { id: '005', slug: 'slug-generator',          name: 'SLUG GENERATOR',       desc: 'テキストをURLスラッグに変換' },
+  { id: '006', slug: 'base64',                  name: 'BASE64',               desc: 'テキストのBase64エンコード・デコード' },
+  { id: '007', slug: 'color-converter',         name: 'COLOR CONVERTER',      desc: 'HEX / RGB / HSL 相互変換' },
+  { id: '008', slug: 'contrast-checker',        name: 'CONTRAST CHECKER',     desc: 'WCAGコントラスト比を計算' },
+  { id: '009', slug: 'gradient-generator',      name: 'GRADIENT GENERATOR',   desc: 'CSSグラデーションを生成' },
+  { id: '010', slug: 'color-palette',           name: 'COLOR PALETTE',        desc: '画像から主要カラーを抽出' },
+  { id: '011', slug: 'box-shadow-generator',    name: 'BOX SHADOW',           desc: 'CSSボックスシャドウを生成' },
+  { id: '012', slug: 'px-converter',            name: 'PX / REM CONVERTER',   desc: 'px・rem・em・ptの相互変換' },
+  { id: '013', slug: 'aspect-ratio',            name: 'ASPECT RATIO',         desc: 'アスペクト比・サイズを計算' },
+  { id: '014', slug: 'typography-scale',        name: 'TYPOGRAPHY SCALE',     desc: 'モジュラースケールでフォントサイズを生成' },
+  { id: '015', slug: 'image-resizer',           name: 'IMAGE RESIZER',        desc: 'ブラウザで画像をリサイズ・変換' },
+  { id: '016', slug: 'svg-cleaner',             name: 'SVG CLEANER',          desc: 'SVGコードを最適化・クリーニング' },
+  { id: '017', slug: 'qr-generator',            name: 'QR GENERATOR',         desc: 'テキスト・URLからQRコードを生成' },
+  { id: '018', slug: 'timestamp-converter',     name: 'TIMESTAMP',            desc: 'UnixタイムスタンプをISO/JSTに変換' },
+  { id: '019', slug: 'uuid-generator',          name: 'UUID GENERATOR',       desc: 'UUID v4を生成' },
+  { id: '020', slug: 'regex-tester',            name: 'REGEX TESTER',         desc: '正規表現をテスト・デバッグ' },
+  { id: '021', slug: 'lorem-ipsum',             name: 'LOREM IPSUM',          desc: '日本語/英語ダミーテキストを生成' },
+  { id: '022', slug: 'bezier-editor',           name: 'BEZIER EDITOR',        desc: 'CSS cubic-bezierをビジュアルで編集' },
+  { id: '023', slug: 'emoji-search',            name: 'EMOJI SEARCH',         desc: '絵文字をキーワードで検索してコピー' },
+  { id: '024', slug: 'text-diff',               name: 'TEXT DIFF',            desc: '2テキストの差分をハイライト表示' },
+  { id: '025', slug: 'dummy-data',              name: 'DUMMY DATA',           desc: '日本語ダミーデータを生成' },
+  { id: '026', slug: 'border-radius-generator', name: 'BORDER RADIUS',        desc: 'CSS border-radiusをビジュアルで生成' },
+  { id: '027', slug: 'image-color-picker',      name: 'IMAGE COLOR PICKER',   desc: '画像の任意ピクセルのカラーコードを取得' },
+  { id: '028', slug: 'password-generator',      name: 'PASSWORD GENERATOR',   desc: '安全なパスワードを生成' },
+  { id: '029', slug: 'typography-preview',      name: 'TYPOGRAPHY PREVIEW',   desc: 'フォントプロパティをリアルタイム調整' },
+  { id: '030', slug: 'css-animation-preview',   name: 'CSS ANIMATION',        desc: 'トランジション・イージングをプレビュー' },
 ];
 ---
 
 <Layout title="Tools | AOI">
   <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
-
-    <!-- Back Button -->
-    <a
-      href="/"
-      class="fixed top-4 left-4 md:top-6 md:left-6 z-50
-             px-3 py-2 text-sm
-             border border-cyan-400/50 bg-black/50
-             text-cyan-400 font-mono tracking-widest
-             hover:bg-cyan-400/10 hover:border-cyan-400
-             transition-colors duration-300"
-    >
-      {'<'} BACK
-    </a>
+    <a href="/" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} BACK</a>
 
     <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
       <div class="mb-10">
         <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOIFUTURE</p>
         <h1 class="text-2xl tracking-widest text-cyan-400">TOOLS</h1>
-        <p class="text-cyan-400/50 text-sm mt-1">地味に効くやつら</p>
+        <p class="text-cyan-400/50 text-sm mt-1">地味に効くやつら — {tools.length} tools</p>
       </div>
 
       <div class="space-y-px">
         {tools.map(tool => (
           <a
-            href={tool.href}
-            class="flex items-center gap-4 px-4 py-4 border border-cyan-400/20
+            href={`/tools/${tool.slug}`}
+            class="flex items-center gap-4 px-4 py-3 border border-cyan-400/20
                    hover:border-cyan-400/60 hover:bg-cyan-400/5 transition-colors group"
           >
             <span class="text-cyan-400/30 text-xs w-8 shrink-0">{tool.id}</span>
-            <div class="flex-1">
+            <div class="flex-1 min-w-0">
               <p class="text-sm tracking-widest group-hover:text-cyan-300 transition-colors">{tool.name}</p>
-              <p class="text-xs text-cyan-400/40 mt-0.5">{tool.desc}</p>
+              <p class="text-xs text-cyan-400/40 mt-0.5 truncate">{tool.desc}</p>
             </div>
-            <span class="text-cyan-400/30 text-xs group-hover:text-cyan-400/60 transition-colors">→</span>
+            <span class="text-cyan-400/30 text-xs group-hover:text-cyan-400/60 transition-colors shrink-0">→</span>
           </a>
         ))}
       </div>

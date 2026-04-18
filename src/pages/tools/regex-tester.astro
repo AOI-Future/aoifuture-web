@@ -1,0 +1,189 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="REGEX TESTER | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 020</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">REGEX TESTER</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">正規表現をテスト・デバッグ</p>
+      </div>
+
+      <div class="space-y-5">
+        <!-- Pattern Input -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">PATTERN</label>
+          <input type="text" id="pattern" placeholder="/pattern/"
+            class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono" />
+          <p id="error-msg" class="text-red-400 text-xs mt-1 hidden"></p>
+        </div>
+
+        <!-- Flags -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">FLAGS</label>
+          <div class="flex gap-4">
+            {['g', 'i', 'm', 's'].map(flag => (
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="flag-check accent-cyan-400 w-4 h-4" value={flag} checked={flag === 'g'} />
+                <span class="text-sm text-cyan-400/70 tracking-widest">{flag}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <!-- Test String -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <label class="text-xs tracking-widest text-cyan-400/60">TEST STRING</label>
+            <button id="clear-btn" class="px-3 py-1 text-xs border border-cyan-400/20 text-cyan-400/40 hover:border-cyan-400/50 hover:text-cyan-400/70 transition-colors tracking-widest cursor-pointer">
+              CLEAR
+            </button>
+          </div>
+          <textarea id="test-string" rows="8" placeholder="Enter test string here..."
+            class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono h-48 resize-none"></textarea>
+        </div>
+
+        <!-- Highlight Preview -->
+        <div id="highlight-container" class="hidden">
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">MATCH HIGHLIGHT</label>
+          <div id="highlight-output"
+            class="w-full bg-black border border-cyan-400/20 text-cyan-400/80 text-sm p-3 font-mono whitespace-pre-wrap break-all min-h-16 leading-relaxed"></div>
+        </div>
+
+        <!-- Match Results -->
+        <div id="match-results" class="hidden border border-cyan-400/20 p-4 space-y-3">
+          <p id="match-count" class="text-xs tracking-widest text-cyan-400/60"></p>
+          <div id="match-list" class="space-y-2 max-h-64 overflow-y-auto"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  function getPattern(): RegExp | null {
+    const patternInput = (document.getElementById('pattern') as HTMLInputElement).value.trim();
+    const errorMsg = document.getElementById('error-msg') as HTMLElement;
+
+    if (!patternInput) {
+      errorMsg.classList.add('hidden');
+      return null;
+    }
+
+    // Strip wrapping slashes if present
+    let src = patternInput;
+    if (src.startsWith('/')) {
+      const lastSlash = src.lastIndexOf('/');
+      if (lastSlash > 0) {
+        src = src.slice(1, lastSlash);
+      } else {
+        src = src.slice(1);
+      }
+    }
+
+    const flags = [...document.querySelectorAll('.flag-check')]
+      .filter(el => (el as HTMLInputElement).checked)
+      .map(el => (el as HTMLInputElement).value)
+      .join('');
+
+    try {
+      const regex = new RegExp(src, flags);
+      errorMsg.classList.add('hidden');
+      return regex;
+    } catch (e) {
+      errorMsg.textContent = (e as Error).message;
+      errorMsg.classList.remove('hidden');
+      return null;
+    }
+  }
+
+  function runTest() {
+    const testStr = (document.getElementById('test-string') as HTMLTextAreaElement).value;
+    const regex = getPattern();
+    const highlightContainer = document.getElementById('highlight-container') as HTMLElement;
+    const highlightOutput = document.getElementById('highlight-output') as HTMLElement;
+    const matchResults = document.getElementById('match-results') as HTMLElement;
+    const matchCount = document.getElementById('match-count') as HTMLElement;
+    const matchList = document.getElementById('match-list') as HTMLElement;
+
+    if (!regex || !testStr) {
+      highlightContainer.classList.add('hidden');
+      matchResults.classList.add('hidden');
+      return;
+    }
+
+    // Find matches
+    const matches: Array<{ index: number; value: string; groups: string[] }> = [];
+    let m: RegExpExecArray | null;
+
+    // Clone regex to avoid state issues
+    const src = regex.source;
+    const flags = regex.flags.includes('g') ? regex.flags : regex.flags + 'g';
+    const gRegex = new RegExp(src, flags);
+
+    while ((m = gRegex.exec(testStr)) !== null) {
+      matches.push({
+        index: m.index,
+        value: m[0],
+        groups: m.slice(1),
+      });
+      if (!flags.includes('g') || m[0].length === 0) break;
+    }
+
+    // Highlight
+    highlightContainer.classList.remove('hidden');
+    if (matches.length === 0) {
+      highlightOutput.innerHTML = `<span class="text-cyan-400/50">${escapeHtml(testStr)}</span>`;
+    } else {
+      let html = '';
+      let lastIdx = 0;
+      for (const match of matches) {
+        if (match.index > lastIdx) {
+          html += `<span class="text-cyan-400/50">${escapeHtml(testStr.slice(lastIdx, match.index))}</span>`;
+        }
+        html += `<mark class="bg-cyan-400/30 text-cyan-300">${escapeHtml(match.value)}</mark>`;
+        lastIdx = match.index + match.value.length;
+      }
+      if (lastIdx < testStr.length) {
+        html += `<span class="text-cyan-400/50">${escapeHtml(testStr.slice(lastIdx))}</span>`;
+      }
+      highlightOutput.innerHTML = html;
+    }
+
+    // Match results
+    matchResults.classList.remove('hidden');
+    matchCount.textContent = `${matches.length} match${matches.length !== 1 ? 'es' : ''}`;
+    matchList.innerHTML = matches.map((match, i) => `
+      <div class="border border-cyan-400/10 p-2 text-xs space-y-1">
+        <div class="flex gap-3">
+          <span class="text-cyan-400/40">MATCH ${i + 1}</span>
+          <span class="text-cyan-400/80">"${escapeHtml(match.value)}"</span>
+          <span class="text-cyan-400/30">index: ${match.index}</span>
+        </div>
+        ${match.groups.length > 0 ? `
+          <div class="pl-4 text-cyan-400/40">
+            ${match.groups.map((g, gi) => `<span>Group ${gi + 1}: "${escapeHtml(g || '')}"</span>`).join(' ')}
+          </div>
+        ` : ''}
+      </div>
+    `).join('');
+  }
+
+  function escapeHtml(str: string): string {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  document.getElementById('pattern')?.addEventListener('input', runTest);
+  document.getElementById('test-string')?.addEventListener('input', runTest);
+  document.querySelectorAll('.flag-check').forEach(el => el.addEventListener('change', runTest));
+
+  document.getElementById('clear-btn')?.addEventListener('click', () => {
+    (document.getElementById('test-string') as HTMLTextAreaElement).value = '';
+    (document.getElementById('pattern') as HTMLInputElement).value = '';
+    (document.getElementById('highlight-container') as HTMLElement).classList.add('hidden');
+    (document.getElementById('match-results') as HTMLElement).classList.add('hidden');
+    (document.getElementById('error-msg') as HTMLElement).classList.add('hidden');
+  });
+</script>

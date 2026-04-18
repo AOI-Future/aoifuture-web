@@ -1,0 +1,111 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="UUID GENERATOR | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 019</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">UUID GENERATOR</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">UUID v4を生成</p>
+      </div>
+
+      <div class="space-y-6">
+        <!-- Count -->
+        <div class="flex items-center gap-4">
+          <div>
+            <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">COUNT</label>
+            <input type="number" id="uuid-count" value="1" min="1" max="100"
+              class="bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-2 focus:outline-none focus:border-cyan-400/70 font-mono w-24" />
+          </div>
+          <div class="pt-6">
+            <button id="generate-btn" class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer">
+              GENERATE
+            </button>
+          </div>
+        </div>
+
+        <!-- UUID Count Display -->
+        <p id="uuid-count-display" class="text-xs text-cyan-400/40 tracking-widest hidden"></p>
+
+        <!-- UUID List (clickable) -->
+        <div id="uuid-list" class="hidden space-y-1">
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">CLICK TO COPY EACH</label>
+          <div id="uuid-items"></div>
+        </div>
+
+        <!-- Textarea output -->
+        <div id="uuid-output-container" class="hidden">
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">ALL UUIDs</label>
+          <textarea id="uuid-output" readonly
+            class="w-full bg-black border border-cyan-400/20 text-cyan-400/80 text-sm p-3 font-mono resize-none"></textarea>
+          <p id="copy-msg" class="text-xs text-cyan-400/40 mt-1 transition-opacity opacity-0">Copied.</p>
+        </div>
+
+        <button id="copy-all-btn" class="hidden px-4 py-2 text-sm border border-cyan-400/20 text-cyan-400/50 hover:border-cyan-400/50 hover:text-cyan-400/80 transition-colors tracking-widest cursor-pointer">
+          COPY ALL
+        </button>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  let generatedUUIDs: string[] = [];
+
+  document.getElementById('generate-btn')?.addEventListener('click', () => {
+    const count = Math.min(100, Math.max(1, parseInt((document.getElementById('uuid-count') as HTMLInputElement).value) || 1));
+
+    generatedUUIDs = Array.from({ length: count }, () => crypto.randomUUID());
+
+    // Count display
+    const countDisplay = document.getElementById('uuid-count-display') as HTMLElement;
+    countDisplay.textContent = `${count} UUID${count > 1 ? 's' : ''} generated`;
+    countDisplay.classList.remove('hidden');
+
+    // List
+    const listEl = document.getElementById('uuid-list') as HTMLElement;
+    const itemsEl = document.getElementById('uuid-items') as HTMLElement;
+    listEl.classList.remove('hidden');
+
+    itemsEl.innerHTML = generatedUUIDs.map((uuid, i) => `
+      <div class="uuid-item flex items-center justify-between border border-cyan-400/10 p-2 hover:border-cyan-400/30 cursor-pointer transition-colors group" data-uuid="${uuid}" data-index="${i}">
+        <span class="text-sm text-cyan-400/70 group-hover:text-cyan-400/90 transition-colors">${uuid}</span>
+        <span class="text-xs text-cyan-400/20 group-hover:text-cyan-400/50 ml-2 tracking-widest transition-colors">COPY</span>
+      </div>
+    `).join('');
+
+    // Textarea
+    const outputContainer = document.getElementById('uuid-output-container') as HTMLElement;
+    const outputTextarea = document.getElementById('uuid-output') as HTMLTextAreaElement;
+    outputContainer.classList.remove('hidden');
+    outputTextarea.value = generatedUUIDs.join('\n');
+    outputTextarea.style.height = 'auto';
+    outputTextarea.style.height = `${Math.min(400, outputTextarea.scrollHeight)}px`;
+
+    // Copy all button
+    (document.getElementById('copy-all-btn') as HTMLElement).classList.remove('hidden');
+
+    // Individual copy handlers
+    document.querySelectorAll('.uuid-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const uuid = (item as HTMLElement).dataset.uuid || '';
+        navigator.clipboard.writeText(uuid).then(() => {
+          const span = item.querySelector('span:last-child') as HTMLElement;
+          const orig = span.textContent;
+          span.textContent = 'COPIED';
+          setTimeout(() => { span.textContent = orig; }, 1500);
+        });
+      });
+    });
+  });
+
+  document.getElementById('copy-all-btn')?.addEventListener('click', () => {
+    navigator.clipboard.writeText(generatedUUIDs.join('\n')).then(() => {
+      const msg = document.getElementById('copy-msg') as HTMLElement;
+      msg.style.opacity = '1';
+      setTimeout(() => { msg.style.opacity = '0'; }, 1500);
+    });
+  });
+</script>

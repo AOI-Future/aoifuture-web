@@ -1,0 +1,154 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="SVG CLEANER | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 016</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">SVG CLEANER</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">SVGコードを最適化・クリーニング</p>
+      </div>
+
+      <div class="space-y-6">
+        <!-- Input -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">SVG INPUT</label>
+          <textarea id="svg-input" rows="12" placeholder="<svg>...</svg>"
+            class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono h-48 resize-none"></textarea>
+        </div>
+
+        <!-- Options -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-3">OPTIONS</label>
+          <div class="grid grid-cols-2 gap-2">
+            {[
+              { id: 'rm-ids', label: 'id属性を削除' },
+              { id: 'rm-classes', label: 'class属性を削除' },
+              { id: 'rm-comments', label: 'コメントを削除' },
+              { id: 'rm-data', label: 'data-* 属性を削除' },
+              { id: 'rm-style', label: 'style属性を削除' },
+              { id: 'rm-empty-groups', label: '空のグループを削除' },
+              { id: 'rm-xlink', label: 'xmlns:xlink を削除' },
+            ].map(opt => (
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id={opt.id} checked class="accent-cyan-400 w-4 h-4" />
+                <span class="text-sm text-cyan-400/70 tracking-widest">{opt.label}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <button id="clean-btn" class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer">
+          CLEAN
+        </button>
+
+        <!-- Stats -->
+        <div id="stats" class="hidden text-xs text-cyan-400/50 tracking-widest"></div>
+
+        <!-- Output -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">OUTPUT</label>
+          <textarea id="svg-output" readonly rows="12"
+            class="w-full bg-black border border-cyan-400/20 text-cyan-400/80 text-sm p-3 font-mono h-48 resize-none"></textarea>
+          <p id="copy-msg" class="text-xs text-cyan-400/40 mt-1 transition-opacity opacity-0">Copied.</p>
+        </div>
+
+        <button id="copy-btn" class="px-4 py-2 text-sm border border-cyan-400/20 text-cyan-400/50 hover:border-cyan-400/50 hover:text-cyan-400/80 transition-colors tracking-widest cursor-pointer">
+          COPY
+        </button>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  interface Options {
+    removeIds: boolean;
+    removeClasses: boolean;
+    removeComments: boolean;
+    removeDataAttrs: boolean;
+    removeStyle: boolean;
+    removeEmptyGroups: boolean;
+    removeXlink: boolean;
+  }
+
+  function cleanSvg(svg: string, opts: Options): string {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(svg, 'image/svg+xml');
+
+    const parseError = doc.querySelector('parsererror');
+    if (parseError) throw new Error('Invalid SVG');
+
+    if (opts.removeIds) doc.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+    if (opts.removeClasses) doc.querySelectorAll('[class]').forEach(el => el.removeAttribute('class'));
+
+    if (opts.removeComments) {
+      const walker = document.createTreeWalker(doc as any, NodeFilter.SHOW_COMMENT);
+      const comments: Node[] = [];
+      while (walker.nextNode()) comments.push(walker.currentNode);
+      comments.forEach(c => c.parentNode?.removeChild(c));
+    }
+
+    if (opts.removeDataAttrs) {
+      doc.querySelectorAll('*').forEach(el => {
+        [...el.attributes].filter(a => a.name.startsWith('data-')).forEach(a => el.removeAttribute(a.name));
+      });
+    }
+
+    if (opts.removeStyle) doc.querySelectorAll('[style]').forEach(el => el.removeAttribute('style'));
+    if (opts.removeEmptyGroups) doc.querySelectorAll('g:empty').forEach(el => el.remove());
+
+    if (opts.removeXlink) {
+      const svgEl = doc.documentElement;
+      svgEl.removeAttribute('xmlns:xlink');
+      doc.querySelectorAll('*').forEach(el => {
+        [...el.attributes].filter(a => a.name.startsWith('xlink:')).forEach(a => el.removeAttribute(a.name));
+      });
+    }
+
+    const serializer = new XMLSerializer();
+    return serializer.serializeToString(doc.documentElement);
+  }
+
+  document.getElementById('clean-btn')?.addEventListener('click', () => {
+    const input = (document.getElementById('svg-input') as HTMLTextAreaElement).value.trim();
+    if (!input) return;
+
+    const opts: Options = {
+      removeIds: (document.getElementById('rm-ids') as HTMLInputElement).checked,
+      removeClasses: (document.getElementById('rm-classes') as HTMLInputElement).checked,
+      removeComments: (document.getElementById('rm-comments') as HTMLInputElement).checked,
+      removeDataAttrs: (document.getElementById('rm-data') as HTMLInputElement).checked,
+      removeStyle: (document.getElementById('rm-style') as HTMLInputElement).checked,
+      removeEmptyGroups: (document.getElementById('rm-empty-groups') as HTMLInputElement).checked,
+      removeXlink: (document.getElementById('rm-xlink') as HTMLInputElement).checked,
+    };
+
+    try {
+      const output = cleanSvg(input, opts);
+      (document.getElementById('svg-output') as HTMLTextAreaElement).value = output;
+
+      const beforeBytes = new Blob([input]).size;
+      const afterBytes = new Blob([output]).size;
+      const saved = beforeBytes - afterBytes;
+      const pct = beforeBytes > 0 ? Math.round(saved / beforeBytes * 100) : 0;
+      const stats = document.getElementById('stats') as HTMLElement;
+      stats.classList.remove('hidden');
+      stats.textContent = `Before: ${beforeBytes} bytes → After: ${afterBytes} bytes (-${pct}%)`;
+    } catch (e) {
+      (document.getElementById('svg-output') as HTMLTextAreaElement).value = 'Error: ' + (e as Error).message;
+    }
+  });
+
+  document.getElementById('copy-btn')?.addEventListener('click', () => {
+    const output = (document.getElementById('svg-output') as HTMLTextAreaElement).value;
+    if (!output) return;
+    navigator.clipboard.writeText(output).then(() => {
+      const msg = document.getElementById('copy-msg') as HTMLElement;
+      msg.style.opacity = '1';
+      setTimeout(() => { msg.style.opacity = '0'; }, 1500);
+    });
+  });
+</script>

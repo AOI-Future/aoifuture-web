@@ -1,0 +1,147 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Border Radius | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 026</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">BORDER RADIUS</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">CSS border-radiusをビジュアルで生成</p>
+      </div>
+
+      <!-- Preview -->
+      <div class="flex justify-center my-8">
+        <div id="preview-box" class="w-48 h-48 bg-cyan-400/20 border-2 border-cyan-400/50 transition-all duration-200"></div>
+      </div>
+
+      <!-- Master slider -->
+      <div class="mb-6">
+        <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">ALL CORNERS</label>
+        <div class="flex items-center gap-3">
+          <input type="range" id="master" min="0" max="50" value="0" class="w-full accent-cyan-400 cursor-pointer">
+          <span id="master-val" class="text-cyan-400/80 text-sm w-12 text-right">0%</span>
+        </div>
+      </div>
+
+      <!-- Individual sliders -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        {[
+          { id: 'tl', label: 'TOP LEFT' },
+          { id: 'tr', label: 'TOP RIGHT' },
+          { id: 'bl', label: 'BOTTOM LEFT' },
+          { id: 'br', label: 'BOTTOM RIGHT' },
+        ].map(({ id, label }) => (
+          <div>
+            <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">{label}</label>
+            <div class="flex items-center gap-3">
+              <input type="range" id={id} min="0" max="50" value="0" class="w-full accent-cyan-400 cursor-pointer">
+              <span id={`${id}-val`} class="text-cyan-400/80 text-sm w-12 text-right">0%</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Unit toggle -->
+      <div class="flex gap-2 mb-6">
+        <span class="text-xs tracking-widest text-cyan-400/60 self-center">UNIT:</span>
+        <button id="unit-pct" class="px-3 py-1 text-xs border border-cyan-400/60 bg-cyan-400/10 tracking-widest cursor-pointer">%</button>
+        <button id="unit-px" class="px-3 py-1 text-xs border border-cyan-400/20 text-cyan-400/50 tracking-widest cursor-pointer">px</button>
+      </div>
+
+      <!-- Presets -->
+      <div class="flex gap-2 flex-wrap mb-6">
+        <span class="text-xs tracking-widest text-cyan-400/60 self-center">PRESETS:</span>
+        {[
+          { label: 'none', values: [0,0,0,0] },
+          { label: 'card', values: [4,4,4,4] },
+          { label: 'pill', values: [50,50,50,50] },
+        ].map(({ label, values }) => (
+          <button class="preset-btn px-3 py-1 text-xs border border-cyan-400/20 text-cyan-400/50 hover:border-cyan-400/50 hover:text-cyan-400/80 transition-colors tracking-widest cursor-pointer" data-values={values.join(',')}>
+            {label}
+          </button>
+        ))}
+      </div>
+
+      <!-- Output -->
+      <div class="mb-2">
+        <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">CSS OUTPUT</label>
+        <div class="flex gap-2 items-start">
+          <input id="css-output" readonly class="flex-1 bg-black border border-cyan-400/20 text-cyan-400/80 text-sm p-3 font-mono focus:outline-none" value="">
+          <button id="copy-btn" class="px-4 py-3 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer shrink-0">COPY</button>
+        </div>
+        <p id="copy-msg" class="text-xs text-cyan-400/40 mt-1 opacity-0 transition-opacity">Copied.</p>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const sliders = {
+    tl: document.getElementById('tl') as HTMLInputElement,
+    tr: document.getElementById('tr') as HTMLInputElement,
+    bl: document.getElementById('bl') as HTMLInputElement,
+    br: document.getElementById('br') as HTMLInputElement,
+  };
+  const master = document.getElementById('master') as HTMLInputElement;
+  const preview = document.getElementById('preview-box') as HTMLDivElement;
+  const output = document.getElementById('css-output') as HTMLInputElement;
+  const copyMsg = document.getElementById('copy-msg')!;
+  let unit = '%';
+
+  function update() {
+    const vals = {
+      tl: +sliders.tl.value,
+      tr: +sliders.tr.value,
+      bl: +sliders.bl.value,
+      br: +sliders.br.value,
+    };
+    const u = unit;
+    const css = `border-radius: ${vals.tl}${u} ${vals.tr}${u} ${vals.br}${u} ${vals.bl}${u}`;
+    preview.style.borderRadius = `${vals.tl}${u} ${vals.tr}${u} ${vals.br}${u} ${vals.bl}${u}`;
+    output.value = css;
+    Object.entries(vals).forEach(([k, v]) => {
+      document.getElementById(`${k}-val`)!.textContent = `${v}${u}`;
+    });
+    document.getElementById('master-val')!.textContent = `${master.value}${u}`;
+  }
+
+  master.addEventListener('input', () => {
+    Object.values(sliders).forEach(s => s.value = master.value);
+    update();
+  });
+  Object.values(sliders).forEach(s => s.addEventListener('input', update));
+
+  document.querySelectorAll<HTMLButtonElement>('.preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const [tl, tr, bl, br] = btn.dataset.values!.split(',').map(Number);
+      sliders.tl.value = String(tl); sliders.tr.value = String(tr);
+      sliders.bl.value = String(bl); sliders.br.value = String(br);
+      master.value = String(tl);
+      update();
+    });
+  });
+
+  document.getElementById('unit-pct')!.addEventListener('click', () => {
+    unit = '%';
+    document.getElementById('unit-pct')!.className = 'px-3 py-1 text-xs border border-cyan-400/60 bg-cyan-400/10 tracking-widest cursor-pointer';
+    document.getElementById('unit-px')!.className = 'px-3 py-1 text-xs border border-cyan-400/20 text-cyan-400/50 tracking-widest cursor-pointer';
+    update();
+  });
+  document.getElementById('unit-px')!.addEventListener('click', () => {
+    unit = 'px';
+    document.getElementById('unit-px')!.className = 'px-3 py-1 text-xs border border-cyan-400/60 bg-cyan-400/10 tracking-widest cursor-pointer';
+    document.getElementById('unit-pct')!.className = 'px-3 py-1 text-xs border border-cyan-400/20 text-cyan-400/50 tracking-widest cursor-pointer';
+    update();
+  });
+
+  document.getElementById('copy-btn')!.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(output.value);
+    copyMsg.style.opacity = '1';
+    setTimeout(() => copyMsg.style.opacity = '0', 1500);
+  });
+
+  update();
+</script>

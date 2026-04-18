@@ -1,0 +1,100 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="JSON FORMATTER | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 003</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">JSON FORMATTER</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">JSON整形・バリデーション・minify</p>
+      </div>
+
+      <div class="mb-4">
+        <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">INPUT</label>
+        <textarea
+          id="json-input"
+          class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono h-48 resize-none"
+          placeholder='{"key": "value"}'
+        ></textarea>
+      </div>
+
+      <div class="flex gap-2 mb-4">
+        <button id="format-btn" class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer">FORMAT</button>
+        <button id="minify-btn" class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer">MINIFY</button>
+        <button id="clear-btn" class="px-4 py-2 text-sm border border-cyan-400/20 text-cyan-400/50 hover:border-cyan-400/50 hover:text-cyan-400/80 transition-colors tracking-widest cursor-pointer">CLEAR</button>
+      </div>
+
+      <p id="error-msg" class="text-red-400 text-xs mt-2 mb-2 hidden"></p>
+
+      <div class="mb-4">
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-xs tracking-widest text-cyan-400/60">OUTPUT</label>
+          <button id="copy-btn" class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer">COPY</button>
+        </div>
+        <textarea
+          id="json-output"
+          readonly
+          class="w-full bg-black border border-cyan-400/20 text-cyan-400/80 text-sm p-3 font-mono h-48 resize-none"
+        ></textarea>
+        <p id="copy-feedback" class="text-xs text-cyan-400/40 mt-1 transition-opacity opacity-0">Copied.</p>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const jsonInput = document.getElementById('json-input') as HTMLTextAreaElement;
+  const jsonOutput = document.getElementById('json-output') as HTMLTextAreaElement;
+  const errorMsg = document.getElementById('error-msg')!;
+  const copyFeedback = document.getElementById('copy-feedback')!;
+  const formatBtn = document.getElementById('format-btn')!;
+  const minifyBtn = document.getElementById('minify-btn')!;
+  const clearBtn = document.getElementById('clear-btn')!;
+  const copyBtn = document.getElementById('copy-btn')!;
+
+  function showError(msg: string) {
+    errorMsg.textContent = msg;
+    errorMsg.classList.remove('hidden');
+  }
+
+  function clearError() {
+    errorMsg.textContent = '';
+    errorMsg.classList.add('hidden');
+  }
+
+  formatBtn.addEventListener('click', () => {
+    clearError();
+    try {
+      const parsed = JSON.parse(jsonInput.value);
+      jsonOutput.value = JSON.stringify(parsed, null, 2);
+    } catch (e) {
+      showError(String(e));
+    }
+  });
+
+  minifyBtn.addEventListener('click', () => {
+    clearError();
+    try {
+      const parsed = JSON.parse(jsonInput.value);
+      jsonOutput.value = JSON.stringify(parsed);
+    } catch (e) {
+      showError(String(e));
+    }
+  });
+
+  clearBtn.addEventListener('click', () => {
+    jsonInput.value = '';
+    jsonOutput.value = '';
+    clearError();
+  });
+
+  copyBtn.addEventListener('click', () => {
+    if (!jsonOutput.value) return;
+    navigator.clipboard.writeText(jsonOutput.value).then(() => {
+      copyFeedback.style.opacity = '1';
+      setTimeout(() => { copyFeedback.style.opacity = '0'; }, 1500);
+    });
+  });
+</script>

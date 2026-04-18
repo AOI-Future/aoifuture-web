@@ -1,0 +1,154 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="CSS Animation | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 030</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">CSS ANIMATION</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">トランジション・イージングをプレビュー</p>
+      </div>
+
+      <!-- Preview -->
+      <div class="mb-6">
+        <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">PREVIEW</label>
+        <div id="track" class="relative h-16 bg-cyan-400/5 border border-cyan-400/20 overflow-hidden">
+          <div id="ball" class="absolute top-2 w-12 h-12 bg-cyan-400 flex items-center justify-center text-black text-xs font-bold" style="left:4px">GO</div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+        <!-- Easing -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">EASING FUNCTION</label>
+          <select id="easing" class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none font-mono mb-2">
+            <option value="linear">linear</option>
+            <option value="ease" selected>ease</option>
+            <option value="ease-in">ease-in</option>
+            <option value="ease-out">ease-out</option>
+            <option value="ease-in-out">ease-in-out</option>
+            <option value="cubic-bezier(0.34,1.56,0.64,1)">back (overshoot)</option>
+            <option value="steps(5,end)">steps(5, end)</option>
+            <option value="custom">custom cubic-bezier...</option>
+          </select>
+          <input id="custom-bezier" type="text" placeholder="cubic-bezier(0.25, 0.1, 0.25, 1)"
+            class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono hidden">
+        </div>
+        <!-- Duration -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">DURATION — <span id="dur-val">1.0s</span></label>
+          <input id="duration" type="range" min="100" max="3000" value="1000" class="w-full accent-cyan-400 cursor-pointer mt-3">
+        </div>
+        <!-- Property -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">ANIMATE</label>
+          <select id="property" class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none font-mono">
+            <option value="translateX">translateX (横移動)</option>
+            <option value="scale">scale (拡大縮小)</option>
+            <option value="rotate">rotate (回転)</option>
+            <option value="opacity">opacity (透明度)</option>
+          </select>
+        </div>
+        <!-- Repeat -->
+        <div class="flex items-end">
+          <label class="flex items-center gap-2 text-sm text-cyan-400/70 cursor-pointer pb-3">
+            <input type="checkbox" id="repeat" class="accent-cyan-400"> REPEAT
+          </label>
+        </div>
+      </div>
+
+      <div class="flex gap-3 mb-6">
+        <button id="play-btn" class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer">▶ PLAY</button>
+        <button id="reset-btn" class="px-4 py-2 text-sm border border-cyan-400/20 text-cyan-400/50 hover:border-cyan-400/50 hover:text-cyan-400/80 transition-colors tracking-widest cursor-pointer">RESET</button>
+      </div>
+
+      <!-- CSS Output -->
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-xs tracking-widest text-cyan-400/60">CSS OUTPUT</label>
+          <button id="copy-btn" class="text-xs px-3 py-1 border border-cyan-400/30 text-cyan-400/60 hover:border-cyan-400/60 hover:text-cyan-400 transition-colors tracking-widest cursor-pointer">COPY</button>
+        </div>
+        <textarea id="css-output" readonly rows="4"
+          class="w-full bg-black border border-cyan-400/20 text-cyan-400/80 text-sm p-3 font-mono focus:outline-none resize-none"></textarea>
+        <p id="copy-msg" class="text-xs text-cyan-400/40 mt-1 opacity-0 transition-opacity">Copied.</p>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const ball       = document.getElementById('ball')!;
+  const track      = document.getElementById('track')!;
+  const easingEl   = document.getElementById('easing') as HTMLSelectElement;
+  const customEl   = document.getElementById('custom-bezier') as HTMLInputElement;
+  const durationEl = document.getElementById('duration') as HTMLInputElement;
+  const durVal     = document.getElementById('dur-val')!;
+  const propertyEl = document.getElementById('property') as HTMLSelectElement;
+  const repeatEl   = document.getElementById('repeat') as HTMLInputElement;
+  const cssOutput  = document.getElementById('css-output') as HTMLTextAreaElement;
+  const copyMsg    = document.getElementById('copy-msg')!;
+  let anim: Animation | null = null;
+
+  function getEasing(): string {
+    return easingEl.value === 'custom' ? (customEl.value || 'ease') : easingEl.value;
+  }
+
+  function getKeyframes(): Keyframe[] {
+    const prop = propertyEl.value;
+    const w = track.offsetWidth - 52;
+    if (prop === 'translateX') return [{ transform: 'translateX(0px)' }, { transform: `translateX(${w}px)` }];
+    if (prop === 'scale')      return [{ transform: 'scale(1)' }, { transform: 'scale(1.5)' }, { transform: 'scale(1)' }];
+    if (prop === 'rotate')     return [{ transform: 'rotate(0deg)' }, { transform: 'rotate(360deg)' }];
+    if (prop === 'opacity')    return [{ opacity: '1' }, { opacity: '0' }, { opacity: '1' }];
+    return [];
+  }
+
+  function updateCSS() {
+    const dur = (+durationEl.value / 1000).toFixed(1);
+    const easing = getEasing();
+    const prop = propertyEl.value === 'translateX' ? 'transform' :
+                 propertyEl.value === 'scale' ? 'transform' :
+                 propertyEl.value === 'rotate' ? 'transform' : 'opacity';
+    cssOutput.value = `.element {\n  transition: ${prop} ${dur}s ${easing};\n}\n\n/* or */\n\n.element {\n  animation: move ${dur}s ${easing}${repeatEl.checked ? ' infinite' : ''};\n}`;
+  }
+
+  function play() {
+    anim?.cancel();
+    const easing = getEasing();
+    const dur    = +durationEl.value;
+    const iter   = repeatEl.checked ? Infinity : 1;
+    anim = ball.animate(getKeyframes(), { duration: dur, easing, fill: 'both', iterations: iter });
+    anim.onfinish = () => { if (!repeatEl.checked) { anim?.commitStyles(); anim?.cancel(); } };
+    updateCSS();
+  }
+
+  durationEl.addEventListener('input', () => {
+    durVal.textContent = `${(+durationEl.value / 1000).toFixed(1)}s`;
+    updateCSS();
+  });
+  easingEl.addEventListener('change', () => {
+    customEl.classList.toggle('hidden', easingEl.value !== 'custom');
+    updateCSS();
+  });
+  customEl.addEventListener('input', updateCSS);
+  propertyEl.addEventListener('change', updateCSS);
+  repeatEl.addEventListener('change', updateCSS);
+
+  document.getElementById('play-btn')!.addEventListener('click', play);
+  document.getElementById('reset-btn')!.addEventListener('click', () => {
+    anim?.cancel();
+    ball.style.cssText = 'position:absolute;top:8px;left:4px;width:48px;height:48px;background:#22d3ee;display:flex;align-items:center;justify-content:center;color:black;font-size:0.75rem;font-weight:bold';
+    ball.textContent = 'GO';
+  });
+  document.getElementById('copy-btn')!.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(cssOutput.value);
+    copyMsg.style.opacity = '1';
+    setTimeout(() => copyMsg.style.opacity = '0', 1500);
+  });
+
+  updateCSS();
+</script>

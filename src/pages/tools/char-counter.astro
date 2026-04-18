@@ -1,0 +1,75 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="CHAR COUNTER | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 002</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">CHAR COUNTER</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">文字数・単語数・行数をカウント</p>
+      </div>
+
+      <div class="mb-4">
+        <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">INPUT</label>
+        <textarea
+          id="input-text"
+          class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono h-48 resize-none"
+          placeholder="テキストを入力してください..."
+        ></textarea>
+      </div>
+
+      <div class="mb-4 grid grid-cols-2 md:grid-cols-4 gap-px border border-cyan-400/20">
+        <div class="bg-black p-4 text-center">
+          <p class="text-3xl text-cyan-300" id="chars-all">0</p>
+          <p class="text-xs text-cyan-400/40 mt-1 tracking-widest">文字数</p>
+        </div>
+        <div class="bg-black p-4 text-center">
+          <p class="text-3xl text-cyan-300" id="chars-no-space">0</p>
+          <p class="text-xs text-cyan-400/40 mt-1 tracking-widest">スペース除く</p>
+        </div>
+        <div class="bg-black p-4 text-center">
+          <p class="text-3xl text-cyan-300" id="words">0</p>
+          <p class="text-xs text-cyan-400/40 mt-1 tracking-widest">単語数</p>
+        </div>
+        <div class="bg-black p-4 text-center">
+          <p class="text-3xl text-cyan-300" id="lines">0</p>
+          <p class="text-xs text-cyan-400/40 mt-1 tracking-widest">行数</p>
+        </div>
+      </div>
+
+      <div class="flex gap-2">
+        <button
+          id="clear-btn"
+          class="px-4 py-2 text-sm border border-cyan-400/20 text-cyan-400/50 hover:border-cyan-400/50 hover:text-cyan-400/80 transition-colors tracking-widest cursor-pointer"
+        >CLEAR</button>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const inputText = document.getElementById('input-text') as HTMLTextAreaElement;
+  const charsAll = document.getElementById('chars-all')!;
+  const charsNoSpace = document.getElementById('chars-no-space')!;
+  const wordsEl = document.getElementById('words')!;
+  const linesEl = document.getElementById('lines')!;
+  const clearBtn = document.getElementById('clear-btn')!;
+
+  function updateCounts() {
+    const text = inputText.value;
+    charsAll.textContent = String(text.length);
+    charsNoSpace.textContent = String(text.replace(/\s/g, '').length);
+    const wordCount = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+    wordsEl.textContent = String(wordCount);
+    linesEl.textContent = String(text === '' ? 0 : text.split('\n').length);
+  }
+
+  inputText.addEventListener('input', updateCounts);
+
+  clearBtn.addEventListener('click', () => {
+    inputText.value = '';
+    updateCounts();
+  });
+</script>

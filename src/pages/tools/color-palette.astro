@@ -1,0 +1,127 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="COLOR PALETTE | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 010</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">COLOR PALETTE</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">画像から主要カラーを抽出</p>
+      </div>
+
+      <!-- Drop Zone -->
+      <div
+        id="drop-zone"
+        class="h-32 border-2 border-dashed border-cyan-400/30 hover:border-cyan-400/60 flex flex-col items-center justify-center text-cyan-400/40 text-sm cursor-pointer transition-colors mb-4"
+      >
+        <p>画像をドロップ または クリックして選択</p>
+        <p class="text-xs mt-1">PNG, JPG, WEBP など</p>
+      </div>
+      <input type="file" id="file-input" accept="image/*" class="hidden" />
+
+      <!-- Image Preview -->
+      <div id="img-container" class="mb-6 hidden">
+        <img id="img-preview" class="max-h-48 object-contain border border-cyan-400/20 mb-4" alt="preview" />
+      </div>
+
+      <!-- Palette -->
+      <div id="palette-container" class="hidden">
+        <label class="text-xs tracking-widest text-cyan-400/60 block mb-3">EXTRACTED COLORS</label>
+        <div id="palette-grid" class="grid grid-cols-3 md:grid-cols-6 gap-2"></div>
+        <p id="copy-feedback" class="text-xs text-cyan-400/40 mt-3 transition-opacity opacity-0">Copied.</p>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  function extractColors(img: HTMLImageElement, count: number): string[] {
+    const canvas = document.createElement('canvas');
+    const size = 100;
+    canvas.width = canvas.height = size;
+    const ctx = canvas.getContext('2d')!;
+    ctx.drawImage(img, 0, 0, size, size);
+    const data = ctx.getImageData(0, 0, size, size).data;
+    const buckets: Record<string, number> = {};
+    for (let i = 0; i < data.length; i += 4 * 5) {
+      const r = Math.round(data[i] / 32) * 32;
+      const g = Math.round(data[i + 1] / 32) * 32;
+      const b = Math.round(data[i + 2] / 32) * 32;
+      const key = `${r},${g},${b}`;
+      buckets[key] = (buckets[key] || 0) + 1;
+    }
+    return Object.entries(buckets)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, count)
+      .map(([k]) => {
+        const [r, g, b] = k.split(',').map(Number);
+        return '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+      });
+  }
+
+  const dropZone = document.getElementById('drop-zone')!;
+  const fileInput = document.getElementById('file-input') as HTMLInputElement;
+  const imgContainer = document.getElementById('img-container')!;
+  const imgPreview = document.getElementById('img-preview') as HTMLImageElement;
+  const paletteContainer = document.getElementById('palette-container')!;
+  const paletteGrid = document.getElementById('palette-grid')!;
+  const copyFeedback = document.getElementById('copy-feedback')!;
+
+  function processFile(file: File) {
+    if (!file.type.startsWith('image/')) return;
+    const url = URL.createObjectURL(file);
+    imgPreview.src = url;
+    imgPreview.onload = () => {
+      imgContainer.classList.remove('hidden');
+      const colors = extractColors(imgPreview, 6);
+      renderPalette(colors);
+      URL.revokeObjectURL(url);
+    };
+  }
+
+  function renderPalette(colors: string[]) {
+    paletteGrid.innerHTML = '';
+    colors.forEach(hex => {
+      const card = document.createElement('div');
+      card.className = 'cursor-pointer group';
+      card.innerHTML = `
+        <div class="h-16 w-full border border-cyan-400/20 group-hover:border-cyan-400/60 transition-colors" style="background-color: ${hex};"></div>
+        <p class="text-xs text-cyan-400/60 mt-1 text-center tracking-widest group-hover:text-cyan-400 transition-colors">${hex}</p>
+      `;
+      card.addEventListener('click', () => {
+        navigator.clipboard.writeText(hex).then(() => {
+          copyFeedback.textContent = `Copied ${hex}`;
+          copyFeedback.style.opacity = '1';
+          setTimeout(() => { copyFeedback.style.opacity = '0'; }, 1500);
+        });
+      });
+      paletteGrid.appendChild(card);
+    });
+    paletteContainer.classList.remove('hidden');
+  }
+
+  dropZone.addEventListener('click', () => fileInput.click());
+
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('border-cyan-400/60');
+  });
+
+  dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('border-cyan-400/60');
+  });
+
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('border-cyan-400/60');
+    const file = e.dataTransfer?.files[0];
+    if (file) processFile(file);
+  });
+
+  fileInput.addEventListener('change', () => {
+    const file = fileInput.files?.[0];
+    if (file) processFile(file);
+  });
+</script>

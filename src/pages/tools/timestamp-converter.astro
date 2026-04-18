@@ -1,0 +1,139 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="TIMESTAMP | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 018</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">TIMESTAMP</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">Unix タイムスタンプを変換</p>
+      </div>
+
+      <div class="space-y-6">
+        <!-- Unix to Date -->
+        <div class="border border-cyan-400/20 p-4 space-y-4">
+          <p class="text-xs tracking-widest text-cyan-400/60">UNIX → DATE</p>
+
+          <div class="flex gap-3">
+            <input type="text" id="ts-input" placeholder="1745056200" value=""
+              class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono" />
+            <button id="now-btn" class="px-4 py-2 text-sm border border-cyan-400/20 text-cyan-400/50 hover:border-cyan-400/50 hover:text-cyan-400/80 transition-colors tracking-widest cursor-pointer whitespace-nowrap">
+              NOW
+            </button>
+          </div>
+
+          <button id="convert-btn" class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer">
+            CONVERT
+          </button>
+
+          <!-- Results -->
+          <div id="results" class="hidden space-y-2">
+            {[
+              { id: 'res-iso', label: 'ISO 8601' },
+              { id: 'res-jst', label: 'JST' },
+              { id: 'res-utc', label: 'UTC' },
+              { id: 'res-unix-s', label: 'Unix秒' },
+              { id: 'res-unix-ms', label: 'Unix ms' },
+            ].map(row => (
+              <div class="flex items-center justify-between gap-3 border border-cyan-400/10 p-2">
+                <span class="text-xs text-cyan-400/40 tracking-widest w-20 shrink-0">{row.label}</span>
+                <span id={row.id} class="text-sm text-cyan-400/80 flex-1 break-all"></span>
+                <button class="copy-row-btn px-2 py-1 text-xs border border-cyan-400/20 text-cyan-400/40 hover:border-cyan-400/50 hover:text-cyan-400/70 transition-colors tracking-widest cursor-pointer shrink-0" data-target={row.id}>
+                  COPY
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <p id="copy-msg-1" class="text-xs text-cyan-400/40 transition-opacity opacity-0">Copied.</p>
+        </div>
+
+        <!-- Date to Unix -->
+        <div class="border border-cyan-400/20 p-4 space-y-4">
+          <p class="text-xs tracking-widest text-cyan-400/60">DATE → UNIX</p>
+
+          <input type="datetime-local" id="date-input"
+            class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono" />
+
+          <button id="date-convert-btn" class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer">
+            CONVERT
+          </button>
+
+          <div id="date-result" class="hidden border border-cyan-400/10 p-2 flex items-center justify-between gap-3">
+            <span class="text-xs text-cyan-400/40 tracking-widest shrink-0">Unix秒</span>
+            <span id="date-unix-out" class="text-sm text-cyan-400/80 flex-1"></span>
+            <button id="copy-date-unix" class="px-2 py-1 text-xs border border-cyan-400/20 text-cyan-400/40 hover:border-cyan-400/50 hover:text-cyan-400/70 transition-colors tracking-widest cursor-pointer shrink-0">
+              COPY
+            </button>
+          </div>
+
+          <p id="copy-msg-2" class="text-xs text-cyan-400/40 transition-opacity opacity-0">Copied.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  function showCopied(msgId: string) {
+    const msg = document.getElementById(msgId) as HTMLElement;
+    msg.style.opacity = '1';
+    setTimeout(() => { msg.style.opacity = '0'; }, 1500);
+  }
+
+  document.getElementById('now-btn')?.addEventListener('click', () => {
+    const ts = Math.floor(Date.now() / 1000);
+    (document.getElementById('ts-input') as HTMLInputElement).value = ts.toString();
+  });
+
+  document.getElementById('convert-btn')?.addEventListener('click', () => {
+    const raw = (document.getElementById('ts-input') as HTMLInputElement).value.trim();
+    if (!raw) return;
+
+    let ts = parseInt(raw);
+    if (isNaN(ts)) return;
+
+    // Auto detect ms vs s
+    const isMs = ts > 9999999999;
+    const date = new Date(isMs ? ts : ts * 1000);
+    const unixS = isMs ? Math.floor(ts / 1000) : ts;
+    const unixMs = isMs ? ts : ts * 1000;
+
+    // JST
+    const jst = date.toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo',
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+    (document.getElementById('res-iso') as HTMLElement).textContent = date.toISOString();
+    (document.getElementById('res-jst') as HTMLElement).textContent = jst.replace(/\//g, '年').replace('/', '月').replace(' ', '日 ').replace(':', '時').replace(':', '分') + '秒';
+    (document.getElementById('res-utc') as HTMLElement).textContent = date.toUTCString();
+    (document.getElementById('res-unix-s') as HTMLElement).textContent = unixS.toString();
+    (document.getElementById('res-unix-ms') as HTMLElement).textContent = unixMs.toString();
+
+    (document.getElementById('results') as HTMLElement).classList.remove('hidden');
+  });
+
+  document.querySelectorAll('.copy-row-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = (btn as HTMLElement).dataset.target || '';
+      const text = (document.getElementById(targetId) as HTMLElement)?.textContent || '';
+      navigator.clipboard.writeText(text).then(() => showCopied('copy-msg-1'));
+    });
+  });
+
+  document.getElementById('date-convert-btn')?.addEventListener('click', () => {
+    const val = (document.getElementById('date-input') as HTMLInputElement).value;
+    if (!val) return;
+    const date = new Date(val);
+    const unixS = Math.floor(date.getTime() / 1000);
+    (document.getElementById('date-unix-out') as HTMLElement).textContent = unixS.toString();
+    (document.getElementById('date-result') as HTMLElement).classList.remove('hidden');
+  });
+
+  document.getElementById('copy-date-unix')?.addEventListener('click', () => {
+    const text = (document.getElementById('date-unix-out') as HTMLElement)?.textContent || '';
+    navigator.clipboard.writeText(text).then(() => showCopied('copy-msg-2'));
+  });
+</script>

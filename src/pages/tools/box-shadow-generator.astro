@@ -1,0 +1,150 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="BOX SHADOW | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 011</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">BOX SHADOW</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">CSSボックスシャドウを生成</p>
+      </div>
+
+      <div class="space-y-5">
+        <!-- X Offset -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">X OFFSET</label>
+          <div class="flex items-center gap-3">
+            <input type="range" id="x-offset" min="-50" max="50" value="4" class="w-full accent-cyan-400 cursor-pointer" />
+            <span id="x-offset-val" class="text-cyan-400/80 text-sm w-12 text-right">4</span>
+          </div>
+        </div>
+
+        <!-- Y Offset -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">Y OFFSET</label>
+          <div class="flex items-center gap-3">
+            <input type="range" id="y-offset" min="-50" max="50" value="4" class="w-full accent-cyan-400 cursor-pointer" />
+            <span id="y-offset-val" class="text-cyan-400/80 text-sm w-12 text-right">4</span>
+          </div>
+        </div>
+
+        <!-- Blur -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">BLUR</label>
+          <div class="flex items-center gap-3">
+            <input type="range" id="blur" min="0" max="100" value="10" class="w-full accent-cyan-400 cursor-pointer" />
+            <span id="blur-val" class="text-cyan-400/80 text-sm w-12 text-right">10</span>
+          </div>
+        </div>
+
+        <!-- Spread -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">SPREAD</label>
+          <div class="flex items-center gap-3">
+            <input type="range" id="spread" min="-20" max="50" value="0" class="w-full accent-cyan-400 cursor-pointer" />
+            <span id="spread-val" class="text-cyan-400/80 text-sm w-12 text-right">0</span>
+          </div>
+        </div>
+
+        <!-- Opacity -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">OPACITY</label>
+          <div class="flex items-center gap-3">
+            <input type="range" id="opacity" min="0" max="100" value="50" class="w-full accent-cyan-400 cursor-pointer" />
+            <span id="opacity-val" class="text-cyan-400/80 text-sm w-12 text-right">50</span>
+          </div>
+        </div>
+
+        <!-- Color & Inset -->
+        <div class="flex items-center gap-6">
+          <div>
+            <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">COLOR</label>
+            <input type="color" id="shadow-color" value="#000000" class="h-9 w-16 bg-black border border-cyan-400/30 cursor-pointer p-0.5" />
+          </div>
+          <div>
+            <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">INSET</label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" id="inset" class="accent-cyan-400 w-4 h-4" />
+              <span class="text-sm text-cyan-400/70 tracking-widest">INSET</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Preview -->
+        <div class="border border-cyan-400/20 p-6 bg-black/50">
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-4">PREVIEW</label>
+          <div class="flex items-center justify-center">
+            <div id="preview-box" class="bg-white w-20 h-20 mx-auto my-8"></div>
+          </div>
+        </div>
+
+        <!-- CSS Output -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">CSS OUTPUT</label>
+          <textarea id="css-output" readonly rows="1" class="w-full bg-black border border-cyan-400/20 text-cyan-400/80 text-sm p-3 font-mono resize-none"></textarea>
+          <p id="copy-msg" class="text-xs text-cyan-400/40 mt-1 transition-opacity opacity-0">Copied.</p>
+        </div>
+
+        <button id="copy-btn" class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer">
+          COPY CSS
+        </button>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  function hexToRgba(hex: string, opacity: number): string {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    const a = (opacity / 100).toFixed(2);
+    return `rgba(${r}, ${g}, ${b}, ${a})`;
+  }
+
+  function update() {
+    const x = (document.getElementById('x-offset') as HTMLInputElement).value;
+    const y = (document.getElementById('y-offset') as HTMLInputElement).value;
+    const blur = (document.getElementById('blur') as HTMLInputElement).value;
+    const spread = (document.getElementById('spread') as HTMLInputElement).value;
+    const opacity = parseInt((document.getElementById('opacity') as HTMLInputElement).value);
+    const color = (document.getElementById('shadow-color') as HTMLInputElement).value;
+    const inset = (document.getElementById('inset') as HTMLInputElement).checked;
+
+    (document.getElementById('x-offset-val') as HTMLElement).textContent = x;
+    (document.getElementById('y-offset-val') as HTMLElement).textContent = y;
+    (document.getElementById('blur-val') as HTMLElement).textContent = blur;
+    (document.getElementById('spread-val') as HTMLElement).textContent = spread;
+    (document.getElementById('opacity-val') as HTMLElement).textContent = opacity.toString();
+
+    const rgba = hexToRgba(color, opacity);
+    const insetStr = inset ? 'inset ' : '';
+    const shadow = `${insetStr}${x}px ${y}px ${blur}px ${spread}px ${rgba}`;
+    const css = `box-shadow: ${shadow};`;
+
+    const preview = document.getElementById('preview-box') as HTMLElement;
+    preview.style.boxShadow = shadow;
+
+    const output = document.getElementById('css-output') as HTMLTextAreaElement;
+    output.value = css;
+  }
+
+  ['x-offset', 'y-offset', 'blur', 'spread', 'opacity'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', update);
+  });
+  document.getElementById('shadow-color')?.addEventListener('input', update);
+  document.getElementById('inset')?.addEventListener('change', update);
+
+  document.getElementById('copy-btn')?.addEventListener('click', () => {
+    const output = document.getElementById('css-output') as HTMLTextAreaElement;
+    navigator.clipboard.writeText(output.value).then(() => {
+      const msg = document.getElementById('copy-msg') as HTMLElement;
+      msg.style.opacity = '1';
+      setTimeout(() => { msg.style.opacity = '0'; }, 1500);
+    });
+  });
+
+  update();
+</script>

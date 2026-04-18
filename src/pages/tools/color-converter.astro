@@ -1,0 +1,188 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="COLOR CONVERTER | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 007</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">COLOR CONVERTER</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">HEX / RGB / HSL 相互変換</p>
+      </div>
+
+      <div class="space-y-4 mb-4">
+        <!-- HEX -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">HEX</label>
+          <div class="flex gap-2 items-center">
+            <input
+              type="text"
+              id="hex-input"
+              class="flex-1 bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono"
+              placeholder="#22d3ee"
+              maxlength="7"
+            />
+            <button data-copy="hex" class="copy-btn px-4 py-2 text-sm border border-cyan-400/20 text-cyan-400/50 hover:border-cyan-400/50 hover:text-cyan-400/80 transition-colors tracking-widest cursor-pointer">COPY</button>
+          </div>
+        </div>
+
+        <!-- RGB -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">RGB</label>
+          <div class="flex gap-2 items-center">
+            <input
+              type="text"
+              id="rgb-input"
+              class="flex-1 bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono"
+              placeholder="34, 211, 238"
+            />
+            <button data-copy="rgb" class="copy-btn px-4 py-2 text-sm border border-cyan-400/20 text-cyan-400/50 hover:border-cyan-400/50 hover:text-cyan-400/80 transition-colors tracking-widest cursor-pointer">COPY</button>
+          </div>
+        </div>
+
+        <!-- HSL -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">HSL</label>
+          <div class="flex gap-2 items-center">
+            <input
+              type="text"
+              id="hsl-input"
+              class="flex-1 bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono"
+              placeholder="189, 85%, 73%"
+            />
+            <button data-copy="hsl" class="copy-btn px-4 py-2 text-sm border border-cyan-400/20 text-cyan-400/50 hover:border-cyan-400/50 hover:text-cyan-400/80 transition-colors tracking-widest cursor-pointer">COPY</button>
+          </div>
+        </div>
+      </div>
+
+      <p id="copy-feedback" class="text-xs text-cyan-400/40 mb-2 transition-opacity opacity-0">Copied.</p>
+
+      <div id="color-preview" class="w-full h-16 mt-4 border border-cyan-400/20 transition-colors duration-300" style="background-color: #22d3ee;"></div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  function hexToRgb(hex: string): [number, number, number] {
+    const clean = hex.replace('#', '');
+    const bigint = parseInt(clean, 16);
+    return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
+  }
+
+  function rgbToHex(r: number, g: number, b: number): string {
+    return '#' + [r, g, b].map(v => Math.round(v).toString(16).padStart(2, '0')).join('');
+  }
+
+  function rgbToHsl(r: number, g: number, b: number): [number, number, number] {
+    const rn = r / 255, gn = g / 255, bn = b / 255;
+    const max = Math.max(rn, gn, bn), min = Math.min(rn, gn, bn);
+    let h = 0, s = 0;
+    const l = (max + min) / 2;
+    if (max !== min) {
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) {
+        case rn: h = ((gn - bn) / d + (gn < bn ? 6 : 0)) / 6; break;
+        case gn: h = ((bn - rn) / d + 2) / 6; break;
+        case bn: h = ((rn - gn) / d + 4) / 6; break;
+      }
+    }
+    return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
+  }
+
+  function hslToRgb(h: number, s: number, l: number): [number, number, number] {
+    const sn = s / 100, ln = l / 100;
+    const c = (1 - Math.abs(2 * ln - 1)) * sn;
+    const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+    const m = ln - c / 2;
+    let r = 0, g = 0, b = 0;
+    if (h < 60) { r = c; g = x; }
+    else if (h < 120) { r = x; g = c; }
+    else if (h < 180) { g = c; b = x; }
+    else if (h < 240) { g = x; b = c; }
+    else if (h < 300) { r = x; b = c; }
+    else { r = c; b = x; }
+    return [Math.round((r + m) * 255), Math.round((g + m) * 255), Math.round((b + m) * 255)];
+  }
+
+  const hexInput = document.getElementById('hex-input') as HTMLInputElement;
+  const rgbInput = document.getElementById('rgb-input') as HTMLInputElement;
+  const hslInput = document.getElementById('hsl-input') as HTMLInputElement;
+  const colorPreview = document.getElementById('color-preview')!;
+  const copyFeedback = document.getElementById('copy-feedback')!;
+
+  let updating = false;
+
+  function updateFromHex(hex: string) {
+    if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return;
+    const [r, g, b] = hexToRgb(hex);
+    const [h, s, l] = rgbToHsl(r, g, b);
+    rgbInput.value = `${r}, ${g}, ${b}`;
+    hslInput.value = `${h}, ${s}%, ${l}%`;
+    colorPreview.style.backgroundColor = hex;
+  }
+
+  function updateFromRgb(val: string) {
+    const parts = val.split(',').map(v => parseInt(v.trim()));
+    if (parts.length !== 3 || parts.some(isNaN)) return;
+    const [r, g, b] = parts;
+    if ([r,g,b].some(v => v < 0 || v > 255)) return;
+    const hex = rgbToHex(r, g, b);
+    const [h, s, l] = rgbToHsl(r, g, b);
+    hexInput.value = hex;
+    hslInput.value = `${h}, ${s}%, ${l}%`;
+    colorPreview.style.backgroundColor = hex;
+  }
+
+  function updateFromHsl(val: string) {
+    const parts = val.replace(/%/g, '').split(',').map(v => parseFloat(v.trim()));
+    if (parts.length !== 3 || parts.some(isNaN)) return;
+    const [h, s, l] = parts;
+    const [r, g, b] = hslToRgb(h, s, l);
+    const hex = rgbToHex(r, g, b);
+    hexInput.value = hex;
+    rgbInput.value = `${r}, ${g}, ${b}`;
+    colorPreview.style.backgroundColor = hex;
+  }
+
+  hexInput.addEventListener('input', () => {
+    if (updating) return;
+    updating = true;
+    updateFromHex(hexInput.value);
+    updating = false;
+  });
+
+  rgbInput.addEventListener('input', () => {
+    if (updating) return;
+    updating = true;
+    updateFromRgb(rgbInput.value);
+    updating = false;
+  });
+
+  hslInput.addEventListener('input', () => {
+    if (updating) return;
+    updating = true;
+    updateFromHsl(hslInput.value);
+    updating = false;
+  });
+
+  // Initialize with default
+  hexInput.value = '#22d3ee';
+  updateFromHex('#22d3ee');
+
+  document.querySelectorAll<HTMLButtonElement>('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const type = btn.dataset.copy;
+      let text = '';
+      if (type === 'hex') text = hexInput.value;
+      else if (type === 'rgb') text = rgbInput.value;
+      else if (type === 'hsl') text = hslInput.value;
+      if (!text) return;
+      navigator.clipboard.writeText(text).then(() => {
+        copyFeedback.style.opacity = '1';
+        setTimeout(() => { copyFeedback.style.opacity = '0'; }, 1500);
+      });
+    });
+  });
+</script>

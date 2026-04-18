@@ -1,0 +1,145 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="ASPECT RATIO | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 013</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">ASPECT RATIO</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">アスペクト比・サイズを計算</p>
+      </div>
+
+      <div class="space-y-6">
+        <!-- Presets -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-3">PRESETS</label>
+          <div class="flex flex-wrap gap-2">
+            {['16:9', '4:3', '1:1', '3:2', '21:9', '9:16'].map(ratio => (
+              <button class="preset-btn px-3 py-1.5 text-xs border border-cyan-400/20 text-cyan-400/50 hover:border-cyan-400/50 hover:text-cyan-400/80 transition-colors tracking-widest cursor-pointer" data-ratio={ratio}>
+                {ratio}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <!-- Inputs -->
+        <div class="grid grid-cols-3 gap-4">
+          <div>
+            <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">WIDTH (px)</label>
+            <input type="number" id="input-width" min="1" step="1" placeholder="1920"
+              class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono" />
+          </div>
+          <div>
+            <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">HEIGHT (px)</label>
+            <input type="number" id="input-height" min="1" step="1" placeholder="1080"
+              class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono" />
+          </div>
+          <div>
+            <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">RATIO</label>
+            <input type="text" id="input-ratio" placeholder="16:9"
+              class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono" />
+          </div>
+        </div>
+
+        <button id="calc-btn" class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer">
+          CALCULATE
+        </button>
+
+        <!-- Result -->
+        <div id="result" class="hidden border border-cyan-400/20 p-4">
+          <p class="text-xs tracking-widest text-cyan-400/60 mb-2">RESULT</p>
+          <p id="result-text" class="text-cyan-400 text-sm tracking-widest"></p>
+          <p id="error-text" class="text-red-400 text-xs mt-1 hidden"></p>
+        </div>
+
+        <!-- Preview -->
+        <div id="preview-container" class="hidden border border-cyan-400/20 p-4">
+          <p class="text-xs tracking-widest text-cyan-400/60 mb-4">PREVIEW</p>
+          <div class="flex justify-center">
+            <div id="preview-box" class="border border-cyan-400/40 bg-cyan-400/5 flex items-center justify-center">
+              <span id="preview-label" class="text-cyan-400/30 text-xs tracking-widest"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  function calculate() {
+    const wInput = document.getElementById('input-width') as HTMLInputElement;
+    const hInput = document.getElementById('input-height') as HTMLInputElement;
+    const rInput = document.getElementById('input-ratio') as HTMLInputElement;
+    const result = document.getElementById('result') as HTMLElement;
+    const resultText = document.getElementById('result-text') as HTMLElement;
+    const errorText = document.getElementById('error-text') as HTMLElement;
+    const previewContainer = document.getElementById('preview-container') as HTMLElement;
+    const previewBox = document.getElementById('preview-box') as HTMLElement;
+    const previewLabel = document.getElementById('preview-label') as HTMLElement;
+
+    const w = parseFloat(wInput.value);
+    const h = parseFloat(hInput.value);
+    const ratioStr = rInput.value.trim();
+
+    result.classList.remove('hidden');
+    errorText.classList.add('hidden');
+
+    let finalW = w, finalH = h;
+    let ratioW = 0, ratioH = 0;
+
+    if (ratioStr && ratioStr.includes(':')) {
+      const parts = ratioStr.split(':');
+      ratioW = parseFloat(parts[0]);
+      ratioH = parseFloat(parts[1]);
+    }
+
+    // Calculate missing value
+    if (!isNaN(w) && !isNaN(h) && w > 0 && h > 0) {
+      // Both width and height given — compute ratio
+      const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+      const g = gcd(Math.round(w), Math.round(h));
+      const rw = Math.round(w) / g;
+      const rh = Math.round(h) / g;
+      rInput.value = `${rw}:${rh}`;
+      resultText.textContent = `${w} × ${h} (${rw}:${rh})`;
+      finalW = w; finalH = h;
+    } else if (!isNaN(w) && w > 0 && ratioW > 0 && ratioH > 0) {
+      // Width + ratio → height
+      finalH = Math.round(w * ratioH / ratioW);
+      hInput.value = finalH.toString();
+      resultText.textContent = `${w} × ${finalH} (${ratioStr})`;
+    } else if (!isNaN(h) && h > 0 && ratioW > 0 && ratioH > 0) {
+      // Height + ratio → width
+      finalW = Math.round(h * ratioW / ratioH);
+      wInput.value = finalW.toString();
+      resultText.textContent = `${finalW} × ${h} (${ratioStr})`;
+    } else {
+      errorText.textContent = '2つ以上の値を入力してください';
+      errorText.classList.remove('hidden');
+      return;
+    }
+
+    // Preview
+    previewContainer.classList.remove('hidden');
+    const maxW = 300;
+    const maxH = 200;
+    let pW = finalW, pH = finalH;
+    if (pW > maxW) { pH = pH * maxW / pW; pW = maxW; }
+    if (pH > maxH) { pW = pW * maxH / pH; pH = maxH; }
+    previewBox.style.width = `${Math.round(pW)}px`;
+    previewBox.style.height = `${Math.round(pH)}px`;
+    previewLabel.textContent = `${Math.round(finalW)} × ${Math.round(finalH)}`;
+  }
+
+  document.getElementById('calc-btn')?.addEventListener('click', calculate);
+
+  document.querySelectorAll('.preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const ratio = (btn as HTMLElement).dataset.ratio || '';
+      (document.getElementById('input-ratio') as HTMLInputElement).value = ratio;
+    });
+  });
+</script>

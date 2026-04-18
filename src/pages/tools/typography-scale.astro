@@ -1,0 +1,106 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="TYPOGRAPHY SCALE | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 014</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">TYPOGRAPHY SCALE</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">モジュラースケールでフォントサイズを生成</p>
+      </div>
+
+      <div class="space-y-6">
+        <!-- Controls -->
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">BASE SIZE (px)</label>
+            <input type="number" id="base-size" value="16" min="1" step="0.5"
+              class="bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-2 focus:outline-none focus:border-cyan-400/70 font-mono w-24" />
+          </div>
+          <div>
+            <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">SCALE RATIO</label>
+            <select id="scale-ratio" class="bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-2 focus:outline-none focus:border-cyan-400/70 font-mono w-full">
+              <option value="1.067">Minor Second (1.067)</option>
+              <option value="1.125">Major Second (1.125)</option>
+              <option value="1.200">Minor Third (1.200)</option>
+              <option value="1.250">Major Third (1.250)</option>
+              <option value="1.333" selected>Perfect Fourth (1.333)</option>
+              <option value="1.414">Augmented Fourth (1.414)</option>
+              <option value="1.500">Perfect Fifth (1.500)</option>
+              <option value="1.618">Golden Ratio (1.618)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Scale Table -->
+        <div class="border border-cyan-400/20 overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-cyan-400/20">
+                <th class="text-left p-3 text-xs tracking-widest text-cyan-400/60 font-normal">LABEL</th>
+                <th class="text-left p-3 text-xs tracking-widest text-cyan-400/60 font-normal">PX</th>
+                <th class="text-left p-3 text-xs tracking-widest text-cyan-400/60 font-normal">REM</th>
+                <th class="text-left p-3 text-xs tracking-widest text-cyan-400/60 font-normal">SAMPLE</th>
+              </tr>
+            </thead>
+            <tbody id="scale-table">
+            </tbody>
+          </table>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <button id="copy-btn" class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer">
+            COPY AS CSS VALUES
+          </button>
+          <p id="copy-msg" class="text-xs text-cyan-400/40 transition-opacity opacity-0">Copied.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const labels = ['xs', 'sm', 'base', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl', '7xl', '8xl'];
+  const steps = [-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+  function generateScale() {
+    const base = parseFloat((document.getElementById('base-size') as HTMLInputElement).value) || 16;
+    const ratio = parseFloat((document.getElementById('scale-ratio') as HTMLSelectElement).value) || 1.333;
+    const tbody = document.getElementById('scale-table') as HTMLElement;
+
+    const rows: Array<{label: string; px: number; rem: number}> = steps.map((step, i) => {
+      const px = base * Math.pow(ratio, step);
+      return { label: labels[i], px, rem: px / 16 };
+    });
+
+    tbody.innerHTML = rows.map(row => `
+      <tr class="border-b border-cyan-400/10 hover:bg-cyan-400/5">
+        <td class="p-3 text-cyan-400/60 text-xs tracking-widest">--text-${row.label}</td>
+        <td class="p-3 text-cyan-400/80">${row.px.toFixed(1)}</td>
+        <td class="p-3 text-cyan-400/50">${row.rem.toFixed(3)}</td>
+        <td class="p-3 text-cyan-400/80 overflow-hidden" style="font-size: ${row.px}px; max-width: 150px; white-space: nowrap;">Aa</td>
+      </tr>
+    `).join('');
+
+    // Store for copy
+    (window as any).__scale = rows;
+  }
+
+  document.getElementById('base-size')?.addEventListener('input', generateScale);
+  document.getElementById('scale-ratio')?.addEventListener('change', generateScale);
+
+  document.getElementById('copy-btn')?.addEventListener('click', () => {
+    const rows: Array<{label: string; px: number; rem: number}> = (window as any).__scale || [];
+    const css = rows.map(r => `  --text-${r.label}: ${r.rem.toFixed(3)}rem;`).join('\n');
+    const full = `:root {\n${css}\n}`;
+    navigator.clipboard.writeText(full).then(() => {
+      const msg = document.getElementById('copy-msg') as HTMLElement;
+      msg.style.opacity = '1';
+      setTimeout(() => { msg.style.opacity = '0'; }, 1500);
+    });
+  });
+
+  generateScale();
+</script>

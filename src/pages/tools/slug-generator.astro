@@ -1,0 +1,96 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="SLUG GENERATOR | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 005</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">SLUG GENERATOR</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">テキストをURLスラッグに変換</p>
+      </div>
+
+      <div class="mb-4">
+        <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">INPUT</label>
+        <textarea
+          id="slug-input"
+          class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono h-24 resize-none"
+          placeholder="Hello World! This is a Test."
+        ></textarea>
+      </div>
+
+      <div class="mb-4 flex items-center gap-4">
+        <label class="text-xs tracking-widest text-cyan-400/60">区切り文字:</label>
+        <label class="flex items-center gap-2 text-sm text-cyan-400/70 cursor-pointer">
+          <input type="radio" name="separator" value="-" checked class="accent-cyan-400" />
+          ハイフン (-)
+        </label>
+        <label class="flex items-center gap-2 text-sm text-cyan-400/70 cursor-pointer">
+          <input type="radio" name="separator" value="_" class="accent-cyan-400" />
+          アンダースコア (_)
+        </label>
+      </div>
+
+      <div class="flex gap-2 mb-4">
+        <button id="convert-btn" class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer">CONVERT</button>
+      </div>
+
+      <div class="mb-4">
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-xs tracking-widest text-cyan-400/60">OUTPUT</label>
+          <button id="copy-btn" class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer">COPY</button>
+        </div>
+        <textarea
+          id="slug-output"
+          readonly
+          class="w-full bg-black border border-cyan-400/20 text-cyan-400/80 text-sm p-3 font-mono h-24 resize-none"
+        ></textarea>
+        <p id="copy-feedback" class="text-xs text-cyan-400/40 mt-1 transition-opacity opacity-0">Copied.</p>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  function slugify(text: string, sep: string): string {
+    return text
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^\w\s-]/g, '')
+      .trim()
+      .replace(/[\s_-]+/g, sep)
+      .replace(new RegExp(`^${sep}|${sep}$`, 'g'), '');
+  }
+
+  const slugInput = document.getElementById('slug-input') as HTMLTextAreaElement;
+  const slugOutput = document.getElementById('slug-output') as HTMLTextAreaElement;
+  const convertBtn = document.getElementById('convert-btn')!;
+  const copyBtn = document.getElementById('copy-btn')!;
+  const copyFeedback = document.getElementById('copy-feedback')!;
+
+  function getSeparator(): string {
+    const checked = document.querySelector('input[name="separator"]:checked') as HTMLInputElement;
+    return checked ? checked.value : '-';
+  }
+
+  function convert() {
+    slugOutput.value = slugify(slugInput.value, getSeparator());
+  }
+
+  slugInput.addEventListener('input', convert);
+  convertBtn.addEventListener('click', convert);
+
+  document.querySelectorAll('input[name="separator"]').forEach(radio => {
+    radio.addEventListener('change', convert);
+  });
+
+  copyBtn.addEventListener('click', () => {
+    if (!slugOutput.value) return;
+    navigator.clipboard.writeText(slugOutput.value).then(() => {
+      copyFeedback.style.opacity = '1';
+      setTimeout(() => { copyFeedback.style.opacity = '0'; }, 1500);
+    });
+  });
+</script>

@@ -1,0 +1,204 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="IMAGE RESIZER | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 015</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">IMAGE RESIZER</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">ブラウザでの画像リサイズ・変換</p>
+      </div>
+
+      <div class="space-y-6">
+        <!-- Drop Zone -->
+        <div id="drop-zone" class="border-2 border-dashed border-cyan-400/30 p-12 text-center cursor-pointer hover:border-cyan-400/60 transition-colors">
+          <input type="file" id="file-input" accept="image/*" class="hidden" />
+          <p class="text-cyan-400/50 text-sm tracking-widest">DROP IMAGE HERE</p>
+          <p class="text-cyan-400/30 text-xs mt-2">or click to select</p>
+        </div>
+
+        <!-- Original Info -->
+        <div id="image-info" class="hidden border border-cyan-400/20 p-4 space-y-1">
+          <p class="text-xs tracking-widest text-cyan-400/60 mb-2">ORIGINAL</p>
+          <p class="text-sm text-cyan-400/80"><span class="text-cyan-400/40">NAME: </span><span id="info-name"></span></p>
+          <p class="text-sm text-cyan-400/80"><span class="text-cyan-400/40">SIZE: </span><span id="info-size"></span></p>
+          <p class="text-sm text-cyan-400/80"><span class="text-cyan-400/40">FILE: </span><span id="info-file-size"></span></p>
+        </div>
+
+        <!-- Preview -->
+        <div id="preview-container" class="hidden border border-cyan-400/20 p-4">
+          <p class="text-xs tracking-widest text-cyan-400/60 mb-3">PREVIEW</p>
+          <img id="preview-img" src="" alt="preview" class="max-h-48 object-contain mx-auto" />
+        </div>
+
+        <!-- Resize Settings -->
+        <div id="resize-settings" class="hidden space-y-4">
+          <p class="text-xs tracking-widest text-cyan-400/60">RESIZE SETTINGS</p>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">WIDTH (px)</label>
+              <input type="number" id="out-width" min="1"
+                class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono" />
+            </div>
+            <div>
+              <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">HEIGHT (px)</label>
+              <input type="number" id="out-height" min="1"
+                class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono" />
+            </div>
+          </div>
+
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" id="lock-ratio" checked class="accent-cyan-400 w-4 h-4" />
+            <span class="text-sm text-cyan-400/70 tracking-widest">LOCK ASPECT RATIO</span>
+          </label>
+
+          <!-- Format -->
+          <div>
+            <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">OUTPUT FORMAT</label>
+            <div class="flex gap-4">
+              {['PNG', 'JPEG', 'WebP'].map(fmt => (
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="radio" name="format" value={fmt.toLowerCase()} class="accent-cyan-400" checked={fmt === 'PNG'} />
+                  <span class="text-sm text-cyan-400/70 tracking-widest">{fmt}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <!-- Quality -->
+          <div id="quality-section" class="hidden">
+            <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">QUALITY</label>
+            <div class="flex items-center gap-3">
+              <input type="range" id="quality" min="1" max="100" value="90" class="w-full accent-cyan-400 cursor-pointer" />
+              <span id="quality-val" class="text-cyan-400/80 text-sm w-12 text-right">90</span>
+            </div>
+          </div>
+
+          <button id="download-btn" class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer">
+            DOWNLOAD
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  let originalImg: HTMLImageElement | null = null;
+  let origW = 0, origH = 0;
+  let lockUpdating = false;
+
+  const dropZone = document.getElementById('drop-zone') as HTMLElement;
+  const fileInput = document.getElementById('file-input') as HTMLInputElement;
+
+  dropZone.addEventListener('click', () => fileInput.click());
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('border-cyan-400/60'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-cyan-400/60'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('border-cyan-400/60');
+    const file = e.dataTransfer?.files[0];
+    if (file) loadFile(file);
+  });
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files?.[0]) loadFile(fileInput.files[0]);
+  });
+
+  function loadFile(file: File) {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      originalImg = img;
+      origW = img.naturalWidth;
+      origH = img.naturalHeight;
+
+      (document.getElementById('info-name') as HTMLElement).textContent = file.name;
+      (document.getElementById('info-size') as HTMLElement).textContent = `${origW} × ${origH}`;
+      (document.getElementById('info-file-size') as HTMLElement).textContent = formatBytes(file.size);
+      (document.getElementById('image-info') as HTMLElement).classList.remove('hidden');
+
+      const preview = document.getElementById('preview-img') as HTMLImageElement;
+      preview.src = url;
+      (document.getElementById('preview-container') as HTMLElement).classList.remove('hidden');
+
+      (document.getElementById('out-width') as HTMLInputElement).value = origW.toString();
+      (document.getElementById('out-height') as HTMLInputElement).value = origH.toString();
+      (document.getElementById('resize-settings') as HTMLElement).classList.remove('hidden');
+    };
+    img.src = url;
+  }
+
+  function formatBytes(bytes: number): string {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
+  }
+
+  document.getElementById('out-width')?.addEventListener('input', () => {
+    if (lockUpdating) return;
+    const locked = (document.getElementById('lock-ratio') as HTMLInputElement).checked;
+    if (locked && origW > 0) {
+      lockUpdating = true;
+      const w = parseFloat((document.getElementById('out-width') as HTMLInputElement).value);
+      (document.getElementById('out-height') as HTMLInputElement).value = Math.round(w * origH / origW).toString();
+      lockUpdating = false;
+    }
+  });
+
+  document.getElementById('out-height')?.addEventListener('input', () => {
+    if (lockUpdating) return;
+    const locked = (document.getElementById('lock-ratio') as HTMLInputElement).checked;
+    if (locked && origH > 0) {
+      lockUpdating = true;
+      const h = parseFloat((document.getElementById('out-height') as HTMLInputElement).value);
+      (document.getElementById('out-width') as HTMLInputElement).value = Math.round(h * origW / origH).toString();
+      lockUpdating = false;
+    }
+  });
+
+  document.querySelectorAll('input[name="format"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const val = (radio as HTMLInputElement).value;
+      const qSection = document.getElementById('quality-section') as HTMLElement;
+      if (val === 'jpeg' || val === 'webp') {
+        qSection.classList.remove('hidden');
+      } else {
+        qSection.classList.add('hidden');
+      }
+    });
+  });
+
+  document.getElementById('quality')?.addEventListener('input', (e) => {
+    (document.getElementById('quality-val') as HTMLElement).textContent = (e.target as HTMLInputElement).value;
+  });
+
+  document.getElementById('download-btn')?.addEventListener('click', () => {
+    if (!originalImg) return;
+    const w = parseInt((document.getElementById('out-width') as HTMLInputElement).value);
+    const h = parseInt((document.getElementById('out-height') as HTMLInputElement).value);
+    const format = (document.querySelector('input[name="format"]:checked') as HTMLInputElement)?.value || 'png';
+    const quality = parseInt((document.getElementById('quality') as HTMLInputElement).value) / 100;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d')!;
+    ctx.drawImage(originalImg, 0, 0, w, h);
+
+    const mimeType = format === 'jpeg' ? 'image/jpeg' : format === 'webp' ? 'image/webp' : 'image/png';
+    const q = format === 'png' ? undefined : quality;
+
+    canvas.toBlob(blob => {
+      if (!blob) return;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `resized.${format === 'jpeg' ? 'jpg' : format}`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }, mimeType, q);
+  });
+</script>

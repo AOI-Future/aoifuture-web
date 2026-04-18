@@ -1,0 +1,110 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="QR GENERATOR | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 017</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">QR GENERATOR</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">テキスト・URLからQRコードを生成</p>
+      </div>
+
+      <div class="space-y-6">
+        <!-- Text Input -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">TEXT / URL</label>
+          <textarea id="qr-text" rows="3" placeholder="https://example.com"
+            class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono resize-none"></textarea>
+        </div>
+
+        <!-- Size -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">SIZE</label>
+          <div class="flex gap-4">
+            {[128, 256, 512].map(size => (
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="qr-size" value={size} class="accent-cyan-400" checked={size === 256} />
+                <span class="text-sm text-cyan-400/70 tracking-widest">{size}px</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <!-- Error Correction -->
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">ERROR CORRECTION</label>
+          <div class="flex gap-4">
+            {['L', 'M', 'Q', 'H'].map(level => (
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="qr-level" value={level} class="accent-cyan-400" checked={level === 'H'} />
+                <span class="text-sm text-cyan-400/70 tracking-widest">{level}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <button id="generate-btn" class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer">
+          GENERATE
+        </button>
+
+        <!-- QR Output -->
+        <div id="qr-container" class="hidden flex flex-col items-center gap-4">
+          <div class="bg-white p-4 inline-block">
+            <div id="qr-output"></div>
+          </div>
+          <button id="download-btn" class="px-4 py-2 text-sm border border-cyan-400/20 text-cyan-400/50 hover:border-cyan-400/50 hover:text-cyan-400/80 transition-colors tracking-widest cursor-pointer">
+            PNG DOWNLOAD
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+<script>
+  declare const QRCode: any;
+
+  let qrInstance: any = null;
+
+  document.getElementById('generate-btn')?.addEventListener('click', () => {
+    const text = (document.getElementById('qr-text') as HTMLTextAreaElement).value.trim();
+    if (!text) return;
+
+    const size = parseInt((document.querySelector('input[name="qr-size"]:checked') as HTMLInputElement)?.value || '256');
+    const levelStr = (document.querySelector('input[name="qr-level"]:checked') as HTMLInputElement)?.value || 'H';
+
+    const levelMap: Record<string, number> = { L: 1, M: 0, Q: 3, H: 2 };
+
+    const outputEl = document.getElementById('qr-output') as HTMLElement;
+    outputEl.innerHTML = '';
+
+    qrInstance = new QRCode(outputEl, {
+      text,
+      width: size,
+      height: size,
+      colorDark: '#000000',
+      colorLight: '#ffffff',
+      correctLevel: levelMap[levelStr],
+    });
+
+    (document.getElementById('qr-container') as HTMLElement).classList.remove('hidden');
+  });
+
+  document.getElementById('download-btn')?.addEventListener('click', () => {
+    const canvas = document.querySelector('#qr-output canvas') as HTMLCanvasElement;
+    if (!canvas) return;
+    canvas.toBlob(blob => {
+      if (!blob) return;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'qrcode.png';
+      a.click();
+      URL.revokeObjectURL(url);
+    }, 'image/png');
+  });
+</script>
