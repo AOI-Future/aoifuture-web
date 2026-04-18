@@ -1,0 +1,55 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const tools = [
+  {
+    id: '001',
+    name: 'URL EXTRACTOR',
+    desc: 'テキストからhttp/https URLを抽出',
+    href: '/tools/url-extractor',
+  },
+];
+---
+
+<Layout title="Tools | AOI">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+
+    <!-- Back Button -->
+    <a
+      href="/"
+      class="fixed top-4 left-4 md:top-6 md:left-6 z-50
+             px-3 py-2 text-sm
+             border border-cyan-400/50 bg-black/50
+             text-cyan-400 font-mono tracking-widest
+             hover:bg-cyan-400/10 hover:border-cyan-400
+             transition-colors duration-300"
+    >
+      {'<'} BACK
+    </a>
+
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-10">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOIFUTURE</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">TOOLS</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">地味に効くやつら</p>
+      </div>
+
+      <div class="space-y-px">
+        {tools.map(tool => (
+          <a
+            href={tool.href}
+            class="flex items-center gap-4 px-4 py-4 border border-cyan-400/20
+                   hover:border-cyan-400/60 hover:bg-cyan-400/5 transition-colors group"
+          >
+            <span class="text-cyan-400/30 text-xs w-8 shrink-0">{tool.id}</span>
+            <div class="flex-1">
+              <p class="text-sm tracking-widest group-hover:text-cyan-300 transition-colors">{tool.name}</p>
+              <p class="text-xs text-cyan-400/40 mt-0.5">{tool.desc}</p>
+            </div>
+            <span class="text-cyan-400/30 text-xs group-hover:text-cyan-400/60 transition-colors">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </main>
+</Layout>

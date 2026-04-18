@@ -1,0 +1,141 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="URL Extractor | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+
+    <!-- Back Button -->
+    <a
+      href="/tools"
+      class="fixed top-4 left-4 md:top-6 md:left-6 z-50
+             px-3 py-2 text-sm
+             border border-cyan-400/50 bg-black/50
+             text-cyan-400 font-mono tracking-widest
+             hover:bg-cyan-400/10 hover:border-cyan-400
+             transition-colors duration-300"
+    >
+      {'<'} TOOLS
+    </a>
+
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <!-- Header -->
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 001</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">URL EXTRACTOR</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">テキストからhttp/https URLを抽出します</p>
+      </div>
+
+      <!-- Input -->
+      <div class="mb-4">
+        <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">INPUT — テキストを貼り付け</label>
+        <textarea
+          id="input"
+          class="w-full h-48 bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3
+                 focus:outline-none focus:border-cyan-400/70 resize-none placeholder-cyan-400/20
+                 font-mono"
+          placeholder="ここにテキストを貼り付けてください..."
+        ></textarea>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex gap-3 mb-6">
+        <button
+          id="extract-btn"
+          class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10
+                 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest"
+        >
+          EXTRACT
+        </button>
+        <button
+          id="clear-btn"
+          class="px-4 py-2 text-sm border border-cyan-400/20 text-cyan-400/50
+                 hover:border-cyan-400/50 hover:text-cyan-400/80 transition-colors tracking-widest"
+        >
+          CLEAR
+        </button>
+      </div>
+
+      <!-- Output -->
+      <div id="output-section" class="hidden">
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-xs tracking-widest text-cyan-400/60">OUTPUT — <span id="count">0</span> URLs</label>
+          <button
+            id="copy-btn"
+            class="text-xs px-3 py-1 border border-cyan-400/30 text-cyan-400/60
+                   hover:border-cyan-400/60 hover:text-cyan-400 transition-colors tracking-widest"
+          >
+            COPY ALL
+          </button>
+        </div>
+        <textarea
+          id="output"
+          readonly
+          class="w-full bg-black border border-cyan-400/20 text-cyan-400/80 text-sm p-3
+                 focus:outline-none resize-none font-mono"
+          rows="1"
+        ></textarea>
+        <p id="copy-msg" class="text-xs text-cyan-400/40 mt-1 opacity-0 transition-opacity">Copied.</p>
+      </div>
+
+      <!-- No results -->
+      <p id="no-result" class="hidden text-cyan-400/40 text-sm">URLが見つかりませんでした。</p>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const inputEl = document.getElementById('input') as HTMLTextAreaElement;
+  const outputEl = document.getElementById('output') as HTMLTextAreaElement;
+  const outputSection = document.getElementById('output-section')!;
+  const noResult = document.getElementById('no-result')!;
+  const countEl = document.getElementById('count')!;
+  const copyMsg = document.getElementById('copy-msg')!;
+
+  function extractUrls(text: string): string[] {
+    const matches = text.match(/https?:\/\/[^\s"'<>）」』\]]+/g) ?? [];
+    return [...new Set(matches)];
+  }
+
+  function autoResize(el: HTMLTextAreaElement) {
+    el.style.height = 'auto';
+    el.style.height = el.scrollHeight + 'px';
+  }
+
+  document.getElementById('extract-btn')!.addEventListener('click', () => {
+    const urls = extractUrls(inputEl.value);
+    outputSection.classList.add('hidden');
+    noResult.classList.add('hidden');
+
+    if (urls.length === 0) {
+      noResult.classList.remove('hidden');
+      return;
+    }
+
+    const result = urls.join('\n');
+    outputEl.value = result;
+    countEl.textContent = String(urls.length);
+    outputSection.classList.remove('hidden');
+    autoResize(outputEl);
+  });
+
+  document.getElementById('clear-btn')!.addEventListener('click', () => {
+    inputEl.value = '';
+    outputEl.value = '';
+    outputSection.classList.add('hidden');
+    noResult.classList.add('hidden');
+  });
+
+  document.getElementById('copy-btn')!.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(outputEl.value);
+    copyMsg.style.opacity = '1';
+    setTimeout(() => { copyMsg.style.opacity = '0'; }, 1500);
+  });
+
+  // Auto-extract on paste
+  inputEl.addEventListener('paste', () => {
+    setTimeout(() => {
+      document.getElementById('extract-btn')!.dispatchEvent(new Event('click'));
+    }, 0);
+  });
+</script>
