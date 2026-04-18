@@ -1,15 +1,21 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
 
 /* Custom Cyberpunk Terminal Theme */
 @theme {
-  --color-cyber-bg: #000000;
+  --color-cyber-bg:      #000000;
   --color-cyber-primary: #00ffff;
   --color-cyber-secondary: #ff00ff;
-  --color-cyber-accent: #8b5cf6;
-  --color-cyber-glow: rgba(0, 255, 255, 0.5);
-  --color-cyber-grid: rgba(0, 255, 255, 0.1);
+  --color-cyber-accent:  #8b5cf6;
+  --color-cyber-glow:    rgba(0, 255, 255, 0.5);
+  --color-cyber-grid:    rgba(0, 255, 255, 0.1);
 
-  --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Mono', 'Droid Sans Mono', monospace;
+  /* Override Tailwind cyan-400 to brand pure cyan */
+  --color-cyan-400: #00ffff;
+
+  /* Font stacks */
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Mono', 'Droid Sans Mono', monospace;
+  --font-sans: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, system-ui, sans-serif;
 }
 
 /* Base Styles */
@@ -77,7 +83,7 @@ body::before {
   animation: typewriter 2s steps(30) 1s forwards;
 }
 
-/* Glow Effect */
+/* Glow Effects */
 .glow {
   text-shadow:
     0 0 5px var(--color-cyber-primary),
@@ -85,11 +91,21 @@ body::before {
     0 0 20px var(--color-cyber-primary);
 }
 
+.glow-sm {
+  text-shadow: 0 0 5px var(--color-cyber-primary);
+}
+
 .glow-box {
   box-shadow:
     0 0 5px var(--color-cyber-primary),
     0 0 10px var(--color-cyber-primary),
     inset 0 0 5px rgba(0, 255, 255, 0.1);
+}
+
+.glow-box-sm {
+  box-shadow:
+    0 0 5px var(--color-cyber-primary),
+    inset 0 0 5px rgba(0, 255, 255, 0.10);
 }
 
 /* Glass Effect */
