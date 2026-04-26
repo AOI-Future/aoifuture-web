@@ -200,6 +200,32 @@ export default function HUDOverlay() {
                 </div>
               </a>
 
+            {/* Work Commission */}
+              <a
+                href="/consulting"
+                className="block p-4 border border-cyan-400/20
+                           hover:border-cyan-400/60 hover:bg-cyan-400/5
+                           transition-all duration-300 group"
+              >
+                <div className="flex items-center gap-3">
+                  <svg viewBox="0 0 16 16" className="w-8 h-8 text-cyan-400" style={{ imageRendering: 'pixelated' }}>
+                    <rect x="5" y="2" width="6" height="2" fill="currentColor" />
+                    <rect x="3" y="4" width="10" height="8" fill="none" stroke="currentColor" strokeWidth="1" />
+                    <rect x="5" y="4" width="6" height="1" fill="currentColor" />
+                    <rect x="3" y="8" width="10" height="1" fill="currentColor" />
+                  </svg>
+                  <div>
+                    <div className="text-cyan-400 font-mono text-sm
+                                    group-hover:glow transition-all">
+                      {'>'} WORK.COMMISSION
+                    </div>
+                    <div className="text-cyan-400/40 font-mono text-[10px] mt-0.5">
+                      AI CONSULTING / CREATIVE DIRECTION
+                    </div>
+                  </div>
+                </div>
+              </a>
+
             {/* About & Legal Links */}
             <div className="space-y-3">
               <a
