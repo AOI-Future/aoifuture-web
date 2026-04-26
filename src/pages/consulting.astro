@@ -1,11 +1,6 @@
 ---
 import '../styles/consulting.css';
 import Analytics from '@vercel/analytics/astro';
-
-const AGENT_CHAT_ID = 'agent-hearing-dialog';
-const AGENT_CHAT_MODEL = 'openclaw:web-lp';
-const AGENT_CHAT_MAX_LENGTH = 1000;
-const AGENT_CHAT_ENDPOINT = 'https://factory-p1.aoifuture.com/api/v1/webchat';
 ---
 
 <!doctype html>
@@ -13,14 +8,14 @@ const AGENT_CHAT_ENDPOINT = 'https://factory-p1.aoifuture.com/api/v1/webchat';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="AIエージェント運用設計の相談。境界線を一緒に引き、運用実験から得た知見を共有します。" />
+    <meta name="description" content="AIと仕事する設計を、一緒に。実装伴走・月次ブリーフィング・スポット相談。野崎秀吾（Shugo Nozaki）のAI活用支援サービス。" />
     <meta name="robots" content="noindex, nofollow" />
     <meta name="robots" content="noai, noimageai" />
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet" />
-    <title>AI運用設計の相談 | AOIFUTURE</title>
+    <title>AIと仕事する設計を、一緒に | AOIFUTURE</title>
 
     <!-- Google tag (gtag.js) - loaded only after consent -->
     <script is:inline>
@@ -49,7 +44,7 @@ const AGENT_CHAT_ENDPOINT = 'https://factory-p1.aoifuture.com/api/v1/webchat';
         "name": "Shugo Nozaki",
         "alternateName": "野崎秀吾"
       },
-      "description": "AIエージェント運用設計の知見共有と伴走",
+      "description": "AI実装伴走・月次AIブリーフィング・スポット相談。AIと仕事する設計を一緒に進めます。",
       "areaServed": "JP",
       "availableLanguage": ["ja", "en"]
     }
@@ -67,34 +62,36 @@ const AGENT_CHAT_ENDPOINT = 'https://factory-p1.aoifuture.com/api/v1/webchat';
       </div>
 
       <h1 class="text-3xl md:text-[2.75rem] md:leading-[1.35] font-bold text-[var(--color-brand)] mb-8">
-        AIエージェント運用の<br class="hidden md:inline" />境界線を、<br />
-        一緒に引いていく。
+        AIと仕事する、<br />
+        その設計から<br class="hidden md:inline" />一緒に。
       </h1>
 
       <p class="text-base md:text-lg text-[var(--color-text-muted)] max-w-2xl leading-loose mb-12">
-        ChatGPTを導入した。Copilotも試した。社内研修もやった。<br />
+        ChatGPTを入れた。Copilotも試した。社内研修もやった。<br />
         でも半年後、使っているのは最初から興味があった一人だけ。<br /><br />
-        「AIを入れる」ことはできた。<br />
-        でも「AIが業務に溶け込む」ことは、まだできていない。<br /><br />
-        問題はツールそのものより、<span class="text-[var(--color-brand)] font-medium">誰がどこまで担うかという運用設計</span>にあることが多いです。
+        「ツールを入れる」ことはできた。<br />
+        「AIが業務に溶け込む」ことは、まだできていない。<br /><br />
+        問題はツールではなく、<span class="text-[var(--color-brand)] font-medium">誰がどこまで担うかという設計</span>にあります。<br />
+        その設計と実装を、実際に手を動かしながら一緒に進めます。
       </p>
 
       <div class="space-y-4">
-        <button
-          type="button"
-          data-open-agent-chat
+        <a
+          href="https://aoifuture.notion.site/6a828f1f8371416187ab544742734fcd?pvs=105"
+          target="_blank"
+          rel="noopener noreferrer"
           class="inline-flex items-center gap-2 bg-[var(--color-brand)] text-white
-               px-8 py-4 text-sm font-medium tracking-wide cursor-pointer
+               px-8 py-4 text-sm font-medium tracking-wide
                hover:bg-[var(--color-brand-light)] transition-colors duration-300
                w-fit"
         >
-          AIエージェントに相談する
+          相談フォームへ
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
-        </button>
+        </a>
         <p class="text-sm text-[var(--color-text-light)] max-w-xl leading-relaxed">
-          まずはAIエージェントが事前ヒアリングを行います。状況整理のあと、必要なら人間のセッションにつなぎます。
+          状況を簡単に書いて送ってください。1〜2営業日以内に返信します。
         </p>
       </div>
     </section>
@@ -262,7 +259,67 @@ const AGENT_CHAT_ENDPOINT = 'https://factory-p1.aoifuture.com/api/v1/webchat';
     </section>
 
 
-    <!-- ======================== PRICING ======================== -->
+    <!-- ======================== CASES ======================== -->
+    <section class="px-6 md:px-12 lg:px-20 max-w-4xl mx-auto py-24 md:py-32">
+      <span class="text-xs tracking-widest text-[var(--color-text-light)] uppercase mb-6 block">
+        Cases
+      </span>
+
+      <h2 class="text-2xl md:text-3xl font-bold text-[var(--color-brand)] mb-12">
+        実績
+      </h2>
+
+      <div class="space-y-12">
+
+        <!-- Case 1 -->
+        <div class="border-l-2 border-[var(--color-accent)] pl-8 py-2">
+          <div class="text-xs tracking-widest text-[var(--color-text-light)] uppercase mb-3">Case 01 — スポット伴走</div>
+          <h3 class="text-lg font-medium text-[var(--color-brand)] mb-4">
+            残り1ヶ月の卒業制作を、1回で通した
+          </h3>
+          <div class="space-y-3 text-sm text-[var(--color-text-muted)] leading-relaxed">
+            <p>
+              美術大学の学生から「提出まで1ヶ月を切ったが、制作にAIをどう使えばいいかわからない」という相談を受けた。
+            </p>
+            <p>
+              無駄を省き、要点だけを押さえた1回のセッション。その後はオンラインで随時サポートしながら、提出まで伴走した。
+            </p>
+            <p class="text-[var(--color-text)] font-medium">
+              「わかる」から「使える」へ。時間が限られているほど、設計の精度が成否を分ける。
+            </p>
+          </div>
+        </div>
+
+        <!-- Case 2 -->
+        <div class="border-l-2 border-[var(--color-accent-warm)] pl-8 py-2">
+          <div class="text-xs tracking-widest text-[var(--color-text-light)] uppercase mb-3">Case 02 — 月次ブリーフィング</div>
+          <h3 class="text-lg font-medium text-[var(--color-brand)] mb-4">
+            「ChatGPTの使い方がわからない」から自律的にAIサービスを作るまで
+          </h3>
+          <div class="space-y-3 text-sm text-[var(--color-text-muted)] leading-relaxed">
+            <p>
+              ある企業の執行役員（マーケティング担当）からの依頼。ChatGPTをどう使えばいいかわからない、という段階からスタート。
+            </p>
+            <p>
+              毎月1回、業界トレンドを整理し、「この変化は自分の仕事にどう関係するか」を一緒に言語化するセッションを続けた。慣れ親しんだGoogle検索との違いを体感してもらいながら、粘り強く伴走した。
+            </p>
+            <p class="text-[var(--color-text)] font-medium">
+              いまでは自律的にAIで業務ツールを作ってみる、いわゆる「バイブコーディング」にまで取り組んでいる。
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ======================== DIVIDER ======================== -->
+    <div class="max-w-4xl mx-auto px-6 md:px-12 lg:px-20">
+      <hr class="border-[var(--color-border)]" />
+    </div>
+
+
+    <!-- ======================== SERVICES ======================== -->
     <section class="px-6 md:px-12 lg:px-20 max-w-4xl mx-auto py-24 md:py-32">
       <span class="text-xs tracking-widest text-[var(--color-text-light)] uppercase mb-6 block">
         Services
@@ -272,11 +329,12 @@ const AGENT_CHAT_ENDPOINT = 'https://factory-p1.aoifuture.com/api/v1/webchat';
         サービス内容
       </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
         <!-- Spot -->
         <div class="border border-[var(--color-border)] p-8 flex flex-col">
           <h3 class="text-sm font-medium text-[var(--color-text-light)] uppercase tracking-wider mb-4">
-            Spot
+            Spot 相談
           </h3>
           <div class="text-2xl font-bold text-[var(--color-brand)] mb-1">
             ¥30,000
@@ -284,49 +342,53 @@ const AGENT_CHAT_ENDPOINT = 'https://factory-p1.aoifuture.com/api/v1/webchat';
           <div class="text-xs text-[var(--color-text-muted)] mb-6">1回 / 60分</div>
 
           <p class="text-sm text-[var(--color-text-muted)] leading-relaxed mb-8 flex-1">
-            「いま抱えている論点を整理したい」<br />
-            「方向性だけ先に見たい」という方向け。
+            「いま迷っている論点を整理したい」<br />
+            「方向性だけ先に確認したい」という方向け。
           </p>
 
           <ul class="text-sm text-[var(--color-text-muted)] space-y-2">
             <li class="flex items-start gap-2">
               <span class="text-[var(--color-accent)] mt-0.5 shrink-0">&mdash;</span>
-              業務課題のヒアリング
+              業務課題・AI活用の論点整理
             </li>
             <li class="flex items-start gap-2">
               <span class="text-[var(--color-accent)] mt-0.5 shrink-0">&mdash;</span>
-              AI活用の切り分け
+              AI/人間の役割分担設計
             </li>
             <li class="flex items-start gap-2">
               <span class="text-[var(--color-accent)] mt-0.5 shrink-0">&mdash;</span>
-              次のアクション提案
+              2週間アクションプランの提供
             </li>
           </ul>
         </div>
 
-        <!-- Monthly -->
+        <!-- AI実装伴走 -->
         <div class="border-2 border-[var(--color-brand)] p-8 flex flex-col relative">
           <div class="absolute -top-3 left-6 bg-[var(--color-brand)] text-white text-[10px] tracking-wider uppercase px-3 py-1">
             Recommended
           </div>
 
           <h3 class="text-sm font-medium text-[var(--color-text-light)] uppercase tracking-wider mb-4">
-            Monthly
+            AI実装伴走
           </h3>
           <div class="text-2xl font-bold text-[var(--color-brand)] mb-1">
-            ¥50,000〜
+            ¥80,000〜120,000
           </div>
-          <div class="text-xs text-[var(--color-text-muted)] mb-6">月額 / セッション2回</div>
+          <div class="text-xs text-[var(--color-text-muted)] mb-6">月額 / セッション月2〜4回</div>
 
           <p class="text-sm text-[var(--color-text-muted)] leading-relaxed mb-8 flex-1">
-            「継続的に観測と調整をしたい」<br />
-            「設計から運用まで往復したい」という方向け。
+            「実際に作りながら学びたい」<br />
+            「自分でも動かせる仕組みを手元に残したい」という方向け。
           </p>
 
           <ul class="text-sm text-[var(--color-text-muted)] space-y-2">
             <li class="flex items-start gap-2">
               <span class="text-[var(--color-accent)] mt-0.5 shrink-0">&mdash;</span>
-              月2回のセッション（各60分）
+              月2〜4回のセッション（各60分）
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-[var(--color-accent)] mt-0.5 shrink-0">&mdash;</span>
+              実装サポート・プロンプト設計
             </li>
             <li class="flex items-start gap-2">
               <span class="text-[var(--color-accent)] mt-0.5 shrink-0">&mdash;</span>
@@ -339,36 +401,68 @@ const AGENT_CHAT_ENDPOINT = 'https://factory-p1.aoifuture.com/api/v1/webchat';
           </ul>
         </div>
 
-        <!-- Custom -->
+        <!-- 月次ブリーフィング 個人 -->
         <div class="border border-[var(--color-border)] p-8 flex flex-col">
           <h3 class="text-sm font-medium text-[var(--color-text-light)] uppercase tracking-wider mb-4">
-            Custom
+            月次AIブリーフィング（個人）
           </h3>
           <div class="text-2xl font-bold text-[var(--color-brand)] mb-1">
-            個別見積もり
+            ¥60,000
           </div>
-          <div class="text-xs text-[var(--color-text-muted)] mb-6">要件に応じて</div>
+          <div class="text-xs text-[var(--color-text-muted)] mb-6">月額 / 月1回60分</div>
 
           <p class="text-sm text-[var(--color-text-muted)] leading-relaxed mb-8 flex-1">
-            「具体的に動く仕組みを持ち帰りたい」<br />
-            「特定の業務にエージェントを組み込みたい」という方向け。
+            「AI動向を自分の業務文脈で把握したい」<br />
+            「判断の精度を上げる情報を継続的に欲しい」という方向け。
           </p>
 
           <ul class="text-sm text-[var(--color-text-muted)] space-y-2">
             <li class="flex items-start gap-2">
               <span class="text-[var(--color-accent)] mt-0.5 shrink-0">&mdash;</span>
-              要件定義
+              月1回の個別ブリーフィング（60分）
             </li>
             <li class="flex items-start gap-2">
               <span class="text-[var(--color-accent)] mt-0.5 shrink-0">&mdash;</span>
-              実装・運用設計
+              業界トレンドの解説と業務への適用方法
             </li>
             <li class="flex items-start gap-2">
               <span class="text-[var(--color-accent)] mt-0.5 shrink-0">&mdash;</span>
-              エージェント構築
+              Q&A・論点の言語化サポート
             </li>
           </ul>
         </div>
+
+        <!-- 月次ブリーフィング チーム -->
+        <div class="border border-[var(--color-border)] p-8 flex flex-col">
+          <h3 class="text-sm font-medium text-[var(--color-text-light)] uppercase tracking-wider mb-4">
+            月次AIブリーフィング（チーム）
+          </h3>
+          <div class="text-2xl font-bold text-[var(--color-brand)] mb-1">
+            ¥150,000
+          </div>
+          <div class="text-xs text-[var(--color-text-muted)] mb-6">月額 / 3〜10名対象</div>
+
+          <p class="text-sm text-[var(--color-text-muted)] leading-relaxed mb-8 flex-1">
+            「チーム全員のAIリテラシーを底上げしたい」<br />
+            「経営層とメンバーの認識を揃えたい」という方向け。
+          </p>
+
+          <ul class="text-sm text-[var(--color-text-muted)] space-y-2">
+            <li class="flex items-start gap-2">
+              <span class="text-[var(--color-accent)] mt-0.5 shrink-0">&mdash;</span>
+              月1回のチームブリーフィング（60〜90分）
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-[var(--color-accent)] mt-0.5 shrink-0">&mdash;</span>
+              チームに合わせたカスタム資料
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-[var(--color-accent)] mt-0.5 shrink-0">&mdash;</span>
+              チームQ&Aセッション
+            </li>
+          </ul>
+        </div>
+
       </div>
     </section>
 
@@ -531,7 +625,7 @@ const AGENT_CHAT_ENDPOINT = 'https://factory-p1.aoifuture.com/api/v1/webchat';
     <section class="bg-[var(--color-brand)] py-24 md:py-32">
       <div class="px-6 md:px-12 lg:px-20 max-w-4xl mx-auto text-center">
         <h2 class="text-2xl md:text-3xl font-bold text-white mb-8">
-          まずは、AIエージェントが聞きます
+          まずは、一行でいい
         </h2>
 
         <div class="max-w-xl mx-auto space-y-6 text-white/70 text-sm leading-loose mb-12">
@@ -539,8 +633,8 @@ const AGENT_CHAT_ENDPOINT = 'https://factory-p1.aoifuture.com/api/v1/webchat';
             「まだ相談として成立していないかもしれない」で大丈夫です。
           </p>
           <p>
-            こちらでも、AIエージェント群の運用実験を続けながら失敗ログを溜めています。<br />
-            その前提で、最初はAIエージェントが状況を聞き取り、論点を整えてから次の接続先を判断します。
+            いま何に困っているか、どんな業務でAIを使えないか迷っているか、<br />
+            一行でもいいので書いて送ってください。
           </p>
           <p class="text-white/90 font-medium">
             完成品を売るというより、<br />
@@ -549,132 +643,25 @@ const AGENT_CHAT_ENDPOINT = 'https://factory-p1.aoifuture.com/api/v1/webchat';
         </div>
 
         <div class="space-y-4">
-          <button
-            type="button"
-            data-open-agent-chat
+          <a
+            href="https://aoifuture.notion.site/6a828f1f8371416187ab544742734fcd?pvs=105"
+            target="_blank"
+            rel="noopener noreferrer"
             class="inline-flex items-center gap-2 bg-white text-[var(--color-brand)]
                    px-10 py-4 text-sm font-medium tracking-wide
-                   hover:bg-white/90 transition-colors duration-300 cursor-pointer"
+                   hover:bg-white/90 transition-colors duration-300"
           >
-            AIエージェントに相談する
+            相談フォームへ
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
-          </button>
+          </a>
           <p class="text-white/40 text-xs leading-relaxed">
-            まずはAIエージェントが事前ヒアリングを行います。内容を整理したうえで、人間のセッションが必要なら案内します。
+            1〜2営業日以内に返信します。
           </p>
         </div>
       </div>
     </section>
-
-    <!-- ======================== CHAT WIDGET (Floating) ======================== -->
-    <div id="agent-chat-widget" class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
-      <!-- Chat panel (hidden by default) -->
-      <div
-        id={AGENT_CHAT_ID}
-        class="hidden w-[min(400px,calc(100vw-2rem))] h-[min(560px,calc(100vh-6rem))] bg-[var(--color-surface)] border border-[var(--color-border)] shadow-2xl flex flex-col"
-        style="border-radius: 12px; overflow: hidden;"
-      >
-        <!-- Header -->
-        <div class="bg-[var(--color-brand)] px-5 py-4 flex items-center justify-between gap-3 shrink-0">
-          <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-              </svg>
-            </div>
-            <div>
-              <p class="text-white text-sm font-medium">AIエージェント</p>
-              <p class="text-white/60 text-xs">事前ヒアリング</p>
-            </div>
-          </div>
-          <button
-            type="button"
-            data-close-agent-chat
-            class="text-white/60 hover:text-white transition-colors cursor-pointer p-1"
-            aria-label="チャットを閉じる"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-
-        <!-- Messages area -->
-        <div id="agent-chat-messages" class="flex-1 overflow-y-auto px-4 py-4 space-y-3 text-sm leading-relaxed">
-          <!-- Welcome message -->
-          <div class="flex items-start gap-2">
-            <div class="w-6 h-6 rounded-full bg-[var(--color-brand)] flex items-center justify-center shrink-0 mt-0.5">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-              </svg>
-            </div>
-            <div class="max-w-[80%] bg-[var(--color-surface-alt)] border border-[var(--color-border)] px-3 py-2.5 text-[var(--color-text-muted)]" style="border-radius: 2px 12px 12px 12px;">
-              AOIFUTUREのヒアリング用エージェントです。いま整理したい業務や、AIに任せるか迷っている作業を教えてください。
-            </div>
-          </div>
-        </div>
-
-        <!-- Quick start suggestions (before first message) -->
-        <div id="agent-chat-quickstart" class="px-4 pb-2 shrink-0">
-          <div class="flex flex-wrap gap-1.5">
-            <button type="button" data-chat-prompt="AIに任せる業務と人間が持つ業務の境界線を整理したいです。" class="border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-[var(--color-accent)] transition-colors cursor-pointer" style="border-radius: 16px;">
-              境界線を整理したい
-            </button>
-            <button type="button" data-chat-prompt="試しに導入したAIツールが定着しません。設計の問題かを見たいです。" class="border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-[var(--color-accent)] transition-colors cursor-pointer" style="border-radius: 16px;">
-              定着しない理由を見たい
-            </button>
-            <button type="button" data-chat-prompt="いま動かしているAIエージェントの挙動を見直したいです。" class="border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-[var(--color-accent)] transition-colors cursor-pointer" style="border-radius: 16px;">
-              既存エージェントを見直したい
-            </button>
-          </div>
-        </div>
-
-        <!-- Input area -->
-        <div class="border-t border-[var(--color-border)] px-3 py-3 shrink-0">
-          <div class="flex items-end gap-2">
-            <textarea
-              id="agent-chat-input"
-              class="flex-1 min-h-[3.5rem] max-h-32 border border-[var(--color-border)] bg-transparent px-3 py-2 text-sm leading-relaxed outline-none focus:border-[var(--color-accent)] transition-colors resize-none"
-              placeholder="メッセージを入力..."
-              maxlength={AGENT_CHAT_MAX_LENGTH}
-              rows="2"
-              style="border-radius: 20px;"
-            ></textarea>
-            <button
-              type="button"
-              id="agent-chat-submit"
-              class="w-9 h-9 flex items-center justify-center bg-[var(--color-brand)] text-white hover:bg-[var(--color-brand-light)] transition-colors cursor-pointer shrink-0"
-              style="border-radius: 50%;"
-              aria-label="送信"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 19V5m0 0l-7 7m7-7l7 7" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- FAB (Floating Action Button) -->
-      <button
-        type="button"
-        id="agent-chat-fab"
-        data-open-agent-chat
-        class="w-14 h-14 bg-[var(--color-brand)] text-white shadow-lg hover:bg-[var(--color-brand-light)] transition-all cursor-pointer flex items-center justify-center"
-        style="border-radius: 50%;"
-        aria-label="AIエージェントに相談する"
-      >
-        <svg id="agent-chat-fab-icon-open" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-        </svg>
-        <svg id="agent-chat-fab-icon-close" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-    </div>
-
 
     <!-- ======================== NOTE LINK ======================== -->
     <section class="px-6 md:px-12 lg:px-20 max-w-4xl mx-auto py-16">
@@ -684,12 +671,12 @@ const AGENT_CHAT_ENDPOINT = 'https://factory-p1.aoifuture.com/api/v1/webchat';
         </p>
         <div class="space-y-2">
           <a
-            href="https://zenn.dev/aoikuro"
+            href="https://note.com/shugo"
             target="_blank"
             rel="noopener noreferrer"
             class="inline-block text-sm text-[var(--color-accent)] hover:text-[var(--color-brand)] transition-colors duration-300 underline underline-offset-4"
           >
-            クロちゃん（AI社員）のZenn →
+            野崎秀吾のnote（毎日更新）→
           </a>
         </div>
       </div>
@@ -797,7 +784,7 @@ const AGENT_CHAT_ENDPOINT = 'https://factory-p1.aoifuture.com/api/v1/webchat';
             &copy; 2026 Shugo Nozaki
           </div>
           <div>
-            最終更新：2026年3月
+            最終更新：2026年4月
           </div>
         </div>
       </div>
@@ -805,240 +792,6 @@ const AGENT_CHAT_ENDPOINT = 'https://factory-p1.aoifuture.com/api/v1/webchat';
 
     <Analytics />
 
-    <script is:inline define:vars={{ agentChatId: AGENT_CHAT_ID, agentChatModel: AGENT_CHAT_MODEL, agentChatMaxLength: AGENT_CHAT_MAX_LENGTH, agentChatEndpoint: AGENT_CHAT_ENDPOINT }}>
-      const chatPanel = document.getElementById(agentChatId);
-      const fab = document.getElementById('agent-chat-fab');
-      const fabIconOpen = document.getElementById('agent-chat-fab-icon-open');
-      const fabIconClose = document.getElementById('agent-chat-fab-icon-close');
-      const input = document.getElementById('agent-chat-input');
-      const messagesContainer = document.getElementById('agent-chat-messages');
-      const quickstart = document.getElementById('agent-chat-quickstart');
-      const submit = document.getElementById('agent-chat-submit');
-      const openers = document.querySelectorAll('[data-open-agent-chat]');
-      const closers = document.querySelectorAll('[data-close-agent-chat]');
-      const prompts = document.querySelectorAll('[data-chat-prompt]');
-
-      const SESSION_KEY = 'openclaw:webchat-lp:session-id';
-      let chatOpen = false;
-
-      function getSessionId() {
-        let id = localStorage.getItem(SESSION_KEY);
-        if (!id) {
-          id = 'webchat-lp:user:' + crypto.randomUUID();
-          localStorage.setItem(SESSION_KEY, id);
-        }
-        return id;
-      }
-
-      function toggleChat(forceOpen) {
-        chatOpen = typeof forceOpen === 'boolean' ? forceOpen : !chatOpen;
-
-        if (chatOpen) {
-          chatPanel?.classList.remove('hidden');
-          chatPanel?.classList.add('flex');
-          fabIconOpen?.classList.add('hidden');
-          fabIconClose?.classList.remove('hidden');
-          window.requestAnimationFrame(() => input?.focus());
-        } else {
-          chatPanel?.classList.add('hidden');
-          chatPanel?.classList.remove('flex');
-          fabIconOpen?.classList.remove('hidden');
-          fabIconClose?.classList.add('hidden');
-        }
-      }
-
-      function renderMarkdown(md) {
-        // Sanitize HTML entities first
-        let html = md
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;');
-
-        // Headers: ## Text → <strong>Text</strong>
-        html = html.replace(/^#{1,3}\s+(.+)$/gm, '<strong>$1</strong>');
-
-        // Bold: **text** → <strong>text</strong>
-        html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-
-        // Italic: *text* → <em>text</em>
-        html = html.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
-
-        // Numbered lists: 1. text → <li>text</li> (wrapped later)
-        html = html.replace(/^(\d+)\.\s+(.+)$/gm, '<li>$2</li>');
-
-        // Bullet lists: - text → <li>text</li>
-        html = html.replace(/^[-•]\s+(.+)$/gm, '<li>$1</li>');
-
-        // Wrap consecutive <li> in <ol> or <ul>
-        html = html.replace(/((?:<li>.*<\/li>\n?)+)/g, '<ul class="agent-chat-list">$1</ul>');
-
-        // Horizontal rule: --- → <hr>
-        html = html.replace(/^---+$/gm, '<hr class="my-2 border-[var(--color-border)]">');
-
-        // Line breaks: double newline → paragraph break, single → <br>
-        html = html
-          .split('\n\n')
-          .map(block => block.trim())
-          .filter(Boolean)
-          .map(block => '<p>' + block.replace(/\n/g, '<br>') + '</p>')
-          .join('');
-
-        return html;
-      }
-
-      function appendMessage(text, role) {
-        if (!(messagesContainer instanceof HTMLElement)) return;
-
-        const wrapper = document.createElement('div');
-
-        if (role === 'user') {
-          wrapper.className = 'flex justify-end';
-          const bubble = document.createElement('div');
-          bubble.className = 'max-w-[80%] bg-[var(--color-brand)] text-white px-3 py-2.5 text-sm';
-          bubble.style.borderRadius = '12px 2px 12px 12px';
-          bubble.textContent = text;
-          wrapper.appendChild(bubble);
-        } else {
-          wrapper.className = 'flex items-start gap-2';
-          const avatar = document.createElement('div');
-          avatar.className = 'w-6 h-6 rounded-full bg-[var(--color-brand)] flex items-center justify-center shrink-0 mt-0.5';
-          avatar.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>';
-          const bubble = document.createElement('div');
-          bubble.className = 'max-w-[80%] bg-[var(--color-surface-alt)] border border-[var(--color-border)] px-3 py-2.5 text-sm text-[var(--color-text-muted)] agent-chat-bubble';
-          bubble.style.borderRadius = '2px 12px 12px 12px';
-          bubble.innerHTML = renderMarkdown(text);
-          wrapper.appendChild(avatar);
-          wrapper.appendChild(bubble);
-        }
-
-        messagesContainer.appendChild(wrapper);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-      }
-
-      function appendLoading() {
-        if (!(messagesContainer instanceof HTMLElement)) return;
-
-        const wrapper = document.createElement('div');
-        wrapper.className = 'flex items-start gap-2';
-        wrapper.id = 'agent-chat-loading';
-
-        const avatar = document.createElement('div');
-        avatar.className = 'w-6 h-6 rounded-full bg-[var(--color-brand)] flex items-center justify-center shrink-0 mt-0.5';
-        avatar.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>';
-
-        const bubble = document.createElement('div');
-        bubble.className = 'bg-[var(--color-surface-alt)] border border-[var(--color-border)] px-4 py-3 text-[var(--color-text-light)]';
-        bubble.style.borderRadius = '2px 12px 12px 12px';
-        bubble.innerHTML = '<span class="agent-chat-typing"><span>.</span><span>.</span><span>.</span></span>';
-
-        wrapper.appendChild(avatar);
-        wrapper.appendChild(bubble);
-        messagesContainer.appendChild(wrapper);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-      }
-
-      function removeLoading() {
-        document.getElementById('agent-chat-loading')?.remove();
-      }
-
-      // Open/close handlers
-      fab?.addEventListener('click', () => toggleChat());
-      openers.forEach((btn) => btn.addEventListener('click', () => toggleChat(true)));
-      closers.forEach((btn) => btn.addEventListener('click', () => toggleChat(false)));
-
-      // Quick start prompts
-      prompts.forEach((button) => {
-        button.addEventListener('click', () => {
-          if (!(button instanceof HTMLButtonElement) || !(input instanceof HTMLTextAreaElement)) return;
-          input.value = (button.dataset.chatPrompt ?? '').slice(0, agentChatMaxLength);
-          input.focus();
-        });
-      });
-
-      // Auto-resize textarea
-      input?.addEventListener('input', () => {
-        if (!(input instanceof HTMLTextAreaElement)) return;
-        input.style.height = 'auto';
-        input.style.height = Math.min(input.scrollHeight, 96) + 'px';
-      });
-
-      // Enter is for newline (default textarea behavior)
-
-      let firstMessage = true;
-
-      submit?.addEventListener('click', async () => {
-        if (!(input instanceof HTMLTextAreaElement)) return;
-
-        const message = input.value.trim();
-        if (!message || submit.disabled) {
-          input.focus();
-          return;
-        }
-
-        if (message.length > agentChatMaxLength) {
-          appendMessage(agentChatMaxLength + '文字以内で入力してください。', 'assistant');
-          return;
-        }
-
-        // Hide quickstart after first message
-        if (firstMessage && quickstart) {
-          quickstart.style.display = 'none';
-          firstMessage = false;
-        }
-
-        // Show user message and clear input
-        appendMessage(message, 'user');
-        input.value = '';
-        input.style.height = 'auto';
-
-        submit.disabled = true;
-        appendLoading();
-
-        try {
-          const apiResponse = await fetch(agentChatEndpoint, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              model: agentChatModel,
-              input: message,
-              user: getSessionId()
-            })
-          });
-
-          removeLoading();
-
-          const payload = await apiResponse.json().catch(() => null);
-          if (!apiResponse.ok) {
-            appendMessage(
-              payload?.error ?? '現在ヒアリング窓口が利用できません。時間を置いて再度お試しください。',
-              'assistant'
-            );
-            return;
-          }
-
-          appendMessage(
-            payload?.output_text ?? '受け取りました。もう少し詳しく教えてください。',
-            'assistant'
-          );
-        } catch (error) {
-          removeLoading();
-          appendMessage(
-            'ネットワークエラーが発生しました。時間を置いて再度お試しください。',
-            'assistant'
-          );
-        } finally {
-          submit.disabled = false;
-          input.focus();
-        }
-      });
-
-      // Escape key to close
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && chatOpen) {
-          toggleChat(false);
-        }
-      });
-    </script>
   </body>
 </html>
 
@@ -1068,54 +821,4 @@ const AGENT_CHAT_ENDPOINT = 'https://factory-p1.aoifuture.com/api/v1/webchat';
     content: '';
   }
 
-  /* Chat bubble markdown styles */
-  .agent-chat-bubble p {
-    margin-bottom: 0.5em;
-  }
-  .agent-chat-bubble p:last-child {
-    margin-bottom: 0;
-  }
-  .agent-chat-bubble strong {
-    color: var(--color-text);
-    font-weight: 600;
-  }
-  .agent-chat-bubble ul.agent-chat-list {
-    margin: 0.4em 0;
-    padding-left: 1.2em;
-    list-style: none;
-  }
-  .agent-chat-bubble ul.agent-chat-list li {
-    position: relative;
-    padding-left: 0.2em;
-    margin-bottom: 0.3em;
-  }
-  .agent-chat-bubble ul.agent-chat-list li::before {
-    content: "–";
-    position: absolute;
-    left: -1em;
-    color: var(--color-accent);
-  }
-
-  /* Chat typing indicator */
-  .agent-chat-typing span {
-    display: inline-block;
-    font-size: 1.5em;
-    line-height: 0.5;
-    animation: agent-chat-blink 1.4s infinite both;
-  }
-  .agent-chat-typing span:nth-child(2) { animation-delay: 0.2s; }
-  .agent-chat-typing span:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes agent-chat-blink {
-    0%, 80%, 100% { opacity: 0.2; }
-    40% { opacity: 1; }
-  }
-
-  /* Chat panel slide-up animation */
-  #agent-chat-widget #agent-hearing-dialog.flex {
-    animation: agent-chat-slide-up 0.2s ease-out;
-  }
-  @keyframes agent-chat-slide-up {
-    from { opacity: 0; transform: translateY(12px) scale(0.95); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-  }
 </style>
