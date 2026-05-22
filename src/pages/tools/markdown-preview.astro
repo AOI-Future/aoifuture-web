@@ -72,8 +72,10 @@ import Layout from '../../layouts/Layout.astro';
   }
 </style>
 
-<script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
 <script>
+  import DOMPurify from 'dompurify';
+  import { marked } from 'marked';
+
   const defaultMarkdown = `# Hello, Markdown!
 
 ## Features
@@ -103,8 +105,8 @@ console.log(greet('AOI'));
   const mdPreview = document.getElementById('md-preview')!;
 
   function updatePreview() {
-    // @ts-ignore
-    mdPreview.innerHTML = marked.parse(mdInput.value);
+    const rendered = marked.parse(mdInput.value, { async: false });
+    mdPreview.innerHTML = DOMPurify.sanitize(rendered);
   }
 
   mdInput.value = defaultMarkdown;

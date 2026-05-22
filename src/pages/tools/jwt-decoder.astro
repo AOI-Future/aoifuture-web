@@ -1,0 +1,144 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="JWT DECODER | AOI Tools">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/tools" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} TOOLS</a>
+    <div class="max-w-5xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 031</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400">JWT DECODER</h1>
+        <p class="text-cyan-400/50 text-sm mt-1">JWTのheader / payload / time claimsをローカルで確認</p>
+      </div>
+
+      <div class="mb-4">
+        <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">TOKEN</label>
+        <textarea
+          id="jwt-input"
+          class="w-full bg-black border border-cyan-400/30 text-cyan-400/80 text-sm p-3 focus:outline-none focus:border-cyan-400/70 font-mono h-36 resize-none break-all"
+          placeholder="eyJhbGciOi..."
+        ></textarea>
+      </div>
+
+      <div class="flex flex-wrap gap-2 mb-4">
+        <button id="decode-btn" class="px-4 py-2 text-sm border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest cursor-pointer">DECODE</button>
+        <button id="sample-btn" class="px-4 py-2 text-sm border border-cyan-400/20 text-cyan-400/50 hover:border-cyan-400/50 hover:text-cyan-400/80 transition-colors tracking-widest cursor-pointer">SAMPLE</button>
+        <button id="clear-btn" class="px-4 py-2 text-sm border border-cyan-400/20 text-cyan-400/50 hover:border-cyan-400/50 hover:text-cyan-400/80 transition-colors tracking-widest cursor-pointer">CLEAR</button>
+      </div>
+
+      <p id="error-msg" class="text-red-400 text-xs mb-4 hidden"></p>
+
+      <div id="result" class="hidden grid md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">HEADER</label>
+          <textarea id="header-output" readonly rows="10" class="w-full bg-black border border-cyan-400/20 text-cyan-400/80 text-sm p-3 font-mono resize-none"></textarea>
+        </div>
+        <div>
+          <label class="text-xs tracking-widest text-cyan-400/60 block mb-2">PAYLOAD</label>
+          <textarea id="payload-output" readonly rows="10" class="w-full bg-black border border-cyan-400/20 text-cyan-400/80 text-sm p-3 font-mono resize-none"></textarea>
+        </div>
+      </div>
+
+      <div id="meta" class="hidden border border-cyan-400/20 p-4 space-y-2 text-xs text-cyan-400/60">
+        <div class="flex justify-between gap-4"><span>ALG</span><span id="alg" class="text-cyan-400/80 text-right break-all"></span></div>
+        <div class="flex justify-between gap-4"><span>TYP</span><span id="typ" class="text-cyan-400/80 text-right break-all"></span></div>
+        <div class="flex justify-between gap-4"><span>IAT</span><span id="iat" class="text-cyan-400/80 text-right break-all"></span></div>
+        <div class="flex justify-between gap-4"><span>NBF</span><span id="nbf" class="text-cyan-400/80 text-right break-all"></span></div>
+        <div class="flex justify-between gap-4"><span>EXP</span><span id="exp" class="text-cyan-400/80 text-right break-all"></span></div>
+        <div class="flex justify-between gap-4"><span>SIGNATURE</span><span id="signature-state" class="text-cyan-400/80 text-right">decoded only</span></div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const input = document.getElementById('jwt-input') as HTMLTextAreaElement;
+  const headerOutput = document.getElementById('header-output') as HTMLTextAreaElement;
+  const payloadOutput = document.getElementById('payload-output') as HTMLTextAreaElement;
+  const errorMsg = document.getElementById('error-msg') as HTMLElement;
+  const result = document.getElementById('result') as HTMLElement;
+  const meta = document.getElementById('meta') as HTMLElement;
+
+  function showError(message: string) {
+    errorMsg.textContent = message;
+    errorMsg.classList.remove('hidden');
+    result.classList.add('hidden');
+    meta.classList.add('hidden');
+  }
+
+  function clearError() {
+    errorMsg.textContent = '';
+    errorMsg.classList.add('hidden');
+  }
+
+  function fromBase64Url(part: string): string {
+    const normalized = part.replace(/-/g, '+').replace(/_/g, '/');
+    const padded = normalized.padEnd(Math.ceil(normalized.length / 4) * 4, '=');
+    const binary = atob(padded);
+    const bytes = Uint8Array.from(binary, char => char.charCodeAt(0));
+    return new TextDecoder().decode(bytes);
+  }
+
+  function toBase64Url(text: string): string {
+    const bytes = new TextEncoder().encode(text);
+    let binary = '';
+    bytes.forEach(byte => { binary += String.fromCharCode(byte); });
+    return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
+  }
+
+  function formatJson(value: unknown): string {
+    return JSON.stringify(value, null, 2);
+  }
+
+  function formatUnix(value: unknown): string {
+    if (typeof value !== 'number' || !Number.isFinite(value)) return '—';
+    const date = new Date(value * 1000);
+    if (Number.isNaN(date.getTime())) return '—';
+    return `${value} / ${date.toISOString()}`;
+  }
+
+  function decode() {
+    clearError();
+    const token = input.value.trim();
+    const parts = token.split('.');
+    if (parts.length !== 3 || parts.some(part => part.length === 0)) {
+      showError('JWTは header.payload.signature の3パートで入力してください。');
+      return;
+    }
+
+    try {
+      const header = JSON.parse(fromBase64Url(parts[0]));
+      const payload = JSON.parse(fromBase64Url(parts[1]));
+
+      headerOutput.value = formatJson(header);
+      payloadOutput.value = formatJson(payload);
+      (document.getElementById('alg') as HTMLElement).textContent = header.alg ?? '—';
+      (document.getElementById('typ') as HTMLElement).textContent = header.typ ?? '—';
+      (document.getElementById('iat') as HTMLElement).textContent = formatUnix(payload.iat);
+      (document.getElementById('nbf') as HTMLElement).textContent = formatUnix(payload.nbf);
+      (document.getElementById('exp') as HTMLElement).textContent = formatUnix(payload.exp);
+      result.classList.remove('hidden');
+      meta.classList.remove('hidden');
+    } catch (error) {
+      showError(`デコードできません: ${(error as Error).message}`);
+    }
+  }
+
+  function sample() {
+    const header = { alg: 'HS256', typ: 'JWT' };
+    const payload = { sub: '1234567890', name: 'AOI Future', iat: 1779494400, exp: 1779580800 };
+    input.value = `${toBase64Url(JSON.stringify(header))}.${toBase64Url(JSON.stringify(payload))}.signature`;
+    decode();
+  }
+
+  document.getElementById('decode-btn')?.addEventListener('click', decode);
+  document.getElementById('sample-btn')?.addEventListener('click', sample);
+  document.getElementById('clear-btn')?.addEventListener('click', () => {
+    input.value = '';
+    headerOutput.value = '';
+    payloadOutput.value = '';
+    clearError();
+    result.classList.add('hidden');
+    meta.classList.add('hidden');
+  });
+</script>

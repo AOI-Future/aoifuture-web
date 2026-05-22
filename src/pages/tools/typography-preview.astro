@@ -114,7 +114,13 @@ import Layout from '../../layouts/Layout.astro';
     if (gf) loadGoogleFont(gf);
 
     const text = textInput.value.replace(/\\n/g, '\n');
-    preview.innerHTML = text.split('\n').map(l => `<span style="display:block">${l || '&nbsp;'}</span>`).join('');
+    preview.replaceChildren();
+    text.split('\n').forEach(line => {
+      const span = document.createElement('span');
+      span.style.display = 'block';
+      span.textContent = line || '\u00a0';
+      preview.appendChild(span);
+    });
     preview.style.cssText += `font-size:${fs}px;font-weight:${fw};line-height:${lh};letter-spacing:${ls}em;font-family:${ff}`;
 
     document.getElementById('fs-val')!.textContent = `${fs}px`;

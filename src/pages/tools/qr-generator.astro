@@ -63,12 +63,8 @@ import Layout from '../../layouts/Layout.astro';
   </main>
 </Layout>
 
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-
 <script>
-  declare const QRCode: any;
-
-  let qrInstance: any = null;
+  import QRCode from 'qrcode';
 
   document.getElementById('generate-btn')?.addEventListener('click', () => {
     const text = (document.getElementById('qr-text') as HTMLTextAreaElement).value.trim();
@@ -77,19 +73,20 @@ import Layout from '../../layouts/Layout.astro';
     const size = parseInt((document.querySelector('input[name="qr-size"]:checked') as HTMLInputElement)?.value || '256');
     const levelStr = (document.querySelector('input[name="qr-level"]:checked') as HTMLInputElement)?.value || 'H';
 
-    const levelMap: Record<string, number> = { L: 1, M: 0, Q: 3, H: 2 };
-
     const outputEl = document.getElementById('qr-output') as HTMLElement;
-    outputEl.innerHTML = '';
+    outputEl.replaceChildren();
 
-    qrInstance = new QRCode(outputEl, {
-      text,
+    const canvas = document.createElement('canvas');
+    QRCode.toCanvas(canvas, text, {
+      errorCorrectionLevel: levelStr as 'L' | 'M' | 'Q' | 'H',
+      margin: 1,
       width: size,
-      height: size,
-      colorDark: '#000000',
-      colorLight: '#ffffff',
-      correctLevel: levelMap[levelStr],
+      color: {
+        dark: '#000000',
+        light: '#ffffff',
+      },
     });
+    outputEl.appendChild(canvas);
 
     (document.getElementById('qr-container') as HTMLElement).classList.remove('hidden');
   });
