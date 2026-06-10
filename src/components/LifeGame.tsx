@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { mulberry32, r2Point, ValueNoise1D } from '../lib/random';
 
 // --- Constants ---
 const N = 128;
@@ -64,8 +65,7 @@ function growth(u: number, mu: number, sigma: number): number {
 }
 
 // Bilinear interpolation read from grid (toroidal)
-function sampleBilinear(grid: Float32Array, fx: number, fy: number): Float32Array {
-  const out = new Float32Array(N * N);
+function sampleBilinear(grid: Float32Array, out: Float32Array, fx: number, fy: number): Float32Array {
   for (let y = 0; y < N; y++) {
     for (let x = 0; x < N; x++) {
       const sx = x - fx;
@@ -101,19 +101,6 @@ function injectBlob(grid: Float32Array, cx: number, cy: number, radius: number, 
   }
 }
 
-// Initialize grid with random Gaussian blobs
-function initGrid(grid: Float32Array) {
-  grid.fill(0);
-  const numBlobs = 8 + Math.floor(Math.random() * 8);
-  for (let i = 0; i < numBlobs; i++) {
-    const cx = Math.random() * N;
-    const cy = Math.random() * N;
-    const radius = 4 + Math.random() * 6;
-    const peak = 0.5 + Math.random() * 0.5;
-    injectBlob(grid, cx, cy, radius, peak);
-  }
-}
-
 export default function LifeGame() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -130,9 +117,43 @@ export default function LifeGame() {
     const offCtx = offscreen.getContext('2d')!;
     const imageData = offCtx.createImageData(N, N);
 
-    // Double buffer
+    // --- Structured randomness ---
+    // Session seed: each visit gets its own deterministic universe.
+    const seed = (Date.now() ^ (performance.now() * 1000)) >>> 0;
+    const rand = mulberry32(seed);
+    // Independent noise fields for flow direction / strength / turbulence
+    const noiseAngle = new ValueNoise1D(seed ^ 0x9e3779b9);
+    const noiseFlow = new ValueNoise1D(seed ^ 0x85ebca6b);
+    const noiseTurbX = new ValueNoise1D(seed ^ 0xc2b2ae35);
+    const noiseTurbY = new ValueNoise1D(seed ^ 0x27d4eb2f);
+    // R2 low-discrepancy sequence: blob placement covers the field evenly
+    let r2Index = 0;
+    const r2Phase: [number, number] = [rand(), rand()];
+    const nextBlobPos = (): [number, number] => {
+      const [u, v] = r2Point(r2Index++, r2Phase[0], r2Phase[1]);
+      return [u * N, v * N];
+    };
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Reduced motion: slow the simulation to a gentle drift (~5 steps/sec)
+    const simInterval = reducedMotion ? 12 : 3;
+
+    // Double buffer + advection scratch buffer (reused, no per-step alloc)
     let gridA = new Float32Array(N * N);
     let gridB = new Float32Array(N * N);
+    const shifted = new Float32Array(N * N);
+
+    // Initialize: low-discrepancy blob placement, seeded sizes
+    const initGrid = (grid: Float32Array) => {
+      grid.fill(0);
+      const numBlobs = 8 + Math.floor(rand() * 8);
+      for (let i = 0; i < numBlobs; i++) {
+        const [cx, cy] = nextBlobPos();
+        const radius = 4 + rand() * 6;
+        const peak = 0.5 + rand() * 0.5;
+        injectBlob(grid, cx, cy, radius, peak);
+      }
+    };
     initGrid(gridA);
 
     // Precomputed kernel
@@ -142,11 +163,11 @@ export default function LifeGame() {
     let gyroX = 0;
     let gyroY = 0;
     let hasGyro = false;
-    let autoFlowAngle = Math.random() * Math.PI * 2;
     let animId = 0;
     let frameCount = 0;
     let canvasW = 0;
     let canvasH = 0;
+    let running = true;
 
     // Resize
     const resize = () => {
@@ -203,42 +224,41 @@ export default function LifeGame() {
       const mu = MU_BASE + 0.035 * Math.sin(t * 0.7) + 0.02 * Math.sin(t * 1.3) + 0.01 * Math.sin(t * 2.1);
       const sigma = SIGMA_BASE + 0.008 * Math.sin(t * 0.5 + 1.0) + 0.004 * Math.sin(t * 1.7);
 
-      // Spontaneous blob injection to prevent stagnation
+      // Spontaneous blob injection to prevent stagnation —
+      // placed via low-discrepancy sequence so revivals spread evenly
       stepCount++;
       if (stepCount % SPONTANEOUS_INTERVAL === 0) {
-        const cx = Math.random() * N;
-        const cy = Math.random() * N;
-        injectBlob(gridA, cx, cy, 4 + Math.random() * 4, 0.4 + Math.random() * 0.4);
+        const [cx, cy] = nextBlobPos();
+        injectBlob(gridA, cx, cy, 4 + rand() * 4, 0.4 + rand() * 0.4);
       }
 
-      // Sparse random mutations — ~0.3% of cells get a small nudge each step
+      // Sparse seeded mutations — ~0.3% of cells get a small nudge each step
       const mutationCount = Math.floor(N * N * 0.003);
       for (let m = 0; m < mutationCount; m++) {
-        const idx = Math.floor(Math.random() * N * N);
-        gridA[idx] = Math.min(gridA[idx] + 0.05 + Math.random() * 0.1, 1);
+        const idx = Math.floor(rand() * N * N);
+        gridA[idx] = Math.min(gridA[idx] + 0.05 + rand() * 0.1, 1);
       }
 
-      // Flow vector
+      // Flow vector — direction wanders via smooth noise instead of constant rotation
       let fx: number, fy: number;
       if (hasGyro) {
         fx = gyroX * 2.0;
         fy = gyroY * 2.0;
       } else {
-        autoFlowAngle += 0.003;
-        const flowStrength = 0.15 + 0.1 * Math.sin(t * 0.2);
-        fx = Math.cos(autoFlowAngle) * flowStrength;
-        fy = Math.sin(autoFlowAngle) * flowStrength;
+        const angle = noiseAngle.fbm(t * 0.05) * Math.PI * 2;
+        const flowStrength = 0.18 + 0.12 * noiseFlow.at(t * 0.1);
+        fx = Math.cos(angle) * flowStrength;
+        fy = Math.sin(angle) * flowStrength;
       }
 
-      // Local turbulence — occasional vortex that disrupts uniform flow
-      let turbX = 0, turbY = 0;
-      if (stepCount % 40 === 0) {
-        turbX = (Math.random() - 0.5) * 3.0;
-        turbY = (Math.random() - 0.5) * 3.0;
-      }
+      // Turbulence — continuous noise field replaces the old abrupt jolt
+      // every 40 steps; swells and ebbs organically, never snaps
+      const turbAmp = reducedMotion ? 0 : 0.6 + 0.5 * noiseFlow.at(t * 0.07 + 50);
+      const turbX = noiseTurbX.fbm(t * 0.25) * turbAmp;
+      const turbY = noiseTurbY.fbm(t * 0.25) * turbAmp;
 
       // Apply advection (flow shift via bilinear interpolation)
-      const shifted = sampleBilinear(gridA, fx + turbX, fy + turbY);
+      sampleBilinear(gridA, shifted, fx + turbX, fy + turbY);
 
       // Convolution + growth
       for (let y = 0; y < N; y++) {
@@ -295,8 +315,9 @@ export default function LifeGame() {
 
     // --- Animation loop ---
     const animate = (time: number) => {
-      // Sim at ~20 steps/sec (every 3 frames at 60fps)
-      if (frameCount % 3 === 0) {
+      if (!running) return;
+
+      if (frameCount % simInterval === 0) {
         step(time);
       }
 
@@ -321,14 +342,28 @@ export default function LifeGame() {
       animId = requestAnimationFrame(animate);
     };
 
+    // Pause when tab is hidden — no wasted CPU, sim resumes where it left off
+    const onVisibility = () => {
+      if (document.hidden) {
+        running = false;
+        cancelAnimationFrame(animId);
+      } else if (!running) {
+        running = true;
+        animId = requestAnimationFrame(animate);
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+
     animId = requestAnimationFrame(animate);
 
     return () => {
+      running = false;
       window.removeEventListener('resize', resize);
       canvas.removeEventListener('mousemove', onMouseMove);
       canvas.removeEventListener('touchmove', onTouchMove);
       canvas.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('deviceorientation', handleOrientation);
+      document.removeEventListener('visibilitychange', onVisibility);
       cancelAnimationFrame(animId);
     };
   }, []);

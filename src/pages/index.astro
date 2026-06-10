@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import LifeGame from '../components/LifeGame';
-import HUDOverlay from '../components/HUDOverlay';
+import Navigator from '../components/Navigator';
 import AmbientSound from '../components/AmbientSound';
 ---
 
@@ -10,8 +10,8 @@ import AmbientSound from '../components/AmbientSound';
     <!-- Life Game Background -->
     <LifeGame client:load />
 
-    <!-- HUD Overlay -->
-    <HUDOverlay client:load />
+    <!-- Overlay Navigator -->
+    <Navigator client:load />
 
     <!-- Ambient Sound Control -->
     <AmbientSound client:load />
