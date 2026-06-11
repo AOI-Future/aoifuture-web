@@ -19,6 +19,7 @@ const ACCENT = {
     borderDim: 'border-cyan-400/20',
     tagBorder: 'border-cyan-400/50',
     hover: 'hover:bg-cyan-400/10 hover:border-cyan-400',
+    menu: 'text-cyan-400/90',
     menuHover: 'group-hover:text-cyan-400',
     hoverText: 'hover:text-cyan-400',
     glow: 'glow-cyan',
@@ -31,6 +32,7 @@ const ACCENT = {
     borderDim: 'border-purple-400/20',
     tagBorder: 'border-purple-400/50',
     hover: 'hover:bg-purple-400/10 hover:border-purple-400',
+    menu: 'text-purple-400/90',
     menuHover: 'group-hover:text-purple-400',
     hoverText: 'hover:text-purple-400',
     glow: 'glow-purple',
@@ -43,6 +45,7 @@ const ACCENT = {
     borderDim: 'border-amber-400/20',
     tagBorder: 'border-amber-400/50',
     hover: 'hover:bg-amber-400/10 hover:border-amber-400',
+    menu: 'text-amber-400/90',
     menuHover: 'group-hover:text-amber-400',
     hoverText: 'hover:text-amber-400',
     glow: 'glow-amber',
@@ -414,17 +417,17 @@ export default function Navigator() {
                                flex md:flex-row-reverse items-baseline gap-3 md:ml-auto
                                py-0.5"
                   >
-                    <span className="text-cyan-400/30 text-[10px] tracking-widest">
+                    <span className="text-cyan-400/50 text-[10px] tracking-widest menu-label">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <span
-                      className={`${a.dim} ${a.menuHover} text-sm md:text-base tracking-[0.2em]
-                                  group-hover:tracking-[0.3em] transition-all duration-300`}
+                      className={`${a.menu} ${a.menuHover} text-sm md:text-base tracking-[0.2em]
+                                  group-hover:tracking-[0.3em] transition-all duration-300 menu-label`}
                     >
                       {s.label}
                     </span>
                     <span
-                      className={`${a.faint} text-[10px] tracking-widest hidden md:inline
+                      className={`${a.dim} text-[10px] tracking-widest hidden md:inline menu-label
                                   opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
                     >
                       {s.sub}
@@ -477,6 +480,13 @@ export default function Navigator() {
       )}
 
       <style>{`
+        /* Keep menu text legible over bright cells in the generative background */
+        .menu-label {
+          text-shadow:
+            0 0 4px rgba(0, 0, 0, 0.95),
+            0 0 10px rgba(0, 0, 0, 0.85),
+            0 1px 2px rgba(0, 0, 0, 0.9);
+        }
         .layer-backdrop {
           animation: layerFade 0.3s ease-out both;
         }
