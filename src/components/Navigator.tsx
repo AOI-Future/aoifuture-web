@@ -376,7 +376,7 @@ export default function Navigator() {
           aria-label="About AOIFUTURE"
         >
           <img src="/logo.svg" alt="" className="h-5 md:h-6 w-auto" />
-          <span className="hidden md:inline">Aoifuture</span>
+          <span className="hidden md:inline">aoifuture</span>
         </button>
 
         {/* Top Right - Status (hidden on mobile) */}
