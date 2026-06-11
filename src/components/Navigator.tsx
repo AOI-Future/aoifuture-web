@@ -61,7 +61,7 @@ interface Section {
 
 const SECTIONS: Section[] = [
   { id: 'nictia', label: 'NICTIA', sub: 'AI ARTIST', accent: 'purple' },
-  { id: 'camino', label: 'CAMINO AOI', sub: 'AUTHOR', accent: 'amber' },
+  { id: 'camino', label: 'AOI CAMINO', sub: 'AUTHOR', accent: 'amber' },
   { id: 'sound-umwelt', label: 'SOUND UMWELT', sub: 'PROJECT', accent: 'cyan' },
   { id: 'commission', label: 'WORK.COMMISSION', sub: 'SERVICE', accent: 'cyan' },
   { id: 'about', label: 'ABOUT', sub: 'LABEL', accent: 'cyan' },
@@ -155,7 +155,7 @@ function CaminoPanel() {
       <div>
         <Tag accent="amber">ENTITY.TYPE: AUTHOR</Tag>
         <h2 className="text-3xl md:text-5xl font-mono text-amber-400 tracking-widest glow-amber">
-          CAMINO AOI
+          AOI CAMINO
         </h2>
         <p className="mt-3 text-amber-400/60 font-mono text-sm">作家 / Fiction Writer</p>
       </div>
