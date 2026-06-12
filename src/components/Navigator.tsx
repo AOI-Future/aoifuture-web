@@ -63,6 +63,7 @@ const SECTIONS: Section[] = [
   { id: 'nictia', label: 'NICTIA', sub: 'AI ARTIST', accent: 'purple' },
   { id: 'camino', label: 'AOI CAMINO', sub: 'AUTHOR', accent: 'amber' },
   { id: 'sound-umwelt', label: 'SOUND UMWELT', sub: 'PROJECT', accent: 'cyan' },
+  { id: 'dispatch', label: 'DISPATCH', sub: 'MEDIA', accent: 'amber' },
   { id: 'commission', label: 'WORK.COMMISSION', sub: 'SERVICE', accent: 'cyan' },
   { id: 'about', label: 'ABOUT', sub: 'LABEL', accent: 'cyan' },
   { id: 'legal', label: 'LEGAL', sub: 'NOTICE', accent: 'cyan' },
@@ -192,6 +193,33 @@ function SoundUmweltPanel() {
   );
 }
 
+function DispatchPanel() {
+  return (
+    <div className="panel-stagger space-y-6">
+      <div>
+        <Tag accent="amber">MEDIA.TYPE: NEWSLETTER</Tag>
+        <h2 className="text-3xl md:text-5xl font-mono text-amber-400 tracking-widest glow-amber">
+          AOIFUTURE DISPATCH
+        </h2>
+        <p className="mt-3 text-amber-400/60 font-mono text-sm">
+          Field Notes from Japan
+        </p>
+      </div>
+      <p className="text-amber-400/80 font-sans text-sm md:text-base leading-relaxed">
+        日本のカルチャー、クリエイターエコノミー、次世代テクノロジー。
+        その内側から観察したフィールドノートを英語で発信するニュースレター。
+      </p>
+      <div className="font-mono text-xs text-amber-400/40 space-y-1 border-l border-amber-400/20 pl-4">
+        <p>LANGUAGE: EN</p>
+        <p>STATUS: LAUNCHING</p>
+      </div>
+      <ExternalLink accent="amber" href="https://dispatch.aoifuture.com/">
+        READ DISPATCH
+      </ExternalLink>
+    </div>
+  );
+}
+
 function CommissionPanel() {
   return (
     <div className="panel-stagger space-y-6">
@@ -306,6 +334,7 @@ const PANELS: Record<string, () => ReactNode> = {
   nictia: NictiaPanel,
   camino: CaminoPanel,
   'sound-umwelt': SoundUmweltPanel,
+  dispatch: DispatchPanel,
   commission: CommissionPanel,
   about: AboutPanel,
   legal: LegalPanel,
