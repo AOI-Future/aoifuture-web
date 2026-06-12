@@ -65,11 +65,11 @@ const SECTIONS: Section[] = [
   { id: 'sound-umwelt', label: 'SOUND UMWELT', sub: 'PROJECT', accent: 'cyan' },
   { id: 'dispatch', label: 'DISPATCH', sub: 'MEDIA', accent: 'amber' },
   { id: 'commission', label: 'WORK.COMMISSION', sub: 'SERVICE', accent: 'cyan' },
-  { id: 'about', label: 'ABOUT', sub: 'LABEL', accent: 'cyan' },
   { id: 'legal', label: 'LEGAL', sub: 'NOTICE', accent: 'cyan' },
 ];
 
-const VALID_IDS = new Set(SECTIONS.map((s) => s.id));
+// ABOUT is opened from the logo button, not the menu — keep #about deep links valid
+const VALID_IDS = new Set([...SECTIONS.map((s) => s.id), 'about']);
 
 function readHash(): string | null {
   const h = window.location.hash.replace('#', '');
@@ -394,7 +394,7 @@ export default function Navigator() {
         {/* Top Left - Logo (opens ABOUT layer) */}
         <button
           onClick={() => open('about')}
-          className="pointer-events-auto absolute top-4 left-4 md:top-6 md:left-6
+          className="group pointer-events-auto absolute top-4 left-4 md:top-6 md:left-6
                      px-2 py-1.5 md:px-3 md:py-2 text-sm md:text-base
                      border border-cyan-400/50 bg-black/50
                      text-cyan-400 font-mono tracking-widest
@@ -406,6 +406,12 @@ export default function Navigator() {
         >
           <img src="/logo.svg" alt="" className="h-5 md:h-6 w-auto" />
           <span className="hidden md:inline">aoifuture</span>
+          <span
+            className="hidden md:inline text-[10px] tracking-widest text-cyan-400/60
+                       opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          >
+            / ABOUT
+          </span>
         </button>
 
         {/* Top Right - Status (hidden on mobile) */}
