@@ -1,0 +1,45 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const apps = [
+  {
+    id: '001',
+    slug: 'harbor',
+    name: 'AOI HARBOR',
+    desc: 'MacのApple Foundation Modelを艦隊全体のローカルLLMゲートウェイに',
+    status: 'EARLY SIGNAL',
+  },
+];
+---
+
+<Layout title="Apps | AOI">
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} BACK</a>
+
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-16">
+      <div class="mb-10">
+        <p class="eyebrow mb-2">AOI APPS / SYS.PRODUCT</p>
+        <h1 class="text-2xl tracking-widest text-cyan-400 glow">APPS</h1>
+        <p class="text-cyan-400/50 text-sm mt-2" style="font-family:var(--font-sans);line-height:1.75">自分の艦隊のために作って、欲しい人に渡す — {apps.length} {apps.length === 1 ? 'app' : 'apps'}</p>
+      </div>
+
+      <div class="space-y-px">
+        {apps.map(app => (
+          <a
+            href={`/apps/${app.slug}`}
+            class="flex items-center gap-4 px-4 py-3 border border-cyan-400/20
+                   hover:border-cyan-400/50 hover:bg-cyan-400/5 transition-colors duration-200 group"
+          >
+            <span class="text-cyan-400/30 text-xs w-8 shrink-0 tabular-nums">{app.id}</span>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm tracking-widest group-hover:glow-sm transition-all duration-200">{app.name}</p>
+              <p class="text-xs text-cyan-400/40 mt-0.5 truncate" style="font-family:var(--font-sans)">{app.desc}</p>
+            </div>
+            <span class="text-[10px] text-cyan-400/40 border border-cyan-400/20 px-2 py-1 tracking-widest shrink-0 hidden sm:inline">{app.status}</span>
+            <span class="text-cyan-400/30 text-xs group-hover:text-cyan-400/60 transition-colors shrink-0">&gt;</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </main>
+</Layout>

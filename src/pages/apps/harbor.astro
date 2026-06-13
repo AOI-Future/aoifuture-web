@@ -1,0 +1,168 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const GH = 'https://github.com/AOI-Future/aoi-harbor';
+
+const tiers = [
+  {
+    n: '①',
+    name: 'ON-DEVICE',
+    tag: '~4K · $0 · private',
+    desc: 'Mac上のApple Foundation ModelをTailscale越しにOpenAI互換で配信。ほとんどの呼び出しはハードウェアの外に出ない。',
+  },
+  {
+    n: '②',
+    name: 'PRIVATE CLOUD COMPUTE',
+    tag: '32K · reasoning · Apple-private',
+    desc: 'コンテキスト超過・推論が要るときだけ。Appleのサーバ側Foundation Model(32K + reasoning)、APIキー不要・Appleのプライバシー保証下。',
+  },
+  {
+    n: '③',
+    name: 'CLAUDE / GEMINI',
+    tag: 'your key · only when needed',
+    desc: '32Kを超える/専門タスクのロングテールだけ。本当に必要な一部にだけ自分のキーで課金。判断はルーターがやる。',
+  },
+];
+
+const problems = [
+  { b: 'API課金が地味に効く', p: '常駐エージェント・採点・要約 — 高頻度のローカルタスクこそクラウド請求を積み上げる。' },
+  { b: 'プライバシー vs 能力', p: '議事録や個人ログを端末の外に出したくない。でも純ローカルはコンテキストか品質で詰まる。' },
+  { b: '艦隊のハブが無い', p: 'Ollama / LM Studio は単一マシンの推論サーバ。VPS・Mac・iPhoneをまたいで「軽いのはローカル / 重いのだけ上流」へ透過的に振るルーターは存在しない。' },
+];
+
+const who = [
+  { b: 'Fleet operators', p: '複数マシン/エージェントを回し、N個の推論サーバではなく一貫したローカルLLMハブが欲しい人。' },
+  { b: 'Privacy-first builders', p: 'データは極力オンデバイスに留め、意図的にだけ外へ逃がしたいApple Silicon所有者。' },
+  { b: 'Indie hackers', p: '常駐タスクのクラウド請求が刺さっていて、十分に使える無料デフォルト層が欲しい人。' },
+];
+---
+
+<Layout title="Aoi Harbor | AOI">
+  <Fragment slot="head">
+    <meta name="description" content="Apple のオンデバイス Foundation Models を Tailscale 越しの chat-completions エンドポイントとして公開。ローカル優先・クラウドAPIコストゼロ、必要なときだけ PCC / Claude / Gemini へ自動エスカレーション。" />
+    <meta property="og:title" content="Aoi Harbor — the free, private AI home port for your fleet" />
+    <meta property="og:description" content="Apple's on-device AI as a chat-completions endpoint for every machine you own. Local when it can, cloud only when it must." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://aoifuture.com/apps/harbor" />
+  </Fragment>
+
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/apps" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} APPS</a>
+
+    <div class="max-w-3xl mx-auto px-4 pt-24 pb-20">
+
+      <!-- HERO -->
+      <header class="mb-16">
+        <span class="inline-block text-[10px] tracking-widest border border-cyan-400/30 text-cyan-400/70 px-3 py-1.5 mb-6">◆ EARLY SIGNAL · GAUGING INTEREST</span>
+        <h1 class="text-3xl md:text-5xl leading-tight tracking-tight glow">
+          あなたのMacを、艦隊全体の<br /><span class="text-cyan-300">無料で私有なAIの母港</span>に。
+        </h1>
+        <p class="mt-6 text-cyan-400/60 text-base md:text-lg" style="font-family:var(--font-sans);line-height:1.85;max-width:60ch">
+          Aoi Harbor は Apple のオンデバイス Foundation Models を Tailscale 越しの
+          chat-completions エンドポイントとして公開する。所有する全マシンが一つのURLを向く。
+          できる限りローカルで無料 — クラウドは必要なときだけ、自動で。
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3 items-center">
+          <a href={GH} class="inline-block px-5 py-3 border border-cyan-400/60 text-cyan-300 tracking-widest text-sm hover:bg-cyan-400/10 hover:border-cyan-400 hover:glow-sm transition-all duration-200">★ STAR ON GITHUB</a>
+          <a href="#how" class="inline-block px-5 py-3 text-cyan-400/50 tracking-widest text-sm hover:text-cyan-400 transition-colors">仕組みを見る ↓</a>
+        </div>
+        <p class="mt-4 text-xs text-cyan-400/40" style="font-family:var(--font-sans)">
+          売り物はまだ無い。GitHub の ★ が「自分以外にも欲しい人がいるか」の唯一のシグナル。刺さったら押してほしい。
+        </p>
+      </header>
+
+      <!-- PROBLEM -->
+      <section class="mb-16 border-t border-cyan-400/15 pt-12">
+        <p class="eyebrow mb-6 text-cyan-400/50 text-xs tracking-widest">THE PROBLEM</p>
+        <div class="grid sm:grid-cols-3 gap-3">
+          {problems.map(c => (
+            <div class="border border-cyan-400/20 p-4">
+              <p class="text-sm tracking-wide text-cyan-300 mb-2">{c.b}</p>
+              <p class="text-xs text-cyan-400/50" style="font-family:var(--font-sans);line-height:1.75">{c.p}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- HOW IT ROUTES -->
+      <section id="how" class="mb-16 border-t border-cyan-400/15 pt-12">
+        <p class="eyebrow mb-6 text-cyan-400/50 text-xs tracking-widest">HOW IT ROUTES</p>
+        <div class="space-y-2">
+          {tiers.map((t, i) => (
+            <>
+              <div class="border border-cyan-400/20 p-4 hover:border-cyan-400/40 transition-colors">
+                <div class="flex items-baseline justify-between gap-3 flex-wrap">
+                  <span class="text-sm tracking-widest text-cyan-300">{t.n} {t.name}</span>
+                  <span class="text-[10px] text-cyan-400/60 border border-cyan-400/20 px-2 py-1 tracking-wide">{t.tag}</span>
+                </div>
+                <p class="mt-2 text-xs text-cyan-400/50" style="font-family:var(--font-sans);line-height:1.75">{t.desc}</p>
+              </div>
+              {i < tiers.length - 1 && (
+                <p class="text-center text-[10px] text-cyan-400/30 tracking-widest">↓ {i === 0 ? 'コンテキスト超過 / 推論が必要' : '32Kを超える / 専門タスク'}</p>
+              )}
+            </>
+          ))}
+        </div>
+        <div class="mt-5 border-l-2 border-cyan-400/40 pl-4 py-1">
+          <p class="text-sm text-cyan-400/70" style="font-family:var(--font-sans);line-height:1.8">
+            狙いは「全部ローカル」ではない。<span class="text-cyan-300">ローカルがデフォルト、クラウドは例外</span> —
+            コストもデータ露出も、タスクが本当に要求する最小まで縮める。
+          </p>
+        </div>
+      </section>
+
+      <!-- DROP-IN -->
+      <section class="mb-16 border-t border-cyan-400/15 pt-12">
+        <p class="eyebrow mb-6 text-cyan-400/50 text-xs tracking-widest">POINT YOUR EXISTING TOOLS AT IT</p>
+        <pre class="border border-cyan-400/20 bg-cyan-400/[0.03] p-4 overflow-auto text-xs leading-relaxed text-cyan-400/80"><span class="text-cyan-400/40"># 書き換え不要 — base URL を変えるだけ</span>
+<span class="text-cyan-300">export</span> OPENAI_BASE_URL=http://your-mac.tailnet:9999/v1
+<span class="text-cyan-300">export</span> OPENAI_API_KEY=harbor   <span class="text-cyan-400/40"># ローカルでは無視される</span>
+
+<span class="text-cyan-400/40"># 既存のエージェント / スクリプト / アプリがそのまま動く。今度は無料 & 私有で</span>
+curl $OPENAI_BASE_URL/chat/completions -d '&lbrace;
+  "model":"foundation",
+  "messages":[&lbrace;"role":"user","content":"summarize today's notes"&rbrace;]
+&rbrace;'</pre>
+        <ul class="mt-5 space-y-2 text-xs text-cyan-400/55" style="font-family:var(--font-sans);line-height:1.7">
+          <li>· Apple 公式 Foundation Models framework (iOS/macOS 26) と公開 <code class="text-cyan-300">LanguageModel</code> protocol 上に構築 — アプリコード無改変でプロバイダ差し替え。</li>
+          <li>· オンデバイス推論は <span class="text-cyan-300">$0</span> で私有。PCC もインディー開発者なら <span class="text-cyan-300">クラウドAPIコスト$0</span>(App Store Small Business Program / 累計DL &lt;200万)。</li>
+          <li>· エンジンは OSS: <code class="text-cyan-300">AOI-Future/aoi-harbor</code>。</li>
+        </ul>
+      </section>
+
+      <!-- WHO -->
+      <section class="mb-16 border-t border-cyan-400/15 pt-12">
+        <p class="eyebrow mb-6 text-cyan-400/50 text-xs tracking-widest">WHO IT'S FOR</p>
+        <div class="grid sm:grid-cols-3 gap-3">
+          {who.map(c => (
+            <div class="border border-cyan-400/20 p-4">
+              <p class="text-sm tracking-wide text-cyan-300 mb-2">{c.b}</p>
+              <p class="text-xs text-cyan-400/50" style="font-family:var(--font-sans);line-height:1.75">{c.p}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- HONEST STATUS -->
+      <section class="mb-16 border-t border-cyan-400/15 pt-12">
+        <p class="eyebrow mb-6 text-cyan-400/50 text-xs tracking-widest">HONEST STATUS</p>
+        <div class="border border-amber-400/30 bg-amber-400/[0.04] p-5">
+          <p class="text-sm text-amber-200/80" style="font-family:var(--font-sans);line-height:1.85">
+            これは<span class="text-amber-200">early signal ページ</span>で、まだダウンロードは無い。
+            技術的な背骨は実機で検証済み（ネットワーク常駐サーバ、レート/スループット、4K→32K→クラウドのルーティング）。
+            <span class="text-amber-200">第一目的は自分の艦隊用ツール</span>で、それは既に成立している。
+            このページは「自分以外にも欲しい人がいるか」を、製品レイヤを作る前に確かめるためのもの。
+            刺さったら <a href={GH} class="text-amber-200 underline hover:no-underline">GitHub で ★</a> を。
+          </p>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="border-t border-cyan-400/15 pt-8 text-xs text-cyan-400/40" style="font-family:var(--font-sans);line-height:1.8">
+        <p>Aoi Harbor · part of <a href="/" class="text-cyan-400/60 hover:text-cyan-400">aoifuture.com</a> · <a href={GH} class="text-cyan-400/60 hover:text-cyan-400">GitHub</a></p>
+        <p class="mt-2 text-cyan-400/30">Apple, Foundation Models, Private Cloud Compute は Apple Inc. の商標です。本プロジェクトは独立しており Apple と提携関係にありません。</p>
+      </footer>
+
+    </div>
+  </main>
+</Layout>
