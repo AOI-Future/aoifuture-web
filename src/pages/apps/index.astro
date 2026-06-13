@@ -1,15 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-
-const apps = [
-  {
-    id: '001',
-    slug: 'harbor',
-    name: 'AOI HARBOR',
-    desc: 'MacのApple Foundation Modelを艦隊全体のローカルLLMゲートウェイに',
-    status: 'EARLY SIGNAL',
-  },
-];
+import { apps } from '../../data/apps';
 ---
 
 <Layout title="Apps | AOI">
@@ -35,6 +26,9 @@ const apps = [
               <p class="text-sm tracking-widest group-hover:glow-sm transition-all duration-200">{app.name}</p>
               <p class="text-xs text-cyan-400/40 mt-0.5 truncate" style="font-family:var(--font-sans)">{app.desc}</p>
             </div>
+            {app.site && (
+              <span class="text-[10px] text-cyan-400/40 tracking-widest shrink-0 hidden sm:inline" title={app.site}>SITE ↗</span>
+            )}
             <span class="text-[10px] text-cyan-400/40 border border-cyan-400/20 px-2 py-1 tracking-widest shrink-0 hidden sm:inline">{app.status}</span>
             <span class="text-cyan-400/30 text-xs group-hover:text-cyan-400/60 transition-colors shrink-0">&gt;</span>
           </a>
