@@ -9,7 +9,7 @@
 //     site なし … そのページ自体がフル LP（CTA は GitHub ★ 等）
 //     site あり … 紹介ページ＋「専用サイトへ →」の外部誘導
 
-export type AppStatus = 'EARLY SIGNAL' | 'BETA' | 'LIVE';
+export type AppStatus = 'IN DEV' | 'EARLY SIGNAL' | 'BETA' | 'LIVE';
 
 export interface AppEntry {
   id: string;        // 表示用連番 '001'
@@ -30,9 +30,14 @@ export const apps: AppEntry[] = [
     status: 'EARLY SIGNAL',
     repo: 'AOI-Future/aoi-harbor',
   },
-  // 例) AoiTap を足すとき（自社ドメイン配下スタート）:
-  // { id:'002', slug:'aoi-tap', name:'AOI TAP', desc:'…', status:'BETA', repo:'0xshugo/aoi-tap' },
-  //
+  {
+    id: '002',
+    slug: 'aoi-tap',
+    name: 'AOI TAP',
+    desc: 'iPhoneの声を、オンデバイスで文字起こし＋日英対訳 → そのままAIが読めるノートに',
+    status: 'IN DEV',
+    repo: '0xshugo/aoi-tap',
+  },
   // 例) 育って独自ドメインを持ったら `site` を足すだけ（紹介ページは残す）:
   // { id:'003', slug:'studiee', name:'STUDIEE', desc:'…', status:'LIVE', repo:'studiee-ios', site:'https://studiee.app' },
 ];

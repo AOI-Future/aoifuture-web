@@ -1,0 +1,143 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const flow = [
+  {
+    n: '①',
+    name: 'CAPTURE',
+    tag: 'iPhone mic · on-device',
+    desc: '目の前の会議・打ち合わせ・ボイスメモ。iPhoneのマイクで拾うだけ。録音ファイルの管理も書き起こしソフトへの取り込みも要らない。',
+  },
+  {
+    n: '②',
+    name: 'TRANSCRIBE + TRANSLATE',
+    tag: 'SpeechAnalyzer · ja↔en · $0',
+    desc: 'Apple純正のオンデバイス音声認識でリアルタイム字幕。日英は対訳併記。クラウドに音声は出ない・APIコストもゼロ。',
+  },
+  {
+    n: '③',
+    name: 'LAND IN YOUR VAULT',
+    tag: 'Markdown → Obsidian',
+    desc: '整形済みノートを既存のObsidian Vaultへ直接 .md 出力。タグ・frontmatter付き。あなたのAIエージェントがそのまま読める場所に着地する。',
+  },
+];
+
+const why = [
+  { b: '文字起こしは手段、価値は着地点', p: '「録れた」で終わるアプリは多い。AoiTapのゴールは、その場の音声が"あとでAIに使える形"でVaultに残ること。' },
+  { b: 'iPhoneだから現場で拾える', p: 'Macの前にいない時こそ会話は起きる。対面の打ち合わせ・移動中の思いつき・目の前の相手の通訳 — それを取りこぼさない。' },
+  { b: '完全オンデバイス・私有', p: '音声も文字起こしも翻訳も端末内で完結。議事録や個人的な記録を外のサーバに預けない。' },
+];
+
+const who = [
+  { b: 'Obsidian / Vault 運用者', p: '思考も記録もVaultに集約していて、音声入力もそこへ流し込みたい人。' },
+  { b: 'AIエージェント使い', p: 'ローカルのノートをLLM/エージェントに読ませている人。文字起こしを"次の入力"にしたい人。' },
+  { b: '日英を行き来する人', p: '対面の打ち合わせや通訳で、その場で対訳が欲しい人。' },
+];
+---
+
+<Layout title="Aoi Tap | AOI">
+  <Fragment slot="head">
+    <meta name="description" content="iPhone のマイク音声をオンデバイスでリアルタイム文字起こし＋日英対訳し、整形ノートを Obsidian Vault へ直接 Markdown 出力。文字起こしを、そのまま AI が使える場所へ。完全オンデバイス・私有。" />
+    <meta property="og:title" content="Aoi Tap — iPhoneの声を、そのままAIが読めるノートに" />
+    <meta property="og:description" content="On-device transcription + ja/en translation on iPhone, landing as Markdown in your Obsidian Vault. Not just a transcript — a next input for your AI." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://aoifuture.com/apps/aoi-tap" />
+  </Fragment>
+
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/apps" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} APPS</a>
+
+    <div class="max-w-3xl mx-auto px-4 pt-24 pb-20">
+
+      <!-- HERO -->
+      <header class="mb-16">
+        <span class="inline-block text-[10px] tracking-widest border border-cyan-400/30 text-cyan-400/70 px-3 py-1.5 mb-6">◆ IN DEV · iPHONE</span>
+        <h1 class="text-3xl md:text-5xl leading-tight tracking-tight glow">
+          iPhoneの声を、<br /><span class="text-cyan-300">そのままAIが読めるノート</span>に。
+        </h1>
+        <p class="mt-6 text-cyan-400/60 text-base md:text-lg" style="font-family:var(--font-sans);line-height:1.85;max-width:60ch">
+          Aoi Tap は iPhone のマイク音声をオンデバイスでリアルタイム文字起こし＋日英対訳し、
+          整形したノートを既存の Obsidian Vault へそのまま Markdown で落とす。
+          狙いは「録ること」ではなく、その場の音声を<span class="text-cyan-300">あとで AI に使える形で残す</span>こと。
+        </p>
+        <p class="mt-6 text-xs text-cyan-400/40" style="font-family:var(--font-sans)">
+          開発中の iPhone アプリ。実機で文字起こし・日英対訳・Vault 書き込みまで動作確認済み。配布はまだ。
+        </p>
+      </header>
+
+      <!-- HOW IT FLOWS -->
+      <section class="mb-16 border-t border-cyan-400/15 pt-12">
+        <p class="eyebrow mb-6 text-cyan-400/50 text-xs tracking-widest">CAPTURE → AI-READY NOTE</p>
+        <div class="space-y-2">
+          {flow.map((t, i) => (
+            <>
+              <div class="border border-cyan-400/20 p-4 hover:border-cyan-400/40 transition-colors">
+                <div class="flex items-baseline justify-between gap-3 flex-wrap">
+                  <span class="text-sm tracking-widest text-cyan-300">{t.n} {t.name}</span>
+                  <span class="text-[10px] text-cyan-400/60 border border-cyan-400/20 px-2 py-1 tracking-wide">{t.tag}</span>
+                </div>
+                <p class="mt-2 text-xs text-cyan-400/50" style="font-family:var(--font-sans);line-height:1.75">{t.desc}</p>
+              </div>
+              {i < flow.length - 1 && (
+                <p class="text-center text-[10px] text-cyan-400/30 tracking-widest">↓</p>
+              )}
+            </>
+          ))}
+        </div>
+        <div class="mt-5 border-l-2 border-cyan-400/40 pl-4 py-1">
+          <p class="text-sm text-cyan-400/70" style="font-family:var(--font-sans);line-height:1.8">
+            「文字起こしアプリ」は既にある。AoiTap が違うのは<span class="text-cyan-300">着地点</span> —
+            出力は録音ファイルでも閉じたアプリ内テキストでもなく、<span class="text-cyan-300">あなたの Vault の中の、AI が読める Markdown</span>。
+          </p>
+        </div>
+      </section>
+
+      <!-- WHY -->
+      <section class="mb-16 border-t border-cyan-400/15 pt-12">
+        <p class="eyebrow mb-6 text-cyan-400/50 text-xs tracking-widest">WHY IT'S DIFFERENT</p>
+        <div class="grid sm:grid-cols-3 gap-3">
+          {why.map(c => (
+            <div class="border border-cyan-400/20 p-4">
+              <p class="text-sm tracking-wide text-cyan-300 mb-2">{c.b}</p>
+              <p class="text-xs text-cyan-400/50" style="font-family:var(--font-sans);line-height:1.75">{c.p}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- WHO -->
+      <section class="mb-16 border-t border-cyan-400/15 pt-12">
+        <p class="eyebrow mb-6 text-cyan-400/50 text-xs tracking-widest">WHO IT'S FOR</p>
+        <div class="grid sm:grid-cols-3 gap-3">
+          {who.map(c => (
+            <div class="border border-cyan-400/20 p-4">
+              <p class="text-sm tracking-wide text-cyan-300 mb-2">{c.b}</p>
+              <p class="text-xs text-cyan-400/50" style="font-family:var(--font-sans);line-height:1.75">{c.p}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- HONEST STATUS -->
+      <section class="mb-16 border-t border-cyan-400/15 pt-12">
+        <p class="eyebrow mb-6 text-cyan-400/50 text-xs tracking-widest">HONEST STATUS</p>
+        <div class="border border-amber-400/30 bg-amber-400/[0.04] p-5">
+          <p class="text-sm text-amber-200/80" style="font-family:var(--font-sans);line-height:1.85">
+            これは<span class="text-amber-200">開発中の紹介ページ</span>で、まだ配布はしていない。
+            実機（iPhone 16 Pro / iOS 26）でマイク文字起こし・日英リアルタイム対訳・Vault への Markdown 書き込みまで動作確認済み。
+            残りは要約／タイトル自動生成（オンデバイス Foundation Models）と仕上げ。
+            macOS 版 AoiTap（システム音声キャプチャ）の兄弟アプリで、<span class="text-amber-200">同じ Vault に同じ形式のノートを落とす</span>。
+            要件: iOS 26+ / Apple Intelligence 対応 iPhone。
+          </p>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="border-t border-cyan-400/15 pt-8 text-xs text-cyan-400/40" style="font-family:var(--font-sans);line-height:1.8">
+        <p>Aoi Tap · part of <a href="/" class="text-cyan-400/60 hover:text-cyan-400">aoifuture.com</a></p>
+        <p class="mt-2 text-cyan-400/30">Apple, Foundation Models, Obsidian は各社の商標です。本プロジェクトは独立しており各社と提携関係にありません。</p>
+      </footer>
+
+    </div>
+  </main>
+</Layout>
