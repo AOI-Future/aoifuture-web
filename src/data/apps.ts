@@ -36,7 +36,7 @@ export const apps: AppEntry[] = [
     name: 'AOI TAP',
     desc: 'iPhoneの声を、オンデバイスで文字起こし＋日英対訳 → そのままAIが読めるノートに',
     status: 'IN DEV',
-    repo: '0xshugo/aoi-tap',
+    repo: 'AOI-Future/aoi-tap',
   },
   // 例) 育って独自ドメインを持ったら `site` を足すだけ（紹介ページは残す）:
   // { id:'003', slug:'studiee', name:'STUDIEE', desc:'…', status:'LIVE', repo:'studiee-ios', site:'https://studiee.app' },
