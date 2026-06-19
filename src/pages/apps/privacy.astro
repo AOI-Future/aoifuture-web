@@ -1,0 +1,162 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+// aoifuture のネイティブアプリ共通プライバシーポリシー。
+// 全アプリ（AoiTap / AOI HARBOR / 今後のアプリ）は完全オンデバイスで
+// 動作し、ユーザーデータを収集・外部送信しない（Data Not Collected）。
+// App Store / TestFlight の「プライバシーポリシー URL」はこのページを指す。
+// 注意: ウェブサイト（aoifuture.com 本体）の解析・Cookie は別ポリシー（/privacy）。
+const lastUpdated = '2026-06-19';
+
+const apps = [
+  { name: 'AoiTap', plat: 'iOS / macOS / watchOS', note: 'オンデバイス文字起こし・日英対訳 → Markdown' },
+  { name: 'AOI HARBOR', plat: 'macOS', note: 'ローカル LLM ゲートウェイ' },
+];
+---
+
+<Layout title="App Privacy | AOI">
+  <Fragment slot="head">
+    <meta name="description" content="aoifuture のネイティブアプリ共通プライバシーポリシー。全アプリは完全オンデバイスで動作し、ユーザーデータを収集・外部送信しません（Data Not Collected）。" />
+    <meta property="og:title" content="App Privacy Policy — AOI Future apps" />
+    <meta property="og:description" content="All aoifuture native apps run fully on-device and collect no user data (Data Not Collected)." />
+    <meta property="og:url" content="https://aoifuture.com/apps/privacy" />
+  </Fragment>
+
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/apps" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} APPS</a>
+
+    <div class="max-w-3xl mx-auto px-4 pt-24 pb-20">
+
+      <!-- HEADER -->
+      <header class="mb-12">
+        <span class="inline-block text-[10px] tracking-widest border border-cyan-400/30 text-cyan-400/70 px-3 py-1.5 mb-6">◆ DATA NOT COLLECTED</span>
+        <h1 class="text-2xl md:text-4xl leading-tight tracking-tight glow">
+          App Privacy Policy
+        </h1>
+        <p class="mt-3 text-cyan-400/60 text-lg">アプリ プライバシーポリシー</p>
+        <p class="mt-4 text-xs text-cyan-400/40">Last updated: {lastUpdated}</p>
+      </header>
+
+      <!-- SCOPE -->
+      <section class="mb-12 border-t border-cyan-400/15 pt-10">
+        <p class="eyebrow mb-4 text-cyan-400/50 text-xs tracking-widest">SCOPE / 対象</p>
+        <p class="text-sm text-cyan-400/70" style="font-family:var(--font-sans);line-height:1.85">
+          本ポリシーは、AOI Future（個人事業 / 野崎秀吾）が提供する以下の<span class="text-cyan-300">ネイティブアプリ</span>に適用されます。
+          いずれも完全オンデバイスで動作し、ユーザーのデータを収集・外部送信しません。
+        </p>
+        <div class="mt-5 space-y-px">
+          {apps.map(a => (
+            <div class="flex items-baseline gap-3 border border-cyan-400/20 px-4 py-3 flex-wrap">
+              <span class="text-sm tracking-widest text-cyan-300">{a.name}</span>
+              <span class="text-[10px] text-cyan-400/60 border border-cyan-400/20 px-2 py-1 tracking-wide">{a.plat}</span>
+              <span class="text-xs text-cyan-400/40" style="font-family:var(--font-sans)">{a.note}</span>
+            </div>
+          ))}
+        </div>
+        <p class="mt-5 text-xs text-cyan-400/40" style="font-family:var(--font-sans);line-height:1.8">
+          ※ ウェブサイト（aoifuture.com 本体・コンサルティング等）における Cookie・アクセス解析については、
+          <a href="/privacy" class="text-cyan-400/70 hover:text-cyan-400 hover:underline">サイトのプライバシーポリシー</a> をご覧ください。本ページはアプリ専用です。
+        </p>
+      </section>
+
+      <!-- TL;DR -->
+      <section class="mb-12 border-t border-cyan-400/15 pt-10">
+        <div class="border-l-2 border-cyan-400/40 pl-4 py-1">
+          <p class="text-sm text-cyan-400/80" style="font-family:var(--font-sans);line-height:1.85">
+            <span class="text-cyan-300">要約 —</span> アプリはあなたのデータを集めません。音声・文字起こし・ノートはすべてあなたの端末の中だけで処理され、
+            私たちのサーバーや第三者に送信されることはありません。アカウント登録も不要です。
+          </p>
+          <p class="mt-3 text-xs text-cyan-400/50" style="font-family:var(--font-sans);line-height:1.85">
+            <span class="text-cyan-400/70">TL;DR —</span> The apps do not collect your data. Audio, transcripts, and notes are processed entirely on your device
+            and are never sent to our servers or any third party. No account is required.
+          </p>
+        </div>
+      </section>
+
+      <!-- 01. DATA NOT COLLECTED -->
+      <section class="mb-12 border-t border-cyan-400/15 pt-10">
+        <p class="eyebrow mb-4 text-cyan-400/50 text-xs tracking-widest">01 / 収集しないデータ</p>
+        <p class="text-sm text-cyan-400/70 mb-3" style="font-family:var(--font-sans);line-height:1.85">
+          アプリは、Apple の「App のプライバシー」区分における<span class="text-cyan-300">「データを収集しません（Data Not Collected）」</span>に該当します。
+          具体的には以下を一切行いません。
+        </p>
+        <ul class="space-y-1.5 text-xs text-cyan-400/60" style="font-family:var(--font-sans);line-height:1.7">
+          <li>— サーバーやクラウドへのデータ送信（ネットワーク通信そのものを行いません / CLOUD API: NONE）</li>
+          <li>— アカウント登録・ログイン・メールアドレス等の取得</li>
+          <li>— 解析 SDK・広告・トラッキング・端末識別子の収集</li>
+          <li>— 音声録音、文字起こしテキスト、ノートの外部共有や第三者提供</li>
+          <li>— 位置情報、連絡先、その他の個人情報の収集</li>
+        </ul>
+      </section>
+
+      <!-- 02. ON-DEVICE PROCESSING -->
+      <section class="mb-12 border-t border-cyan-400/15 pt-10">
+        <p class="eyebrow mb-4 text-cyan-400/50 text-xs tracking-widest">02 / 端末内での処理</p>
+        <div class="space-y-4 text-xs text-cyan-400/60" style="font-family:var(--font-sans);line-height:1.8">
+          <div>
+            <p class="text-sm text-cyan-300 mb-1">マイク音声</p>
+            <p>マイクへのアクセスは、その場の音声を<span class="text-cyan-400/80">端末内で文字起こしするためだけ</span>に使用します。録音音声はアプリの動作のために端末内で一時的に扱われ、外部に送信されません。</p>
+          </div>
+          <div>
+            <p class="text-sm text-cyan-300 mb-1">文字起こし・翻訳</p>
+            <p>音声認識および日英対訳は、Apple のオンデバイス音声認識（Speech フレームワーク）等を用いて<span class="text-cyan-400/80">端末内で完結</span>します。処理のためにテキストがネットワークへ送られることはありません。</p>
+          </div>
+          <div>
+            <p class="text-sm text-cyan-300 mb-1">保存先（Vault）</p>
+            <p>文字起こし結果は、あなたが指定した端末内・iCloud Drive 等のフォルダ（Vault）へ Markdown として保存されます。保存先とその同期はあなたの管理下にあり、私たちがアクセスすることはありません。</p>
+          </div>
+          <div>
+            <p class="text-sm text-cyan-300 mb-1">Apple Watch（AoiTap）</p>
+            <p>Apple Watch で録音した音声は、ペアリング済みの iPhone へ Apple の端末間転送で送られ、文字起こしは iPhone 側で行います。クラウドを経由しません。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 03. THIRD PARTIES -->
+      <section class="mb-12 border-t border-cyan-400/15 pt-10">
+        <p class="eyebrow mb-4 text-cyan-400/50 text-xs tracking-widest">03 / 第三者・外部サービス</p>
+        <p class="text-sm text-cyan-400/70" style="font-family:var(--font-sans);line-height:1.85">
+          アプリはサードパーティの解析・広告・クラッシュレポート SDK を一切組み込んでいません。
+          音声認識・翻訳・AI 要約には Apple がオペレーティングシステムとして提供するオンデバイス機能を使用します。
+          これらは Apple の端末内で動作し、あなたのデータを私たちや外部サーバーへ送信しません。
+          Apple のプラットフォームの取り扱いについては Apple のプライバシーポリシーをご参照ください。
+        </p>
+      </section>
+
+      <!-- 04. CHILDREN -->
+      <section class="mb-12 border-t border-cyan-400/15 pt-10">
+        <p class="eyebrow mb-4 text-cyan-400/50 text-xs tracking-widest">04 / 子どもの利用</p>
+        <p class="text-sm text-cyan-400/70" style="font-family:var(--font-sans);line-height:1.85">
+          アプリはいかなる利用者からも個人情報を収集しないため、年齢を問わず安全にご利用いただけます。
+          子どもの個人情報を意図的に収集することはありません。
+        </p>
+      </section>
+
+      <!-- 05. YOUR CONTROL -->
+      <section class="mb-12 border-t border-cyan-400/15 pt-10">
+        <p class="eyebrow mb-4 text-cyan-400/50 text-xs tracking-widest">05 / あなたの管理権</p>
+        <p class="text-sm text-cyan-400/70" style="font-family:var(--font-sans);line-height:1.85">
+          すべてのデータはあなたの端末内にあります。マイク権限は iOS / macOS の「設定」からいつでも取り消せます。
+          文字起こしファイルは保存先フォルダから直接削除でき、アプリ自体を削除すればアプリが端末内に作成したデータも取り除かれます。
+          私たちはあなたのデータを保持していないため、開示・削除の請求対象となるデータはありません。
+        </p>
+      </section>
+
+      <!-- 06. CHANGES + CONTACT -->
+      <section class="mb-12 border-t border-cyan-400/15 pt-10">
+        <p class="eyebrow mb-4 text-cyan-400/50 text-xs tracking-widest">06 / 変更・お問い合わせ</p>
+        <p class="text-sm text-cyan-400/70" style="font-family:var(--font-sans);line-height:1.85">
+          本ポリシーは、機能の追加や法令の変更に応じて更新されることがあります。重要な変更がある場合はこのページで通知します。
+          プライバシーに関するお問い合わせは <a href="mailto:legal@aoifuture.com" class="text-cyan-400 hover:underline">legal@aoifuture.com</a> までご連絡ください。
+        </p>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="border-t border-cyan-400/15 pt-8 text-xs text-cyan-400/40" style="font-family:var(--font-sans);line-height:1.8">
+        <p>App Privacy · part of <a href="/" class="text-cyan-400/60 hover:text-cyan-400">aoifuture.com</a></p>
+        <p class="mt-2 text-cyan-400/30">AOI Future / Shugo Nozaki · Tokyo, JP · Apple, Obsidian は各社の商標です。本プロジェクトは独立しており各社と提携関係にありません。</p>
+      </footer>
+
+    </div>
+  </main>
+</Layout>
