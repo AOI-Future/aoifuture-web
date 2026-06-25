@@ -1,0 +1,179 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+// aoifuture のネイティブアプリ共通 利用規約・免責事項。
+// 全アプリ（AoiTap / AOI HARBOR / 今後のアプリ）に適用される
+// 現状有姿・無保証／利用者の責任／責任の制限／準拠法を定める。
+// App Store の利用許諾は Apple 標準 EULA が既定で適用され、本規約はこれを補完する。
+// プライバシー（データの取り扱い）は別ページ /apps/privacy を参照。
+const lastUpdated = '2026-06-26';
+
+const apps = [
+  { name: 'AoiTap', plat: 'iOS / macOS / watchOS', note: 'オンデバイス文字起こし・日英対訳 → Markdown' },
+  { name: 'AOI HARBOR', plat: 'macOS', note: 'ローカル LLM ゲートウェイ' },
+];
+---
+
+<Layout title="App Terms of Use | AOI">
+  <Fragment slot="head">
+    <meta name="description" content="aoifuture のネイティブアプリ共通 利用規約・免責事項。アプリは現状有姿で提供され、文字起こし・翻訳・AI 出力の正確性は保証されません。録音の同意取得・著作権・各国法令の遵守は利用者の責任です。" />
+    <meta property="og:title" content="App Terms of Use — AOI Future apps" />
+    <meta property="og:description" content="Terms of use and disclaimer for aoifuture native apps. Provided as-is; users are responsible for consent, copyright, and legal compliance." />
+    <meta property="og:url" content="https://aoifuture.com/apps/terms" />
+  </Fragment>
+
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a href="/apps" class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300">{'<'} APPS</a>
+
+    <div class="max-w-3xl mx-auto px-4 pt-24 pb-20">
+
+      <!-- HEADER -->
+      <header class="mb-12">
+        <span class="inline-block text-[10px] tracking-widest border border-cyan-400/30 text-cyan-400/70 px-3 py-1.5 mb-6">◆ TERMS OF USE</span>
+        <h1 class="text-2xl md:text-4xl leading-tight tracking-tight glow">
+          App Terms of Use
+        </h1>
+        <p class="mt-3 text-cyan-400/60 text-lg">アプリ 利用規約・免責事項</p>
+        <p class="mt-4 text-xs text-cyan-400/40">Last updated: {lastUpdated}</p>
+      </header>
+
+      <!-- SCOPE -->
+      <section class="mb-12 border-t border-cyan-400/15 pt-10">
+        <p class="eyebrow mb-4 text-cyan-400/50 text-xs tracking-widest">SCOPE / 対象</p>
+        <p class="text-sm text-cyan-400/70" style="font-family:var(--font-sans);line-height:1.85">
+          本規約は、AOI Future（個人事業 / 野崎秀吾。以下「当方」）が提供する以下の<span class="text-cyan-300">ネイティブアプリ</span>の
+          利用条件を定めるものです。アプリをインストール・利用した時点で、本規約に同意したものとみなします。
+        </p>
+        <div class="mt-5 space-y-px">
+          {apps.map(a => (
+            <div class="flex items-baseline gap-3 border border-cyan-400/20 px-4 py-3 flex-wrap">
+              <span class="text-sm tracking-widest text-cyan-300">{a.name}</span>
+              <span class="text-[10px] text-cyan-400/60 border border-cyan-400/20 px-2 py-1 tracking-wide">{a.plat}</span>
+              <span class="text-xs text-cyan-400/40" style="font-family:var(--font-sans)">{a.note}</span>
+            </div>
+          ))}
+        </div>
+        <p class="mt-5 text-xs text-cyan-400/40" style="font-family:var(--font-sans);line-height:1.8">
+          ※ App Store 経由でインストールしたアプリには Apple の標準使用許諾契約（Licensed Application End User License Agreement）が既定で適用されます。
+          本規約はこれを<span class="text-cyan-400/70">補完</span>するものであり、両者が矛盾する場合は、利用者にとって不利でない範囲で本規約の個別条項が優先します。
+        </p>
+        <p class="mt-3 text-xs text-cyan-400/40" style="font-family:var(--font-sans);line-height:1.8">
+          ※ データの取り扱い（収集しないこと）については
+          <a href="/apps/privacy" class="text-cyan-400/70 hover:text-cyan-400 hover:underline">アプリのプライバシーポリシー</a> をご覧ください。
+        </p>
+      </section>
+
+      <!-- TL;DR -->
+      <section class="mb-12 border-t border-cyan-400/15 pt-10">
+        <div class="border-l-2 border-cyan-400/40 pl-4 py-1">
+          <p class="text-sm text-cyan-400/80" style="font-family:var(--font-sans);line-height:1.85">
+            <span class="text-cyan-300">要約 —</span> アプリは「現状のまま」提供します。文字起こし・翻訳・AI による出力は<span class="text-cyan-400">必ずしも正確とは限りません</span>。
+            また、誰かの声を録音すること・著作物を扱うこと・各サービスの規約や法令を守ることは、利用者ご自身の責任で行ってください。
+            当方は、利用者の使い方によって生じたトラブルや損害について責任を負いません。
+          </p>
+          <p class="mt-3 text-xs text-cyan-400/50" style="font-family:var(--font-sans);line-height:1.85">
+            <span class="text-cyan-400/70">TL;DR —</span> The apps are provided "as is." Transcription, translation, and AI output may be inaccurate.
+            You are responsible for obtaining consent to record, respecting copyright, and complying with applicable laws and platform terms.
+            We are not liable for how you use the apps.
+          </p>
+        </div>
+      </section>
+
+      <!-- 01. AS-IS / NO WARRANTY -->
+      <section class="mb-12 border-t border-cyan-400/15 pt-10">
+        <p class="eyebrow mb-4 text-cyan-400/50 text-xs tracking-widest">01 / 現状有姿・無保証</p>
+        <p class="text-sm text-cyan-400/70 mb-3" style="font-family:var(--font-sans);line-height:1.85">
+          アプリは「現状のまま（as is）」提供されます。当方は、商品性、特定目的への適合性、非侵害性を含むがこれに限定されない、
+          明示・黙示のいかなる保証も行いません。とりわけ次の点について、正確性・完全性・継続的な利用可能性を保証しません。
+        </p>
+        <ul class="space-y-1.5 text-xs text-cyan-400/60" style="font-family:var(--font-sans);line-height:1.7">
+          <li>— 音声認識（文字起こし）の<span class="text-cyan-400/80">正確性</span>。聞き取り・固有名詞・専門用語の誤変換が生じ得ます。</li>
+          <li>— 翻訳・対訳結果の<span class="text-cyan-400/80">正確性・適切性</span>。重要な判断には専門家・原文での確認を行ってください。</li>
+          <li>— AI による要約・整形その他の生成結果の<span class="text-cyan-400/80">正確性</span>（事実と異なる内容が含まれ得ます）。</li>
+          <li>— OS・端末・他アプリとの組み合わせにおける動作、および将来のバージョンでの仕様維持。</li>
+        </ul>
+        <p class="mt-3 text-xs text-cyan-400/50" style="font-family:var(--font-sans);line-height:1.8">
+          文字起こし・翻訳・AI 出力は<span class="text-cyan-400/70">補助</span>としてご利用ください。業務・法務・医療など重要な用途では、内容の正確性を必ずご自身で検証してください。
+        </p>
+      </section>
+
+      <!-- 02. USER RESPONSIBILITY -->
+      <section class="mb-12 border-t border-cyan-400/15 pt-10">
+        <p class="eyebrow mb-4 text-cyan-400/50 text-xs tracking-widest">02 / 利用者の責任</p>
+        <p class="text-sm text-cyan-400/70 mb-3" style="font-family:var(--font-sans);line-height:1.85">
+          アプリをどのように使うかは利用者が決定し、その結果について利用者が責任を負います。利用にあたっては、次のすべてを利用者の責任で順守してください。
+        </p>
+        <div class="space-y-4 text-xs text-cyan-400/60" style="font-family:var(--font-sans);line-height:1.8">
+          <div>
+            <p class="text-sm text-cyan-300 mb-1">録音と同意</p>
+            <p>自分以外の声・会話を録音または文字起こしする場合は、<span class="text-cyan-400/80">相手の同意</span>を得るなど、適用される法令・規則（録音に関する各国・地域の法、職場や施設の規定等）を順守してください。</p>
+          </div>
+          <div>
+            <p class="text-sm text-cyan-300 mb-1">著作権・第三者の権利</p>
+            <p>第三者の著作物・配信コンテンツ・講演等を録音／文字起こし／翻訳する場合は、<span class="text-cyan-400/80">著作権その他の権利</span>および各配信プラットフォームの利用規約を順守してください。権利者の許諾が必要な利用は、許諾の範囲で行ってください。</p>
+          </div>
+          <div>
+            <p class="text-sm text-cyan-300 mb-1">法令・公序良俗</p>
+            <p>違法な目的、他者の権利・プライバシーの侵害、盗聴・無断録音、その他<span class="text-cyan-400/80">公序良俗に反する用途</span>にアプリを使用しないでください。</p>
+          </div>
+          <div>
+            <p class="text-sm text-cyan-300 mb-1">データの管理</p>
+            <p>文字起こし結果は利用者の端末・指定フォルダ（Vault）に保存されます。その保管・共有・バックアップ・削除は利用者の管理下にあり、当方はこれらにアクセスしません。機微な情報の取り扱いには十分ご注意ください。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 03. LIMITATION OF LIABILITY -->
+      <section class="mb-12 border-t border-cyan-400/15 pt-10">
+        <p class="eyebrow mb-4 text-cyan-400/50 text-xs tracking-widest">03 / 責任の制限</p>
+        <p class="text-sm text-cyan-400/70 mb-3" style="font-family:var(--font-sans);line-height:1.85">
+          法律で許容される最大限の範囲において、当方（AOI Future / 野崎秀吾）は、アプリの利用または利用不能から生じる
+          いかなる間接的・付随的・特別・結果的・懲罰的損害についても責任を負いません。具体的には、次のいずれについても当方は責任を負いません。
+        </p>
+        <ul class="space-y-1.5 text-xs text-cyan-400/60" style="font-family:var(--font-sans);line-height:1.7">
+          <li>— 文字起こし・翻訳・AI 出力の誤りに起因して生じた損害、判断の誤り、機会損失。</li>
+          <li>— 利用者による録音・文字起こし・配信コンテンツの利用に関して、<span class="text-cyan-400/80">第三者との間で生じた紛争・請求・損害</span>（同意・著作権・プライバシーに関するものを含む）。</li>
+          <li>— データの消失・破損、保存先（Vault）や同期サービスに起因する不具合。</li>
+          <li>— 利用者が適用法令・プラットフォーム規約に違反したことにより生じた結果。</li>
+        </ul>
+        <p class="mt-3 text-xs text-cyan-400/50" style="font-family:var(--font-sans);line-height:1.8">
+          利用者の使用に起因して当方が第三者から請求・損害を受けた場合、利用者は当方に生じた損害を補償するものとします。
+          なお、本条は当方の故意または重過失による損害に係る責任、および法令上免除できない責任を制限するものではありません。
+        </p>
+      </section>
+
+      <!-- 04. CHANGES + TERMINATION -->
+      <section class="mb-12 border-t border-cyan-400/15 pt-10">
+        <p class="eyebrow mb-4 text-cyan-400/50 text-xs tracking-widest">04 / 変更・提供の終了</p>
+        <p class="text-sm text-cyan-400/70" style="font-family:var(--font-sans);line-height:1.85">
+          当方は、機能の追加・改良や法令の変更に応じて、アプリの仕様や本規約を変更することがあります。重要な変更がある場合はこのページで通知します。
+          また、アプリの提供・更新を予告なく終了・停止することがあります。変更後もアプリの利用を継続した場合、変更後の規約に同意したものとみなします。
+        </p>
+      </section>
+
+      <!-- 05. GOVERNING LAW -->
+      <section class="mb-12 border-t border-cyan-400/15 pt-10">
+        <p class="eyebrow mb-4 text-cyan-400/50 text-xs tracking-widest">05 / 準拠法・裁判管轄</p>
+        <p class="text-sm text-cyan-400/70" style="font-family:var(--font-sans);line-height:1.85">
+          本規約および当方のアプリまたはサービスに関連して生じる紛争は、<span class="text-cyan-300">日本国法</span>に準拠し、これに従って解釈されます。
+          これらに起因または関連する訴訟については、<span class="text-cyan-300">東京地方裁判所</span>を第一審の専属的合意管轄裁判所とします。
+        </p>
+      </section>
+
+      <!-- 06. CONTACT -->
+      <section class="mb-12 border-t border-cyan-400/15 pt-10">
+        <p class="eyebrow mb-4 text-cyan-400/50 text-xs tracking-widest">06 / お問い合わせ</p>
+        <p class="text-sm text-cyan-400/70" style="font-family:var(--font-sans);line-height:1.85">
+          本規約に関するお問い合わせは <a href="mailto:legal@aoifuture.com" class="text-cyan-400 hover:underline">legal@aoifuture.com</a> までご連絡ください。
+        </p>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="border-t border-cyan-400/15 pt-8 text-xs text-cyan-400/40" style="font-family:var(--font-sans);line-height:1.8">
+        <p>App Terms of Use · part of <a href="/" class="text-cyan-400/60 hover:text-cyan-400">aoifuture.com</a> · <a href="/apps/privacy" class="text-cyan-400/60 hover:text-cyan-400">App Privacy</a></p>
+        <p class="mt-2 text-cyan-400/30">AOI Future / Shugo Nozaki · 個人事業（日本国内）· Tokyo, JP · Apple, Obsidian は各社の商標です。本プロジェクトは独立しており各社と提携関係にありません。</p>
+      </footer>
+
+    </div>
+  </main>
+</Layout>
