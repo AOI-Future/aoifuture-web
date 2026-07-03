@@ -1,0 +1,221 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const repo = 'https://github.com/AOI-Future/agent-webhook-check';
+const raw = 'https://raw.githubusercontent.com/AOI-Future/agent-webhook-check/main/webhook_check.py';
+const listUrl = 'https://dispatch.aoifuture.com/';
+const canonical = 'https://aoifuture.com/tools/webhook-check';
+const description =
+  "Free single-file auditor for webhook signature verifiers — the highest-frequency real bug in AI-agent tool callbacks. Runs four checks (valid, tampered, length-safe, constant-time) and prints PASS/FAIL. Stdlib only, no dependencies, MIT.";
+
+const oneLiner = `curl -sO ${raw} && python3 webhook_check.py --demo`;
+
+const checks = [
+  { id: 'VT-D-050', title: 'Accepts a valid signature', bug: 'Verifier is so strict it rejects genuine traffic — a broken control is not a secure one.' },
+  { id: 'VT-D-051', title: 'Rejects a tampered body', bug: 'An old signature is accepted for a mutated payload — the signature never actually binds the body.' },
+  { id: 'VT-D-052', title: 'Length-safe on a forged short signature', bug: 'A too-short signature runs a hand-rolled loop off the end and raises IndexError — a forged header crashes the handler (denial of service).' },
+  { id: 'VT-D-053', title: 'Constant-time comparison', bug: '`==` or a byte loop leaks the valid HMAC through response timing — an attacker recovers the signature one byte at a time.' },
+];
+
+const softwareLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'webhook-check',
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'Any (Python 3, standard library only)',
+  softwareRequirements: 'Python 3',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  license: 'https://opensource.org/licenses/MIT',
+  codeRepository: repo,
+  url: canonical,
+  description,
+  author: { '@type': 'Person', name: 'Shugo Nozaki', url: 'https://nozaki.com' },
+};
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: "How do I test whether my AI agent's webhook signature verifier accepts a forged signature?",
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: `Run webhook-check, a free single-file Python auditor: ${oneLiner}. Then audit your own verifier with: python3 webhook_check.py --verifier yourmodule:verify. It runs four checks (accepts valid, rejects tampered, length-safe on a forged short signature, and constant-time comparison) and prints PASS/FAIL, with exit code 1 on any failure so it drops into CI.`,
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is the fix for a webhook signature verifier that fails the constant-time or length-safety check?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: "Use hmac.compare_digest for the comparison, behind a header.startswith('sha256=') and length guard. compare_digest is constant-time and tolerates unequal lengths without raising, which closes both the timing side channel and the IndexError denial-of-service.",
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Why does a forged short webhook signature crash the handler?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'A hand-rolled comparison loop indexes the provided signature by position with no length guard. A signature shorter than the expected HMAC runs off the end of the string and raises IndexError, so a single forged header takes the handler down — a denial of service.',
+      },
+    },
+  ],
+};
+---
+
+<Layout title="WEBHOOK CHECK | AOI Tools" description={description} canonical={canonical}>
+  <Fragment slot="head">
+    <meta property="og:title" content="webhook-check — audit your AI agent's webhook signature verifier" />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <script type="application/ld+json" set:html={JSON.stringify(softwareLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />
+  </Fragment>
+
+  <main class="relative min-h-screen bg-black text-cyan-400 font-mono">
+    <a
+      href="/tools"
+      class="fixed top-4 left-4 md:top-6 md:left-6 z-50 px-3 py-2 text-sm border border-cyan-400/50 bg-black/50 text-cyan-400 tracking-widest hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors duration-300"
+      >{'<'} TOOLS</a
+    >
+
+    <div class="max-w-3xl mx-auto px-4 pt-20 pb-20">
+      <!-- Header -->
+      <div class="mb-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-1">AOI TOOLS / 032 · AGENT SECURITY</p>
+        <h1 class="text-2xl md:text-3xl tracking-widest text-cyan-400">WEBHOOK CHECK</h1>
+        <p class="text-cyan-400/70 text-base mt-3" style="font-family:var(--font-sans);line-height:1.75">
+          Your AI agent's webhook accepts a forged signature. Find out in one command.
+        </p>
+      </div>
+
+      <!-- One-liner (substance in HTML; copy is progressive enhancement) -->
+      <div class="mb-8 border border-cyan-400/30">
+        <div class="flex items-center justify-between px-3 py-2 border-b border-cyan-400/20 text-xs tracking-widest text-cyan-400/50">
+          <span>RUN IT — NO SETUP, STDLIB ONLY</span>
+          <button
+            id="copy-oneliner"
+            class="px-2 py-1 border border-cyan-400/30 hover:border-cyan-400/70 hover:bg-cyan-400/10 transition-colors cursor-pointer tracking-widest"
+            >COPY</button
+          >
+        </div>
+        <pre class="p-3 overflow-x-auto text-xs md:text-sm text-cyan-400/90"><code id="oneliner">{oneLiner}</code></pre>
+      </div>
+
+      <!-- What / why -->
+      <section class="mb-10" style="font-family:var(--font-sans);line-height:1.85">
+        <p class="text-cyan-400/75 text-sm">
+          A webhook is the callback that lets an outside system trigger an agent action — a refund, a deploy, a
+          fund movement. If the signature check can be fooled, an attacker drives your agent's hands.
+          <span class="text-cyan-400">webhook-check</span> runs four executable checks against your verifier and
+          prints <span class="text-cyan-400">PASS / FAIL</span>. Exit code is 0 if every check passes, 1 if any
+          fails — so you can drop it into CI.
+        </p>
+      </section>
+
+      <!-- The four checks -->
+      <section class="mb-10">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-3">WHAT IT CHECKS</p>
+        <div class="space-y-px">
+          {checks.map((c) => (
+            <div class="border border-cyan-400/20 px-4 py-3">
+              <div class="flex items-baseline gap-3">
+                <span class="text-cyan-400/50 text-xs tabular-nums shrink-0">{c.id}</span>
+                <span class="text-sm tracking-wide text-cyan-400">{c.title}</span>
+              </div>
+              <p class="text-xs text-cyan-400/45 mt-1.5" style="font-family:var(--font-sans);line-height:1.7" set:html={c.bug} />
+            </div>
+          ))}
+        </div>
+        <p class="text-cyan-400/60 text-sm mt-4" style="font-family:var(--font-sans);line-height:1.8">
+          The fix for both real defects is one line:
+          <span class="text-cyan-400">hmac.compare_digest</span>, behind a
+          <span class="text-cyan-400">startswith("sha256=")</span> / length guard. The tool ships two worked
+          references — a deliberately broken verifier and a correct one — so
+          <span class="text-cyan-400">--demo</span> finds a real bug with zero setup.
+        </p>
+      </section>
+
+      <!-- Audit your own -->
+      <section class="mb-10">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-3">AUDIT YOUR OWN VERIFIER</p>
+        <pre class="border border-cyan-400/20 p-3 overflow-x-auto text-xs md:text-sm text-cyan-400/85"><code>python3 webhook_check.py --verifier yourmodule:verify</code></pre>
+        <p class="text-cyan-400/45 text-xs mt-2" style="font-family:var(--font-sans);line-height:1.7">
+          Any callable <code>verify(secret: bytes, body: bytes, header: str) -&gt; bool</code>. It must not raise
+          on malformed input; it must return False.
+        </p>
+      </section>
+
+      <!-- Source -->
+      <section class="mb-12">
+        <a
+          href={repo}
+          class="inline-block px-4 py-3 border border-cyan-400/60 bg-cyan-400/10 hover:bg-cyan-400/20 hover:border-cyan-400 transition-colors tracking-widest text-sm"
+          >SOURCE ON GITHUB — MIT ↗</a
+        >
+        <p class="text-cyan-400/40 text-xs mt-2" style="font-family:var(--font-sans)">
+          Read it, run it, share it. One file, no dependencies.
+        </p>
+      </section>
+
+      <!-- Funnel: list -->
+      <section class="mb-8 border-t border-cyan-400/15 pt-8">
+        <p class="text-cyan-400/40 text-xs tracking-widest mb-2">GET THE NEXT FREE CASE</p>
+        <p class="text-cyan-400/70 text-sm mb-4" style="font-family:var(--font-sans);line-height:1.8">
+          This is one case from a larger map of the agent attack surface. Join the list for the next free check
+          and a heads-up when the standards (MCP, EMA) move.
+        </p>
+        <div class="bg-white rounded-md overflow-hidden border border-cyan-400/20">
+          <iframe
+            src="https://dispatch.aoifuture.com/embed"
+            title="Subscribe to the dispatch"
+            width="100%"
+            height="150"
+            style="border:0;background:#fff;"
+            frameborder="0"
+            scrolling="no"></iframe>
+        </div>
+        <p class="text-cyan-400/35 text-xs mt-2" style="font-family:var(--font-sans)">
+          Powered by Substack — <a href={listUrl} class="text-cyan-400/60 hover:text-cyan-400 underline">dispatch.aoifuture.com</a>. No spam; unsubscribe any time.
+        </p>
+      </section>
+
+      <!-- Funnel: kit (separation principle) -->
+      <section class="mb-4 border border-cyan-400/20 p-5" style="font-family:var(--font-sans);line-height:1.8">
+        <p class="text-cyan-400 text-sm tracking-wide mb-2">Want the whole surface, and evidence you can defend?</p>
+        <p class="text-cyan-400/60 text-sm">
+          This free tool covers one case and tells you PASS or FAIL. The full
+          <span class="text-cyan-400/90">AI-Agent Security Verification Kit</span> covers identity, tools,
+          untrusted content, the MCP supply chain, and EMA — one command against your config — and seals each run
+          into a single artifact (JSON + PDF) whose hash is countersigned by an
+          <span class="text-cyan-400/90">RFC 3161</span> timestamp authority. Proof of <em>what</em> you tested
+          and <em>when</em>. No secret leaves your machine — only a hash and a nonce.
+        </p>
+        <p class="text-cyan-400/40 text-xs mt-3">
+          The book and the kit are publishing soon —
+          <a href={listUrl} class="text-cyan-400/70 hover:text-cyan-400 underline">join the list</a> and I'll send the links at launch.
+        </p>
+      </section>
+
+      <p class="text-cyan-400/30 text-xs mt-8" style="font-family:var(--font-sans)">
+        Explanation and a single check are free. Execution across the whole surface, and the signed proof, are the kit.
+      </p>
+    </div>
+  </main>
+
+  <script is:inline>
+    document.getElementById('copy-oneliner')?.addEventListener('click', function () {
+      var code = document.getElementById('oneliner');
+      if (!code) return;
+      navigator.clipboard.writeText(code.textContent || '').then(function () {
+        var btn = document.getElementById('copy-oneliner');
+        if (!btn) return;
+        var prev = btn.textContent;
+        btn.textContent = 'COPIED';
+        setTimeout(function () { btn.textContent = prev; }, 1400);
+      });
+    });
+  </script>
+</Layout>
