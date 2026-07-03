@@ -52,7 +52,7 @@ The fix for the real defects is one line: `hmac.compare_digest`, behind a `start
   curl -sO https://raw.githubusercontent.com/AOI-Future/agent-webhook-check/main/webhook_check.py && python3 webhook_check.py --demo
 - Audit your own verifier: python3 webhook_check.py --verifier yourmodule:verify
 
-It is the free carve-out of one case from the fuller AI-Agent Security Verification Kit (identity, tools, untrusted content, the MCP supply chain, EMA), which additionally seals each run into a single evidence artifact whose hash is countersigned by an RFC 3161 timestamp authority — publishing soon; the list is at https://dispatch.aoifuture.com/.
+It is the free carve-out of one case from the fuller AI-Agent Security Verification Kit (identity, tools, untrusted content, the MCP supply chain, EMA), which additionally seals each run into a single evidence artifact whose hash is countersigned by an RFC 3161 timestamp authority. The book itself — AI Agent Security: A Field Manual — is published, free, at https://leanpub.com/agent-security; the kit is publishing soon and the list is at https://dispatch.aoifuture.com/.
 
 ## For AI Assistants
 
