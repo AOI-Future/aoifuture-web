@@ -64,6 +64,7 @@ const SECTIONS: Section[] = [
   { id: 'camino', label: 'AOI CAMINO', sub: 'AUTHOR', accent: 'amber' },
   { id: 'sound-umwelt', label: 'SOUND UMWELT', sub: 'PROJECT', accent: 'cyan' },
   { id: 'dispatch', label: 'DISPATCH', sub: 'MEDIA', accent: 'amber' },
+  { id: 'agent-security', label: 'AGENT.SECURITY', sub: 'FIELD MANUAL', accent: 'cyan' },
   { id: 'commission', label: 'WORK.COMMISSION', sub: 'SERVICE', accent: 'cyan' },
   { id: 'legal', label: 'LEGAL', sub: 'NOTICE', accent: 'cyan' },
 ];
@@ -220,6 +221,40 @@ function DispatchPanel() {
   );
 }
 
+function AgentSecurityPanel() {
+  return (
+    <div className="panel-stagger space-y-6">
+      <div>
+        <Tag accent="cyan">DOC.TYPE: FIELD MANUAL</Tag>
+        <h2 className="text-3xl md:text-5xl font-mono text-cyan-400 tracking-widest glow-cyan">
+          AGENT SECURITY
+        </h2>
+        <p className="mt-3 text-cyan-400/60 font-mono text-sm">
+          AI Agent Security — A Field Manual
+        </p>
+      </div>
+      <p className="text-cyan-400/80 font-sans text-sm md:text-base leading-relaxed">
+        AIエージェントの「制御」を、主張から証拠へ。
+        脅威 → 制御 → 要件 → 検証の連鎖で、実運用のセキュリティ境界を
+        検証可能にするフィールドマニュアル。無料本と、証跡を生成する検証キットの二層構成。
+      </p>
+      <div className="font-mono text-xs text-cyan-400/40 space-y-1 border-l border-cyan-400/20 pl-4">
+        <p>FREE.BOOK: PUBLISHED</p>
+        <p>VERIFICATION.KIT: PUBLISHING SOON</p>
+        <p>LICENSE: CC BY-NC-ND 4.0</p>
+      </div>
+      <div className="flex flex-col sm:flex-row gap-3">
+        <ExternalLink accent="cyan" href="https://leanpub.com/agent-security">
+          READ FREE BOOK
+        </ExternalLink>
+        <LaunchLink accent="cyan" href="/tools/webhook-check">
+          TRY WEBHOOK CHECK
+        </LaunchLink>
+      </div>
+    </div>
+  );
+}
+
 function CommissionPanel() {
   return (
     <div className="panel-stagger space-y-6">
@@ -335,6 +370,7 @@ const PANELS: Record<string, () => ReactNode> = {
   camino: CaminoPanel,
   'sound-umwelt': SoundUmweltPanel,
   dispatch: DispatchPanel,
+  'agent-security': AgentSecurityPanel,
   commission: CommissionPanel,
   about: AboutPanel,
   legal: LegalPanel,
