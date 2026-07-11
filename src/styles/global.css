@@ -16,6 +16,88 @@
   /* Font stacks */
   --font-mono: 'JetBrains Mono', 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Mono', 'Droid Sans Mono', monospace;
   --font-sans: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, system-ui, sans-serif;
+  --font-serif: 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+}
+
+/* ============================================================
+   AOI Future Design System v2.0.0 — 蒼硝子 (Liquid Glass)
+   Reference implementation. Spec: root ./AGENTS.md
+   v1 cyber-* tokens above are the compatibility/alias layer and
+   remain the default (Cyber) surface. v2 tokens below are canonical
+   for new glass material / geometry / typography roles.
+   ============================================================ */
+:root {
+  /* ---- Cyber palette (v2 canonical names; values == v1 cyber-*) ---- */
+  --aoi-bg:            #000000;
+  --aoi-brand:         #00ffff;   /* == --color-cyber-primary */
+  --aoi-brand-90:      rgba(0,255,255,0.90);
+  --aoi-brand-70:      rgba(0,255,255,0.70);
+  --aoi-brand-50:      rgba(0,255,255,0.50);
+  --aoi-brand-30:      rgba(0,255,255,0.30);
+  --aoi-brand-20:      rgba(0,255,255,0.20);
+  --aoi-brand-15:      rgba(0,255,255,0.15);
+  --aoi-brand-10:      rgba(0,255,255,0.10);
+  --aoi-brand-05:      rgba(0,255,255,0.05);
+  --aoi-ai:            #8b5cf6;   /* AI accent (NICTIA) == --color-cyber-accent */
+  --aoi-magenta:       #ff00ff;   /* rare, duotone only == --color-cyber-secondary */
+  --aoi-warn:          #ff4d6a;
+
+  /* domain hues (sound-umwelt) */
+  --aoi-voice:         #ff4d6a;
+  --aoi-piano:         #ffb030;
+  --aoi-room:          #4d7fff;
+  --aoi-env:           #40ff80;
+
+  /* ---- Consult palette (/consulting only; see consulting.css) ---- */
+  --aoi-c-navy:        #1a1a2e;
+  --aoi-c-cool:        #0f3460;
+  --aoi-c-red:         #e94560;
+  --aoi-c-surface:     #fafafa;
+  --aoi-c-muted:       #6b6b80;
+
+  /* ---- Glass material (蒼硝子) — system-owned ---- */
+  --g-tint:            0.42;   /* user setting t = 0..1 (drives the rest) */
+  --g-alpha:           0.42;   /* = 0.10 + t*0.60 */
+  --g-blur:            16px;   /* = 8px + t*16px */
+  --g-satur:           150%;
+  --g-edge:            0.50;   /* = 0.35 + t*0.35 (darkened edge, 2026) */
+  --g-specular:        0.20;   /* glow ON->0.32 (CEILING). reduce->0.06 */
+  --g-bloom:           0.14;   /* = 0.10 + t*0.08 (AOI cyan glow). glow OFF->0 */
+  --g-glass-fill:      4,22,28;         /* rgb of the tint layer */
+  --g-lift:            0 14px 44px rgba(0,0,0,0.55); /* floating shadow */
+
+  /* ---- Geometry (角丸スケール, v2 新設・同心円ルール) ---- */
+  --r2-none:           0px;    /* grid / scanline chrome */
+  --r2-xs:             6px;    /* chip / input */
+  --r2-sm:             12px;   /* nested panel */
+  --r2-md:             20px;   /* card / modal */
+  --r2-lg:             28px;   /* top-level container */
+  --r2-capsule:        999px;  /* floating control */
+
+  /* ---- Type scale + roles ---- */
+  --fs-10: 10px; --fs-12: 12px; --fs-14: 14px; --fs-16: 16px;
+  --fs-18: 18px; --fs-20: 20px; --fs-24: 24px; --fs-32: 32px;
+  --fs-hero:   var(--fs-32); /* page top heading (1/screen) */
+  --fs-h2:     var(--fs-24); /* section heading */
+  --fs-module: var(--fs-20); /* card heading / module */
+  --fs-lead:   var(--fs-16); /* lead / emphasised body */
+  --fs-body:   var(--fs-14); /* JP body default & minimum */
+  --fs-label:  var(--fs-12); /* EN mono label */
+  --fs-eyebrow:var(--fs-10); /* eyebrow (EN only, no body) */
+  --fs-min-jp:      14px;   /* JP body minimum (line-height 1.75) */
+  --fs-min-chrome:  12px;   /* EN mono label minimum */
+  --lh-body:        1.75;   /* JP body */
+  --ls-eyebrow:     0.3em;  /* eyebrow only */
+
+  /* ---- Spacing / layout ---- */
+  --tap-min:        44px;
+  --line-max:       672px;  /* ~= 40 JP chars */
+  --pad-card:       20px;   /* follows concentric radius */
+  --safe-inset:     16px;   /* floating margin from screen edge */
+
+  /* ---- Motion ---- */
+  --dur:        300ms;   /* default. range 200-500ms */
+  --ease:       ease-in-out; /* or linear. NO bounce/spring */
 }
 
 /* Base Styles */
@@ -191,3 +273,139 @@ body::before {
 .text-piano { color: #ffb030; }
 .text-room { color: #4d7fff; }
 .text-env { color: #40ff80; }
+
+/* ============================================================
+   蒼硝子 (Liquid Glass) material — .aoi-glass
+   5 layers, order strict. Glass is for floating/controls only:
+   never lay it under body text, never glass-on-glass.
+   Legacy .glass (above) is preserved for existing pages.
+   ============================================================ */
+.aoi-glass {
+  background: rgba(var(--g-glass-fill), var(--g-alpha));              /* 1 tint */
+  backdrop-filter: blur(var(--g-blur)) saturate(var(--g-satur));      /* 2 diffuse */
+  -webkit-backdrop-filter: blur(var(--g-blur)) saturate(var(--g-satur));
+  border: 1px solid var(--aoi-brand-20);
+  border-radius: var(--r2-md);
+  box-shadow:
+    inset 0 0 0 1px rgba(0,0,0, var(--g-edge)),                       /* 3 dark edge */
+    inset 0 1.5px 1px rgba(255,255,255, var(--g-specular)),           /* 4 specular  */
+    inset 0 0 34px rgba(0,255,255, 0.05),
+    var(--g-lift),                                                    /* float       */
+    0 0 30px rgba(0,255,255, var(--g-bloom));                         /* 5 bloom     */
+  position: relative;
+  overflow: hidden;
+}
+/* optional refraction sheen — a child, screen-blended */
+.aoi-glass::before {
+  content: ""; position: absolute; inset: 0; height: 55%;
+  border-radius: inherit; pointer-events: none; mix-blend-mode: screen;
+  background: linear-gradient(160deg, rgba(255,255,255,0.10), transparent 60%);
+}
+
+/* Floating control = capsule */
+.aoi-glass--capsule { border-radius: var(--r2-capsule); }
+
+/* Clear variant — needs a dimming layer; NO body text on top */
+.aoi-glass--clear {
+  background: rgba(var(--g-glass-fill), 0.06);
+  backdrop-filter: blur(3px) saturate(120%);
+  -webkit-backdrop-filter: blur(3px) saturate(120%);
+  border-color: rgba(255,255,255,0.30);
+}
+.aoi-glass--clear::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(0,0,0,0.5), rgba(0,0,0,0.28)); /* dimming */
+}
+
+/* Consult surface — no glow, weak edge (see consulting.css) */
+.aoi-glass--consult {
+  --g-bloom: 0; --g-specular: 0.14;
+  background: rgba(255,255,255,0.72);
+  border-color: rgba(26,26,46,0.12);
+}
+
+/* ============================================================
+   Floating controls — capsule tab bar / 56x56 search island /
+   opaque-ish top toolbar. Scroll behaviour driven by
+   src/scripts/floating-controls.ts (initFloatingControls()).
+   Reusable, not wired into any layout by default.
+   ============================================================ */
+.aoi-tabbar {
+  position: fixed;
+  left: var(--safe-inset);
+  right: calc(var(--safe-inset) + 56px + 12px); /* leave room for search island */
+  bottom: var(--safe-inset);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 8px;
+  min-height: var(--tap-min);
+  padding: 8px 12px;
+  transform-origin: bottom center;
+  transition: transform var(--dur) var(--ease);
+}
+.aoi-search-island {
+  position: fixed;
+  right: var(--safe-inset);
+  bottom: var(--safe-inset);
+  z-index: 60;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r2-capsule);
+  transition: transform var(--dur) var(--ease);
+}
+.aoi-toolbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 55;
+  min-height: var(--tap-min);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--safe-inset);
+  /* opaque-ish glass: higher alpha, stronger blur */
+  --g-alpha: 0.72;
+  --g-blur: 18px;
+  --g-bloom: 0;
+  border-radius: 0;
+  opacity: 0; /* faded in on scroll by initFloatingControls() */
+  transition: opacity var(--dur) var(--ease);
+}
+.aoi-tabbar__item {
+  flex: 1;
+  min-height: var(--tap-min);
+  min-width: var(--tap-min);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r2-capsule);
+  color: var(--aoi-brand-70);
+  font-family: var(--font-mono);
+  font-size: var(--fs-min-chrome);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+.aoi-tabbar__item[aria-current="true"],
+.aoi-tabbar__item:hover { color: var(--aoi-brand); background: var(--aoi-brand-10); }
+
+/* ============================================================
+   Accessibility — follow OS settings (do not disable)
+   ============================================================ */
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --g-alpha: 0.92; --g-blur: 2px; --g-satur: 100%;
+    --g-edge: 0.70; --g-specular: 0.06; --g-bloom: 0;
+  }
+  .aoi-glass { background: #041014; }  /* opaque replacement */
+  .aoi-toolbar { --g-alpha: 0.92; --g-blur: 2px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

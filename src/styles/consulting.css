@@ -2,6 +2,7 @@
 
 /* Consulting page - Clean professional theme */
 /* Intentionally separate from global.css cyberpunk theme */
+/* AOI DS v2 Consult surface: off-white #fafafa, navy/warm-red, NO glow / NO scanline. */
 
 @theme {
   --color-brand: #1a1a2e;
@@ -15,4 +16,72 @@
   --color-text-light: #9999aa;
   --color-border: #e0e0e8;
   --font-sans: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+}
+
+/* ============================================================
+   AOI DS v2 — Consult surface tokens + glass Consult variant.
+   Shares the same 蒼硝子 structure as Cyber (geometry / type roles
+   / motion / concentric radius) but with the Consult palette:
+   bloom = 0, weak edge, light glass fill. Spec: root ./AGENTS.md
+   ============================================================ */
+:root {
+  /* ---- Consult palette (v2 canonical names) ---- */
+  --aoi-c-navy:    #1a1a2e;   /* == --color-brand */
+  --aoi-c-cool:    #0f3460;   /* == --color-accent */
+  --aoi-c-red:     #e94560;   /* == --color-accent-warm */
+  --aoi-c-surface: #fafafa;   /* == --color-surface */
+  --aoi-c-muted:   #6b6b80;   /* == --color-text-muted */
+
+  /* ---- Glass material (Consult tuning: no glow, weak edge) ---- */
+  --g-tint:        0.42;
+  --g-alpha:       0.72;   /* light glass fill on off-white */
+  --g-blur:        16px;
+  --g-satur:       120%;
+  --g-edge:        0.10;   /* weak edge on light ground */
+  --g-specular:    0.14;   /* Consult specular */
+  --g-bloom:       0;      /* Consult: NO cyan bloom */
+  --g-glass-fill:  255,255,255;
+  --g-lift:        0 14px 44px rgba(26,26,46,0.14);
+
+  /* ---- Geometry (same concentric scale) ---- */
+  --r2-none:   0px;  --r2-xs: 6px;  --r2-sm: 12px;
+  --r2-md:     20px; --r2-lg: 28px; --r2-capsule: 999px;
+
+  /* ---- Type scale + roles (same as Cyber) ---- */
+  --fs-10: 10px; --fs-12: 12px; --fs-14: 14px; --fs-16: 16px;
+  --fs-18: 18px; --fs-20: 20px; --fs-24: 24px; --fs-32: 32px;
+  --fs-min-jp: 14px; --fs-min-chrome: 12px;
+  --lh-body: 1.75; --ls-eyebrow: 0.3em;
+
+  /* ---- Spacing / layout ---- */
+  --tap-min: 44px; --line-max: 672px; --pad-card: 20px; --safe-inset: 16px;
+
+  /* ---- Motion ---- */
+  --dur: 300ms; --ease: ease-in-out;
+}
+
+/* Consult glass — no glow, weak edge, light fill.
+   .aoi-glass core lives in global.css; this variant is self-contained
+   here so /consulting (which imports only this sheet) can use it. */
+.aoi-glass {
+  background: rgba(var(--g-glass-fill), var(--g-alpha));
+  backdrop-filter: blur(var(--g-blur)) saturate(var(--g-satur));
+  -webkit-backdrop-filter: blur(var(--g-blur)) saturate(var(--g-satur));
+  border: 1px solid rgba(26,26,46,0.12);
+  border-radius: var(--r2-md);
+  box-shadow:
+    inset 0 0 0 1px rgba(26,26,46, var(--g-edge)),
+    inset 0 1.5px 1px rgba(255,255,255, var(--g-specular)),
+    var(--g-lift);
+  position: relative;
+  overflow: hidden;
+}
+.aoi-glass--capsule { border-radius: var(--r2-capsule); }
+
+@media (prefers-reduced-transparency: reduce) {
+  :root { --g-alpha: 0.98; --g-blur: 2px; --g-satur: 100%; --g-edge: 0.20; --g-specular: 0.06; }
+  .aoi-glass { background: #fafafa; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
 }
