@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import LifeGame from '../components/LifeGame';
 
-const lastUpdated = '2026-03-22';
+const lastUpdated = '2026-07-14';
 ---
 
 <Layout title="Privacy Policy | Aoifuture">
@@ -107,8 +107,9 @@ const lastUpdated = '2026-03-22';
           <div>
             <h3 class="text-cyan-400/80 text-sm mb-2">b. お客さまが提供する情報</h3>
             <ul class="space-y-1 ml-4">
-              <li>- チャットウィジェットを通じた相談内容（テキスト）</li>
-              <li>- メールアドレス、お名前（任意でご提供いただいた場合）</li>
+              <li>- 初回相談窓口で選択した現在地、仕事の状況、任意の相談の着地点</li>
+              <li>- 返信先メールアドレス、お名前・表示名および所属（後二者は任意）</li>
+              <li>- 受付番号、受付日時、同意したポリシーの版</li>
               <li>- コンサルティングセッションでの業務情報</li>
             </ul>
           </div>
@@ -210,7 +211,9 @@ const lastUpdated = '2026-03-22';
                   <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">Google Analytics</td><td class="pr-4">Google LLC</td><td>アクセス解析</td></tr>
                   <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">Vercel Analytics</td><td class="pr-4">Vercel Inc.</td><td>パフォーマンス分析</td></tr>
                   <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">Google Fonts</td><td class="pr-4">Google LLC</td><td>フォント配信</td></tr>
-                  <tr><td class="py-2 pr-4">Vercel</td><td class="pr-4">Vercel Inc.</td><td>ウェブサイトホスティング</td></tr>
+                  <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">Vercel</td><td class="pr-4">Vercel Inc.</td><td>ホスティング・API処理</td></tr>
+                  <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">Notion</td><td class="pr-4">Notion Labs, Inc.</td><td>初回相談の保管・担当者通知</td></tr>
+                  <tr><td class="py-2 pr-4">Cloudflare Turnstile（有効時）</td><td class="pr-4">Cloudflare, Inc.</td><td>不正送信の防止</td></tr>
                 </tbody>
               </table>
             </div>
@@ -226,8 +229,10 @@ const lastUpdated = '2026-03-22';
         </h2>
         <div class="space-y-4 text-cyan-400/70 font-mono text-xs leading-relaxed">
           <div>
-            <h3 class="text-cyan-400/80 text-sm mb-2">チャットでの相談</h3>
-            <p>チャットウィジェットで入力された相談内容は、AIエージェントによる応答生成のために処理されます。相談の確度が高いと判断された場合、担当者への通知のために会話内容の要約が社内ツール（Discord）に送信されることがあります。</p>
+            <h3 class="text-cyan-400/80 text-sm mb-2">初回相談窓口</h3>
+            <p>入力された情報は、相談内容の確認、返信、対応可否と次の進め方の検討、不正送信の防止に使用します。自由記述は自動的なAI判定・受任判断・外部URLの取得には使用せず、野崎秀吾が内容を確認します。営業目的のメール配信には使用しません。</p>
+            <p class="mt-2">受付データはVercelを経由してNotionに保管します。Cloudflare Turnstileが設定されている場合は、不正送信防止のため同サービスへ検証情報が送信されます。通知はNotion内で行い、相談本文をDiscord等へ転送しません。</p>
+            <p class="mt-2">顧客名、個人名、契約内容、未公開の数値、パスワード・APIキーなど、社外に出せない情報は入力しないでください。</p>
           </div>
           <div>
             <h3 class="text-cyan-400/80 text-sm mb-2">セッションでの業務情報</h3>
@@ -257,6 +262,8 @@ const lastUpdated = '2026-03-22';
               </thead>
               <tbody class="text-cyan-400/70">
                 <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">アクセスログ</td><td class="pr-4">14ヶ月（GA4デフォルト）</td><td>Google</td></tr>
+                <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">初回相談（未契約・非アクティブ）</td><td class="pr-4">最終連絡から90日を目安に見直し・削除</td><td>Notion</td></tr>
+                <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">初回相談（契約へ移行）</td><td class="pr-4">必要事項を顧客記録へ移した後、契約開始から30〜90日以内に元の受付を削除</td><td>Notion</td></tr>
                 <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">チャット会話データ</td><td class="pr-4">30日</td><td>当方サーバー</td></tr>
                 <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">エスカレーション通知</td><td class="pr-4">90日</td><td>Discord</td></tr>
                 <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">セッション記録</td><td class="pr-4">契約終了後6ヶ月</td><td>当方管理環境</td></tr>
@@ -295,7 +302,7 @@ const lastUpdated = '2026-03-22';
           <span class="text-cyan-400/40">10 //</span> 国際的なデータ移転
         </h2>
         <div class="text-cyan-400/70 font-mono text-xs leading-relaxed space-y-2">
-          <p>当方は日本国内で事業を運営していますが、利用する外部サービス（Google Analytics、Vercel等）のサーバーが海外に所在する場合があります。これらのサービスへのデータ移転は、各サービス提供者の適切な保護措置に基づいて行われます。</p>
+          <p>当方は日本国内で事業を運営していますが、利用する外部サービス（Google、Vercel、Notion、Cloudflare等）のサーバーが海外に所在し、国外で情報が処理・保管される場合があります。これらのサービスへのデータ移転は、各サービス提供者の契約および適切な保護措置に基づいて行われます。</p>
           <p>EEAからのデータ移転については、日本が欧州委員会より十分性認定を受けていることを根拠とします。</p>
         </div>
       </section>

@@ -1,0 +1,46 @@
+---
+import '../../styles/consultation-intake.css';
+import { getConsultationConfig } from '../../lib/consultation-config';
+const config = getConsultationConfig();
+if (!config.enabled) return Astro.redirect(config.fallbackUrl, 302);
+const stages = [
+  ['deciding_where_to_start', '何から始めるか決めたい'],
+  ['trial_not_adopted', 'AIやツールを試したが、仕事に定着していない'],
+  ['workflow_review', '特定の仕事の流れを見直したい'],
+  ['moving_to_operation', 'すでにある自動化やAIエージェントを、実運用に近づけたい'],
+  ['aligning_team_decisions', 'チーム内の役割や判断基準を揃えたい'],
+  ['unclear_or_other', 'まだ言葉にできない / どれとも違う'],
+];
+---
+<!doctype html><html lang="ja"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="AIを含む仕事の仕組みについて、3分で状況を整理する初回相談窓口。"/><meta name="robots" content="noindex, nofollow"/>
+<title>仕事の相談を整理する | AOIFUTURE</title><link rel="icon" href="/logo.svg"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+{config.turnstileSiteKey && <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+</head><body class="intake-body">
+<main class="intake-shell" data-intake data-turnstile-site-key={config.turnstileSiteKey}>
+<header class="intake-header"><a href="/consulting" class="back-link">AOIFUTURE / 相談ページ</a></header>
+<form id="intake-form" novalidate>
+<section data-panel="1" aria-labelledby="step1-title">
+<div class="progress-copy"><strong>1 / 2</strong>　いまの仕事</div><div class="progress-line"><span style="width:50%"></span></div>
+<h1 id="step1-title">いまの仕事を整理する</h1><p class="lead">うまく整理できていなくても大丈夫です。いま起きていることを順番にたどります。</p>
+<aside class="safety-note">社外に出せない情報は入力しないでください。顧客名、個人名、契約内容、未公開の数値、パスワード・APIキーなどは伏せ、「取引先」「社内システム」のように置き換えてください。</aside>
+<fieldset class="question"><legend>いま、どの段階に近いですか？ <span class="badge">必須</span></legend><p>完全に一致しなくても、いちばん近いものを選んでください。</p><div class="radio-list">{stages.map(([value,label]) => <label class="radio-card"><input type="radio" name="stage" value={value}/><span>{label}</span></label>)}</div><p class="field-error" data-error="stage" tabindex="-1"></p></fieldset>
+<div class="question"><label for="situation">いま、仕事の中で何が起きていますか？ <span class="badge">必須</span></label><p>「誰が、どんな仕事で、どこに時間がかかる・止まる・迷うか」がわかる範囲で十分です。固有名詞や正確な数値は必要ありません。</p><textarea id="situation" name="situation" maxlength="800" rows="8" placeholder="例：毎週のレポート作成に時間がかかっています。AIも試しましたが、確認する人や完了の基準が決まっておらず、結局手作業に戻っています。"></textarea><div class="under-field"><small>顧客名・個人名・契約内容・未公開情報・パスワード・APIキーは入力しないでください。</small><output data-count="situation">0 / 800</output></div><p class="field-advice" data-advice="situation"></p><p class="field-error" data-error="situation" tabindex="-1"></p></div>
+<div class="question"><label for="desiredTakeaway">最初の相談で、何を持ち帰れたら前に進めそうですか？ <span class="badge optional">任意</span></label><p>決まっていなければ空欄で構いません。</p><textarea id="desiredTakeaway" name="desiredTakeaway" maxlength="240" rows="3" placeholder="例：AIに任せる範囲と、人が確認する場所を決めたい。"></textarea><div class="under-field"><span></span><output data-count="desiredTakeaway">0 / 240</output></div></div>
+<div class="actions"><button type="button" class="primary" data-next>返信先の入力へ</button><a href="/consulting">相談ページに戻る</a></div>
+</section>
+<section data-panel="2" hidden aria-labelledby="step2-title"><div class="progress-copy"><strong>2 / 2</strong>　返信先</div><div class="progress-line"><span style="width:100%"></span></div><h1 id="step2-title">返信先を入力する</h1><p class="lead">内容を読んだうえで、野崎秀吾からメールで返信します。営業目的のメール配信には使用しません。</p>
+<div class="question"><label for="displayName">お名前（表示名でも構いません） <span class="badge optional">任意</span></label><p>空欄の場合は「ご相談者さま」として返信します。</p><input id="displayName" name="displayName" maxlength="100" autocomplete="name" placeholder="例：山田 太郎"/></div>
+<div class="question"><label for="email">返信先のメールアドレス <span class="badge">必須</span></label><p>1〜2営業日以内の返信先です。入力間違いがないかご確認ください。</p><input id="email" name="email" type="email" maxlength="254" autocomplete="email" inputmode="email" placeholder="name@example.com"/><p class="field-error" data-error="email" tabindex="-1"></p></div>
+<div class="question"><label for="organization">会社名・チーム名など <span class="badge optional">任意</span></label><p>個人でのご相談や、所属を伏せたい場合は空欄で構いません。</p><input id="organization" name="organization" maxlength="200" autocomplete="organization" placeholder="例：〇〇株式会社 / 個人事業"/></div>
+<div class="honeypot" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"/></label></div>
+<div class="actions"><button type="button" class="primary" data-confirm>入力内容を確認する</button><button type="button" class="text-button" data-back="1">前の質問に戻る</button></div></section>
+<section data-panel="confirm" hidden aria-labelledby="confirm-title"><div class="progress-copy"><strong>確認</strong></div><h1 id="confirm-title">この内容で相談しますか？</h1><div class="review-card"><button type="button" data-edit="1">修正する</button><h2>いまの仕事</h2><dl data-review="work"></dl></div><div class="review-card"><button type="button" data-edit="2">修正する</button><h2>返信先</h2><dl data-review="contact"></dl></div>
+<label class="confirm-check"><input type="checkbox" name="noSensitiveData"/> <span><strong>必須</strong> 機密情報や認証情報を含めていないことを確認しました<small>顧客名、個人名、契約内容、未公開の数値、パスワード・APIキーなどが含まれていないか、もう一度確認してください。</small></span></label><p class="field-error" data-error="noSensitiveData" tabindex="-1"></p>
+<label class="confirm-check"><input type="checkbox" name="privacyPolicy"/> <span><strong>必須</strong> <a href="/privacy#consulting" target="_blank">プライバシーポリシー</a>に同意します</span></label><p class="field-error" data-error="privacyPolicy" tabindex="-1"></p>
+<div data-turnstile></div><div class="submit-error" data-submit-error role="alert" hidden></div><div class="actions"><button type="submit" class="primary" data-submit>この内容で相談を送る</button><button type="button" class="text-button" data-edit="1">入力を修正する</button></div></section>
+<section data-panel="success" hidden aria-labelledby="success-title"><h1 id="success-title">相談を受け付けました</h1><p data-success-copy></p><p>相談内容によっては、この窓口ではお引き受けできない場合があります。その場合も、対応できない範囲を返信でお伝えします。</p><p class="receipt">受付番号: <strong data-receipt></strong></p><div class="actions"><a class="primary link-button" href="/consulting">相談ページに戻る</a><a href="https://note.com/shugo" target="_blank" rel="noopener noreferrer">野崎秀吾のnoteを読む</a></div></section>
+</form><footer><p>入力の目安：3分 / 返信：1〜2営業日以内</p><p>希望サービスや予算は、まだ決めなくて構いません。</p></footer></main>
+<script src="../../scripts/consultation-intake.ts"></script>
+</body></html>

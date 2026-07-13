@@ -1,6 +1,10 @@
 ---
 import '../styles/consulting.css';
 import Analytics from '@vercel/analytics/astro';
+import { getConsultationConfig } from '../lib/consultation-config';
+const consultationConfig = getConsultationConfig();
+const intakeUrl = consultationConfig.enabled ? '/consulting/intake' : consultationConfig.fallbackUrl;
+const intakeExternal = !consultationConfig.enabled;
 ---
 
 <!doctype html>
@@ -77,15 +81,15 @@ import Analytics from '@vercel/analytics/astro';
 
       <div class="space-y-4">
         <a
-          href="https://aoifuture.notion.site/6a828f1f8371416187ab544742734fcd?pvs=105"
-          target="_blank"
-          rel="noopener noreferrer"
+          href={intakeUrl}
+          target={intakeExternal ? '_blank' : undefined}
+          rel={intakeExternal ? 'noopener noreferrer' : undefined}
           class="inline-flex items-center gap-2 bg-[var(--color-brand)] text-white
                px-8 py-4 text-sm font-medium tracking-wide
                hover:bg-[var(--color-brand-light)] transition-colors duration-300
                w-fit"
         >
-          相談フォームへ
+          相談内容を整理する
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
@@ -653,14 +657,14 @@ import Analytics from '@vercel/analytics/astro';
 
         <div class="space-y-4">
           <a
-            href="https://aoifuture.notion.site/6a828f1f8371416187ab544742734fcd?pvs=105"
-            target="_blank"
-            rel="noopener noreferrer"
+            href={intakeUrl}
+            target={intakeExternal ? '_blank' : undefined}
+            rel={intakeExternal ? 'noopener noreferrer' : undefined}
             class="inline-flex items-center gap-2 bg-white text-[var(--color-brand)]
                    px-10 py-4 text-sm font-medium tracking-wide
                    hover:bg-white/90 transition-colors duration-300"
           >
-            相談フォームへ
+            相談内容を整理する
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
