@@ -1,7 +1,7 @@
 export type ConsultationConfig = ReturnType<typeof getConsultationConfig>;
 const truthy = (value: string | undefined) => value === 'true' || value === '1';
 export function getConsultationConfig(env: Record<string, string | undefined> = process.env) {
-  const origins = (env.CONSULTATION_ALLOWED_ORIGINS || 'https://aoifuture.com,https://www.aoifuture.com').split(',').map(x => x.trim()).filter(Boolean);
+  const origins = (env.CONSULTATION_ALLOWED_ORIGINS || 'https://aoifuture.com,https://www.aoifuture.com,https://nozaki.com,https://www.nozaki.com,https://wfhradio.tokyo,https://www.wfhradio.tokyo,https://dispatch.aoifuture.com').split(',').map(x => x.trim()).filter(Boolean);
   return {
     enabled: truthy(env.CONSULTATION_NATIVE_FORM_ENABLED),
     fallbackUrl: env.PUBLIC_CONSULTATION_FALLBACK_URL || 'https://aoifuture.notion.site/6a828f1f8371416187ab544742734fcd?pvs=105',

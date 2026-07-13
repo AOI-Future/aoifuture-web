@@ -63,16 +63,18 @@ export class NotionConsultationStore {
       Name: { title: [{ type: 'text', text: { content: `${receiptId} / ${input.displayName || 'ご相談者さま'}` } }] },
       Status: { select: { name: 'New' } }, Priority: { select: { name: 'P2' } }, Owner: rich('Shugo'),
       'Next Action': rich('内容を確認し、1〜2営業日以内に返信'), 'Next Action Due': { date: { start: due.toISOString() } },
-      Stage: { select: { name: notionStageLabels[input.stage] } }, Email: { email: input.email.toLowerCase() },
+      Email: { email: input.email.toLowerCase() },
       Situation: rich(input.situation), 'Receipt ID': rich(receiptId), 'Idempotency Key': rich(input.idempotencyKey),
-      Source: { select: { name: input.source === 'consulting_page' ? 'aoifuture.com/consulting/intake' : 'manual' } }, 'Received At': { date: { start: receivedAt.toISOString() } },
+      Source: { select: { name: input.source } }, 'Inquiry Type': { select: { name: input.inquiryType } }, 'Received At': { date: { start: receivedAt.toISOString() } },
       'Last Contact': { date: { start: receivedAt.toISOString() } }, 'Retention Review At': { date: { start: retention.toISOString() } },
-      'Consent Version': rich(input.consent.version), 'Notification Status': { select: { name: 'Notion' } },
+      'Consent Version': rich(input.consent.version), 'Notification Status': { select: { name: 'Pending' } },
       'Security Flags': { multi_select: [] },
     };
+    if (input.stage) properties.Stage = { select: { name: notionStageLabels[input.stage] } };
     if (input.desiredTakeaway) properties['Desired Takeaway'] = rich(input.desiredTakeaway);
     if (input.displayName) properties['Display Name'] = rich(input.displayName);
     if (input.organization) properties.Organization = rich(input.organization);
+    if (input.articleUrl) properties['Article URL'] = { url: input.articleUrl };
     const response = await this.request('/pages', { method: 'POST', body: JSON.stringify({ parent: { type: 'data_source_id', data_source_id: this.config.dataSourceId }, properties }) });
     const page = await response.json() as NotionPage;
     return { receiptId, pageId: page.id, url: page.url };

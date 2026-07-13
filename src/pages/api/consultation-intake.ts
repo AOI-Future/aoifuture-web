@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { randomBytes } from 'node:crypto';
 import { getConsultationConfig, type ConsultationConfig } from '../../lib/consultation-config';
-import { validateConsultationIntake } from '../../lib/consultation-intake';
+import { validateContactIntake } from '../../lib/consultation-intake';
 import { NotionConsultationStore } from '../../lib/notion-consultation';
 import { verifyTurnstile } from '../../lib/consultation-turnstile';
 
@@ -10,17 +10,21 @@ type Dependencies = { config?: ConsultationConfig; store?: NotionConsultationSto
 
 const headers = (origin: string | null, allowed: boolean) => ({
   ...(allowed && origin ? { 'Access-Control-Allow-Origin': origin } : {}),
-  'Access-Control-Allow-Methods': 'POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type', Vary: 'Origin',
-  'Cache-Control': 'no-store', 'Content-Type': 'application/json; charset=utf-8',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type, Idempotency-Key', Vary: 'Origin',
+  'Cache-Control': 'no-store', 'Content-Type': 'application/json; charset=utf-8', 'X-Content-Type-Options': 'nosniff',
 });
 const response = (status: number, body: Record<string, unknown>, origin: string | null, allowed: boolean) => new Response(JSON.stringify(body), { status, headers: headers(origin, allowed) });
 
-export async function handleConsultationIntake(request: Request, deps: Dependencies = {}): Promise<Response> {
+export async function handleContactIntake(request: Request, deps: Dependencies = {}): Promise<Response> {
   const config = deps.config || getConsultationConfig();
   const origin = request.headers.get('origin');
   const originAllowed = !!origin && config.allowedOrigins.includes(origin);
   if (request.method === 'OPTIONS') return originAllowed ? new Response(null, { status: 204, headers: headers(origin, true) }) : response(403, { error: 'origin_not_allowed' }, origin, false);
-  if (request.method !== 'POST') return response(405, { error: 'method_not_allowed' }, origin, originAllowed);
+  if (request.method !== 'POST') {
+    const result = response(405, { error: 'method_not_allowed' }, origin, originAllowed);
+    result.headers.set('Allow', 'POST, OPTIONS');
+    return result;
+  }
   if (!config.enabled) return response(503, { error: 'intake_disabled', fallbackUrl: config.fallbackUrl }, origin, originAllowed);
   if (!originAllowed) return response(403, { error: 'origin_not_allowed' }, origin, false);
   if (!request.headers.get('content-type')?.toLowerCase().startsWith('application/json')) return response(415, { error: 'json_required' }, origin, true);
@@ -31,8 +35,10 @@ export async function handleConsultationIntake(request: Request, deps: Dependenc
   let raw: unknown;
   try { raw = JSON.parse(text); } catch { return response(400, { error: 'invalid_json' }, origin, true); }
   const now = (deps.now || (() => new Date()))();
-  const validation = validateConsultationIntake(raw, now.getTime());
+  const validation = validateContactIntake(raw, now.getTime());
   if (!validation.ok) return response(400, { error: 'validation_failed', fields: validation.errors }, origin, true);
+  const idempotencyHeader = request.headers.get('idempotency-key');
+  if (idempotencyHeader && idempotencyHeader !== validation.value.idempotencyKey) return response(409, { error: 'idempotency_conflict' }, origin, true);
 
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim();
   const turnstile = await verifyTurnstile(validation.value.antiSpam.turnstileToken, ip, {
@@ -50,7 +56,7 @@ export async function handleConsultationIntake(request: Request, deps: Dependenc
     if (!rate.allowed) return response(429, { error: 'rate_limited', retryAfter: rate.reason === 'email_daily_limit' ? 86400 : 3600 }, origin, true);
     const receiptId = (deps.receipt || (() => `AOI-${randomBytes(4).toString('hex').toUpperCase()}`))();
     const stored = await store.create(validation.value, receiptId, now);
-    console.info(JSON.stringify({ event: 'consultation_intake', receipt: stored.receiptId.slice(0, 12), stage: validation.value.stage, result: stored.receiptId === receiptId ? 'created' : 'duplicate', status: stored.receiptId === receiptId ? 201 : 200, latency: Date.now() - started < 1000 ? 'lt1s' : Date.now() - started < 5000 ? '1-5s' : 'gte5s' }));
+    console.info(JSON.stringify({ event: 'contact_intake', receipt: stored.receiptId.slice(0, 12), source: validation.value.source, inquiryType: validation.value.inquiryType, ...(validation.value.stage ? { stage: validation.value.stage } : {}), result: stored.receiptId === receiptId ? 'created' : 'duplicate', status: stored.receiptId === receiptId ? 201 : 200, latency: Date.now() - started < 1000 ? 'lt1s' : Date.now() - started < 5000 ? '1-5s' : 'gte5s' }));
     return response(stored.receiptId === receiptId ? 201 : 200, { ok: true, receiptId: stored.receiptId, duplicate: stored.receiptId !== receiptId }, origin, true);
   } catch {
     // A timed-out create may have succeeded. One durable lookup resolves a safe retry.
@@ -58,9 +64,10 @@ export async function handleConsultationIntake(request: Request, deps: Dependenc
       const stored = await store.findByIdempotencyKey(validation.value.idempotencyKey);
       if (stored) return response(200, { ok: true, receiptId: stored.receiptId, duplicate: true }, origin, true);
     } catch { /* fail closed */ }
-    console.warn(JSON.stringify({ event: 'consultation_intake', stage: validation.value.stage, result: 'storage_unavailable', status: 503, latency: Date.now() - started < 1000 ? 'lt1s' : Date.now() - started < 5000 ? '1-5s' : 'gte5s' }));
+    console.warn(JSON.stringify({ event: 'contact_intake', source: validation.value.source, inquiryType: validation.value.inquiryType, ...(validation.value.stage ? { stage: validation.value.stage } : {}), result: 'storage_unavailable', status: 503, latency: Date.now() - started < 1000 ? 'lt1s' : Date.now() - started < 5000 ? '1-5s' : 'gte5s' }));
     return response(503, { error: 'storage_unavailable' }, origin, true);
   }
 }
 
-export const ALL: APIRoute = ({ request }) => handleConsultationIntake(request);
+export const handleConsultationIntake = handleContactIntake;
+export const ALL: APIRoute = ({ request }) => handleContactIntake(request);

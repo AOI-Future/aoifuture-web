@@ -10,7 +10,29 @@ export const intakeStages = [
   'unclear_or_other',
 ] as const;
 
+export const intakeSources = [
+  'aoifuture.com/consulting/intake',
+  'aoifuture.com/contact',
+  'nozaki.com',
+  'wfhradio.tokyo',
+  'dispatch.aoifuture.com',
+  'direct',
+  'manual',
+] as const;
+
+export const inquiryTypes = [
+  'Work Consultation',
+  'Writing / Contribution',
+  'Interview / Speaking',
+  'Music / Creative',
+  'Article Question / Correction',
+  'AOI Future / NICTIA',
+  'General / Other',
+] as const;
+
 export type IntakeStage = (typeof intakeStages)[number];
+export type IntakeSource = (typeof intakeSources)[number];
+export type InquiryType = (typeof inquiryTypes)[number];
 
 export const notionStageLabels: Record<IntakeStage, string> = {
   deciding_where_to_start: 'Deciding where to start',
@@ -21,25 +43,30 @@ export const notionStageLabels: Record<IntakeStage, string> = {
   unclear_or_other: 'Unclear / Other',
 };
 
-export type ConsultationIntake = {
+export type ContactIntake = {
   schemaVersion: typeof INTAKE_SCHEMA_VERSION;
   idempotencyKey: string;
-  stage: IntakeStage;
+  source: IntakeSource;
+  inquiryType: InquiryType;
   situation: string;
   desiredTakeaway?: string;
   displayName?: string;
   email: string;
   organization?: string;
+  articleUrl?: string;
+  stage?: IntakeStage;
   consent: { privacyPolicy: true; noSensitiveData: true; version: typeof CONSENT_VERSION };
   antiSpam: { turnstileToken: string; website: string; formStartedAt: number };
-  source?: 'consulting_page' | 'direct';
 };
 
+// Kept as an exported alias for existing imports while the intake becomes shared.
+export type ConsultationIntake = ContactIntake;
+
 export type ValidationResult =
-  | { ok: true; value: ConsultationIntake }
+  | { ok: true; value: ContactIntake }
   | { ok: false; errors: Record<string, string> };
 
-const rootKeys = new Set(['schemaVersion', 'idempotencyKey', 'stage', 'situation', 'desiredTakeaway', 'displayName', 'email', 'organization', 'consent', 'antiSpam', 'source']);
+const rootKeys = new Set(['schemaVersion', 'idempotencyKey', 'source', 'inquiryType', 'situation', 'desiredTakeaway', 'displayName', 'email', 'organization', 'articleUrl', 'stage', 'consent', 'antiSpam']);
 const consentKeys = new Set(['privacyPolicy', 'noSensitiveData', 'version']);
 const antiSpamKeys = new Set(['turnstileToken', 'website', 'formStartedAt']);
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -54,18 +81,25 @@ function unknownKeys(value: Record<string, unknown>, allowed: Set<string>, prefi
   for (const key of Object.keys(value)) if (!allowed.has(key)) errors[`${prefix}${key}`] = 'unknown_field';
 }
 
-export function validateConsultationIntake(input: unknown, now = Date.now()): ValidationResult {
+export function validateContactIntake(input: unknown, now = Date.now()): ValidationResult {
   const errors: Record<string, string> = {};
   if (!input || typeof input !== 'object' || Array.isArray(input)) return { ok: false, errors: { request: 'invalid_request' } };
   const raw = input as Record<string, unknown>;
   unknownKeys(raw, rootKeys, '', errors);
 
-  const schemaVersion = raw.schemaVersion;
-  if (schemaVersion !== INTAKE_SCHEMA_VERSION) errors.schemaVersion = 'invalid_schema_version';
+  if (raw.schemaVersion !== INTAKE_SCHEMA_VERSION) errors.schemaVersion = 'invalid_schema_version';
   const idempotencyKey = normalizeText(raw.idempotencyKey);
   if (!uuidPattern.test(idempotencyKey)) errors.idempotencyKey = 'invalid_idempotency_key';
-  const stage = raw.stage;
-  if (typeof stage !== 'string' || !intakeStages.includes(stage as IntakeStage)) errors.stage = 'invalid_stage';
+
+  const source = normalizeText(raw.source);
+  if (!intakeSources.includes(source as IntakeSource)) errors.source = 'invalid_source';
+  const inquiryType = normalizeText(raw.inquiryType);
+  if (!inquiryTypes.includes(inquiryType as InquiryType)) errors.inquiryType = 'invalid_inquiry_type';
+
+  const stage = normalizeText(raw.stage);
+  const stageRequired = source === 'aoifuture.com/consulting/intake' && inquiryType === 'Work Consultation';
+  if (stageRequired && !stage) errors.stage = 'required';
+  else if (stage && !intakeStages.includes(stage as IntakeStage)) errors.stage = 'invalid_stage';
 
   const situation = normalizeText(raw.situation);
   if (!situation) errors.situation = 'required'; else if (situation.length > 800) errors.situation = 'too_long';
@@ -77,6 +111,12 @@ export function validateConsultationIntake(input: unknown, now = Date.now()): Va
   if (!email) errors.email = 'required'; else if (email.length < 3 || email.length > 254 || !emailPattern.test(email)) errors.email = 'invalid_email';
   const organization = normalizeText(raw.organization);
   if (organization.length > 200) errors.organization = 'too_long';
+  const articleUrl = normalizeText(raw.articleUrl);
+  if (articleUrl.length > 2_000) errors.articleUrl = 'too_long';
+  else if (articleUrl) {
+    try { const url = new URL(articleUrl); if (url.protocol !== 'https:' && url.protocol !== 'http:') errors.articleUrl = 'invalid_url'; }
+    catch { errors.articleUrl = 'invalid_url'; }
+  }
 
   const consent = raw.consent;
   if (!consent || typeof consent !== 'object' || Array.isArray(consent)) errors.consent = 'required';
@@ -103,24 +143,25 @@ export function validateConsultationIntake(input: unknown, now = Date.now()): Va
     else if (now - formStartedAt > 24 * 60 * 60 * 1000) errors['antiSpam.formStartedAt'] = 'form_expired';
   }
 
-  const source = raw.source;
-  if (source !== undefined && source !== 'consulting_page' && source !== 'direct') errors.source = 'invalid_source';
   if (Object.keys(errors).length) return { ok: false, errors };
-
   return { ok: true, value: {
     schemaVersion: INTAKE_SCHEMA_VERSION,
     idempotencyKey,
-    stage: stage as IntakeStage,
+    source: source as IntakeSource,
+    inquiryType: inquiryType as InquiryType,
     situation,
     ...(desiredTakeaway ? { desiredTakeaway } : {}),
     ...(displayName ? { displayName } : {}),
     email,
     ...(organization ? { organization } : {}),
+    ...(articleUrl ? { articleUrl } : {}),
+    ...(stage ? { stage: stage as IntakeStage } : {}),
     consent: { privacyPolicy: true, noSensitiveData: true, version: CONSENT_VERSION },
     antiSpam: { turnstileToken, website: '', formStartedAt },
-    ...(source ? { source: source as 'consulting_page' | 'direct' } : {}),
   } };
 }
+
+export const validateConsultationIntake = validateContactIntake;
 
 export function addBusinessDays(date: Date, days: number): Date {
   const result = new Date(date);

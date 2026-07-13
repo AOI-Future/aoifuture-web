@@ -1,43 +1,79 @@
-# Consultation intake operations
+# Contact & Consultation OS intake operations
 
-## Purpose and architecture
+## Purpose and endpoints
 
-`/consulting/intake` sends a bounded six-question JSON request to `/api/consultation-intake`. The API validates origin, body size, schema, honeypot, minimum dwell and optional Turnstile before querying and creating a page in the configured Notion data source. No LLM, URL fetch, attachment, automatic acceptance decision, confirmation email, or free-text notification is used.
+The shared intake contract accepts contact requests from AOI Future and the related first-party sites:
 
-Notion is the MVP control plane: an exact `Idempotency Key` query prevents ordinary retry duplicates; `Email` + `Received At` (3/day) and global `Received At` (30/hour) queries provide low-volume rate controls. This is intentionally not a high-concurrency admission system.
+- `POST /api/contact-intake` — canonical shared endpoint.
+- `POST /api/consultation-intake` — compatible URL alias using the same handler and contract.
+- `/consulting/intake` — preserved detailed two-step, six-question Work Consultation UX.
+- `/contact` — simple AOI Future general contact form when the native intake feature is enabled.
+
+The API validates exact origin, JSON/body size, schema, honeypot, minimum dwell, optional Turnstile, idempotency and low-volume rate limits before creating a page in the configured Notion data source. It does not use an LLM, fetch submitted URLs, automatically accept work, send confirmation email, or copy free text to notifications.
+
+## Shared request contract (`2026-07-14`)
+
+Required fields are `schemaVersion`, `idempotencyKey`, `source`, `inquiryType`, `situation`, `email`, `consent`, and `antiSpam`. Optional fields are `desiredTakeaway`, `displayName`, `organization`, `articleUrl`, and `stage`.
+
+`stage` is required only when `source=aoifuture.com/consulting/intake` and `inquiryType=Work Consultation`; it remains optional for every other source/type combination. The `Idempotency-Key` header is optional for same-origin forms, but when supplied it must equal the body value.
+
+Allowed Source options:
+
+- `aoifuture.com/consulting/intake`
+- `aoifuture.com/contact`
+- `nozaki.com`
+- `wfhradio.tokyo`
+- `dispatch.aoifuture.com`
+- `direct`
+- `manual`
+
+Allowed Inquiry Type options:
+
+- `Work Consultation`
+- `Writing / Contribution`
+- `Interview / Speaking`
+- `Music / Creative`
+- `Article Question / Correction`
+- `AOI Future / NICTIA`
+- `General / Other`
+
+Default CORS origins are both apex and `www` variants of `aoifuture.com`, `nozaki.com`, and `wfhradio.tokyo`, plus `dispatch.aoifuture.com`. Override them with an exact comma-separated `CONSULTATION_ALLOWED_ORIGINS`; wildcard origins are not supported.
 
 ## Required Notion schema
 
-Configure `NOTION_CONSULTATION_DATA_SOURCE_ID`; never hardcode it or the token. The integration must have access only to the consultation data source. Property names are exact: `Name`, `Status`, `Priority`, `Owner`, `Next Action`, `Next Action Due`, `Stage`, `Email`, `Display Name`, `Organization`, `Situation`, `Desired Takeaway`, `Receipt ID`, `Idempotency Key`, `Source`, `Received At`, `Last Contact`, `Retention Review At`, `Consent Version`, `Notification Status`, `Security Flags`.
+Configure `NOTION_CONSULTATION_DATA_SOURCE_ID`; never hardcode the data source ID or token. The integration must have access only to this data source.
 
-Stage options: `Deciding where to start`, `Trial not adopted`, `Workflow review`, `Moving to operation`, `Aligning team decisions`, `Unclear / Other`. Defaults are Status `New`, Priority `P2`, Owner `Shugo`.
+Exact properties used by the writer are: `Name`, `Status`, `Priority`, `Owner`, `Next Action`, `Next Action Due`, `Stage`, `Email`, `Display Name`, `Organization`, `Situation`, `Desired Takeaway`, `Article URL`, `Receipt ID`, `Idempotency Key`, `Source`, `Inquiry Type`, `Received At`, `Last Contact`, `Retention Review At`, `Consent Version`, `Notification Status`, and `Security Flags`.
+
+The live data source also contains operational properties `Discord Thread`, `Last Instruction`, and `Decision`. The intake writer intentionally leaves those unset for the watcher/human triage workflow. Defaults written on creation are Status `New`, Priority `P2`, Owner `Shugo`, and Notification Status `Pending`. `Pending` is required so the existing Discord watcher can claim and alert on a new record.
+
+Stage options are `Deciding where to start`, `Trial not adopted`, `Workflow review`, `Moving to operation`, `Aligning team decisions`, and `Unclear / Other`. Stage is omitted from generic Notion rows when absent from the request.
+
+Notion remains the low-volume MVP control plane: exact `Idempotency Key` lookup prevents ordinary retry duplicates; `Email` + `Received At` (3/day) and global `Received At` (30/hour) queries provide basic rate controls. This is not a high-concurrency admission system.
+
+## Logging and notifications
+
+Structured logs contain only the receipt prefix, Source, Inquiry Type, optional Stage, outcome/status, and latency bucket. They must not contain name, email, organization, article URL, situation/free text, IP, user agent, tokens, or Notion response bodies.
+
+The existing model-free watcher consumes records with Notification Status `Pending`. Discord alerts contain operational metadata and a Notion link only—not contact details or submitted free text. The watcher owns later status transitions and the `Discord Thread`, `Last Instruction`, and `Decision` fields.
 
 ## Enablement checklist
 
 1. Create a separate preview data source with the exact schema and grant the preview integration access.
 2. Set preview origins and credentials; keep `CONSULTATION_NATIVE_FORM_ENABLED=false` in production.
 3. If Turnstile is used, set both keys and test hostname validation. Set `CONSULTATION_REQUIRE_TURNSTILE=true` only after both exist; this mode fails closed.
-4. Submit synthetic, non-PII text. Verify every property, the two-business-day due date, 90-day retention review, and Notion owner notification.
-5. Retry the same request/idempotency key and verify the same receipt with no additional page.
-6. Exercise a bad origin, honeypot, short dwell, rate limit and Notion outage. An outage must show no success and retain browser values.
-7. Review Vercel logs: only receipt prefix, stage, result/status and latency bucket may appear.
+4. Submit synthetic, non-PII examples through both API paths. Verify Source, Inquiry Type, optional Stage/Article URL, due date, retention review, and Notification Status `Pending`.
+5. Retry the same request/idempotency key and verify the same receipt with no additional page. Verify a mismatched header/body key returns `409`.
+6. Exercise an allowed cross-origin preflight, bad origin, honeypot, short dwell, rate limit, and Notion outage. An outage must show no success and retain browser values.
+7. Review Vercel logs for the PII-free field allowlist above. Confirm the watcher alerts and updates notification status without copying PII/free text.
 8. Obtain explicit approval, enable the production flag, deploy, run one synthetic canary, then delete it.
 
-## Daily operation and retention
+## Daily operation, retention, and incidents
 
-- Notion automation/filtered views are the owner notification mechanism. No consultation free text is sent to Discord.
-- Review `New` items each business day; update `Last Contact`, status and next action manually.
-- For unaccepted/inactive inquiries, delete at the `Retention Review At` review (90 days from last contact). If contact continues, update Last Contact and the review date.
+- Review `New` items each business day; update Last Contact, status, next action, Last Instruction, and Decision manually as appropriate.
+- For unaccepted/inactive inquiries, review and delete at `Retention Review At` (90 days from last contact). If contact continues, update Last Contact and the review date.
 - For accepted work, transfer only necessary facts to the client record and delete the original intake 30–90 days after contract start.
-- Deletion/access requests sent to `legal@aoifuture.com` are located by receipt ID or verified email and completed in Notion. Record completion without copying the consultation text.
+- Deletion/access requests sent to `legal@aoifuture.com` are located by receipt ID or verified email and completed in Notion without copying the inquiry text.
+- For an incident, set `CONSULTATION_NATIVE_FORM_ENABLED=false` and redeploy, rotate the Notion token if needed, preserve only minimal receipt/time/status evidence, and notify affected people or authorities when legally required.
 
-## Incident response
-
-1. Set `CONSULTATION_NATIVE_FORM_ENABLED=false` and redeploy; `/consulting` returns to the fallback URL and the API returns `503 intake_disabled`.
-2. Revoke/rotate the Notion token if exposure is suspected and review integration access plus Notion page history.
-3. Preserve only minimal receipt/time/status evidence needed for investigation; do not paste request bodies into tickets or chat.
-4. Notify affected people and authorities when legally required.
-
-## Rollback
-
-Keep `PUBLIC_CONSULTATION_FALLBACK_URL` valid. Disabling the flag is the primary rollback and does not delete existing Notion records. For code rollback, revert the intake commit after disabling; remove unused secrets only after confirming the fallback works.
+The primary rollback is the feature flag; it does not delete existing Notion records. Keep `PUBLIC_CONSULTATION_FALLBACK_URL` valid and remove unused secrets only after confirming the fallback works.

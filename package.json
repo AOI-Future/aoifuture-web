@@ -9,7 +9,7 @@
     "astro": "astro",
     "test:tools": "playwright test tests/tools.spec.ts",
     "test:intake": "vitest run tests/consultation-*.test.ts tests/notion-consultation.test.ts",
-    "test:intake:e2e": "playwright test tests/consultation-intake.spec.ts"
+    "test:intake:e2e": "playwright test tests/consultation-intake.spec.ts tests/contact-intake.spec.ts"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",
