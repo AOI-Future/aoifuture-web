@@ -21,6 +21,8 @@ describe('Notion shared contact store', () => {
     expect(body.properties['Inquiry Type'].select.name).toBe('Article Question / Correction');
     expect(body.properties['Article URL'].url).toBe('https://nozaki.com/article');
     expect(body.properties['Notification Status'].select.name).toBe('Pending');
+    expect(body.properties.Name.title[0].text.content).toBe('AOI-12345678 / Article Question / Correction');
+    expect(JSON.stringify(body.properties.Name)).not.toContain('Test Person');
     expect(body.properties.Stage).toBeUndefined();
     expect(body.properties.Owner.rich_text[0].text.content).toBe('Shugo');
     expect(body.properties['Next Action Due'].date.start).toBe('2026-07-21T10:00:00.000Z');

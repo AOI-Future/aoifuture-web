@@ -47,6 +47,7 @@ describe('shared contact intake schema', () => {
 
   it('validates article URL and rejects unknown fields', () => {
     expect(validateContactIntake({ ...valid(), articleUrl: 'javascript:alert(1)' }, now)).toMatchObject({ ok: false, errors: { articleUrl: 'invalid_url' } });
+    expect(validateContactIntake({ ...valid(), articleUrl: `https://example.com/${'x'.repeat(481)}` }, now)).toMatchObject({ ok: false, errors: { articleUrl: 'too_long' } });
     expect(validateContactIntake({ ...valid(), extra: true }, now)).toMatchObject({ ok: false, errors: { extra: 'unknown_field' } });
     expect(validateContactIntake({ ...valid(), consent: { ...valid().consent, extra: true } }, now)).toMatchObject({ ok: false, errors: { 'consent.extra': 'unknown_field' } });
   });

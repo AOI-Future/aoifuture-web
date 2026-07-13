@@ -112,7 +112,7 @@ export function validateContactIntake(input: unknown, now = Date.now()): Validat
   const organization = normalizeText(raw.organization);
   if (organization.length > 200) errors.organization = 'too_long';
   const articleUrl = normalizeText(raw.articleUrl);
-  if (articleUrl.length > 2_000) errors.articleUrl = 'too_long';
+  if (articleUrl.length > 500) errors.articleUrl = 'too_long';
   else if (articleUrl) {
     try { const url = new URL(articleUrl); if (url.protocol !== 'https:' && url.protocol !== 'http:') errors.articleUrl = 'invalid_url'; }
     catch { errors.articleUrl = 'invalid_url'; }

@@ -60,7 +60,7 @@ export class NotionConsultationStore {
     const due = addBusinessDays(receivedAt, 2);
     const retention = new Date(receivedAt.getTime() + 90 * 24 * 60 * 60 * 1000);
     const properties: Record<string, unknown> = {
-      Name: { title: [{ type: 'text', text: { content: `${receiptId} / ${input.displayName || 'ご相談者さま'}` } }] },
+      Name: { title: [{ type: 'text', text: { content: `${receiptId} / ${input.inquiryType}` } }] },
       Status: { select: { name: 'New' } }, Priority: { select: { name: 'P2' } }, Owner: rich('Shugo'),
       'Next Action': rich('内容を確認し、1〜2営業日以内に返信'), 'Next Action Due': { date: { start: due.toISOString() } },
       Email: { email: input.email.toLowerCase() },

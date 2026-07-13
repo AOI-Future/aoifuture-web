@@ -3,7 +3,7 @@ import { getConsultationConfig } from '../src/lib/consultation-config';
 import { handleContactIntake, handleConsultationIntake } from '../src/pages/api/consultation-intake';
 
 const config: any = { enabled: true, fallbackUrl: 'https://fallback.test', allowedOrigins: ['https://aoifuture.com'], allowedHostnames: ['aoifuture.com'], turnstileSiteKey: '', turnstileSecretKey: '', requireTurnstile: false, notionApiKey: 'k', notionDataSourceId: 'd', notionApiVersion: '2025-09-03' };
-const body = () => ({ schemaVersion: '2026-07-14', idempotencyKey: '123e4567-e89b-42d3-a456-426614174000', source: 'direct', inquiryType: 'General / Other', situation: 'A real workflow problem', email: 'test@example.com', consent: { privacyPolicy: true, noSensitiveData: true, version: '2026-07-14' }, antiSpam: { turnstileToken: '', website: '', formStartedAt: Date.parse('2026-07-14T11:59:50Z') } });
+const body = () => ({ schemaVersion: '2026-07-14', idempotencyKey: '123e4567-e89b-42d3-a456-426614174000', source: 'aoifuture.com/contact', inquiryType: 'General / Other', situation: 'A real workflow problem', email: 'test@example.com', consent: { privacyPolicy: true, noSensitiveData: true, version: '2026-07-14' }, antiSpam: { turnstileToken: '', website: '', formStartedAt: Date.parse('2026-07-14T11:59:50Z') } });
 const req = (payload: any = body(), headers: Record<string, string> = {}) => new Request('https://aoifuture.com/api/contact-intake', { method: 'POST', headers: { origin: 'https://aoifuture.com', 'content-type': 'application/json', ...headers }, body: JSON.stringify(payload) });
 const now = () => new Date('2026-07-14T12:00:00Z');
 
@@ -33,6 +33,11 @@ describe('shared contact API', () => {
     expect((await handleContactIntake(req(body(), { 'idempotency-key': 'different' }), { config, now })).status).toBe(409);
   });
 
+  it('rejects a source that does not match the public origin', async () => {
+    expect((await handleContactIntake(req({ ...body(), source: 'wfhradio.tokyo' }), { config, now })).status).toBe(400);
+    expect((await handleContactIntake(req({ ...body(), source: 'manual' }), { config, now })).status).toBe(400);
+  });
+
   it('returns created only after store create', async () => {
     const store: any = { findByIdempotencyKey: vi.fn(async () => null), enforceRateLimits: vi.fn(async () => ({ allowed: true })), create: vi.fn(async () => ({ receiptId: 'AOI-TEST0001', pageId: 'p' })) };
     const log = vi.spyOn(console, 'info').mockImplementation(() => undefined);
@@ -41,7 +46,7 @@ describe('shared contact API', () => {
     expect(await res.json()).toEqual({ ok: true, receiptId: 'AOI-TEST0001', duplicate: false });
     expect(store.create).toHaveBeenCalledOnce();
     const serializedLog = String(log.mock.calls[0][0]);
-    expect(serializedLog).toContain('"source":"direct"');
+    expect(serializedLog).toContain('"source":"aoifuture.com/contact"');
     expect(serializedLog).toContain('"inquiryType":"General / Other"');
     expect(serializedLog).not.toMatch(/Private Person|private@example.com|Private Org/);
     log.mockRestore();

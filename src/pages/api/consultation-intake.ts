@@ -15,6 +15,17 @@ const headers = (origin: string | null, allowed: boolean) => ({
 });
 const response = (status: number, body: Record<string, unknown>, origin: string | null, allowed: boolean) => new Response(JSON.stringify(body), { status, headers: headers(origin, allowed) });
 
+function sourceMatchesOrigin(source: string, origin: string): boolean {
+  let hostname = '';
+  try { hostname = new URL(origin).hostname; } catch { return false; }
+  if (hostname.endsWith('.vercel.app')) return source.startsWith('aoifuture.com/');
+  if (hostname === 'aoifuture.com' || hostname === 'www.aoifuture.com') return source.startsWith('aoifuture.com/');
+  if (hostname === 'nozaki.com' || hostname === 'www.nozaki.com') return source === 'nozaki.com';
+  if (hostname === 'wfhradio.tokyo' || hostname === 'www.wfhradio.tokyo') return source === 'wfhradio.tokyo';
+  if (hostname === 'dispatch.aoifuture.com') return source === 'dispatch.aoifuture.com';
+  return false;
+}
+
 export async function handleContactIntake(request: Request, deps: Dependencies = {}): Promise<Response> {
   const config = deps.config || getConsultationConfig();
   const origin = request.headers.get('origin');
@@ -37,6 +48,7 @@ export async function handleContactIntake(request: Request, deps: Dependencies =
   const now = (deps.now || (() => new Date()))();
   const validation = validateContactIntake(raw, now.getTime());
   if (!validation.ok) return response(400, { error: 'validation_failed', fields: validation.errors }, origin, true);
+  if (!sourceMatchesOrigin(validation.value.source, origin)) return response(400, { error: 'source_origin_mismatch' }, origin, true);
   const idempotencyHeader = request.headers.get('idempotency-key');
   if (idempotencyHeader && idempotencyHeader !== validation.value.idempotencyKey) return response(409, { error: 'idempotency_conflict' }, origin, true);
 
@@ -70,4 +82,6 @@ export async function handleContactIntake(request: Request, deps: Dependencies =
 }
 
 export const handleConsultationIntake = handleContactIntake;
+export const POST: APIRoute = ({ request }) => handleContactIntake(request);
+export const OPTIONS: APIRoute = ({ request }) => handleContactIntake(request);
 export const ALL: APIRoute = ({ request }) => handleContactIntake(request);
