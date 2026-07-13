@@ -31,13 +31,13 @@ const inquiryTypes = [
             </select>
           </label>
           <label>内容 <span>必須</span>
-            <textarea name="situation" maxlength="800" rows="8" required placeholder="固有名詞や機密情報は伏せて、概要をお書きください。"></textarea>
+            <textarea name="situation" maxlength="800" rows="8" required placeholder="連絡先欄のご自身の情報を除き、第三者の氏名や個人情報、機密情報は伏せて概要をお書きください。"></textarea>
           </label>
           <label>お名前・表示名 <small>任意</small><input name="displayName" maxlength="100" autocomplete="name" /></label>
           <label>返信先メールアドレス <span>必須</span><input name="email" type="email" maxlength="254" autocomplete="email" required /></label>
           <label>会社名・チーム名 <small>任意</small><input name="organization" maxlength="200" autocomplete="organization" /></label>
           <label>関連する記事URL <small>任意</small><input name="articleUrl" type="url" maxlength="500" inputmode="url" /></label>
-          <label class="check"><input name="noSensitiveData" type="checkbox" required /> 機密情報、パスワード、APIキー、要配慮個人情報を含めていません。</label>
+          <label class="check"><input name="noSensitiveData" type="checkbox" required /> 本文に第三者の個人情報、パスワード、APIキーなどの機密情報を含めていません。</label>
           <label class="check"><input name="privacyPolicy" type="checkbox" required /> <a href="/privacy#consulting" target="_blank">プライバシーポリシー</a>に同意します。</label>
           <label class="trap">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
           <div data-turnstile></div>

@@ -63,10 +63,10 @@ const lastUpdated = '2026-07-14';
       <!-- Intro -->
       <div class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-8">
         <p class="text-cyan-400/80 font-mono text-sm leading-relaxed mb-4">
-          AOI Future（以下「当方」）は、お客さまの個人情報の保護を重要な責務と考えています。本プライバシーポリシーは、当方が運営するウェブサイト（aoifuture.com、nictia.xyz）およびこれに付随するサービスにおける個人情報の取扱いについて定めるものです。
+          AOI Future（以下「当方」）は、お客さまの個人情報の保護を重要な責務と考えています。本ポリシーは、aoifuture.com、nozaki.com、wfhradio.tokyo、nictia.xyz、およびこれらに付随する問い合わせ窓口を対象とします。
         </p>
         <p class="text-cyan-400/60 font-mono text-sm leading-relaxed">
-          AOI Future ("we", "us") takes the protection of your personal information seriously. This Privacy Policy describes how we collect, use, and protect information through our websites (aoifuture.com, nictia.xyz) and associated services.
+          AOI Future ("we", "us") takes the protection of your personal information seriously. This policy covers aoifuture.com, nozaki.com, wfhradio.tokyo, nictia.xyz, and the contact channels associated with these sites.
         </p>
         <div class="mt-4 border-l-2 border-cyan-400/40 pl-4 py-1">
           <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
@@ -107,18 +107,14 @@ const lastUpdated = '2026-07-14';
           <div>
             <h3 class="text-cyan-400/80 text-sm mb-2">b. お客さまが提供する情報</h3>
             <ul class="space-y-1 ml-4">
-              <li>- 初回相談窓口で選択した現在地、仕事の状況、任意の相談の着地点</li>
+              <li>- お問い合わせの種類、本文、任意で入力された記事URL</li>
+              <li>- 詳細相談窓口で選択した現在地、仕事の状況、任意の相談の着地点</li>
               <li>- 返信先メールアドレス、お名前・表示名および所属（後二者は任意）</li>
               <li>- 受付番号、受付日時、同意したポリシーの版</li>
               <li>- コンサルティングセッションでの業務情報</li>
             </ul>
           </div>
-          <div>
-            <h3 class="text-cyan-400/80 text-sm mb-2">c. 端末に保存される情報</h3>
-            <ul class="space-y-1 ml-4">
-              <li>- チャットセッションID（localStorage、ブラウザ内のみ保存）</li>
-            </ul>
-          </div>
+
         </div>
       </section>
 
@@ -225,14 +221,14 @@ const lastUpdated = '2026-07-14';
       <!-- 07. Consulting -->
       <section id="consulting" class="glass p-6 md:p-8 max-w-4xl w-full border border-cyan-400/30 mb-6">
         <h2 class="text-cyan-400 font-mono text-lg mb-6 flex items-center gap-2">
-          <span class="text-cyan-400/40">07 //</span> コンサルティングサービスにおけるデータの取扱い
+          <span class="text-cyan-400/40">07 //</span> お問い合わせ・コンサルティングにおけるデータの取扱い
         </h2>
         <div class="space-y-4 text-cyan-400/70 font-mono text-xs leading-relaxed">
           <div>
             <h3 class="text-cyan-400/80 text-sm mb-2">お問い合わせ・初回相談窓口</h3>
             <p>AOI Futureおよび関連サイトの共通窓口に入力された情報は、お問い合わせ・相談内容の確認、返信、対応可否と次の進め方の検討、不正送信の防止に使用します。自由記述や記事URLは自動的なAI判定・受任判断・外部URLの取得には使用せず、野崎秀吾が内容を確認します。営業目的のメール配信には使用しません。</p>
             <p class="mt-2">受付データはVercelを経由してNotionに保管します。Cloudflare Turnstileが設定されている場合は、不正送信防止のため同サービスへ検証情報が送信されます。新着通知では受付番号、問い合わせ種別、処理期限、Notionへのリンクなどの運用メタデータのみをDiscordへ送り、氏名、メールアドレス、組織名、自由記述、記事URLは転送しません。</p>
-            <p class="mt-2">顧客名、個人名、契約内容、未公開の数値、パスワード・APIキーなど、社外に出せない情報は入力しないでください。</p>
+            <p class="mt-2">連絡先欄に入力するご自身の情報を除き、本文には顧客名や取引先担当者など第三者の氏名・個人情報を書かないでください。契約内容、未公開の数値、パスワード・APIキーなど、社外に出せない情報も入力しないでください。</p>
           </div>
           <div>
             <h3 class="text-cyan-400/80 text-sm mb-2">セッションでの業務情報</h3>
@@ -240,7 +236,7 @@ const lastUpdated = '2026-07-14';
           </div>
           <div>
             <h3 class="text-cyan-400/80 text-sm mb-2">ツール・成果物のデータ管理</h3>
-            <p>当方はツールと運用設計をお渡しする形でサービスを提供します。お客さまの業務データの管理・保管はお客さまの環境で行っていただきます。当方がお客さまのデータをお預かりすることはありません。</p>
+            <p>初回問い合わせで入力された情報を除き、継続支援で扱う業務データは原則としてお客さまの環境で管理していただきます。</p>
           </div>
         </div>
       </section>
@@ -264,8 +260,7 @@ const lastUpdated = '2026-07-14';
                 <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">アクセスログ</td><td class="pr-4">14ヶ月（GA4デフォルト）</td><td>Google</td></tr>
                 <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">お問い合わせ・初回相談（非アクティブ）</td><td class="pr-4">最終連絡から90日を目安に見直し・削除</td><td>Notion</td></tr>
                 <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">初回相談（契約へ移行）</td><td class="pr-4">必要事項を顧客記録へ移した後、契約開始から30〜90日以内に元の受付を削除</td><td>Notion</td></tr>
-                <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">チャット会話データ</td><td class="pr-4">30日</td><td>当方サーバー</td></tr>
-                <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">エスカレーション通知</td><td class="pr-4">90日</td><td>Discord</td></tr>
+
                 <tr class="border-b border-cyan-400/10"><td class="py-2 pr-4">セッション記録</td><td class="pr-4">契約終了後6ヶ月</td><td>当方管理環境</td></tr>
                 <tr><td class="py-2 pr-4">メールアドレス</td><td class="pr-4">お取引終了後1年</td><td>当方管理環境</td></tr>
               </tbody>
