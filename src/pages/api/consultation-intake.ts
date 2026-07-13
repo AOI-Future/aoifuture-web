@@ -2,7 +2,8 @@ import type { APIRoute } from 'astro';
 import { randomBytes } from 'node:crypto';
 import { getConsultationConfig, type ConsultationConfig } from '../../lib/consultation-config';
 import { validateContactIntake } from '../../lib/consultation-intake';
-import { NotionConsultationStore } from '../../lib/notion-consultation';
+import { contactPayloadFingerprint } from '../../lib/consultation-fingerprint';
+import { IdempotencyConflictError, NotionConsultationStore } from '../../lib/notion-consultation';
 import { verifyTurnstile } from '../../lib/consultation-turnstile';
 
 const MAX_BODY_BYTES = 16 * 1024;
@@ -60,21 +61,27 @@ export async function handleContactIntake(request: Request, deps: Dependencies =
   if (!config.notionApiKey || !config.notionDataSourceId) return response(503, { error: 'storage_not_configured' }, origin, true);
 
   const store = deps.store || new NotionConsultationStore({ apiKey: config.notionApiKey, dataSourceId: config.notionDataSourceId, apiVersion: config.notionApiVersion });
+  const payloadFingerprint = contactPayloadFingerprint(validation.value);
   const started = Date.now();
   try {
     const duplicate = await store.findByIdempotencyKey(validation.value.idempotencyKey);
-    if (duplicate) return response(200, { ok: true, receiptId: duplicate.receiptId, duplicate: true }, origin, true);
+    if (duplicate) {
+      if (duplicate.payloadFingerprint !== payloadFingerprint) return response(409, { error: 'idempotency_conflict' }, origin, true);
+      return response(200, { ok: true, receiptId: duplicate.receiptId, duplicate: true }, origin, true);
+    }
     const rate = await store.enforceRateLimits(validation.value.email.toLowerCase(), now);
     if (!rate.allowed) return response(429, { error: 'rate_limited', retryAfter: rate.reason === 'email_daily_limit' ? 86400 : 3600 }, origin, true);
     const receiptId = (deps.receipt || (() => `AOI-${randomBytes(4).toString('hex').toUpperCase()}`))();
     const stored = await store.create(validation.value, receiptId, now);
     console.info(JSON.stringify({ event: 'contact_intake', receipt: stored.receiptId.slice(0, 12), source: validation.value.source, inquiryType: validation.value.inquiryType, ...(validation.value.stage ? { stage: validation.value.stage } : {}), result: stored.receiptId === receiptId ? 'created' : 'duplicate', status: stored.receiptId === receiptId ? 201 : 200, latency: Date.now() - started < 1000 ? 'lt1s' : Date.now() - started < 5000 ? '1-5s' : 'gte5s' }));
     return response(stored.receiptId === receiptId ? 201 : 200, { ok: true, receiptId: stored.receiptId, duplicate: stored.receiptId !== receiptId }, origin, true);
-  } catch {
+  } catch (error) {
+    if (error instanceof IdempotencyConflictError) return response(409, { error: 'idempotency_conflict' }, origin, true);
     // A timed-out create may have succeeded. One durable lookup resolves a safe retry.
     try {
       const stored = await store.findByIdempotencyKey(validation.value.idempotencyKey);
-      if (stored) return response(200, { ok: true, receiptId: stored.receiptId, duplicate: true }, origin, true);
+      if (stored?.payloadFingerprint === payloadFingerprint) return response(200, { ok: true, receiptId: stored.receiptId, duplicate: true }, origin, true);
+      if (stored) return response(409, { error: 'idempotency_conflict' }, origin, true);
     } catch { /* fail closed */ }
     console.warn(JSON.stringify({ event: 'contact_intake', source: validation.value.source, inquiryType: validation.value.inquiryType, ...(validation.value.stage ? { stage: validation.value.stage } : {}), result: 'storage_unavailable', status: 503, latency: Date.now() - started < 1000 ? 'lt1s' : Date.now() - started < 5000 ? '1-5s' : 'gte5s' }));
     return response(503, { error: 'storage_unavailable' }, origin, true);

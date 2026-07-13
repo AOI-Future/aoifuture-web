@@ -1,13 +1,25 @@
 import { addBusinessDays, notionStageLabels, type ConsultationIntake } from './consultation-intake';
+import { contactPayloadFingerprint } from './consultation-fingerprint';
 
 export type NotionConfig = { apiKey: string; dataSourceId: string; apiVersion?: string };
-export type StoredConsultation = { receiptId: string; pageId: string; url?: string };
+export type StoredConsultation = { receiptId: string; pageId: string; url?: string; payloadFingerprint?: string; createdTime?: string };
 
-type NotionPage = { id: string; url?: string; properties?: Record<string, { rich_text?: Array<{ plain_text?: string }> }> };
+type NotionPage = {
+  id: string;
+  url?: string;
+  created_time?: string;
+  properties?: Record<string, { rich_text?: Array<{ plain_text?: string }> }>;
+};
+
+export class IdempotencyConflictError extends Error {
+  constructor() { super('idempotency_conflict'); this.name = 'IdempotencyConflictError'; }
+}
 
 export class NotionConsultationStore {
   private readonly base = 'https://api.notion.com/v1';
   constructor(private config: NotionConfig, private fetcher: typeof fetch = fetch) {}
+
+  payloadFingerprint(input: ConsultationIntake): string { return contactPayloadFingerprint(input); }
 
   private headers() { return { Authorization: `Bearer ${this.config.apiKey}`, 'Notion-Version': this.config.apiVersion || '2025-09-03', 'Content-Type': 'application/json' }; }
 
@@ -30,12 +42,27 @@ export class NotionConsultationStore {
     return data.results || [];
   }
 
-  async findByIdempotencyKey(key: string): Promise<StoredConsultation | null> {
-    const pages = await this.query({ property: 'Idempotency Key', rich_text: { equals: key } }, 1);
-    const page = pages[0];
-    if (!page) return null;
+  private storedFromPage(page: NotionPage): StoredConsultation | null {
     const receiptId = page.properties?.['Receipt ID']?.rich_text?.map(x => x.plain_text || '').join('') || '';
-    return receiptId ? { receiptId, pageId: page.id, url: page.url } : null;
+    if (!receiptId) return null;
+    const payloadFingerprint = page.properties?.['Payload Fingerprint']?.rich_text?.map(x => x.plain_text || '').join('') || undefined;
+    return { receiptId, pageId: page.id, url: page.url, payloadFingerprint, createdTime: page.created_time };
+  }
+
+  private canonical(pages: StoredConsultation[]): StoredConsultation | null {
+    return [...pages].sort((a, b) => {
+      const byTime = (a.createdTime || '9999').localeCompare(b.createdTime || '9999');
+      return byTime || a.pageId.localeCompare(b.pageId);
+    })[0] || null;
+  }
+
+  private async findAllByIdempotencyKey(key: string): Promise<StoredConsultation[]> {
+    const pages = await this.query({ property: 'Idempotency Key', rich_text: { equals: key } }, 100);
+    return pages.map(page => this.storedFromPage(page)).filter((page): page is StoredConsultation => page !== null);
+  }
+
+  async findByIdempotencyKey(key: string): Promise<StoredConsultation | null> {
+    return this.canonical(await this.findAllByIdempotencyKey(key));
   }
 
   async enforceRateLimits(email: string, now: Date, limits = { emailPerDay: 3, globalPerHour: 30 }): Promise<{ allowed: boolean; reason?: string }> {
@@ -54,8 +81,12 @@ export class NotionConsultationStore {
   }
 
   async create(input: ConsultationIntake, receiptId: string, receivedAt: Date): Promise<StoredConsultation> {
+    const payloadFingerprint = this.payloadFingerprint(input);
     const existing = await this.findByIdempotencyKey(input.idempotencyKey);
-    if (existing) return existing;
+    if (existing) {
+      if (existing.payloadFingerprint !== payloadFingerprint) throw new IdempotencyConflictError();
+      return existing;
+    }
     const rich = (content: string) => ({ rich_text: [{ type: 'text', text: { content } }] });
     const due = addBusinessDays(receivedAt, 2);
     const retention = new Date(receivedAt.getTime() + 90 * 24 * 60 * 60 * 1000);
@@ -65,6 +96,7 @@ export class NotionConsultationStore {
       'Next Action': rich('内容を確認し、1〜2営業日以内に返信'), 'Next Action Due': { date: { start: due.toISOString() } },
       Email: { email: input.email.toLowerCase() },
       Situation: rich(input.situation), 'Receipt ID': rich(receiptId), 'Idempotency Key': rich(input.idempotencyKey),
+      'Payload Fingerprint': rich(payloadFingerprint),
       Source: { select: { name: input.source } }, 'Inquiry Type': { select: { name: input.inquiryType } }, 'Received At': { date: { start: receivedAt.toISOString() } },
       'Last Contact': { date: { start: receivedAt.toISOString() } }, 'Retention Review At': { date: { start: retention.toISOString() } },
       'Consent Version': rich(input.consent.version), 'Notification Status': { select: { name: 'Pending' } },
@@ -77,6 +109,20 @@ export class NotionConsultationStore {
     if (input.articleUrl) properties['Article URL'] = { url: input.articleUrl };
     const response = await this.request('/pages', { method: 'POST', body: JSON.stringify({ parent: { type: 'data_source_id', data_source_id: this.config.dataSourceId }, properties }) });
     const page = await response.json() as NotionPage;
-    return { receiptId, pageId: page.id, url: page.url };
+    if (!page.id) throw new Error('notion_rejected');
+    const created: StoredConsultation = { receiptId, pageId: page.id, url: page.url, payloadFingerprint, createdTime: page.created_time || receivedAt.toISOString() };
+
+    // Notion has no unique constraint. Re-read after create and converge racing writers on
+    // the earliest page; trash only the page created by this request when it lost the race.
+    const candidates = await this.findAllByIdempotencyKey(input.idempotencyKey);
+    if (!candidates.some(candidate => candidate.pageId === created.pageId)) candidates.push(created);
+    const canonical = this.canonical(candidates) || created;
+    if (canonical.pageId !== created.pageId) {
+      try { await this.request(`/pages/${created.pageId}`, { method: 'PATCH', body: JSON.stringify({ in_trash: true }) }); }
+      catch { /* best-effort reconciliation; the canonical receipt remains authoritative */ }
+      if (canonical.payloadFingerprint !== payloadFingerprint) throw new IdempotencyConflictError();
+      return canonical;
+    }
+    return created;
   }
 }

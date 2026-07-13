@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { getConsultationConfig } from '../src/lib/consultation-config';
+import { contactPayloadFingerprint } from '../src/lib/consultation-fingerprint';
 import { handleContactIntake, handleConsultationIntake } from '../src/pages/api/consultation-intake';
 
 const config: any = { enabled: true, fallbackUrl: 'https://fallback.test', allowedOrigins: ['https://aoifuture.com'], allowedHostnames: ['aoifuture.com'], turnstileSiteKey: '', turnstileSecretKey: '', requireTurnstile: false, notionApiKey: 'k', notionDataSourceId: 'd', notionApiVersion: '2025-09-03' };
@@ -53,11 +54,27 @@ describe('shared contact API', () => {
   });
 
   it('returns durable duplicate and skips rate/create', async () => {
-    const store: any = { findByIdempotencyKey: vi.fn(async () => ({ receiptId: 'AOI-OLD', pageId: 'p' })), enforceRateLimits: vi.fn(), create: vi.fn() };
+    const store: any = { findByIdempotencyKey: vi.fn(async () => ({ receiptId: 'AOI-OLD', pageId: 'p', payloadFingerprint: contactPayloadFingerprint(body() as any) })), enforceRateLimits: vi.fn(), create: vi.fn() };
     const res = await handleContactIntake(req(), { config, store, now });
     expect(res.status).toBe(200);
     expect(await res.json()).toMatchObject({ duplicate: true, receiptId: 'AOI-OLD' });
     expect(store.create).not.toHaveBeenCalled();
+  });
+
+  it('rejects the same idempotency key with a changed normalized payload', async () => {
+    const store: any = { findByIdempotencyKey: vi.fn(async () => ({ receiptId: 'AOI-OLD', pageId: 'p', payloadFingerprint: 'different' })), enforceRateLimits: vi.fn(), create: vi.fn() };
+    const res = await handleContactIntake(req({ ...body(), situation: 'Changed business payload' }), { config, store, now });
+    expect(res.status).toBe(409);
+    expect(await res.json()).toEqual({ error: 'idempotency_conflict' });
+    expect(store.enforceRateLimits).not.toHaveBeenCalled();
+    expect(store.create).not.toHaveBeenCalled();
+  });
+
+  it('treats a legacy duplicate without a fingerprint as a conflict', async () => {
+    const store: any = { findByIdempotencyKey: vi.fn(async () => ({ receiptId: 'AOI-OLD', pageId: 'p' })), enforceRateLimits: vi.fn(), create: vi.fn() };
+    const res = await handleContactIntake(req(), { config, store, now });
+    expect(res.status).toBe(409);
+    expect(await res.json()).toEqual({ error: 'idempotency_conflict' });
   });
 
   it('returns 429 and 503 without a success receipt', async () => {

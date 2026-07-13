@@ -21,6 +21,7 @@ describe('Notion shared contact store', () => {
     expect(body.properties['Inquiry Type'].select.name).toBe('Article Question / Correction');
     expect(body.properties['Article URL'].url).toBe('https://nozaki.com/article');
     expect(body.properties['Notification Status'].select.name).toBe('Pending');
+    expect(body.properties['Payload Fingerprint'].rich_text[0].text.content).toMatch(/^[0-9a-f]{64}$/);
     expect(body.properties.Name.title[0].text.content).toBe('AOI-12345678 / Article Question / Correction');
     expect(JSON.stringify(body.properties.Name)).not.toContain('Test Person');
     expect(body.properties.Stage).toBeUndefined();
@@ -43,11 +44,41 @@ describe('Notion shared contact store', () => {
     expect(JSON.parse(String(calls[0].body)).properties.Stage.select.name).toBe('Workflow review');
   });
 
-  it('returns existing receipt without create', async () => {
-    const fetcher = vi.fn(async () => new Response(JSON.stringify({ results: [{ id: 'p', url: 'u', properties: { 'Receipt ID': { rich_text: [{ plain_text: 'AOI-OLD' }] } } }] }))) as unknown as typeof fetch;
+  it('returns existing receipt without create when the semantic payload matches', async () => {
+    let fingerprint = '';
+    const fetcher = vi.fn(async () => new Response(JSON.stringify({ results: [{ id: 'p', url: 'u', created_time: '2026-07-14T00:00:00Z', properties: { 'Receipt ID': { rich_text: [{ plain_text: 'AOI-OLD' }] }, 'Payload Fingerprint': { rich_text: [{ plain_text: fingerprint }] } } }] }))) as unknown as typeof fetch;
     const store = new NotionConsultationStore({ apiKey: 'k', dataSourceId: 'ds' }, fetcher);
+    fingerprint = store.payloadFingerprint(input);
     await expect(store.create(input, 'AOI-NEW', new Date())).resolves.toMatchObject({ receiptId: 'AOI-OLD' });
     expect(fetcher).toHaveBeenCalledOnce();
+  });
+
+  it('reconciles a concurrent duplicate to the deterministic earliest page', async () => {
+    let queryCount = 0;
+    let fingerprint = '';
+    const fetcher = vi.fn(async (url: string | URL | Request, init?: RequestInit) => {
+      const path = String(url);
+      if (path.includes('/query')) {
+        queryCount++;
+        if (queryCount === 1) return new Response(JSON.stringify({ results: [] }));
+        return new Response(JSON.stringify({ results: [
+          { id: 'page-new', url: 'new', created_time: '2026-07-14T12:00:01Z', properties: { 'Receipt ID': { rich_text: [{ plain_text: 'AOI-NEW' }] }, 'Payload Fingerprint': { rich_text: [{ plain_text: fingerprint }] } } },
+          { id: 'page-canonical', url: 'canonical', created_time: '2026-07-14T12:00:00Z', properties: { 'Receipt ID': { rich_text: [{ plain_text: 'AOI-CANONICAL' }] }, 'Payload Fingerprint': { rich_text: [{ plain_text: fingerprint }] } } },
+        ] }));
+      }
+      if (path.endsWith('/pages')) return new Response(JSON.stringify({ id: 'page-new', url: 'new', created_time: '2026-07-14T12:00:01Z' }));
+      if (path.endsWith('/pages/page-new')) return new Response(JSON.stringify({ id: 'page-new', in_trash: true }));
+      throw new Error(`unexpected request: ${path} ${init?.method}`);
+    }) as unknown as typeof fetch;
+    const store = new NotionConsultationStore({ apiKey: 'k', dataSourceId: 'ds' }, fetcher);
+    fingerprint = store.payloadFingerprint(input);
+
+    await expect(store.create(input, 'AOI-NEW', new Date('2026-07-14T12:00:01Z'))).resolves.toMatchObject({
+      receiptId: 'AOI-CANONICAL', pageId: 'page-canonical', payloadFingerprint: fingerprint,
+    });
+    const trashCall = fetcher.mock.calls.find(([url]) => String(url).endsWith('/pages/page-new'));
+    expect(trashCall).toBeDefined();
+    expect(JSON.parse(String(trashCall?.[1]?.body))).toEqual({ in_trash: true });
   });
 
   it('queries email/day and global/hour limits', async () => {
