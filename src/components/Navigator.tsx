@@ -365,11 +365,19 @@ function AboutPanel() {
 
       <section>
         <SectionHeading accent="cyan">CONTACT</SectionHeading>
-        <div className="flex font-mono text-sm">
-          <span className="text-cyan-400/40 w-28 shrink-0">EMAIL:</span>
-          <a href="mailto:s@aoifuture.com" className="text-cyan-400 hover:glow-cyan transition-all">
-            s@aoifuture.com
-          </a>
+        <div className="space-y-2 font-mono text-sm">
+          <div className="flex">
+            <span className="text-cyan-400/40 w-28 shrink-0">FORM:</span>
+            <a href="/contact" className="text-cyan-400 hover:glow-cyan transition-all">
+              GENERAL INQUIRY
+            </a>
+          </div>
+          <div className="flex">
+            <span className="text-cyan-400/40 w-28 shrink-0">EMAIL:</span>
+            <a href="mailto:s@aoifuture.com" className="text-cyan-400 hover:glow-cyan transition-all">
+              s@aoifuture.com
+            </a>
+          </div>
         </div>
       </section>
     </div>
