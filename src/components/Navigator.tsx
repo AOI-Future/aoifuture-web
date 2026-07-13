@@ -212,10 +212,10 @@ function DispatchPanel() {
       </p>
       <div className="font-mono text-xs text-amber-400/40 space-y-1 border-l border-amber-400/20 pl-4">
         <p>LANGUAGE: EN</p>
-        <p>STATUS: LAUNCHING</p>
+        <p>STATUS: PUBLISHING</p>
       </div>
       <ExternalLink accent="amber" href="https://dispatch.aoifuture.com/">
-        READ DISPATCH
+        READ FIELD NOTES
       </ExternalLink>
     </div>
   );
@@ -263,13 +263,13 @@ function CommissionPanel() {
         <h2 className="text-3xl md:text-5xl font-mono text-cyan-400 tracking-widest glow-cyan">
           WORK.COMMISSION
         </h2>
-        <p className="mt-3 text-cyan-400/60 font-mono text-sm">AI Consulting / Creative Direction</p>
+        <p className="mt-3 text-cyan-400/60 font-mono text-sm">AI Systems Design / Creative Direction</p>
       </div>
       <p className="text-cyan-400/80 font-sans text-sm md:text-base leading-relaxed">
-        AI活用コンサルティングとクリエイティブディレクションのご依頼を受け付けています。
-        生成AIの導入設計から、人間とAIの協働による制作まで。
+        AIを含む仕事の流れを、役割・判断・引き継ぎ・観測まで含めて設計します。
+        導入前の整理から、小さな実装と運用の立ち上げ、クリエイティブ制作まで。
       </p>
-      <LaunchLink accent="cyan" href="/consulting">OPEN CHANNEL</LaunchLink>
+      <LaunchLink accent="cyan" href="/consulting">DISCUSS A WORKFLOW</LaunchLink>
     </div>
   );
 }
@@ -289,10 +289,18 @@ function AboutPanel() {
 
       <section>
         <SectionHeading accent="cyan">ABOUT</SectionHeading>
-        <p className="text-cyan-400/80 font-sans text-sm md:text-base leading-relaxed">
-          AOIFUTUREは、人間とAIの創造性が交差する地点で
-          新しいデジタルリアリティを構築するクリエイティブレーベルです。
-        </p>
+        <div className="space-y-3 text-cyan-400/80 font-sans text-sm md:text-base leading-relaxed">
+          <p>
+            AOIFUTUREは、作品と仕事の仕組みをつくるAI-native solo studioです。
+            自ら運用するシステムを通して、人間とAIの協働を試し続ける
+            living laboratoryでもあります。
+          </p>
+          <p>
+            NICTIAは、その中心にあるアーティストプロジェクトの一つです。
+            リサーチ、編集、制作、公開、運用。その流れのどこを人が判断し、
+            どこをAIに渡し、どう観測して止めるかまで設計します。
+          </p>
+        </div>
       </section>
 
       <section>
@@ -308,18 +316,41 @@ function AboutPanel() {
           </div>
           <div className="flex">
             <span className="text-cyan-400/40 w-28 shrink-0">PRESENTED BY:</span>
-            <span className="text-cyan-400/80">
-              <a
-                href="https://nozaki.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-cyan-400 hover:glow-cyan transition-all"
-              >
-                Shugo Nozaki ↗
-              </a>
-              <span className="text-cyan-400/40 ml-2">(主宰)</span>
-            </span>
+            <div className="text-cyan-400/80">
+              <div>
+                <a
+                  href="https://nozaki.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-cyan-400 hover:glow-cyan transition-all"
+                >
+                  Shugo Nozaki ↗
+                </a>
+                <span className="text-cyan-400/40 ml-2">(主宰)</span>
+              </div>
+              <div className="mt-1 text-xs text-cyan-400/60">
+                Content Syncretist / Generative Systems Artist
+              </div>
+              <div className="mt-1 text-xs text-cyan-400/40">
+                AI Systems Designer and Agent Operational Readiness Advisor
+              </div>
+            </div>
           </div>
+        </div>
+      </section>
+
+      <section>
+        <SectionHeading accent="cyan">FOLLOW THE WORK</SectionHeading>
+        <p className="mb-4 text-cyan-400/70 font-sans text-sm leading-relaxed">
+          公開中のフィールドノートと、仕事の仕組みを一緒に考える窓口へ。
+        </p>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <ExternalLink accent="amber" href="https://dispatch.aoifuture.com/">
+            READ DISPATCH
+          </ExternalLink>
+          <LaunchLink accent="cyan" href="/consulting">
+            DISCUSS A WORKFLOW
+          </LaunchLink>
         </div>
       </section>
 

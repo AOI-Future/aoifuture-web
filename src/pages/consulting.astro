@@ -8,7 +8,7 @@ import Analytics from '@vercel/analytics/astro';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="AIと仕事する設計を、一緒に。実装伴走・月次ブリーフィング・スポット相談。野崎秀吾（Shugo Nozaki）のAI活用支援サービス。" />
+    <meta name="description" content="AIを含む仕事の仕組みを、一緒に。業務とAIの役割、権限、人による承認、ログ、停止・復旧条件を整理し、小さな実装と運用へつなぐ野崎秀吾のAI活用支援サービス。" />
     <meta name="robots" content="noindex, nofollow" />
     <meta name="robots" content="noai, noimageai" />
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
@@ -44,7 +44,7 @@ import Analytics from '@vercel/analytics/astro';
         "name": "Shugo Nozaki",
         "alternateName": "野崎秀吾"
       },
-      "description": "AI実装伴走・月次AIブリーフィング・スポット相談。AIと仕事する設計を一緒に進めます。",
+      "description": "業務とAIの役割、権限、人による承認、ログ、停止・復旧条件を整理し、小さな実装と運用へつなぐAI活用支援。",
       "areaServed": "JP",
       "availableLanguage": ["ja", "en"]
     }
@@ -243,6 +243,15 @@ import Analytics from '@vercel/analytics/astro';
             </h3>
             <p class="text-sm text-[var(--color-text-muted)] leading-relaxed pl-0 md:pl-4">
               プロンプト設計、記憶の設計、タスクの渡し方を見直しながら、どこにズレが生まれているかを確認します。
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-base font-medium text-[var(--color-brand)] mb-3">
+              AIエージェントを実運用へ近づけたいが、未確認条件がわからない
+            </h3>
+            <p class="text-sm text-[var(--color-text-muted)] leading-relaxed pl-0 md:pl-4">
+              目的と担当範囲、利用権限、入力・出力、ログ、人による承認、停止・復旧条件を確認し、次に検証すべき点を整理します。
             </p>
           </div>
 
@@ -702,7 +711,7 @@ import Analytics from '@vercel/analytics/astro';
             <div>
               <h4 class="font-medium text-[var(--color-text-muted)] mb-3">免責事項</h4>
               <p class="mb-2">
-                本サービスは、野崎秀吾が個人として提供するものです。いかなる企業・団体とも関係ありません。
+                本サービスは、AOI Futureを主宰する野崎秀吾が個人として提供するものです。勤務先その他の企業・団体が提供するサービスではありません。
               </p>
               <p class="mb-2">
                 本サービスは、業務改善・AI活用に関する相談および情報提供を行うものです。特定の成果（売上向上・コスト削減・業務時間の短縮等）を保証するものではありません。セッションで提案した内容の実施および結果については、ご自身の判断と責任のもとで行ってください。
