@@ -1,0 +1,7 @@
+import { describe, expect, it, vi } from 'vitest';
+import { verifyTurnstile } from '../src/lib/consultation-turnstile';
+describe('turnstile',()=>{
+ it('is optional without key and fails closed when required',async()=>{await expect(verifyTurnstile('',undefined,{required:false,allowedHostnames:[]})).resolves.toEqual({ok:true});await expect(verifyTurnstile('',undefined,{required:true,allowedHostnames:[]})).resolves.toMatchObject({ok:false});});
+ it('validates response and hostname',async()=>{const fetcher=vi.fn(async()=>new Response(JSON.stringify({success:true,hostname:'aoifuture.com'}),{status:200})) as unknown as typeof fetch;await expect(verifyTurnstile('token',undefined,{secretKey:'secret',required:true,allowedHostnames:['aoifuture.com']},fetcher)).resolves.toEqual({ok:true});expect(fetcher).toHaveBeenCalledOnce();});
+ it('rejects invalid hostname and network failure',async()=>{const bad=vi.fn(async()=>new Response(JSON.stringify({success:true,hostname:'evil.test'}))) as unknown as typeof fetch;await expect(verifyTurnstile('x',undefined,{secretKey:'s',required:true,allowedHostnames:['aoifuture.com']},bad)).resolves.toMatchObject({ok:false});const down=vi.fn(async()=>{throw new Error('down')}) as unknown as typeof fetch;await expect(verifyTurnstile('x',undefined,{secretKey:'s',required:true,allowedHostnames:[]},down)).resolves.toEqual({ok:false,reason:'turnstile_unavailable'});});
+});

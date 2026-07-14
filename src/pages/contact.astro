@@ -1,0 +1,113 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getConsultationConfig } from '../lib/consultation-config';
+const config = getConsultationConfig();
+const inquiryTypes = [
+  ['Work Consultation', '仕事の相談'],
+  ['Writing / Contribution', '執筆・寄稿'],
+  ['Interview / Speaking', '取材・登壇'],
+  ['Music / Creative', '音楽・創作'],
+  ['Article Question / Correction', '記事への質問・訂正'],
+  ['AOI Future / NICTIA', 'AOI Future・NICTIAについて'],
+  ['General / Other', 'その他'],
+];
+---
+<Layout title="Contact | AOI Future" description="AOI Futureへの仕事、取材、執筆、音楽・創作、記事についてのお問い合わせ。" canonical="https://aoifuture.com/contact">
+  {config.turnstileSiteKey && <script slot="head" src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+  <main class="contact-shell">
+    <a class="back" href="/">← AOI Future</a>
+    <section class="contact-card">
+      <p class="eyebrow">CONTACT</p>
+      <h1>お問い合わせ</h1>
+      <p>仕事の相談、執筆・寄稿、取材・登壇、音楽・創作、記事への質問や訂正などを受け付けています。</p>
+      {!config.enabled ? (
+        <div class="notice"><p>現在、フォームは準備中です。仕事の仕組みに関する詳しい相談は、既存の相談窓口をご利用ください。</p><a href={config.fallbackUrl}>相談窓口を開く</a></div>
+      ) : (
+        <form id="contact-form" data-turnstile-site-key={config.turnstileSiteKey}>
+          <label>お問い合わせの種類 <span>必須</span>
+            <select name="inquiryType" required>
+              <option value="" selected disabled>選んでください</option>
+              {inquiryTypes.map(([value, label]) => <option value={value}>{label}</option>)}
+            </select>
+          </label>
+          <label>内容 <span>必須</span>
+            <textarea name="situation" maxlength="800" rows="8" required placeholder="連絡先欄のご自身の情報を除き、第三者の氏名や個人情報、機密情報は伏せて概要をお書きください。"></textarea>
+          </label>
+          <label>お名前・表示名 <small>任意</small><input name="displayName" maxlength="100" autocomplete="name" /></label>
+          <label>返信先メールアドレス <span>必須</span><input name="email" type="email" maxlength="254" autocomplete="email" required /></label>
+          <label>会社名・チーム名 <small>任意</small><input name="organization" maxlength="200" autocomplete="organization" /></label>
+          <label>関連する記事URL <small>任意</small><input name="articleUrl" type="url" maxlength="500" inputmode="url" /></label>
+          <label class="check"><input name="noSensitiveData" type="checkbox" required /> 本文に第三者の個人情報、パスワード、APIキーなどの機密情報を含めていません。</label>
+          <label class="check"><input name="privacyPolicy" type="checkbox" required /> <a href="/privacy#consulting" target="_blank">プライバシーポリシー</a>に同意します。</label>
+          <label class="trap">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
+          <div data-turnstile></div>
+          <button type="submit">送信する</button>
+          <p data-result role="status" aria-live="polite"></p>
+        </form>
+      )}
+      <p class="work-link">AIを含む仕事の仕組みについて詳しく整理したい方は、<a href="/consulting/intake">仕事相談専用の6問フォーム</a>をご利用ください。</p>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .contact-shell{min-height:100vh;padding:5rem 1.25rem;background:#000;color:rgba(0,255,255,.78);font-family:var(--font-sans)}
+  .back,.contact-card a{color:#00ffff}.back{display:block;max-width:760px;margin:0 auto 1rem;font-family:var(--font-mono);font-size:.8rem}
+  .contact-card{max-width:760px;margin:auto;padding:clamp(1.25rem,4vw,3rem);border:1px solid rgba(0,255,255,.25);border-radius:20px;background:rgba(4,22,28,.65)}
+  .eyebrow{font-family:var(--font-mono);letter-spacing:.2em;font-size:.75rem}.contact-card h1{margin:.4rem 0 1rem;color:#fff;font-size:clamp(2rem,6vw,3.5rem)}
+  form{display:grid;gap:1.25rem;margin-top:2rem}label{display:grid;gap:.45rem;color:#fff;font-weight:600}label span{color:#00ffff;font-size:.75rem}label small{color:rgba(0,255,255,.6)}
+  input,select,textarea{width:100%;border:1px solid rgba(0,255,255,.3);border-radius:8px;background:#020a0d;color:#fff;padding:.85rem;font:inherit}textarea{resize:vertical}
+  .check{grid-template-columns:auto 1fr;align-items:start;font-size:.9rem;font-weight:400}.check input{width:auto;margin-top:.25rem}.trap{position:absolute;left:-9999px}
+  button{justify-self:start;border:1px solid #00ffff;border-radius:999px;background:#00ffff;color:#001014;padding:.8rem 1.5rem;font-weight:700;cursor:pointer}button:disabled{opacity:.5}
+  [data-result]{min-height:1.5em}.notice{margin:2rem 0;padding:1rem;border-left:3px solid #00ffff;background:rgba(0,255,255,.06)}.work-link{margin-top:2rem;font-size:.9rem}
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('#contact-form');
+  if (form) {
+    const startedAt = Date.now();
+    let idempotencyKey = crypto.randomUUID();
+    let submissionAttempted = false;
+    const resetIdempotencyAfterEdit = () => {
+      if (submissionAttempted) {
+        idempotencyKey = crypto.randomUUID();
+        submissionAttempted = false;
+      }
+    };
+    form.addEventListener('input', resetIdempotencyAfterEdit);
+    form.addEventListener('change', resetIdempotencyAfterEdit);
+    let turnstileToken = '';
+    const sitekey = form.dataset.turnstileSiteKey;
+    if (sitekey) {
+      const mount = () => {
+        const widget = form.querySelector('[data-turnstile]');
+        const turnstile = (window as Window & { turnstile?: { render: (element: Element, options: Record<string, unknown>) => string } }).turnstile;
+        if (widget && turnstile) turnstile.render(widget, { sitekey, callback: (token: string) => turnstileToken = token, 'expired-callback': () => turnstileToken = '' });
+        else setTimeout(mount, 100);
+      };
+      mount();
+    }
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const result = form.querySelector<HTMLElement>('[data-result]')!;
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+      button.disabled = true;
+      result.textContent = '送信しています…';
+      const text = (name: string) => (data.get(name)?.toString() || '').trim();
+      const payload = {
+        schemaVersion: '2026-07-14', idempotencyKey, source: 'aoifuture.com/contact', inquiryType: text('inquiryType'), situation: text('situation'), displayName: text('displayName'), email: text('email'), organization: text('organization'), articleUrl: text('articleUrl'),
+        consent: { privacyPolicy: data.get('privacyPolicy') === 'on', noSensitiveData: data.get('noSensitiveData') === 'on', version: '2026-07-14' }, antiSpam: { turnstileToken, website: text('website'), formStartedAt: startedAt },
+      };
+      try {
+        submissionAttempted = true;
+        const response = await fetch('/api/contact-intake', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Idempotency-Key': idempotencyKey }, body: JSON.stringify(payload) });
+        const body = await response.json();
+        if (!response.ok) throw new Error(body.error || 'request_failed');
+        result.textContent = `受け付けました。受付番号: ${body.receiptId}`;
+        form.reset(); idempotencyKey = crypto.randomUUID(); submissionAttempted = false;
+      } catch { result.textContent = '送信できませんでした。入力内容を残したまま、時間をおいてもう一度お試しください。'; }
+      finally { button.disabled = false; }
+    });
+  }
+</script>
