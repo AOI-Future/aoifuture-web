@@ -68,21 +68,27 @@ const inquiryTypes = [
     const startedAt = Date.now();
     let idempotencyKey = crypto.randomUUID();
     let submissionAttempted = false;
+    let turnstileToken = '';
+    let widgetId = '';
+    type TurnstileApi = { render: (element: Element, options: Record<string, unknown>) => string; reset?: (widgetId?: string) => void };
+    const turnstileApi = () => (window as Window & { turnstile?: TurnstileApi }).turnstile;
+    const resetTurnstile = () => { turnstileToken = ''; if (widgetId) turnstileApi()?.reset?.(widgetId); };
     const resetIdempotencyAfterEdit = () => {
       if (submissionAttempted) {
         idempotencyKey = crypto.randomUUID();
         submissionAttempted = false;
+        resetTurnstile();
       }
     };
     form.addEventListener('input', resetIdempotencyAfterEdit);
     form.addEventListener('change', resetIdempotencyAfterEdit);
-    let turnstileToken = '';
     const sitekey = form.dataset.turnstileSiteKey;
     if (sitekey) {
       const mount = () => {
+        if (widgetId) return;
         const widget = form.querySelector('[data-turnstile]');
-        const turnstile = (window as Window & { turnstile?: { render: (element: Element, options: Record<string, unknown>) => string } }).turnstile;
-        if (widget && turnstile) turnstile.render(widget, { sitekey, callback: (token: string) => turnstileToken = token, 'expired-callback': () => turnstileToken = '' });
+        const turnstile = turnstileApi();
+        if (widget && turnstile) widgetId = turnstile.render(widget, { sitekey, action: 'contact_intake', callback: (token: string) => turnstileToken = token, 'expired-callback': () => turnstileToken = '', 'error-callback': () => { turnstileToken = ''; } });
         else setTimeout(mount, 100);
       };
       mount();
@@ -105,8 +111,8 @@ const inquiryTypes = [
         const body = await response.json();
         if (!response.ok) throw new Error(body.error || 'request_failed');
         result.textContent = `受け付けました。受付番号: ${body.receiptId}`;
-        form.reset(); idempotencyKey = crypto.randomUUID(); submissionAttempted = false;
-      } catch { result.textContent = '送信できませんでした。入力内容を残したまま、時間をおいてもう一度お試しください。'; }
+        form.reset(); resetTurnstile(); idempotencyKey = crypto.randomUUID(); submissionAttempted = false;
+      } catch { resetTurnstile(); result.textContent = '送信できませんでした。入力内容を残したまま、時間をおいてもう一度お試しください。'; }
       finally { button.disabled = false; }
     });
   }

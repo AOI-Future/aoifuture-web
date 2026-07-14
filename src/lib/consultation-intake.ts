@@ -81,6 +81,13 @@ function unknownKeys(value: Record<string, unknown>, allowed: Set<string>, prefi
   for (const key of Object.keys(value)) if (!allowed.has(key)) errors[`${prefix}${key}`] = 'unknown_field';
 }
 
+function optionalText(raw: Record<string, unknown>, field: string, errors: Record<string, string>): string {
+  const value = raw[field];
+  if (value === undefined) return '';
+  if (typeof value !== 'string') { errors[field] = 'invalid_type'; return ''; }
+  return normalizeText(value);
+}
+
 export function validateContactIntake(input: unknown, now = Date.now()): ValidationResult {
   const errors: Record<string, string> = {};
   if (!input || typeof input !== 'object' || Array.isArray(input)) return { ok: false, errors: { request: 'invalid_request' } };
@@ -96,22 +103,22 @@ export function validateContactIntake(input: unknown, now = Date.now()): Validat
   const inquiryType = normalizeText(raw.inquiryType);
   if (!inquiryTypes.includes(inquiryType as InquiryType)) errors.inquiryType = 'invalid_inquiry_type';
 
-  const stage = normalizeText(raw.stage);
+  const stage = optionalText(raw, 'stage', errors);
   const stageRequired = source === 'aoifuture.com/consulting/intake' && inquiryType === 'Work Consultation';
-  if (stageRequired && !stage) errors.stage = 'required';
+  if (stageRequired && !stage && !errors.stage) errors.stage = 'required';
   else if (stage && !intakeStages.includes(stage as IntakeStage)) errors.stage = 'invalid_stage';
 
   const situation = normalizeText(raw.situation);
   if (!situation) errors.situation = 'required'; else if (situation.length > 800) errors.situation = 'too_long';
-  const desiredTakeaway = normalizeText(raw.desiredTakeaway);
+  const desiredTakeaway = optionalText(raw, 'desiredTakeaway', errors);
   if (desiredTakeaway.length > 240) errors.desiredTakeaway = 'too_long';
-  const displayName = normalizeText(raw.displayName);
+  const displayName = optionalText(raw, 'displayName', errors);
   if (displayName.length > 100) errors.displayName = 'too_long';
   const email = normalizeText(raw.email);
   if (!email) errors.email = 'required'; else if (email.length < 3 || email.length > 254 || !emailPattern.test(email)) errors.email = 'invalid_email';
-  const organization = normalizeText(raw.organization);
+  const organization = optionalText(raw, 'organization', errors);
   if (organization.length > 200) errors.organization = 'too_long';
-  const articleUrl = normalizeText(raw.articleUrl);
+  const articleUrl = optionalText(raw, 'articleUrl', errors);
   if (articleUrl.length > 500) errors.articleUrl = 'too_long';
   else if (articleUrl) {
     try { const url = new URL(articleUrl); if (url.protocol !== 'https:' && url.protocol !== 'http:') errors.articleUrl = 'invalid_url'; }
@@ -134,12 +141,13 @@ export function validateContactIntake(input: unknown, now = Date.now()): Validat
   else {
     const a = antiSpam as Record<string, unknown>;
     unknownKeys(a, antiSpamKeys, 'antiSpam.', errors);
-    turnstileToken = normalizeText(a.turnstileToken);
-    website = normalizeText(a.website);
+    if (typeof a.turnstileToken !== 'string') errors['antiSpam.turnstileToken'] = 'invalid_type';
+    else turnstileToken = normalizeText(a.turnstileToken);
+    if (typeof a.website !== 'string') errors['antiSpam.website'] = 'invalid_type';
+    else website = normalizeText(a.website);
     formStartedAt = typeof a.formStartedAt === 'number' ? a.formStartedAt : 0;
     if (website) errors['antiSpam.website'] = 'spam_detected';
     if (!Number.isFinite(formStartedAt) || formStartedAt <= 0 || formStartedAt > now) errors['antiSpam.formStartedAt'] = 'invalid_started_at';
-    else if (now - formStartedAt < 3_000) errors['antiSpam.formStartedAt'] = 'submitted_too_quickly';
     else if (now - formStartedAt > 24 * 60 * 60 * 1000) errors['antiSpam.formStartedAt'] = 'form_expired';
   }
 
