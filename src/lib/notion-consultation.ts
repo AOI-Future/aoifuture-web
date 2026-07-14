@@ -1,5 +1,6 @@
 import { addBusinessDays, notionStageLabels, type ConsultationIntake } from './consultation-intake';
 import { contactPayloadFingerprint } from './consultation-fingerprint';
+import type { IntakeSecurityAssessment } from './consultation-security-signals';
 
 export type NotionConfig = { apiKey: string; dataSourceId: string; apiVersion?: string };
 export type StoredConsultation = { receiptId: string; pageId: string; url?: string; payloadFingerprint?: string; createdTime?: string };
@@ -80,7 +81,7 @@ export class NotionConsultationStore {
     return { allowed: true };
   }
 
-  async create(input: ConsultationIntake, receiptId: string, receivedAt: Date): Promise<StoredConsultation> {
+  async create(input: ConsultationIntake, receiptId: string, receivedAt: Date, security: IntakeSecurityAssessment = { flags: [], quarantine: false }): Promise<StoredConsultation> {
     const payloadFingerprint = this.payloadFingerprint(input);
     const existing = await this.findByIdempotencyKey(input.idempotencyKey);
     if (existing) {
@@ -92,15 +93,15 @@ export class NotionConsultationStore {
     const retention = new Date(receivedAt.getTime() + 90 * 24 * 60 * 60 * 1000);
     const properties: Record<string, unknown> = {
       Name: { title: [{ type: 'text', text: { content: `${receiptId} / ${input.inquiryType}` } }] },
-      Status: { select: { name: 'New' } }, Priority: { select: { name: 'P2' } }, Owner: rich('Shugo'),
-      'Next Action': rich('内容を確認し、1〜2営業日以内に返信'), 'Next Action Due': { date: { start: due.toISOString() } },
+      Status: { select: { name: security.quarantine ? 'Triaging' : 'New' } }, Priority: { select: { name: security.quarantine ? 'P3' : 'P2' } }, Owner: rich('Shugo'),
+      'Next Action': rich(security.quarantine ? '安全性を確認し、正規問い合わせの場合のみ返信' : '内容を確認し、1〜2営業日以内に返信'), 'Next Action Due': { date: { start: due.toISOString() } },
       Email: { email: input.email.toLowerCase() },
       Situation: rich(input.situation), 'Receipt ID': rich(receiptId), 'Idempotency Key': rich(input.idempotencyKey),
       'Payload Fingerprint': rich(payloadFingerprint),
       Source: { select: { name: input.source } }, 'Inquiry Type': { select: { name: input.inquiryType } }, 'Received At': { date: { start: receivedAt.toISOString() } },
       'Last Contact': { date: { start: receivedAt.toISOString() } }, 'Retention Review At': { date: { start: retention.toISOString() } },
       'Consent Version': rich(input.consent.version), 'Notification Status': { select: { name: 'Pending' } },
-      'Security Flags': { multi_select: [] },
+      'Security Flags': { multi_select: security.flags.map(name => ({ name })) },
     };
     if (input.stage) properties.Stage = { select: { name: notionStageLabels[input.stage] } };
     if (input.desiredTakeaway) properties['Desired Takeaway'] = rich(input.desiredTakeaway);

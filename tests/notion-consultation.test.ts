@@ -32,6 +32,22 @@ describe('Notion shared contact store', () => {
     expect(JSON.stringify(body)).not.toContain('secret');
   });
 
+  it('maps quarantined intake to Triaging with allowlisted security flags', async () => {
+    const calls: RequestInit[] = [];
+    const fetcher = vi.fn(async (url: any, init?: RequestInit) => {
+      if (String(url).includes('/query')) return new Response(JSON.stringify({ results: [] }));
+      calls.push(init || {});
+      return new Response(JSON.stringify({ id: 'p' }));
+    }) as unknown as typeof fetch;
+    const store = new NotionConsultationStore({ apiKey: 'secret', dataSourceId: 'ds' }, fetcher);
+    await store.create(input, 'AOI-QUARANTINE', new Date('2026-07-17T10:00:00Z'), { flags: ['Fast submit', 'Many links'], quarantine: true });
+    const properties = JSON.parse(String(calls[0].body)).properties;
+    expect(properties.Status.select.name).toBe('Triaging');
+    expect(properties.Priority.select.name).toBe('P3');
+    expect(properties['Security Flags'].multi_select).toEqual([{ name: 'Fast submit' }, { name: 'Many links' }]);
+    expect(properties['Next Action'].rich_text[0].text.content).toContain('安全性を確認');
+  });
+
   it('maps stage for the detailed work-consultation flow', async () => {
     const calls: RequestInit[] = [];
     const fetcher = vi.fn(async (url: any, init?: RequestInit) => {

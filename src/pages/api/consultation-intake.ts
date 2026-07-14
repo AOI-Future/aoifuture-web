@@ -5,9 +5,13 @@ import { validateContactIntake } from '../../lib/consultation-intake';
 import { contactPayloadFingerprint } from '../../lib/consultation-fingerprint';
 import { IdempotencyConflictError, NotionConsultationStore } from '../../lib/notion-consultation';
 import { verifyTurnstile } from '../../lib/consultation-turnstile';
+import { readBoundedBody } from '../../lib/intake-http';
+import { consultationAbuseLimiter, consultationPreTurnstileLimiter, type AbuseLimitInput, type AbuseLimitResult } from '../../lib/consultation-abuse-limit';
+import { UpstashAbuseLimiter, type DistributedLimitResult } from '../../lib/consultation-distributed-limit';
+import { assessIntakeSecurity } from '../../lib/consultation-security-signals';
+import { trustedClientIp } from '../../lib/trusted-client-ip';
 
-const MAX_BODY_BYTES = 16 * 1024;
-type Dependencies = { config?: ConsultationConfig; store?: NotionConsultationStore; fetcher?: typeof fetch; now?: () => Date; receipt?: () => string };
+type Dependencies = { config?: ConsultationConfig; store?: NotionConsultationStore; fetcher?: typeof fetch; now?: () => Date; receipt?: () => string; preLimiter?: { check: (input: AbuseLimitInput) => AbuseLimitResult }; limiter?: { check: (input: AbuseLimitInput) => AbuseLimitResult }; distributedLimiter?: { check: (input: AbuseLimitInput) => Promise<DistributedLimitResult> } };
 
 const headers = (origin: string | null, allowed: boolean) => ({
   ...(allowed && origin ? { 'Access-Control-Allow-Origin': origin } : {}),
@@ -38,26 +42,57 @@ export async function handleContactIntake(request: Request, deps: Dependencies =
     return result;
   }
   if (!config.enabled) return response(503, { error: 'intake_disabled', fallbackUrl: config.fallbackUrl }, origin, originAllowed);
+  if (config.requireTurnstile && (!config.turnstileSiteKey || !config.turnstileSecretKey)) return response(503, { error: 'turnstile_not_configured' }, origin, originAllowed);
   if (!originAllowed) return response(403, { error: 'origin_not_allowed' }, origin, false);
-  if (!request.headers.get('content-type')?.toLowerCase().startsWith('application/json')) return response(415, { error: 'json_required' }, origin, true);
-  const declared = Number(request.headers.get('content-length') || '0');
-  if (declared > MAX_BODY_BYTES) return response(413, { error: 'body_too_large' }, origin, true);
-  const text = await request.text();
-  if (new TextEncoder().encode(text).byteLength > MAX_BODY_BYTES) return response(413, { error: 'body_too_large' }, origin, true);
+  const body = await readBoundedBody(request);
+  if (!body.ok) return response(body.status, { error: body.error }, origin, true);
   let raw: unknown;
-  try { raw = JSON.parse(text); } catch { return response(400, { error: 'invalid_json' }, origin, true); }
+  try { raw = JSON.parse(body.text); } catch { return response(400, { error: 'invalid_json' }, origin, true); }
   const now = (deps.now || (() => new Date()))();
   const validation = validateContactIntake(raw, now.getTime());
   if (!validation.ok) return response(400, { error: 'validation_failed', fields: validation.errors }, origin, true);
+  const security = assessIntakeSecurity(validation.value, now.getTime());
+  if (!config.requireTurnstile && security.flags.includes('Fast submit')) return response(400, { error: 'validation_failed', fields: { 'antiSpam.formStartedAt': 'submitted_too_quickly' } }, origin, true);
   if (!sourceMatchesOrigin(validation.value.source, origin)) return response(400, { error: 'source_origin_mismatch' }, origin, true);
   const idempotencyHeader = request.headers.get('idempotency-key');
   if (idempotencyHeader && idempotencyHeader !== validation.value.idempotencyKey) return response(409, { error: 'idempotency_conflict' }, origin, true);
 
-  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim();
+  const ip = trustedClientIp(request.headers);
+  const preLimit = (deps.preLimiter || consultationPreTurnstileLimiter).check({ ip, email: validation.value.email, idempotencyKey: validation.value.idempotencyKey, now: now.getTime() });
+  if (!preLimit.allowed) {
+    const limited = response(429, { error: 'rate_limited', retryAfter: preLimit.retryAfter }, origin, true);
+    limited.headers.set('Retry-After', String(preLimit.retryAfter));
+    return limited;
+  }
+  const turnstileHostname = origin ? new URL(origin).hostname : '';
   const turnstile = await verifyTurnstile(validation.value.antiSpam.turnstileToken, ip, {
-    secretKey: config.turnstileSecretKey, required: config.requireTurnstile, allowedHostnames: config.allowedHostnames,
+    secretKey: config.turnstileSecretKey, required: config.requireTurnstile, allowedHostnames: [turnstileHostname],
+    idempotencyKey: validation.value.idempotencyKey, expectedAction: 'contact_intake',
   }, deps.fetcher);
   if (!turnstile.ok) return response(turnstile.reason === 'turnstile_unavailable' || turnstile.reason === 'turnstile_not_configured' ? 503 : 400, { error: turnstile.reason }, origin, true);
+  const abuseLimit = (deps.limiter || consultationAbuseLimiter).check({ ip, email: validation.value.email, idempotencyKey: validation.value.idempotencyKey, now: now.getTime() });
+  if (!abuseLimit.allowed) {
+    const limited = response(429, { error: 'rate_limited', retryAfter: abuseLimit.retryAfter }, origin, true);
+    limited.headers.set('Retry-After', String(abuseLimit.retryAfter));
+    return limited;
+  }
+  const distributedConfigured = !!(
+    config.distributedLimitUrl?.startsWith('https://') && config.distributedLimitToken &&
+    config.distributedLimitHashSecret?.length >= 32 && /^[A-Za-z0-9_-]{1,40}$/.test(config.distributedLimitNamespace || '')
+  );
+  if (config.requireDistributedLimit && !distributedConfigured && !deps.distributedLimiter) return response(503, { error: 'abuse_protection_unavailable' }, origin, true);
+  if (distributedConfigured || deps.distributedLimiter) {
+    const distributedLimiter = deps.distributedLimiter || new UpstashAbuseLimiter({ url: config.distributedLimitUrl, token: config.distributedLimitToken, hashSecret: config.distributedLimitHashSecret, namespace: config.distributedLimitNamespace });
+    const distributed = await distributedLimiter.check({ ip, email: validation.value.email, idempotencyKey: validation.value.idempotencyKey, now: now.getTime() });
+    if (!distributed.allowed) {
+      if ('unavailable' in distributed) return response(503, { error: 'abuse_protection_unavailable' }, origin, true);
+      if (distributed.breaker) return response(503, { error: 'intake_temporarily_paused' }, origin, true);
+      const limited = response(429, { error: 'rate_limited', retryAfter: distributed.retryAfter }, origin, true);
+      limited.headers.set('Retry-After', String(distributed.retryAfter));
+      return limited;
+    }
+    if (distributed.softDaily) console.warn(JSON.stringify({ event: 'contact_intake_abuse', result: 'daily_soft_threshold', status: 200 }));
+  }
   if (!config.notionApiKey || !config.notionDataSourceId) return response(503, { error: 'storage_not_configured' }, origin, true);
 
   const store = deps.store || new NotionConsultationStore({ apiKey: config.notionApiKey, dataSourceId: config.notionDataSourceId, apiVersion: config.notionApiVersion });
@@ -69,11 +104,18 @@ export async function handleContactIntake(request: Request, deps: Dependencies =
       if (duplicate.payloadFingerprint !== payloadFingerprint) return response(409, { error: 'idempotency_conflict' }, origin, true);
       return response(200, { ok: true, receiptId: duplicate.receiptId, duplicate: true }, origin, true);
     }
-    const rate = await store.enforceRateLimits(validation.value.email.toLowerCase(), now);
-    if (!rate.allowed) return response(429, { error: 'rate_limited', retryAfter: rate.reason === 'email_daily_limit' ? 86400 : 3600 }, origin, true);
+    if (!distributedConfigured && !deps.distributedLimiter) {
+      const rate = await store.enforceRateLimits(validation.value.email.toLowerCase(), now);
+      if (!rate.allowed) {
+        const retryAfter = rate.reason === 'email_daily_limit' ? 86400 : 3600;
+        const limited = response(429, { error: 'rate_limited', retryAfter }, origin, true);
+        limited.headers.set('Retry-After', String(retryAfter));
+        return limited;
+      }
+    }
     const receiptId = (deps.receipt || (() => `AOI-${randomBytes(4).toString('hex').toUpperCase()}`))();
-    const stored = await store.create(validation.value, receiptId, now);
-    console.info(JSON.stringify({ event: 'contact_intake', receipt: stored.receiptId.slice(0, 12), source: validation.value.source, inquiryType: validation.value.inquiryType, ...(validation.value.stage ? { stage: validation.value.stage } : {}), result: stored.receiptId === receiptId ? 'created' : 'duplicate', status: stored.receiptId === receiptId ? 201 : 200, latency: Date.now() - started < 1000 ? 'lt1s' : Date.now() - started < 5000 ? '1-5s' : 'gte5s' }));
+    const stored = await store.create(validation.value, receiptId, now, security);
+    console.info(JSON.stringify({ event: 'contact_intake', receipt: stored.receiptId.slice(0, 12), source: validation.value.source, inquiryType: validation.value.inquiryType, ...(validation.value.stage ? { stage: validation.value.stage } : {}), quarantined: security.quarantine, result: stored.receiptId === receiptId ? 'created' : 'duplicate', status: stored.receiptId === receiptId ? 201 : 200, latency: Date.now() - started < 1000 ? 'lt1s' : Date.now() - started < 5000 ? '1-5s' : 'gte5s' }));
     return response(stored.receiptId === receiptId ? 201 : 200, { ok: true, receiptId: stored.receiptId, duplicate: stored.receiptId !== receiptId }, origin, true);
   } catch (error) {
     if (error instanceof IdempotencyConflictError) return response(409, { error: 'idempotency_conflict' }, origin, true);

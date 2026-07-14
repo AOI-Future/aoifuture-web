@@ -10,7 +10,7 @@
     "test:tools": "playwright test tests/tools.spec.ts",
     "test:agent-security": "vitest run tests/agent-security-reference.test.ts",
     "test:agent-security:e2e": "playwright test tests/agent-security-reference.spec.ts",
-    "test:intake": "vitest run tests/consultation-*.test.ts tests/notion-consultation.test.ts",
+    "test:intake": "vitest run tests/consultation-*.test.ts tests/intake-http.test.ts tests/notion-consultation.test.ts",
     "test:intake:e2e": "playwright test tests/consultation-intake.spec.ts tests/contact-intake.spec.ts"
   },
   "dependencies": {
