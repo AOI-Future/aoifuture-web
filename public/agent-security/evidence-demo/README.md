@@ -6,12 +6,12 @@ This output-only package demonstrates the evidence format produced by the AI-Age
 
 - Verification profile: `core-runtime-v1`, a focused subset of the Field Manual — not full conformance
 - Target: the Kit's bundled, deliberately insecure example configuration
-- Result: 25 checks — 7 PASS / 17 FAIL / 1 SKIP / 0 ERROR
+- Result: 28 checks — 7 PASS / 20 FAIL / 1 SKIP / 0 ERROR
 - Result IDs: unique and stable across tool/MCP array reordering
 - Customer environment: none
 - Input configuration: not included in this public output package
 
-The profile accounts for every Field Manual SHALL requirement as in scope or explicitly out of scope with a reason. `VT-S-054` verifies that every in-scope SHALL has at least one registered test. Because the input configuration is not distributed here, this package demonstrates result structure, traceability, scope accounting, and artifact integrity; it is not a reproducibility bundle.
+The profile accounts for every Field Manual SHALL requirement as in scope or explicitly out of scope with a reason. `VT-S-054` compares the master matrix with Result objects actually emitted by implemented checks for every in-scope SHALL. Because the input configuration is not distributed here, this package demonstrates result structure, traceability, scope accounting, and artifact integrity; it is not a reproducibility bundle.
 
 ## Package contents
 
@@ -28,10 +28,10 @@ Evidence artifacts:
 
 Representative mappings:
 
+- `VT-S-011-SHELL → REQ-011 → TH-02` — least privilege and input-schema validation
 - `VT-S-012B-SHELL → REQ-012 → TH-02` — sandboxed code execution
-- `VT-S-015A-WIRE-TRANSFER → REQ-015 → TH-02` — concrete-effect approval for a high-impact tool
-- `VT-S-022 → REQ-022 → TH-04` — policy-controlled, provenance-tagged, privileged, reversible memory writes
-- `VT-S-050D-RANDOM-MCP → REQ-050 → TH-07` — MCP definition hash, change detection, and re-review gate
+- `VT-S-015A-WIRE-TRANSFER → REQ-015 → TH-02` — concrete-effect approval
+- `VT-S-050D-RANDOM-MCP → REQ-050 → TH-07` — MCP change detection and re-review
 
 `VT-S-003D` is SKIP because the bundled target does not select EMA. The Field Manual does not require EMA specifically; another JIT/gateway mechanism may satisfy REQ-003.
 
@@ -39,13 +39,15 @@ Representative mappings:
 
 Canonical JSON SHA-256:
 
-`5c571e0a1dc2bd5288edea738ae1dde615eaca0537b50948bc5df9989e9ed79a`
+`84e55e1e6eb795334daed27172771f8030762957d16e5a94e7982629396b4d29`
 
-The RFC 3161 response was granted at `2026-07-16 03:55:07 UTC`. Its SHA-256 message imprint matches the canonical JSON digest.
+The RFC 3161 response was granted at `2026-07-16 04:16:44 UTC`. Its SHA-256 message imprint matches the canonical JSON digest.
 
-Obtain the FreeTSA root certificate from:
+Download the FreeTSA root certificate with the exact filename used below:
 
-`https://freetsa.org/files/cacert.pem`
+```sh
+curl -fsSLo freetsa-cacert.pem https://freetsa.org/files/cacert.pem
+```
 
 Expected downloaded-file SHA-256:
 

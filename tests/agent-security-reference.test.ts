@@ -41,7 +41,7 @@ describe('AI Agent Security Reference Hub', () => {
   it('publishes the verified sample archive and manifest references', () => {
     const zipPath = join(root, 'public/agent-security/evidence-demo/AI-Agent-Security-Sample-Evidence.zip');
     const digest = createHash('sha256').update(readFileSync(zipPath)).digest('hex');
-    expect(digest).toBe('2f9fcce0fc5aea9a4d0e012f484dde46740316423ff3fbc3240955a4c4d5a2ee');
+    expect(digest).toBe('3c2822b1f5d3753d5b2e10d268c852db94c6e764cd30df54fc81ccb784f7171c');
 
     const names = execFileSync('unzip', ['-Z1', zipPath], { encoding: 'utf8' });
     expect(names).toContain('sample-evidence-fail/sample-verification-fail.json');
@@ -52,9 +52,9 @@ describe('AI Agent Security Reference Hub', () => {
     const jsonBytes = execFileSync('unzip', ['-p', zipPath, 'sample-evidence-fail/sample-verification-fail.json']);
     const artifact = JSON.parse(jsonBytes.toString('utf8'));
     const ids = artifact.results.map((result: { id: string }) => result.id);
-    expect(ids).toHaveLength(25);
-    expect(new Set(ids).size).toBe(25);
-    expect(artifact.summary.counts).toEqual({ PASS: 7, FAIL: 17, SKIP: 1, ERROR: 0 });
+    expect(ids).toHaveLength(28);
+    expect(new Set(ids).size).toBe(28);
+    expect(artifact.summary.counts).toEqual({ PASS: 7, FAIL: 20, SKIP: 1, ERROR: 0 });
 
     const byTitle = new Map(artifact.results.map((result: { title: string }) => [result.title, result]));
     expect(byTitle.get("Code tool 'shell' runs sandboxed")).toMatchObject({ id: 'VT-S-012B-SHELL', requirement: 'REQ-012', threat: 'TH-02' });
@@ -65,7 +65,7 @@ describe('AI Agent Security Reference Hub', () => {
     const manifestText = execFileSync('unzip', ['-p', zipPath, 'sample-evidence-fail/sample-verification-fail.manifest.json'], { encoding: 'utf8' });
     const manifest = JSON.parse(manifestText);
     const jsonDigest = createHash('sha256').update(jsonBytes).digest('hex');
-    expect(jsonDigest).toBe('5c571e0a1dc2bd5288edea738ae1dde615eaca0537b50948bc5df9989e9ed79a');
+    expect(jsonDigest).toBe('84e55e1e6eb795334daed27172771f8030762957d16e5a94e7982629396b4d29');
     expect(manifest.report_json_sha256).toBe(jsonDigest);
     expect(manifest.report_json).toBe('sample-verification-fail.json');
     expect(manifest.timestamp.token_file).toBe('sample-verification-fail.tsr');
@@ -75,6 +75,7 @@ describe('AI Agent Security Reference Hub', () => {
     expect(readme).toContain('not a customer assessment');
     expect(readme).toContain('core-runtime-v1');
     expect(readme).toContain('https://freetsa.org/files/cacert.pem');
+    expect(readme).toContain('curl -fsSLo freetsa-cacert.pem');
     expect(readme).toContain('2151b61137ffa86bf664691ba67e7da0b19f98c758e3d228d5d8ebf27e044438');
   });
 
