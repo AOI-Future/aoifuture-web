@@ -7,12 +7,14 @@ interface Props {
   title: string;
   description?: string;
   canonical?: string;
+  pageTransition?: boolean;
 }
 
 const {
   title,
   description = "AOI Future is an AI-native solo studio and living laboratory designing creative work and work systems for human-AI collaboration.",
   canonical = "https://aoifuture.com",
+  pageTransition = true,
 } = Astro.props;
 ---
 
@@ -89,7 +91,7 @@ const {
   </head>
   <body>
     <!-- Page Transition Effect -->
-    <PageTransition client:load />
+    {pageTransition && <PageTransition client:load />}
 
     <slot />
     <Analytics />

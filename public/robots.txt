@@ -50,4 +50,4 @@ Disallow: /consulting
 User-agent: cohere-ai
 Disallow: /consulting
 
-Sitemap: https://aoifuture.com/sitemap.xml
+Sitemap: https://aoifuture.com/sitemap-index.xml

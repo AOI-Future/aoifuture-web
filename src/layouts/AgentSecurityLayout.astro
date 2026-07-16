@@ -1,0 +1,74 @@
+---
+import Layout from './Layout.astro';
+import '../styles/agent-security.css';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  eyebrow?: string;
+}
+
+const { title, description, canonical, eyebrow = 'AI AGENT SECURITY REFERENCE' } = Astro.props;
+---
+
+<Layout title={title} description={description} canonical={canonical} pageTransition={false}>
+  <Fragment slot="head">
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="AOI Future" />
+    <meta property="og:image" content="https://aoifuture.com/agent-security/evidence-demo/overview.png" />
+    <meta property="og:image:alt" content="AI Agent Security Evidence Demo — 28 checks, 7 PASS, 20 FAIL, 1 SKIP" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://aoifuture.com/agent-security/evidence-demo/overview.png" />
+    <slot name="head" />
+  </Fragment>
+
+  <main class="as-shell">
+    <header class="as-header">
+      <a class="as-brand" href="/">AOIFUTURE</a>
+      <nav aria-label="Agent Security">
+        <a href="/agent-security/">Overview</a>
+        <a href="/agent-security/checklist/">Checklist</a>
+        <a href="/agent-security/evidence-demo/">Evidence Demo</a>
+        <a href="/agent-security/reference/tool-and-action-safety/">Reference</a>
+      </nav>
+    </header>
+
+    <div class="as-page">
+      <p class="as-eyebrow">{eyebrow}</p>
+      <slot />
+    </div>
+
+    <footer class="as-footer">
+      <div>
+        <strong>AI Agent Security Reference</strong>
+        <p>脅威を、コントロール、要件、検証へ接続する。</p>
+      </div>
+      <div class="as-footer-links">
+        <a href="/agent-security/">Reference Hub</a>
+        <a href="https://dispatch.aoifuture.com/s/security">Security Dispatch ↗</a>
+        <a href="/privacy">Privacy</a>
+      </div>
+    </footer>
+  </main>
+
+  <script is:inline>
+    document.addEventListener('click', function (event) {
+      var target = event.target instanceof Element ? event.target.closest('[data-as-track]') : null;
+      if (!target) return;
+      var eventName = target.getAttribute('data-as-track') || 'agent_security_action';
+      var location = target.getAttribute('data-as-location') || window.location.pathname;
+      var destination = target.getAttribute('href') || '';
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', eventName, {
+          content_type: 'agent_security_reference',
+          item_id: location,
+          link_url: destination,
+        });
+      }
+    });
+  </script>
+</Layout>

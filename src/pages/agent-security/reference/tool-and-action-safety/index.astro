@@ -1,0 +1,105 @@
+---
+import AgentSecurityLayout from '../../../../layouts/AgentSecurityLayout.astro';
+import { agentSecurityLinks, gumroadUrl } from '../../../../data/agent-security';
+
+export const prerender = true;
+
+const canonical = 'https://aoifuture.com/agent-security/reference/tool-and-action-safety/';
+const title = 'ツールとアクションの安全性 | AI Agent Security Reference';
+const description = 'AIエージェントのツール許可リスト、最小権限、入力検証、サンドボックス、承認ゲート、MCPサーバーの変更検知を、脅威・コントロール・要件・テストへ接続します。';
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: 'ツールとアクションの安全性',
+  description,
+  url: canonical,
+  inLanguage: 'ja',
+  author: { '@type': 'Person', name: 'Shugo Nozaki', url: 'https://nozaki.com' },
+  isPartOf: { '@type': 'CollectionPage', name: 'AI Agent Security Reference', url: 'https://aoifuture.com/agent-security/' },
+};
+---
+
+<AgentSecurityLayout title={title} description={description} canonical={canonical} eyebrow="REFERENCE / CHAPTER 05">
+  <Fragment slot="head"><script type="application/ld+json" set:html={JSON.stringify(articleLd)} /></Fragment>
+
+  <section class="as-hero">
+    <div>
+      <p class="as-kicker">TH-02 · TH-07 / CT-04 · CT-05 · CT-06 · CT-08 · CT-14</p>
+      <h1 class="as-title">ツールは、文章を現実の結果へ変える境界です。</h1>
+      <p class="as-lead">攻撃者の一段落が、削除、外部送信、コード実行、本番変更へ変わるにはツールが必要です。だから防御の中心は「モデルが善良であること」ではなく、到達できる能力を小さく保ち、危険なアクションをシステム側で止めることにあります。</p>
+      <div class="as-actions">
+        <a class="as-button as-button--primary" href="/agent-security/checklist/#security-checklist" data-as-track="checklist_view" data-as-location="reference_tool_safety_hero">関連項目を確認する</a>
+        <a class="as-button" href={agentSecurityLinks.bookJa} target="_blank" rel="noopener noreferrer" data-as-track="book_click" data-as-location="reference_tool_safety_book">書籍の第5章を読む ↗</a>
+      </div>
+    </div>
+    <aside class="as-panel">
+      <p class="as-label">章内の代表的な対応</p>
+      <p class="as-code">TH-02 / TH-07 / TH-08<br />↓<br />CT-04 / 05 / 06 / 08 / 14<br />↓<br />REQ-010 / 011 / 012 / 014 / 015 / 050 / 053<br />↓<br />VT-S / VT-D / VT-E / VT-A</p>
+    </aside>
+  </section>
+
+  <article class="as-prose">
+    <h2>何が危険なのか</h2>
+    <p>通常のアプリケーションでは、関数の引数は自分たちが書いたコードから来ます。AIエージェントでは、ツールの引数を組み立てるモデルが、Webページ、メール、PDF、RAG、ツール出力に含まれる信頼できない文章から影響を受けます。</p>
+    <blockquote><p><strong>ツール境界を、信頼境界として扱う。</strong><br />型、範囲、宛先、データ分類、許可された操作は、プロンプトではなくツール側で検証します。</p></blockquote>
+    <p>TH-01のプロンプトインジェクションは侵入口です。過剰な権限を持つツールが呼び出されたとき、TH-02のツール悪用として実害に変わります。MCPサーバーやプラグインがすり替わる場合は、TH-07のサプライチェーン侵害が同じ境界へ到達します。</p>
+
+    <h2>実装するコントロール</h2>
+    <h3>1. ツールレジストリと許可リスト</h3>
+    <p><strong>CT-04</strong>は、各ツールの所有者、スキーマ、バージョン、リスククラス、ネットワーク・ファイル・金銭・コード実行能力を記録します。拒否リストではなく、名指ししたものだけを許可するポジティブモデルを使います。</p>
+
+    <h3>2. 最小権限と入力検証</h3>
+    <p><strong>CT-05</strong>と<strong>REQ-011</strong>は、ツールができることと、個々の呼び出しで依頼できることを別々に縮小します。書き込み先のディレクトリ、送信先、上限金額、利用できるAPI操作を、ツール実装側で制約します。</p>
+
+    <h3>3. サンドボックスと外向き通信の制限</h3>
+    <p><strong>CT-06</strong>と<strong>REQ-012</strong>は、コード実行、ブラウザ、ファイル操作を、本番環境・資格情報・無制限ネットワークから分離します。ネットワークは宣言がない限り閉じ、外向き通信は許可した宛先だけに限定します。</p>
+
+    <h3>4. 具体的な効果を示す承認ゲート</h3>
+    <p><strong>CT-08</strong>と<strong>REQ-015</strong>が求めるのは、「エージェントが送信したいと言っています」という意図の承認ではありません。差分またはペイロード、宛先、行使する特権、データ分類、ロールバック条件を示し、その具体的な効果を人が判断できることです。</p>
+
+    <h3>5. MCPのバージョン固定と定義ハッシュ</h3>
+    <p><strong>REQ-050</strong>は、MCPサーバーを審査済み許可リストから選び、バージョンとツール定義を固定・ハッシュ化し、変更時に使用を止めて再レビューすることを求めます。これにより、レビュー後のラグプルを「静かなすり替え」ではなく「検知できるハッシュ不一致」に変えます。</p>
+
+    <h2>確認可能な要件へ変える</h2>
+  </article>
+
+  <div class="as-table-wrap">
+    <table class="as-table">
+      <caption class="sr-only">ツールとアクションの安全性に関する要件一覧</caption>
+      <thead><tr><th scope="col">REQ</th><th scope="col">LEVEL</th><th scope="col">確認すること</th></tr></thead>
+      <tbody>
+        <tr><td>REQ-010</td><td>SHALL</td><td>全ツールが許可リストにあり、高リスク能力が分類されている。</td></tr>
+        <tr><td>REQ-011</td><td>SHALL</td><td>権限が最小化され、入力が実行前にスキーマ検証される。</td></tr>
+        <tr><td>REQ-012</td><td>SHALL</td><td>コード、ブラウザ、ファイル操作が隔離され、外向き宛先が制限される。</td></tr>
+        <tr><td>REQ-014</td><td>SHALL</td><td>外部サービス、プラグイン、MCPプロバイダーを利用前に評価する。</td></tr>
+        <tr><td>REQ-015</td><td>SHALL</td><td>高影響アクションが具体的な効果を示して承認を求める。</td></tr>
+        <tr><td>REQ-050</td><td>SHALL</td><td>MCP定義を固定・ハッシュ化し、変更時に再レビューする。</td></tr>
+        <tr><td>REQ-053</td><td>SHOULD</td><td>承認率、遅延、オーバーライドを測り、形骸化を検知する。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <section class="as-section">
+    <p class="as-label">MINIMUM REVIEW</p>
+    <h2>MCPサーバーを本番利用する前の確認</h2>
+    <div class="as-card-grid">
+      <article class="as-card"><h3>Exposure</h3><p>公開インターフェースへ直接置かず、ローカルまたはゲートウェイの背後に置く。</p></article>
+      <article class="as-card"><h3>Permission ledger</h3><p>読み取り、書き込み、外部送信、シェル／コードの4軸で権限を記録する。</p></article>
+      <article class="as-card"><h3>Definition integrity</h3><p>バージョンとツール定義のハッシュを保持し、変更を自動受け入れしない。</p></article>
+      <article class="as-card"><h3>Credentials</h3><p>短寿命の資格情報を仲介し、エージェントへ下流の秘密値を保持させない。</p></article>
+      <article class="as-card"><h3>Approval</h3><p>書き込み、外部送信、削除、本番変更へ具体的な効果を示す承認を置く。</p></article>
+      <article class="as-card"><h3>Evidence</h3><p>ツール呼び出しと承認を相関IDで追跡し、秘密値をログへ残さない。</p></article>
+    </div>
+  </section>
+
+  <section class="as-section">
+    <p class="as-label">FROM REFERENCE TO EVIDENCE</p>
+    <h2>「実装済み」を、テスト結果へ</h2>
+    <p>リファレンスは確認すべき境界を示します。チェックリストは未確認項目を見つけます。Evidence Demoは、その結果をどの形式で残せるかを示します。</p>
+    <div class="as-actions">
+      <a class="as-button" href="/agent-security/evidence-demo/" data-as-track="evidence_demo_view" data-as-location="reference_tool_safety_evidence">Evidence Demoを見る</a>
+      <a class="as-button as-button--primary" href={gumroadUrl('reference_tool_action_safety')} target="_blank" rel="noopener noreferrer" data-as-track="gumroad_click" data-as-location="reference_tool_action_safety">Verification Kitを確認 ↗</a>
+    </div>
+    <div class="as-note">Verification Kitが残すのは、定義された検証を実行した結果です。特定システム全体の安全性、完全な脅威カバレッジ、監査担当者による受容を保証しません。</div>
+  </section>
+</AgentSecurityLayout>

@@ -1,0 +1,117 @@
+---
+import AgentSecurityLayout from '../../../layouts/AgentSecurityLayout.astro';
+import { agentSecurityLinks, checklistGroups, gumroadUrl } from '../../../data/agent-security';
+
+export const prerender = true;
+
+const canonical = 'https://aoifuture.com/agent-security/checklist/';
+const title = 'AIエージェントセキュリティ・チェックリスト | AOI Future';
+const description = 'AIエージェントを実運用へ出す前に、アイデンティティ、ツール、MCP、RAG、メモリ、ログ、停止・復旧を確認する無料セルフアセスメント。';
+const total = checklistGroups.reduce((sum, group) => sum + group.items.length, 0);
+const webpageLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'AIエージェントセキュリティ・チェックリスト',
+  url: canonical,
+  description,
+  inLanguage: 'ja',
+  isPartOf: { '@type': 'CollectionPage', url: 'https://aoifuture.com/agent-security/' },
+};
+---
+
+<AgentSecurityLayout title={title} description={description} canonical={canonical} eyebrow="AI AGENT SECURITY / SELF-ASSESSMENT">
+  <Fragment slot="head"><script type="application/ld+json" set:html={JSON.stringify(webpageLd)} /></Fragment>
+
+  <section class="as-hero">
+    <div>
+      <p class="as-kicker">{total} QUESTIONS · LOCAL-ONLY STATE</p>
+      <h1 class="as-title">実装したつもりを、確認できる状態へ。</h1>
+      <p class="as-lead">チェックを付ける基準は「方針がある」ではありません。設定、ログ、テスト、レビュー記録のどれかで、第三者が同じ判断へたどり着けることです。</p>
+      <div class="as-actions">
+        <a class="as-button" href={agentSecurityLinks.checklistDownload} download data-as-track="checklist_download" data-as-location="checklist_hero">Markdown版を保存</a>
+        <button class="as-button as-button--quiet" id="print-checklist" type="button">印刷 / PDF保存</button>
+      </div>
+      <div class="as-note">ブラウザ版は一次トリアージ用で、保存するのはチェック状態だけです。証拠の場所、Unknown、対象外理由、承認者はMarkdown版へ記録してください。チェック数が多いだけで安全性や準拠を認証するものではありません。</div>
+    </div>
+    <aside class="as-panel" aria-live="polite">
+      <p class="as-label">PROGRESS</p>
+      <div class="as-stat"><strong id="check-count">0 / {total}</strong><span>browser-local checklist state</span></div>
+      <p style="color:var(--as-muted);line-height:1.8;font-size:13px;margin:18px 0 0">チェック状態はブラウザ内だけに保存され、AOI Futureへ送信されません。証拠メモは保存しません。</p>
+      <button class="as-button as-button--quiet" id="reset-checklist" type="button" style="margin-top:18px">チェックをリセット</button>
+    </aside>
+  </section>
+
+  <section class="as-section">
+    <p class="as-label">HOW TO USE</p>
+    <h2>Yesではなく、証拠の場所を答える</h2>
+    <div class="as-card-grid">
+      <article class="as-card"><span class="as-index">01</span><h3>対象範囲を宣言</h3><p>どのエージェント、環境、ツール、データ、委譲経路を確認するかを先に固定します。</p></article>
+      <article class="as-card"><span class="as-index">02</span><h3>証拠を指す</h3><p>設定パス、テストID、ログ、承認記録など、別の人が再確認できる場所を記録します。</p></article>
+      <article class="as-card"><span class="as-index">03</span><h3>Unknownを残す</h3><p>分からない項目を「たぶん実装済み」で埋めず、そのまま次の検証対象にします。</p></article>
+      <article class="as-card"><span class="as-index">04</span><h3>変更後に再実行</h3><p>モデル、ツール、MCP、RAG、権限が変われば、以前の確認結果を引き継がず再検証します。</p></article>
+    </div>
+  </section>
+
+  <section class="as-section">
+    <p class="as-label">SELF-ASSESSMENT</p>
+    <h2>出荷前に確認する境界</h2>
+    <div class="as-checklist" id="security-checklist">
+      {checklistGroups.map((group) => (
+        <section class="as-check-group">
+          <h2>{group.title}</h2>
+          {group.items.map(([id, text], itemIndex) => {
+            const inputId = `check-${id.toLowerCase()}-${itemIndex}`;
+            return (
+              <label class="as-check-row" for={inputId}>
+                <input id={inputId} type="checkbox" data-check-id={id} />
+                <span class="as-check-id">{id}</span>
+                <span class="as-check-text">{text}</span>
+              </label>
+            );
+          })}
+        </section>
+      ))}
+    </div>
+  </section>
+
+  <section class="as-section">
+    <p class="as-label">INTERPRETATION</p>
+    <h2>チェックが付かなかったときの次の行動</h2>
+    <div class="as-path">
+      <article class="as-card"><span class="as-index">LEARN</span><h3>要件の理由が分からない</h3><p>書籍と章別リファレンスで、脅威とコントロールのつながりを確認します。</p><div class="as-actions"><a class="as-button as-button--quiet" href={agentSecurityLinks.bookJa} target="_blank" rel="noopener noreferrer" data-as-track="book_click" data-as-location="checklist_learn">日本語版を読む ↗</a></div></article>
+      <article class="as-card"><span class="as-index">ASSESS</span><h3>Webhook署名から試したい</h3><p>無料ツールで4つの動的チェックを実行し、PASS／FAILの扱いを試します。</p><div class="as-actions"><a class="as-button as-button--quiet" href={agentSecurityLinks.webhookTool} data-as-track="free_tool_click" data-as-location="checklist_webhook">Webhook Checkへ</a></div></article>
+      <article class="as-card"><span class="as-index">VERIFY</span><h3>広い範囲を証跡にしたい</h3><p>Evidence Demoで成果物を確認してから、Kitが自分のレビュー文脈に合うかを判断します。</p><div class="as-actions"><a class="as-button as-button--quiet" href="/agent-security/evidence-demo/" data-as-track="evidence_demo_view" data-as-location="checklist_evidence">デモを見る</a></div></article>
+    </div>
+  </section>
+
+  <section class="as-section">
+    <p class="as-label">PRACTICAL LAYER</p>
+    <h2>確認結果を、保持できる検証記録へ</h2>
+    <p>Verification Kitは、チェックリストの自己申告を認証するものではありません。定義された検証を実行し、結果を識別子付きのJSON、PDF、manifest、timestamp responseとして残す実践層です。</p>
+    <div class="as-actions"><a class="as-button as-button--primary" href={gumroadUrl('checklist_footer')} target="_blank" rel="noopener noreferrer" data-as-track="gumroad_click" data-as-location="checklist_footer">GumroadでKitを確認 ↗</a></div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      var storageKey = 'aoifuture-agent-security-checklist-v1';
+      var boxes = Array.from(document.querySelectorAll('#security-checklist input[type="checkbox"]'));
+      var counter = document.getElementById('check-count');
+      function render() {
+        var checked = boxes.filter(function (box) { return box.checked; }).length;
+        if (counter) counter.textContent = checked + ' / ' + boxes.length;
+        try { localStorage.setItem(storageKey, JSON.stringify(boxes.map(function (box) { return box.checked; }))); } catch (_) {}
+      }
+      try {
+        var saved = JSON.parse(localStorage.getItem(storageKey) || '[]');
+        boxes.forEach(function (box, index) { box.checked = Boolean(saved[index]); });
+      } catch (_) {}
+      boxes.forEach(function (box) { box.addEventListener('change', render); });
+      document.getElementById('reset-checklist')?.addEventListener('click', function () { boxes.forEach(function (box) { box.checked = false; }); render(); });
+      document.getElementById('print-checklist')?.addEventListener('click', function () {
+        if (typeof window.gtag === 'function') window.gtag('event', 'checklist_print', { item_id: 'checklist_print' });
+        window.print();
+      });
+      render();
+    })();
+  </script>
+</AgentSecurityLayout>

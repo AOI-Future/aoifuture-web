@@ -1,0 +1,127 @@
+---
+import AgentSecurityLayout from '../../../layouts/AgentSecurityLayout.astro';
+import { agentSecurityLinks, gumroadUrl, sampleFindings } from '../../../data/agent-security';
+
+export const prerender = true;
+
+const canonical = 'https://aoifuture.com/agent-security/evidence-demo/';
+const title = 'AI Agent Security Evidence Demo | AOI Future';
+const description = 'core-runtime-v1プロファイルで意図的に脆弱なサンプル設定へ28項目を実行した公開デモ。7 PASS / 20 FAIL / 1 SKIPの検証成果物を確認できます。';
+const faq = [
+  ['これは実在する顧客環境の評価ですか？', 'いいえ。Kitに同梱された意図的に脆弱なサンプル設定に対して生成した、成果物形式と完全性チェーンの公開デモです。入力設定自体は公開ZIPに含まれません。'],
+  ['FAILが多いのはなぜですか？', '問題が見つかったときに、検証ID、要件ID、脅威クラス、説明がどのように記録されるかを見せるためです。'],
+  ['この結果はAIエージェントが安全ではないことを証明しますか？', '選択したcore-runtime-v1プロファイルでは20項目がFAILし、1項目が対象外としてSKIPされた、と示します。別のシステム、Field Manual全体への適合、システム全体の安全性を認証するものではありません。'],
+  ['RFC 3161 timestampは何を示しますか？', '正本JSONのdigestに対応するメッセージインプリントが、記録された時刻にタイムスタンプ応答へ含まれていたことを検証できます。'],
+];
+const faqLd = {
+  '@type': 'FAQPage',
+  mainEntity: faq.map(([name, text]) => ({ '@type': 'Question', name, acceptedAnswer: { '@type': 'Answer', text } })),
+};
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Dataset',
+      name: 'AI Agent Security Sample Evidence — Deliberately Failing Demo',
+      description,
+      url: canonical,
+      inLanguage: ['ja', 'en'],
+      creator: { '@type': 'Organization', name: 'AOI Future', url: 'https://aoifuture.com' },
+      distribution: [{
+        '@type': 'DataDownload',
+        contentUrl: 'https://aoifuture.com/agent-security/evidence-demo/AI-Agent-Security-Sample-Evidence.zip',
+        encodingFormat: 'application/zip',
+        sha256: '90b494ddea862e0d595ec6303597f275b04303f7756c5d2296320a92e4de1cbf',
+      }],
+    },
+    faqLd,
+  ],
+};
+---
+
+<AgentSecurityLayout title={title} description={description} canonical={canonical} eyebrow="AI AGENT SECURITY / EVIDENCE DEMO">
+  <Fragment slot="head"><script type="application/ld+json" set:html={JSON.stringify(structuredData)} /></Fragment>
+
+  <section class="as-hero">
+    <div>
+      <p class="as-kicker">28 CHECKS · 7 PASS · 20 FAIL · 1 SKIP</p>
+      <h1 class="as-title">「検証した」を、あとから確かめられる形にする。</h1>
+      <p class="as-lead">このデモは、Kitのfocused subsetである<code>core-runtime-v1</code>プロファイルを、意図的に脆弱な設定へ実行した結果です。全SHALLを適用範囲または理由付き対象外として記録し、適用範囲内のSHALLが実際に出力された検証結果へ対応することも確認します。</p>
+      <div class="as-actions">
+        <a class="as-button as-button--primary" href={agentSecurityLinks.evidenceDownload} download data-as-track="evidence_download" data-as-location="evidence_hero">Sample ZIPをダウンロード</a>
+        <a class="as-button" href={gumroadUrl('evidence_demo_hero')} target="_blank" rel="noopener noreferrer" data-as-track="gumroad_click" data-as-location="evidence_demo_hero">Verification Kitを見る ↗</a>
+      </div>
+      <div class="as-note">顧客環境の評価でも、Field Manual全体への適合評価でもありません。公開ZIPはoutput-only packageで、入力設定を含む再現bundleではありません。安全性や監査受容を保証しません。</div>
+    </div>
+    <aside class="as-panel">
+      <p class="as-label">SAMPLE VERDICT</p>
+      <div class="as-stat-grid">
+        <div class="as-stat"><strong>28</strong><span>checks executed</span></div>
+        <div class="as-stat as-stat--fail"><strong>20</strong><span>failed checks</span></div>
+        <div class="as-stat as-stat--pass"><strong>7</strong><span>passed checks</span></div>
+        <div class="as-stat"><strong>1</strong><span>skipped check / 0 errors</span></div>
+      </div>
+    </aside>
+  </section>
+
+  <section class="as-section">
+    <p class="as-label">READ THE RESULT</p>
+    <h2>FAILから、修正すべき境界へ戻る</h2>
+    <p>各行は単なるエラー文ではありません。検証テスト、要件、脅威クラスを同じ結果へ残すことで、「何が失敗したか」と「なぜ確認するのか」を往復できます。</p>
+    <div class="as-table-wrap">
+      <table class="as-table">
+        <caption class="sr-only">Evidence Demoの代表的なFAIL結果と要件・脅威の対応</caption>
+        <thead><tr><th scope="col">TEST</th><th scope="col">RESULT</th><th scope="col">REQUIREMENT</th><th scope="col">THREAT</th><th scope="col">FINDING</th></tr></thead>
+        <tbody>
+          {sampleFindings.map((finding) => (
+            <tr><td>{finding.id}</td><td><span class="as-fail">{finding.status}</span></td><td>{finding.req}</td><td>{finding.threat}</td><td>{finding.title}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <div class="as-actions"><a class="as-button as-button--quiet" href="/agent-security/evidence-demo/sample-verification-fail.pdf" target="_blank" data-as-track="evidence_pdf_view" data-as-location="evidence_findings">2ページのPDFを見る ↗</a></div>
+  </section>
+
+  <section class="as-section">
+    <p class="as-label">ARTIFACT CHAIN</p>
+    <h2>正本JSON、digest、timestampが同じ結果を指す</h2>
+    <p>タイムスタンプが安全性を証明するわけではありません。正本JSONのdigestとtimestamp responseのmessage imprintが一致することで、検証結果の完全性と記録時点を確認する手掛かりになります。</p>
+    <div class="as-integrity">
+      <article class="as-card"><span class="as-index">01</span><h3>Canonical JSON</h3><p>28件の結果を保持する機械可読な正本。</p><p class="as-code">sample-verification-fail.json</p></article>
+      <article class="as-card"><span class="as-index">02</span><h3>SHA-256 Manifest</h3><p>正本JSONのdigestを記録。</p><p class="as-code">5f630a55fabc0732dc01b89f4f89252602f8d8740fa88ef061ad6f62c3523370</p></article>
+      <article class="as-card"><span class="as-index">03</span><h3>RFC 3161 Response</h3><p>同じmessage imprintを含むtimestamp response。</p><p class="as-code">Granted<br />2026-07-16 04:30:31 UTC</p></article>
+    </div>
+    <img class="as-media" style="margin-top:32px" src="/agent-security/evidence-demo/integrity.png" width="1600" height="900" loading="lazy" alt="Canonical JSON、SHA-256 manifest、RFC 3161 timestamp responseの完全性チェーン" />
+  </section>
+
+  <section class="as-section">
+    <p class="as-label">DOWNLOAD CONTENTS</p>
+    <h2>ZIPに含まれるもの</h2>
+    <div class="as-card-grid">
+      <article class="as-card"><h3>Human-readable</h3><p><code>sample-verification-fail.pdf</code><br />2ページの結果一覧とfindings。</p></article>
+      <article class="as-card"><h3>Machine-readable</h3><p><code>sample-verification-fail.json</code><br />並べ替えで変わらないIDを持つ28件の結果。</p></article>
+      <article class="as-card"><h3>Integrity metadata</h3><p><code>sample-verification-fail.manifest.json</code><br />JSON digestとtimestamp参照。</p></article>
+      <article class="as-card"><h3>Timestamp response</h3><p><code>sample-verification-fail.tsr</code><br />RFC 3161 response token。</p></article>
+      <article class="as-card"><h3>Verification guide</h3><p><code>README.md</code><br />プロファイル範囲、5ファイルの構成、CA取得・検証手順、制限事項。</p></article>
+    </div>
+    <p class="as-code" style="margin-top:24px">ZIP SHA-256: 90b494ddea862e0d595ec6303597f275b04303f7756c5d2296320a92e4de1cbf</p>
+    <p>FreeTSA root CA: <a href="https://freetsa.org/files/cacert.pem" target="_blank" rel="noopener noreferrer">cacert.pem ↗</a><br /><code>curl -fsSLo freetsa-cacert.pem https://freetsa.org/files/cacert.pem</code><br /><code>SHA-256 2151b61137ffa86bf664691ba67e7da0b19f98c758e3d228d5d8ebf27e044438</code></p>
+    <div class="as-actions"><a class="as-button as-button--primary" href={agentSecurityLinks.evidenceDownload} download data-as-track="evidence_download" data-as-location="evidence_contents">公開サンプルを取得</a></div>
+  </section>
+
+  <section class="as-section">
+    <p class="as-label">FAQ</p>
+    <h2>このデモが示すこと、示さないこと</h2>
+    <div class="as-faq">{faq.map(([question, answer]) => <details><summary>{question}</summary><p>{answer}</p></details>)}</div>
+  </section>
+
+  <section class="as-section">
+    <p class="as-label">NEXT STEP</p>
+    <h2>自分の構成で、同じ形式の検証記録を作る</h2>
+    <p>書籍とチェックリストは、何を確認するかを整理します。Verification Kitは、定義された検証を実行し、結果をJSON、PDF、manifest、timestamp responseとして保持する実践層です。</p>
+    <div class="as-actions">
+      <a class="as-button" href="/agent-security/checklist/" data-as-track="checklist_view" data-as-location="evidence_next">先にチェックリストを確認</a>
+      <a class="as-button as-button--primary" href={gumroadUrl('evidence_demo_footer')} target="_blank" rel="noopener noreferrer" data-as-track="gumroad_click" data-as-location="evidence_demo_footer">GumroadでKitを確認 ↗</a>
+    </div>
+  </section>
+</AgentSecurityLayout>

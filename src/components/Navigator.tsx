@@ -240,16 +240,15 @@ function AgentSecurityPanel() {
       </p>
       <div className="font-mono text-xs text-cyan-400/40 space-y-1 border-l border-cyan-400/20 pl-4">
         <p>FREE.BOOK: PUBLISHED</p>
-        <p>VERIFICATION.KIT: PUBLISHING SOON</p>
+        <p>REFERENCE.HUB: LIVE</p>
+        <p>VERIFICATION.KIT: AVAILABLE</p>
         <p>LICENSE: CC BY-NC-ND 4.0</p>
       </div>
       <div className="flex flex-col sm:flex-row gap-3">
-        <ExternalLink accent="cyan" href="https://leanpub.com/agent-security">
-          READ FREE BOOK
-        </ExternalLink>
-        <LaunchLink accent="cyan" href="/tools/webhook-check">
-          TRY WEBHOOK CHECK
+        <LaunchLink accent="cyan" href="/agent-security/">
+          OPEN REFERENCE HUB
         </LaunchLink>
+        <ExternalLink accent="cyan" href="https://leanpub.com/agent-security">READ FREE BOOK</ExternalLink>
       </div>
     </div>
   );
