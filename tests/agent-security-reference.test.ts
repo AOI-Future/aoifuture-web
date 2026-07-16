@@ -38,6 +38,34 @@ describe('AI Agent Security Reference Hub', () => {
     }
   });
 
+  it('explains TH, CT, REQ, and VT before readers need the book', () => {
+    const guide = read('src/components/SecurityNotationGuide.astro');
+    const data = read('src/data/agent-security.ts');
+    const layout = read('src/layouts/AgentSecurityLayout.astro');
+    const hub = read('src/pages/agent-security/index.astro');
+    const linkedRoutes = routeFiles.slice(1).map(read);
+
+    expect(hub).toContain('<SecurityNotationGuide />');
+    expect(guide).toContain('id="how-to-read"');
+    expect(guide).toContain('専門家だけが使う暗号ではありません');
+    expect(guide).toContain('VT-S-011-SHELL');
+    expect(guide).toContain('VT-D-011');
+    expect(guide).toContain('一対一の変換でも、総合点でもなく');
+    expect(guide).toContain('SKIPも合格ではなく');
+    expect(guide).not.toContain('トレーサビリティ');
+    expect(data).toContain("code: 'TH'");
+    expect(data).toContain("code: 'CT'");
+    expect(data).toContain("code: 'REQ'");
+    expect(data).toContain("code: 'VT'");
+    expect(data).toContain('SHALLは必須');
+    expect(data).toContain('Manualの基本判定はPASS／FAIL');
+    expect(data).toContain('SKIPは合格ではありません');
+    expect(layout).toContain('/agent-security/#how-to-read');
+    for (const source of linkedRoutes) expect(source).toContain('/agent-security/#how-to-read');
+    const evidence = read('src/pages/agent-security/evidence-demo/index.astro');
+    expect(evidence.indexOf('4つの記号の読み方')).toBeLessThan(evidence.indexOf('28 CHECKS'));
+  });
+
   it('publishes the verified sample archive and manifest references', () => {
     const zipPath = join(root, 'public/agent-security/evidence-demo/AI-Agent-Security-Sample-Evidence.zip');
     const digest = createHash('sha256').update(readFileSync(zipPath)).digest('hex');

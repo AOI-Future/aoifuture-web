@@ -64,3 +64,15 @@ test('checklist stays in local storage and can reset', async ({ page }) => {
   await page.locator('#reset-checklist').click();
   await expect(first).not.toBeChecked();
 });
+
+test('terminology guide explains the traceability chain without opening the book', async ({ page }) => {
+  await page.goto('/agent-security/reference/tool-and-action-safety/');
+  await page.getByRole('link', { name: '4つの記号の読み方' }).click();
+  await expect(page).toHaveURL(/\/agent-security\/#how-to-read$/);
+  await expect(page.getByRole('heading', { name: 'この4つだけ分かれば、記号は読めます。' })).toBeVisible();
+  for (const term of ['脅威', 'コントロール', '要件', '検証テスト']) {
+    await expect(page.locator('.as-notation-heading h3').filter({ hasText: term })).toBeVisible();
+  }
+  await expect(page.getByText('VT-S-011-SHELL', { exact: true }).first()).toBeVisible();
+  await expect(page.locator('#how-to-read')).toContainText('一対一の変換でも、総合点でもなく');
+});

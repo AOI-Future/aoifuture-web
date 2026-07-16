@@ -44,9 +44,10 @@ const structuredData = {
 
   <section class="as-hero">
     <div>
+      <p class="as-inline-help as-inline-help--first">このページで使うREQ、VT、PASS／FAIL／SKIPは、<a href="/agent-security/#how-to-read" data-as-track="terminology_view" data-as-location="evidence_intro">4つの記号の読み方</a>で先に確認できます。</p>
       <p class="as-kicker">28 CHECKS · 7 PASS · 20 FAIL · 1 SKIP</p>
       <h1 class="as-title">「検証した」を、あとから確かめられる形にする。</h1>
-      <p class="as-lead">このデモは、Kitのfocused subsetである<code>core-runtime-v1</code>プロファイルを、意図的に脆弱な設定へ実行した結果です。全SHALLを適用範囲または理由付き対象外として記録し、適用範囲内のSHALLが実際に出力された検証結果へ対応することも確認します。</p>
+      <p class="as-lead">このデモは、Kitが検証対象を限定して定義した<code>core-runtime-v1</code>プロファイルを、意図的に脆弱な設定へ実行した結果です。必須要件（SHALL）を適用範囲または理由付き対象外として記録し、適用範囲内の必須要件が実際の検証結果へ対応することも確認します。</p>
       <div class="as-actions">
         <a class="as-button as-button--primary" href={agentSecurityLinks.evidenceDownload} download data-as-track="evidence_download" data-as-location="evidence_hero">Sample ZIPをダウンロード</a>
         <a class="as-button" href={gumroadUrl('evidence_demo_hero')} target="_blank" rel="noopener noreferrer" data-as-track="gumroad_click" data-as-location="evidence_demo_hero">Verification Kitを見る ↗</a>
@@ -67,11 +68,11 @@ const structuredData = {
   <section class="as-section">
     <p class="as-label">READ THE RESULT</p>
     <h2>FAILから、修正すべき境界へ戻る</h2>
-    <p>各行は単なるエラー文ではありません。検証テスト、要件、脅威クラスを同じ結果へ残すことで、「何が失敗したか」と「なぜ確認するのか」を往復できます。</p>
+    <p>各行は単なるエラー文ではありません。検証テスト、要件、脅威クラスを同じ結果へ残すことで、「何が失敗したか」と「なぜ確認するのか」を往復できます。記号の意味は<a href="/agent-security/#how-to-read" data-as-track="terminology_view" data-as-location="evidence_read_result">TH / CT / REQ / VTの読み方</a>で確認できます。</p>
     <div class="as-table-wrap">
       <table class="as-table">
         <caption class="sr-only">Evidence Demoの代表的なFAIL結果と要件・脅威の対応</caption>
-        <thead><tr><th scope="col">TEST</th><th scope="col">RESULT</th><th scope="col">REQUIREMENT</th><th scope="col">THREAT</th><th scope="col">FINDING</th></tr></thead>
+        <thead><tr><th scope="col">検証テスト (VT)</th><th scope="col">結果</th><th scope="col">要件 (REQ)</th><th scope="col">脅威 (TH)</th><th scope="col">確認内容</th></tr></thead>
         <tbody>
           {sampleFindings.map((finding) => (
             <tr><td>{finding.id}</td><td><span class="as-fail">{finding.status}</span></td><td>{finding.req}</td><td>{finding.threat}</td><td>{finding.title}</td></tr>
