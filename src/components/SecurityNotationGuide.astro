@@ -1,0 +1,37 @@
+---
+import { notationTerms } from '../data/agent-security';
+---
+
+<section class="as-section as-notation" id="how-to-read" aria-labelledby="how-to-read-title">
+  <p class="as-label">START HERE / 記号の読み方</p>
+  <h2 id="how-to-read-title">この4つだけ分かれば、記号は読めます。</h2>
+  <p>TH、CT、REQ、VTは、専門家だけが使う暗号ではありません。同じ問題を「何が怖いのか」から「どう確かめるか」までたどるための住所です。</p>
+
+  <div class="as-notation-grid">
+    {notationTerms.map((term) => (
+      <article class="as-card as-notation-card">
+        <div class="as-notation-heading">
+          <span class="as-notation-code">{term.code}</span>
+          <h3>{term.ja}<small>{term.en}</small></h3>
+        </div>
+        <p class="as-notation-question">{term.question}</p>
+        <p>{term.description}</p>
+        <p class="as-notation-example"><code>{term.exampleId}</code> {term.example}</p>
+      </article>
+    ))}
+  </div>
+
+  <div class="as-chain-example">
+    <p class="as-label">ひとつの例でつなぐ</p>
+    <ol>
+      <li><code>TH-02</code><span>ツールを悪用され、削除や送信、コード実行などの実害が起きるかもしれない。</span></li>
+      <li><code>CT-05</code><span>そこで、ツールの権限を必要最小限に絞る。</span></li>
+      <li><code>REQ-011</code><span>「各ツールは最小権限で、入力を実行前にスキーマ検証する」と、真偽を判定できる要件にする。</span></li>
+      <li><code>VT-S-011-SHELL</code><span>shellツールの設定を静的に検査し、この要件を満たすかPASS／FAILで記録する。</span></li>
+    </ol>
+  </div>
+
+  <div class="as-note">
+    番号を暗記する必要はありません。矢印は一対一の変換でも、総合点でもなく、理由をたどるためのトレーサビリティです。一つの脅威に複数のコントロールが必要なことも、一つの要件を複数のテストで確かめることもあります。FAILは「そのテスト条件を満たさなかった」という記録であり、それだけでシステム全体が危険だと断定するものではありません。
+  </div>
+</section>

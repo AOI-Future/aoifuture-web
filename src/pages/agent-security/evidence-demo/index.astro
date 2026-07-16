@@ -67,11 +67,11 @@ const structuredData = {
   <section class="as-section">
     <p class="as-label">READ THE RESULT</p>
     <h2>FAILから、修正すべき境界へ戻る</h2>
-    <p>各行は単なるエラー文ではありません。検証テスト、要件、脅威クラスを同じ結果へ残すことで、「何が失敗したか」と「なぜ確認するのか」を往復できます。</p>
+    <p>各行は単なるエラー文ではありません。検証テスト、要件、脅威クラスを同じ結果へ残すことで、「何が失敗したか」と「なぜ確認するのか」を往復できます。記号の意味は<a href="/agent-security/#how-to-read" data-as-track="terminology_view" data-as-location="evidence_read_result">TH / CT / REQ / VTの読み方</a>で確認できます。</p>
     <div class="as-table-wrap">
       <table class="as-table">
         <caption class="sr-only">Evidence Demoの代表的なFAIL結果と要件・脅威の対応</caption>
-        <thead><tr><th scope="col">TEST</th><th scope="col">RESULT</th><th scope="col">REQUIREMENT</th><th scope="col">THREAT</th><th scope="col">FINDING</th></tr></thead>
+        <thead><tr><th scope="col">検証テスト (VT)</th><th scope="col">結果</th><th scope="col">要件 (REQ)</th><th scope="col">脅威 (TH)</th><th scope="col">確認内容</th></tr></thead>
         <tbody>
           {sampleFindings.map((finding) => (
             <tr><td>{finding.id}</td><td><span class="as-fail">{finding.status}</span></td><td>{finding.req}</td><td>{finding.threat}</td><td>{finding.title}</td></tr>

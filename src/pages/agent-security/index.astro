@@ -1,5 +1,6 @@
 ---
 import AgentSecurityLayout from '../../layouts/AgentSecurityLayout.astro';
+import SecurityNotationGuide from '../../components/SecurityNotationGuide.astro';
 import { agentSecurityLinks, chapters, gumroadUrl } from '../../data/agent-security';
 
 export const prerender = true;
@@ -46,14 +47,16 @@ const collectionLd = {
     <aside class="as-panel" aria-label="Reference path">
       <p class="as-label">THE CHAIN</p>
       <div class="as-stat-grid">
-        <div class="as-stat"><strong>10</strong><span>Threat classes / TH</span></div>
-        <div class="as-stat"><strong>15</strong><span>Control classes / CT</span></div>
-        <div class="as-stat"><strong>REQ</strong><span>Normative requirements</span></div>
-        <div class="as-stat"><strong>VT</strong><span>PASS / FAIL verification</span></div>
+        <div class="as-stat"><strong>TH</strong><span>脅威：何が起こりうるか</span></div>
+        <div class="as-stat"><strong>CT</strong><span>対策：何で防ぐか</span></div>
+        <div class="as-stat"><strong>REQ</strong><span>要件：何を満たすか</span></div>
+        <div class="as-stat"><strong>VT</strong><span>検証：どう確かめるか</span></div>
       </div>
       <p class="as-code" style="margin:22px 0 0">TH-* → CT-* → REQ-* → VT-*</p>
     </aside>
   </section>
+
+  <SecurityNotationGuide />
 
   <section class="as-section">
     <p class="as-label">CHOOSE A PATH</p>

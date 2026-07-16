@@ -17,6 +17,45 @@ export function gumroadUrl(content: string) {
   return `https://0xshugo.gumroad.com/l/AI-Agent?${params.toString()}`;
 }
 
+export const notationTerms = [
+  {
+    code: 'TH',
+    ja: '脅威',
+    en: 'Threat',
+    question: '何が起こりうる？',
+    description: '攻撃者の目的や侵入経路ごとに、「どういう種類の問題か」を整理する分類です。TH-01からTH-10まであります。',
+    exampleId: 'TH-02',
+    example: 'ツールの悪用と権限昇格',
+  },
+  {
+    code: 'CT',
+    ja: 'コントロール',
+    en: 'Control',
+    question: '何で防ぐ？',
+    description: '脅威に対して置く防御策の種類です。CT-01からCT-15まであり、特定製品の設定名ではなく、最小権限やサンドボックスなど、防御の考え方を表します。',
+    exampleId: 'CT-05',
+    example: '最小権限と職務分離',
+  },
+  {
+    code: 'REQ',
+    ja: '要件',
+    en: 'Requirement',
+    question: '何が満たされればよい？',
+    description: 'コントロールを、ある／ない、満たす／満たさないと判定できる文章にしたものです。REQ-000からREQ-054までの安定した識別子を使い、SHALLは必須、SHOULDは理由を記録したうえで判断する強い推奨です。',
+    exampleId: 'REQ-011',
+    example: 'ツールを最小権限にし、入力を実行前に検証する',
+  },
+  {
+    code: 'VT',
+    ja: '検証テスト',
+    en: 'Verification Test',
+    question: 'どう確かめる？',
+    description: '要件を実際に確認し、PASS／FAIL／SKIPとして記録するテストです。Sは静的、Dは動的、Eは証拠・ログ、Aは監査・アテステーションを表します。',
+    exampleId: 'VT-S-011-SHELL',
+    example: 'shellツールの設定を静的に確認する',
+  },
+] as const;
+
 export const chapters = [
   { no: '01', title: 'エージェントセキュリティという問題', summary: 'モデルの出力ではなく、ツールを通じて行使される権限と結果を脅威モデルの中心に置く。' },
   { no: '02', title: '脅威分類', summary: 'TH-01からTH-10まで。攻撃者の目的と侵入経路で、エージェント固有の脅威を整理する。' },
