@@ -1,0 +1,121 @@
+---
+import AgentSecurityLayout from '../../layouts/AgentSecurityLayout.astro';
+import { agentSecurityLinks, chapters, gumroadUrl } from '../../data/agent-security';
+
+export const prerender = true;
+
+const canonical = 'https://aoifuture.com/agent-security/';
+const title = 'AI Agent Security Reference | AOI Future';
+const description = 'AIエージェントの脅威、コントロール、要件、検証を章ごとにたどる無料リファレンス。書籍、実践チェックリスト、Evidence Demo、Verification Kitを一つの導線にまとめています。';
+const collectionLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'AI Agent Security Reference',
+  url: canonical,
+  description,
+  inLanguage: 'ja',
+  author: { '@type': 'Person', name: 'Shugo Nozaki', url: 'https://nozaki.com' },
+  hasPart: chapters.filter((chapter) => chapter.href).map((chapter) => ({
+    '@type': 'CreativeWork',
+    name: `Chapter ${chapter.no}: ${chapter.title}`,
+    url: `https://aoifuture.com${chapter.href}`,
+  })),
+};
+---
+
+<AgentSecurityLayout title={title} description={description} canonical={canonical}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(collectionLd)} />
+  </Fragment>
+
+  <section class="as-hero">
+    <div>
+      <p class="as-kicker">LEARN → ASSESS → VERIFY</p>
+      <h1 class="as-title">AIエージェントの「安全です」を、検証できる形にする。</h1>
+      <p class="as-lead">
+        プロンプトだけでは、削除、送信、コード実行、資金移動を止められない。ここでは、AIエージェントの脅威をコントロールへ、コントロールを要件へ、要件をPASS／FAILへつなぎます。
+      </p>
+      <div class="as-actions">
+        <a class="as-button as-button--primary" href="/agent-security/checklist/" data-as-track="agent_security_path_click" data-as-location="hub_hero_checklist">セルフチェックを始める</a>
+        <a class="as-button" href="/agent-security/evidence-demo/" data-as-track="agent_security_path_click" data-as-location="hub_hero_evidence">Evidence Demoを見る</a>
+      </div>
+      <div class="as-note">
+        このリファレンスとチェックリストは、特定システムの安全性を認証するものではありません。対象範囲を定め、確認すべき境界と残すべき証跡を整理するための公開資料です。
+      </div>
+    </div>
+    <aside class="as-panel" aria-label="Reference path">
+      <p class="as-label">THE CHAIN</p>
+      <div class="as-stat-grid">
+        <div class="as-stat"><strong>10</strong><span>Threat classes / TH</span></div>
+        <div class="as-stat"><strong>15</strong><span>Control classes / CT</span></div>
+        <div class="as-stat"><strong>REQ</strong><span>Normative requirements</span></div>
+        <div class="as-stat"><strong>VT</strong><span>PASS / FAIL verification</span></div>
+      </div>
+      <p class="as-code" style="margin:22px 0 0">TH-* → CT-* → REQ-* → VT-*</p>
+    </aside>
+  </section>
+
+  <section class="as-section">
+    <p class="as-label">CHOOSE A PATH</p>
+    <h2>読むだけで終わらせないための3つの入口</h2>
+    <p>全体像が必要な人、今日確認したい人、証跡を残したい人。同じ情報を、目的に合わせて使い分けられます。</p>
+    <div class="as-path">
+      <article class="as-card">
+        <span class="as-index">01 / LEARN</span>
+        <h3>書籍と章別リファレンス</h3>
+        <p>なぜ必要かを理解し、脅威・コントロール・要件・検証のつながりを読む。</p>
+        <div class="as-actions"><a class="as-button as-button--quiet" href="#chapters">章から探す</a></div>
+      </article>
+      <article class="as-card">
+        <span class="as-index">02 / ASSESS</span>
+        <h3>実践チェックリスト</h3>
+        <p>自分の構成について、Yesではなく「確認できるか」を問い直す。</p>
+        <div class="as-actions"><a class="as-button as-button--quiet" href="/agent-security/checklist/" data-as-track="checklist_view" data-as-location="hub_path">チェックリストへ</a></div>
+      </article>
+      <article class="as-card">
+        <span class="as-index">03 / VERIFY</span>
+        <h3>Evidence Demo</h3>
+        <p>PDF、JSON、manifest、RFC 3161 timestampが、どのように一つの検証記録になるかを見る。</p>
+        <div class="as-actions"><a class="as-button as-button--quiet" href="/agent-security/evidence-demo/" data-as-track="evidence_demo_view" data-as-location="hub_path">デモを確認</a></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="as-section" id="chapters">
+    <p class="as-label">BOOK REFERENCE</p>
+    <h2>フィールドマニュアルを章ごとにたどる</h2>
+    <p>公開中の独立リファレンスは第5章から開始しています。ほかの章は要点を確認したうえで、無料書籍の該当章へ進めます。</p>
+    <div class="as-chapter-grid">
+      {chapters.map((chapter) => (
+        <a id={`chapter-${chapter.no}`} class="as-card as-chapter" href={chapter.href || agentSecurityLinks.bookJa} data-as-track={chapter.href ? 'reference_chapter_view' : 'book_click'} data-as-location={`hub_chapter_${chapter.no}`}>
+          <span class="as-index">CHAPTER {chapter.no}</span>
+          <h3>{chapter.title}</h3>
+          <p>{chapter.summary}</p>
+          <small>{chapter.href ? '公開リファレンスを読む >' : '無料書籍の目次から読む ↗'}</small>
+        </a>
+      ))}
+    </div>
+    <div class="as-actions">
+      <a class="as-button" href={agentSecurityLinks.bookJa} target="_blank" rel="noopener noreferrer" data-as-track="book_click" data-as-location="hub_book_ja">日本語版を無料で読む ↗</a>
+      <a class="as-button as-button--quiet" href={agentSecurityLinks.bookEn} target="_blank" rel="noopener noreferrer" data-as-track="book_click" data-as-location="hub_book_en">English edition ↗</a>
+    </div>
+  </section>
+
+  <section class="as-section">
+    <p class="as-label">FROM ONE CHECK TO THE WHOLE SURFACE</p>
+    <h2>無料の確認と、有料の検証実行を分ける</h2>
+    <div class="as-card-grid">
+      <article class="as-card">
+        <h3>Webhook Check</h3>
+        <p>Webhook署名検証の4ケースだけを、Python標準ライブラリで実行する無料ツール。まず一つの境界でPASS／FAILを体験できます。</p>
+        <div class="as-actions"><a class="as-button as-button--quiet" href={agentSecurityLinks.webhookTool} data-as-track="free_tool_click" data-as-location="hub_webhook">無料ツールを実行</a></div>
+      </article>
+      <article class="as-card">
+        <h3>Verification Kit</h3>
+        <p>より広い検証を実行し、機械可読JSON、人が読めるPDF、digest manifest、timestamp responseを保持するための実践パッケージです。</p>
+        <div class="as-actions"><a class="as-button as-button--primary" href={gumroadUrl('hub_verification_kit')} target="_blank" rel="noopener noreferrer" data-as-track="gumroad_click" data-as-location="hub_verification_kit">GumroadでKitを確認 ↗</a></div>
+      </article>
+    </div>
+    <div class="as-note">Kitが示すのは、何を・いつ・どの結果で検証したかという記録です。システム全体の安全性や、監査担当者による受容を保証する証明書ではありません。</div>
+  </section>
+</AgentSecurityLayout>

@@ -88,14 +88,9 @@ export default function PageTransition() {
           50% { transform: translateX(100%); opacity: 1; }
         }
 
-        body {
-          opacity: 0;
-          transition: opacity 0.3s ease-in;
-        }
-
-        body.page-loaded {
-          opacity: 1;
-        }
+        /* Content stays visible if client hydration fails. The transition
+           overlay is progressive enhancement, never a rendering gate. */
+        body { opacity: 1; }
       `}</style>
     </>
   );

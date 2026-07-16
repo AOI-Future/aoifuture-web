@@ -52,7 +52,17 @@ The fix for the real defects is one line: `hmac.compare_digest`, behind a `start
   curl -sO https://raw.githubusercontent.com/AOI-Future/agent-webhook-check/main/webhook_check.py && python3 webhook_check.py --demo
 - Audit your own verifier: python3 webhook_check.py --verifier yourmodule:verify
 
-It is the free carve-out of one case from the fuller AI-Agent Security Verification Kit (identity, tools, untrusted content, the MCP supply chain, EMA), which additionally seals each run into a single evidence artifact whose hash is countersigned by an RFC 3161 timestamp authority. The book itself — AI Agent Security: A Field Manual — is published, free, at https://leanpub.com/agent-security; the kit is publishing soon and the list is at https://dispatch.aoifuture.com/.
+It is the free carve-out of one case from the fuller AI-Agent Security Verification Kit (identity, tools, untrusted content, the MCP supply chain, EMA), which produces reviewable JSON, PDF, digest-manifest, and RFC 3161 timestamp artifacts. The public AI Agent Security Reference Hub connects the chapter guide, self-assessment checklist, deliberately failing evidence demo, free books, and Verification Kit:
+
+- Reference Hub: https://aoifuture.com/agent-security/
+- Checklist: https://aoifuture.com/agent-security/checklist/
+- Evidence Demo: https://aoifuture.com/agent-security/evidence-demo/
+- Tool and Action Safety reference: https://aoifuture.com/agent-security/reference/tool-and-action-safety/
+- Free English book: https://leanpub.com/agent-security
+- Free Japanese book: https://leanpub.com/agent-security-ja
+- Verification Kit: https://0xshugo.gumroad.com/l/AI-Agent
+
+The evidence demo is generated from a bundled deliberately insecure sample configuration. It is not a customer assessment, a safety certificate, or a guarantee that any auditor will accept the artifacts.
 
 ## For AI Assistants
 
