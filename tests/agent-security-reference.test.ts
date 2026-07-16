@@ -41,7 +41,7 @@ describe('AI Agent Security Reference Hub', () => {
   it('publishes the verified sample archive and manifest references', () => {
     const zipPath = join(root, 'public/agent-security/evidence-demo/AI-Agent-Security-Sample-Evidence.zip');
     const digest = createHash('sha256').update(readFileSync(zipPath)).digest('hex');
-    expect(digest).toBe('3c2822b1f5d3753d5b2e10d268c852db94c6e764cd30df54fc81ccb784f7171c');
+    expect(digest).toBe('90b494ddea862e0d595ec6303597f275b04303f7756c5d2296320a92e4de1cbf');
 
     const names = execFileSync('unzip', ['-Z1', zipPath], { encoding: 'utf8' });
     expect(names).toContain('sample-evidence-fail/sample-verification-fail.json');
@@ -65,7 +65,7 @@ describe('AI Agent Security Reference Hub', () => {
     const manifestText = execFileSync('unzip', ['-p', zipPath, 'sample-evidence-fail/sample-verification-fail.manifest.json'], { encoding: 'utf8' });
     const manifest = JSON.parse(manifestText);
     const jsonDigest = createHash('sha256').update(jsonBytes).digest('hex');
-    expect(jsonDigest).toBe('84e55e1e6eb795334daed27172771f8030762957d16e5a94e7982629396b4d29');
+    expect(jsonDigest).toBe('5f630a55fabc0732dc01b89f4f89252602f8d8740fa88ef061ad6f62c3523370');
     expect(manifest.report_json_sha256).toBe(jsonDigest);
     expect(manifest.report_json).toBe('sample-verification-fail.json');
     expect(manifest.timestamp.token_file).toBe('sample-verification-fail.tsr');

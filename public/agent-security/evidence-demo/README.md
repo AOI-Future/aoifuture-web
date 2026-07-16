@@ -39,9 +39,9 @@ Representative mappings:
 
 Canonical JSON SHA-256:
 
-`84e55e1e6eb795334daed27172771f8030762957d16e5a94e7982629396b4d29`
+`5f630a55fabc0732dc01b89f4f89252602f8d8740fa88ef061ad6f62c3523370`
 
-The RFC 3161 response was granted at `2026-07-16 04:16:44 UTC`. Its SHA-256 message imprint matches the canonical JSON digest.
+The RFC 3161 response was granted at `2026-07-16 04:30:31 UTC`. Its SHA-256 message imprint matches the canonical JSON digest.
 
 Download the FreeTSA root certificate with the exact filename used below:
 
