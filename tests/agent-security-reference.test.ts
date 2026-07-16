@@ -49,14 +49,21 @@ describe('AI Agent Security Reference Hub', () => {
     expect(guide).toContain('id="how-to-read"');
     expect(guide).toContain('専門家だけが使う暗号ではありません');
     expect(guide).toContain('VT-S-011-SHELL');
+    expect(guide).toContain('VT-D-011');
     expect(guide).toContain('一対一の変換でも、総合点でもなく');
+    expect(guide).toContain('SKIPも合格ではなく');
+    expect(guide).not.toContain('トレーサビリティ');
     expect(data).toContain("code: 'TH'");
     expect(data).toContain("code: 'CT'");
     expect(data).toContain("code: 'REQ'");
     expect(data).toContain("code: 'VT'");
     expect(data).toContain('SHALLは必須');
+    expect(data).toContain('Manualの基本判定はPASS／FAIL');
+    expect(data).toContain('SKIPは合格ではありません');
     expect(layout).toContain('/agent-security/#how-to-read');
     for (const source of linkedRoutes) expect(source).toContain('/agent-security/#how-to-read');
+    const evidence = read('src/pages/agent-security/evidence-demo/index.astro');
+    expect(evidence.indexOf('4つの記号の読み方')).toBeLessThan(evidence.indexOf('28 CHECKS'));
   });
 
   it('publishes the verified sample archive and manifest references', () => {

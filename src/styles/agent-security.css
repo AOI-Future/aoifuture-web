@@ -170,6 +170,7 @@
 .as-chapter small { display: block; margin-top: 16px; color: rgba(0, 255, 255, 0.65); font-family: var(--font-mono); }
 
 .as-inline-help { margin: 18px 0 0; color: var(--as-muted); font-size: 14px; line-height: 1.8; }
+.as-inline-help--first { margin: 0 0 18px; }
 .as-inline-help a,
 .as-section > p a { color: var(--as-cyan); text-underline-offset: 4px; }
 .as-notation-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 30px; }

@@ -44,9 +44,10 @@ const structuredData = {
 
   <section class="as-hero">
     <div>
+      <p class="as-inline-help as-inline-help--first">このページで使うREQ、VT、PASS／FAIL／SKIPは、<a href="/agent-security/#how-to-read" data-as-track="terminology_view" data-as-location="evidence_intro">4つの記号の読み方</a>で先に確認できます。</p>
       <p class="as-kicker">28 CHECKS · 7 PASS · 20 FAIL · 1 SKIP</p>
       <h1 class="as-title">「検証した」を、あとから確かめられる形にする。</h1>
-      <p class="as-lead">このデモは、Kitのfocused subsetである<code>core-runtime-v1</code>プロファイルを、意図的に脆弱な設定へ実行した結果です。全SHALLを適用範囲または理由付き対象外として記録し、適用範囲内のSHALLが実際に出力された検証結果へ対応することも確認します。</p>
+      <p class="as-lead">このデモは、Kitが検証対象を限定して定義した<code>core-runtime-v1</code>プロファイルを、意図的に脆弱な設定へ実行した結果です。必須要件（SHALL）を適用範囲または理由付き対象外として記録し、適用範囲内の必須要件が実際の検証結果へ対応することも確認します。</p>
       <div class="as-actions">
         <a class="as-button as-button--primary" href={agentSecurityLinks.evidenceDownload} download data-as-track="evidence_download" data-as-location="evidence_hero">Sample ZIPをダウンロード</a>
         <a class="as-button" href={gumroadUrl('evidence_demo_hero')} target="_blank" rel="noopener noreferrer" data-as-track="gumroad_click" data-as-location="evidence_demo_hero">Verification Kitを見る ↗</a>

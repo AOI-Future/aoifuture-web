@@ -5,7 +5,7 @@ import { notationTerms } from '../data/agent-security';
 <section class="as-section as-notation" id="how-to-read" aria-labelledby="how-to-read-title">
   <p class="as-label">START HERE / 記号の読み方</p>
   <h2 id="how-to-read-title">この4つだけ分かれば、記号は読めます。</h2>
-  <p>TH、CT、REQ、VTは、専門家だけが使う暗号ではありません。同じ問題を「何が怖いのか」から「どう確かめるか」までたどるための住所です。</p>
+  <p>TH、CT、REQ、VTは、専門家だけが使う暗号ではありません。同じ問題を「何が怖いのか」から「どう確かめるか」までたどるための目印です。</p>
 
   <div class="as-notation-grid">
     {notationTerms.map((term) => (
@@ -25,13 +25,13 @@ import { notationTerms } from '../data/agent-security';
     <p class="as-label">ひとつの例でつなぐ</p>
     <ol>
       <li><code>TH-02</code><span>ツールを悪用され、削除や送信、コード実行などの実害が起きるかもしれない。</span></li>
-      <li><code>CT-05</code><span>そこで、ツールの権限を必要最小限に絞る。</span></li>
-      <li><code>REQ-011</code><span>「各ツールは最小権限で、入力を実行前にスキーマ検証する」と、真偽を判定できる要件にする。</span></li>
-      <li><code>VT-S-011-SHELL</code><span>shellツールの設定を静的に検査し、この要件を満たすかPASS／FAILで記録する。</span></li>
+      <li><code>CT-05</code><span>そこで、ツールの権限を必要最小限に絞る対策（コントロール）を置く。</span></li>
+      <li><code>REQ-011</code><span>「各ツールは最小権限で、入力の型・必須項目・許容範囲を実行前に確認する」と、真偽を判定できる要件にする。</span></li>
+      <li><code>VT-S-011-SHELL</code><span>Kit固有の静的テストでshellツールの設定を確認する。これだけで入力拒否の挙動まで証明したことにはならないため、Manualの<code>VT-D-011</code>のような動的テストも組み合わせる。</span></li>
     </ol>
   </div>
 
   <div class="as-note">
-    番号を暗記する必要はありません。矢印は一対一の変換でも、総合点でもなく、理由をたどるためのトレーサビリティです。一つの脅威に複数のコントロールが必要なことも、一つの要件を複数のテストで確かめることもあります。FAILは「そのテスト条件を満たさなかった」という記録であり、それだけでシステム全体が危険だと断定するものではありません。
+    番号を暗記する必要はありません。矢印は一対一の変換でも、総合点でもなく、「なぜこの対策・要件・テストが必要なのか」を後からたどるための対応関係です。一つの脅威に複数の対策が必要なことも、一つの要件を複数のテストで確かめることもあります。FAILは「そのテスト条件を満たさなかった」という記録であり、それだけでシステム全体が危険だと断定するものではありません。SKIPも合格ではなく、そのテストを判定対象から外した理由を別に確認する必要があります。
   </div>
 </section>
