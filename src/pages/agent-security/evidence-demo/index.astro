@@ -6,11 +6,11 @@ export const prerender = true;
 
 const canonical = 'https://aoifuture.com/agent-security/evidence-demo/';
 const title = 'AI Agent Security Evidence Demo | AOI Future';
-const description = '意図的に脆弱なサンプル設定へ21項目の検証を実行した公開デモ。4 PASS / 16 FAIL / 1 SKIPのPDF、JSON、manifest、RFC 3161 timestampを確認できます。';
+const description = 'core-runtime-v1プロファイルで意図的に脆弱なサンプル設定へ25項目を実行した公開デモ。7 PASS / 17 FAIL / 1 SKIPの検証成果物を確認できます。';
 const faq = [
   ['これは実在する顧客環境の評価ですか？', 'いいえ。Kitに同梱された意図的に脆弱なサンプル設定に対して生成した、成果物形式と完全性チェーンの公開デモです。入力設定自体は公開ZIPに含まれません。'],
   ['FAILが多いのはなぜですか？', '問題が見つかったときに、検証ID、要件ID、脅威クラス、説明がどのように記録されるかを見せるためです。'],
-  ['この結果はAIエージェントが安全ではないことを証明しますか？', 'サンプル対象の定義済み検証では16項目がFAILし、1項目が対象外としてSKIPされた、と示します。別のシステムや、システム全体の安全性を認証するものではありません。'],
+  ['この結果はAIエージェントが安全ではないことを証明しますか？', '選択したcore-runtime-v1プロファイルでは17項目がFAILし、1項目が対象外としてSKIPされた、と示します。別のシステム、Field Manual全体への適合、システム全体の安全性を認証するものではありません。'],
   ['RFC 3161 timestampは何を示しますか？', '正本JSONのdigestに対応するメッセージインプリントが、記録された時刻にタイムスタンプ応答へ含まれていたことを検証できます。'],
 ];
 const faqLd = {
@@ -31,7 +31,7 @@ const structuredData = {
         '@type': 'DataDownload',
         contentUrl: 'https://aoifuture.com/agent-security/evidence-demo/AI-Agent-Security-Sample-Evidence.zip',
         encodingFormat: 'application/zip',
-        sha256: '5244bc39c4cac235e7c7a51f173dd3ae3c693382bc5e0bee0ef65160f3aaf3d0',
+        sha256: '2f9fcce0fc5aea9a4d0e012f484dde46740316423ff3fbc3240955a4c4d5a2ee',
       }],
     },
     faqLd,
@@ -44,21 +44,21 @@ const structuredData = {
 
   <section class="as-hero">
     <div>
-      <p class="as-kicker">21 CHECKS · 4 PASS · 16 FAIL · 1 SKIP</p>
+      <p class="as-kicker">25 CHECKS · 7 PASS · 17 FAIL · 1 SKIP</p>
       <h1 class="as-title">「検証した」を、あとから確かめられる形にする。</h1>
-      <p class="as-lead">このデモは、Kitに同梱された意図的に脆弱な設定へVerification Kitを実行した結果です。画面の要約だけでなく、PDF、正本JSON、digest manifest、RFC 3161 timestamp responseをそのまま確認できます。</p>
+      <p class="as-lead">このデモは、Kitのfocused subsetである<code>core-runtime-v1</code>プロファイルを、意図的に脆弱な設定へ実行した結果です。全SHALLを適用範囲または理由付き対象外として記録し、適用範囲内のSHALLにテストがあることも確認します。</p>
       <div class="as-actions">
         <a class="as-button as-button--primary" href={agentSecurityLinks.evidenceDownload} download data-as-track="evidence_download" data-as-location="evidence_hero">Sample ZIPをダウンロード</a>
         <a class="as-button" href={gumroadUrl('evidence_demo_hero')} target="_blank" rel="noopener noreferrer" data-as-track="gumroad_click" data-as-location="evidence_demo_hero">Verification Kitを見る ↗</a>
       </div>
-      <div class="as-note">顧客環境の評価ではありません。公開ZIPは成果物形式と完全性チェーンを確認するoutput-only packageで、入力設定を含む再現bundleではありません。AIエージェントの安全性や監査受容を保証しません。</div>
+      <div class="as-note">顧客環境の評価でも、Field Manual全体への適合評価でもありません。公開ZIPはoutput-only packageで、入力設定を含む再現bundleではありません。安全性や監査受容を保証しません。</div>
     </div>
     <aside class="as-panel">
       <p class="as-label">SAMPLE VERDICT</p>
       <div class="as-stat-grid">
-        <div class="as-stat"><strong>21</strong><span>checks executed</span></div>
-        <div class="as-stat as-stat--fail"><strong>16</strong><span>failed checks</span></div>
-        <div class="as-stat as-stat--pass"><strong>4</strong><span>passed checks</span></div>
+        <div class="as-stat"><strong>25</strong><span>checks executed</span></div>
+        <div class="as-stat as-stat--fail"><strong>17</strong><span>failed checks</span></div>
+        <div class="as-stat as-stat--pass"><strong>7</strong><span>passed checks</span></div>
         <div class="as-stat"><strong>1</strong><span>skipped check / 0 errors</span></div>
       </div>
     </aside>
@@ -87,9 +87,9 @@ const structuredData = {
     <h2>正本JSON、digest、timestampが同じ結果を指す</h2>
     <p>タイムスタンプが安全性を証明するわけではありません。正本JSONのdigestとtimestamp responseのmessage imprintが一致することで、検証結果の完全性と記録時点を確認する手掛かりになります。</p>
     <div class="as-integrity">
-      <article class="as-card"><span class="as-index">01</span><h3>Canonical JSON</h3><p>21件の結果を保持する機械可読な正本。</p><p class="as-code">sample-verification-fail.json</p></article>
-      <article class="as-card"><span class="as-index">02</span><h3>SHA-256 Manifest</h3><p>正本JSONのdigestを記録。</p><p class="as-code">2df559f00240917ed97ecdb35a8b1e6f4482e62bacc750314b5b466c5384624f</p></article>
-      <article class="as-card"><span class="as-index">03</span><h3>RFC 3161 Response</h3><p>同じmessage imprintを含むtimestamp response。</p><p class="as-code">Granted<br />2026-07-16 03:21:03 UTC</p></article>
+      <article class="as-card"><span class="as-index">01</span><h3>Canonical JSON</h3><p>25件の結果を保持する機械可読な正本。</p><p class="as-code">sample-verification-fail.json</p></article>
+      <article class="as-card"><span class="as-index">02</span><h3>SHA-256 Manifest</h3><p>正本JSONのdigestを記録。</p><p class="as-code">5c571e0a1dc2bd5288edea738ae1dde615eaca0537b50948bc5df9989e9ed79a</p></article>
+      <article class="as-card"><span class="as-index">03</span><h3>RFC 3161 Response</h3><p>同じmessage imprintを含むtimestamp response。</p><p class="as-code">Granted<br />2026-07-16 03:55:07 UTC</p></article>
     </div>
     <img class="as-media" style="margin-top:32px" src="/agent-security/evidence-demo/integrity.png" width="1600" height="900" loading="lazy" alt="Canonical JSON、SHA-256 manifest、RFC 3161 timestamp responseの完全性チェーン" />
   </section>
@@ -99,11 +99,13 @@ const structuredData = {
     <h2>ZIPに含まれるもの</h2>
     <div class="as-card-grid">
       <article class="as-card"><h3>Human-readable</h3><p><code>sample-verification-fail.pdf</code><br />2ページの結果一覧とfindings。</p></article>
-      <article class="as-card"><h3>Machine-readable</h3><p><code>sample-verification-fail.json</code><br />安定したIDを持つ21件の結果。</p></article>
+      <article class="as-card"><h3>Machine-readable</h3><p><code>sample-verification-fail.json</code><br />並べ替えで変わらないIDを持つ25件の結果。</p></article>
       <article class="as-card"><h3>Integrity metadata</h3><p><code>sample-verification-fail.manifest.json</code><br />JSON digestとtimestamp参照。</p></article>
       <article class="as-card"><h3>Timestamp response</h3><p><code>sample-verification-fail.tsr</code><br />RFC 3161 response token。</p></article>
+      <article class="as-card"><h3>Verification guide</h3><p><code>README.md</code><br />プロファイル範囲、5ファイルの構成、CA取得・検証手順、制限事項。</p></article>
     </div>
-    <p class="as-code" style="margin-top:24px">ZIP SHA-256: 5244bc39c4cac235e7c7a51f173dd3ae3c693382bc5e0bee0ef65160f3aaf3d0</p>
+    <p class="as-code" style="margin-top:24px">ZIP SHA-256: 2f9fcce0fc5aea9a4d0e012f484dde46740316423ff3fbc3240955a4c4d5a2ee</p>
+    <p>FreeTSA root CA: <a href="https://freetsa.org/files/cacert.pem" target="_blank" rel="noopener noreferrer">cacert.pem ↗</a><br /><code>SHA-256 2151b61137ffa86bf664691ba67e7da0b19f98c758e3d228d5d8ebf27e044438</code></p>
     <div class="as-actions"><a class="as-button as-button--primary" href={agentSecurityLinks.evidenceDownload} download data-as-track="evidence_download" data-as-location="evidence_contents">公開サンプルを取得</a></div>
   </section>
 

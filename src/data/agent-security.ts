@@ -73,5 +73,5 @@ export const sampleFindings = [
   { id: 'VT-S-001', req: 'REQ-001', threat: 'TH-05', status: 'FAIL', title: 'Agent identity is distinct from the human' },
   { id: 'VT-S-003B', req: 'REQ-003', threat: 'TH-05', status: 'FAIL', title: 'Agent credential scope is minimized' },
   { id: 'VT-S-051B', req: 'REQ-051', threat: 'TH-06', status: 'FAIL', title: 'Delegate scope is a subset of the parent' },
-  { id: 'VT-S-012A-001', req: 'REQ-012', threat: 'TH-08', status: 'FAIL', title: 'Network tool has an egress allowlist' },
+  { id: 'VT-S-012A-WEB-FETCH', req: 'REQ-012', threat: 'TH-08', status: 'FAIL', title: 'Network tool has an egress allowlist' },
 ] as const;

@@ -190,6 +190,7 @@
 .as-integrity .as-card { position: relative; }
 .as-integrity .as-card:not(:last-child)::after { content: '>'; position: absolute; right: -32px; top: 50%; color: var(--as-cyan); font-family: var(--font-mono); font-size: 28px; }
 .as-code { overflow-wrap: anywhere; color: #c8e8eb; font-family: var(--font-mono); font-size: 12px; line-height: 1.7; }
+.as-shell code { overflow-wrap: anywhere; word-break: break-word; }
 
 .as-checklist { display: grid; gap: 22px; margin-top: 34px; }
 .as-check-group h2 { font-size: 22px; }
