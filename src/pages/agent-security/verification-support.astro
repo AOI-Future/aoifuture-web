@@ -1,0 +1,241 @@
+---
+import AgentSecurityLayout from '../../layouts/AgentSecurityLayout.astro';
+import { agentSecurityLinks, gumroadUrl } from '../../data/agent-security';
+
+export const prerender = true;
+
+const canonical = 'https://aoifuture.com/agent-security/verification-support/';
+const title = 'Agent Verification Sprint | AI Agent Security Reference | AOI Future';
+const description = 'Verification Kitが出力した検証記録を、是正計画と経営向けサマリーに変える人間の検証者による実務パッケージ。SVC-REQに基づく検証、FAILレビュー、Continuous Verificationまでを一つの導線でつなぎます。';
+
+const svcReqs = [
+  { id: 'SVC-REQ-01', level: 'SHALL', text: '対象システムの適用REQ範囲を初回セッションで確定し文書化する' },
+  { id: 'SVC-REQ-02', level: 'SHALL', text: '検証はVerification Kitの静的テストと、Manualから選定した動的テスト（VT-D）で実施する' },
+  { id: 'SVC-REQ-03', level: 'SHALL', text: 'すべての判定に根拠（設定値・ログ・再現手順のいずれか）を添付する' },
+  { id: 'SVC-REQ-04', level: 'SHALL', text: 'SKIPには判定対象から外した理由を記録する' },
+  { id: 'SVC-REQ-05', level: 'SHOULD', text: '是正実施は依頼者側で行う。実装代行は本スプリントに含めない' },
+];
+
+const weeks = [
+  { no: '01', title: 'Week 1', body: '適用範囲の確定（対象1エージェント構成・ツール群・MCP接続）' },
+  { no: '02', title: 'Week 2', body: '検証実行（Kit静的＋選定VT-D）' },
+  { no: '03', title: 'Week 3', body: 'FAILレビュー会・成果物納品' },
+];
+
+const faq = [
+  ['これは認証ですか？', 'いいえ。検証記録の作成支援です。記録を認証として扱うかは、依頼者側の監査プロセスが判断します。'],
+  ['FAILが多いと依頼できませんか？', 'FAILこそ出発点です。Evidence Demoも28チェック中20がFAILです。'],
+  ['NDAは締結できますか？', '可能です。intakeでお申し出ください。'],
+  ['是正の実装もお願いできますか？', '本スプリントには含めません。検証者の独立性を保つためです。'],
+];
+
+const serviceLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'AI Agent Security Verification',
+  name: 'Agent Verification Sprint',
+  description,
+  url: canonical,
+  provider: { '@type': 'Person', name: 'Shugo Nozaki', url: 'https://nozaki.com' },
+  areaServed: 'JP',
+  offers: [
+    {
+      '@type': 'Offer',
+      name: 'Agent Verification Sprint',
+      price: '300000',
+      priceCurrency: 'JPY',
+    },
+    {
+      '@type': 'Offer',
+      name: 'Continuous Verification',
+      price: '100000',
+      priceCurrency: 'JPY',
+    },
+  ],
+};
+---
+
+<AgentSecurityLayout title={title} description={description} canonical={canonical}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(serviceLd)} />
+  </Fragment>
+
+  <section class="as-hero">
+    <div>
+      <p class="as-kicker">VERIFY → REMEDIATE</p>
+      <h1 class="as-title">FAILの先を、一緒に進める。</h1>
+      <p class="as-lead">
+        Kitが出力するのは検証記録。その記録を是正計画に変え、次のPASSへ進むための実務パッケージです。
+      </p>
+      <div class="as-actions">
+        <a class="as-button as-button--primary" href="/consulting/intake" data-as-track="agent_security_path_click" data-as-location="verification_support_hero">相談内容を整理する</a>
+        <a class="as-button" href="/agent-security/evidence-demo/" data-as-track="evidence_demo_view" data-as-location="verification_support_hero">Evidence Demoを見る</a>
+      </div>
+      <div class="as-note">
+        本サービスは検証記録の作成支援であり、システムの安全性を保証する認証ではありません。
+      </div>
+    </div>
+    <aside class="as-panel" aria-label="対象">
+      <p class="as-label">対象 / 対象外</p>
+      <p><strong>対象</strong><br />AIエージェントを本番運用中または直前で、権限・承認・ログ・停止条件を確認可能な状態にしたい方</p>
+      <p style="margin-top:16px"><strong>対象外</strong></p>
+      <ul>
+        <li>認証書・保証書が必要な方</li>
+        <li>ペネトレーションテストをお探しの方</li>
+        <li>まだエージェントを運用していない方（→<a href={agentSecurityLinks.bookJa} target="_blank" rel="noopener noreferrer">書籍</a>と<a href="/agent-security/checklist/">Checklist</a>へ）</li>
+      </ul>
+    </aside>
+  </section>
+
+  <section class="as-section">
+    <p class="as-label">THE CHAIN上の位置</p>
+    <h2>VERIFYを、機械と人間で分担する</h2>
+    <p class="as-code">LEARN → ASSESS → VERIFY（Kit：機械 / Sprint：人間） → REMEDIATE（依頼者側実施）</p>
+    <p>Verification Kitが静的テストで検証記録を作るところまでを機械が担い、その記録を読み解いて是正計画に変える工程を、本サービスが人間の検証者として引き継ぎます。是正の実施そのものは、検証者の独立性を保つため依頼者側で行います。</p>
+  </section>
+
+  <section class="as-section">
+    <p class="as-label">サービス要件</p>
+    <h2>SVC-REQ</h2>
+    <div class="as-table-wrap">
+      <table class="as-table">
+        <caption class="sr-only">Agent Verification Sprint サービス要件一覧</caption>
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Level</th>
+            <th scope="col">要件</th>
+          </tr>
+        </thead>
+        <tbody>
+          {svcReqs.map((req) => (
+            <tr>
+              <td>{req.id}</td>
+              <td>{req.level}</td>
+              <td>{req.text}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="as-note">スコープ外: ペネトレーションテスト / モデル自体の安全性評価 / コードベース全体監査 / 認証・保証の発行</p>
+  </section>
+
+  <section class="as-section">
+    <p class="as-label">進め方</p>
+    <h2>3週間・セッション3回</h2>
+    <div class="as-path">
+      {weeks.map((week) => (
+        <article class="as-card">
+          <span class="as-index">{week.no} / {week.title}</span>
+          <p>{week.body}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="as-section">
+    <p class="as-label">成果物</p>
+    <h2>検証記録から、次の一手へ</h2>
+    <ul>
+      <li>検証レポート（PASS/FAIL/SKIP＋根拠、REQ準拠）</li>
+      <li>是正優先度リスト</li>
+      <li>経営向け1枚サマリー</li>
+      <li>digest manifest＋timestamp（Kit形式）</li>
+    </ul>
+    <p>成果物の形式は<a href="/agent-security/evidence-demo/">Evidence Demo</a>で確認できます。</p>
+  </section>
+
+  <section class="as-section">
+    <p class="as-label">価格</p>
+    <h2>Sprintと、その後の継続検証</h2>
+    <div class="as-card-grid">
+      <article class="as-card">
+        <h3>Agent Verification Sprint</h3>
+        <p class="as-stat"><strong>¥300,000</strong><span>税別・固定</span></p>
+        <p>2〜3週間 / セッション3回</p>
+        <p class="as-note">先行3件のみ¥200,000（匿名化した事例の本ページ掲載にご同意いただける場合）</p>
+        <div class="as-actions"><a class="as-button as-button--primary" href="/consulting/intake" data-as-track="agent_security_path_click" data-as-location="verification_support_price_sprint">相談内容を整理する</a></div>
+      </article>
+      <article class="as-card">
+        <h3>Continuous Verification</h3>
+        <p class="as-stat"><strong>¥100,000</strong><span>/月・税別・最低3ヶ月</span></p>
+        <p>月1回の構成変更レビュー、四半期再検証、インシデント時優先相談</p>
+        <p class="as-note">Sprint実施済みが前提</p>
+        <div class="as-actions"><a class="as-button as-button--quiet" href="/consulting/intake" data-as-track="agent_security_path_click" data-as-location="verification_support_price_continuous">相談内容を整理する</a></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="as-section">
+    <p class="as-label">FAIL Review</p>
+    <h2>無料・Kit購入者限定</h2>
+    <p>Verification Kitの実行結果（result.json＋PDF）をお持ちの方に、30分のFAIL Reviewを無料で提供します。</p>
+    <ul>
+      <li>予約時に実行結果の提出が必要です</li>
+      <li>出口は「自走 / Sprint / 対象外」の3つのいずれかです</li>
+      <li>毎月の受付枠に上限があります（現在: 4件）</li>
+    </ul>
+    <div class="as-actions">
+      <a class="as-button as-button--quiet" href={gumroadUrl('verification_support_fail_review')} target="_blank" rel="noopener noreferrer" data-as-track="gumroad_click" data-as-location="verification_support_fail_review">GumroadでKitを確認 ↗</a>
+      <a class="as-button" href={agentSecurityLinks.dispatch} target="_blank" rel="noopener noreferrer" data-as-track="dispatch_subscribe" data-as-location="verification_support_fail_review">Security Dispatchを購読</a>
+    </div>
+  </section>
+
+  <section class="as-section">
+    <p class="as-label">FAQ</p>
+    <h2>よくある質問</h2>
+    <div class="as-faq">
+      {faq.map(([q, a]) => (
+        <details>
+          <summary>{q}</summary>
+          <p>{a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="as-section">
+    <p class="as-label">NEXT STEP</p>
+    <h2>相談内容を整理する</h2>
+    <div class="as-actions">
+      <a class="as-button as-button--primary" href="/consulting/intake" data-as-track="agent_security_path_click" data-as-location="verification_support_cta">相談内容を整理する</a>
+    </div>
+    <p class="as-note">受付はAIエージェントによる事前ヒアリングから始まります。エージェントに仕事を任せる境界設計を、受付自体でお見せします。</p>
+  </section>
+
+  <section class="as-section">
+    <div class="as-faq">
+      <details>
+        <summary>免責事項・特定商取引法に基づく表記</summary>
+        <div>
+          <h4>免責事項</h4>
+          <p>本サービスは、AOI Futureを主宰する野崎秀吾が個人として提供するものです。勤務先その他の企業・団体が提供するサービスではありません。</p>
+          <p>本サービスは、業務改善・AI活用に関する相談および情報提供を行うものです。特定の成果（売上向上・コスト削減・業務時間の短縮等）を保証するものではありません。セッションで提案した内容の実施および結果については、ご自身の判断と責任のもとで行ってください。</p>
+          <p>提供する情報・アドバイスは、提供時点での知識・経験に基づくものです。AI技術・関連ツールの仕様は頻繁に変更されるため、情報の正確性・完全性・最新性を保証しません。法務・税務・労務・投資に関するアドバイスは行いません。</p>
+          <p>本サービスの利用によって生じた損害（直接・間接を問わず）について、提供者は責任を負いません。ただし、提供者の故意または重大な過失による場合はこの限りではありません。</p>
+          <p>セッション中にご共有いただいた業務情報・個人情報は、サービス提供の目的以外には使用しません。第三者への開示は行いません（法令により開示が義務付けられる場合を除く）。</p>
+          <p>本サービスは検証記録の作成支援であり、対象システムの安全性、法令適合性、または第三者（監査人等）による受容を保証するものではありません。</p>
+
+          <h4>特定商取引法に基づく表記</h4>
+          <div class="as-table-wrap">
+            <table class="as-table">
+              <caption class="sr-only">特定商取引法に基づく表記</caption>
+              <tbody>
+                <tr><th scope="row">販売者</th><td>野崎秀吾</td></tr>
+                <tr><th scope="row">所在地</th><td>お申し込み後に開示します</td></tr>
+                <tr><th scope="row">連絡先</th><td>AIエージェント事前ヒアリングよりご連絡ください</td></tr>
+                <tr><th scope="row">サービス内容</th><td>AIエージェント構成の検証支援サービス（オンライン）</td></tr>
+                <tr><th scope="row">料金</th><td>各プランの料金に記載（税別）</td></tr>
+                <tr><th scope="row">支払方法</th><td>銀行振込（標準）。クレジットカードはお申し出があった場合のみ対応</td></tr>
+                <tr><th scope="row">支払時期</th><td>請求書発行後、翌月末までにお支払い</td></tr>
+                <tr><th scope="row">提供時期</th><td>AIエージェントによる事前ヒアリング後、必要に応じて日程調整の上で開始</td></tr>
+                <tr><th scope="row">キャンセル</th><td>開始48時間前までキャンセル可能です。お支払い済みの場合は返金しますが、決済事業者の規約により返還されない決済手数料、および返金振込に要する実費を差し引かせていただきます。開始48時間前を過ぎた後の返金はできません。Continuous Verificationは当月分の返金不可、解約は前月末までにお申し出ください。</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+</AgentSecurityLayout>
