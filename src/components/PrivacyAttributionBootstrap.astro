@@ -1,0 +1,66 @@
+---
+import {
+  attributionLimits,
+  attributionQuerySpecs,
+  attributionIdentifierPatternSource,
+  attributionEntryPathPatternSource,
+  attributionControlPatternSource,
+  intakeOffers,
+  type IntakeAttribution,
+} from '../lib/intake-attribution';
+
+interface Props {
+  initialAttribution?: IntakeAttribution;
+  includeIntakeFields?: boolean;
+}
+
+const {
+  initialAttribution = null,
+  includeIntakeFields = false,
+} = Astro.props;
+const entryPathLimit = attributionLimits.entryPath;
+---
+
+<script is:inline define:vars={{ initialAttribution, includeIntakeFields, attributionQuerySpecs, intakeOffers, entryPathLimit, attributionIdentifierPatternSource, attributionEntryPathPatternSource, attributionControlPatternSource }}>
+  (function () {
+    var identifierPattern = new RegExp(attributionIdentifierPatternSource, 'u');
+    var entryPathPattern = new RegExp(attributionEntryPathPatternSource);
+    var controlPattern = new RegExp(attributionControlPatternSource, 'g');
+    var safe = Object.create(null);
+    var normalize = function (value) {
+      return value.normalize('NFC').replace(controlPattern, '').trim();
+    };
+    var addIdentifier = function (field, raw, limit) {
+      if (typeof raw !== 'string') return;
+      var value = normalize(raw);
+      if (value && value.length <= limit && identifierPattern.test(value)) safe[field] = value;
+    };
+    var input = initialAttribution;
+    if (input && typeof input === 'object' && !Array.isArray(input)) {
+      attributionQuerySpecs.forEach(function (spec) {
+        if (Object.prototype.hasOwnProperty.call(input, spec.field)) addIdentifier(spec.field, input[spec.field], spec.limit);
+      });
+      if (includeIntakeFields && Object.prototype.hasOwnProperty.call(input, 'entryPath')) {
+        var initialPath = input.entryPath;
+        if (typeof initialPath === 'string' && initialPath.length <= entryPathLimit && entryPathPattern.test(initialPath) && !initialPath.startsWith('//') && !initialPath.includes('\\') && !initialPath.includes('?') && !initialPath.includes('#') && !initialPath.split('/').some(function (segment) { return segment === '.' || segment === '..'; })) safe.entryPath = initialPath;
+      }
+      if (includeIntakeFields && typeof input.offer === 'string' && intakeOffers.includes(input.offer)) safe.offer = input.offer;
+    } else {
+      var params = new URLSearchParams(window.location.search);
+      attributionQuerySpecs.forEach(function (spec) {
+        var raw = params.get(spec.queryKey);
+        if (raw !== null) addIdentifier(spec.field, raw, spec.limit);
+      });
+      if (includeIntakeFields) {
+        var entryPath = normalize(params.get('entry_path') || '');
+        if (entryPath && entryPath.length <= entryPathLimit && entryPathPattern.test(entryPath) && !entryPath.startsWith('//') && !entryPath.includes('\\') && !entryPath.includes('?') && !entryPath.includes('#') && !entryPath.split('/').some(function (segment) { return segment === '.' || segment === '..'; })) safe.entryPath = entryPath;
+        var offer = normalize(params.get('offer') || '');
+        if (intakeOffers.includes(offer)) safe.offer = offer;
+      }
+    }
+    Object.defineProperty(window, '__aoiSafeIntakeAttribution', { value: Object.freeze(safe), configurable: false, enumerable: false, writable: false });
+    if (window.location.search) {
+      try { window.history.replaceState(null, '', window.location.pathname + window.location.hash); } catch (_) { /* sanitized GA config remains authoritative */ }
+    }
+  })();
+</script>

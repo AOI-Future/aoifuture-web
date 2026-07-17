@@ -1,5 +1,6 @@
 ---
 import AgentSecurityLayout from '../../layouts/AgentSecurityLayout.astro';
+import PrivacyAttributionBootstrap from '../../components/PrivacyAttributionBootstrap.astro';
 import { agentSecurityLinks, gumroadUrl } from '../../data/agent-security';
 
 export const prerender = true;
@@ -55,8 +56,9 @@ const serviceLd = {
 };
 ---
 
-<AgentSecurityLayout title={title} description={description} canonical={canonical}>
+<AgentSecurityLayout title={title} description={description} canonical={canonical} privacySafeAnalytics={true}>
   <Fragment slot="head">
+    <PrivacyAttributionBootstrap />
     <script type="application/ld+json" set:html={JSON.stringify(serviceLd)} />
   </Fragment>
 
@@ -68,7 +70,7 @@ const serviceLd = {
         Kitが出力するのは検証記録。その記録を是正計画に変え、次のPASSへ進むための実務パッケージです。
       </p>
       <div class="as-actions">
-        <a class="as-button as-button--primary" href="/consulting/intake" data-as-track="agent_security_path_click" data-as-location="verification_support_hero">相談内容を整理する</a>
+        <a class="as-button as-button--primary" href="/consulting/intake" data-intake-offer="sprint" data-as-location="verification_support_hero">相談内容を整理する</a>
         <a class="as-button" href="/agent-security/evidence-demo/" data-as-track="evidence_demo_view" data-as-location="verification_support_hero">Evidence Demoを見る</a>
       </div>
       <div class="as-note">
@@ -155,14 +157,14 @@ const serviceLd = {
         <p class="as-stat"><strong>¥300,000</strong><span>税別・固定</span></p>
         <p>2〜3週間 / セッション3回</p>
         <p class="as-note">先行3件のみ¥200,000（匿名化した事例の本ページ掲載にご同意いただける場合）</p>
-        <div class="as-actions"><a class="as-button as-button--primary" href="/consulting/intake" data-as-track="agent_security_path_click" data-as-location="verification_support_price_sprint">相談内容を整理する</a></div>
+        <div class="as-actions"><a class="as-button as-button--primary" href="/consulting/intake" data-intake-offer="sprint" data-as-location="verification_support_price_sprint">相談内容を整理する</a></div>
       </article>
       <article class="as-card">
         <h3>Continuous Verification</h3>
         <p class="as-stat"><strong>¥100,000</strong><span>/月・税別・最低3ヶ月</span></p>
         <p>月1回の構成変更レビュー、四半期再検証、インシデント時優先相談</p>
         <p class="as-note">Sprint実施済みが前提</p>
-        <div class="as-actions"><a class="as-button as-button--quiet" href="/consulting/intake" data-as-track="agent_security_path_click" data-as-location="verification_support_price_continuous">相談内容を整理する</a></div>
+        <div class="as-actions"><a class="as-button as-button--quiet" href="/consulting/intake" data-intake-offer="continuous" data-as-location="verification_support_price_continuous">相談内容を整理する</a></div>
       </article>
     </div>
   </section>
@@ -175,7 +177,7 @@ const serviceLd = {
       <li>予約時に実行結果の提出が必要です</li>
       <li>出口は「自走 / Sprint / 対象外」の3つのいずれかです</li>
       <li>毎月の受付枠に上限があります（現在: 4件）</li>
-      <li>Kitをお持ちの方は、実行結果を添えて<a href="/consulting/intake" data-as-track="agent_security_path_click" data-as-location="verification_support_fail_review_intake">事前ヒアリング</a>からご予約ください</li>
+      <li>Kitをお持ちの方は、実行結果を添えて<a href="/consulting/intake" data-intake-offer="fail_review" data-as-location="verification_support_fail_review_intake">事前ヒアリング</a>からご予約ください</li>
     </ul>
     <div class="as-actions">
       <a class="as-button as-button--quiet" href={gumroadUrl('verification_support_fail_review')} target="_blank" rel="noopener noreferrer" data-as-track="gumroad_click" data-as-location="verification_support_fail_review">GumroadでKitを確認 ↗</a>
@@ -200,7 +202,7 @@ const serviceLd = {
     <p class="as-label">NEXT STEP</p>
     <h2>相談内容を整理する</h2>
     <div class="as-actions">
-      <a class="as-button as-button--primary" href="/consulting/intake" data-as-track="agent_security_path_click" data-as-location="verification_support_cta">相談内容を整理する</a>
+      <a class="as-button as-button--primary" href="/consulting/intake" data-intake-offer="general" data-as-location="verification_support_cta">相談内容を整理する</a>
     </div>
     <p class="as-note">受付はAIエージェントによる事前ヒアリングから始まります。エージェントに仕事を任せる境界設計を、受付自体でお見せします。</p>
   </section>
@@ -239,4 +241,5 @@ const serviceLd = {
       </details>
     </div>
   </section>
+  <script src="../../scripts/verification-support-attribution.ts"></script>
 </AgentSecurityLayout>

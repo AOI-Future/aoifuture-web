@@ -32,6 +32,22 @@ describe('Notion shared contact store', () => {
     expect(JSON.stringify(body)).not.toContain('secret');
   });
 
+  it('maps quarantined intake to Triaging with allowlisted security flags', async () => {
+    const calls: RequestInit[] = [];
+    const fetcher = vi.fn(async (url: any, init?: RequestInit) => {
+      if (String(url).includes('/query')) return new Response(JSON.stringify({ results: [] }));
+      calls.push(init || {});
+      return new Response(JSON.stringify({ id: 'p' }));
+    }) as unknown as typeof fetch;
+    const store = new NotionConsultationStore({ apiKey: 'secret', dataSourceId: 'ds' }, fetcher);
+    await store.create(input, 'AOI-QUARANTINE', new Date('2026-07-17T10:00:00Z'), { flags: ['Fast submit', 'Many links'], quarantine: true });
+    const properties = JSON.parse(String(calls[0].body)).properties;
+    expect(properties.Status.select.name).toBe('Triaging');
+    expect(properties.Priority.select.name).toBe('P3');
+    expect(properties['Security Flags'].multi_select).toEqual([{ name: 'Fast submit' }, { name: 'Many links' }]);
+    expect(properties['Next Action'].rich_text[0].text.content).toContain('安全性を確認');
+  });
+
   it('maps stage for the detailed work-consultation flow', async () => {
     const calls: RequestInit[] = [];
     const fetcher = vi.fn(async (url: any, init?: RequestInit) => {
@@ -42,6 +58,23 @@ describe('Notion shared contact store', () => {
     const store = new NotionConsultationStore({ apiKey: 'k', dataSourceId: 'ds' }, fetcher);
     await store.create({ ...input, source: 'aoifuture.com/consulting/intake', inquiryType: 'Work Consultation', stage: 'workflow_review' }, 'AOI-WORK', new Date('2026-07-17T10:00:00Z'));
     expect(JSON.parse(String(calls[0].body)).properties.Stage.select.name).toBe('Workflow review');
+  });
+
+  it('stores attribution as a deterministic child without assuming a Notion property', async () => {
+    const calls: RequestInit[] = [];
+    const fetcher = vi.fn(async (url: any, init?: RequestInit) => {
+      if (String(url).includes('/query')) return new Response(JSON.stringify({ results: [] }));
+      calls.push(init || {});
+      return new Response(JSON.stringify({ id: 'p' }));
+    }) as unknown as typeof fetch;
+    const store = new NotionConsultationStore({ apiKey: 'secret', dataSourceId: 'ds' }, fetcher);
+    await store.create({ ...input, source: 'aoifuture.com/consulting/intake', inquiryType: 'Work Consultation', stage: 'workflow_review', attribution: {
+      cellId: 'cell-1', utmSource: 'google', utmMedium: 'cpc', utmCampaign: 'agent_security', entryPath: '/agent-security/verification-support/', offer: 'sprint',
+    } }, 'AOI-ATTR', new Date('2026-07-17T10:00:00Z'));
+    const body = JSON.parse(String(calls[0].body));
+    expect(body.properties.Attribution).toBeUndefined();
+    expect(body.properties.Situation.rich_text[0].text.content).toBe('An article needs a correction');
+    expect(body.children).toEqual([{ object: 'block', type: 'code', code: { language: 'json', rich_text: [{ type: 'text', text: { content: '{"schema":"aoi-intake-attribution-v1","cellId":"cell-1","utmSource":"google","utmMedium":"cpc","utmCampaign":"agent_security","entryPath":"/agent-security/verification-support/","offer":"sprint"}' } }] } }]);
   });
 
   it('returns existing receipt without create when the semantic payload matches', async () => {

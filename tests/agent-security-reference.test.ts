@@ -122,4 +122,11 @@ describe('AI Agent Security Reference Hub', () => {
     expect(transition).not.toMatch(/body\s*\{[^}]*opacity:\s*0/s);
     expect(transition).toContain('body { opacity: 1; }');
   });
+
+  it('gives every Verification Support intake CTA a fixed offer without generic path tracking', () => {
+    const source = read('src/pages/agent-security/verification-support.astro');
+    expect(source.match(/data-intake-offer=/g)).toHaveLength(5);
+    for (const offer of ['sprint', 'continuous', 'fail_review', 'general']) expect(source).toContain(`data-intake-offer="${offer}"`);
+    expect(source).not.toMatch(/href="\/consulting\/intake"[^>]*data-as-track=/);
+  });
 });

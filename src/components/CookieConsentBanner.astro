@@ -1,0 +1,78 @@
+---
+interface Props {
+  variant?: 'default' | 'intake';
+}
+
+const { variant = 'default' } = Astro.props;
+const intake = variant === 'intake';
+---
+
+<aside
+  id="cookie-banner"
+  style={intake
+    ? 'display:none;position:fixed;z-index:100;left:0;right:0;bottom:0;padding:12px 16px;background:rgba(0,0,0,.94);color:#9dd;border-top:1px solid #277'
+    : 'display:none'}
+  class={intake ? undefined : 'fixed bottom-0 left-0 right-0 z-[100] bg-black/90 border-t border-cyan-400/30 px-4 py-3 backdrop-blur-sm'}
+  aria-label="アクセス解析の選択"
+>
+  <div class={intake ? undefined : 'max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3'}>
+    <p class={intake ? undefined : 'text-cyan-400/70 font-mono text-xs leading-relaxed'}>
+      このサイトではGoogle Analyticsを使用しています。
+      <a href="/privacy" class={intake ? undefined : 'text-cyan-400 hover:underline'}>プライバシーポリシー</a>
+    </p>
+    <div class={intake ? undefined : 'flex gap-2 shrink-0'}>
+      <button
+        id="cookie-reject"
+        type="button"
+        class={intake ? undefined : 'px-3 py-1.5 text-xs font-mono text-cyan-400/60 border border-cyan-400/30 hover:border-cyan-400/60 transition-colors cursor-pointer'}
+      >拒否</button>
+      <button
+        id="cookie-accept"
+        type="button"
+        class={intake ? undefined : 'px-3 py-1.5 text-xs font-mono text-cyan-400 border border-cyan-400/50 bg-cyan-400/10 hover:bg-cyan-400/20 transition-colors cursor-pointer'}
+      >同意</button>
+    </div>
+  </div>
+</aside>
+<script is:inline>
+  (function() {
+    function readConsent() {
+      try {
+        return localStorage.getItem('cookie-consent');
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function persistConsent(value) {
+      try {
+        localStorage.setItem('cookie-consent', value);
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }
+
+    var consent = readConsent();
+    if (consent) return;
+
+    var banner = document.getElementById('cookie-banner');
+    if (banner) banner.style.display = 'block';
+
+    document.getElementById('cookie-accept')?.addEventListener('click', function() {
+      persistConsent('accepted');
+      if (banner) banner.style.display = 'none';
+      try {
+        gtag('consent', 'update', { analytics_storage: 'granted' });
+      } catch (_) {}
+      try {
+        window.dispatchEvent(new Event('aoi:analytics-consent'));
+      } catch (_) {}
+    });
+
+    document.getElementById('cookie-reject')?.addEventListener('click', function() {
+      persistConsent('rejected');
+      if (banner) banner.style.display = 'none';
+    });
+  })();
+</script>

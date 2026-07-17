@@ -9,13 +9,19 @@ The shared intake contract accepts contact requests from AOI Future and the rela
 - `/consulting/intake` — preserved detailed two-step, six-question Work Consultation UX.
 - `/contact` — simple AOI Future general contact form when the native intake feature is enabled.
 
-The API validates exact origin, JSON/body size, schema, honeypot, minimum dwell, optional Turnstile, idempotency and low-volume rate limits before creating a page in the configured Notion data source. It does not use an LLM, fetch submitted URLs, automatically accept work, send confirmation email, or copy free text to notifications.
+The API validates exact origin, strictly parsed JSON media type, a streaming 16 KiB body limit, schema, honeypot, minimum dwell, optional Turnstile, idempotency and layered low-volume rate limits before creating a page in the configured Notion data source. It does not use an LLM, fetch submitted URLs, automatically accept work, send confirmation email, or copy free text to notifications.
 
 ## Shared request contract (`2026-07-14`)
 
-Required fields are `schemaVersion`, `idempotencyKey`, `source`, `inquiryType`, `situation`, `email`, `consent`, and `antiSpam`. Optional fields are `desiredTakeaway`, `displayName`, `organization`, `articleUrl`, and `stage`.
+Required fields are `schemaVersion`, `idempotencyKey`, `source`, `inquiryType`, `situation`, `email`, `consent`, and `antiSpam`. Optional fields are `desiredTakeaway`, `displayName`, `organization`, `articleUrl`, `stage`, and `attribution`.
 
 `stage` is required only when `source=aoifuture.com/consulting/intake` and `inquiryType=Work Consultation`; it remains optional for every other source/type combination. The `Idempotency-Key` header is optional for same-origin forms, but when supplied it must equal the body value.
+
+### Privacy-safe attribution contract
+
+`attribution` is accepted only for an `aoifuture.com/*` Source. It is a strict object whose only keys are `cellId`, `utmSource`, `utmMedium`, `utmCampaign`, `utmContent`, `entryPath`, and `offer`. All values must be strings. Offers are exactly `sprint`, `continuous`, `fail_review`, or `general`. Values are trimmed, NFC-normalized, stripped of control characters, length-bounded (64 characters for `cellId`, 100 for each UTM value, 160 for `entryPath`), and checked as non-PII identifiers or a safe root-relative path. Unknown keys, arrays, non-string values, URL-like identifiers, email-like values, unsafe paths, and attribution on another Source are rejected.
+
+Before either affected page configures GA or emits an event, it captures only the bounded allowlist into an immutable, prototype-safe page-lifetime object and removes the complete query from the displayed URL with `history.replaceState`. The raw query and unknown parameters are never copied to storage or history state. Verification Support forwards only `cell_id` and `utm_source`, `utm_medium`, `utm_campaign`, `utm_content` from that capture. It adds the fixed `entry_path=/agent-security/verification-support/` and the CTA's fixed `offer`. It never forwards `gclid`, `gbraid`, `wbraid`, arbitrary query fields, referrer, or a full URL. The intake page reads its captured seven-field allowlist after query removal into the durable request; missing or invalid fields are omitted. Attribution is part of the semantic payload fingerprint, while `antiSpam`, timing, challenge tokens, and idempotency metadata remain excluded. Both pages set `Referrer-Policy` equivalently with `meta name=referrer` (`no-referrer`) and configure GA `page_location` as origin plus pathname and `page_referrer` as empty; a failed history replacement therefore does not restore an unsafe GA context.
 
 Allowed Source options:
 
@@ -43,30 +49,69 @@ Default CORS origins are both apex and `www` variants of `aoifuture.com`, `nozak
 
 Configure `NOTION_CONSULTATION_DATA_SOURCE_ID`; never hardcode the data source ID or token. The integration must have access only to this data source.
 
-Exact properties used by the writer are: `Name`, `Status`, `Priority`, `Owner`, `Next Action`, `Next Action Due`, `Stage`, `Email`, `Display Name`, `Organization`, `Situation`, `Desired Takeaway`, `Article URL`, `Receipt ID`, `Idempotency Key`, `Payload Fingerprint`, `Source`, `Inquiry Type`, `Received At`, `Last Contact`, `Retention Review At`, `Consent Version`, `Notification Status`, and `Security Flags`. `Payload Fingerprint` must be a `rich_text` property.
+Exact properties used by the writer are: `Name`, `Status`, `Priority`, `Owner`, `Next Action`, `Next Action Due`, `Stage`, `Email`, `Display Name`, `Organization`, `Situation`, `Desired Takeaway`, `Article URL`, `Receipt ID`, `Idempotency Key`, `Payload Fingerprint`, `Source`, `Inquiry Type`, `Received At`, `Last Contact`, `Retention Review At`, `Consent Version`, `Notification Status`, and `Security Flags`. `Payload Fingerprint` must be a `rich_text` property. When attribution exists, the writer adds a deterministic JSON code child block with schema marker `aoi-intake-attribution-v1`; it does not assume an unverified Notion property and does not append metadata to Situation or another user-semantic field.
 
-The live data source also contains operational properties `Discord Thread`, `Last Instruction`, and `Decision`. The intake writer intentionally leaves those unset for the watcher/human triage workflow. Defaults written on creation are Status `New`, Priority `P2`, Owner `Shugo`, and Notification Status `Pending`. `Pending` is required so the existing Discord watcher can claim and alert on a new record.
+The live data source also contains operational properties `Discord Thread`, `Last Instruction`, and `Decision`. The intake writer intentionally leaves those unset for the watcher/human triage workflow. Normal defaults are Status `New`, Priority `P2`, Owner `Shugo`, and Notification Status `Pending`. Deterministically suspicious input is quarantined as Status `Triaging`, Priority `P3`, with allowlisted `Security Flags`; it is not automatically deleted or classified by an LLM. `Pending` is retained so the existing Discord watcher can alert for human review.
 
 Stage options are `Deciding where to start`, `Trial not adopted`, `Workflow review`, `Moving to operation`, `Aligning team decisions`, and `Unclear / Other`. Stage is omitted from generic Notion rows when absent from the request.
 
 Notion remains the low-volume MVP control plane. An exact `Idempotency Key` lookup plus the server-side semantic `Payload Fingerprint` distinguishes a safe retry from a changed request (`409 idempotency_conflict`; a legacy row with no fingerprint also conflicts). After creation, the writer re-queries the key, chooses the deterministic earliest page as canonical, and best-effort trashes the page it just created if it lost a race. Notion still provides no atomic uniqueness constraint, so this reduces rather than eliminates every possible high-concurrency race. `Email` + `Received At` (3/day) and global `Received At` (30/hour) queries provide basic rate controls.
 
+## Abuse and AI-generated harassment controls
+
+The request body is untrusted data even when it resembles system instructions, tool commands, URLs, Markdown, or a conversation transcript. Intake text must never be concatenated into an agent's system/developer prompt. Any future reply-drafting workflow must wrap it as quoted data, disable tools while interpreting it, and require a separate human-approved action for Notion changes or external email. Prompt-injection-like text is not automatically classified as malicious: deterministic transport controls limit abuse, while a human decides intent.
+
+Quarantine signals are intentionally narrow: fast submission, four or more HTTP(S) links, a run of at least 20 repeated non-space characters, or Unicode format/bidirectional controls. In balanced mode, one weak signal is recorded without quarantine; two signals or a manual-review signal move the row to `Triaging`. Until Turnstile is mandatory, fast submission retains the legacy hard reject so a staged deployment does not weaken protection. Fluent prose, unusual opinions, and prompt-injection-like sentences alone are not abuse signals.
+
+Before Turnstile, a process-local L1 gate uses only the Vercel-overwritten, syntactically valid client IP and allows 20 requests/minute per warm instance/IP. Untrusted forwarding headers outside Vercel are ignored. Only after Turnstile succeeds does a second process-local gate apply global 20/minute, IP 5/10 minutes, email 3/day, and idempotency-key 3/10 minutes. IP and email identifiers are SHA-256 digests held only in ephemeral process memory and are never logged. This protects a warm instance and avoids letting invalid challenge tokens poison a victim email/global bucket, but it is not a distributed guarantee.
+
+The production target is defense in depth:
+
+1. Vercel platform DDoS protection and route-level firewall/rate rules when the account plan permits.
+2. Cloudflare Turnstile in managed mode on all three public forms, with the token hostname bound to the exact request Origin/source, action `contact_intake`, and Siteverify idempotency validation. Required mode fails closed if either key is absent. Clients discard/reset a consumed token after failure, editing, or success so retries never pair a new idempotency key with an old token.
+3. An atomic distributed limiter (for example Upstash Redis) before Notion, keyed by HMAC-digested IP/email plus global 30/hour and daily breakers. Namespaces must separate Preview and Production. At 60 accepted requests/day it emits a PII-free soft warning; over 100/day it fails closed with `503 intake_temporarily_paused`.
+4. The existing Notion email/global queries remain only as a compatibility fallback when Redis is not configured. Balanced Production skips them, so rejected/rate-accounting requests do not consume Notion API quota.
+
+Do not run load or DoS tests against production. Verify thresholds against unit tests or Preview, then use at most one synthetic production canary and remove its Notion record.
+
 ## Logging and notifications
 
-Structured logs contain only the receipt prefix, Source, Inquiry Type, optional Stage, outcome/status, and latency bucket. They must not contain name, email, organization, article URL, situation/free text, IP, user agent, tokens, or Notion response bodies.
+Structured logs contain only Source, Inquiry Type, optional Stage, outcome/status, latency bucket, quarantine state, and the bounded attribution subset `cellId`, `offer`, `utmSource`, `utmMedium`, and `utmCampaign`. They must not contain a receipt (full or partial), name, email, organization, article URL, Situation/free text, `utmContent`, `entryPath`, raw click IDs, IP, referrer/full URL, user agent, idempotency key, challenge token, or Notion response body.
 
 The existing model-free watcher consumes records with Notification Status `Pending`. Discord alerts contain operational metadata and a Notion link only—not contact details or submitted free text. The watcher owns later status transitions and the `Discord Thread`, `Last Instruction`, and `Decision` fields.
+
+## Analytics event contract and interpretation
+
+GA4 remains consent-default-denied and the cookie banner does not gate the form. Custom events are emitted only when `cookie-consent=accepted`:
+
+| Event | Trigger | Allowed parameters |
+| --- | --- | --- |
+| `verification_support_view` | Verification Support is viewed with analytics consent | `offer`, optional `cell_id`, `entry_path` |
+| `verification_support_intake_click` | A fixed-offer intake CTA is clicked | `offer`, optional `cell_id`, `entry_path`, `cta_location` |
+| `consultation_intake_start` | First meaningful form interaction; page-lifetime at-most-once emission attempt | `source`, `offer`, optional `cell_id`, `entry_path` |
+| `consultation_intake_submit_success` | API returns a durable success (`ok=true` plus receipt); page-lifetime at-most-once emission attempt | `source`, `offer`, optional `cell_id`, `entry_path` |
+
+No analytics event may contain name, email, organization, Situation/free text, receipt, idempotency key, Turnstile token, IP, referrer, full URL, click ID, or form field value. A rejected or undecided analytics choice produces no custom event but does not remove attribution from the durable intake request. A failed API attempt produces no submit-success event; after a durable retry succeeds, the page makes at most one submit-success emission attempt. This is not an exactly-once GA4 delivery guarantee: blockers, consent state, transport failure, batching, and provider processing can all create gaps.
+
+Interpret conversion only as a query-carried chain: Verification Support query → rewritten CTA → intake payload. Query-carried attribution does not establish or enforce a browser-session boundary. This contract does not create a user identity, cross-device join, or proof that a GA4 event and Notion row belong to the same person. If attribution or `utmSource` is missing, record the intake normally and report the analytics source as `unattributed`; never infer `direct` or any attribution value from absence, referrer, IP, email domain, or full URL.
+
+For QA, use a non-PII marker such as `cell_id=qa_<ticket>` and a normal allowlisted offer. QA markers are intentionally retained in both consented analytics and durable metadata so the two layers can be checked, but they are not automatically deleted or excluded: filter `qa_` cells from business reporting and remove any approved synthetic Notion record after verification. The Notion attribution child is part of the intake record and follows that record's 90-day retention review/deletion lifecycle below; it is not retained as a separate attribution record. GA4 event and user data retention is configured separately and is currently 14 months, so consented QA events/markers follow that GA4 retention unless an approved property-level deletion is performed. Never put a tester name, email, receipt, or production click ID in the marker.
+
+Manual reconciliation is aggregate and privacy-safe: compare counts by time window, `cellId`, `offer`, `entryPath`, and Source/campaign between GA4 and Notion. Expect gaps from rejected consent, blockers, navigation loss, or missing attribution. Do not export contact fields into GA4 or join rows by PII. Investigate discrepancies using the bounded server log dimensions and Notion's attribution child block, then document the count and reason rather than fabricating a one-to-one match.
+
+These changes do not alter the approved Stage 1 acquisition cell: Stage 1 remains the Checklist landing and auto-tagging remains enabled under the existing reviewed packet. Direct future ads to Verification Support are not approved; they require a separately reviewed cell/packet and must not be inferred from this intake instrumentation.
 
 ## Enablement checklist
 
 1. Create a separate preview data source with the exact schema and grant the preview integration access.
 2. Set preview origins and credentials; keep `CONSULTATION_NATIVE_FORM_ENABLED=false` in production.
-3. If Turnstile is used, set both keys and test hostname validation. Set `CONSULTATION_REQUIRE_TURNSTILE=true` only after both exist; this mode fails closed.
-4. Submit synthetic, non-PII examples through both API paths. Verify Source, Inquiry Type, optional Stage/Article URL, due date, retention review, and Notification Status `Pending`.
-5. Retry the same request/idempotency key and verify the same receipt with no additional durable page. Change a normalized business field while retaining the key and verify `409 idempotency_conflict`; also verify a mismatched header/body key returns `409`.
-6. Exercise an allowed cross-origin preflight, bad origin, honeypot, short dwell, rate limit, and Notion outage. An outage must show no success and retain browser values.
-7. Review Vercel logs for the PII-free field allowlist above. Confirm the watcher alerts and updates notification status without copying PII/free text.
-8. Obtain explicit approval, enable the production flag, deploy, run one synthetic canary, then delete it.
+3. Configure one managed Turnstile widget for the canonical hostnames, set both keys, and test hostname plus action `contact_intake`. Set `CONSULTATION_REQUIRE_TURNSTILE=true` only after all three clients have the public key; this mode fails closed.
+4. Configure the distributed limiter URL, token, and a random 32+ byte HMAC secret. Verify it in Preview, then set `CONSULTATION_REQUIRE_DISTRIBUTED_LIMIT=true`; limiter failure must not fall through to Notion.
+5. Submit synthetic, non-PII examples through both API paths. Verify Source, Inquiry Type, optional Stage/Article URL, due date, retention review, and Notification Status `Pending`.
+6. Retry the same request/idempotency key and verify the same receipt with no additional durable page. Change a normalized business field while retaining the key and verify `409 idempotency_conflict`; also verify a mismatched header/body key returns `409`.
+7. Exercise an allowed cross-origin preflight, bad origin, honeypot, quarantine signal, local/distributed rate limit, and provider outage. An outage must show no success and retain browser values.
+8. Review Vercel logs for the PII-free field allowlist above. Confirm the watcher alerts and updates notification status without copying PII/free text.
+9. Obtain explicit approval, enable the production flags, deploy, run one synthetic canary, then delete it.
 
 ## Daily operation, retention, and incidents
 

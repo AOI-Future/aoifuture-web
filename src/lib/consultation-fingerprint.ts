@@ -14,6 +14,7 @@ export function contactPayloadFingerprint(input: ContactIntake): string {
     organization: input.organization || '',
     articleUrl: input.articleUrl || '',
     consentVersion: input.consent.version,
+    attribution: input.attribution || {},
   };
   return createHash('sha256').update(JSON.stringify(semanticPayload), 'utf8').digest('hex');
 }
