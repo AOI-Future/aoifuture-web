@@ -145,3 +145,26 @@ test('throwing verification-support analytics is consumed once and does not bloc
   ]);
   expect(pageErrors).toEqual([]);
 });
+
+test('verification support stays usable when consent storage is unavailable', async ({ page }) => {
+  const pageErrors: string[] = [];
+  page.on('pageerror', error => pageErrors.push(error.message));
+  await page.addInitScript(() => {
+    Storage.prototype.getItem = () => { throw new Error('storage read denied'); };
+    Storage.prototype.setItem = () => { throw new Error('storage write denied'); };
+  });
+
+  await page.goto('/agent-security/verification-support/');
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await expect(page.locator('#cookie-banner')).toBeVisible();
+  expect(await page.evaluate(() => (window as any).dataLayer.some((entry: any) =>
+    entry[0] === 'consent' && entry[1] === 'default'
+      && entry[2].analytics_storage === 'denied' && entry[2].ad_storage === 'denied'
+  ))).toBe(true);
+
+  await page.locator('#cookie-reject').click();
+  await expect(page.locator('#cookie-banner')).toBeHidden();
+  await page.locator('a[data-intake-offer="sprint"]').first().click();
+  await expect(page).toHaveURL(/\/consulting\/intake\?.*offer=sprint/);
+  expect(pageErrors).toEqual([]);
+});

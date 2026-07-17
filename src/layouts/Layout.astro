@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import PageTransition from '../components/PageTransition';
 import Analytics from '@vercel/analytics/astro';
+import CookieConsentBanner from '../components/CookieConsentBanner.astro';
 
 interface Props {
   title: string;
@@ -105,39 +106,6 @@ const {
     <Analytics />
 
     <!-- Cookie Consent Banner -->
-    <div id="cookie-banner" style="display:none" class="fixed bottom-0 left-0 right-0 z-[100] bg-black/90 border-t border-cyan-400/30 px-4 py-3 backdrop-blur-sm">
-      <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-        <p class="text-cyan-400/70 font-mono text-xs leading-relaxed">
-          このサイトではGoogle Analyticsを使用しています。
-          <a href="/privacy" class="text-cyan-400 hover:underline">プライバシーポリシー</a>
-        </p>
-        <div class="flex gap-2 shrink-0">
-          <button id="cookie-reject" class="px-3 py-1.5 text-xs font-mono text-cyan-400/60 border border-cyan-400/30 hover:border-cyan-400/60 transition-colors cursor-pointer">
-            拒否
-          </button>
-          <button id="cookie-accept" class="px-3 py-1.5 text-xs font-mono text-cyan-400 border border-cyan-400/50 bg-cyan-400/10 hover:bg-cyan-400/20 transition-colors cursor-pointer">
-            同意
-          </button>
-        </div>
-      </div>
-    </div>
-    <script is:inline>
-      (function() {
-        var consent = localStorage.getItem("cookie-consent");
-        if (consent) return; // Already decided
-        var banner = document.getElementById("cookie-banner");
-        if (banner) banner.style.display = "block";
-        document.getElementById("cookie-accept")?.addEventListener("click", function() {
-          localStorage.setItem("cookie-consent", "accepted");
-          gtag("consent", "update", { analytics_storage: "granted" });
-          window.dispatchEvent(new Event("aoi:analytics-consent"));
-          banner.style.display = "none";
-        });
-        document.getElementById("cookie-reject")?.addEventListener("click", function() {
-          localStorage.setItem("cookie-consent", "rejected");
-          banner.style.display = "none";
-        });
-      })();
-    </script>
+    <CookieConsentBanner />
   </body>
 </html>

@@ -75,3 +75,29 @@ test('throwing analytics is consumed once and cannot replace durable success wit
   await expect(page.getByText('AOI-DURABLE-QA')).toBeVisible();
   expect(await page.evaluate(()=>(window as any).__analyticsAttempts)).toEqual(['consultation_intake_start','consultation_intake_submit_success']);
 });
+
+test('intake remains durable when consent storage reads and writes throw',async({page})=>{
+  const pageErrors:string[]=[];
+  page.on('pageerror',error=>pageErrors.push(error.message));
+  await page.addInitScript(()=>{
+    Storage.prototype.getItem=()=>{throw new Error('storage read denied');};
+    Storage.prototype.setItem=()=>{throw new Error('storage write denied');};
+  });
+  await page.route('**/api/consultation-intake',async route=>route.fulfill({status:201,contentType:'application/json',body:JSON.stringify({ok:true,receiptId:'AOI-STORAGE-DURABLE',duplicate:false})}));
+
+  await page.goto('/consulting/intake');
+  await expect(page.getByRole('heading',{name:'いまの仕事を整理する'})).toBeVisible();
+  await expect(page.locator('#cookie-banner')).toBeVisible();
+  expect(await page.evaluate(()=>(window as any).dataLayer.some((entry:any)=>entry[0]==='consent'&&entry[1]==='default'&&entry[2].analytics_storage==='denied'&&entry[2].ad_storage==='denied'))).toBe(true);
+  await page.locator('#cookie-accept').click();
+  await expect(page.locator('#cookie-banner')).toBeHidden();
+
+  await reachConfirmation(page);
+  await page.getByLabel(/機密情報や認証情報/).check();
+  await page.getByLabel(/プライバシーポリシーに同意/).check();
+  await page.getByRole('button',{name:'この内容で相談を送る'}).click();
+  await expect(page.getByRole('heading',{name:'相談を受け付けました'})).toBeVisible();
+  await expect(page.getByText('AOI-STORAGE-DURABLE')).toBeVisible();
+  await expect(page.locator('[data-submit-error]')).toBeHidden();
+  expect(pageErrors).toEqual([]);
+});

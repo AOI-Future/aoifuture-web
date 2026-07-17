@@ -3,6 +3,7 @@ import '../../styles/consultation-intake.css';
 import { getConsultationConfig } from '../../lib/consultation-config';
 import { intakeAttributionFromQuery } from '../../lib/intake-attribution';
 import PrivacyAttributionBootstrap from '../../components/PrivacyAttributionBootstrap.astro';
+import CookieConsentBanner from '../../components/CookieConsentBanner.astro';
 const config = getConsultationConfig();
 if (!config.enabled) return Astro.redirect(config.fallbackUrl, 302);
 const initialAttribution = intakeAttributionFromQuery(Astro.url.search);
@@ -52,12 +53,6 @@ gtag('js',new Date());gtag('config','G-44419Y68H7',{page_location:window.locatio
 <div data-turnstile></div><div class="submit-error" data-submit-error role="alert" hidden></div><div class="actions"><button type="submit" class="primary" data-submit>この内容で相談を送る</button><button type="button" class="text-button" data-edit="1">入力を修正する</button></div></section>
 <section data-panel="success" hidden aria-labelledby="success-title"><h1 id="success-title">相談を受け付けました</h1><p data-success-copy></p><p>相談内容によっては、この窓口ではお引き受けできない場合があります。その場合も、対応できない範囲を返信でお伝えします。</p><p class="receipt">受付番号: <strong data-receipt></strong></p><div class="actions"><a class="primary link-button" href="/consulting">相談ページに戻る</a><a href="https://note.com/shugo" target="_blank" rel="noopener noreferrer">野崎秀吾のnoteを読む</a></div></section>
 </form><footer><p>入力の目安：3分 / 返信：1〜2営業日以内</p><p>希望サービスや予算は、まだ決めなくて構いません。</p></footer></main>
-<aside id="cookie-banner" style="display:none;position:fixed;z-index:100;left:0;right:0;bottom:0;padding:12px 16px;background:rgba(0,0,0,.94);color:#9dd;border-top:1px solid #277" aria-label="アクセス解析の選択">
-  <span>このサイトではGoogle Analyticsを使用しています。 <a href="/privacy">プライバシーポリシー</a></span>
-  <button id="cookie-reject" type="button">拒否</button><button id="cookie-accept" type="button">同意</button>
-</aside>
-<script is:inline>
-(function(){var consent=localStorage.getItem('cookie-consent');if(consent)return;var banner=document.getElementById('cookie-banner');if(banner)banner.style.display='block';document.getElementById('cookie-accept')?.addEventListener('click',function(){localStorage.setItem('cookie-consent','accepted');gtag('consent','update',{analytics_storage:'granted'});window.dispatchEvent(new Event('aoi:analytics-consent'));if(banner)banner.style.display='none';});document.getElementById('cookie-reject')?.addEventListener('click',function(){localStorage.setItem('cookie-consent','rejected');if(banner)banner.style.display='none';});})();
-</script>
+<CookieConsentBanner variant="intake" />
 <script src="../../scripts/consultation-intake.ts"></script>
 </body></html>
