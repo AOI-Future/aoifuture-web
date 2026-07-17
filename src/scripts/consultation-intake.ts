@@ -1,3 +1,5 @@
+import { intakeAttributionFromQuery } from '../lib/intake-attribution';
+
 const root = document.querySelector<HTMLElement>('[data-intake]');
 const form = document.querySelector<HTMLFormElement>('#intake-form');
 if (!root || !form) throw new Error('intake_form_missing');
@@ -5,6 +7,34 @@ const startedAt = Date.now();
 let idempotencyKey = crypto.randomUUID();
 let submissionAttempted = false;
 let resetTurnstile = () => {};
+const attribution = intakeAttributionFromQuery(window.location.search);
+let meaningfullyStarted = false;
+let startSent = false;
+let successSent = false;
+const analyticsAllowed = () => localStorage.getItem('cookie-consent') === 'accepted';
+const analyticsFields = () => ({
+  source: attribution?.utmSource || 'direct', offer: attribution?.offer || 'general',
+  ...(attribution?.cellId ? { cell_id: attribution.cellId } : {}),
+  entry_path: attribution?.entryPath || '/consulting/intake/',
+});
+const emitAnalytics = (name: string) => {
+  const gtag = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag;
+  if (analyticsAllowed() && typeof gtag === 'function') gtag('event', name, analyticsFields());
+};
+const emitStart = () => {
+  if (!meaningfullyStarted || startSent || !analyticsAllowed()) return;
+  startSent = true;
+  emitAnalytics('consultation_intake_start');
+};
+form.addEventListener('input', event => {
+  const target = event.target as HTMLInputElement | HTMLTextAreaElement;
+  if (target.name && target.name !== 'website' && !['privacyPolicy', 'noSensitiveData'].includes(target.name)) { meaningfullyStarted = true; emitStart(); }
+});
+form.addEventListener('change', event => {
+  const target = event.target as HTMLInputElement;
+  if (target.name && target.name !== 'website' && !['privacyPolicy', 'noSensitiveData'].includes(target.name)) { meaningfullyStarted = true; emitStart(); }
+});
+window.addEventListener('aoi:analytics-consent', emitStart);
 const resetIdempotencyAfterEdit = () => {
   if (submissionAttempted) {
     idempotencyKey = crypto.randomUUID();
@@ -34,6 +64,6 @@ resetTurnstile=()=>{turnstileToken='';if(turnstileWidgetId)(window as TurnstileW
 const mountTurnstile=()=>{if(!sitekey||turnstileWidgetId)return;const el=document.querySelector('[data-turnstile]');const turnstile=(window as TurnstileWindow).turnstile;if(el&&turnstile)turnstileWidgetId=turnstile.render(el,{sitekey,action:'contact_intake',callback:(token:string)=>turnstileToken=token,'expired-callback':()=>turnstileToken='','error-callback':()=>{turnstileToken='';}});else setTimeout(mountTurnstile,100);};
 document.querySelector('[data-confirm]')?.addEventListener('click', () => { if (validateStep2()) { renderReview(); show('confirm'); mountTurnstile(); } });
 form.addEventListener('submit', async event => { event.preventDefault(); setError('noSensitiveData');setError('privacyPolicy'); const noSensitive=(form.elements.namedItem('noSensitiveData') as HTMLInputElement).checked; const privacy=(form.elements.namedItem('privacyPolicy') as HTMLInputElement).checked; if(!noSensitive){setError('noSensitiveData','入力を確認してください：機密情報が含まれていないことを確認してください。');failFocus('noSensitiveData');return;} if(!privacy){setError('privacyPolicy','入力を確認してください：プライバシーポリシーへの同意が必要です。');failFocus('privacyPolicy');return;} const button=document.querySelector<HTMLButtonElement>('[data-submit]')!; const error=document.querySelector<HTMLElement>('[data-submit-error]')!;submissionAttempted=true;button.disabled=true;button.textContent='送信しています…';error.hidden=true;
- const payload={schemaVersion:'2026-07-14',idempotencyKey,source:'aoifuture.com/consulting/intake',inquiryType:'Work Consultation',stage:value('stage'),situation:value('situation'),desiredTakeaway:value('desiredTakeaway'),displayName:value('displayName'),email:value('email'),organization:value('organization'),consent:{privacyPolicy:true,noSensitiveData:true,version:'2026-07-14'},antiSpam:{turnstileToken,website:value('website'),formStartedAt:startedAt}};
- try{const res=await fetch('/api/consultation-intake',{method:'POST',headers:{'Content-Type':'application/json','Idempotency-Key':idempotencyKey},body:JSON.stringify(payload)});const data=await res.json();if(!res.ok)throw new Error(data.error||'request_failed');document.querySelector<HTMLElement>('[data-success-copy]')!.textContent=`お送りいただいた内容を読み、1〜2営業日以内に ${value('email')} へ返信します。まずは、いま整理できている範囲で十分です。追加で確認したいことがあれば、返信の中でお聞きします。`;document.querySelector<HTMLElement>('[data-receipt]')!.textContent=data.receiptId;show('success');form.reset();resetTurnstile();idempotencyKey=crypto.randomUUID();submissionAttempted=false;}catch{resetTurnstile();error.textContent='送信できませんでした。入力内容は残っています。通信環境を確認して、もう一度お試しください。';error.hidden=false;}finally{button.disabled=false;button.textContent='この内容で相談を送る';}
+ const payload={schemaVersion:'2026-07-14',idempotencyKey,source:'aoifuture.com/consulting/intake',inquiryType:'Work Consultation',stage:value('stage'),situation:value('situation'),desiredTakeaway:value('desiredTakeaway'),displayName:value('displayName'),email:value('email'),organization:value('organization'),consent:{privacyPolicy:true,noSensitiveData:true,version:'2026-07-14'},antiSpam:{turnstileToken,website:value('website'),formStartedAt:startedAt},...(attribution?{attribution}:{})};
+ try{const res=await fetch('/api/consultation-intake',{method:'POST',headers:{'Content-Type':'application/json','Idempotency-Key':idempotencyKey},body:JSON.stringify(payload)});const data=await res.json();if(!res.ok||data.ok!==true||typeof data.receiptId!=='string')throw new Error(data.error||'request_failed');document.querySelector<HTMLElement>('[data-success-copy]')!.textContent=`お送りいただいた内容を読み、1〜2営業日以内に ${value('email')} へ返信します。まずは、いま整理できている範囲で十分です。追加で確認したいことがあれば、返信の中でお聞きします。`;document.querySelector<HTMLElement>('[data-receipt]')!.textContent=data.receiptId;if(!successSent){successSent=true;emitAnalytics('consultation_intake_submit_success');}show('success');form.reset();resetTurnstile();idempotencyKey=crypto.randomUUID();submissionAttempted=false;}catch{resetTurnstile();error.textContent='送信できませんでした。入力内容は残っています。通信環境を確認して、もう一度お試しください。';error.hidden=false;}finally{button.disabled=false;button.textContent='この内容で相談を送る';}
 });

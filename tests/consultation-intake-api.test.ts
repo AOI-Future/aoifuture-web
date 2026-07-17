@@ -76,6 +76,22 @@ describe('shared contact API', () => {
     log.mockRestore();
   });
 
+  it('logs only bounded non-PII attribution fields', async () => {
+    const store: any = { findByIdempotencyKey: vi.fn(async () => null), enforceRateLimits: vi.fn(async () => ({ allowed: true })), create: vi.fn(async () => ({ receiptId: 'AOI-ATTR0001', pageId: 'p' })) };
+    const log = vi.spyOn(console, 'info').mockImplementation(() => undefined);
+    const unsafe = { ...body(), attribution: { cellId: 'cell-1', utmSource: 'google', utmMedium: 'cpc', utmCampaign: 'agent_security', utmContent: 'private@example.com', entryPath: '/agent-security/verification-support/', offer: 'sprint' } };
+    expect((await handleContactIntake(req(unsafe), deps({ config, store, now }))).status).toBe(400);
+    expect(log).not.toHaveBeenCalled();
+    const safe = { ...unsafe, attribution: { ...unsafe.attribution, utmContent: 'rsa-1' } };
+    expect((await handleContactIntake(req(safe), deps({ config, store, now, receipt: () => 'AOI-ATTR0001' }))).status).toBe(201);
+    const serialized = String(log.mock.calls[0][0]);
+    expect(serialized).toContain('"cellId":"cell-1"');
+    expect(serialized).toContain('"offer":"sprint"');
+    expect(serialized).toContain('"utmCampaign":"agent_security"');
+    expect(serialized).not.toMatch(/utmContent|entryPath|@example|situation|email|token|receipt|AOI-ATTR/i);
+    log.mockRestore();
+  });
+
   it('returns durable duplicate and skips rate/create', async () => {
     const store: any = { findByIdempotencyKey: vi.fn(async () => ({ receiptId: 'AOI-OLD', pageId: 'p', payloadFingerprint: contactPayloadFingerprint(body() as any) })), enforceRateLimits: vi.fn(), create: vi.fn() };
     const res = await handleContactIntake(req(), deps({ config, store, now }));

@@ -108,7 +108,13 @@ export class NotionConsultationStore {
     if (input.displayName) properties['Display Name'] = rich(input.displayName);
     if (input.organization) properties.Organization = rich(input.organization);
     if (input.articleUrl) properties['Article URL'] = { url: input.articleUrl };
-    const response = await this.request('/pages', { method: 'POST', body: JSON.stringify({ parent: { type: 'data_source_id', data_source_id: this.config.dataSourceId }, properties }) });
+    const children = input.attribution ? [{
+      object: 'block', type: 'code', code: {
+        language: 'json',
+        rich_text: [{ type: 'text', text: { content: JSON.stringify({ schema: 'aoi-intake-attribution-v1', ...input.attribution }) } }],
+      },
+    }] : undefined;
+    const response = await this.request('/pages', { method: 'POST', body: JSON.stringify({ parent: { type: 'data_source_id', data_source_id: this.config.dataSourceId }, properties, ...(children ? { children } : {}) }) });
     const page = await response.json() as NotionPage;
     if (!page.id) throw new Error('notion_rejected');
     const created: StoredConsultation = { receiptId, pageId: page.id, url: page.url, payloadFingerprint, createdTime: page.created_time || receivedAt.toISOString() };

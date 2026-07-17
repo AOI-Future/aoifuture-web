@@ -60,6 +60,23 @@ describe('Notion shared contact store', () => {
     expect(JSON.parse(String(calls[0].body)).properties.Stage.select.name).toBe('Workflow review');
   });
 
+  it('stores attribution as a deterministic child without assuming a Notion property', async () => {
+    const calls: RequestInit[] = [];
+    const fetcher = vi.fn(async (url: any, init?: RequestInit) => {
+      if (String(url).includes('/query')) return new Response(JSON.stringify({ results: [] }));
+      calls.push(init || {});
+      return new Response(JSON.stringify({ id: 'p' }));
+    }) as unknown as typeof fetch;
+    const store = new NotionConsultationStore({ apiKey: 'secret', dataSourceId: 'ds' }, fetcher);
+    await store.create({ ...input, source: 'aoifuture.com/consulting/intake', inquiryType: 'Work Consultation', stage: 'workflow_review', attribution: {
+      cellId: 'cell-1', utmSource: 'google', utmMedium: 'cpc', utmCampaign: 'agent_security', entryPath: '/agent-security/verification-support/', offer: 'sprint',
+    } }, 'AOI-ATTR', new Date('2026-07-17T10:00:00Z'));
+    const body = JSON.parse(String(calls[0].body));
+    expect(body.properties.Attribution).toBeUndefined();
+    expect(body.properties.Situation.rich_text[0].text.content).toBe('An article needs a correction');
+    expect(body.children).toEqual([{ object: 'block', type: 'code', code: { language: 'json', rich_text: [{ type: 'text', text: { content: '{"schema":"aoi-intake-attribution-v1","cellId":"cell-1","utmSource":"google","utmMedium":"cpc","utmCampaign":"agent_security","entryPath":"/agent-security/verification-support/","offer":"sprint"}' } }] } }]);
+  });
+
   it('returns existing receipt without create when the semantic payload matches', async () => {
     let fingerprint = '';
     const fetcher = vi.fn(async () => new Response(JSON.stringify({ results: [{ id: 'p', url: 'u', created_time: '2026-07-14T00:00:00Z', properties: { 'Receipt ID': { rich_text: [{ plain_text: 'AOI-OLD' }] }, 'Payload Fingerprint': { rich_text: [{ plain_text: fingerprint }] } } }] }))) as unknown as typeof fetch;

@@ -1,3 +1,5 @@
+import { attributionKeys, attributionLimits, intakeOffers, isSafeAttributionIdentifier, isSafeEntryPath, normalizeAttributionText, type IntakeAttribution } from './intake-attribution';
+
 export const INTAKE_SCHEMA_VERSION = '2026-07-14' as const;
 export const CONSENT_VERSION = '2026-07-14' as const;
 
@@ -57,6 +59,7 @@ export type ContactIntake = {
   stage?: IntakeStage;
   consent: { privacyPolicy: true; noSensitiveData: true; version: typeof CONSENT_VERSION };
   antiSpam: { turnstileToken: string; website: string; formStartedAt: number };
+  attribution?: IntakeAttribution;
 };
 
 // Kept as an exported alias for existing imports while the intake becomes shared.
@@ -66,9 +69,10 @@ export type ValidationResult =
   | { ok: true; value: ContactIntake }
   | { ok: false; errors: Record<string, string> };
 
-const rootKeys = new Set(['schemaVersion', 'idempotencyKey', 'source', 'inquiryType', 'situation', 'desiredTakeaway', 'displayName', 'email', 'organization', 'articleUrl', 'stage', 'consent', 'antiSpam']);
+const rootKeys = new Set(['schemaVersion', 'idempotencyKey', 'source', 'inquiryType', 'situation', 'desiredTakeaway', 'displayName', 'email', 'organization', 'articleUrl', 'stage', 'consent', 'antiSpam', 'attribution']);
 const consentKeys = new Set(['privacyPolicy', 'noSensitiveData', 'version']);
 const antiSpamKeys = new Set(['turnstileToken', 'website', 'formStartedAt']);
+const attributionKeySet = new Set<string>(attributionKeys);
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -125,6 +129,32 @@ export function validateContactIntake(input: unknown, now = Date.now()): Validat
     catch { errors.articleUrl = 'invalid_url'; }
   }
 
+  let attribution: IntakeAttribution | undefined;
+  if (raw.attribution !== undefined) {
+    if (!raw.attribution || typeof raw.attribution !== 'object' || Array.isArray(raw.attribution)) errors.attribution = 'invalid_type';
+    else {
+      const a = raw.attribution as Record<string, unknown>;
+      unknownKeys(a, attributionKeySet, 'attribution.', errors);
+      const normalized: Record<string, string> = {};
+      for (const key of attributionKeys) {
+        const value = a[key];
+        if (value === undefined) continue;
+        if (typeof value !== 'string') { errors[`attribution.${key}`] = 'invalid_type'; continue; }
+        const text = normalizeAttributionText(value);
+        if (!text) { errors[`attribution.${key}`] = 'invalid_value'; continue; }
+        if (text.length > attributionLimits[key]) { errors[`attribution.${key}`] = 'too_long'; continue; }
+        if (key === 'entryPath') {
+          if (!isSafeEntryPath(text)) errors[`attribution.${key}`] = 'unsafe_entry_path';
+        } else if (key === 'offer') {
+          if (!intakeOffers.includes(text as (typeof intakeOffers)[number])) errors[`attribution.${key}`] = 'invalid_offer';
+        } else if (!isSafeAttributionIdentifier(text)) errors[`attribution.${key}`] = 'unsafe_identifier';
+        normalized[key] = text;
+      }
+      if (!source.startsWith('aoifuture.com/')) errors.attribution = 'source_not_allowed';
+      attribution = normalized as IntakeAttribution;
+    }
+  }
+
   const consent = raw.consent;
   if (!consent || typeof consent !== 'object' || Array.isArray(consent)) errors.consent = 'required';
   else {
@@ -166,6 +196,7 @@ export function validateContactIntake(input: unknown, now = Date.now()): Validat
     ...(stage ? { stage: stage as IntakeStage } : {}),
     consent: { privacyPolicy: true, noSensitiveData: true, version: CONSENT_VERSION },
     antiSpam: { turnstileToken, website: '', formStartedAt },
+    ...(attribution ? { attribution } : {}),
   } };
 }
 

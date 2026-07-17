@@ -10,6 +10,7 @@ import { consultationAbuseLimiter, consultationPreTurnstileLimiter, type AbuseLi
 import { UpstashAbuseLimiter, type DistributedLimitResult } from '../../lib/consultation-distributed-limit';
 import { assessIntakeSecurity } from '../../lib/consultation-security-signals';
 import { trustedClientIp } from '../../lib/trusted-client-ip';
+import type { IntakeAttribution } from '../../lib/intake-attribution';
 
 type Dependencies = { config?: ConsultationConfig; store?: NotionConsultationStore; fetcher?: typeof fetch; now?: () => Date; receipt?: () => string; preLimiter?: { check: (input: AbuseLimitInput) => AbuseLimitResult }; limiter?: { check: (input: AbuseLimitInput) => AbuseLimitResult }; distributedLimiter?: { check: (input: AbuseLimitInput) => Promise<DistributedLimitResult> } };
 
@@ -19,6 +20,15 @@ const headers = (origin: string | null, allowed: boolean) => ({
   'Cache-Control': 'no-store', 'Content-Type': 'application/json; charset=utf-8', 'X-Content-Type-Options': 'nosniff',
 });
 const response = (status: number, body: Record<string, unknown>, origin: string | null, allowed: boolean) => new Response(JSON.stringify(body), { status, headers: headers(origin, allowed) });
+const attributionLogFields = (attribution?: IntakeAttribution) => {
+  if (!attribution) return {};
+  const value = attribution as { cellId?: string; offer?: string; utmSource?: string; utmMedium?: string; utmCampaign?: string };
+  return {
+    ...(value.cellId ? { cellId: value.cellId } : {}), ...(value.offer ? { offer: value.offer } : {}),
+    ...(value.utmSource ? { utmSource: value.utmSource } : {}), ...(value.utmMedium ? { utmMedium: value.utmMedium } : {}),
+    ...(value.utmCampaign ? { utmCampaign: value.utmCampaign } : {}),
+  };
+};
 
 function sourceMatchesOrigin(source: string, origin: string): boolean {
   let hostname = '';
@@ -115,7 +125,7 @@ export async function handleContactIntake(request: Request, deps: Dependencies =
     }
     const receiptId = (deps.receipt || (() => `AOI-${randomBytes(4).toString('hex').toUpperCase()}`))();
     const stored = await store.create(validation.value, receiptId, now, security);
-    console.info(JSON.stringify({ event: 'contact_intake', receipt: stored.receiptId.slice(0, 12), source: validation.value.source, inquiryType: validation.value.inquiryType, ...(validation.value.stage ? { stage: validation.value.stage } : {}), quarantined: security.quarantine, result: stored.receiptId === receiptId ? 'created' : 'duplicate', status: stored.receiptId === receiptId ? 201 : 200, latency: Date.now() - started < 1000 ? 'lt1s' : Date.now() - started < 5000 ? '1-5s' : 'gte5s' }));
+    console.info(JSON.stringify({ event: 'contact_intake', source: validation.value.source, inquiryType: validation.value.inquiryType, ...(validation.value.stage ? { stage: validation.value.stage } : {}), ...attributionLogFields(validation.value.attribution), quarantined: security.quarantine, result: stored.receiptId === receiptId ? 'created' : 'duplicate', status: stored.receiptId === receiptId ? 201 : 200, latency: Date.now() - started < 1000 ? 'lt1s' : Date.now() - started < 5000 ? '1-5s' : 'gte5s' }));
     return response(stored.receiptId === receiptId ? 201 : 200, { ok: true, receiptId: stored.receiptId, duplicate: stored.receiptId !== receiptId }, origin, true);
   } catch (error) {
     if (error instanceof IdempotencyConflictError) return response(409, { error: 'idempotency_conflict' }, origin, true);
@@ -125,7 +135,7 @@ export async function handleContactIntake(request: Request, deps: Dependencies =
       if (stored?.payloadFingerprint === payloadFingerprint) return response(200, { ok: true, receiptId: stored.receiptId, duplicate: true }, origin, true);
       if (stored) return response(409, { error: 'idempotency_conflict' }, origin, true);
     } catch { /* fail closed */ }
-    console.warn(JSON.stringify({ event: 'contact_intake', source: validation.value.source, inquiryType: validation.value.inquiryType, ...(validation.value.stage ? { stage: validation.value.stage } : {}), result: 'storage_unavailable', status: 503, latency: Date.now() - started < 1000 ? 'lt1s' : Date.now() - started < 5000 ? '1-5s' : 'gte5s' }));
+    console.warn(JSON.stringify({ event: 'contact_intake', source: validation.value.source, inquiryType: validation.value.inquiryType, ...(validation.value.stage ? { stage: validation.value.stage } : {}), ...attributionLogFields(validation.value.attribution), result: 'storage_unavailable', status: 503, latency: Date.now() - started < 1000 ? 'lt1s' : Date.now() - started < 5000 ? '1-5s' : 'gte5s' }));
     return response(503, { error: 'storage_unavailable' }, origin, true);
   }
 }

@@ -5,6 +5,7 @@ const routes = [
   '/agent-security/checklist/',
   '/agent-security/evidence-demo/',
   '/agent-security/reference/tool-and-action-safety/',
+  '/agent-security/verification-support/',
 ];
 
 for (const route of routes) {
@@ -75,4 +76,20 @@ test('terminology guide explains the traceability chain without opening the book
   }
   await expect(page.getByText('VT-S-011-SHELL', { exact: true }).first()).toBeVisible();
   await expect(page.locator('#how-to-read')).toContainText('一対一の変換でも、総合点でもなく');
+});
+
+test('verification support forwards only allowlisted attribution and emits consent-aware non-PII events', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('cookie-consent', 'accepted'));
+  await page.goto('/agent-security/verification-support/?cell_id=cell-7&utm_source=google&utm_medium=cpc&utm_campaign=agent_security&utm_content=rsa-1&gclid=raw-click&email=private%40example.com');
+  const links = page.locator('a[data-intake-offer]');
+  await expect(links).toHaveCount(5);
+  const sprint = links.first();
+  const href = await sprint.getAttribute('href');
+  expect(href).toContain('cell_id=cell-7'); expect(href).toContain('offer=sprint'); expect(href).toContain('entry_path=%2Fagent-security%2Fverification-support%2F');
+  expect(href).not.toMatch(/gclid|email|private|raw-click/);
+  await sprint.evaluate((element) => element.addEventListener('click', event => event.preventDefault()));
+  await sprint.click();
+  const events = await page.evaluate(() => (window as any).dataLayer.filter((entry:any) => entry[0] === 'event' && String(entry[1]).startsWith('verification_support_')).map((entry:any) => ({ name: entry[1], fields: entry[2] })));
+  expect(events.map((event:any) => event.name)).toEqual(['verification_support_view', 'verification_support_intake_click']);
+  for (const event of events) { expect(Object.keys(event.fields).every(key => ['offer','cell_id','entry_path','cta_location'].includes(key))).toBe(true); expect(JSON.stringify(event)).not.toMatch(/gclid|email|private|raw-click|utm_|link_url|referrer/i); }
 });

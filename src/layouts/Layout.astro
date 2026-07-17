@@ -122,6 +122,7 @@ const {
         document.getElementById("cookie-accept")?.addEventListener("click", function() {
           localStorage.setItem("cookie-consent", "accepted");
           gtag("consent", "update", { analytics_storage: "granted" });
+          window.dispatchEvent(new Event("aoi:analytics-consent"));
           banner.style.display = "none";
         });
         document.getElementById("cookie-reject")?.addEventListener("click", function() {

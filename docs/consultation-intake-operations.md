@@ -13,9 +13,15 @@ The API validates exact origin, strictly parsed JSON media type, a streaming 16 
 
 ## Shared request contract (`2026-07-14`)
 
-Required fields are `schemaVersion`, `idempotencyKey`, `source`, `inquiryType`, `situation`, `email`, `consent`, and `antiSpam`. Optional fields are `desiredTakeaway`, `displayName`, `organization`, `articleUrl`, and `stage`.
+Required fields are `schemaVersion`, `idempotencyKey`, `source`, `inquiryType`, `situation`, `email`, `consent`, and `antiSpam`. Optional fields are `desiredTakeaway`, `displayName`, `organization`, `articleUrl`, `stage`, and `attribution`.
 
 `stage` is required only when `source=aoifuture.com/consulting/intake` and `inquiryType=Work Consultation`; it remains optional for every other source/type combination. The `Idempotency-Key` header is optional for same-origin forms, but when supplied it must equal the body value.
+
+### Privacy-safe attribution contract
+
+`attribution` is accepted only for an `aoifuture.com/*` Source. It is a strict object whose only keys are `cellId`, `utmSource`, `utmMedium`, `utmCampaign`, `utmContent`, `entryPath`, and `offer`. All values must be strings. Offers are exactly `sprint`, `continuous`, `fail_review`, or `general`. Values are trimmed, NFC-normalized, stripped of control characters, length-bounded (64 characters for `cellId`, 100 for each UTM value, 160 for `entryPath`), and checked as non-PII identifiers or a safe root-relative path. Unknown keys, arrays, non-string values, URL-like identifiers, email-like values, unsafe paths, and attribution on another Source are rejected.
+
+The Verification Support page forwards only `cell_id` and `utm_source`, `utm_medium`, `utm_campaign`, `utm_content` from its current query. It adds the fixed `entry_path=/agent-security/verification-support/` and the CTA's fixed `offer`. It never forwards `gclid`, `gbraid`, `wbraid`, arbitrary query fields, referrer, or a full URL. The intake page parses that same seven-field query allowlist into the durable request; missing or invalid fields are omitted. Attribution is part of the semantic payload fingerprint, while `antiSpam`, timing, challenge tokens, and idempotency metadata remain excluded.
 
 Allowed Source options:
 
@@ -43,7 +49,7 @@ Default CORS origins are both apex and `www` variants of `aoifuture.com`, `nozak
 
 Configure `NOTION_CONSULTATION_DATA_SOURCE_ID`; never hardcode the data source ID or token. The integration must have access only to this data source.
 
-Exact properties used by the writer are: `Name`, `Status`, `Priority`, `Owner`, `Next Action`, `Next Action Due`, `Stage`, `Email`, `Display Name`, `Organization`, `Situation`, `Desired Takeaway`, `Article URL`, `Receipt ID`, `Idempotency Key`, `Payload Fingerprint`, `Source`, `Inquiry Type`, `Received At`, `Last Contact`, `Retention Review At`, `Consent Version`, `Notification Status`, and `Security Flags`. `Payload Fingerprint` must be a `rich_text` property.
+Exact properties used by the writer are: `Name`, `Status`, `Priority`, `Owner`, `Next Action`, `Next Action Due`, `Stage`, `Email`, `Display Name`, `Organization`, `Situation`, `Desired Takeaway`, `Article URL`, `Receipt ID`, `Idempotency Key`, `Payload Fingerprint`, `Source`, `Inquiry Type`, `Received At`, `Last Contact`, `Retention Review At`, `Consent Version`, `Notification Status`, and `Security Flags`. `Payload Fingerprint` must be a `rich_text` property. When attribution exists, the writer adds a deterministic JSON code child block with schema marker `aoi-intake-attribution-v1`; it does not assume an unverified Notion property and does not append metadata to Situation or another user-semantic field.
 
 The live data source also contains operational properties `Discord Thread`, `Last Instruction`, and `Decision`. The intake writer intentionally leaves those unset for the watcher/human triage workflow. Normal defaults are Status `New`, Priority `P2`, Owner `Shugo`, and Notification Status `Pending`. Deterministically suspicious input is quarantined as Status `Triaging`, Priority `P3`, with allowlisted `Security Flags`; it is not automatically deleted or classified by an LLM. `Pending` is retained so the existing Discord watcher can alert for human review.
 
@@ -70,9 +76,28 @@ Do not run load or DoS tests against production. Verify thresholds against unit 
 
 ## Logging and notifications
 
-Structured logs contain only the receipt prefix, Source, Inquiry Type, optional Stage, outcome/status, and latency bucket. They must not contain name, email, organization, article URL, situation/free text, IP, user agent, tokens, or Notion response bodies.
+Structured logs contain only Source, Inquiry Type, optional Stage, outcome/status, latency bucket, quarantine state, and the bounded attribution subset `cellId`, `offer`, `utmSource`, `utmMedium`, and `utmCampaign`. They must not contain a receipt (full or partial), name, email, organization, article URL, Situation/free text, `utmContent`, `entryPath`, raw click IDs, IP, referrer/full URL, user agent, idempotency key, challenge token, or Notion response body.
 
 The existing model-free watcher consumes records with Notification Status `Pending`. Discord alerts contain operational metadata and a Notion link only—not contact details or submitted free text. The watcher owns later status transitions and the `Discord Thread`, `Last Instruction`, and `Decision` fields.
+
+## Analytics event contract and interpretation
+
+GA4 remains consent-default-denied and the cookie banner does not gate the form. Custom events are emitted only when `cookie-consent=accepted`:
+
+| Event | Trigger | Allowed parameters |
+| --- | --- | --- |
+| `verification_support_view` | Verification Support is viewed with analytics consent | `offer`, optional `cell_id`, `entry_path` |
+| `verification_support_intake_click` | A fixed-offer intake CTA is clicked | `offer`, optional `cell_id`, `entry_path`, `cta_location` |
+| `consultation_intake_start` | First meaningful form interaction, at most once | `source`, `offer`, optional `cell_id`, `entry_path` |
+| `consultation_intake_submit_success` | API returns a durable success (`ok=true` plus receipt), at most once | `source`, `offer`, optional `cell_id`, `entry_path` |
+
+No analytics event may contain name, email, organization, Situation/free text, receipt, idempotency key, Turnstile token, IP, referrer, full URL, click ID, or form field value. A rejected or undecided analytics choice produces no custom event but does not remove attribution from the durable intake request. A failed API attempt produces no submit-success event; a successful retry produces exactly one.
+
+Interpret conversion only within the same browser session and carried query chain: Verification Support query → rewritten CTA → intake payload. This contract does not create a user identity, cross-device join, or proof that a GA4 event and Notion row belong to the same person. If attribution is missing, record the intake normally and report it as unattributed; do not infer values from referrer, IP, email domain, or full URL.
+
+For QA, use a non-PII marker such as `cell_id=qa_<ticket>` and a normal allowlisted offer. QA markers are intentionally retained in both consented analytics and durable metadata so the two layers can be checked, but they are not automatically deleted or excluded: filter `qa_` cells from business reporting and remove any approved synthetic Notion record after verification. Never put a tester name, email, receipt, or production click ID in the marker.
+
+Manual reconciliation is aggregate and privacy-safe: compare counts by time window, `cellId`, `offer`, `entryPath`, and Source/campaign between GA4 and Notion. Expect gaps from rejected consent, blockers, navigation loss, or missing attribution. Do not export contact fields into GA4 or join rows by PII. Investigate discrepancies using the bounded server log dimensions and Notion's attribution child block, then document the count and reason rather than fabricating a one-to-one match.
 
 ## Enablement checklist
 
