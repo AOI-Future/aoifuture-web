@@ -93,3 +93,30 @@ test('verification support forwards only allowlisted attribution and emits conse
   expect(events.map((event:any) => event.name)).toEqual(['verification_support_view', 'verification_support_intake_click']);
   for (const event of events) { expect(Object.keys(event.fields).every(key => ['offer','cell_id','entry_path','cta_location'].includes(key))).toBe(true); expect(JSON.stringify(event)).not.toMatch(/gclid|email|private|raw-click|utm_|link_url|referrer/i); }
 });
+
+test('throwing verification-support analytics is consumed once and does not block intake navigation', async ({ page }) => {
+  const pageErrors: string[] = [];
+  page.on('pageerror', error => pageErrors.push(error.message));
+  await page.addInitScript(() => localStorage.setItem('cookie-consent', 'rejected'));
+  await page.goto('/agent-security/verification-support/?cell_id=cell-throw');
+  await page.evaluate(() => {
+    localStorage.setItem('cookie-consent', 'accepted');
+    (window as any).gtag = (command: string, name: string) => {
+      if (command === 'event') {
+        const attempts = JSON.parse(sessionStorage.getItem('analytics-attempts') || '[]');
+        attempts.push(name);
+        sessionStorage.setItem('analytics-attempts', JSON.stringify(attempts));
+      }
+      throw new Error('analytics unavailable');
+    };
+    window.dispatchEvent(new Event('aoi:analytics-consent'));
+    window.dispatchEvent(new Event('aoi:analytics-consent'));
+  });
+  await page.locator('a[data-intake-offer="sprint"]').first().click();
+  await expect(page).toHaveURL(/\/consulting\/intake\?.*cell_id=cell-throw.*offer=sprint/);
+  expect(await page.evaluate(() => JSON.parse(sessionStorage.getItem('analytics-attempts') || '[]'))).toEqual([
+    'verification_support_view',
+    'verification_support_intake_click',
+  ]);
+  expect(pageErrors).toEqual([]);
+});

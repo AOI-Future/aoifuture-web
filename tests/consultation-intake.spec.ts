@@ -27,3 +27,29 @@ test('rejected analytics does not block form or durable attribution',async({page
   await expect(page.getByText('AOI-REJECTED')).toBeVisible();expect(payload.attribution).toMatchObject({cellId:'cell-9',utmSource:'google',entryPath:'/agent-security/verification-support/',offer:'fail_review'});
   expect(await page.evaluate(()=>(window as any).dataLayer.filter((entry:any)=>entry[0]==='event'&&String(entry[1]).startsWith('consultation_intake_')).length)).toBe(0);
 });
+
+test('throwing analytics is consumed once and cannot replace durable success with an error',async({page})=>{
+  await page.addInitScript(()=>localStorage.setItem('cookie-consent','accepted'));
+  await page.route('**/api/consultation-intake',async route=>route.fulfill({status:201,contentType:'application/json',body:JSON.stringify({ok:true,receiptId:'AOI-DURABLE-QA',duplicate:false})}));
+  await page.goto('/consulting/intake');
+  await page.evaluate(()=>{
+    (window as any).__analyticsAttempts=[];
+    (window as any).gtag=(command:string,name:string)=>{
+      if(command==='event') (window as any).__analyticsAttempts.push(name);
+      throw new Error('analytics unavailable');
+    };
+  });
+  await page.getByLabel('特定の仕事の流れを見直したい').check();
+  await page.getByLabel(/いま、仕事の中で何が起きていますか/).fill('毎週の確認作業で担当と完了条件が曖昧になっています。');
+  await page.getByLabel(/いま、仕事の中で何が起きていますか/).fill('分析障害があっても相談内容は送信できます。');
+  await page.getByRole('button',{name:'返信先の入力へ'}).click();
+  await page.getByLabel(/返信先のメールアドレス/).fill('test@example.com');
+  await page.getByRole('button',{name:'入力内容を確認する'}).click();
+  await page.getByLabel(/機密情報や認証情報/).check();
+  await page.getByLabel(/プライバシーポリシーに同意/).check();
+  await page.getByRole('button',{name:'この内容で相談を送る'}).click();
+  await expect(page.getByRole('heading',{name:'相談を受け付けました'})).toBeVisible();
+  await expect(page.locator('[data-submit-error]')).toBeHidden();
+  await expect(page.getByText('AOI-DURABLE-QA')).toBeVisible();
+  expect(await page.evaluate(()=>(window as any).__analyticsAttempts)).toEqual(['consultation_intake_start','consultation_intake_submit_success']);
+});

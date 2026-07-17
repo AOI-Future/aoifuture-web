@@ -1,4 +1,5 @@
 import { attributionFromQuery, type IntakeAttribution } from '../lib/intake-attribution';
+import { emitAnalyticsBestEffort } from '../lib/analytics';
 
 const ENTRY_PATH = '/agent-security/verification-support/';
 const allowedEventFields = (attribution: IntakeAttribution, ctaLocation?: string) => ({
@@ -7,18 +8,12 @@ const allowedEventFields = (attribution: IntakeAttribution, ctaLocation?: string
   entry_path: ENTRY_PATH,
   ...(ctaLocation ? { cta_location: ctaLocation } : {}),
 });
-const analyticsAllowed = () => localStorage.getItem('cookie-consent') === 'accepted';
-const emit = (name: string, fields: Record<string, string>) => {
-  if (analyticsAllowed() && typeof window.gtag === 'function') window.gtag('event', name, fields);
-};
-
 const links = [...document.querySelectorAll<HTMLAnchorElement>('a[data-intake-offer][data-as-location]')];
 let viewSent = false;
 const viewAttribution = attributionFromQuery(window.location.search, { entryPath: ENTRY_PATH, offer: 'general' });
 const emitView = () => {
-  if (viewSent || !analyticsAllowed()) return;
-  viewSent = true;
-  emit('verification_support_view', allowedEventFields(viewAttribution));
+  if (viewSent) return;
+  viewSent = emitAnalyticsBestEffort('verification_support_view', () => allowedEventFields(viewAttribution));
 };
 
 for (const link of links) {
@@ -31,7 +26,7 @@ for (const link of links) {
   ];
   for (const [field, queryKey] of queryFields) if (attribution[field]) target.searchParams.set(queryKey, attribution[field] as string);
   link.href = `${target.pathname}${target.search}`;
-  link.addEventListener('click', () => emit('verification_support_intake_click', allowedEventFields(attribution, link.dataset.asLocation)));
+  link.addEventListener('click', () => emitAnalyticsBestEffort('verification_support_intake_click', () => allowedEventFields(attribution, link.dataset.asLocation)));
 }
 
 emitView();
