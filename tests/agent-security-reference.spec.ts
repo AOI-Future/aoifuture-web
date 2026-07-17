@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { analyticsPayload, captureGoogleAnalytics, type CapturedAnalyticsRequest } from './helpers/google-analytics';
 
 const routes = [
   '/agent-security/',
@@ -92,6 +93,30 @@ test('verification support forwards only allowlisted attribution and emits conse
   const events = await page.evaluate(() => (window as any).dataLayer.filter((entry:any) => entry[0] === 'event' && String(entry[1]).startsWith('verification_support_')).map((entry:any) => ({ name: entry[1], fields: entry[2] })));
   expect(events.map((event:any) => event.name)).toEqual(['verification_support_view', 'verification_support_intake_click']);
   for (const event of events) { expect(Object.keys(event.fields).every(key => ['offer','cell_id','entry_path','cta_location'].includes(key))).toBe(true); expect(JSON.stringify(event)).not.toMatch(/gclid|email|private|raw-click|utm_|link_url|referrer/i); }
+});
+
+test('verification support strips the query before GA and suppresses implicit URL/referrer leakage', async ({ page }) => {
+  const requests: CapturedAnalyticsRequest[] = [];
+  await page.addInitScript(() => localStorage.setItem('cookie-consent', 'accepted'));
+  await captureGoogleAnalytics(page, requests);
+  await page.goto('/privacy?email=referrer-leak%40example.com&gclid=referrer-click-id');
+  requests.length = 0;
+  await page.evaluate(() => {
+    window.location.href = '/agent-security/verification-support/?cell_id=cell-privacy&utm_source=google&utm_medium=cpc&utm_campaign=agent_security&utm_content=rsa-privacy&gclid=raw-click-id&email=query-leak%40example.com&token=secret-token&receipt=AOI-SECRET';
+  });
+  await expect(page).toHaveURL('http://127.0.0.1:4327/agent-security/verification-support/');
+  await expect(page.locator('meta[name="referrer"]')).toHaveAttribute('content', 'no-referrer');
+  const sprint = page.locator('a[data-intake-offer="sprint"]').first();
+  await sprint.evaluate(element => element.addEventListener('click', event => event.preventDefault()));
+  await sprint.click();
+  await expect.poll(() => requests.length).toBeGreaterThanOrEqual(3);
+
+  for (const request of requests) {
+    const payload = analyticsPayload(request);
+    expect(payload.body.get('page_location')).toBe('http://127.0.0.1:4327/agent-security/verification-support/');
+    expect(payload.body.get('page_referrer')).toBe('');
+    expect(payload.text).not.toMatch(/query-leak|referrer-leak|example\.com|gclid|raw-click-id|referrer-click-id|AOI-SECRET|secret-token|receipt|idempotency/i);
+  }
 });
 
 test('throwing verification-support analytics is consumed once and does not block intake navigation', async ({ page }) => {

@@ -8,6 +8,7 @@ interface Props {
   description?: string;
   canonical?: string;
   pageTransition?: boolean;
+  privacySafeAnalytics?: boolean;
 }
 
 const {
@@ -15,6 +16,7 @@ const {
   description = "AOI Future is an AI-native solo studio and living laboratory designing creative work and work systems for human-AI collaboration.",
   canonical = "https://aoifuture.com",
   pageTransition = true,
+  privacySafeAnalytics = false,
 } = Astro.props;
 ---
 
@@ -31,14 +33,15 @@ const {
     <meta name="copyright" content="© 2024-2026 AOI Future / Shugo Nozaki" />
     <meta name="ai-generated" content="partial" />
     <meta name="human-contribution" content="substantial" />
+    {privacySafeAnalytics && <meta name="referrer" content="no-referrer" />}
     <link rel="canonical" href={canonical} />
     <title>{title}</title>
     <slot name="head" />
 
     <!-- Google tag (gtag.js) - loaded only after consent -->
-    <script is:inline>
+    <script is:inline define:vars={{ privacySafeAnalytics }}>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+      window.gtag = function(){window.dataLayer.push(arguments);};
 
       // Default: deny analytics until consent
       gtag("consent", "default", {
@@ -48,12 +51,17 @@ const {
       });
 
       // If user already consented, grant immediately
-      if (localStorage.getItem("cookie-consent") === "accepted") {
-        gtag("consent", "update", { analytics_storage: "granted" });
-      }
+      try {
+        if (localStorage.getItem("cookie-consent") === "accepted") {
+          gtag("consent", "update", { analytics_storage: "granted" });
+        }
+      } catch (_) {}
 
       gtag("js", new Date());
-      gtag("config", "G-44419Y68H7");
+      gtag("config", "G-44419Y68H7", privacySafeAnalytics ? {
+        page_location: window.location.origin + window.location.pathname,
+        page_referrer: ""
+      } : {});
     </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-44419Y68H7"></script>
 

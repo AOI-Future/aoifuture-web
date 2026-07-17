@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { attributionFromQuery, intakeAttributionFromQuery } from '../src/lib/intake-attribution';
+import { attributionFromQuery, attributionQuerySpecs, intakeAttributionFromQuery } from '../src/lib/intake-attribution';
 import { validateContactIntake } from '../src/lib/consultation-intake';
 
 const now = Date.parse('2026-07-18T00:00:00Z');
@@ -43,6 +43,16 @@ describe('privacy-safe intake attribution', () => {
     const attribution = attributionFromQuery('?cell_id=cell-7&utm_source=google&utm_medium=cpc&utm_campaign=agent_security&utm_content=rsa_1&gclid=secret&email=person%40example.com&name=Private', { entryPath: '/agent-security/verification-support/', offer: 'sprint' });
     expect(attribution).toEqual({ cellId: 'cell-7', utmSource: 'google', utmMedium: 'cpc', utmCampaign: 'agent_security', utmContent: 'rsa_1', entryPath: '/agent-security/verification-support/', offer: 'sprint' });
     expect(JSON.stringify(attribution)).not.toMatch(/gclid|email|Private|secret/);
+  });
+
+  it('shares one bounded query bootstrap specification with the strict parser', () => {
+    expect(attributionQuerySpecs).toEqual([
+      { queryKey: 'cell_id', field: 'cellId', limit: 64 },
+      { queryKey: 'utm_source', field: 'utmSource', limit: 100 },
+      { queryKey: 'utm_medium', field: 'utmMedium', limit: 100 },
+      { queryKey: 'utm_campaign', field: 'utmCampaign', limit: 100 },
+      { queryKey: 'utm_content', field: 'utmContent', limit: 100 },
+    ]);
   });
 
   it('parses only allowed intake query fields and drops unsafe values', () => {

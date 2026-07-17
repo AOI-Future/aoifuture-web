@@ -1,4 +1,4 @@
-import { intakeAttributionFromQuery } from '../lib/intake-attribution';
+import { pageLifetimeAttribution } from '../lib/intake-attribution';
 import { emitAnalyticsBestEffort } from '../lib/analytics';
 
 const root = document.querySelector<HTMLElement>('[data-intake]');
@@ -8,12 +8,12 @@ const startedAt = Date.now();
 let idempotencyKey = crypto.randomUUID();
 let submissionAttempted = false;
 let resetTurnstile = () => {};
-const attribution = intakeAttributionFromQuery(window.location.search);
+const attribution = pageLifetimeAttribution();
 let meaningfullyStarted = false;
 let startSent = false;
 let successSent = false;
 const analyticsFields = () => ({
-  source: attribution?.utmSource || 'direct', offer: attribution?.offer || 'general',
+  source: attribution?.utmSource || 'unattributed', offer: attribution?.offer || 'general',
   ...(attribution?.cellId ? { cell_id: attribution.cellId } : {}),
   entry_path: attribution?.entryPath || '/consulting/intake/',
 });

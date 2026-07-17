@@ -1,4 +1,4 @@
-import { attributionFromQuery, type IntakeAttribution } from '../lib/intake-attribution';
+import { pageLifetimeAttribution, type IntakeAttribution, type IntakeOffer } from '../lib/intake-attribution';
 import { emitAnalyticsBestEffort } from '../lib/analytics';
 
 const ENTRY_PATH = '/agent-security/verification-support/';
@@ -10,7 +10,9 @@ const allowedEventFields = (attribution: IntakeAttribution, ctaLocation?: string
 });
 const links = [...document.querySelectorAll<HTMLAnchorElement>('a[data-intake-offer][data-as-location]')];
 let viewSent = false;
-const viewAttribution = attributionFromQuery(window.location.search, { entryPath: ENTRY_PATH, offer: 'general' });
+const capturedAttribution = pageLifetimeAttribution() || {};
+const withFixedAttribution = (offer: IntakeOffer): IntakeAttribution => ({ ...capturedAttribution, entryPath: ENTRY_PATH, offer });
+const viewAttribution = withFixedAttribution('general');
 const emitView = () => {
   if (viewSent) return;
   viewSent = emitAnalyticsBestEffort('verification_support_view', () => allowedEventFields(viewAttribution));
@@ -18,7 +20,7 @@ const emitView = () => {
 
 for (const link of links) {
   const offer = link.dataset.intakeOffer as 'sprint' | 'continuous' | 'fail_review' | 'general';
-  const attribution = attributionFromQuery(window.location.search, { entryPath: ENTRY_PATH, offer });
+  const attribution = withFixedAttribution(offer);
   const target = new URL('/consulting/intake', window.location.origin);
   const queryFields: Array<[keyof IntakeAttribution, string]> = [
     ['cellId', 'cell_id'], ['utmSource', 'utm_source'], ['utmMedium', 'utm_medium'],

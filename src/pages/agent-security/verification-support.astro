@@ -1,5 +1,6 @@
 ---
 import AgentSecurityLayout from '../../layouts/AgentSecurityLayout.astro';
+import PrivacyAttributionBootstrap from '../../components/PrivacyAttributionBootstrap.astro';
 import { agentSecurityLinks, gumroadUrl } from '../../data/agent-security';
 
 export const prerender = true;
@@ -55,8 +56,9 @@ const serviceLd = {
 };
 ---
 
-<AgentSecurityLayout title={title} description={description} canonical={canonical}>
+<AgentSecurityLayout title={title} description={description} canonical={canonical} privacySafeAnalytics={true}>
   <Fragment slot="head">
+    <PrivacyAttributionBootstrap />
     <script type="application/ld+json" set:html={JSON.stringify(serviceLd)} />
   </Fragment>
 
