@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aoifuture.com/schemas/aoi-news-context-v1.schema.json",
+  "title": "AOIFUTURE News Active Context v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "slug", "title", "current_view", "updated_at", "supporting_signal_ids", "revisions"],
+  "properties": {
+    "schema_version": { "const": "aoi.news.context.v1" },
+    "id": { "$ref": "#/$defs/id" },
+    "slug": { "$ref": "#/$defs/id" },
+    "title": { "$ref": "#/$defs/text200" },
+    "current_view": { "$ref": "#/$defs/text2000" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "operator_context": { "$ref": "#/$defs/operatorContext" },
+    "supporting_signal_ids": { "$ref": "#/$defs/nonEmptyIdList" },
+    "revisions": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/revision" } }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{2,79}$" },
+    "text200": { "type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[^<>]*$" },
+    "text500": { "type": "string", "minLength": 1, "maxLength": 500, "pattern": "^[^<>]*$" },
+    "text2000": { "type": "string", "minLength": 1, "maxLength": 2000, "pattern": "^[^<>]*$" },
+    "nonEmptyIdList": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+    "operatorContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "capability": { "$ref": "#/$defs/text500" },
+        "authority": { "$ref": "#/$defs/text500" },
+        "control": { "$ref": "#/$defs/text500" },
+        "evidence": { "$ref": "#/$defs/text500" },
+        "cost_route": { "$ref": "#/$defs/text500" },
+        "operational_impact": { "$ref": "#/$defs/text500" },
+        "unresolved": { "$ref": "#/$defs/text500" }
+      }
+    },
+    "revision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "changed_at", "change_reason", "resulting_view", "evidence_signal_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "changed_at": { "type": "string", "format": "date-time" },
+        "change_reason": { "$ref": "#/$defs/text500" },
+        "resulting_view": { "$ref": "#/$defs/text2000" },
+        "evidence_signal_ids": { "$ref": "#/$defs/nonEmptyIdList" }
+      }
+    }
+  }
+}

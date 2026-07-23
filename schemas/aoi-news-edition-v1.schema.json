@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aoifuture.com/schemas/aoi-news-edition-v1.schema.json",
+  "title": "AOIFUTURE News Edition v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "edition_id", "edition_date", "generated_at", "published_at", "title", "items", "topics"],
+  "properties": {
+    "schema_version": { "const": "aoi.news.edition.v1" },
+    "edition_id": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+    "edition_date": { "type": "string", "format": "date" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "published_at": { "type": "string", "format": "date-time" },
+    "corrected_at": { "type": "string", "format": "date-time" },
+    "title": { "$ref": "#/$defs/text200" },
+    "dek": { "$ref": "#/$defs/text500" },
+    "edition_note": { "$ref": "#/$defs/text1000" },
+    "items": { "type": "array", "minItems": 1, "maxItems": 12, "items": { "$ref": "#/$defs/item" } },
+    "topics": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/topic" } }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{2,79}$" },
+    "text100": { "type": "string", "minLength": 1, "maxLength": 100, "pattern": "^[^<>]*$" },
+    "text200": { "type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[^<>]*$" },
+    "text500": { "type": "string", "minLength": 1, "maxLength": 500, "pattern": "^[^<>]*$" },
+    "text1000": { "type": "string", "minLength": 1, "maxLength": 1000, "pattern": "^[^<>]*$" },
+    "idList": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+    "change": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": { "enum": ["new", "updated", "corrected", "superseded", "withdrawn"] },
+        "previous_signal_ids": { "$ref": "#/$defs/idList" }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "checked_at"],
+      "properties": {
+        "status": { "enum": ["verified", "source-unavailable", "withdrawn"] },
+        "checked_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "image": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "alt", "credit", "rights_basis"],
+      "properties": {
+        "url": { "type": "string", "format": "uri", "pattern": "^https://aoifuture\\.com/" },
+        "alt": { "$ref": "#/$defs/text500" },
+        "credit": { "$ref": "#/$defs/text200" },
+        "rights_basis": { "$ref": "#/$defs/text200" }
+      }
+    },
+    "item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "source_url", "source_title", "source_domain", "source_kind", "language", "observed_at", "context_ids", "source_fact", "aoi_note", "topics", "role", "verification"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/text200" },
+        "source_url": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "source_title": { "$ref": "#/$defs/text500" },
+        "source_domain": { "type": "string", "minLength": 1, "maxLength": 253, "pattern": "^[A-Za-z0-9.-]+$" },
+        "source_kind": { "enum": ["official", "documentation", "release", "repository", "paper", "advisory", "regulator", "original-reporting", "analysis"] },
+        "language": { "enum": ["ja", "en", "other"] },
+        "published_at": { "type": "string", "format": "date-time" },
+        "observed_at": { "type": "string", "format": "date-time" },
+        "context_ids": { "$ref": "#/$defs/idList" },
+        "change": { "$ref": "#/$defs/change" },
+        "source_fact": { "$ref": "#/$defs/text1000" },
+        "aoi_note": { "$ref": "#/$defs/text1000" },
+        "caveat": { "$ref": "#/$defs/text500" },
+        "topics": { "$ref": "#/$defs/idList" },
+        "role": { "enum": ["lead", "major", "brief", "detour", "watch"] },
+        "verification": { "$ref": "#/$defs/verification" },
+        "image": { "$ref": "#/$defs/image" },
+        "corrected_at": { "type": "string", "format": "date-time" },
+        "correction_note": { "$ref": "#/$defs/text500" }
+      }
+    },
+    "topic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label_ja"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "label_ja": { "$ref": "#/$defs/text100" },
+        "label_en": { "$ref": "#/$defs/text100" },
+        "description": { "$ref": "#/$defs/text500" }
+      }
+    }
+  }
+}
