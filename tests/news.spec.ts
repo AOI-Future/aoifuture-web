@@ -5,6 +5,54 @@ const directSources = [
   'https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.118.0',
 ];
 
+const newsRoutes = [
+  '/news/',
+  '/news/2026-07-23/',
+  '/news/context/agent-authority/',
+  '/news/archive/',
+];
+
+test('News canonicals are singular HTTPS no-www URLs with trailing slashes', async ({ page }) => {
+  for (const route of newsRoutes) {
+    await page.goto(route);
+    const canonicals = page.locator('link[rel="canonical"]');
+    await expect(canonicals).toHaveCount(1);
+    const href = await canonicals.getAttribute('href');
+    expect(href).toBe(`https://aoifuture.com${route}`);
+    expect(new URL(href!).protocol).toBe('https:');
+    expect(new URL(href!).hostname).toBe('aoifuture.com');
+    expect(new URL(href!).pathname.endsWith('/')).toBe(true);
+  }
+});
+
+test('News loads self-hosted fonts only and retains readable fallbacks', async ({ page }) => {
+  const fontRequests: string[] = [];
+  const externalFontRequests: string[] = [];
+  page.on('request', (request) => {
+    const url = new URL(request.url());
+    if (request.resourceType() === 'font') fontRequests.push(url.href);
+    if (/fonts\.(?:googleapis|gstatic)\.com/.test(url.hostname)) externalFontRequests.push(url.href);
+  });
+
+  await page.goto('/news/');
+  await page.evaluate(() => document.fonts.ready);
+
+  expect(externalFontRequests).toEqual([]);
+  expect(fontRequests.length).toBeGreaterThan(0);
+  expect(fontRequests.every((url) => new URL(url).origin === 'http://127.0.0.1:4331')).toBe(true);
+  expect(await page.locator('.news-body').evaluate((node) => getComputedStyle(node).fontFamily)).toContain('Noto Sans JP');
+  expect(await page.locator('.news-nav').evaluate((node) => getComputedStyle(node).fontFamily)).toContain('JetBrains Mono');
+
+  await page.addStyleTag({
+    content: '.news-body { --news-body: system-ui, sans-serif; --news-mono: ui-monospace, monospace; }',
+  });
+  const dimensions = await page.evaluate(() => ({
+    scrollWidth: document.documentElement.scrollWidth,
+    clientWidth: document.documentElement.clientWidth,
+  }));
+  expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.clientWidth + 1);
+});
+
 test('Edition is finite, source-first, labeled, and explicitly non-production', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
@@ -110,7 +158,7 @@ test('News remains readable with JavaScript disabled', async ({ browser }) => {
   await context.close();
 });
 
-for (const route of ['/news/', '/news/2026-07-23/', '/news/context/agent-authority/', '/news/archive/']) {
+for (const route of newsRoutes) {
   test(`${route} has no horizontal overflow at mobile and desktop widths`, async ({ page }) => {
     for (const width of [320, 1440]) {
       await page.setViewportSize({ width, height: 900 });

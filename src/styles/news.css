@@ -1,3 +1,5 @@
+@import "./news-fonts.css";
+
 :root {
   color-scheme: dark;
   --news-ground: #000000;
