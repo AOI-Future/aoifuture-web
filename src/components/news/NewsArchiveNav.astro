@@ -1,14 +1,30 @@
 ---
-import type { NewsCatalog } from '../../lib/news/types';
+import type { NewsCatalog, NewsTopic } from '../../lib/news/types';
 
 interface Props {
   catalog: NewsCatalog;
 }
 
 const { catalog } = Astro.props;
-const topics = catalog.editions.flatMap((edition) => edition.topics.flatMap((topic) => (
-  edition.items.filter((signal) => signal.topics.includes(topic.id)).map((signal) => ({ edition, topic, signal }))
+const topicById = new Map(catalog.editions.flatMap((edition) => (
+  edition.topics.map((topic) => [topic.id, topic] as const)
 )));
+const topicRecords = new Map<string, {
+  topic: NewsTopic;
+  records: Array<{ edition: NewsCatalog['editions'][number]; signal: NewsCatalog['editions'][number]['items'][number] }>;
+}>();
+for (const edition of catalog.editions) {
+  for (const signal of edition.items) {
+    for (const topicId of signal.topics) {
+      const topic = topicById.get(topicId);
+      if (!topic) continue;
+      const group = topicRecords.get(topicId) ?? { topic, records: [] };
+      group.records.push({ edition, signal });
+      topicRecords.set(topicId, group);
+    }
+  }
+}
+const topics = Array.from(topicRecords.values());
 const sources = catalog.editions.flatMap((edition) => edition.items.map((signal) => ({ edition, signal })));
 ---
 
@@ -32,8 +48,20 @@ const sources = catalog.editions.flatMap((edition) => edition.items.map((signal)
   <section aria-labelledby="archive-topics">
     <h2 id="archive-topics">By topic</h2>
     <ul id="archive-topics-list">
-      {topics.map(({ edition, topic, signal }) => (
-        <li><a href={`/news/${edition.edition_date}/#${signal.id}`}>{topic.label_ja} / {signal.title}</a></li>
+      {topics.map(({ topic, records }) => (
+        <li class="news-archive-topic" aria-labelledby={`topic-${topic.id}`}>
+          <h3 id={`topic-${topic.id}`}>{topic.label_ja}</h3>
+          {topic.description && <p>{topic.description}</p>}
+          <ul>
+            {records.map(({ edition, signal }) => (
+              <li>
+                <a href={`/news/${edition.edition_date}/#${signal.id}`}>
+                  <time datetime={edition.edition_date}>{edition.edition_date} JST</time> / {signal.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </li>
       ))}
     </ul>
   </section>

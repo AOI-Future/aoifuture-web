@@ -34,10 +34,10 @@ npm run build
 PASS — all four News routes prerendered; sitemap generated
 
 npm run test:news:e2e
-PASS — 10/10 browser tests
+PASS — 11/11 browser tests
 ```
 
-Browser coverage includes the finite Edition, direct source links, locked Signal DOM order, semantic dates with visible JST, source-title language, current-view-before-history ordering, evidence links, AOIFUTURE-retained topic/source archive destinations, normal same-tab navigation, JavaScript-disabled reading, four-route mobile/desktop overflow checks, skip-link and keyboard focus, unknown date/Context 404 responses, Navigator NEWS route, and preservation of existing hash-overlay behavior.
+Browser coverage includes the finite Edition, direct source links, locked Signal DOM order, semantic dates with visible JST, source-title language, current-view-before-history ordering, evidence links, AOIFUTURE-retained topic/source archive destinations, normal same-tab navigation, JavaScript-disabled reading, four-route mobile/desktop overflow checks, skip-link and keyboard focus, unknown date/Context 404 responses, Navigator NEWS route, and preservation of existing hash-overlay behavior. The topic regression follows the visible Edition metadata link and proves its unique archive fragment exposes both exact retained Signal anchors under one topic group.
 
 The build-time loader calls the canonical Phase 1 schema and semantic validator for the public catalog. Regression coverage proves invalid source-kind, Signal-role, verification-status, and change-kind enums fail closed, as does a non-reciprocal Signal/Context reference. The canonical validator uses static JSON module imports so the same validation remains available in bundled prerender execution without filesystem-relative schema lookup.
 
@@ -52,6 +52,8 @@ The candidate adds `react-dom/client` to `vite.optimizeDeps.include` and gives N
 ## Visual readback
 
 Desktop and 390px mobile views were inspected from the local candidate.
+
+Fresh topic-retrospective evidence is retained for the Debug/Reviewer handoff at `test-results/news-topic-retrospective-desktop.png` (1440 × 1000 viewport) and `test-results/news-topic-retrospective-mobile.png` (390 × 844 viewport). Both browser readbacks reached `/news/archive/#topic-agent-operations`, found exactly one target, exposed both dated `2026-07-23 JST` Signal records, and had equal document/client widths.
 
 - The reading surface is flat black and text-led.
 - Cyan is limited to structure, labels, focus, and direct-source navigation.

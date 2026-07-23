@@ -80,6 +80,27 @@ test('archive exposes bounded Edition, Context, topic, and source entry points',
   await expect(page.locator('#archive-sources-list a[href^="http"]')).toHaveCount(0);
 });
 
+test('visible Signal topic navigation reaches its grouped retained retrospective', async ({ page }) => {
+  await page.goto('/news/2026-07-23/');
+  const topicLinks = page.locator('[data-news-signal] a[href="/news/archive/#topic-agent-operations"]');
+  await expect(topicLinks).toHaveCount(2);
+
+  await topicLinks.first().click();
+  await expect(page).toHaveURL(/\/news\/archive\/#topic-agent-operations$/);
+
+  const topicTarget = page.locator('#topic-agent-operations');
+  await expect(topicTarget).toBeVisible();
+  await expect(topicTarget).toHaveText('エージェント運用');
+  const topicGroup = topicTarget.locator('xpath=..');
+  for (const href of [
+    '/news/2026-07-23/#sig-openai-presence-20260722',
+    '/news/2026-07-23/#sig-anthropic-sdk-20260722',
+  ]) {
+    await expect(topicGroup.locator(`a[href="${href}"]`)).toHaveCount(1);
+  }
+  await expect(topicGroup.locator('time[datetime="2026-07-23"]')).toHaveCount(2);
+});
+
 test('News remains readable with JavaScript disabled', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();

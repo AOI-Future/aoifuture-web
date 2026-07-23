@@ -484,6 +484,18 @@ html {
   border-top: 1px solid var(--news-rule);
 }
 
+.news-archive-topic h3 {
+  margin: 0;
+  scroll-margin-top: 24px;
+  color: var(--news-cyan);
+  font: 600 16px/1.6 var(--news-mono);
+}
+
+.news-archive-topic > p {
+  margin: 8px 0 0;
+  color: var(--news-muted);
+}
+
 .news-site-footer {
   padding-block: 28px 48px;
   border-top: 1px solid var(--news-rule);
