@@ -1,0 +1,32 @@
+---
+import NewsActiveContext from '../../../components/news/NewsActiveContext.astro';
+import NewsContextHistory from '../../../components/news/NewsContextHistory.astro';
+import NewsLayout from '../../../layouts/NewsLayout.astro';
+import { loadNewsCatalog } from '../../../lib/news/load-news';
+import type { NewsContext } from '../../../lib/news/types';
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return loadNewsCatalog().contexts.map((context) => ({
+    params: { slug: context.slug },
+    props: { context },
+  }));
+}
+
+interface Props {
+  context: NewsContext;
+}
+
+const { context } = Astro.props;
+---
+
+<NewsLayout
+  title={`${context.title} | Active Context | AOIFUTURE News`}
+  description={context.current_view}
+  canonical={`https://aoifuture.com/news/context/${context.slug}/`}
+>
+  <p class="news-sample-label news-sample-label--hero">NON-PRODUCTION SAMPLE</p>
+  <NewsActiveContext context={context} />
+  <NewsContextHistory context={context} />
+</NewsLayout>

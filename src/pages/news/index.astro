@@ -1,0 +1,19 @@
+---
+import NewsEdition from '../../components/news/NewsEdition.astro';
+import NewsLayout from '../../layouts/NewsLayout.astro';
+import { loadNewsCatalog } from '../../lib/news/load-news';
+
+export const prerender = true;
+
+const catalog = loadNewsCatalog();
+const edition = catalog.editions[0];
+if (!edition) throw new Error('AOIFUTURE News requires at least one staged Edition');
+---
+
+<NewsLayout
+  title={`${edition.title} | AOIFUTURE News`}
+  description={edition.dek ?? edition.title}
+  canonical="https://aoifuture.com/news/"
+>
+  <NewsEdition edition={edition} contexts={catalog.contexts} />
+</NewsLayout>

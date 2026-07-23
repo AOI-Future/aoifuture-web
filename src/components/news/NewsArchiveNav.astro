@@ -1,0 +1,46 @@
+---
+import type { NewsCatalog } from '../../lib/news/types';
+
+interface Props {
+  catalog: NewsCatalog;
+}
+
+const { catalog } = Astro.props;
+const topics = catalog.editions.flatMap((edition) => edition.topics.map((topic) => ({ edition, topic })));
+const sources = catalog.editions.flatMap((edition) => edition.items.map((signal) => ({ edition, signal })));
+---
+
+<div class="news-archive-grid">
+  <section aria-labelledby="archive-editions">
+    <h2 id="archive-editions">By Edition</h2>
+    <ul>
+      {catalog.editions.map((edition) => (
+        <li><a href={`/news/${edition.edition_date}/`}>{edition.edition_date} / {edition.title}</a></li>
+      ))}
+    </ul>
+  </section>
+  <section aria-labelledby="archive-contexts">
+    <h2 id="archive-contexts">By Context</h2>
+    <ul>
+      {catalog.contexts.map((context) => (
+        <li><a href={`/news/context/${context.slug}/`}>{context.title}</a></li>
+      ))}
+    </ul>
+  </section>
+  <section aria-labelledby="archive-topics">
+    <h2 id="archive-topics">By topic</h2>
+    <ul>
+      {topics.map(({ edition, topic }) => (
+        <li><a href={`/news/${edition.edition_date}/#signals-heading`}>{topic.label_ja} / {topic.label_en}</a></li>
+      ))}
+    </ul>
+  </section>
+  <section aria-labelledby="archive-sources">
+    <h2 id="archive-sources">By source</h2>
+    <ul>
+      {sources.map(({ signal }) => (
+        <li><a href={signal.source_url} target="_blank" rel="noopener noreferrer">{signal.source_domain} / {signal.source_title}</a></li>
+      ))}
+    </ul>
+  </section>
+</div>

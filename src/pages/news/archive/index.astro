@@ -1,0 +1,23 @@
+---
+import NewsArchiveNav from '../../../components/news/NewsArchiveNav.astro';
+import NewsLayout from '../../../layouts/NewsLayout.astro';
+import { loadNewsCatalog } from '../../../lib/news/load-news';
+
+export const prerender = true;
+const catalog = loadNewsCatalog();
+---
+
+<NewsLayout
+  title="Sample index | AOIFUTURE News"
+  description="AOIFUTURE News non-production sample retrospective entry points."
+  canonical="https://aoifuture.com/news/archive/"
+>
+  <header class="news-archive-header">
+    <p class="news-sample-label news-sample-label--hero">NON-PRODUCTION SAMPLE</p>
+    <p class="news-kicker">RETROSPECTIVE ENTRY POINTS</p>
+    <h1>Sample index</h1>
+    <p class="news-archive-warning">SAMPLE INDEX — NOT A COMPLETE ARCHIVE</p>
+    <p>この試作に含まれる Edition、Active Context、topic、source だけを示します。サイト全体の検索や完全な履歴を表すものではありません。</p>
+  </header>
+  <NewsArchiveNav catalog={catalog} />
+</NewsLayout>

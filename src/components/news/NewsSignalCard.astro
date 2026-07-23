@@ -1,0 +1,80 @@
+---
+import type { NewsContext, NewsSignal, NewsTopic } from '../../lib/news/types';
+
+interface Props {
+  signal: NewsSignal;
+  contextById: Map<string, NewsContext>;
+  topicById: Map<string, NewsTopic>;
+}
+
+const { signal, contextById, topicById } = Astro.props;
+const formatDate = (value: string) => new Intl.DateTimeFormat('ja-JP', {
+  dateStyle: 'medium',
+  timeStyle: 'short',
+  timeZone: 'Asia/Tokyo',
+}).format(new Date(value));
+const isHistorical = signal.verification.status !== 'verified' || signal.change?.kind === 'withdrawn';
+---
+
+<article
+  class:list={['news-signal', { 'news-signal--lead': signal.role === 'lead' }]}
+  id={signal.id}
+  data-news-signal
+  aria-labelledby={`${signal.id}-title`}
+>
+  <header class="news-signal__header">
+    <div class="news-signal__flags">
+      <span>{signal.role.toUpperCase()}</span>
+      <span>{signal.change?.kind?.toUpperCase() ?? 'CURRENT'}</span>
+      {isHistorical && <span>HISTORICAL EVIDENCE — {signal.verification.status.toUpperCase()}</span>}
+    </div>
+    <h3 id={`${signal.id}-title`}>{signal.title}</h3>
+    <a class="news-source-link" href={signal.source_url} target="_blank" rel="noopener noreferrer">
+      Read the direct source <span aria-hidden="true">&gt;</span>
+      <span class="news-source-link__title">{signal.source_title}</span>
+    </a>
+  </header>
+
+  <dl class="news-source-meta">
+    <div><dt>Publisher</dt><dd>{signal.source_domain}</dd></div>
+    <div><dt>Source kind</dt><dd>{signal.source_kind}</dd></div>
+    {signal.published_at && <div><dt>Published</dt><dd>{formatDate(signal.published_at)}</dd></div>}
+    <div><dt>Observed</dt><dd>{formatDate(signal.observed_at)}</dd></div>
+  </dl>
+
+  <div class="news-reading-notes">
+    <section aria-labelledby={`${signal.id}-fact`}>
+      <h4 id={`${signal.id}-fact`}>Source fact</h4>
+      <p>{signal.source_fact}</p>
+    </section>
+    <section aria-labelledby={`${signal.id}-note`}>
+      <h4 id={`${signal.id}-note`}>AOI note</h4>
+      <p>{signal.aoi_note}</p>
+    </section>
+    {signal.caveat && (
+      <section class="news-caveat" aria-labelledby={`${signal.id}-caveat`}>
+        <h4 id={`${signal.id}-caveat`}>Caveat</h4>
+        <p>{signal.caveat}</p>
+      </section>
+    )}
+  </div>
+
+  <footer class="news-signal__footer">
+    <div>
+      <span class="news-meta-label">Topic</span>
+      {signal.topics.map((topicId) => {
+        const topic = topicById.get(topicId);
+        return <a href={`/news/archive/#topic-${topicId}`}>{topic?.label_ja ?? topicId}</a>;
+      })}
+    </div>
+    <div>
+      <span class="news-meta-label">Context</span>
+      {signal.context_ids.map((contextId) => {
+        const context = contextById.get(contextId);
+        return context
+          ? <a href={`/news/context/${context.slug}/`}>{context.title}</a>
+          : <span>{contextId}</span>;
+      })}
+    </div>
+  </footer>
+</article>

@@ -13,6 +13,8 @@
     "test:intake": "vitest run tests/consultation-*.test.ts tests/notion-consultation.test.ts",
     "test:intake:e2e": "playwright test tests/consultation-intake.spec.ts tests/contact-intake.spec.ts",
     "test:news-contract": "vitest run tests/news-contract.test.mjs",
+    "test:news": "vitest run tests/news-ui.test.ts tests/news-contract.test.mjs",
+    "test:news:e2e": "playwright test --config=playwright.news.config.ts",
     "validate:news-contract": "node scripts/validate-news-contract.mjs fixtures/news-contract/non-production/import-bundle.json"
   },
   "dependencies": {
