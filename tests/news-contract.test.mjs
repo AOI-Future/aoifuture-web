@@ -131,6 +131,22 @@ describe('AOIFUTURE News publication contract', () => {
   });
 
   it.each([
+    ['null Edition', (b) => { b.edition = null; }],
+    ['null Context', (b) => { b.contexts = [null]; }],
+    ['null previous Context', (b) => { b.previous_contexts = [null]; }],
+    ['null receipt', (b) => { b.receipts = [null]; }],
+    ['non-array published index', (b) => { b.published_editions = {}; }],
+  ])('fails closed with stable errors for malformed bundle documents: %s', (_name, mutate) => {
+    const bundle = validBundle();
+    mutate(bundle);
+    const first = validatePublicationBundle(bundle);
+    const second = validatePublicationBundle(bundle);
+    expect(first.ok).toBe(false);
+    expect(first.errors.length).toBeGreaterThan(0);
+    expect(second).toEqual(first);
+  });
+
+  it.each([
     ['unknown/private field', (b) => { b.edition.items[0].internal_score = 0.9; }, 'schema'],
     ['raw source body', (b) => { b.edition.items[0].source_body = 'copied body'; }, 'schema'],
     ['HTML in public text', (b) => { b.edition.items[0].aoi_note = '<strong>unsafe</strong>'; }, 'schema'],

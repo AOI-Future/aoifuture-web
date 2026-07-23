@@ -249,6 +249,9 @@ export function validatePublicationBundle(bundle) {
   const publishedEditions = Array.isArray(bundle.published_editions) ? bundle.published_editions : [];
   const publishedContexts = Array.isArray(bundle.published_contexts) ? bundle.published_contexts : [];
   if (!isObject(edition) || !Array.isArray(bundle.contexts) || !Array.isArray(bundle.previous_contexts) || !Array.isArray(bundle.receipts)) return result(errors.length ? errors : [error('bundle_shape', '', 'bundle fields have invalid types')]);
+  for (const key of ['published_editions', 'published_contexts']) {
+    if (Object.hasOwn(bundle, key) && !Array.isArray(bundle[key])) errors.push(error('bundle_shape', `/${key}`, 'must be an array'));
+  }
 
   const allEditions = [...publishedEditions, edition];
   const allContexts = [...publishedContexts, ...contexts];
@@ -269,13 +272,17 @@ export function validatePublicationBundle(bundle) {
   receipts.forEach((receipt, index) => errors.push(...validateDocument('receipt', receipt, `/receipts/${index}`).errors));
 
   const signalMap = new Map();
-  allEditions.forEach((entry, editionIndex) => entry.items?.forEach((signal, signalIndex) => {
-    const path = editionIndex === allEditions.length - 1 ? `/edition/items/${signalIndex}` : `/published_editions/${editionIndex}/items/${signalIndex}`;
-    if (signalMap.has(signal.id)) errors.push(error('duplicate_signal_id', `${path}/id`, `Signal ID ${signal.id} is globally reused`));
-    else signalMap.set(signal.id, { signal, path });
-  }));
+  allEditions.forEach((entry, editionIndex) => {
+    if (!isObject(entry) || !Array.isArray(entry.items)) return;
+    entry.items.forEach((signal, signalIndex) => {
+      const path = editionIndex === allEditions.length - 1 ? `/edition/items/${signalIndex}` : `/published_editions/${editionIndex}/items/${signalIndex}`;
+      if (signalMap.has(signal.id)) errors.push(error('duplicate_signal_id', `${path}/id`, `Signal ID ${signal.id} is globally reused`));
+      else signalMap.set(signal.id, { signal, path });
+    });
+  });
   const contextMap = new Map();
   allContexts.forEach((context, index) => {
+    if (!isObject(context)) return;
     const path = index >= publishedContexts.length ? `/contexts/${index - publishedContexts.length}` : `/published_contexts/${index}`;
     if (contextMap.has(context.id)) errors.push(error('duplicate_context_id', `${path}/id`, `Context ID ${context.id} is globally reused`));
     else contextMap.set(context.id, { context, path });
@@ -316,6 +323,7 @@ export function validatePublicationBundle(bundle) {
 
   const receiptMap = new Map();
   receipts.forEach((receipt, index) => {
+    if (!isObject(receipt)) return;
     if (!receiptMap.has(receipt.signal_id)) receiptMap.set(receipt.signal_id, []);
     receiptMap.get(receipt.signal_id).push({ receipt, path: `/receipts/${index}` });
   });
@@ -331,11 +339,16 @@ export function validatePublicationBundle(bundle) {
   }
 
   contexts.forEach((context, index) => {
-    const previous = previousContexts.find((entry) => entry.id === context.id);
+    if (!isObject(context)) return;
+    const previous = previousContexts.find((entry) => isObject(entry) && entry.id === context.id);
     errors.push(...validateContextTransition(previous, context, `/contexts/${index}`).errors);
   });
   previousContexts.forEach((previous, index) => {
-    if (!contexts.some((context) => context.id === previous.id)) errors.push(error('orphan_previous_context', `/previous_contexts/${index}`, 'previous Context has no candidate'));
+    if (!isObject(previous)) {
+      errors.push(...validateDocument('context', previous, `/previous_contexts/${index}`).errors);
+      return;
+    }
+    if (!contexts.some((context) => isObject(context) && context.id === previous.id)) errors.push(error('orphan_previous_context', `/previous_contexts/${index}`, 'previous Context has no candidate'));
   });
   return result(errors);
 }
