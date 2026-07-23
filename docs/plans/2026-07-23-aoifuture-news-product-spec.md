@@ -215,38 +215,34 @@ Canonical URLs should include trailing slash consistently with Astro/Vercel beha
    - short promise: `Primary sources, selected and annotated.`
    - latest/archive control
 
-2. **Latest Delta**
-   - the small set of changes since the previous edition: new, updated, corrected, superseded, or withdrawn
-   - each change links to its source Signal and affected Active Context
-
-3. **Lead field**
+2. **Lead field**
    - one lead signal or a two-item pair
    - headline, source identity, source type, published time
    - two-line source fact
    - one distinct AOI note
    - direct source action
 
-4. **Today field**
+3. **Today field**
    - dense, responsive card grid
    - 6–12 curated items for a normal edition
    - varied card span based on editorial role, not popularity score
 
-5. **Active Contexts**
+4. **Active Contexts**
    - current views such as Agent Authority, Evaluation and Evidence, Model Routing and Cost, Local/Cloud Execution, Security, and Creative Provenance
    - each card shows current view, last meaningful change, unresolved point, and supporting Signals
    - counts are descriptive, not gamified
    - selecting a Context filters related Signals and updates an accessible result count
 
-6. **Detour**
+5. **Detour**
    - one adjacent item chosen because it broadens the edition
    - explicitly labeled `DETOUR`, not “recommended for you”
    - no personal behavioral profile required
 
-7. **Edition note**
+6. **Edition note**
    - 2–4 sentences about the day's pattern
    - written only when there is a real connection; omitted when the edition is simply a useful set of unrelated items
 
-8. **Archive footer**
+7. **Archive footer**
    - previous/next available edition
    - browse by Context, topic, and source
    - correction policy, feed links, editorial method
@@ -510,6 +506,46 @@ export interface PublicNewsContextRevisionV1 {
 
 A Context revision is an editorial record, not a generated hidden state. The public page shows the current view first and the revision trail below it. A revision cannot cite a private candidate or internal model output; every evidence ID must resolve to a published Signal.
 
+### Private source-read receipt — LOCKED
+
+Every published Signal has a private, bounded source-read receipt. The receipt proves the editorial check without publishing or permanently storing the source body.
+
+```ts
+export interface PrivateSourceReadReceiptV1 {
+  schema_version: 'aoi.news.source-read.v1';
+  signal_id: string;
+  normalized_source_url: string;
+  source_kind: string;
+  read_at: string;
+  claim_locator: string;      // section, heading, page, release entry, advisory field, or repository path
+  reviewed_by: string;        // attributable human/editor identity, not a public reader identifier
+  approved_at: string;
+  decision: 'approved' | 'rejected';
+}
+```
+
+The receipt contains no copied source body or hidden model reasoning. `claim_locator` must be specific enough for a later reviewer to reopen the source and find support for `source_fact`. Build/import fails when a public Signal lacks an approved receipt whose `signal_id` and normalized URL match.
+
+### Cross-manifest state-transition contract — LOCKED
+
+JSON Schema validates one document. Publication additionally runs a state-transition validator against the immediately preceding published Context manifest.
+
+- Initial publication has at least one revision, and `current_view` equals that revision's `resulting_view`.
+- For every publication, `current_view === revisions[-1].resulting_view` and `updated_at === revisions[-1].changed_at`.
+- On update, the previous revision array is an immutable prefix of the candidate array after canonical semantic normalization: no prior revision may be deleted, reordered, renamed, or edited.
+- A changed `current_view`, `updated_at`, supporting set, or operator Context that changes editorial meaning requires one newly appended revision with a concrete reason and evidence Signals.
+- Republishing an identical manifest is idempotent; a metadata-only change cannot fabricate a new editorial revision.
+
+### Reference namespace and closure — LOCKED
+
+- Signal IDs are globally unique across all published Editions and are never reused. Context IDs are globally unique in a separate namespace.
+- `context_ids` resolve only to published Context IDs.
+- `supporting_signal_ids`, every revision's `evidence_signal_ids`, and `previous_signal_ids` resolve only to globally published Signal IDs; self-reference is forbidden.
+- `previous_signal_ids` must point to an earlier published/observed Signal and express correction, supersession, or lineage—not generic relatedness.
+- Bidirectional closure is exact: a Signal lists a Context in `context_ids` if and only if that Signal appears in the Context's current `supporting_signal_ids` or any revision's `evidence_signal_ids`.
+- A withdrawn Signal remains resolvable for historical evidence and lineage, with withdrawn status visible. It cannot appear in current `supporting_signal_ids`; it may remain in a historical revision's evidence set.
+- Validators load the complete published Edition/Context index needed to prove global uniqueness and closure; validating only the candidate file is insufficient.
+
 ### Validation invariants — LOCKED
 
 - `schema_version` must be exact and supported.
@@ -525,9 +561,10 @@ A Context revision is an editorial record, not a generated hidden state. The pub
 - Image URL, alt, credit, and rights basis are required together; image URLs must be same-origin public assets.
 - `title` is AOIFUTURE's display headline and `source_title` is the source's own title; the UI must not present one as the other.
 - Every item has an AOI note because the editorial reason for inclusion is part of the reader-facing promise.
-- Every `context_ids` and `evidence_signal_ids` reference resolves to a published object.
-- Context revisions are ordered by `changed_at`, have stable IDs, and state a concrete change reason.
-- A Context update cannot silently replace `current_view`; it adds a revision and updates the public `updated_at`.
+- Cross-manifest validation enforces the complete reference namespace and closure contract above, including `supporting_signal_ids` and `previous_signal_ids`.
+- Context revisions are ordered by `changed_at`, have stable IDs, state a concrete change reason, and satisfy the previous-manifest immutable-prefix check.
+- `current_view` and `updated_at` exactly match the latest revision; neither may be replaced without an appended revision.
+- Every public Signal has a matching approved private source-read receipt with a usable claim locator.
 - HTML is rejected from public text fields; titles, facts, notes, caveats, labels, credits, rights fields, and Context fields render as plain text in MVP.
 - Unknown fields fail validation so private metadata cannot hitchhike into production.
 
@@ -614,7 +651,6 @@ src/
     NewsLead.astro
     NewsCard.astro
     NewsThreadFilter.astro
-    NewsLatestDelta.astro
     NewsActiveContext.astro
     NewsContextHistory.astro
     NewsDetour.astro
@@ -643,13 +679,16 @@ src/
     news.css
 scripts/
   validate-news-editions.mjs
+  validate-news-state-transition.mjs
   import-news-edition.mjs
 schemas/
   aoi-news-edition-v1.schema.json
   aoi-news-context-v1.schema.json
+  aoi-news-source-read-v1.schema.json
 tests/
   news-schema.test.ts
   news-context-history.test.ts
+  news-source-read-receipt.test.ts
   news-render.test.ts
   news-feed.test.ts
   news.spec.ts
@@ -766,7 +805,7 @@ Concrete byte and Core Web Vitals budgets require implementation measurement.
 ### In MVP
 
 - Latest and dated edition routes
-- Latest Delta and at least one Active Context backed by published Signals
+- At least one Active Context backed by published Signals
 - Context history showing the current view first and “How we got here” below it
 - 6–12 curated source-first items per normal edition
 - Lead/major/brief/detour/watch roles
@@ -789,6 +828,7 @@ Concrete byte and Core Web Vitals budgets require implementation measurement.
 - Full-text mirroring or scraping of source articles
 - AI-generated audio or automatic podcast
 - Real-time breaking-news ticker
+- Dedicated `Latest Delta` surface until Phase 1 defines stable Signal identity and deterministic change derivation
 - Paid placements or native advertising
 - Multilingual full-page translation
 - Native mobile app
@@ -838,9 +878,10 @@ Gate: Shugo approves or revises the product meaning. No implementation proceeds 
 Deliverables:
 
 - one redacted, public-safe edition manifest built from a real DailyNews day;
-- one public-safe Active Context with at least two revisions backed by published Signal IDs;
-- JSON Schema and validator;
-- negative tests proving private fields, unknown fields, unsafe HTML, invalid URLs, duplicate IDs, unresolved Context references, and silent Context overwrite fail;
+- one public-safe Active Context represented as previous and candidate manifests with at least one valid appended revision backed by published Signal IDs;
+- JSON Schemas plus single-manifest, cross-manifest transition, global reference-closure, and source-read receipt validators;
+- one approved private source-read receipt per sample Signal, using claim locators without copied source bodies;
+- negative tests proving private fields, unknown fields, unsafe HTML, invalid URLs, duplicate/global-ID reuse, unresolved or one-way references, withdrawn current support, prior-revision mutation/reordering/deletion, mismatched `current_view`/`updated_at`, and missing/rejected source-read receipts fail;
 - source reachability and correction semantics;
 - an artifact retention ledger naming each public/private class, purpose, owner, deletion condition, and verification;
 - exact handoff procedure from DailyNews to the repo.
@@ -902,6 +943,7 @@ Production publication is a separate approval boundary.
 ### Editorial integrity
 
 - [ ] Every item identifies publisher and source kind.
+- [ ] Every public Signal has an approved private source-read receipt with a claim locator that a reviewer can reopen.
 - [ ] Primary sources are preferred and duplicate syndication is collapsed.
 - [ ] `watch` items carry claim-adjacent caveats.
 - [ ] Corrections and withdrawals are visible.
@@ -921,6 +963,8 @@ Production publication is a separate approval boundary.
 - [ ] DailyNews/iCloud is not a production runtime dependency.
 - [ ] Last known valid edition survives exporter failure.
 - [ ] Schema tests include negative leakage cases.
+- [ ] Cross-manifest tests prove immutable revision prefixes and exact latest-view/timestamp equality.
+- [ ] Global reference tests close every Signal/Context edge bidirectionally and apply withdrawn-reference rules.
 - [ ] Retention tests reject raw source bodies and unresolved private references from public manifests.
 - [ ] The selected RSS/Atom feed and sitemap are valid, including dated editions and Context routes.
 - [ ] Build and Playwright checks pass from an isolated worktree.
