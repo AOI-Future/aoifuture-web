@@ -15,12 +15,13 @@ The private handoff object has exactly these keys:
 
 - `edition`: one candidate `aoi.news.edition.v1` manifest;
 - `contexts`: candidate current Context manifests;
+- `context_transitions`: exactly one `{ context_id, kind }` declaration per candidate Context, where `kind` is `initial` or `update`;
 - `previous_contexts`: the immediately preceding manifest for each updated Context;
 - `receipts`: private approved source-read receipts covering every Signal in the validation graph;
 - `published_editions`: the complete prior Edition index required for global Signal uniqueness and lineage;
-- `published_contexts`: other current published Contexts required for global Context uniqueness and reference closure.
+- `published_contexts`: the complete current published Context index before the candidate transition, required for global uniqueness, canonical prior-state proof, and reference closure.
 
-The wrapper is private and short-lived. Only the Edition and candidate Contexts can leave it through the importer.
+All seven keys are required, including empty complete indexes. An `update` declaration requires exactly one matching immediately preceding Context, and that manifest must exactly match the same ID in `published_contexts`. An `initial` declaration requires no prior or published match and starts with exactly one revision. This explicit state prevents missing or replaced prior history from being interpreted as a first publication. The wrapper is private and short-lived. Only the Edition and candidate Contexts can leave it through the importer.
 
 ## Editorial preparation checklist
 
@@ -34,6 +35,7 @@ The wrapper is private and short-lived. Only the Edition and candidate Contexts 
 - Close every Context edge in both directions: a Signal's `context_ids` must exactly match Contexts whose current support or revision evidence cites it.
 - Do not place withdrawn Signals in current `supporting_signal_ids`; historical revisions may retain them.
 - Preserve the previous revision array byte-semantically after canonical normalization. Append one revision for a meaningful current-view, timestamp, support-set, or operator-context change.
+- Declare every candidate Context as `initial` or `update`; never relabel an update as initial or omit its immediately preceding canonical manifest.
 - Set `current_view` and `updated_at` exactly to the latest revision's `resulting_view` and `changed_at`.
 
 ## Exact local commands

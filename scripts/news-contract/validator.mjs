@@ -169,12 +169,16 @@ function checkEdition(edition, path, errors) {
     if (item.image) checkPublicUrl(item.image.url, `${itemPath}/image/url`, errors, { sameOrigin: true });
     if (item.role === 'watch' && !item.caveat) errors.push(error('watch_requires_caveat', itemPath, 'watch items require a caveat'));
     if (item.verification.status === 'source-unavailable' && !item.caveat) errors.push(error('unavailable_requires_caveat', itemPath, 'source-unavailable items require a visible caveat'));
-    if (item.verification.status === 'withdrawn') {
+    const withdrawn = item.verification.status === 'withdrawn' || item.change?.kind === 'withdrawn';
+    if (withdrawn) {
       if (['lead', 'major'].includes(item.role)) errors.push(error('withdrawn_role', `${itemPath}/role`, 'withdrawn items cannot be lead or major'));
-      if (item.change?.kind !== 'withdrawn') errors.push(error('withdrawn_change', `${itemPath}/change`, 'withdrawn verification requires withdrawn change state'));
+      if (item.verification.status !== 'withdrawn' || item.change?.kind !== 'withdrawn') {
+        errors.push(error('withdrawn_semantics', itemPath, 'withdrawal requires both withdrawn verification and withdrawn change state'));
+      }
     }
-    if (item.corrected_at || item.correction_note) {
-      if (!item.corrected_at || !item.correction_note || item.change?.kind !== 'corrected') errors.push(error('correction_semantics', itemPath, 'material corrections require corrected_at, correction_note, and corrected change state'));
+    const corrected = item.change?.kind === 'corrected' || item.corrected_at || item.correction_note;
+    if (corrected && (!item.corrected_at || !item.correction_note || item.change?.kind !== 'corrected')) {
+      errors.push(error('correction_semantics', itemPath, 'material corrections require corrected_at, correction_note, and corrected change state'));
     }
     for (const topicId of item.topics) {
       if (!topicIds.has(topicId)) errors.push(error('unresolved_topic_reference', `${itemPath}/topics`, `unknown topic ${topicId}`));
@@ -238,33 +242,54 @@ function result(errors) {
 
 export function validatePublicationBundle(bundle) {
   const errors = [];
-  const allowedBundleKeys = new Set(['edition', 'contexts', 'previous_contexts', 'receipts', 'published_editions', 'published_contexts']);
+  const allowedBundleKeys = new Set(['edition', 'contexts', 'context_transitions', 'previous_contexts', 'receipts', 'published_editions', 'published_contexts']);
   if (!isObject(bundle)) return result([error('bundle_shape', '', 'bundle must be an object')]);
   for (const key of Object.keys(bundle)) if (!allowedBundleKeys.has(key)) errors.push(error('bundle_shape', `/${key}`, 'unknown bundle field'));
-  for (const key of ['edition', 'contexts', 'previous_contexts', 'receipts']) if (!Object.hasOwn(bundle, key)) errors.push(error('bundle_shape', `/${key}`, 'required bundle field'));
+  for (const key of allowedBundleKeys) if (!Object.hasOwn(bundle, key)) errors.push(error('bundle_shape', `/${key}`, 'required bundle field'));
   const edition = bundle.edition;
   const contexts = Array.isArray(bundle.contexts) ? bundle.contexts : [];
+  const contextTransitions = Array.isArray(bundle.context_transitions) ? bundle.context_transitions : [];
   const previousContexts = Array.isArray(bundle.previous_contexts) ? bundle.previous_contexts : [];
   const receipts = Array.isArray(bundle.receipts) ? bundle.receipts : [];
   const publishedEditions = Array.isArray(bundle.published_editions) ? bundle.published_editions : [];
   const publishedContexts = Array.isArray(bundle.published_contexts) ? bundle.published_contexts : [];
-  if (!isObject(edition) || !Array.isArray(bundle.contexts) || !Array.isArray(bundle.previous_contexts) || !Array.isArray(bundle.receipts)) return result(errors.length ? errors : [error('bundle_shape', '', 'bundle fields have invalid types')]);
-  for (const key of ['published_editions', 'published_contexts']) {
-    if (Object.hasOwn(bundle, key) && !Array.isArray(bundle[key])) errors.push(error('bundle_shape', `/${key}`, 'must be an array'));
+  if (!isObject(edition)) errors.push(error('bundle_shape', '/edition', 'must be an object'));
+  for (const key of ['contexts', 'context_transitions', 'previous_contexts', 'receipts', 'published_editions', 'published_contexts']) {
+    if (!Array.isArray(bundle[key])) errors.push(error('bundle_shape', `/${key}`, 'must be an array'));
   }
+  if (!isObject(edition) || [...allowedBundleKeys].slice(1).some((key) => !Array.isArray(bundle[key]))) return result(errors);
+
+  contextTransitions.forEach((transition, index) => {
+    const path = `/context_transitions/${index}`;
+    if (!isObject(transition)) {
+      errors.push(error('bundle_shape', path, 'transition must be an object'));
+      return;
+    }
+    for (const key of ['context_id', 'kind']) if (!Object.hasOwn(transition, key)) errors.push(error('bundle_shape', `${path}/${key}`, 'required transition field'));
+    for (const key of Object.keys(transition)) if (!['context_id', 'kind'].includes(key)) errors.push(error('bundle_shape', `${path}/${key}`, 'unknown transition field'));
+    if (typeof transition.context_id !== 'string' || !/^[a-z0-9][a-z0-9-]{2,79}$/.test(transition.context_id)) errors.push(error('bundle_shape', `${path}/context_id`, 'must be a valid Context ID'));
+    if (!['initial', 'update'].includes(transition.kind)) errors.push(error('bundle_shape', `${path}/kind`, 'must be initial or update'));
+  });
 
   const allEditions = [...publishedEditions, edition];
-  const allContexts = [...publishedContexts, ...contexts];
+  const candidateContextIds = new Set(contexts.filter(isObject).map((context) => context.id));
+  const contextDocuments = [
+    ...publishedContexts.map((context, index) => ({ context, path: `/published_contexts/${index}` })),
+    ...contexts.map((context, index) => ({ context, path: `/contexts/${index}` })),
+  ];
+  const allContextEntries = [
+    ...publishedContexts
+      .map((context, index) => ({ context, path: `/published_contexts/${index}` }))
+      .filter(({ context }) => !isObject(context) || !candidateContextIds.has(context.id)),
+    ...contexts.map((context, index) => ({ context, path: `/contexts/${index}` })),
+  ];
   allEditions.forEach((entry, index) => {
     const path = index === allEditions.length - 1 ? '/edition' : `/published_editions/${index}`;
     const schemaResult = validateDocument('edition', entry, path);
     errors.push(...schemaResult.errors);
     if (schemaResult.ok) checkEdition(entry, path, errors);
   });
-  allContexts.forEach((context, index) => {
-    const isCandidate = index >= publishedContexts.length;
-    const candidateIndex = index - publishedContexts.length;
-    const path = isCandidate ? `/contexts/${candidateIndex}` : `/published_contexts/${index}`;
+  contextDocuments.forEach(({ context, path }) => {
     const schemaResult = validateDocument('context', context, path);
     errors.push(...schemaResult.errors);
     if (schemaResult.ok) validateContextDocument(context, path, errors);
@@ -281,9 +306,8 @@ export function validatePublicationBundle(bundle) {
     });
   });
   const contextMap = new Map();
-  allContexts.forEach((context, index) => {
+  allContextEntries.forEach(({ context, path }) => {
     if (!isObject(context)) return;
-    const path = index >= publishedContexts.length ? `/contexts/${index - publishedContexts.length}` : `/published_contexts/${index}`;
     if (contextMap.has(context.id)) errors.push(error('duplicate_context_id', `${path}/id`, `Context ID ${context.id} is globally reused`));
     else contextMap.set(context.id, { context, path });
   });
@@ -340,8 +364,34 @@ export function validatePublicationBundle(bundle) {
 
   contexts.forEach((context, index) => {
     if (!isObject(context)) return;
-    const previous = previousContexts.find((entry) => isObject(entry) && entry.id === context.id);
-    errors.push(...validateContextTransition(previous, context, `/contexts/${index}`).errors);
+    const transitions = contextTransitions.filter((entry) => isObject(entry) && entry.context_id === context.id);
+    const previousMatches = previousContexts.filter((entry) => isObject(entry) && entry.id === context.id);
+    const publishedMatches = publishedContexts.filter((entry) => isObject(entry) && entry.id === context.id);
+    if (transitions.length !== 1) {
+      errors.push(error('context_transition_declaration', `/contexts/${index}`, 'each candidate Context requires exactly one transition declaration'));
+      return;
+    }
+    if (transitions[0].kind === 'update') {
+      if (previousMatches.length !== 1) {
+        errors.push(error('missing_previous_context', `/contexts/${index}`, 'an update requires exactly one immediately preceding canonical Context'));
+        return;
+      }
+      if (publishedMatches.length !== 1 || canonical(publishedMatches[0]) !== canonical(previousMatches[0])) {
+        errors.push(error('previous_context_not_canonical', `/contexts/${index}`, 'the previous Context must exactly match the complete published Context index'));
+        return;
+      }
+      errors.push(...validateContextTransition(previousMatches[0], context, `/contexts/${index}`).errors);
+      return;
+    }
+    if (previousMatches.length !== 0) errors.push(error('unexpected_previous_context', `/contexts/${index}`, 'an initial Context must not declare previous state'));
+    if (publishedMatches.length !== 0) errors.push(error('duplicate_context_id', `/contexts/${index}/id`, `Context ID ${context.id} already exists in the complete published Context index`));
+    if (context.revisions?.length !== 1) errors.push(error('initial_context_history', `/contexts/${index}/revisions`, 'an initial Context must begin with exactly one revision'));
+    errors.push(...validateContextTransition(undefined, context, `/contexts/${index}`).errors);
+  });
+  contextTransitions.forEach((transition, index) => {
+    if (isObject(transition) && !contexts.some((context) => isObject(context) && context.id === transition.context_id)) {
+      errors.push(error('orphan_context_transition', `/context_transitions/${index}`, 'transition declaration has no candidate Context'));
+    }
   });
   previousContexts.forEach((previous, index) => {
     if (!isObject(previous)) {

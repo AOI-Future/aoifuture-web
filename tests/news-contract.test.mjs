@@ -105,10 +105,11 @@ const receipts = () => edition().items.map((signal) => ({
 const validBundle = () => ({
   edition: edition(),
   contexts: [candidateContext()],
+  context_transitions: [{ context_id: 'ctx-agent-authority', kind: 'update' }],
   previous_contexts: [previousContext()],
   receipts: receipts(),
   published_editions: [],
-  published_contexts: [],
+  published_contexts: [previousContext()],
 });
 
 const codes = (result) => result.errors.map((error) => error.code);
@@ -146,6 +147,15 @@ describe('AOIFUTURE News publication contract', () => {
     expect(second).toEqual(first);
   });
 
+  it.each(['context_transitions', 'published_editions', 'published_contexts'])(
+    'requires the fail-closed %s bundle field',
+    (key) => {
+      const bundle = validBundle();
+      delete bundle[key];
+      expectInvalid(bundle, 'bundle_shape');
+    },
+  );
+
   it.each([
     ['unknown/private field', (b) => { b.edition.items[0].internal_score = 0.9; }, 'schema'],
     ['raw source body', (b) => { b.edition.items[0].source_body = 'copied body'; }, 'schema'],
@@ -166,12 +176,30 @@ describe('AOIFUTURE News publication contract', () => {
     ['withdrawn current support', (b) => { b.edition.items[0].verification.status = 'withdrawn'; b.edition.items[0].change = { kind: 'withdrawn' }; b.edition.items[0].role = 'brief'; }, 'withdrawn_current_support'],
     ['cross-origin image', (b) => { b.edition.items[0].image = { url: 'https://example.com/image.png', alt: 'Evidence image', credit: 'Publisher', rights_basis: 'Explicit permission' }; }, 'schema'],
     ['incomplete correction state', (b) => { b.edition.items[0].corrected_at = stamp2; }, 'correction_semantics'],
+    ['corrected change without public correction metadata', (b) => { b.edition.items[0].change = { kind: 'corrected' }; }, 'correction_semantics'],
+    ['withdrawn verification without withdrawn change', (b) => { b.edition.items[0].verification.status = 'withdrawn'; b.edition.items[0].role = 'brief'; }, 'withdrawn_semantics'],
+    ['withdrawn change with verified status', (b) => { b.edition.items[0].change = { kind: 'withdrawn' }; b.edition.items[0].role = 'brief'; }, 'withdrawn_semantics'],
+    ['withdrawn change retaining a lead role', (b) => { b.edition.items[0].change = { kind: 'withdrawn' }; b.edition.items[0].role = 'lead'; }, 'withdrawn_role'],
     ['missing receipt', (b) => { b.receipts.pop(); }, 'missing_approved_receipt'],
     ['rejected receipt', (b) => { b.receipts[0].decision = 'rejected'; }, 'missing_approved_receipt'],
   ])('rejects %s', (_name, mutate, code) => {
     const bundle = validBundle();
     mutate(bundle);
     expectInvalid(bundle, code);
+  });
+
+  it.each([
+    ['source fact', (b) => { b.edition.items[0].source_fact = '   \n'; }],
+    ['source title', (b) => { b.edition.items[0].source_title = '\t  '; }],
+    ['AOI note', (b) => { b.edition.items[0].aoi_note = '　'; }],
+    ['current Context view', (b) => { b.contexts[0].current_view = '  '; }],
+    ['Context change reason', (b) => { b.contexts[0].revisions[1].change_reason = '\n\t'; }],
+    ['receipt claim locator', (b) => { b.receipts[0].claim_locator = '        '; }],
+    ['receipt reviewer', (b) => { b.receipts[0].reviewed_by = '   '; }],
+  ])('rejects whitespace-only %s', (_name, mutate) => {
+    const bundle = validBundle();
+    mutate(bundle);
+    expectInvalid(bundle, 'schema');
   });
 
   it('rejects global Signal ID reuse across Editions', () => {
@@ -185,7 +213,8 @@ describe('AOIFUTURE News publication contract', () => {
 
   it('rejects global Context ID reuse', () => {
     const bundle = validBundle();
-    bundle.published_contexts.push(candidateContext());
+    bundle.context_transitions[0].kind = 'initial';
+    bundle.previous_contexts = [];
     expectInvalid(bundle, 'duplicate_context_id');
   });
 
@@ -211,6 +240,34 @@ describe('Active Context transition contract', () => {
 
   it('accepts one immutable-prefix append', () => {
     expect(validateContextTransition(previousContext(), candidateContext())).toEqual({ ok: true, errors: [] });
+  });
+
+  it('accepts an explicitly declared genuine initial Context', () => {
+    const bundle = validBundle();
+    bundle.contexts = [previousContext()];
+    bundle.context_transitions[0].kind = 'initial';
+    bundle.previous_contexts = [];
+    bundle.published_contexts = [];
+    bundle.edition.items[1].context_ids = [];
+    expect(validatePublicationBundle(bundle)).toEqual({ ok: true, errors: [] });
+  });
+
+  it('rejects an update with ambiguous missing prior canonical state', () => {
+    const bundle = validBundle();
+    bundle.previous_contexts = [];
+    expectInvalid(bundle, 'missing_previous_context');
+  });
+
+  it('rejects an update whose declared previous state is not the complete-index canonical manifest', () => {
+    const bundle = validBundle();
+    bundle.published_contexts = [candidateContext()];
+    expectInvalid(bundle, 'previous_context_not_canonical');
+  });
+
+  it('rejects initial state when a previous Context is supplied', () => {
+    const bundle = validBundle();
+    bundle.context_transitions[0].kind = 'initial';
+    expectInvalid(bundle, 'unexpected_previous_context');
   });
 
   it('rejects invalid revision ordering', () => {

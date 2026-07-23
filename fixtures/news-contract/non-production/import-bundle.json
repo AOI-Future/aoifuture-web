@@ -89,6 +89,12 @@
       ]
     }
   ],
+  "context_transitions": [
+    {
+      "context_id": "ctx-agent-authority",
+      "kind": "update"
+    }
+  ],
   "previous_contexts": [
     {
       "schema_version": "aoi.news.context.v1",
@@ -138,5 +144,28 @@
     }
   ],
   "published_editions": [],
-  "published_contexts": []
+  "published_contexts": [
+    {
+      "schema_version": "aoi.news.context.v1",
+      "id": "ctx-agent-authority",
+      "slug": "agent-authority",
+      "title": "Agent Authority",
+      "current_view": "業務エージェントでは、権限と人間への引き継ぎ条件が導入判断の中心になる。",
+      "updated_at": "2026-07-22T09:00:00+09:00",
+      "operator_context": {
+        "authority": "実行可能な操作と接続先を列挙する。",
+        "control": "承認と人間への引き継ぎ条件を確認する。"
+      },
+      "supporting_signal_ids": ["sig-openai-presence-20260722"],
+      "revisions": [
+        {
+          "id": "rev-agent-authority-001",
+          "changed_at": "2026-07-22T09:00:00+09:00",
+          "change_reason": "業務エージェントの公開情報から、権限と引き継ぎを初期論点として記録した。",
+          "resulting_view": "業務エージェントでは、権限と人間への引き継ぎ条件が導入判断の中心になる。",
+          "evidence_signal_ids": ["sig-openai-presence-20260722"]
+        }
+      ]
+    }
+  ]
 }

@@ -20,10 +20,10 @@
   },
   "$defs": {
     "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{2,79}$" },
-    "text100": { "type": "string", "minLength": 1, "maxLength": 100, "pattern": "^[^<>]*$" },
-    "text200": { "type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[^<>]*$" },
-    "text500": { "type": "string", "minLength": 1, "maxLength": 500, "pattern": "^[^<>]*$" },
-    "text1000": { "type": "string", "minLength": 1, "maxLength": 1000, "pattern": "^[^<>]*$" },
+    "text100": { "type": "string", "minLength": 1, "maxLength": 100, "pattern": "^(?=[^<>]*\\S)[^<>]*$" },
+    "text200": { "type": "string", "minLength": 1, "maxLength": 200, "pattern": "^(?=[^<>]*\\S)[^<>]*$" },
+    "text500": { "type": "string", "minLength": 1, "maxLength": 500, "pattern": "^(?=[^<>]*\\S)[^<>]*$" },
+    "text1000": { "type": "string", "minLength": 1, "maxLength": 1000, "pattern": "^(?=[^<>]*\\S)[^<>]*$" },
     "idList": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
     "change": {
       "type": "object",
