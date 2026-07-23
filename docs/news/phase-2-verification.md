@@ -53,7 +53,7 @@ The candidate adds `react-dom/client` to `vite.optimizeDeps.include` and gives N
 
 Desktop and 390px mobile views were inspected from the local candidate.
 
-Fresh topic-retrospective evidence is retained for the Debug/Reviewer handoff at `test-results/news-topic-retrospective-desktop.png` (1440 × 1000 viewport) and `test-results/news-topic-retrospective-mobile.png` (390 × 844 viewport). Both browser readbacks reached `/news/archive/#topic-agent-operations`, found exactly one target, exposed both dated `2026-07-23 JST` Signal records, and had equal document/client widths.
+Fresh topic-retrospective screenshots were captured at 1440 × 1000 and 390 × 844 viewports; their temporary local paths are recorded in the Debug/Reviewer gate handoff rather than committed. Both browser readbacks reached `/news/archive/#topic-agent-operations`, found exactly one target, exposed both dated `2026-07-23 JST` Signal records, and had equal document/client widths.
 
 - The reading surface is flat black and text-led.
 - Cyan is limited to structure, labels, focus, and direct-source navigation.
