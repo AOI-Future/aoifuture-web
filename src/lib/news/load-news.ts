@@ -4,6 +4,7 @@ import type {
   NewsEdition,
   NewsSignalReference,
 } from './types';
+import { validatePublicCatalog } from '../../../scripts/news-contract/validator.mjs';
 
 const editionModules = import.meta.glob('../../content/news/editions/*.json', {
   eager: true,
@@ -161,6 +162,10 @@ function validateContext(value: unknown, index: number): NewsContext {
 }
 
 export function validateNewsCatalog(editionsRaw: unknown[], contextsRaw: unknown[]): NewsCatalog {
+  const contract = validatePublicCatalog(editionsRaw, contextsRaw);
+  if (!contract.ok) {
+    throw new Error(`AOIFUTURE News public contract validation failed: ${contract.errors.map((entry) => `${entry.code} ${entry.path}: ${entry.message}`).join('; ')}`);
+  }
   const editions = editionsRaw.map(validateEdition).sort((a, b) => b.edition_date.localeCompare(a.edition_date));
   const contexts = contextsRaw.map(validateContext).sort((a, b) => a.slug.localeCompare(b.slug));
   const signals = new Map(editions.flatMap((edition) => edition.items.map((signal) => [signal.id, signal] as const)));

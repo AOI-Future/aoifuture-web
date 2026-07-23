@@ -25,7 +25,7 @@ Executed after the final implementation edits:
 
 ```text
 npm run test:news
-PASS — 64/64 tests
+PASS — 69/69 tests
 
 npm run validate:news-contract
 PASS — { "ok": true, "errors": [] }
@@ -37,7 +37,9 @@ npm run test:news:e2e
 PASS — 10/10 browser tests
 ```
 
-Browser coverage includes the finite Edition, direct source links, current-view-before-history ordering, evidence links, bounded archive, JavaScript-disabled reading, four-route mobile/desktop overflow checks, skip-link and keyboard focus, unknown date/Context 404 responses, Navigator NEWS route, and preservation of existing hash-overlay behavior.
+Browser coverage includes the finite Edition, direct source links, locked Signal DOM order, semantic dates with visible JST, source-title language, current-view-before-history ordering, evidence links, AOIFUTURE-retained topic/source archive destinations, normal same-tab navigation, JavaScript-disabled reading, four-route mobile/desktop overflow checks, skip-link and keyboard focus, unknown date/Context 404 responses, Navigator NEWS route, and preservation of existing hash-overlay behavior.
+
+The build-time loader calls the canonical Phase 1 schema and semantic validator for the public catalog. Regression coverage proves invalid source-kind, Signal-role, verification-status, and change-kind enums fail closed, as does a non-reciprocal Signal/Context reference. The canonical validator uses static JSON module imports so the same validation remains available in bundled prerender execution without filesystem-relative schema lookup.
 
 `git diff --check` passed. Generated News HTML contained no private wrapper keys, source-read receipts, previous Contexts, local paths, raw bodies, credentials, internal scores, prompts, or hidden reasoning. Sitemap readback included the News routes.
 

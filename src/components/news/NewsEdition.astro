@@ -19,12 +19,12 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('ja-JP', {
 
 <article class="news-edition" data-news-edition={edition.edition_id}>
   <header class="news-edition__header">
-    <p class="news-kicker">EDITION {edition.edition_date}</p>
+    <p class="news-kicker">EDITION <time datetime={edition.edition_date}>{edition.edition_date} JST</time></p>
     <p class="news-sample-label news-sample-label--hero">NON-PRODUCTION SAMPLE</p>
     <h1>{edition.title}</h1>
     {edition.dek && <p class="news-dek">{edition.dek}</p>}
     <dl class="news-edition__meta">
-      <div><dt>Published</dt><dd>{formatDate(edition.published_at)}</dd></div>
+      <div><dt>Published</dt><dd><time datetime={edition.published_at}>{formatDate(edition.published_at)} JST</time></dd></div>
       <div><dt>Signals</dt><dd>{edition.items.length} / finite</dd></div>
     </dl>
   </header>

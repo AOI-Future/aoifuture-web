@@ -38,13 +38,30 @@ describe('AOIFUTURE News public loader', () => {
   it('fails closed on private keys and unresolved references', () => {
     const catalog = structuredClone(loadNewsCatalog());
     const privateEdition = { ...catalog.editions[0], receipts: [] };
-    expect(() => validateNewsCatalog([privateEdition], catalog.contexts)).toThrow(/private|unexpected/i);
+    expect(() => validateNewsCatalog([privateEdition], catalog.contexts)).toThrow(/schema|unknown field/i);
 
     const brokenContext = {
       ...catalog.contexts[0],
       supporting_signal_ids: ['sig-does-not-exist'],
     };
     expect(() => validateNewsCatalog(catalog.editions, [brokenContext])).toThrow(/unresolved/i);
+  });
+
+  it.each([
+    ['source kind', (catalog: ReturnType<typeof loadNewsCatalog>) => { catalog.editions[0].items[0].source_kind = 'press-release' as never; }],
+    ['Signal role', (catalog: ReturnType<typeof loadNewsCatalog>) => { catalog.editions[0].items[0].role = 'feature' as never; }],
+    ['verification status', (catalog: ReturnType<typeof loadNewsCatalog>) => { catalog.editions[0].items[0].verification.status = 'pending' as never; }],
+    ['change kind', (catalog: ReturnType<typeof loadNewsCatalog>) => { catalog.editions[0].items[0].change!.kind = 'retracted' as never; }],
+  ])('fails closed on invalid public contract enum: %s', (_name, mutate) => {
+    const catalog = structuredClone(loadNewsCatalog());
+    mutate(catalog);
+    expect(() => validateNewsCatalog(catalog.editions, catalog.contexts)).toThrow(/schema/i);
+  });
+
+  it('fails closed when Signal and Context references are not reciprocal', () => {
+    const catalog = structuredClone(loadNewsCatalog());
+    catalog.editions[0].items[1].context_ids = [];
+    expect(() => validateNewsCatalog(catalog.editions, catalog.contexts)).toThrow(/reference.closure/i);
   });
 
   it('keeps lead first and Context revisions oldest to newest', () => {

@@ -1,16 +1,12 @@
-import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import { dirname, resolve } from 'node:path';
 import { isIP } from 'node:net';
-
-const here = dirname(fileURLToPath(import.meta.url));
-const root = resolve(here, '../..');
-const loadSchema = (name) => JSON.parse(readFileSync(resolve(root, 'schemas', name), 'utf8'));
+import editionSchema from '../../schemas/aoi-news-edition-v1.schema.json' with { type: 'json' };
+import contextSchema from '../../schemas/aoi-news-context-v1.schema.json' with { type: 'json' };
+import receiptSchema from '../../schemas/aoi-news-source-read-v1.schema.json' with { type: 'json' };
 
 const schemas = {
-  edition: loadSchema('aoi-news-edition-v1.schema.json'),
-  context: loadSchema('aoi-news-context-v1.schema.json'),
-  receipt: loadSchema('aoi-news-source-read-v1.schema.json'),
+  edition: editionSchema,
+  context: contextSchema,
+  receipt: receiptSchema,
 };
 
 const error = (code, path, message) => ({ code, path, message });
@@ -238,6 +234,72 @@ export function validateContextTransition(previous, candidate, path = '/contexts
 function result(errors) {
   const sorted = errors.sort((a, b) => a.path.localeCompare(b.path) || a.code.localeCompare(b.code) || a.message.localeCompare(b.message));
   return { ok: sorted.length === 0, errors: sorted };
+}
+
+export function validatePublicCatalog(editions, contexts) {
+  const errors = [];
+  if (!Array.isArray(editions)) errors.push(error('catalog_shape', '/editions', 'must be an array'));
+  if (!Array.isArray(contexts)) errors.push(error('catalog_shape', '/contexts', 'must be an array'));
+  if (!Array.isArray(editions) || !Array.isArray(contexts)) return result(errors);
+
+  const validEditions = [];
+  editions.forEach((edition, index) => {
+    const path = `/editions/${index}`;
+    const schemaResult = validateDocument('edition', edition, path);
+    errors.push(...schemaResult.errors);
+    if (schemaResult.ok) {
+      checkEdition(edition, path, errors);
+      validEditions.push({ edition, path });
+    }
+  });
+  const validContexts = [];
+  contexts.forEach((context, index) => {
+    const path = `/contexts/${index}`;
+    const schemaResult = validateDocument('context', context, path);
+    errors.push(...schemaResult.errors);
+    if (schemaResult.ok) {
+      validateContextDocument(context, path, errors);
+      validContexts.push({ context, path });
+    }
+  });
+
+  const signalMap = new Map();
+  validEditions.forEach(({ edition, path }) => edition.items.forEach((signal, index) => {
+    const signalPath = `${path}/items/${index}`;
+    if (signalMap.has(signal.id)) errors.push(error('duplicate_signal_id', `${signalPath}/id`, `Signal ID ${signal.id} is globally reused`));
+    else signalMap.set(signal.id, { signal, path: signalPath });
+  }));
+  const contextMap = new Map();
+  validContexts.forEach(({ context, path }) => {
+    if (contextMap.has(context.id)) errors.push(error('duplicate_context_id', `${path}/id`, `Context ID ${context.id} is globally reused`));
+    else contextMap.set(context.id, { context, path });
+  });
+
+  for (const { signal, path } of signalMap.values()) {
+    signal.context_ids.forEach((contextId, index) => {
+      if (!contextMap.has(contextId)) errors.push(error('unresolved_context_reference', `${path}/context_ids/${index}`, `unknown Context ${contextId}`));
+    });
+  }
+  for (const { context, path } of contextMap.values()) {
+    const currentIds = new Set(context.supporting_signal_ids);
+    context.supporting_signal_ids.forEach((signalId, index) => {
+      const signal = signalMap.get(signalId)?.signal;
+      if (!signal) errors.push(error('unresolved_signal_reference', `${path}/supporting_signal_ids/${index}`, `unknown Signal ${signalId}`));
+      else if (signal.verification.status === 'withdrawn') errors.push(error('withdrawn_current_support', `${path}/supporting_signal_ids/${index}`, 'withdrawn Signal cannot be current support'));
+    });
+    const historicalIds = new Set();
+    context.revisions.forEach((revision, revisionIndex) => revision.evidence_signal_ids.forEach((signalId, evidenceIndex) => {
+      historicalIds.add(signalId);
+      if (!signalMap.has(signalId)) errors.push(error('unresolved_signal_reference', `${path}/revisions/${revisionIndex}/evidence_signal_ids/${evidenceIndex}`, `unknown Signal ${signalId}`));
+    }));
+    const expected = new Set([...currentIds, ...historicalIds]);
+    for (const [signalId, entry] of signalMap) {
+      if (entry.signal.context_ids.includes(context.id) !== expected.has(signalId)) {
+        errors.push(error('reference_closure', path, `Signal ${signalId} and Context ${context.id} must reference each other exactly`));
+      }
+    }
+  }
+  return result(errors);
 }
 
 export function validatePublicationBundle(bundle) {

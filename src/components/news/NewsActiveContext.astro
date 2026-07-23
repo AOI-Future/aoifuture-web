@@ -26,7 +26,7 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('ja-JP', {
   <p class="news-kicker">ACTIVE CONTEXT / CURRENT VIEW</p>
   <h1 id="current-view-heading">{context.title}</h1>
   <p class="news-current-view__statement">{context.current_view}</p>
-  <p class="news-timestamp">Updated {formatDate(context.updated_at)}</p>
+  <p class="news-timestamp">Updated <time datetime={context.updated_at}>{formatDate(context.updated_at)} JST</time></p>
 
   {context.operator_context && (
     <section class="news-operator-context" aria-labelledby="operator-context-heading">

@@ -23,7 +23,7 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('ja-JP', {
   <div class="news-history-list">
     {context.revisions.map((revision, index) => (
       <article aria-labelledby={`${revision.id}-heading`}>
-        <p class="news-history-index">REVISION {String(index + 1).padStart(2, '0')} / {formatDate(revision.changed_at)}</p>
+        <p class="news-history-index">REVISION {String(index + 1).padStart(2, '0')} / <time datetime={revision.changed_at}>{formatDate(revision.changed_at)} JST</time></p>
         <h3 id={`${revision.id}-heading`}>{revision.change_reason}</h3>
         <p>{revision.resulting_view}</p>
         <div class="news-evidence-links">

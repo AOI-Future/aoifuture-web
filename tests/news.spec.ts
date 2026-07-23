@@ -17,8 +17,29 @@ test('Edition is finite, source-first, labeled, and explicitly non-production', 
   await expect(page.getByText('AOI note', { exact: true })).toHaveCount(2);
   await expect(page.getByText('Caveat', { exact: true })).toHaveCount(2);
   for (const href of directSources) {
-    await expect(page.locator(`a[href="${href}"]`).first()).toBeVisible();
+    const sourceLink = page.locator(`a[href="${href}"]`).first();
+    await expect(sourceLink).toBeVisible();
+    await expect(sourceLink).not.toHaveAttribute('target', '_blank');
   }
+
+  for (const signal of await page.locator('[data-news-signal]').all()) {
+    expect(await signal.locator(':scope > [data-news-order]').evaluateAll((nodes) => nodes.map((node) => node.getAttribute('data-news-order')))).toEqual([
+      'source',
+      'headline',
+      'fact',
+      'note',
+      'metadata',
+      'action',
+    ]);
+  }
+
+  const times = page.locator('time');
+  await expect(times).toHaveCount(6);
+  for (const time of await times.all()) {
+    await expect(time).toHaveAttribute('datetime', /^(?:\d{4}-\d{2}-\d{2}|\d{4}-\d{2}-\d{2}T)/);
+    await expect(time).toContainText('JST');
+  }
+  await expect(page.locator('.news-source-link__title').first()).toHaveAttribute('lang', 'en');
   expect(errors).toEqual([]);
 });
 
@@ -30,6 +51,11 @@ test('Active Context renders current view before preserved chronology and links 
   await expect(page.getByRole('heading', { name: 'How we got here' })).toBeVisible();
   expect(await current.evaluate((node) => node.compareDocumentPosition(document.querySelector('#context-history')!) & Node.DOCUMENT_POSITION_FOLLOWING)).toBeTruthy();
   await expect(history.locator('article')).toHaveCount(2);
+  await expect(page.locator('time')).toHaveCount(3);
+  for (const time of await page.locator('time').all()) {
+    await expect(time).toHaveAttribute('datetime', /T/);
+    await expect(time).toContainText('JST');
+  }
   await expect(history.locator('a[href="/news/2026-07-23/#sig-openai-presence-20260722"]')).toBeVisible();
   await expect(history.locator('a[href="/news/2026-07-23/#sig-anthropic-sdk-20260722"]')).toBeVisible();
 });
@@ -40,6 +66,18 @@ test('archive exposes bounded Edition, Context, topic, and source entry points',
   for (const label of ['By Edition', 'By Context', 'By topic', 'By source']) {
     await expect(page.getByRole('heading', { name: label })).toBeVisible();
   }
+  await expect(page.locator('section[aria-labelledby="archive-editions"] time')).toHaveAttribute('datetime', '2026-07-23');
+  await expect(page.locator('section[aria-labelledby="archive-editions"] time')).toContainText('JST');
+  const retainedSignals = [
+    '/news/2026-07-23/#sig-openai-presence-20260722',
+    '/news/2026-07-23/#sig-anthropic-sdk-20260722',
+  ];
+  for (const href of retainedSignals) {
+    await expect(page.locator(`#archive-topics-list a[href="${href}"]`)).toHaveCount(1);
+    await expect(page.locator(`#archive-sources-list a[href="${href}"]`)).toHaveCount(1);
+  }
+  expect(await page.locator('#archive-sources-list a').evaluateAll((links) => links.every((link) => !link.hasAttribute('target')))).toBe(true);
+  await expect(page.locator('#archive-sources-list a[href^="http"]')).toHaveCount(0);
 });
 
 test('News remains readable with JavaScript disabled', async ({ browser }) => {
