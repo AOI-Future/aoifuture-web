@@ -1,6 +1,6 @@
 # AOIFUTURE News — Product, UX, and Technical Specification
 
-- **Status:** Product planning draft for owner review
+- **Status:** Product direction approved; Phase 1 contract preparation
 - **Target:** `https://aoifuture.com/news/`
 - **Owning repository:** `AOI-Future/aoifuture-web`
 - **Planning date:** 2026-07-23
@@ -28,7 +28,7 @@ Current implementation facts are not product decisions. In particular, the absen
 
 ## 1. The product in one sentence
 
-AOIFUTURE News is a **source-first signal desk**: a daily, finite view of primary information that Shugo actually reads, with just enough editorial context to help the reader decide what to open next.
+AOIFUTURE News is a **source-first dynamic context desk**: a finite daily view of primary information, plus a living account of what changed and what an AI-agent operator needs to understand now.
 
 It is not a newspaper costume for an RSS feed.
 
@@ -41,6 +41,8 @@ The useful part of The Front Page is not its old-paper ornament. It is the way a
 - A reader should also find one adjacent, unexpected item that they would not have searched for.
 - AOI commentary must be visibly distinct from source facts.
 - A finite daily edition is better than an endless engagement feed.
+- A Daily Edition is a dated editorial snapshot; an Active Context is a living view with an explicit revision history.
+- Public editorial judgments remain traceable, but copied source bodies and private collection data do not become a permanent public archive.
 
 ### Position
 
@@ -51,6 +53,29 @@ This sits between three familiar products:
 - AI news summaries are convenient but flatten sources into interchangeable prose.
 
 AOIFUTURE News should be selective like an editor's desk, inspectable like a research notebook, and open-ended like wandering through a good magazine shop.
+
+### Two temporal surfaces — LOCKED
+
+AOIFUTURE News has two connected ways to read time:
+
+- **Daily Edition:** what AOIFUTURE selected on a given date. It remains a finite, dated snapshot.
+- **Active Context:** the current editorial view of a changing topic, followed by “How we got here”: the Signals and revisions that changed that view.
+
+The site does not make chronology the only navigation model. Readers can move backward by edition, Context, topic, or source. A Context starts with the current view, not with the oldest event. When the view changes, AOIFUTURE records what changed, why it changed, and which public Signals support the revision. Old interpretations are not silently overwritten.
+
+### AI-agent operator lens — LOCKED
+
+An Active Context may organize its current view using these operator questions:
+
+- **Capability:** what became possible?
+- **Authority:** which tools, credentials, systems, or data can the agent reach?
+- **Control:** where are approval, stop, cancellation, and human handoff boundaries?
+- **Evidence:** what readback or artifact proves the claimed result?
+- **Cost / Route:** did the model, provider, subscription, API, or local/cloud route change?
+- **Operational impact:** is there a version, configuration, or workflow to inspect now?
+- **Unresolved:** what remains unknown, unverified, or provider-specific?
+
+These are editorial lenses, not mandatory filler. Empty or generic fields are omitted.
 
 ---
 
@@ -68,6 +93,7 @@ A practitioner who works with AI, software, security, research, creative systems
 4. **Connect:** “Why does this belong beside the other items today?”
 5. **Wander:** “Show me one credible item outside my usual lane.”
 6. **Return:** “Let me revisit a dated edition without losing the original links.”
+7. **Trace:** “Show me why AOIFUTURE's current view changed and which earlier Signals led here.”
 
 Machine readability supports discovery and citation, but it is not a second audience and must not distort the visible page.
 
@@ -163,10 +189,10 @@ Prefer:
 
 ---
 
-## 5. Product concept: Signal Desk
+## 5. Product concept: Dynamic Context Desk
 
 - **Name:** AOIFUTURE News
-- **Internal concept name:** Signal Desk
+- **Internal concept name:** Dynamic Context Desk
 
 The visual metaphor is a live work surface, not a broadsheet. Items have different weights, but they share a disciplined grid. Cyan is used to reveal structure and interaction, not to turn every headline into neon.
 
@@ -174,6 +200,8 @@ The visual metaphor is a live work surface, not a broadsheet. Items have differe
 
 - **LOCKED:** `/news/` — latest edition
 - **DESIGN CHOICE:** `/news/YYYY-MM-DD/` — dated edition
+- **LOCKED:** `/news/context/[slug]/` — current Context and its public revision history
+- **DESIGN CHOICE:** `/news/archive/` — browse by edition, Context, topic, or source
 - **DESIGN CHOICE:** `/news/feed.xml` — curated RSS or Atom output
 - **Deferred unless a real consumer needs it:** `/news/feed.json` — JSON Feed
 
@@ -187,34 +215,40 @@ Canonical URLs should include trailing slash consistently with Astro/Vercel beha
    - short promise: `Primary sources, selected and annotated.`
    - latest/archive control
 
-2. **Lead field**
+2. **Latest Delta**
+   - the small set of changes since the previous edition: new, updated, corrected, superseded, or withdrawn
+   - each change links to its source Signal and affected Active Context
+
+3. **Lead field**
    - one lead signal or a two-item pair
    - headline, source identity, source type, published time
    - two-line source fact
    - one distinct AOI note
    - direct source action
 
-3. **Today field**
+4. **Today field**
    - dense, responsive card grid
    - 6–12 curated items for a normal edition
    - varied card span based on editorial role, not popularity score
 
-4. **Thread rail**
-   - active themes such as Agent Operations, Security, Research, Apple/Platforms, Creative Systems, Society
+5. **Active Contexts**
+   - current views such as Agent Authority, Evaluation and Evidence, Model Routing and Cost, Local/Cloud Execution, Security, and Creative Provenance
+   - each card shows current view, last meaningful change, unresolved point, and supporting Signals
    - counts are descriptive, not gamified
-   - selecting a thread filters in place and updates an accessible result count
+   - selecting a Context filters related Signals and updates an accessible result count
 
-5. **Detour**
+6. **Detour**
    - one adjacent item chosen because it broadens the edition
    - explicitly labeled `DETOUR`, not “recommended for you”
    - no personal behavioral profile required
 
-6. **Edition note**
+7. **Edition note**
    - 2–4 sentences about the day's pattern
    - written only when there is a real connection; omitted when the edition is simply a useful set of unrelated items
 
-7. **Archive footer**
+8. **Archive footer**
    - previous/next available edition
+   - browse by Context, topic, and source
    - correction policy, feed links, editorial method
 
 ### Why the Detour matters
@@ -406,6 +440,11 @@ export interface PublicNewsItemV1 {
   language: 'ja' | 'en' | 'other';
   published_at?: string;
   observed_at: string;
+  context_ids: string[];            // Active Contexts that cite this Signal
+  change?: {
+    kind: 'new' | 'updated' | 'corrected' | 'superseded' | 'withdrawn';
+    previous_signal_ids?: string[];
+  };
   source_fact: string;             // supported by source
   aoi_note: string;                // editorial interpretation; may be short but not generic
   caveat?: string;                 // visible, claim-adjacent limitation
@@ -437,6 +476,40 @@ export interface PublicNewsTopicV1 {
 }
 ```
 
+### Active Context schema v1 — DESIGN CHOICE
+
+```ts
+export interface PublicNewsContextV1 {
+  schema_version: 'aoi.news.context.v1';
+  id: string;
+  slug: string;
+  title: string;
+  current_view: string;
+  updated_at: string;
+  operator_context?: {
+    capability?: string;
+    authority?: string;
+    control?: string;
+    evidence?: string;
+    cost_route?: string;
+    operational_impact?: string;
+    unresolved?: string;
+  };
+  supporting_signal_ids: string[];
+  revisions: PublicNewsContextRevisionV1[];
+}
+
+export interface PublicNewsContextRevisionV1 {
+  id: string;
+  changed_at: string;
+  change_reason: string;
+  resulting_view: string;
+  evidence_signal_ids: string[];
+}
+```
+
+A Context revision is an editorial record, not a generated hidden state. The public page shows the current view first and the revision trail below it. A revision cannot cite a private candidate or internal model output; every evidence ID must resolve to a published Signal.
+
 ### Validation invariants — LOCKED
 
 - `schema_version` must be exact and supported.
@@ -452,12 +525,60 @@ export interface PublicNewsTopicV1 {
 - Image URL, alt, credit, and rights basis are required together; image URLs must be same-origin public assets.
 - `title` is AOIFUTURE's display headline and `source_title` is the source's own title; the UI must not present one as the other.
 - Every item has an AOI note because the editorial reason for inclusion is part of the reader-facing promise.
-- HTML is rejected from public text fields; titles, facts, notes, caveats, labels, credits, and rights fields render as plain text in MVP.
+- Every `context_ids` and `evidence_signal_ids` reference resolves to a published object.
+- Context revisions are ordered by `changed_at`, have stable IDs, and state a concrete change reason.
+- A Context update cannot silently replace `current_view`; it adds a revision and updates the public `updated_at`.
+- HTML is rejected from public text fields; titles, facts, notes, caveats, labels, credits, rights fields, and Context fields render as plain text in MVP.
 - Unknown fields fail validation so private metadata cannot hitchhike into production.
 
 ---
 
-## 11. Editorial-to-web architecture
+## 11. Retention and retrospective access — LOCKED
+
+AOIFUTURE News preserves its own public editorial record. It does not become a mirror of the external web.
+
+### Long-lived public record
+
+Retain for as long as AOIFUTURE News remains an operating publication:
+
+- published Daily Editions;
+- the minimal public Signal fields defined in this contract;
+- Active Context current views and public revision histories;
+- correction, supersession, withdrawal, and source-unavailable states;
+- the public editorial method and material policy revisions.
+
+These records explain what AOIFUTURE published and how its interpretation changed. Removing an item from the current front page does not delete its dated public record. Legal, privacy, safety, or rights obligations may still require redaction or removal; such action is recorded when it is safe and lawful to do so.
+
+### Not retained as a public archive
+
+Do not retain or publish merely to support retrospective browsing:
+
+- copied external article bodies or RSS payloads;
+- generated intermediate summaries, prompts, or hidden reasoning;
+- rejected candidates and private editorial notes;
+- internal ranking/model scores, local paths, account identifiers, or credentials;
+- reader-level behavioral profiles;
+- third-party images without a documented right to host them.
+
+A broken source link does not authorize copying the source body. The minimal Signal record remains and is marked with the latest verified availability state.
+
+### Private operational evidence
+
+Private exporter, validation, rights, and deployment evidence follows a separate bounded retention policy based on operational, legal, and security need. MVP does not invent one universal duration. The Phase 1 contract must name each private artifact class, its purpose, owner, deletion condition, and deletion/readback verification. Keep the shortest period that still supports correction, rollback, and incident review.
+
+### Retrospective navigation
+
+Readers can go backward through:
+
+- **By Edition:** what appeared on a date;
+- **By Context:** current view, revisions, and “How we got here”;
+- **By Topic or Source:** published Signals sharing a subject or publisher.
+
+Search and filtering operate on AOIFUTURE's minimal public metadata and editorial text, not mirrored source bodies. Historical access must not imply that an old Signal remains current; Context pages distinguish current view, superseded view, correction, and unresolved state.
+
+---
+
+## 12. Editorial-to-web architecture
 
 ### Current repository facts
 
@@ -493,12 +614,18 @@ src/
     NewsLead.astro
     NewsCard.astro
     NewsThreadFilter.astro
+    NewsLatestDelta.astro
+    NewsActiveContext.astro
+    NewsContextHistory.astro
     NewsDetour.astro
     NewsArchiveNav.astro
     NewsMethodLink.astro
   content/
     news/
-      2026-07-23.json
+      editions/
+        2026-07-23.json
+      contexts/
+        agent-authority.json
   layouts/
     NewsLayout.astro
   lib/news/
@@ -508,6 +635,8 @@ src/
   pages/news/
     index.astro
     [date].astro
+    archive/index.astro
+    context/[slug].astro
     feed.xml.ts
     method.astro
   styles/
@@ -517,8 +646,10 @@ scripts/
   import-news-edition.mjs
 schemas/
   aoi-news-edition-v1.schema.json
+  aoi-news-context-v1.schema.json
 tests/
   news-schema.test.ts
+  news-context-history.test.ts
   news-render.test.ts
   news-feed.test.ts
   news.spec.ts
@@ -542,7 +673,7 @@ Recommendation: start with a manually reviewed edition manifest and a determinis
 
 ---
 
-## 12. SEO, feeds, and machine readability
+## 13. SEO, feeds, and machine readability
 
 ### Required — LOCKED
 
@@ -560,7 +691,7 @@ The edition is a curated collection, not the original publisher of each linked e
 
 ---
 
-## 13. Measurement without engagement distortion
+## 14. Measurement without engagement distortion
 
 Custom events are not required for launch. Editorial reliability can be evaluated from edition manifests and correction logs without identifying readers. If owner review approves analytics, use this minimal allowlist:
 
@@ -597,7 +728,7 @@ A high source-open rate is not “leakage.” Sending the reader to the source i
 
 ---
 
-## 14. Accessibility and performance acceptance
+## 15. Accessibility and performance acceptance
 
 ### Accessibility — LOCKED
 
@@ -630,17 +761,20 @@ Concrete byte and Core Web Vitals budgets require implementation measurement.
 
 ---
 
-## 15. MVP scope
+## 16. MVP scope
 
 ### In MVP
 
 - Latest and dated edition routes
+- Latest Delta and at least one Active Context backed by published Signals
+- Context history showing the current view first and “How we got here” below it
 - 6–12 curated source-first items per normal edition
 - Lead/major/brief/detour/watch roles
 - Topic filtering
 - Visible source kind, publisher, date, source fact, AOI note, and caveat
 - Direct source links
 - Archive navigation
+- retrospective navigation by edition, Context, topic, and source
 - Public feed
 - Method and correction page
 - Strict public schema, validator, and last-known-valid behavior
@@ -663,7 +797,7 @@ Concrete byte and Core Web Vitals budgets require implementation measurement.
 
 ---
 
-## 16. Alternatives considered
+## 17. Alternatives considered
 
 ### A. Copy The Front Page's newspaper layout
 
@@ -687,7 +821,7 @@ Concrete byte and Core Web Vitals budgets require implementation measurement.
 
 ---
 
-## 17. Delivery phases and gates
+## 18. Delivery phases and gates
 
 ### Phase 0 — Product approval
 
@@ -704,9 +838,11 @@ Gate: Shugo approves or revises the product meaning. No implementation proceeds 
 Deliverables:
 
 - one redacted, public-safe edition manifest built from a real DailyNews day;
+- one public-safe Active Context with at least two revisions backed by published Signal IDs;
 - JSON Schema and validator;
-- negative tests proving private fields, unknown fields, unsafe HTML, invalid URLs, and duplicate IDs fail;
+- negative tests proving private fields, unknown fields, unsafe HTML, invalid URLs, duplicate IDs, unresolved Context references, and silent Context overwrite fail;
 - source reachability and correction semantics;
+- an artifact retention ledger naming each public/private class, purpose, owner, deletion condition, and verification;
 - exact handoff procedure from DailyNews to the repo.
 
 Gate: Engineer → Debug → Reviewer. The sample must contain no local paths or internal scores.
@@ -716,6 +852,7 @@ Gate: Engineer → Debug → Reviewer. The sample must contain no local paths or
 Deliverables:
 
 - `/news/` and one dated edition in an isolated worktree;
+- `/news/context/[slug]/` and retrospective archive navigation;
 - desktop/mobile responsive layout;
 - no-JS source-link readback;
 - topic filter and Detour interaction;
@@ -750,7 +887,7 @@ Production publication is a separate approval boundary.
 
 ---
 
-## 18. Acceptance checklist
+## 19. Acceptance checklist
 
 ### Product
 
@@ -759,6 +896,8 @@ Production publication is a separate approval boundary.
 - [ ] Facts, AOI notes, and caveats are visually and semantically distinct.
 - [ ] The edition is finite and dated.
 - [ ] One credible path to serendipity exists without behavioral profiling.
+- [ ] Current Context is visible before its chronology, and every revision names its supporting public Signals.
+- [ ] Readers can trace a current view backward without exposing copied source bodies or private editorial data.
 
 ### Editorial integrity
 
@@ -766,6 +905,7 @@ Production publication is a separate approval boundary.
 - [ ] Primary sources are preferred and duplicate syndication is collapsed.
 - [ ] `watch` items carry claim-adjacent caveats.
 - [ ] Corrections and withdrawals are visible.
+- [ ] Superseded Context views remain attributable and are not silently rewritten.
 - [ ] Private workflow fields cannot pass schema validation.
 
 ### UX and accessibility
@@ -781,12 +921,24 @@ Production publication is a separate approval boundary.
 - [ ] DailyNews/iCloud is not a production runtime dependency.
 - [ ] Last known valid edition survives exporter failure.
 - [ ] Schema tests include negative leakage cases.
-- [ ] The selected RSS/Atom feed and sitemap are valid, including dated editions.
+- [ ] Retention tests reject raw source bodies and unresolved private references from public manifests.
+- [ ] The selected RSS/Atom feed and sitemap are valid, including dated editions and Context routes.
 - [ ] Build and Playwright checks pass from an isolated worktree.
 
 ---
 
-## 19. Owner decisions requested
+## 20. Owner decisions
+
+### Approved on 2026-07-23 — LOCKED
+
+- AOIFUTURE News includes both finite Daily Editions and dynamic Active Contexts.
+- Editorial framing centers on change over time and the context needed by AI-agent operators.
+- Readers can move backward by edition, Context, topic, and source; chronology is available but is not the only organizing principle.
+- Published Daily Editions, minimal Signals, Context revisions, corrections, and withdrawals form the long-lived public editorial record.
+- Copied source bodies, RSS payloads, intermediate generation, rejected candidates, private notes, and reader-level profiles do not become a permanent public archive.
+- Old Context interpretations are retained as attributable revisions rather than silently overwritten.
+
+### Decisions still requested
 
 These decisions change product meaning and should be settled before implementation:
 
@@ -800,11 +952,11 @@ These decisions change product meaning and should be settled before implementati
 8. **Canonical host:** should public News URLs use `www.aoifuture.com` to match the current live host, or should the site redirect and canonical configuration be normalized to non-`www`?
 9. **AI crawler policy:** should News be added to `public/llms.txt`, and under what citation/reuse statement?
 
-## 20. Recommended defaults
+## 21. Recommended defaults
 
 If implementation had to start without another design meeting, use these defaults:
 
-- public name: **AOIFUTURE News**; use `Signal Desk` only as the internal design concept;
+- public name: **AOIFUTURE News**; use `Dynamic Context Desk` only as the internal design concept;
 - route: `/news/`;
 - language: Japanese UI and annotation, original source titles retained;
 - rhythm: one daily edition with material corrections during the day;
