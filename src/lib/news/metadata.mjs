@@ -57,8 +57,8 @@ export function buildArchiveMetadata(catalog) {
     })),
   ];
   return schema('CollectionPage', {
-    name: 'AOIFUTURE News Sample index',
-    description: 'Bounded retrospective entry points for the non-production sample.',
+    name: 'AOIFUTURE News Editorial review index',
+    description: 'Bounded entry points for the editorial review Preview; not authorized for production publication.',
     url: `${ORIGIN}/news/archive/`,
     mainEntity: itemList(entries),
   });

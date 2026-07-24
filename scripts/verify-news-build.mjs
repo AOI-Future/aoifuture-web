@@ -5,16 +5,22 @@ import { renderRollingFeed } from './news-contract/rolling-feed.mjs';
 const clientRoot = resolve(process.argv[2] ?? 'dist/client');
 const routes = [
   ['news/index.html', 'https://aoifuture.com/news/', 'CollectionPage'],
+  ['news/2026-07-24/index.html', 'https://aoifuture.com/news/2026-07-24/', 'CollectionPage'],
   ['news/2026-07-23/index.html', 'https://aoifuture.com/news/2026-07-23/', 'CollectionPage'],
+  ['news/context/connected-ai-boundaries/index.html', 'https://aoifuture.com/news/context/connected-ai-boundaries/', 'WebPage'],
   ['news/context/agent-authority/index.html', 'https://aoifuture.com/news/context/agent-authority/', 'WebPage'],
   ['news/archive/index.html', 'https://aoifuture.com/news/archive/', 'CollectionPage'],
 ];
 const forbiddenFontOrigins = /(?:fonts\.googleapis\.com|fonts\.gstatic\.com)/i;
 const failures = [];
 const cssPaths = new Set();
-const sampleEdition = JSON.parse(readFileSync(resolve('src/content/news/editions/2026-07-23.json'), 'utf8'));
-const reviewedEvents = JSON.parse(readFileSync(resolve('src/content/news/events/2026-07-23.json'), 'utf8'));
-const latestReviewedAt = reviewedEvents.at(-1)?.published_at;
+const editions = ['2026-07-23', '2026-07-24'].map((date) => (
+  JSON.parse(readFileSync(resolve(`src/content/news/editions/${date}.json`), 'utf8'))
+));
+const events = ['2026-07-23', '2026-07-24'].flatMap((date) => (
+  JSON.parse(readFileSync(resolve(`src/content/news/events/${date}.json`), 'utf8'))
+));
+const latestReviewedAt = new Map(events.map((event) => [event.edition_id, event.published_at]));
 let feedItemCount = 0;
 
 for (const [relativePath, expectedCanonical, expectedType] of routes) {
@@ -42,8 +48,9 @@ for (const [relativePath, expectedCanonical, expectedType] of routes) {
       const jsonLd = JSON.parse(jsonLdMatch[1]);
       if (jsonLd['@type'] !== expectedType) failures.push(`${relativePath}: expected JSON-LD ${expectedType}, received ${jsonLd['@type']}`);
       if (JSON.stringify(jsonLd).includes('NewsArticle')) failures.push(`${relativePath}: Signal metadata must not use NewsArticle`);
-      if (relativePath === 'news/2026-07-23/index.html' && jsonLd.dateModified !== latestReviewedAt) {
-        failures.push(`${relativePath}: dateModified must equal the latest reviewed revision event`);
+      const editionDate = relativePath.match(/^news\/(\d{4}-\d{2}-\d{2})\/index\.html$/)?.[1];
+      if (editionDate && jsonLd.dateModified !== latestReviewedAt.get(editionDate)) {
+        failures.push(`${relativePath}: dateModified must equal its latest reviewed revision event`);
       }
     } catch (cause) {
       failures.push(`${relativePath}: JSON-LD is invalid (${cause.message})`);
@@ -59,10 +66,10 @@ if (!existsSync(feedPath)) {
   failures.push('news/feed.xml: generated RSS is missing');
 } else {
   const feed = readFileSync(feedPath, 'utf8');
-  feedItemCount = reviewedEvents.length;
-  const expected = renderRollingFeed(reviewedEvents, [sampleEdition], { sample: true });
+  feedItemCount = events.length;
+  const expected = renderRollingFeed(events, editions, { sample: true });
   if (feed !== expected) failures.push('news/feed.xml: generated RSS differs from deterministic reviewed-event rendering');
-  if ((feed.match(/<item>/g) ?? []).length !== reviewedEvents.length) failures.push('news/feed.xml: item count does not match reviewed public events');
+  if ((feed.match(/<item>/g) ?? []).length !== events.length) failures.push('news/feed.xml: item count does not match reviewed public events');
   for (const term of ['reviewed_by', 'receipt', 'claim_locator', 'source_body', 'reader_id']) {
     if (feed.toLowerCase().includes(term)) failures.push(`news/feed.xml: private term found (${term})`);
   }

@@ -9,17 +9,17 @@ const catalog = loadNewsCatalog();
 ---
 
 <NewsLayout
-  title="Sample index | AOIFUTURE News"
-  description="AOIFUTURE News non-production sample retrospective entry points."
+  title="Editorial review index | AOIFUTURE News"
+  description="AOIFUTURE News editorial review Preview entry points. Not authorized for production publication."
   canonical="https://aoifuture.com/news/archive/"
   jsonLd={buildArchiveMetadata(catalog)}
 >
   <header class="news-archive-header">
-    <p class="news-sample-label news-sample-label--hero">NON-PRODUCTION SAMPLE</p>
+    <p class="news-sample-label news-sample-label--hero">EDITORIAL REVIEW PREVIEW</p>
     <p class="news-kicker">RETROSPECTIVE ENTRY POINTS</p>
-    <h1>Sample index</h1>
-    <p class="news-archive-warning">SAMPLE INDEX — NOT A COMPLETE ARCHIVE</p>
-    <p>この試作に含まれる Edition、Active Context、topic、source だけを示します。サイト全体の検索や完全な履歴を表すものではありません。</p>
+    <h1>Editorial review index</h1>
+    <p class="news-archive-warning">EDITORIAL REVIEW INDEX — NOT PRODUCTION OR A COMPLETE ARCHIVE</p>
+    <p>このPreviewに含まれる Edition、Active Context、topic、source だけを示します。本番公開、サイト全体の検索、完全な履歴を表すものではありません。</p>
   </header>
   <NewsArchiveNav catalog={catalog} />
 </NewsLayout>

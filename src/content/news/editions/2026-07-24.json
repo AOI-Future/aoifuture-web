@@ -1,0 +1,186 @@
+{
+  "dek": "健康情報、音声ツール、観測基盤、SDK、電話AI、認証。六つの公開情報から、導入前に確認したい停止線を読む。",
+  "edition_date": "2026-07-24",
+  "edition_id": "2026-07-24",
+  "edition_note": "便利さが増えたという話だけではない。接続先が増えるほど、許可の粒度、失敗時の戻り先、本番移行の条件を先に設計する必要がある。",
+  "generated_at": "2026-07-24T15:01:05+09:00",
+  "items": [
+    {
+      "aoi_note": "導入前に、参照のたびに求める許可、接続解除後の削除、会話履歴に残る情報を別々の境界として確認したい。",
+      "caveat": "段階提供で米国外は対象外。接続した健康情報はモデル学習や広告に使わないと説明される一方、同期データと会話履歴では削除条件が異なり、医療判断の代替でもない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [
+        "ctx-connected-ai-boundaries"
+      ],
+      "id": "sig-openai-health-20260724",
+      "language": "en",
+      "observed_at": "2026-07-24T15:01:05+09:00",
+      "role": "lead",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは米国の18歳以上を対象にHealth in ChatGPTの提供を始め、対応する医療記録やApple Healthなどを利用者が任意で接続できるようにした。",
+      "source_kind": "official",
+      "source_title": "Launching Health in ChatGPT",
+      "source_url": "https://openai.com/index/health-in-chatgpt/",
+      "title": "ChatGPT Healthは健康情報を任意接続",
+      "topics": [
+        "connected-ai-operations"
+      ],
+      "verification": {
+        "checked_at": "2026-07-24T15:01:05+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "音声入力の速さをそのまま実行権限にせず、予定変更や返信案では接続単位と実行直前の確認が追えるかを試したい。",
+      "caveat": "全チャット利用者向けのベータ。無料プランはHaikuと接続ツール1つで、上位モデルと複数ツールは有料プラン向け。ツール利用前には許可を求め、通常の利用上限も適用される。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [
+        "ctx-connected-ai-boundaries"
+      ],
+      "id": "sig-claude-voice-tools-20260724",
+      "language": "en",
+      "observed_at": "2026-07-24T15:01:05+09:00",
+      "role": "major",
+      "source_domain": "claude.com",
+      "source_fact": "AnthropicはClaudeの音声モードをOpus、Sonnet、Haikuへ広げ、Gmail、Google Calendar、Canvaなど利用者が接続したツールを音声会話から使えるようにした。",
+      "source_kind": "official",
+      "source_title": "Think through hard problems in voice mode",
+      "source_url": "https://claude.com/blog/think-through-hard-problems-in-voice-mode",
+      "title": "Claude音声が上位モデルと接続ツールへ拡張",
+      "topics": [
+        "connected-ai-operations"
+      ],
+      "verification": {
+        "checked_at": "2026-07-24T15:01:05+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "新規環境での確認と既存v3データを抱えた移行試験を分け、本番は複製環境で移行手順とロールバックを再現してから判断したい。",
+      "caveat": "v3との破壊的変更を含むリリース候補であり、公式ノートも安定版が出るまで本番のv3からv4への移行を待つよう勧告している。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [
+        "ctx-connected-ai-boundaries"
+      ],
+      "id": "sig-langfuse-v4-rc0-20260724",
+      "language": "en",
+      "observed_at": "2026-07-24T15:01:05+09:00",
+      "published_at": "2026-07-24T00:53:06+09:00",
+      "role": "brief",
+      "source_domain": "github.com",
+      "source_fact": "Langfuseはv4.0.0-rc.0をプレリリースとして公開し、セルフホストv4向けの標準環境変数とClickHouse移行を含めた。",
+      "source_kind": "release",
+      "source_title": "v4.0.0-rc.0",
+      "source_url": "https://github.com/langfuse/langfuse/releases/tag/v4.0.0-rc.0",
+      "title": "Langfuse v4 RCは本番移行を待つ段階",
+      "topics": [
+        "connected-ai-operations"
+      ],
+      "verification": {
+        "checked_at": "2026-07-24T15:01:05+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "文脈上限を一律再試行から外し、要約、作業分割、人への返却へ分岐できるかを更新試験に入れたい。",
+      "caveat": "SDKが停止理由を公開したことと、各アプリがその理由を安全に処理できることは別である。更新後の例外処理と再試行条件は実装ごとに検証が要る。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [
+        "ctx-connected-ai-boundaries"
+      ],
+      "id": "sig-anthropic-sdk-0119-20260724",
+      "language": "en",
+      "observed_at": "2026-07-24T15:01:05+09:00",
+      "published_at": "2026-07-24T02:34:23+09:00",
+      "role": "major",
+      "source_domain": "github.com",
+      "source_fact": "Anthropic Python SDK v0.119.0は停止理由model_context_window_exceededを追加し、エージェント用ツールセットのバイナリーファイル読み書きも修正した。",
+      "source_kind": "release",
+      "source_title": "v0.119.0",
+      "source_url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.119.0",
+      "title": "Anthropic SDKが文脈上限の停止理由を追加",
+      "topics": [
+        "connected-ai-operations"
+      ],
+      "verification": {
+        "checked_at": "2026-07-24T15:01:05+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "モデル比較だけでなく、ピーク時のレート制限、既存システムへの書き込み検証、最初の応答までの時間を受入条件に置きたい。",
+      "caveat": "Google Cloudが顧客を紹介するベンダー事例で、独立ベンチマークではない。費用削減、稼働率、導入期間などの数値はVoicify自身の説明として扱う。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [
+        "ctx-connected-ai-boundaries"
+      ],
+      "id": "sig-google-voicify-story-20260724",
+      "language": "en",
+      "observed_at": "2026-07-24T15:01:05+09:00",
+      "published_at": "2026-07-24T08:00:06+09:00",
+      "role": "brief",
+      "source_domain": "cloud.google.com",
+      "source_fact": "Google Cloudの顧客事例でVoicifyは、電話AIの実運用課題として取引の正確さ、急な負荷、応答遅延、セキュリティと法令対応を挙げた。",
+      "source_kind": "official",
+      "source_title": "The Blueprint: How Voicify makes AI-enabled ordering a delight for customers",
+      "source_url": "https://cloud.google.com/blog/topics/customers/bringing-delight-to-customer-phone-calls-with-ai/",
+      "title": "Voicify事例は電話AIの運用条件を示す",
+      "topics": [
+        "connected-ai-operations"
+      ],
+      "verification": {
+        "checked_at": "2026-07-24T15:01:05+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "更新に加え、設定を意図的に壊した試験で拒否側へ倒れるか、認証判定が具体的なユーザーやセッション属性を見ているかを確認したい。",
+      "caveat": "影響は設定が無効で、かつ存在ベース判定を使う場合に限られる。設定が有効な間は影響しない。対象は5.0.0-beta.0からbeta.31で、beta.32が修正版。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [
+        "ctx-connected-ai-boundaries"
+      ],
+      "id": "sig-authjs-fail-open-20260724",
+      "language": "en",
+      "observed_at": "2026-07-24T15:01:05+09:00",
+      "published_at": "2026-07-23T23:52:23+09:00",
+      "role": "major",
+      "source_domain": "github.com",
+      "source_fact": "next-auth v5ベータで設定エラーが起きた際、authオブジェクトの存在だけを見る認証判定では、エラーオブジェクトを認証済みとして扱い、未認証要求を通す場合があった。",
+      "source_kind": "advisory",
+      "source_title": "Auth.js: Configuration errors can cause existence-based auth checks to fail open (auth object populated with an error)",
+      "source_url": "https://github.com/advisories/GHSA-8fpg-xm3f-6cx3",
+      "title": "Auth.jsは設定エラー時のfail-openを修正",
+      "topics": [
+        "connected-ai-operations"
+      ],
+      "verification": {
+        "checked_at": "2026-07-24T15:01:05+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "published_at": "2026-07-24T15:01:05+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "接続するAI、運用境界を先に決める",
+  "topics": [
+    {
+      "description": "データとツールへの接続、停止、移行、負荷、認証失敗を含む運用境界。",
+      "id": "connected-ai-operations",
+      "label_en": "Connected AI operations",
+      "label_ja": "接続型AIの運用"
+    }
+  ]
+}

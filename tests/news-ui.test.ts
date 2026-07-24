@@ -22,11 +22,22 @@ describe('AOIFUTURE News public loader', () => {
     const second = loadNewsCatalog();
 
     expect(first).toEqual(second);
-    expect(first.editions.map((edition) => edition.edition_date)).toEqual(['2026-07-23']);
-    expect(first.contexts.map((context) => context.slug)).toEqual(['agent-authority']);
+    expect(first.editions.map((edition) => edition.edition_date)).toEqual(['2026-07-24', '2026-07-23']);
+    expect(first.contexts.map((context) => context.slug)).toEqual(['agent-authority', 'connected-ai-boundaries']);
+    expect(first.editions[0].items).toHaveLength(6);
+    expect(first.editions[0].items.map((signal) => signal.id)).toEqual([
+      'sig-openai-health-20260724',
+      'sig-claude-voice-tools-20260724',
+      'sig-langfuse-v4-rc0-20260724',
+      'sig-anthropic-sdk-0119-20260724',
+      'sig-google-voicify-story-20260724',
+      'sig-authjs-fail-open-20260724',
+    ]);
+    expect(getEditionByDate('2026-07-24')?.edition_id).toBe('2026-07-24');
     expect(getEditionByDate('2026-07-23')?.edition_id).toBe('2026-07-23');
     expect(getEditionByDate('2099-01-01')).toBeUndefined();
     expect(getContextBySlug('agent-authority')?.id).toBe('ctx-agent-authority');
+    expect(getContextBySlug('connected-ai-boundaries')?.id).toBe('ctx-connected-ai-boundaries');
     expect(getContextBySlug('missing-context')).toBeUndefined();
   });
 

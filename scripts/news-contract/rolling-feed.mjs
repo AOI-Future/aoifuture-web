@@ -274,7 +274,7 @@ export function renderRollingFeed(events, editions, { sample = false } = {}) {
     || right.event_id.localeCompare(left.event_id)
   ));
   const channelTitle = sample
-    ? 'AOIFUTURE News Rolling Edition RSS — NON-PRODUCTION SAMPLE'
+    ? 'AOIFUTURE News Rolling Edition RSS — EDITORIAL REVIEW PREVIEW'
     : 'AOIFUTURE News Rolling Edition RSS';
   const items = newestFirst.map((event) => {
     const edition = editionMap.get(event.edition_id);

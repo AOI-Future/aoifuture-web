@@ -11,6 +11,8 @@ const readJson = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url
 const edition = readJson('../src/content/news/editions/2026-07-23.json');
 const context = readJson('../src/content/news/contexts/agent-authority.json');
 const events = readJson('../src/content/news/events/2026-07-23.json');
+const reviewedEdition = readJson('../src/content/news/editions/2026-07-24.json');
+const reviewedEvents = readJson('../src/content/news/events/2026-07-24.json');
 const clone = (value) => structuredClone(value);
 const codes = (result) => result.errors.map((entry) => entry.code);
 
@@ -26,6 +28,19 @@ describe('Rolling Edition public revision-event contract', () => {
       edition.items.map((signal) => signal.id).sort(),
     );
     expect(validateRevisionEvents(events, [edition])).toEqual({ ok: true, errors: [] });
+  });
+
+  it('accepts the reviewed Preview publication event with all six exact Signal IDs', () => {
+    expect(reviewedEvents).toHaveLength(1);
+    expect(reviewedEvents[0]).toMatchObject({
+      event_id: 'aoi-news-2026-07-24-r001',
+      revision: 1,
+      event_kind: 'edition-published',
+      published_at: reviewedEdition.published_at,
+    });
+    expect(reviewedEvents[0].changed_signal_ids).toEqual(reviewedEdition.items.map((signal) => signal.id));
+    expect(validateRevisionEvents([...events, ...reviewedEvents], [edition, reviewedEdition]))
+      .toEqual({ ok: true, errors: [] });
   });
 
   it.each([
@@ -263,6 +278,15 @@ describe('model-free meaningful-change proposal classifier', () => {
 });
 
 describe('deterministic Rolling Edition RSS', () => {
+  it('renders the reviewed Preview event first with its deterministic GUID and preview boundary', () => {
+    const allEvents = [...events, ...reviewedEvents];
+    const xml = renderRollingFeed(allEvents, [edition, reviewedEdition], { sample: true });
+    expect(xml).toContain('AOIFUTURE News Rolling Edition RSS — EDITORIAL REVIEW PREVIEW');
+    expect(xml).toContain('<guid isPermaLink="false">aoi-news-2026-07-24-r001</guid>');
+    expect(xml.indexOf('aoi-news-2026-07-24-r001')).toBeLessThan(xml.indexOf('aoi-news-2026-07-23-r002'));
+    expect((xml.match(/<item>/g) ?? [])).toHaveLength(3);
+  });
+
   it('uses reviewed events as stable GUID items, newest first, and is byte-stable', () => {
     const first = renderRollingFeed(events, [edition], { sample: true });
     const second = renderRollingFeed(clone(events), [clone(edition)], { sample: true });

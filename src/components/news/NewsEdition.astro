@@ -20,7 +20,7 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('ja-JP', {
 <article class="news-edition" data-news-edition={edition.edition_id}>
   <header class="news-edition__header">
     <p class="news-kicker">EDITION <time datetime={edition.edition_date}>{edition.edition_date} JST</time></p>
-    <p class="news-sample-label news-sample-label--hero">NON-PRODUCTION SAMPLE</p>
+    <p class="news-sample-label news-sample-label--hero">EDITORIAL REVIEW PREVIEW</p>
     <h1>{edition.title}</h1>
     {edition.dek && <p class="news-dek">{edition.dek}</p>}
     <dl class="news-edition__meta">

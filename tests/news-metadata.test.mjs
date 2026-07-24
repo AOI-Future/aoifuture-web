@@ -8,10 +8,12 @@ import {
 } from '../src/lib/news/metadata.mjs';
 
 const readJson = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url), 'utf8'));
-const edition = readJson('../src/content/news/editions/2026-07-23.json');
-const context = readJson('../src/content/news/contexts/agent-authority.json');
-const events = readJson('../src/content/news/events/2026-07-23.json');
-const catalog = { editions: [edition], contexts: [context] };
+const previousEdition = readJson('../src/content/news/editions/2026-07-23.json');
+const edition = readJson('../src/content/news/editions/2026-07-24.json');
+const previousContext = readJson('../src/content/news/contexts/agent-authority.json');
+const context = readJson('../src/content/news/contexts/connected-ai-boundaries.json');
+const events = readJson('../src/content/news/events/2026-07-24.json');
+const catalog = { editions: [edition, previousEdition], contexts: [previousContext, context] };
 const serializedTypes = (value) => JSON.stringify(value);
 
 describe('AOIFUTURE News M2 public metadata', () => {
@@ -19,10 +21,10 @@ describe('AOIFUTURE News M2 public metadata', () => {
     const latestReviewedAt = events.at(-1).published_at;
     const metadata = buildEditionMetadata(edition, latestReviewedAt);
     expect(metadata['@type']).toBe('CollectionPage');
-    expect(metadata.url).toBe('https://aoifuture.com/news/2026-07-23/');
+    expect(metadata.url).toBe('https://aoifuture.com/news/2026-07-24/');
     expect(metadata.dateModified).toBe(latestReviewedAt);
-    expect(metadata.dateModified).not.toBe(edition.generated_at);
-    expect(metadata.mainEntity).toMatchObject({ '@type': 'ItemList', numberOfItems: 2 });
+    expect(metadata.dateModified).toBe(edition.published_at);
+    expect(metadata.mainEntity).toMatchObject({ '@type': 'ItemList', numberOfItems: 6 });
     expect(metadata.mainEntity.itemListElement).toEqual(edition.items.map((signal, index) => ({
       '@type': 'ListItem',
       position: index + 1,
@@ -38,7 +40,8 @@ describe('AOIFUTURE News M2 public metadata', () => {
     const archive = buildArchiveMetadata(catalog);
     expect(index).toMatchObject({ '@type': 'CollectionPage', url: 'https://aoifuture.com/news/' });
     expect(archive).toMatchObject({ '@type': 'CollectionPage', url: 'https://aoifuture.com/news/archive/' });
-    expect(index.mainEntity.itemListElement[0].url).toBe('https://aoifuture.com/news/2026-07-23/');
+    expect(index.mainEntity.itemListElement[0].url).toBe('https://aoifuture.com/news/2026-07-24/');
+    expect(index.mainEntity.itemListElement[1].url).toBe('https://aoifuture.com/news/2026-07-23/');
     expect(serializedTypes([index, archive])).not.toContain('NewsArticle');
   });
 
@@ -46,7 +49,7 @@ describe('AOIFUTURE News M2 public metadata', () => {
     const metadata = buildContextMetadata(context, catalog);
     expect(metadata).toMatchObject({
       '@type': 'WebPage',
-      url: 'https://aoifuture.com/news/context/agent-authority/',
+      url: 'https://aoifuture.com/news/context/connected-ai-boundaries/',
       dateModified: context.updated_at,
     });
     expect(metadata.citation).toEqual(edition.items.map((signal) => ({
