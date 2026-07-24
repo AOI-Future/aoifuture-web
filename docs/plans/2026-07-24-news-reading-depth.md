@@ -774,21 +774,20 @@ npm run build
 
 Expected: exit 0 and non-News routes still build.
 
-**Step 6: Inspect exact diff and create immutable candidate**
+**Step 6: Inspect exact diff and record the immutable candidate**
 
 ```bash
 git status --short
 git diff --check
 git diff origin/main...HEAD -- schemas scripts src/content/news src/lib/news src/components/news src/layouts src/pages/news src/styles/news.css fixtures tests package.json package-lock.json astro.config.mjs
-git add <exact task-owned paths only>
-git diff --cached --check
-git diff --cached --stat
-git commit -m "feat: deepen AOIFUTURE News reading history"
-git rev-parse HEAD^{commit}
+test -z "$(git status --porcelain)"
+CANDIDATE_SHA=$(git rev-parse HEAD^{commit})
+git cat-file -e "${CANDIDATE_SHA}^{commit}"
+printf '%s\n' "$CANDIDATE_SHA"
 git status --short --branch
 ```
 
-Expected: one exact candidate SHA and clean worktree. Do not push or deploy.
+Expected: Tasks 1–10 have already committed every implementation slice, so the cleanliness assertion exits 0 and the existing tip is recorded as one exact candidate SHA. This step does not create, squash, amend, or rewrite a commit. If a test or build leaves tracked changes, stop: inspect them, discard task-local generated residue, or—only for an intentional task-owned source change—return to the owning Task's exact-path staging and commit step, rerun Steps 1–5, and then restart this step. Never stage a path merely because a test touched it. The recorded candidate must have a clean index and worktree. Do not push or deploy.
 
 ## Task 12: Independent Debug gate
 
