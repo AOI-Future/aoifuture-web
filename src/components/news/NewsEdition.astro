@@ -17,6 +17,9 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('ja-JP', {
   timeStyle: 'short',
   timeZone: 'Asia/Tokyo',
 }).format(new Date(value));
+const coverageLabel = edition.coverage_kind === 'selection-window'
+  ? 'Selection window'
+  : 'Selection snapshot observed at';
 ---
 
 <article class="news-edition" data-news-edition={edition.edition_id}>
@@ -28,6 +31,11 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('ja-JP', {
     {edition.dek && <p class="news-dek">{edition.dek}</p>}
     <dl class="news-edition__meta">
       <div><dt>Published</dt><dd><time datetime={edition.published_at}>{formatDate(edition.published_at)} JST</time></dd></div>
+      {edition.coverage_kind === 'selection-window' ? (
+        <div><dt>{coverageLabel}</dt><dd><time datetime={edition.coverage_start_at}>{formatDate(edition.coverage_start_at)}</time> — <time datetime={edition.coverage_end_at}>{formatDate(edition.coverage_end_at)} JST</time></dd></div>
+      ) : (
+        <div><dt>{coverageLabel}</dt><dd><time datetime={edition.coverage_observed_at}>{formatDate(edition.coverage_observed_at)} JST</time></dd></div>
+      )}
       <div><dt>Signals</dt><dd>{edition.items.length} / finite</dd></div>
     </dl>
   </header>

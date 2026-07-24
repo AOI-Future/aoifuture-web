@@ -19,11 +19,12 @@ const contextModules = import.meta.glob('../../content/news/contexts/*.json', {
 
 const EDITION_KEYS = new Set([
   'schema_version', 'edition_id', 'edition_date', 'generated_at', 'published_at',
+  'coverage_kind', 'coverage_start_at', 'coverage_end_at', 'coverage_observed_at',
   'publication_status', 'corrected_at', 'title', 'dek', 'edition_note', 'items', 'topics',
 ]);
 const SIGNAL_KEYS = new Set([
   'id', 'title', 'source_url', 'source_title', 'source_domain', 'source_kind',
-  'language', 'published_at', 'observed_at', 'context_ids', 'change', 'source_fact',
+  'language', 'published_at', 'observed_at', 'context_ids', 'change', 'source_fact', 'selection_reason',
   'aoi_note', 'caveat', 'topics', 'role', 'verification', 'corrected_at', 'correction_note',
 ]);
 const CHANGE_KEYS = new Set(['kind', 'previous_signal_ids']);
@@ -107,6 +108,7 @@ function validateEdition(value: unknown, index: number): NewsEdition {
     textList(item.context_ids, `${itemPath}.context_ids`);
     textList(item.topics, `${itemPath}.topics`);
     text(item.source_fact, `${itemPath}.source_fact`);
+    text(item.selection_reason, `${itemPath}.selection_reason`);
     text(item.aoi_note, `${itemPath}.aoi_note`);
     text(item.role, `${itemPath}.role`);
     const verification = record(item.verification, `${itemPath}.verification`);
@@ -166,6 +168,21 @@ function validateContext(value: unknown, index: number): NewsContext {
   return context as unknown as NewsContext;
 }
 
+export function coverageChronologyAt(edition: NewsEdition): string {
+  return edition.coverage_kind === 'selection-window' ? edition.coverage_end_at : edition.coverage_observed_at;
+}
+
+export function coverageBranchDetailAt(edition: NewsEdition): string {
+  return edition.coverage_kind === 'selection-window' ? edition.coverage_start_at : edition.coverage_observed_at;
+}
+
+export function compareNewsEditions(a: NewsEdition, b: NewsEdition): number {
+  return Date.parse(coverageChronologyAt(b)) - Date.parse(coverageChronologyAt(a))
+    || Date.parse(coverageBranchDetailAt(b)) - Date.parse(coverageBranchDetailAt(a))
+    || Date.parse(b.published_at) - Date.parse(a.published_at)
+    || b.edition_id.localeCompare(a.edition_id);
+}
+
 export function validateNewsCatalog(
   editionsRaw: unknown[],
   contextsRaw: unknown[],
@@ -175,10 +192,7 @@ export function validateNewsCatalog(
   if (!contract.ok) {
     throw new Error(`AOIFUTURE News public contract validation failed: ${contract.errors.map((entry) => `${entry.code} ${entry.path}: ${entry.message}`).join('; ')}`);
   }
-  const completeEditions = editionsRaw.map(validateEdition).sort((a, b) => (
-    Date.parse(b.published_at) - Date.parse(a.published_at)
-    || b.edition_id.localeCompare(a.edition_id)
-  ));
+  const completeEditions = editionsRaw.map(validateEdition).sort(compareNewsEditions);
   const completeContexts = contextsRaw.map(validateContext).sort((a, b) => a.slug.localeCompare(b.slug));
   const editions = mode === 'production'
     ? completeEditions.filter((edition) => edition.publication_status === 'public')

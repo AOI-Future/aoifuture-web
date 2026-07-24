@@ -9,13 +9,23 @@ const directSources = [
   'https://github.com/advisories/GHSA-8fpg-xm3f-6cx3',
 ];
 const production = process.env.VERCEL_ENV === 'production';
+const firstPreviousId = production ? '2026-07-23-0430' : '2026-07-23-0900';
+const firstPreviousRoute = `/news/${firstPreviousId}/`;
+const secondPreviousId = production ? '2026-07-22-0430' : '2026-07-23-0430';
 
 const newsRoutes = [
   '/news/',
   '/news/2026-07-24/',
+  '/news/2026-07-23-0430/',
+  '/news/2026-07-22-0430/',
+  '/news/2026-07-21-0341/',
   '/news/context/connected-ai-boundaries/',
+  '/news/context/ai-delivery-evidence/',
+  '/news/context/delegated-work-control/',
+  '/news/context/operational-ai-authority/',
   '/news/archive/',
-  ...(!production ? ['/news/2026-07-23/', '/news/context/agent-authority/'] : []),
+  '/news/editorial-policy/',
+  ...(!production ? ['/news/2026-07-23-0900/', '/news/context/agent-authority/'] : []),
 ];
 
 test('News canonicals are singular HTTPS no-www URLs with trailing slashes', async ({ page }) => {
@@ -78,10 +88,10 @@ test('Rolling Edition RSS is valid reviewed-event XML with the correct content t
   expect(parseError).toBeNull();
   expect(xml).toContain('<rss version="2.0"');
   expect(xml).toContain(production ? '<title>AOIFUTURE News Rolling Edition RSS</title>' : 'AOIFUTURE News Rolling Edition RSS — EDITORIAL REVIEW PREVIEW');
-  expect((xml.match(/<item>/g) ?? [])).toHaveLength(production ? 1 : 3);
-  if (!production) expect(xml.indexOf('aoi-news-2026-07-24-r001')).toBeLessThan(xml.indexOf('aoi-news-2026-07-23-r002'));
+  expect((xml.match(/<item>/g) ?? [])).toHaveLength(production ? 4 : 6);
+  expect(xml.indexOf('aoi-news-2026-07-21-0341-r001')).toBeLessThan(xml.indexOf('aoi-news-2026-07-24-r001'));
   expect(xml).toContain('<guid isPermaLink="false">aoi-news-2026-07-24-r001</guid>');
-  if (!production) expect(xml.indexOf('aoi-news-2026-07-23-r002')).toBeLessThan(xml.indexOf('aoi-news-2026-07-23-r001'));
+  if (!production) expect(xml.indexOf('aoi-news-2026-07-23-0900-r002')).toBeLessThan(xml.indexOf('aoi-news-2026-07-23-0900-r001'));
   expect(xml).not.toContain('reviewed_by');
   expect(xml).not.toContain('source_fact');
 });
@@ -138,6 +148,8 @@ test('reviewed Preview Edition is finite, source-first, labeled, and explicitly 
       'source',
       'headline',
       'fact',
+      'selection',
+      'caveat',
       'note',
       'metadata',
       'action',
@@ -145,7 +157,7 @@ test('reviewed Preview Edition is finite, source-first, labeled, and explicitly 
   }
 
   const times = page.locator('time');
-  await expect(times).toHaveCount(12);
+  await expect(times).toHaveCount(13);
   for (const time of await times.all()) {
     await expect(time).toHaveAttribute('datetime', /^(?:\d{4}-\d{2}-\d{2}|\d{4}-\d{2}-\d{2}T)/);
     await expect(time).toContainText('JST');
@@ -170,8 +182,8 @@ test('Active Context renders current view before preserved chronology and links 
     await expect(time).toHaveAttribute('datetime', /T/);
     await expect(time).toContainText('JST');
   }
-  await expect(history.locator('a[href="/news/2026-07-23/#edition-2026-07-23-sig-openai-presence-20260722"]')).toBeVisible();
-  await expect(history.locator('a[href="/news/2026-07-23/#edition-2026-07-23-sig-anthropic-sdk-20260722"]')).toBeVisible();
+  await expect(history.locator('a[href="/news/2026-07-23-0900/#edition-2026-07-23-0900-sig-openai-presence-20260722"]')).toBeVisible();
+  await expect(history.locator('a[href="/news/2026-07-23-0900/#edition-2026-07-23-0900-sig-anthropic-sdk-20260722"]')).toBeVisible();
 });
 
 test('reviewed Connected AI Context links all six supporting Signals to the new Edition', async ({ page }) => {
@@ -198,12 +210,12 @@ test('archive exposes bounded Edition, Context, topic, and source entry points',
     await expect(page.getByRole('heading', { name: label })).toBeVisible();
   }
   const editionTimes = page.locator('section[aria-labelledby="archive-editions"] time');
-  await expect(editionTimes).toHaveCount(production ? 1 : 2);
+  await expect(editionTimes).toHaveCount(production ? 4 : 5);
   await expect(editionTimes.first()).toHaveAttribute('datetime', '2026-07-24');
   await expect(editionTimes.first()).toContainText('JST');
   const retainedSignals = [
-    '/news/2026-07-23/#edition-2026-07-23-sig-openai-presence-20260722',
-    '/news/2026-07-23/#edition-2026-07-23-sig-anthropic-sdk-20260722',
+    '/news/2026-07-23-0900/#edition-2026-07-23-0900-sig-openai-presence-20260722',
+    '/news/2026-07-23-0900/#edition-2026-07-23-0900-sig-anthropic-sdk-20260722',
   ];
   for (const href of production ? [] : retainedSignals) {
     await expect(page.locator(`#archive-topics-list a[href="${href}"]`)).toHaveCount(1);
@@ -215,7 +227,7 @@ test('archive exposes bounded Edition, Context, topic, and source entry points',
 
 test('visible Signal topic navigation reaches its grouped retained retrospective', async ({ page }) => {
   test.skip(production, 'review-only Edition');
-  await page.goto('/news/2026-07-23/');
+  await page.goto('/news/2026-07-23-0900/');
   const topicLinks = page.locator('[data-news-signal] a[href="/news/archive/#topic-agent-operations"]');
   await expect(topicLinks).toHaveCount(2);
 
@@ -227,8 +239,8 @@ test('visible Signal topic navigation reaches its grouped retained retrospective
   await expect(topicTarget).toHaveText('エージェント運用');
   const topicGroup = topicTarget.locator('xpath=..');
   for (const href of [
-    '/news/2026-07-23/#edition-2026-07-23-sig-openai-presence-20260722',
-    '/news/2026-07-23/#edition-2026-07-23-sig-anthropic-sdk-20260722',
+    '/news/2026-07-23-0900/#edition-2026-07-23-0900-sig-openai-presence-20260722',
+    '/news/2026-07-23-0900/#edition-2026-07-23-0900-sig-anthropic-sdk-20260722',
   ]) {
     await expect(topicGroup.locator(`a[href="${href}"]`)).toHaveCount(1);
   }
@@ -242,24 +254,18 @@ test('News remains readable with JavaScript disabled', async ({ browser }) => {
   await expect(page.locator('[data-news-signal]')).toHaveCount(6);
   await expect(page.locator(`a[href="${directSources[0]}"]`)).toBeVisible();
   const historyLink = page.locator('[data-news-history-loader] a');
-  await expect(historyLink).toHaveAttribute('href', production ? '/news/archive/' : '/news/2026-07-23/');
+  await expect(historyLink).toHaveAttribute('href', firstPreviousRoute);
   await context.close();
 });
 
 test('previous Edition appends one exact server Edition with unique IDs, focus, and through history', async ({ page }) => {
   await page.goto('/news/');
   const loader = page.locator('[data-news-history-loader]');
-  if (production) {
-    await expect(loader.locator('[data-news-history-link]')).toHaveCount(0);
-    await expect(loader.getByRole('link', { name: 'Archiveを見る' })).toBeVisible();
-    return;
-  }
-
   await expect(page.locator('[data-news-edition]')).toHaveCount(1);
   await loader.getByRole('link', { name: '前のEditionを読む' }).click();
   await expect(page.locator('[data-news-edition]')).toHaveCount(2);
-  await expect(page).toHaveURL(/\?through=2026-07-23$/);
-  const appendedHeading = page.locator('[data-news-edition="2026-07-23"] h2[data-news-edition-heading]');
+  await expect(page).toHaveURL(new RegExp(`\\?through=${firstPreviousId}$`));
+  const appendedHeading = page.locator(`[data-news-edition="${firstPreviousId}"] h2[data-news-edition-heading]`);
   await expect(appendedHeading).toBeFocused();
   await expect(loader.locator('[data-news-history-status]')).toContainText('追加しました');
   const ids = await page.locator('[id]').evaluateAll((nodes) => nodes.map((node) => node.id));
@@ -284,51 +290,163 @@ test('rolling history controls and appended Edition boundaries remain visible ac
     await expect(historyLink).toHaveCSS('border-top-style', 'solid');
     await expect(historyLink).toHaveCSS('border-top-color', 'rgb(43, 74, 74)');
 
-    if (!production) {
-      await historyLink.click();
-      const appendedEdition = page.locator('[data-news-history] > [data-news-edition="2026-07-23"]');
-      await expect(appendedEdition).toHaveCSS('border-top-width', '1px');
-      await expect(appendedEdition).toHaveCSS('border-top-style', 'solid');
-      await expect(appendedEdition).toHaveCSS('border-top-color', 'rgb(43, 74, 74)');
-    }
+    await historyLink.click();
+    const appendedEdition = page.locator(`[data-news-history] > [data-news-edition="${firstPreviousId}"]`);
+    await expect(appendedEdition).toHaveCSS('border-top-width', '1px');
+    await expect(appendedEdition).toHaveCSS('border-top-style', 'solid');
+    await expect(appendedEdition).toHaveCSS('border-top-color', 'rgb(43, 74, 74)');
   }
 });
 
 test('previous Edition fetch failure appends nothing and keeps the fallback link', async ({ page }) => {
-  test.skip(production, 'no previous public Edition');
-  await page.route('**/news/2026-07-23/', (route) => route.fulfill({ status: 503, contentType: 'text/html', body: 'unavailable' }));
+  await page.route(`**${firstPreviousRoute}`, (route) => route.fulfill({ status: 503, contentType: 'text/html', body: 'unavailable' }));
   await page.goto('/news/');
   const link = page.locator('[data-news-history-link]');
   await link.click();
   await expect(page.locator('[data-news-edition]')).toHaveCount(1);
   await expect(page.locator('[data-news-history-status]')).toContainText('読み込めませんでした');
-  await expect(link).toHaveAttribute('href', '/news/2026-07-23/');
+  await expect(link).toHaveAttribute('href', firstPreviousRoute);
   await expect(link).not.toHaveAttribute('aria-disabled', 'true');
+});
+
+test('rapid double-click activation stays in rolling history and issues one request', async ({ page }) => {
+  let requests = 0;
+  await page.route(`**${firstPreviousRoute}`, async (route) => {
+    requests += 1;
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    await route.continue();
+  });
+  await page.goto('/news/');
+
+  await page.locator('[data-news-history-link]').evaluate((link) => {
+    link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, detail: 1 }));
+    link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, detail: 2 }));
+  });
+
+  await expect(page).toHaveURL(new RegExp(`^http://127\\.0\\.0\\.1:\\d+/news/\\?through=${firstPreviousId}$`));
+  await expect(page.locator('[data-news-edition]')).toHaveCount(2);
+  expect(requests).toBe(1);
+});
+
+test('rapid keyboard activation stays in rolling history and issues one request', async ({ page }) => {
+  let requests = 0;
+  await page.route(`**${firstPreviousRoute}`, async (route) => {
+    requests += 1;
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    await route.continue();
+  });
+  await page.goto('/news/');
+  await page.locator('[data-news-history-link]').focus();
+
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('Enter');
+
+  await expect(page).toHaveURL(new RegExp(`^http://127\\.0\\.0\\.1:\\d+/news/\\?through=${firstPreviousId}$`));
+  await expect(page.locator('[data-news-edition]')).toHaveCount(2);
+  expect(requests).toBe(1);
+});
+
+test('activation during history reconciliation is handled without native navigation', async ({ page }) => {
+  let firstEditionRequests = 0;
+  await page.route(`**${firstPreviousRoute}`, async (route) => {
+    firstEditionRequests += 1;
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    await route.continue();
+  });
+  await page.goto(`/news/?through=${secondPreviousId}`, { waitUntil: 'domcontentloaded' });
+  await expect.poll(() => firstEditionRequests).toBe(1);
+
+  await page.locator('[data-news-history-link]').dispatchEvent('click');
+
+  await expect(page).toHaveURL(new RegExp(`/news/\\?through=${secondPreviousId}$`));
+  await expect(page.locator('[data-news-edition]')).toHaveCount(3);
+  expect(firstEditionRequests).toBe(1);
+});
+
+test('editorial policy is discoverable and states the selection boundaries', async ({ page }) => {
+  await page.goto('/news/editorial-policy/');
+  for (const heading of ['選ぶもの', '選ばないもの', '出典の優先順位', '不確実性と訂正', 'スポンサーと利害関係']) {
+    await expect(page.getByRole('heading', { name: heading })).toBeVisible();
+  }
+  await expect(page.locator('main')).toContainText('人気');
+  await expect(page.locator('main')).toContainText('掲載料');
+  await page.goto('/news/');
+  await expect(page.locator('.news-nav a[href="/news/editorial-policy/"]')).toBeVisible();
+  await expect(page.locator('[data-news-signal] .news-policy-link')).toHaveCount(6);
+});
+
+test('Signal cards have defined boundaries, semantic regions, and source-first order', async ({ page }) => {
+  for (const width of [390, 768, 1024, 1280, 1440, 1728]) {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.goto('/news/');
+    const metrics = await page.locator('[data-news-signal]').first().evaluate((node) => {
+      const style = getComputedStyle(node);
+      return {
+        background: style.backgroundColor,
+        borderWidth: style.borderTopWidth,
+        borderStyle: style.borderTopStyle,
+        borderColor: style.borderTopColor,
+        paddingInline: Number.parseFloat(style.paddingInlineStart),
+        paddingBlock: Number.parseFloat(style.paddingBlockStart),
+      };
+    });
+    expect(metrics.background).not.toBe('rgba(0, 0, 0, 0)');
+    expect(metrics.borderWidth).toBe('1px');
+    expect(metrics.borderStyle).toBe('solid');
+    expect(metrics.borderColor).not.toBe('rgb(0, 0, 0)');
+    expect(metrics.paddingInline).toBeGreaterThanOrEqual(20);
+    expect(metrics.paddingBlock).toBeGreaterThanOrEqual(20);
+    await expect(page.locator('[data-news-signal]').first().locator('[data-news-order="fact"], [data-news-order="selection"], [data-news-order="caveat"], [data-news-order="note"], [data-news-order="metadata"]')).toHaveCount(5);
+  }
+});
+
+test('scroll-triggered history waits for trusted movement and appends one Edition without focus steal', async ({ page }) => {
+  const editionRequests: string[] = [];
+  page.on('request', (request) => {
+    if (/\/news\/\d{4}-\d{2}-\d{2}(?:-\d{4})?\/$/.test(new URL(request.url()).pathname)) editionRequests.push(request.url());
+  });
+  await page.goto('/news/');
+  await page.waitForTimeout(250);
+  await expect(page.locator('[data-news-edition]')).toHaveCount(1);
+  expect(editionRequests).toEqual([]);
+
+  await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
+  await page.waitForTimeout(250);
+  await expect(page.locator('[data-news-edition]')).toHaveCount(1);
+
+  await page.evaluate(() => scrollTo(0, 0));
+  await page.keyboard.press('End');
+  await expect(page.locator('[data-news-edition]')).toHaveCount(2);
+  expect(editionRequests).toHaveLength(1);
+  await expect(page).toHaveURL(new RegExp(`\\?through=${firstPreviousId}$`));
+  await expect(page.locator(`[data-news-edition="${firstPreviousId}"] h2[data-news-edition-heading]`)).not.toBeFocused();
+  await page.waitForTimeout(300);
+  expect(editionRequests).toHaveLength(1);
 });
 
 test('production omits review-only News routes, copy, feed events, and loader target', async ({ page, request }) => {
   test.skip(!production, 'production-only boundary');
-  expect((await request.get('/news/2026-07-23/')).status()).toBe(404);
+  expect((await request.get('/news/2026-07-23-0900/')).status()).toBe(404);
   expect((await request.get('/news/context/agent-authority/')).status()).toBe(404);
   await page.goto('/news/');
   await expect(page.getByText('ROLLING EDITION', { exact: true })).toBeVisible();
   await expect(page.getByText(/PREVIEW|NON-PRODUCTION|sample/i)).toHaveCount(0);
-  await expect(page.locator('[data-news-history-link]')).toHaveCount(0);
+  await expect(page.locator('[data-news-history-link]')).toHaveAttribute('data-target-edition', '2026-07-23-0430');
   const feed = await (await request.get('/news/feed.xml')).text();
-  expect(feed).not.toContain('2026-07-23');
+  expect(feed).not.toContain('2026-07-23-0900');
   expect(feed).not.toContain('NON-PRODUCTION SAMPLE');
 });
 
 test('Edition density is responsive across phone, tablet, and two-column desktop widths', async ({ page }) => {
   const expectations = [
-    { width: 390, height: 844, maximumPageHeight: 7500, columns: 1, rows: 6, maximumH1: 30, minimumSignalCopy: 15, minimumSignalHeading: 21, maximumSignalHeading: 22 },
+    { width: 390, height: 844, maximumPageHeight: 8100, columns: 1, rows: 6, maximumH1: 30, minimumSignalCopy: 15, minimumSignalHeading: 21, maximumSignalHeading: 22 },
     { width: 768, height: 1024, maximumPageHeight: 5200, columns: 2, rows: 3, maximumH1: 48, minimumSignalCopy: 14, minimumSignalHeading: 24, maximumSignalHeading: 25 },
     { width: 1024, height: 1366, maximumPageHeight: 4600, columns: 2, rows: 3, maximumH1: 48, minimumSignalCopy: 14, minimumSignalHeading: 24, maximumSignalHeading: 25 },
     { width: 1100, height: 1000, maximumPageHeight: 4300, columns: 2, rows: 3, maximumH1: 48, minimumSignalCopy: 14, minimumSignalHeading: 24, maximumSignalHeading: 25 },
     { width: 1101, height: 1000, maximumPageHeight: 5000, columns: 2, rows: 3, maximumH1: 68, minimumSignalCopy: 16, minimumSignalHeading: 28, maximumSignalHeading: 28 },
     { width: 1280, height: 1000, maximumPageHeight: 4600, columns: 2, rows: 3, maximumH1: 68, minimumSignalCopy: 16, minimumSignalHeading: 28, maximumSignalHeading: 28 },
-    { width: 1440, height: 1000, maximumPageHeight: 4300, columns: 2, rows: 3, maximumH1: 68, minimumSignalCopy: 16, minimumSignalHeading: 28, maximumSignalHeading: 28 },
-    { width: 1728, height: 1000, maximumPageHeight: 4100, columns: 2, rows: 3, maximumH1: 68, minimumSignalCopy: 16, minimumSignalHeading: 28, maximumSignalHeading: 28 },
+    { width: 1440, height: 1000, maximumPageHeight: 4600, columns: 2, rows: 3, maximumH1: 68, minimumSignalCopy: 16, minimumSignalHeading: 28, maximumSignalHeading: 28 },
+    { width: 1728, height: 1000, maximumPageHeight: 4600, columns: 2, rows: 3, maximumH1: 68, minimumSignalCopy: 16, minimumSignalHeading: 28, maximumSignalHeading: 28 },
   ];
 
   for (const expectation of expectations) {

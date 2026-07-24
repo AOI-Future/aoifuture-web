@@ -1,0 +1,19 @@
+[
+  {
+    "schema_version": "aoi.news.edition-event.v1",
+    "event_id": "aoi-news-2026-07-21-0341-r001",
+    "edition_id": "2026-07-21-0341",
+    "edition_date": "2026-07-21",
+    "revision": 1,
+    "event_kind": "edition-published",
+    "title": "AIへ仕事を渡す、その経路をどう止めるか",
+    "summary": "3件のSignalを公開Editionに掲載した。",
+    "published_at": "2026-07-25T06:12:29+09:00",
+    "edition_url": "https://aoifuture.com/news/2026-07-21-0341/",
+    "changed_signal_ids": [
+      "sig-jira-delegation-20260720",
+      "sig-openai-long-horizon-safety-20260720",
+      "sig-nvidia-siggraph-agentic-tools-20260720"
+    ]
+  }
+]

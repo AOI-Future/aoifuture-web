@@ -8,9 +8,9 @@ import {
 } from '../scripts/news-contract/rolling-feed.mjs';
 
 const readJson = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url), 'utf8'));
-const edition = readJson('../src/content/news/editions/2026-07-23.json');
+const edition = readJson('../src/content/news/editions/2026-07-23-0900.json');
 const context = readJson('../src/content/news/contexts/agent-authority.json');
-const events = readJson('../src/content/news/events/2026-07-23.json');
+const events = readJson('../src/content/news/events/2026-07-23-0900.json');
 const reviewedEdition = readJson('../src/content/news/editions/2026-07-24.json');
 const reviewedEvents = readJson('../src/content/news/events/2026-07-24.json');
 const clone = (value) => structuredClone(value);
@@ -84,7 +84,7 @@ describe('Rolling Edition public revision-event contract', () => {
     const candidate = clone(events);
     candidate.push({
       ...candidate[1],
-      event_id: 'aoi-news-2026-07-23-r003',
+      event_id: 'aoi-news-2026-07-23-0900-r003',
       revision: 3,
       event_kind: 'signal-corrected',
       title: 'NON-PRODUCTION SAMPLE: 公開訂正イベント',
@@ -100,7 +100,7 @@ describe('Rolling Edition public revision-event contract', () => {
     const candidateEvents = clone(events);
     candidateEvents.push({
       ...candidateEvents[1],
-      event_id: 'aoi-news-2026-07-23-r003',
+      event_id: 'aoi-news-2026-07-23-0900-r003',
       revision: 3,
       event_kind: 'signal-source-unavailable',
       title: 'NON-PRODUCTION SAMPLE: 公開ソース確認不能イベント',
@@ -115,7 +115,7 @@ describe('Rolling Edition public revision-event contract', () => {
     const candidateEvents = clone(events);
     candidateEvents.push({
       ...candidateEvents[1],
-      event_id: 'aoi-news-2026-07-23-r003',
+      event_id: 'aoi-news-2026-07-23-0900-r003',
       revision: 3,
       event_kind: 'signal-source-unavailable',
       published_at: '2026-07-23T09:10:00+09:00',
@@ -293,7 +293,7 @@ describe('deterministic Rolling Edition RSS', () => {
     const xml = renderRollingFeed(allEvents, [edition, reviewedEdition], { sample: true });
     expect(xml).toContain('AOIFUTURE News Rolling Edition RSS — EDITORIAL REVIEW PREVIEW');
     expect(xml).toContain('<guid isPermaLink="false">aoi-news-2026-07-24-r001</guid>');
-    expect(xml.indexOf('aoi-news-2026-07-24-r001')).toBeLessThan(xml.indexOf('aoi-news-2026-07-23-r002'));
+    expect(xml.indexOf('aoi-news-2026-07-24-r001')).toBeLessThan(xml.indexOf('aoi-news-2026-07-23-0900-r002'));
     expect((xml.match(/<item>/g) ?? [])).toHaveLength(3);
   });
 

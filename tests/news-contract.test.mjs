@@ -25,6 +25,7 @@ const item = (id, url, overrides = {}) => ({
   observed_at: stamp1,
   context_ids: ['ctx-agent-authority'],
   source_fact: '公開情報に記載された変更点を確認した。',
+  selection_reason: '運用境界を一次情報から具体的に確認できるため。',
   aoi_note: '権限境界と検証方法を先に確認したい。',
   topics: ['agent-operations'],
   role: 'brief',
@@ -36,6 +37,8 @@ const edition = () => ({
   schema_version: 'aoi.news.edition.v1',
   edition_id: '2026-07-23',
   edition_date: '2026-07-23',
+  coverage_kind: 'selection-snapshot',
+  coverage_observed_at: '2026-07-23T04:30:00+09:00',
   publication_status: 'review-only',
   generated_at: stamp2,
   published_at: stamp2,
@@ -122,6 +125,23 @@ const expectInvalid = (bundle, code) => {
 };
 
 describe('AOIFUTURE News publication contract', () => {
+  it('requires one evidence-bounded coverage branch and a public selection reason', () => {
+    expect(validatePublicationBundle(validBundle())).toEqual({ ok: true, errors: [] });
+
+    const missingKind = validBundle();
+    delete missingKind.edition.coverage_kind;
+    expectInvalid(missingKind, 'coverage_kind');
+
+    const crossBranch = validBundle();
+    crossBranch.edition.coverage_start_at = stamp1;
+    crossBranch.edition.coverage_end_at = stamp2;
+    expectInvalid(crossBranch, 'coverage_cross_branch_field');
+
+    const missingReason = validBundle();
+    delete missingReason.edition.items[0].selection_reason;
+    expectInvalid(missingReason, 'schema');
+  });
+
   it('accepts timestamped Edition identity while enforcing its calendar prefix', () => {
     const bundle = validBundle();
     bundle.edition.edition_id = '2026-07-23-1530';
@@ -357,7 +377,7 @@ describe('deterministic import normalization', () => {
     const content = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url), 'utf8'));
     expect(content('../src/content/news/editions/2026-07-24.json').publication_status).toBe('public');
     expect(content('../src/content/news/contexts/connected-ai-boundaries.json').publication_status).toBe('public');
-    expect(content('../src/content/news/editions/2026-07-23.json').publication_status).toBe('review-only');
+    expect(content('../src/content/news/editions/2026-07-23-0900.json').publication_status).toBe('review-only');
     expect(content('../src/content/news/contexts/agent-authority.json').publication_status).toBe('review-only');
   });
 

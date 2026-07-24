@@ -1,0 +1,32 @@
+{
+  "schema_version": "aoi.news.context.v1",
+  "id": "ctx-operational-ai-authority",
+  "slug": "operational-ai-authority",
+  "publication_status": "public",
+  "title": "Operational AI Authority",
+  "current_view": "AIを業務や研究へ組み込む際は、会話できる範囲ではなく、到達できるツール、資格情報、操作、変更履歴を基準に権限を設計する必要がある。",
+  "updated_at": "2026-07-25T06:12:29+09:00",
+  "operator_context": {
+    "authority": "利用者、エージェント、ツール、資格情報の権限を別々に確認する。",
+    "control": "承認、人間への引き継ぎ、停止、再評価の条件を記録する。",
+    "evidence": "ベンダー実績、研究結果、助成額、セキュリティ勧告を同じ確度で扱わない。"
+  },
+  "supporting_signal_ids": [
+    "sig-openai-presence-public-20260722",
+    "sig-google-quantum-rl-control-20260722",
+    "sig-n8n-agent-viewer-escalation-20260708"
+  ],
+  "revisions": [
+    {
+      "id": "rev-operational-ai-authority-001",
+      "changed_at": "2026-07-25T06:12:29+09:00",
+      "change_reason": "このEditionの公開情報から、運用判断に必要な境界を初期整理した。",
+      "resulting_view": "AIを業務や研究へ組み込む際は、会話できる範囲ではなく、到達できるツール、資格情報、操作、変更履歴を基準に権限を設計する必要がある。",
+      "evidence_signal_ids": [
+        "sig-openai-presence-public-20260722",
+        "sig-google-quantum-rl-control-20260722",
+        "sig-n8n-agent-viewer-escalation-20260708"
+      ]
+    }
+  ]
+}

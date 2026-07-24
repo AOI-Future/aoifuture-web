@@ -1,0 +1,33 @@
+---
+import NewsLayout from '../../layouts/NewsLayout.astro';
+import { buildEditorialPolicyMetadata } from '../../lib/news/metadata.mjs';
+import { resolveNewsPublicationMode } from '../../lib/news/publication-mode.mjs';
+
+export const prerender = true;
+const mode = resolveNewsPublicationMode(process.env.VERCEL_ENV);
+const title = 'AOIFUTURE News 編集方針';
+const description = '何を選び、何を見送り、確度の違う情報をどう扱うか。AOIFUTURE Newsの判断基準と訂正方法を公開します。';
+---
+
+<NewsLayout
+  title={`${title} | AOIFUTURE News`}
+  description={description}
+  canonical="https://aoifuture.com/news/editorial-policy/"
+  jsonLd={buildEditorialPolicyMetadata()}
+  mode={mode}
+>
+  <article class="news-policy">
+    <header class="news-archive-header">
+      <p class="news-kicker">EDITORIAL POLICY</p>
+      <h1>{title}</h1>
+      <p class="news-dek">{description}</p>
+    </header>
+
+    <section><h2>選ぶもの</h2><p>AOIFUTURE Newsは、AIをつくる人、導入する人、運用する人の判断を変える具体的な変化を選びます。新しい名称や大きな数字だけではなく、権限、停止、検証、費用、移行、安全性など、現場で確かめるべき条件が見えることを重視します。</p><p>掲載には、確認可能な出典があり、既出のSignalとは異なる事実があり、読者が次の確認や行動へ移れることを求めます。件数をそろえるための追加はしません。</p></section>
+    <section><h2>選ばないもの</h2><p>同じURLや実質的に同じ主張の重複、出所を確認できない噂、根拠のない性能評価、変化を確かめられない宣伝だけの記事は掲載しません。強い見出しでも、一次情報へ戻れないものは見送ります。</p><p>その日の候補が少ない場合も、弱い項目で枠を埋めません。AOIFUTURE Newsは、世の中のすべての出来事を一覧にするサービスではありません。</p></section>
+    <section><h2>出典の優先順位</h2><p>公式発表、製品ドキュメント、リリースノート、公開リポジトリ、論文、セキュリティ勧告、規制当局の資料など、変化を直接確認できる出典を優先します。次に、当事者へ取材した原報道を使います。分析や解説を参照する場合は、その立場と出典を明記し、確認済みの事実と筆者の見方を分けます。</p><p>公式発表も無条件には信用しません。ベンダー自身の測定、顧客事例、プレビュー、限定提供、未検証のベンチマークは、その範囲が伝わる留保を添えます。</p></section>
+    <section><h2>不確実性と訂正</h2><p>公開時点で確認できないことは、確認できないまま書きます。提供地域、対象プラン、実験条件、影響範囲、独立評価の有無など、結論を変えうる条件はSignalの近くに示します。</p><p>事実の誤りや重要な更新が判明した場合は、本文を黙って置き換えません。訂正内容と時刻を表示し、必要に応じてSignalを更新、後継、または取り下げとして扱い、変更履歴を残します。</p></section>
+    <section><h2>有限の編集物です</h2><p>各Editionは、定めた観測範囲から編集者が選んだ有限の集合です。掲載されていない出来事が重要でないという意味ではなく、掲載順も人気、閲覧数、企業規模、SNSでの反応を順位づけしたものではありません。</p><p>読者ごとの行動履歴や属性を使って掲載内容を変えることはしません。</p></section>
+    <section><h2>スポンサーと利害関係</h2><p>スポンサー料、広告出稿、提携、製品提供を理由にSignalを選ぶことはありません。金銭、製品、アクセス提供などの利害関係がある対象を扱う場合は、その関係を記事内で明示します。広告や協賛コンテンツを掲載する場合は、通常の編集選定と見分けられる表示を付けます。掲載料を受け取って通常のSignalに見せることはしません。</p></section>
+  </article>
+</NewsLayout>

@@ -40,13 +40,20 @@ const sourceLanguage = signal.language === 'other' ? 'und' : signal.language;
   <section class="news-reading-note" aria-labelledby={`${id}-fact`} data-news-order="fact">
     <h4 id={`${id}-fact`}>Source fact</h4>
     <p>{signal.source_fact}</p>
-    {signal.caveat && (
-      <aside class="news-caveat" aria-labelledby={`${id}-caveat`}>
-        <h4 id={`${id}-caveat`}>Caveat</h4>
-        <p>{signal.caveat}</p>
-      </aside>
-    )}
   </section>
+
+  <section class="news-reading-note news-selection-reason" aria-labelledby={`${id}-selection`} data-news-order="selection">
+    <h4 id={`${id}-selection`}>Why selected</h4>
+    <p>{signal.selection_reason}</p>
+    <a class="news-policy-link" href="/news/editorial-policy/">選定方針</a>
+  </section>
+
+  {signal.caveat && (
+    <aside class="news-reading-note news-caveat" aria-labelledby={`${id}-caveat`} data-news-order="caveat">
+      <h4 id={`${id}-caveat`}>Caveat</h4>
+      <p>{signal.caveat}</p>
+    </aside>
+  )}
 
   <section class="news-reading-note" aria-labelledby={`${id}-note`} data-news-order="note">
     <h4 id={`${id}-note`}>AOI note</h4>

@@ -9,15 +9,19 @@ import { chromium } from '@playwright/test';
 const repoRoot = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const port = Number(process.env.NEWS_EVIDENCE_PORT ?? 4332);
 const baseURL = process.env.NEWS_EVIDENCE_BASE_URL ?? `http://127.0.0.1:${port}`;
-const artifactRoot = resolve(process.env.NEWS_EVIDENCE_ARTIFACT_DIR ?? join(tmpdir(), 'aoifuture-news-phase-3-21cf8b0'));
-const metricsPath = join(repoRoot, 'docs/evidence/news-phase-3-layout-metrics.json');
-const reportPath = join(repoRoot, 'docs/evidence/news-phase-3-layout-evidence.md');
+const artifactRoot = resolve(process.env.NEWS_EVIDENCE_ROOT ?? process.env.NEWS_EVIDENCE_ARTIFACT_DIR ?? join(tmpdir(), 'aoifuture-news-reading-depth'));
+const metricsPath = join(artifactRoot, 'layout-metrics.json');
+const reportPath = join(artifactRoot, 'layout-evidence.md');
 const chromePath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const ownsServer = !process.env.NEWS_EVIDENCE_BASE_URL;
 
 const viewports = [
   { name: 'desktop', width: 1440, height: 1000 },
   { name: 'mobile-390', width: 390, height: 844 },
+  { name: 'tablet-768', width: 768, height: 1024 },
+  { name: 'tablet-1024', width: 1024, height: 1366 },
+  { name: 'desktop-1280', width: 1280, height: 1000 },
+  { name: 'desktop-1728', width: 1728, height: 1000 },
 ];
 const densityScenarios = [2, 6, 9, 12].flatMap((signalCount) =>
   viewports.map((viewport) => ({ kind: 'density', variant: 'none', signalCount, viewport })),
@@ -117,7 +121,7 @@ async function prepareComposition(page, scenario) {
     const main = document.querySelector('.news-main');
     const list = document.querySelector('.news-signal-list');
     const originals = Array.from(list?.querySelectorAll('[data-news-signal]') ?? []);
-    if (!main || !list || originals.length !== 2) throw new Error('Harness requires exactly the two validated public sample cards');
+    if (!main || !list || originals.length < 2) throw new Error('Harness requires at least two validated public cards');
 
     const evidenceLabel = document.createElement('p');
     evidenceLabel.className = 'news-layout-evidence-label';
@@ -290,7 +294,7 @@ let browser;
 try {
   rmSync(artifactRoot, { recursive: true, force: true });
   mkdirSync(artifactRoot, { recursive: true });
-  mkdirSync(resolve(repoRoot, 'docs/evidence'), { recursive: true });
+
   server = startServer();
   await waitForServer(baseURL);
 
@@ -347,7 +351,7 @@ try {
     .sort();
   const expectedDetourCounts = { none: 0, compact: 1, 'full-width': 1, overused: 4 };
   const acceptanceFailures = [];
-  if (results.length !== 16) acceptanceFailures.push(`expected 16 scenarios, received ${results.length}`);
+  if (results.length !== 48) acceptanceFailures.push(`expected 48 scenarios, received ${results.length}`);
   for (const result of results) {
     if (result.metrics.horizontalOverflow) acceptanceFailures.push(`${result.id}: horizontal overflow`);
     if (!result.metrics.finiteEdition) acceptanceFailures.push(`${result.id}: not a finite Edition`);
@@ -369,15 +373,16 @@ try {
 
   const generatedNewsHtmlFiles = [
     'news/index.html',
-    'news/2026-07-23/index.html',
-    'news/context/agent-authority/index.html',
+    'news/2026-07-24/index.html',
+    'news/2026-07-23-0430/index.html',
+    'news/editorial-policy/index.html',
     'news/archive/index.html',
   ];
   const payload = {
     schemaVersion: 1,
     evidenceOnly: true,
     publishable: false,
-    sourcePolicy: 'Only the two existing validated public sample cards are duplicated.',
+    sourcePolicy: 'Only existing contract-validated public cards are duplicated for layout measurement.',
     artifactRoot,
     fontCost: {
       baseline: { localAssetCount: 0, generatedNewsHtmlBytes: 22386, externalOrigins: ['fonts.googleapis.com', 'fonts.gstatic.com'] },
@@ -398,8 +403,9 @@ try {
     },
     canonicals: [
       'https://aoifuture.com/news/',
-      'https://aoifuture.com/news/2026-07-23/',
-      'https://aoifuture.com/news/context/agent-authority/',
+      'https://aoifuture.com/news/2026-07-24/',
+      'https://aoifuture.com/news/2026-07-23-0430/',
+      'https://aoifuture.com/news/editorial-policy/',
       'https://aoifuture.com/news/archive/',
     ],
     scenarios: results,
