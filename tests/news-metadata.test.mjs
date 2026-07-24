@@ -10,14 +10,18 @@ import {
 const readJson = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url), 'utf8'));
 const edition = readJson('../src/content/news/editions/2026-07-23.json');
 const context = readJson('../src/content/news/contexts/agent-authority.json');
+const events = readJson('../src/content/news/events/2026-07-23.json');
 const catalog = { editions: [edition], contexts: [context] };
 const serializedTypes = (value) => JSON.stringify(value);
 
 describe('AOIFUTURE News M2 public metadata', () => {
   it('describes the dated Edition as CollectionPage with exact-anchor ItemList entries', () => {
-    const metadata = buildEditionMetadata(edition);
+    const latestReviewedAt = events.at(-1).published_at;
+    const metadata = buildEditionMetadata(edition, latestReviewedAt);
     expect(metadata['@type']).toBe('CollectionPage');
     expect(metadata.url).toBe('https://aoifuture.com/news/2026-07-23/');
+    expect(metadata.dateModified).toBe(latestReviewedAt);
+    expect(metadata.dateModified).not.toBe(edition.generated_at);
     expect(metadata.mainEntity).toMatchObject({ '@type': 'ItemList', numberOfItems: 2 });
     expect(metadata.mainEntity.itemListElement).toEqual(edition.items.map((signal, index) => ({
       '@type': 'ListItem',
@@ -55,7 +59,7 @@ describe('AOIFUTURE News M2 public metadata', () => {
 
   it('uses public allowlisted values and excludes private metadata fields', () => {
     const metadata = serializedTypes([
-      buildEditionMetadata(edition),
+      buildEditionMetadata(edition, events.at(-1).published_at),
       buildIndexMetadata(catalog),
       buildArchiveMetadata(catalog),
       buildContextMetadata(context, catalog),
@@ -64,5 +68,9 @@ describe('AOIFUTURE News M2 public metadata', () => {
       expect(metadata).not.toContain(key);
     }
     expect(metadata).not.toContain('www.aoifuture.com');
+  });
+
+  it('fails closed when dated Edition metadata lacks a validated reviewed-event timestamp', () => {
+    expect(() => buildEditionMetadata(edition)).toThrow(/reviewed revision event/i);
   });
 });

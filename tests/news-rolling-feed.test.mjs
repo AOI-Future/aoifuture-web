@@ -92,12 +92,19 @@ describe('model-free meaningful-change proposal classifier', () => {
   });
 
   it.each([
-    ['public Source fact correction', (candidate) => { candidate.items[0].source_fact += ' 公開訂正。'; }, 'signal-corrected'],
-    ['public Caveat correction', (candidate) => { candidate.items[0].caveat += ' 公開条件を追記。'; }, 'signal-corrected'],
-    ['public correction note', (candidate) => {
+    ['public Source fact correction', (candidate) => {
+      candidate.items[0].source_fact += ' 公開訂正。';
       candidate.items[0].change = { kind: 'corrected' };
       candidate.items[0].corrected_at = '2026-07-23T11:00:00+09:00';
       candidate.items[0].correction_note = '公開訂正内容。';
+      candidate.corrected_at = candidate.items[0].corrected_at;
+    }, 'signal-corrected'],
+    ['public Caveat correction', (candidate) => {
+      candidate.items[0].caveat += ' 公開条件を追記。';
+      candidate.items[0].change = { kind: 'corrected' };
+      candidate.items[0].corrected_at = '2026-07-23T11:00:00+09:00';
+      candidate.items[0].correction_note = '公開Caveatの訂正内容。';
+      candidate.corrected_at = candidate.items[0].corrected_at;
     }, 'signal-corrected'],
     ['withdrawal', (candidate) => {
       candidate.items[1].change = { kind: 'withdrawn' };
@@ -140,11 +147,69 @@ describe('model-free meaningful-change proposal classifier', () => {
     expect(() => classifyEditionChange(previous, edition, [context])).toThrow(/unsupported public Signal change/i);
   });
 
+  it.each([
+    ['bare Source fact mutation', (candidate) => { candidate.items[0].source_fact += ' サイレント変更。'; }],
+    ['bare Caveat mutation', (candidate) => { candidate.items[0].caveat += ' サイレント変更。'; }],
+    ['missing Edition corrected_at', (candidate) => {
+      candidate.items[0].source_fact += ' 公開訂正。';
+      candidate.items[0].change = { kind: 'corrected' };
+      candidate.items[0].corrected_at = '2026-07-23T11:00:00+09:00';
+      candidate.items[0].correction_note = '公開訂正内容。';
+    }],
+    ['mismatched Edition corrected_at', (candidate) => {
+      candidate.items[0].source_fact += ' 公開訂正。';
+      candidate.items[0].change = { kind: 'corrected' };
+      candidate.items[0].corrected_at = '2026-07-23T11:00:00+09:00';
+      candidate.items[0].correction_note = '公開訂正内容。';
+      candidate.corrected_at = '2026-07-23T11:01:00+09:00';
+    }],
+    ['non-advancing correction timestamp', (candidate) => {
+      candidate.items[0].source_fact += ' 公開訂正。';
+      candidate.items[0].change = { kind: 'corrected' };
+      candidate.items[0].corrected_at = candidate.published_at;
+      candidate.items[0].correction_note = '公開訂正内容。';
+      candidate.corrected_at = candidate.items[0].corrected_at;
+    }],
+    ['Edition corrected_at without a Signal correction', (candidate) => {
+      candidate.corrected_at = '2026-07-23T11:00:00+09:00';
+    }],
+  ])('fails closed on %s', (_name, mutate) => {
+    const candidate = clone(edition);
+    mutate(candidate);
+    expect(() => classifyEditionChange(edition, candidate, [context])).toThrow(/correction|unsupported Edition-level/i);
+  });
+
+  it('requires repeated correction timestamps and Edition corrected_at to advance together', () => {
+    const previous = clone(edition);
+    previous.items[0].change = { kind: 'corrected' };
+    previous.items[0].corrected_at = '2026-07-23T10:00:00+09:00';
+    previous.items[0].correction_note = '最初の公開訂正。';
+    previous.corrected_at = previous.items[0].corrected_at;
+
+    const candidate = clone(previous);
+    candidate.items[0].source_fact += ' 二回目の公開訂正。';
+    candidate.items[0].corrected_at = '2026-07-23T11:00:00+09:00';
+    candidate.items[0].correction_note = '二回目の公開訂正。';
+    candidate.corrected_at = candidate.items[0].corrected_at;
+    expect(classifyEditionChange(previous, candidate, [context])).toMatchObject({
+      event_kind: 'signal-corrected',
+      changed_signal_ids: [candidate.items[0].id],
+    });
+
+    candidate.items[0].corrected_at = previous.items[0].corrected_at;
+    candidate.corrected_at = previous.corrected_at;
+    expect(() => classifyEditionChange(previous, candidate, [context])).toThrow(/timestamp must advance/i);
+  });
+
   it('requires separate reviewed revisions for simultaneous event classes', () => {
     const previous = clone(edition);
     previous.items = previous.items.slice(0, 1);
     const candidate = clone(edition);
     candidate.items[0].source_fact += ' 公開訂正。';
+    candidate.items[0].change = { kind: 'corrected' };
+    candidate.items[0].corrected_at = '2026-07-23T11:00:00+09:00';
+    candidate.items[0].correction_note = '公開訂正内容。';
+    candidate.corrected_at = candidate.items[0].corrected_at;
     expect(() => classifyEditionChange(previous, candidate, [context])).toThrow(/separate reviewed revisions/i);
   });
 });

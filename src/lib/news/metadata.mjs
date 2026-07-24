@@ -15,14 +15,17 @@ const itemList = (entries) => ({
   })),
 });
 
-export function buildEditionMetadata(edition) {
+export function buildEditionMetadata(edition, latestReviewedAt) {
+  if (typeof latestReviewedAt !== 'string' || Number.isNaN(Date.parse(latestReviewedAt))) {
+    throw new Error('Dated Edition metadata requires a validated reviewed revision event timestamp');
+  }
   const url = `${ORIGIN}/news/${edition.edition_date}/`;
   return schema('CollectionPage', {
     name: edition.title,
     description: edition.dek ?? edition.title,
     url,
     datePublished: edition.published_at,
-    ...(edition.corrected_at ? { dateModified: edition.corrected_at } : {}),
+    dateModified: latestReviewedAt,
     mainEntity: itemList(edition.items.map((signal) => ({
       name: signal.title,
       url: `${url}#${signal.id}`,

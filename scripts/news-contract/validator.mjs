@@ -166,6 +166,7 @@ function checkEdition(edition, path, errors) {
   const topicIds = new Set(edition.topics.map((topic) => topic.id));
   if (topicIds.size !== edition.topics.length) errors.push(error('duplicate_topic_id', `${path}/topics`, 'topic IDs must be unique'));
 
+  const correctionTimes = [];
   edition.items.forEach((item, index) => {
     const itemPath = `${path}/items/${index}`;
     checkPublicUrl(item.source_url, `${itemPath}/source_url`, errors);
@@ -190,6 +191,12 @@ function checkEdition(edition, path, errors) {
     if (corrected && (!item.corrected_at || !item.correction_note || item.change?.kind !== 'corrected')) {
       errors.push(error('correction_semantics', itemPath, 'material corrections require corrected_at, correction_note, and corrected change state'));
     }
+    if (item.change?.kind === 'corrected' && item.corrected_at) {
+      correctionTimes.push(item.corrected_at);
+      if (Date.parse(item.corrected_at) <= Date.parse(edition.published_at)) {
+        errors.push(error('correction_time_order', `${itemPath}/corrected_at`, 'Signal corrected_at must be later than Edition published_at'));
+      }
+    }
     for (const topicId of item.topics) {
       if (!topicIds.has(topicId)) errors.push(error('unresolved_topic_reference', `${itemPath}/topics`, `unknown topic ${topicId}`));
     }
@@ -198,6 +205,14 @@ function checkEdition(edition, path, errors) {
       errors.push(error('invalid_lineage_kind', `${itemPath}/change/previous_signal_ids`, 'lineage is limited to correction, supersession, or withdrawal'));
     }
   });
+  if (correctionTimes.length) {
+    const latestCorrection = correctionTimes.sort((left, right) => Date.parse(left) - Date.parse(right)).at(-1);
+    if (!edition.corrected_at || edition.corrected_at !== latestCorrection) {
+      errors.push(error('edition_correction_coherence', `${path}/corrected_at`, 'Edition corrected_at must equal the latest corrected Signal timestamp'));
+    }
+  } else if (edition.corrected_at) {
+    errors.push(error('edition_correction_coherence', `${path}/corrected_at`, 'Edition corrected_at requires a corrected public Signal'));
+  }
 }
 
 export function validateEditionSnapshot(edition, path = '/edition') {

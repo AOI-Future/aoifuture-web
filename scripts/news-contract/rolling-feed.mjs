@@ -139,6 +139,11 @@ export function classifyEditionChange(previous, candidate, contexts = []) {
   const withdrawn = [];
   for (const [id, before] of previousById) {
     const after = candidateById.get(id);
+    const publicTextChanged = before.source_fact !== after.source_fact
+      || (before.caveat ?? null) !== (after.caveat ?? null);
+    const correctionStateChanged = (before.change?.kind ?? null) !== (after.change?.kind ?? null)
+      || (before.corrected_at ?? null) !== (after.corrected_at ?? null)
+      || (before.correction_note ?? null) !== (after.correction_note ?? null);
     const becameHistorical = before.verification.status !== after.verification.status
       && ['source-unavailable', 'withdrawn'].includes(after.verification.status);
     const withdrawalChange = before.change?.kind !== after.change?.kind && after.change?.kind === 'withdrawn';
@@ -147,12 +152,18 @@ export function classifyEditionChange(previous, candidate, contexts = []) {
       throw new Error(`Invalid public Edition snapshot transition: unsupported public Signal change (${id})`);
     }
     if (becameHistorical || withdrawalChange) withdrawn.push(id);
-    if (before.source_fact !== after.source_fact
-      || (before.caveat ?? null) !== (after.caveat ?? null)
-      || (before.change?.kind ?? null) !== (after.change?.kind ?? null)
-      || (before.corrected_at ?? null) !== (after.corrected_at ?? null)
-      || (before.correction_note ?? null) !== (after.correction_note ?? null)) {
-      if (!withdrawn.includes(id)) corrected.push(id);
+    if (!withdrawn.includes(id) && (publicTextChanged || correctionStateChanged)) {
+      if (after.change?.kind !== 'corrected' || !after.corrected_at || !after.correction_note) {
+        throw new Error(`Invalid public Edition snapshot transition: public text correction requires explicit correction semantics (${id})`);
+      }
+      const priorCorrectionTime = Math.max(
+        Date.parse(before.corrected_at ?? previous.corrected_at ?? previous.published_at),
+        Date.parse(previous.corrected_at ?? previous.published_at),
+      );
+      if (Date.parse(after.corrected_at) <= priorCorrectionTime) {
+        throw new Error(`Invalid public Edition snapshot transition: correction timestamp must advance (${id})`);
+      }
+      corrected.push(id);
     }
   }
 
@@ -161,6 +172,7 @@ export function classifyEditionChange(previous, candidate, contexts = []) {
   for (const shell of [previousShell, candidateShell]) {
     delete shell.generated_at;
     delete shell.edition_note;
+    delete shell.corrected_at;
     shell.items = [];
   }
   if (canonical(previousShell) !== canonical(candidateShell)) {
@@ -168,6 +180,14 @@ export function classifyEditionChange(previous, candidate, contexts = []) {
   }
 
   const noteChanged = (previous.edition_note ?? null) !== (candidate.edition_note ?? null);
+  const editionCorrectionChanged = (previous.corrected_at ?? null) !== (candidate.corrected_at ?? null);
+  if (corrected.length && (!editionCorrectionChanged
+    || Date.parse(candidate.corrected_at) <= Date.parse(previous.corrected_at ?? previous.published_at))) {
+    throw new Error('Invalid public Edition snapshot transition: Edition corrected_at must advance with the Signal correction');
+  }
+  if (!corrected.length && editionCorrectionChanged) {
+    throw new Error('Invalid public Edition snapshot transition: Edition corrected_at cannot advance without a Signal correction');
+  }
   if (!added.length && !corrected.length && !withdrawn.length && !noteChanged) return null;
 
   const changedClasses = [added, corrected, withdrawn].filter((ids) => ids.length).length

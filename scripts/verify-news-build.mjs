@@ -12,6 +12,9 @@ const routes = [
 const forbiddenFontOrigins = /(?:fonts\.googleapis\.com|fonts\.gstatic\.com)/i;
 const failures = [];
 const cssPaths = new Set();
+const sampleEdition = JSON.parse(readFileSync(resolve('src/content/news/editions/2026-07-23.json'), 'utf8'));
+const reviewedEvents = JSON.parse(readFileSync(resolve('src/content/news/events/2026-07-23.json'), 'utf8'));
+const latestReviewedAt = reviewedEvents.at(-1)?.published_at;
 let feedItemCount = 0;
 
 for (const [relativePath, expectedCanonical, expectedType] of routes) {
@@ -39,6 +42,9 @@ for (const [relativePath, expectedCanonical, expectedType] of routes) {
       const jsonLd = JSON.parse(jsonLdMatch[1]);
       if (jsonLd['@type'] !== expectedType) failures.push(`${relativePath}: expected JSON-LD ${expectedType}, received ${jsonLd['@type']}`);
       if (JSON.stringify(jsonLd).includes('NewsArticle')) failures.push(`${relativePath}: Signal metadata must not use NewsArticle`);
+      if (relativePath === 'news/2026-07-23/index.html' && jsonLd.dateModified !== latestReviewedAt) {
+        failures.push(`${relativePath}: dateModified must equal the latest reviewed revision event`);
+      }
     } catch (cause) {
       failures.push(`${relativePath}: JSON-LD is invalid (${cause.message})`);
     }
@@ -53,12 +59,10 @@ if (!existsSync(feedPath)) {
   failures.push('news/feed.xml: generated RSS is missing');
 } else {
   const feed = readFileSync(feedPath, 'utf8');
-  const edition = JSON.parse(readFileSync(resolve('src/content/news/editions/2026-07-23.json'), 'utf8'));
-  const events = JSON.parse(readFileSync(resolve('src/content/news/events/2026-07-23.json'), 'utf8'));
-  feedItemCount = events.length;
-  const expected = renderRollingFeed(events, [edition], { sample: true });
+  feedItemCount = reviewedEvents.length;
+  const expected = renderRollingFeed(reviewedEvents, [sampleEdition], { sample: true });
   if (feed !== expected) failures.push('news/feed.xml: generated RSS differs from deterministic reviewed-event rendering');
-  if ((feed.match(/<item>/g) ?? []).length !== events.length) failures.push('news/feed.xml: item count does not match reviewed public events');
+  if ((feed.match(/<item>/g) ?? []).length !== reviewedEvents.length) failures.push('news/feed.xml: item count does not match reviewed public events');
   for (const term of ['reviewed_by', 'receipt', 'claim_locator', 'source_body', 'reader_id']) {
     if (feed.toLowerCase().includes(term)) failures.push(`news/feed.xml: private term found (${term})`);
   }

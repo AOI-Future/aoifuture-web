@@ -40,6 +40,7 @@ test('News exposes M2 JSON-LD, summary metadata, and Rolling Edition feed discov
   await page.goto('/news/2026-07-23/');
   const editionMetadata = await page.locator('script[type="application/ld+json"]').evaluate((node) => JSON.parse(node.textContent ?? ''));
   expect(editionMetadata['@type']).toBe('CollectionPage');
+  expect(editionMetadata.dateModified).toBe('2026-07-23T09:05:00+09:00');
   expect(editionMetadata.mainEntity['@type']).toBe('ItemList');
   expect(editionMetadata.mainEntity.itemListElement.map((entry: { url: string }) => entry.url)).toEqual([
     'https://aoifuture.com/news/2026-07-23/#sig-openai-presence-20260722',
