@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aoifuture.com/schemas/aoi-news-edition-event-v1.schema.json",
+  "title": "AOIFUTURE News Edition revision event v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_id",
+    "edition_id",
+    "edition_date",
+    "revision",
+    "event_kind",
+    "title",
+    "summary",
+    "published_at",
+    "edition_url",
+    "changed_signal_ids"
+  ],
+  "properties": {
+    "schema_version": { "const": "aoi.news.edition-event.v1" },
+    "event_id": { "type": "string", "pattern": "^aoi-news-[0-9]{4}-[0-9]{2}-[0-9]{2}(?:-(?:[01][0-9]|2[0-3])[0-5][0-9])?-r[0-9]{3}$" },
+    "edition_id": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}(?:-(?:[01][0-9]|2[0-3])[0-5][0-9])?$" },
+    "edition_date": { "type": "string", "format": "date" },
+    "revision": { "type": "integer", "minimum": 1, "maximum": 999 },
+    "event_kind": {
+      "enum": [
+        "edition-published",
+        "signals-added",
+        "signal-corrected",
+        "signal-source-unavailable",
+        "signal-withdrawn",
+        "edition-note-updated"
+      ]
+    },
+    "title": { "$ref": "#/$defs/text200" },
+    "summary": { "$ref": "#/$defs/text500" },
+    "published_at": { "type": "string", "format": "date-time" },
+    "edition_url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://aoifuture\\.com/news/[0-9]{4}-[0-9]{2}-[0-9]{2}(?:-(?:[01][0-9]|2[0-3])[0-5][0-9])?/$"
+    },
+    "changed_signal_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/id" }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{2,79}$" },
+    "text200": { "type": "string", "minLength": 1, "maxLength": 200, "pattern": "^(?=[^<>]*\\S)[^<>]*$" },
+    "text500": { "type": "string", "minLength": 1, "maxLength": 500, "pattern": "^(?=[^<>]*\\S)[^<>]*$" }
+  }
+}

@@ -57,6 +57,7 @@ interface Section {
   label: string;
   sub: string;
   accent: Accent;
+  href?: string;
 }
 
 const SECTIONS: Section[] = [
@@ -64,13 +65,14 @@ const SECTIONS: Section[] = [
   { id: 'camino', label: 'AOI CAMINO', sub: 'AUTHOR', accent: 'amber' },
   { id: 'sound-umwelt', label: 'SOUND UMWELT', sub: 'PROJECT', accent: 'cyan' },
   { id: 'dispatch', label: 'DISPATCH', sub: 'MEDIA', accent: 'amber' },
+  { id: 'news', label: 'NEWS', sub: 'SOURCE DESK', accent: 'cyan', href: '/news/' },
   { id: 'agent-security', label: 'AGENT.SECURITY', sub: 'FIELD MANUAL', accent: 'cyan' },
   { id: 'commission', label: 'WORK.COMMISSION', sub: 'SERVICE', accent: 'cyan' },
   { id: 'legal', label: 'LEGAL', sub: 'NOTICE', accent: 'cyan' },
 ];
 
 // ABOUT is opened from the logo button, not the menu — keep #about deep links valid
-const VALID_IDS = new Set([...SECTIONS.map((s) => s.id), 'about']);
+const VALID_IDS = new Set([...SECTIONS.filter((section) => !section.href).map((section) => section.id), 'about']);
 
 function readHash(): string | null {
   const h = window.location.hash.replace('#', '');
@@ -518,30 +520,44 @@ export default function Navigator() {
           <ul className="space-y-2 md:space-y-3 md:text-right">
             {SECTIONS.map((s, i) => {
               const a = ACCENT[s.accent];
+              const menuContent = (
+                <>
+                  <span className="text-cyan-400/50 text-[10px] tracking-widest menu-label">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span
+                    className={`${a.menu} ${a.menuHover} text-sm md:text-base tracking-[0.2em]
+                                group-hover:tracking-[0.3em] transition-all duration-300 menu-label`}
+                  >
+                    {s.label}
+                  </span>
+                  <span
+                    className={`${a.dim} text-[10px] tracking-widest hidden md:inline menu-label
+                                opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                  >
+                    {s.sub}
+                  </span>
+                </>
+              );
               return (
                 <li key={s.id}>
-                  <button
-                    onClick={() => open(s.id)}
-                    className="group font-mono cursor-pointer bg-transparent
-                               flex md:flex-row-reverse items-baseline gap-3 md:ml-auto
-                               py-0.5"
-                  >
-                    <span className="text-cyan-400/50 text-[10px] tracking-widest menu-label">
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <span
-                      className={`${a.menu} ${a.menuHover} text-sm md:text-base tracking-[0.2em]
-                                  group-hover:tracking-[0.3em] transition-all duration-300 menu-label`}
+                  {s.href ? (
+                    <a
+                      href={s.href}
+                      className="group font-mono flex md:flex-row-reverse items-baseline gap-3 md:ml-auto py-2"
                     >
-                      {s.label}
-                    </span>
-                    <span
-                      className={`${a.dim} text-[10px] tracking-widest hidden md:inline menu-label
-                                  opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                      {menuContent}
+                    </a>
+                  ) : (
+                    <button
+                      onClick={() => open(s.id)}
+                      className="group font-mono cursor-pointer bg-transparent
+                                 flex md:flex-row-reverse items-baseline gap-3 md:ml-auto
+                                 py-0.5"
                     >
-                      {s.sub}
-                    </span>
-                  </button>
+                      {menuContent}
+                    </button>
+                  )}
                 </li>
               );
             })}

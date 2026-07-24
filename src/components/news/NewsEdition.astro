@@ -1,0 +1,51 @@
+---
+import type { NewsContext, NewsEdition, NewsPublicationMode } from '../../lib/news/types';
+import NewsSignalCard from './NewsSignalCard.astro';
+
+interface Props {
+  edition: NewsEdition;
+  contexts: NewsContext[];
+  mode: NewsPublicationMode;
+}
+
+const { edition, contexts, mode } = Astro.props;
+const editionPrefix = `edition-${edition.edition_id}`;
+const contextById = new Map(contexts.map((context) => [context.id, context]));
+const topicById = new Map(edition.topics.map((topic) => [topic.id, topic]));
+const formatDate = (value: string) => new Intl.DateTimeFormat('ja-JP', {
+  dateStyle: 'long',
+  timeStyle: 'short',
+  timeZone: 'Asia/Tokyo',
+}).format(new Date(value));
+---
+
+<article class="news-edition" data-news-edition={edition.edition_id}>
+  <header class="news-edition__header">
+    <p class="news-kicker">EDITION <time datetime={edition.edition_date}>{edition.edition_date} JST</time></p>
+    {mode === 'review' && <p class="news-sample-label news-sample-label--hero">EDITORIAL REVIEW PREVIEW</p>}
+    {mode === 'production' && <p class="news-kicker">ROLLING EDITION</p>}
+    <h1 id={`${editionPrefix}-heading`} data-news-edition-heading>{edition.title}</h1>
+    {edition.dek && <p class="news-dek">{edition.dek}</p>}
+    <dl class="news-edition__meta">
+      <div><dt>Published</dt><dd><time datetime={edition.published_at}>{formatDate(edition.published_at)} JST</time></dd></div>
+      <div><dt>Signals</dt><dd>{edition.items.length} / finite</dd></div>
+    </dl>
+  </header>
+
+  {edition.edition_note && (
+    <aside class="news-edition-note" aria-labelledby={`${editionPrefix}-note-heading`}>
+      <h2 id={`${editionPrefix}-note-heading`}>Edition note</h2>
+      <p>{edition.edition_note}</p>
+    </aside>
+  )}
+
+  <section class="news-signal-list" aria-labelledby={`${editionPrefix}-signals-heading`}>
+    <div class="news-section-heading">
+      <p class="news-kicker">SOURCE-FIRST SIGNALS</p>
+      <h2 id={`${editionPrefix}-signals-heading`}>Signals</h2>
+    </div>
+    {edition.items.map((signal) => (
+      <NewsSignalCard signal={signal} editionId={edition.edition_id} contextById={contextById} topicById={topicById} />
+    ))}
+  </section>
+</article>

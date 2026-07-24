@@ -1,0 +1,41 @@
+---
+import { getSignalReference } from '../../lib/news/load-news';
+import type { NewsContext } from '../../lib/news/types';
+
+interface Props {
+  context: NewsContext;
+}
+
+const { context } = Astro.props;
+const formatDate = (value: string) => new Intl.DateTimeFormat('ja-JP', {
+  dateStyle: 'long',
+  timeStyle: 'short',
+  timeZone: 'Asia/Tokyo',
+}).format(new Date(value));
+---
+
+<section id="context-history" class="news-context-history" aria-labelledby="context-history-heading">
+  <div class="news-section-heading">
+    <p class="news-kicker">PRESERVED REVISION CHRONOLOGY</p>
+    <h2 id="context-history-heading">How we got here</h2>
+    <p>古い解釈を上書きせず、変更理由と根拠を記録順に示します。</p>
+  </div>
+  <div class="news-history-list">
+    {context.revisions.map((revision, index) => (
+      <article aria-labelledby={`${revision.id}-heading`}>
+        <p class="news-history-index">REVISION {String(index + 1).padStart(2, '0')} / <time datetime={revision.changed_at}>{formatDate(revision.changed_at)} JST</time></p>
+        <h3 id={`${revision.id}-heading`}>{revision.change_reason}</h3>
+        <p>{revision.resulting_view}</p>
+        <div class="news-evidence-links">
+          <span class="news-meta-label">Evidence</span>
+          {revision.evidence_signal_ids.map((signalId) => {
+            const reference = getSignalReference(signalId);
+            return reference ? (
+              <a href={`/news/${reference.editionId}/#edition-${reference.editionId}-${signalId}`}>{reference.signal.title}</a>
+            ) : null;
+          })}
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

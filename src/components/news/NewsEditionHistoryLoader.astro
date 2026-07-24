@@ -1,0 +1,28 @@
+---
+import type { NewsEdition } from '../../lib/news/types';
+
+interface Props {
+  current: NewsEdition;
+  previous?: NewsEdition;
+}
+
+const { current, previous } = Astro.props;
+---
+
+<section class="news-history-loader" data-news-history-loader data-current-edition={current.edition_id}>
+  <p class="news-history-loader__status" data-news-history-status aria-live="polite" aria-atomic="true"></p>
+  {previous ? (
+    <a
+      class="news-history-loader__link"
+      data-news-history-link
+      data-target-edition={previous.edition_id}
+      href={`/news/${previous.edition_id}/`}
+    >前のEditionを読む</a>
+  ) : (
+    <a class="news-history-loader__link" href="/news/archive/">Archiveを見る</a>
+  )}
+</section>
+
+<script>
+  import '../../scripts/news-edition-history';
+</script>

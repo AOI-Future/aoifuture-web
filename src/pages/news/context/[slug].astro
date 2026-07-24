@@ -1,0 +1,39 @@
+---
+import NewsActiveContext from '../../../components/news/NewsActiveContext.astro';
+import NewsContextHistory from '../../../components/news/NewsContextHistory.astro';
+import NewsLayout from '../../../layouts/NewsLayout.astro';
+import { loadNewsCatalog } from '../../../lib/news/load-news';
+import { buildContextMetadata } from '../../../lib/news/metadata.mjs';
+import { resolveNewsPublicationMode } from '../../../lib/news/publication-mode.mjs';
+import type { NewsContext, NewsPublicationMode } from '../../../lib/news/types';
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  const mode = resolveNewsPublicationMode(process.env.VERCEL_ENV) as NewsPublicationMode;
+  return loadNewsCatalog(mode).contexts.map((context) => ({
+    params: { slug: context.slug },
+    props: { context, mode },
+  }));
+}
+
+interface Props {
+  context: NewsContext;
+  mode: NewsPublicationMode;
+}
+
+const { context, mode } = Astro.props;
+const catalog = loadNewsCatalog(mode);
+---
+
+<NewsLayout
+  title={`${context.title} | Active Context | AOIFUTURE News`}
+  description={context.current_view}
+  canonical={`https://aoifuture.com/news/context/${context.slug}/`}
+  jsonLd={buildContextMetadata(context, catalog)}
+  mode={mode}
+>
+  {mode === 'review' && <p class="news-sample-label news-sample-label--hero">EDITORIAL REVIEW PREVIEW</p>}
+  <NewsActiveContext context={context} />
+  <NewsContextHistory context={context} />
+</NewsLayout>

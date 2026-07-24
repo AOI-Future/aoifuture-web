@@ -1,0 +1,175 @@
+{
+  "edition": {
+    "schema_version": "aoi.news.edition.v1",
+    "publication_status": "review-only",
+    "edition_id": "2026-07-23",
+    "edition_date": "2026-07-23",
+    "generated_at": "2026-07-23T09:00:00+09:00",
+    "published_at": "2026-07-23T09:00:00+09:00",
+    "title": "検証用 AOIFUTURE News: エージェント運用境界",
+    "dek": "本番公開を意図しない契約検証専用サンプル。DailyNewsの選定を手動で再構成した。",
+    "edition_note": "二つの発表を、機能一覧ではなく権限、引き継ぎ、更新後の検証という運用境界から読む。",
+    "items": [
+      {
+        "id": "sig-openai-presence-20260722",
+        "title": "OpenAI Presenceが業務エージェントの制御境界を明示",
+        "source_url": "https://openai.com/index/introducing-openai-presence/",
+        "source_title": "Introducing OpenAI Presence",
+        "source_domain": "openai.com",
+        "source_kind": "official",
+        "language": "en",
+        "published_at": "2026-07-22T09:00:00+09:00",
+        "observed_at": "2026-07-22T09:00:00+09:00",
+        "context_ids": ["ctx-agent-authority"],
+        "change": { "kind": "new" },
+        "source_fact": "OpenAIは、企業がエージェントの操作、承認、人間への引き継ぎ条件を設定する製品を発表した。",
+        "aoi_note": "導入時は自社が権限、承認、変更履歴をどこまで検証できるかを先に確認したい。",
+        "caveat": "提供条件と効果測定はOpenAI自身の発表に基づく。",
+        "topics": ["agent-operations"],
+        "role": "lead",
+        "verification": { "status": "verified", "checked_at": "2026-07-23T09:00:00+09:00" }
+      },
+      {
+        "id": "sig-anthropic-sdk-20260722",
+        "title": "Anthropic SDKがManaged Agents関連APIに対応",
+        "source_url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.118.0",
+        "source_title": "anthropic-sdk-python v0.118.0",
+        "source_domain": "github.com",
+        "source_kind": "release",
+        "language": "en",
+        "published_at": "2026-07-22T12:00:00+09:00",
+        "observed_at": "2026-07-22T12:00:00+09:00",
+        "context_ids": ["ctx-agent-authority"],
+        "change": { "kind": "new" },
+        "source_fact": "Anthropic Python SDK v0.118.0はManaged Agentsに関するAPI項目への対応を追加した。",
+        "aoi_note": "更新前後でイベント順序と差分ストリーミング処理を再現し、統合境界の互換性を確かめたい。",
+        "caveat": "SDK対応の追加はサービス全体の一般提供を意味しない。",
+        "topics": ["agent-operations"],
+        "role": "major",
+        "verification": { "status": "verified", "checked_at": "2026-07-23T09:00:00+09:00" }
+      }
+    ],
+    "topics": [
+      {
+        "id": "agent-operations",
+        "label_ja": "エージェント運用",
+        "label_en": "Agent operations",
+        "description": "権限、制御、引き継ぎ、検証を含む運用境界。"
+      }
+    ]
+  },
+  "contexts": [
+    {
+      "schema_version": "aoi.news.context.v1",
+      "publication_status": "review-only",
+      "id": "ctx-agent-authority",
+      "slug": "agent-authority",
+      "title": "Agent Authority",
+      "current_view": "権限と引き継ぎに加え、SDK更新時のイベント順序と差分処理も運用検証の対象になる。",
+      "updated_at": "2026-07-23T09:00:00+09:00",
+      "operator_context": {
+        "authority": "実行可能な操作と接続先を列挙する。",
+        "control": "承認と人間への引き継ぎ条件を確認する。",
+        "evidence": "SDK更新前後のイベント順序と差分処理を再現する。"
+      },
+      "supporting_signal_ids": ["sig-openai-presence-20260722", "sig-anthropic-sdk-20260722"],
+      "revisions": [
+        {
+          "id": "rev-agent-authority-001",
+          "changed_at": "2026-07-22T09:00:00+09:00",
+          "change_reason": "業務エージェントの公開情報から、権限と引き継ぎを初期論点として記録した。",
+          "resulting_view": "業務エージェントでは、権限と人間への引き継ぎ条件が導入判断の中心になる。",
+          "evidence_signal_ids": ["sig-openai-presence-20260722"]
+        },
+        {
+          "id": "rev-agent-authority-002",
+          "changed_at": "2026-07-23T09:00:00+09:00",
+          "change_reason": "Managed Agents対応のSDK更新により、統合境界の検証項目が増えた。",
+          "resulting_view": "権限と引き継ぎに加え、SDK更新時のイベント順序と差分処理も運用検証の対象になる。",
+          "evidence_signal_ids": ["sig-anthropic-sdk-20260722"]
+        }
+      ]
+    }
+  ],
+  "context_transitions": [
+    {
+      "context_id": "ctx-agent-authority",
+      "kind": "update"
+    }
+  ],
+  "previous_contexts": [
+    {
+      "schema_version": "aoi.news.context.v1",
+      "publication_status": "review-only",
+      "id": "ctx-agent-authority",
+      "slug": "agent-authority",
+      "title": "Agent Authority",
+      "current_view": "業務エージェントでは、権限と人間への引き継ぎ条件が導入判断の中心になる。",
+      "updated_at": "2026-07-22T09:00:00+09:00",
+      "operator_context": {
+        "authority": "実行可能な操作と接続先を列挙する。",
+        "control": "承認と人間への引き継ぎ条件を確認する。"
+      },
+      "supporting_signal_ids": ["sig-openai-presence-20260722"],
+      "revisions": [
+        {
+          "id": "rev-agent-authority-001",
+          "changed_at": "2026-07-22T09:00:00+09:00",
+          "change_reason": "業務エージェントの公開情報から、権限と引き継ぎを初期論点として記録した。",
+          "resulting_view": "業務エージェントでは、権限と人間への引き継ぎ条件が導入判断の中心になる。",
+          "evidence_signal_ids": ["sig-openai-presence-20260722"]
+        }
+      ]
+    }
+  ],
+  "receipts": [
+    {
+      "schema_version": "aoi.news.source-read.v1",
+      "signal_id": "sig-openai-presence-20260722",
+      "normalized_source_url": "https://openai.com/index/introducing-openai-presence/",
+      "source_kind": "official",
+      "read_at": "2026-07-23T09:00:00+09:00",
+      "claim_locator": "Enterprise agent controls: actions, approvals, and human handoff conditions",
+      "reviewed_by": "shugo-dailynews-2026-07-23",
+      "approved_at": "2026-07-23T09:00:00+09:00",
+      "decision": "approved"
+    },
+    {
+      "schema_version": "aoi.news.source-read.v1",
+      "signal_id": "sig-anthropic-sdk-20260722",
+      "normalized_source_url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.118.0",
+      "source_kind": "release",
+      "read_at": "2026-07-23T09:00:00+09:00",
+      "claim_locator": "Release v0.118.0, Added section for Managed Agents API fields",
+      "reviewed_by": "shugo-dailynews-2026-07-23",
+      "approved_at": "2026-07-23T09:00:00+09:00",
+      "decision": "approved"
+    }
+  ],
+  "published_editions": [],
+  "published_contexts": [
+    {
+      "schema_version": "aoi.news.context.v1",
+      "publication_status": "review-only",
+      "id": "ctx-agent-authority",
+      "slug": "agent-authority",
+      "title": "Agent Authority",
+      "current_view": "業務エージェントでは、権限と人間への引き継ぎ条件が導入判断の中心になる。",
+      "updated_at": "2026-07-22T09:00:00+09:00",
+      "operator_context": {
+        "authority": "実行可能な操作と接続先を列挙する。",
+        "control": "承認と人間への引き継ぎ条件を確認する。"
+      },
+      "supporting_signal_ids": ["sig-openai-presence-20260722"],
+      "revisions": [
+        {
+          "id": "rev-agent-authority-001",
+          "changed_at": "2026-07-22T09:00:00+09:00",
+          "change_reason": "業務エージェントの公開情報から、権限と引き継ぎを初期論点として記録した。",
+          "resulting_view": "業務エージェントでは、権限と人間への引き継ぎ条件が導入判断の中心になる。",
+          "evidence_signal_ids": ["sig-openai-presence-20260722"]
+        }
+      ]
+    }
+  ]
+}

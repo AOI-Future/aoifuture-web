@@ -1,0 +1,83 @@
+---
+import type { NewsContext, NewsSignal, NewsTopic } from '../../lib/news/types';
+
+interface Props {
+  signal: NewsSignal;
+  editionId: string;
+  contextById: Map<string, NewsContext>;
+  topicById: Map<string, NewsTopic>;
+}
+
+const { signal, editionId, contextById, topicById } = Astro.props;
+const id = `edition-${editionId}-${signal.id}`;
+const formatDate = (value: string) => new Intl.DateTimeFormat('ja-JP', {
+  dateStyle: 'medium',
+  timeStyle: 'short',
+  timeZone: 'Asia/Tokyo',
+}).format(new Date(value));
+const isHistorical = signal.verification.status !== 'verified' || signal.change?.kind === 'withdrawn';
+const sourceLanguage = signal.language === 'other' ? 'und' : signal.language;
+---
+
+<article
+  class:list={['news-signal', { 'news-signal--lead': signal.role === 'lead' }]}
+  id={id}
+  data-news-signal
+  aria-labelledby={`${id}-title`}
+>
+  <div class="news-signal__source" data-news-order="source">
+    <div class="news-signal__flags">
+      <span>{signal.source_kind.toUpperCase()}</span>
+      <span>{signal.source_domain}</span>
+      <span>{signal.role.toUpperCase()}</span>
+      <span>{signal.change?.kind?.toUpperCase() ?? 'CURRENT'}</span>
+      {isHistorical && <span>HISTORICAL EVIDENCE — {signal.verification.status.toUpperCase()}</span>}
+    </div>
+  </div>
+
+  <h3 id={`${id}-title`} data-news-order="headline">{signal.title}</h3>
+
+  <section class="news-reading-note" aria-labelledby={`${id}-fact`} data-news-order="fact">
+    <h4 id={`${id}-fact`}>Source fact</h4>
+    <p>{signal.source_fact}</p>
+    {signal.caveat && (
+      <aside class="news-caveat" aria-labelledby={`${id}-caveat`}>
+        <h4 id={`${id}-caveat`}>Caveat</h4>
+        <p>{signal.caveat}</p>
+      </aside>
+    )}
+  </section>
+
+  <section class="news-reading-note" aria-labelledby={`${id}-note`} data-news-order="note">
+    <h4 id={`${id}-note`}>AOI note</h4>
+    <p>{signal.aoi_note}</p>
+  </section>
+
+  <footer class="news-signal__footer" data-news-order="metadata">
+    <dl class="news-source-meta">
+      {signal.published_at && <div><dt>Published</dt><dd><time datetime={signal.published_at}>{formatDate(signal.published_at)} JST</time></dd></div>}
+      <div><dt>Observed</dt><dd><time datetime={signal.observed_at}>{formatDate(signal.observed_at)} JST</time></dd></div>
+    </dl>
+    <div>
+      <span class="news-meta-label">Topic</span>
+      {signal.topics.map((topicId) => {
+        const topic = topicById.get(topicId);
+        return <a href={`/news/archive/#topic-${topicId}`}>{topic?.label_ja ?? topicId}</a>;
+      })}
+    </div>
+    <div>
+      <span class="news-meta-label">Context</span>
+      {signal.context_ids.map((contextId) => {
+        const context = contextById.get(contextId);
+        return context
+          ? <a href={`/news/context/${context.slug}/`}>{context.title}</a>
+          : <span>{contextId}</span>;
+      })}
+    </div>
+  </footer>
+
+  <a class="news-source-link" href={signal.source_url} data-news-order="action">
+    Read the direct source <span aria-hidden="true">&gt;</span>
+    <span class="news-source-link__title" lang={sourceLanguage}>{signal.source_title}</span>
+  </a>
+</article>

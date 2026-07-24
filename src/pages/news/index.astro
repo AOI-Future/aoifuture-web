@@ -1,0 +1,28 @@
+---
+import NewsEdition from '../../components/news/NewsEdition.astro';
+import NewsEditionHistoryLoader from '../../components/news/NewsEditionHistoryLoader.astro';
+import NewsLayout from '../../layouts/NewsLayout.astro';
+import { loadNewsCatalog } from '../../lib/news/load-news';
+import { buildIndexMetadata } from '../../lib/news/metadata.mjs';
+import { resolveNewsPublicationMode } from '../../lib/news/publication-mode.mjs';
+
+export const prerender = true;
+
+const mode = resolveNewsPublicationMode(process.env.VERCEL_ENV);
+const catalog = loadNewsCatalog(mode);
+const edition = catalog.editions[0];
+const previous = catalog.editions[1];
+if (!edition) throw new Error('AOIFUTURE News requires at least one staged Edition');
+---
+
+<NewsLayout
+  title={`${edition.title} | AOIFUTURE News`}
+  description={edition.dek ?? edition.title}
+  canonical="https://aoifuture.com/news/"
+  jsonLd={buildIndexMetadata(catalog)}
+  mode={mode}
+>
+  <NewsEdition edition={edition} contexts={catalog.contexts} mode={mode} />
+  <div data-news-history></div>
+  <NewsEditionHistoryLoader current={edition} previous={previous} />
+</NewsLayout>

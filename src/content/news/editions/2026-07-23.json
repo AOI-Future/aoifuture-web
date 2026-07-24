@@ -1,0 +1,77 @@
+{
+  "dek": "本番公開を意図しない契約検証専用サンプル。DailyNewsの選定を手動で再構成した。",
+  "edition_date": "2026-07-23",
+  "edition_id": "2026-07-23",
+  "publication_status": "review-only",
+  "edition_note": "二つの発表を、機能一覧ではなく権限、引き継ぎ、更新後の検証という運用境界から読む。",
+  "generated_at": "2026-07-23T09:00:00+09:00",
+  "items": [
+    {
+      "aoi_note": "導入時は自社が権限、承認、変更履歴をどこまで検証できるかを先に確認したい。",
+      "caveat": "提供条件と効果測定はOpenAI自身の発表に基づく。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [
+        "ctx-agent-authority"
+      ],
+      "id": "sig-openai-presence-20260722",
+      "language": "en",
+      "observed_at": "2026-07-22T09:00:00+09:00",
+      "published_at": "2026-07-22T09:00:00+09:00",
+      "role": "lead",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは、企業がエージェントの操作、承認、人間への引き継ぎ条件を設定する製品を発表した。",
+      "source_kind": "official",
+      "source_title": "Introducing OpenAI Presence",
+      "source_url": "https://openai.com/index/introducing-openai-presence/",
+      "title": "OpenAI Presenceが業務エージェントの制御境界を明示",
+      "topics": [
+        "agent-operations"
+      ],
+      "verification": {
+        "checked_at": "2026-07-23T09:00:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "更新前後でイベント順序と差分ストリーミング処理を再現し、統合境界の互換性を確かめたい。",
+      "caveat": "SDK対応の追加はサービス全体の一般提供を意味しない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [
+        "ctx-agent-authority"
+      ],
+      "id": "sig-anthropic-sdk-20260722",
+      "language": "en",
+      "observed_at": "2026-07-22T12:00:00+09:00",
+      "published_at": "2026-07-22T12:00:00+09:00",
+      "role": "major",
+      "source_domain": "github.com",
+      "source_fact": "Anthropic Python SDK v0.118.0はManaged Agentsに関するAPI項目への対応を追加した。",
+      "source_kind": "release",
+      "source_title": "anthropic-sdk-python v0.118.0",
+      "source_url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v0.118.0",
+      "title": "Anthropic SDKがManaged Agents関連APIに対応",
+      "topics": [
+        "agent-operations"
+      ],
+      "verification": {
+        "checked_at": "2026-07-23T09:00:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "published_at": "2026-07-23T09:00:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "検証用 AOIFUTURE News: エージェント運用境界",
+  "topics": [
+    {
+      "description": "権限、制御、引き継ぎ、検証を含む運用境界。",
+      "id": "agent-operations",
+      "label_en": "Agent operations",
+      "label_ja": "エージェント運用"
+    }
+  ]
+}

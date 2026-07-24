@@ -1,0 +1,40 @@
+{
+  "current_view": "AIが健康情報、業務ツール、観測基盤、既存業務システムへ接続されるほど、運用の中心はモデル性能から権限、停止理由、移行検証、fail-closedへ移る。公開情報の数値や提供範囲は、公式発表、プレリリース、顧客事例、セキュリティ勧告という証拠の種類を分けて読む必要がある。",
+  "id": "ctx-connected-ai-boundaries",
+  "publication_status": "public",
+  "operator_context": {
+    "authority": "データ参照とツール実行の許可を分け、認証では具体的な利用者またはセッション属性を確認する。",
+    "capability": "接続するデータ、ツール、既存システムと、実行できる操作を列挙する。",
+    "control": "設定不良は拒否側へ倒し、文脈上限は再試行以外の経路へ分岐し、本番移行は安定版と再現試験を待つ。",
+    "evidence": "公式発表、リリース候補、SDKリリース、顧客事例、セキュリティ勧告の確度を混ぜずに記録する。",
+    "unresolved": "地域とプランの提供差、移行後の互換性、顧客事例の一般化可能性は個別確認が残る。"
+  },
+  "revisions": [
+    {
+      "change_reason": "接続型AIの公開情報から、許可、停止、移行、負荷、認証失敗を一つの運用境界として初期整理した。",
+      "changed_at": "2026-07-24T15:01:05+09:00",
+      "evidence_signal_ids": [
+        "sig-openai-health-20260724",
+        "sig-claude-voice-tools-20260724",
+        "sig-langfuse-v4-rc0-20260724",
+        "sig-anthropic-sdk-0119-20260724",
+        "sig-google-voicify-story-20260724",
+        "sig-authjs-fail-open-20260724"
+      ],
+      "id": "rev-connected-ai-boundaries-001",
+      "resulting_view": "AIが健康情報、業務ツール、観測基盤、既存業務システムへ接続されるほど、運用の中心はモデル性能から権限、停止理由、移行検証、fail-closedへ移る。公開情報の数値や提供範囲は、公式発表、プレリリース、顧客事例、セキュリティ勧告という証拠の種類を分けて読む必要がある。"
+    }
+  ],
+  "schema_version": "aoi.news.context.v1",
+  "slug": "connected-ai-boundaries",
+  "supporting_signal_ids": [
+    "sig-openai-health-20260724",
+    "sig-claude-voice-tools-20260724",
+    "sig-langfuse-v4-rc0-20260724",
+    "sig-anthropic-sdk-0119-20260724",
+    "sig-google-voicify-story-20260724",
+    "sig-authjs-fail-open-20260724"
+  ],
+  "title": "Connected AI Boundaries",
+  "updated_at": "2026-07-24T15:01:05+09:00"
+}

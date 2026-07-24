@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "candidateBaseline": "b232c11120f502e8c30527a9e7140ba6013b728a",
+  "route": "/news/",
+  "contentPolicy": "Exactly the two validated NON-PRODUCTION SAMPLE Signals; no synthetic reporting.",
+  "screenshots": {
+    "beforeRoot": "/tmp/aoifuture-news-density-before-b232c11",
+    "afterRoot": "/tmp/aoifuture-news-density-after"
+  },
+  "measurements": [
+    {
+      "width": 390,
+      "height": 844,
+      "beforePageHeight": 3027,
+      "afterPageHeight": 2456,
+      "reductionPercent": 18.9,
+      "beforeViewportMultiples": 3.59,
+      "afterViewportMultiples": 2.91,
+      "afterColumns": 1,
+      "afterHorizontalOverflow": false,
+      "afterMinimumInteractiveHeight": 44,
+      "beforeScreenshotSha256": "984a4a490832c64a6a07142e623128d08697f8156e6c8c695dfdc52e05b5b9b1",
+      "afterScreenshotSha256": "7f96051c333a847bd4308800773237c6fb8b7a6905d759d6a00ff690c32de938"
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "beforePageHeight": 2592,
+      "afterPageHeight": 1675,
+      "reductionPercent": 35.4,
+      "beforeViewportMultiples": 2.53,
+      "afterViewportMultiples": 1.64,
+      "afterColumns": 2,
+      "afterHorizontalOverflow": false,
+      "afterMinimumInteractiveHeight": 44,
+      "beforeScreenshotSha256": "18eda07726fbd187691e759610fd2c2936e66f312fa31a3b7143d02941e8d088",
+      "afterScreenshotSha256": "501ecc6c71f6e0582e4251da084f0198b1263c7790c53154baea923f5481dcdd"
+    },
+    {
+      "width": 1024,
+      "height": 1366,
+      "beforePageHeight": 2891,
+      "afterPageHeight": 1604,
+      "reductionPercent": 44.5,
+      "beforeViewportMultiples": 2.12,
+      "afterViewportMultiples": 1.17,
+      "afterColumns": 2,
+      "afterHorizontalOverflow": false,
+      "afterMinimumInteractiveHeight": 44,
+      "beforeScreenshotSha256": "194e6f2c6eb09bc0dbe53bc6336534c532bdb62fe5093bb9ce84ff177261b6f7",
+      "afterScreenshotSha256": "0144154d142bb5e329d2e1e59bbe6f2d4b7e7b5feb4c3604a619958c4a12066f"
+    },
+    {
+      "width": 1440,
+      "height": 1000,
+      "beforePageHeight": 2943,
+      "afterPageHeight": 2943,
+      "reductionPercent": 0,
+      "beforeViewportMultiples": 2.94,
+      "afterViewportMultiples": 2.94,
+      "afterColumns": 1,
+      "afterHorizontalOverflow": false,
+      "afterMinimumInteractiveHeight": 44,
+      "beforeScreenshotSha256": "5d394e2be17ce4b8dd106754ca00cef676acf7eb4f79f11c2c83e141323f7f13",
+      "afterScreenshotSha256": "5d394e2be17ce4b8dd106754ca00cef676acf7eb4f79f11c2c83e141323f7f13"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+---
+import type { NewsContext } from '../../lib/news/types';
+
+interface Props {
+  context: NewsContext;
+}
+
+const { context } = Astro.props;
+const operatorLabels: Record<string, string> = {
+  capability: 'Capability',
+  authority: 'Authority',
+  control: 'Control',
+  evidence: 'Evidence',
+  cost_route: 'Cost route',
+  operational_impact: 'Operational impact',
+  unresolved: 'Unresolved',
+};
+const formatDate = (value: string) => new Intl.DateTimeFormat('ja-JP', {
+  dateStyle: 'long',
+  timeStyle: 'short',
+  timeZone: 'Asia/Tokyo',
+}).format(new Date(value));
+---
+
+<section id="current-view" class="news-current-view" aria-labelledby="current-view-heading" tabindex="-1">
+  <p class="news-kicker">ACTIVE CONTEXT / CURRENT VIEW</p>
+  <h1 id="current-view-heading">{context.title}</h1>
+  <p class="news-current-view__statement">{context.current_view}</p>
+  <p class="news-timestamp">Updated <time datetime={context.updated_at}>{formatDate(context.updated_at)} JST</time></p>
+
+  {context.operator_context && (
+    <section class="news-operator-context" aria-labelledby="operator-context-heading">
+      <h2 id="operator-context-heading">Operator Context</h2>
+      <dl>
+        {Object.entries(context.operator_context).map(([key, value]) => (
+          <div>
+            <dt>{operatorLabels[key] ?? key}</dt>
+            <dd>{value}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  )}
+</section>
