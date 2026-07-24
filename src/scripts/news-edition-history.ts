@@ -87,7 +87,7 @@ function initHistoryLoader(loader: HTMLElement) {
 
   const appendNext = async (expectedId: string, href: string, options: AppendOptions) => {
     const url = exactEditionUrl(expectedId, href);
-    if (pending || reconciling || !url || chain.some((entry) => entry.id === expectedId)) return false;
+    if (pending || !url || chain.some((entry) => entry.id === expectedId)) return false;
     pending = true;
     disconnectObserver();
     const link = loader.querySelector<HTMLAnchorElement>('[data-news-history-link]');
@@ -190,34 +190,41 @@ function initHistoryLoader(loader: HTMLElement) {
       const tail = chain.at(-1)!;
       if (!tail.nextId || !tail.nextHref || encountered.has(tail.nextId)) return false;
       encountered.add(tail.nextId);
-      reconciling = false;
       if (!await appendNext(tail.nextId, tail.nextHref, { trigger: 'restore', focusHeading: false, historyMode: 'none' })) return false;
     }
     return true;
   };
 
+  const runReconcile = async (target: string | null) => {
+    if (reconciling) return false;
+    reconciling = true;
+    try {
+      return await reconcile(target);
+    } finally {
+      reconciling = false;
+    }
+  };
+
   loader.addEventListener('click', async (event) => {
     const link = (event.target as Element).closest<HTMLAnchorElement>('[data-news-history-link]');
-    if (!link || pending || reconciling) return;
+    if (!link) return;
     const target = link.dataset.targetEdition;
     if (!target || !exactEditionUrl(target, link.getAttribute('href') ?? '')) return;
     event.preventDefault();
+    if (pending || reconciling) return;
     disconnectObserver();
     await appendNext(target, link.getAttribute('href')!, { trigger: 'manual', focusHeading: true, historyMode: 'push' });
   });
 
   addEventListener('popstate', async () => {
-    reconciling = true;
     disconnectObserver();
     const target = new URL(location.href).searchParams.get('through');
-    reconciling = false;
-    if (!await reconcile(target)) history.replaceState({}, '', throughUrl(chain.at(-1)!.id));
+    if (!await runReconcile(target)) history.replaceState({}, '', throughUrl(chain.at(-1)!.id));
   });
 
   const initial = new URL(location.href).searchParams.get('through');
   if (initial) {
-    reconciling = false;
-    void reconcile(initial).then((ok) => {
+    void runReconcile(initial).then((ok) => {
       if (!ok) history.replaceState({}, '', throughUrl(chain.at(-1)!.id));
     });
   }

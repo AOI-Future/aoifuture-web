@@ -11,6 +11,7 @@ const directSources = [
 const production = process.env.VERCEL_ENV === 'production';
 const firstPreviousId = production ? '2026-07-23-0430' : '2026-07-23-0900';
 const firstPreviousRoute = `/news/${firstPreviousId}/`;
+const secondPreviousId = production ? '2026-07-22-0430' : '2026-07-23-0430';
 
 const newsRoutes = [
   '/news/',
@@ -306,6 +307,60 @@ test('previous Edition fetch failure appends nothing and keeps the fallback link
   await expect(page.locator('[data-news-history-status]')).toContainText('読み込めませんでした');
   await expect(link).toHaveAttribute('href', firstPreviousRoute);
   await expect(link).not.toHaveAttribute('aria-disabled', 'true');
+});
+
+test('rapid double-click activation stays in rolling history and issues one request', async ({ page }) => {
+  let requests = 0;
+  await page.route(`**${firstPreviousRoute}`, async (route) => {
+    requests += 1;
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    await route.continue();
+  });
+  await page.goto('/news/');
+
+  await page.locator('[data-news-history-link]').evaluate((link) => {
+    link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, detail: 1 }));
+    link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, detail: 2 }));
+  });
+
+  await expect(page).toHaveURL(new RegExp(`^http://127\\.0\\.0\\.1:\\d+/news/\\?through=${firstPreviousId}$`));
+  await expect(page.locator('[data-news-edition]')).toHaveCount(2);
+  expect(requests).toBe(1);
+});
+
+test('rapid keyboard activation stays in rolling history and issues one request', async ({ page }) => {
+  let requests = 0;
+  await page.route(`**${firstPreviousRoute}`, async (route) => {
+    requests += 1;
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    await route.continue();
+  });
+  await page.goto('/news/');
+  await page.locator('[data-news-history-link]').focus();
+
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('Enter');
+
+  await expect(page).toHaveURL(new RegExp(`^http://127\\.0\\.0\\.1:\\d+/news/\\?through=${firstPreviousId}$`));
+  await expect(page.locator('[data-news-edition]')).toHaveCount(2);
+  expect(requests).toBe(1);
+});
+
+test('activation during history reconciliation is handled without native navigation', async ({ page }) => {
+  let firstEditionRequests = 0;
+  await page.route(`**${firstPreviousRoute}`, async (route) => {
+    firstEditionRequests += 1;
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    await route.continue();
+  });
+  await page.goto(`/news/?through=${secondPreviousId}`, { waitUntil: 'domcontentloaded' });
+  await expect.poll(() => firstEditionRequests).toBe(1);
+
+  await page.locator('[data-news-history-link]').dispatchEvent('click');
+
+  await expect(page).toHaveURL(new RegExp(`/news/\\?through=${secondPreviousId}$`));
+  await expect(page.locator('[data-news-edition]')).toHaveCount(3);
+  expect(firstEditionRequests).toBe(1);
 });
 
 test('editorial policy is discoverable and states the selection boundaries', async ({ page }) => {
