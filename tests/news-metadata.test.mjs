@@ -8,7 +8,7 @@ import {
 } from '../src/lib/news/metadata.mjs';
 
 const readJson = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url), 'utf8'));
-const previousEdition = readJson('../src/content/news/editions/2026-07-23.json');
+const previousEdition = readJson('../src/content/news/editions/2026-07-23-0900.json');
 const edition = readJson('../src/content/news/editions/2026-07-24.json');
 const previousContext = readJson('../src/content/news/contexts/agent-authority.json');
 const context = readJson('../src/content/news/contexts/connected-ai-boundaries.json');
@@ -41,7 +41,7 @@ describe('AOIFUTURE News M2 public metadata', () => {
     expect(index).toMatchObject({ '@type': 'CollectionPage', url: 'https://aoifuture.com/news/' });
     expect(archive).toMatchObject({ '@type': 'CollectionPage', url: 'https://aoifuture.com/news/archive/' });
     expect(index.mainEntity.itemListElement[0].url).toBe('https://aoifuture.com/news/2026-07-24/');
-    expect(index.mainEntity.itemListElement[1].url).toBe('https://aoifuture.com/news/2026-07-23/');
+    expect(index.mainEntity.itemListElement[1].url).toBe('https://aoifuture.com/news/2026-07-23-0900/');
     expect(serializedTypes([index, archive])).not.toContain('NewsArticle');
   });
 

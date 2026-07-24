@@ -1,0 +1,19 @@
+[
+  {
+    "schema_version": "aoi.news.edition-event.v1",
+    "event_id": "aoi-news-2026-07-23-0430-r001",
+    "edition_id": "2026-07-23-0430",
+    "edition_date": "2026-07-23",
+    "revision": 1,
+    "event_kind": "edition-published",
+    "title": "AIを業務と研究へ入れる前に、権限を見える形にする",
+    "summary": "3件のSignalを公開Editionに掲載した。",
+    "published_at": "2026-07-25T06:12:29+09:00",
+    "edition_url": "https://aoifuture.com/news/2026-07-23-0430/",
+    "changed_signal_ids": [
+      "sig-openai-presence-public-20260722",
+      "sig-google-quantum-rl-control-20260722",
+      "sig-n8n-agent-viewer-escalation-20260708"
+    ]
+  }
+]

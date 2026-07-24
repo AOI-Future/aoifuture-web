@@ -1,7 +1,7 @@
 {
   "dek": "本番公開を意図しない契約検証専用サンプル。DailyNewsの選定を手動で再構成した。",
   "edition_date": "2026-07-23",
-  "edition_id": "2026-07-23",
+  "edition_id": "2026-07-23-0900",
   "publication_status": "review-only",
   "edition_note": "二つの発表を、機能一覧ではなく権限、引き継ぎ、更新後の検証という運用境界から読む。",
   "generated_at": "2026-07-23T09:00:00+09:00",
@@ -32,7 +32,8 @@
       "verification": {
         "checked_at": "2026-07-23T09:00:00+09:00",
         "status": "verified"
-      }
+      },
+      "selection_reason": "企業エージェントの操作権限、承認、人間への引き継ぎを一つの運用境界として確認できるため。"
     },
     {
       "aoi_note": "更新前後でイベント順序と差分ストリーミング処理を再現し、統合境界の互換性を確かめたい。",
@@ -60,7 +61,8 @@
       "verification": {
         "checked_at": "2026-07-23T09:00:00+09:00",
         "status": "verified"
-      }
+      },
+      "selection_reason": "エージェント統合のSDK更新で、イベント順序と差分処理の回帰確認が必要になるため。"
     }
   ],
   "published_at": "2026-07-23T09:00:00+09:00",
@@ -73,5 +75,7 @@
       "label_en": "Agent operations",
       "label_ja": "エージェント運用"
     }
-  ]
+  ],
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-07-23T09:00:00+09:00"
 }

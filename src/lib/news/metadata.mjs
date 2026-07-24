@@ -26,10 +26,21 @@ export function buildEditionMetadata(edition, latestReviewedAt) {
     url,
     datePublished: edition.published_at,
     dateModified: latestReviewedAt,
+    temporalCoverage: edition.coverage_kind === 'selection-window'
+      ? `${edition.coverage_start_at}/${edition.coverage_end_at}`
+      : edition.coverage_observed_at,
     mainEntity: itemList(edition.items.map((signal) => ({
       name: signal.title,
       url: `${url}#edition-${edition.edition_id}-${signal.id}`,
     }))),
+  });
+}
+
+export function buildEditorialPolicyMetadata() {
+  return schema('WebPage', {
+    name: 'AOIFUTURE News 編集方針',
+    description: 'AOIFUTURE Newsが何を選び、何を見送り、不確実性と訂正をどう扱うかを公開します。',
+    url: `${ORIGIN}/news/editorial-policy/`,
   });
 }
 

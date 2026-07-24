@@ -120,6 +120,9 @@ export function normalizeSourceUrl(value) {
 
 export function normalizeEditionForImport(raw) {
   const edition = structuredClone(raw);
+  for (const key of ['coverage_start_at', 'coverage_end_at', 'coverage_observed_at']) {
+    if (edition[key] === null) delete edition[key];
+  }
   if (Array.isArray(edition.items)) {
     edition.items = edition.items.map((item) => {
       const normalized = { ...item };
@@ -164,6 +167,30 @@ function checkPublicUrl(value, path, errors, { sameOrigin = false } = {}) {
 function checkEdition(edition, path, errors) {
   if (!validEditionId(edition.edition_id) || edition.edition_date !== edition.edition_id.slice(0, 10)) {
     errors.push(error('edition_date_coherence', `${path}/edition_date`, 'edition_date must equal the valid calendar prefix of edition_id'));
+  }
+  const hasStart = Object.hasOwn(edition, 'coverage_start_at');
+  const hasEnd = Object.hasOwn(edition, 'coverage_end_at');
+  const hasObserved = Object.hasOwn(edition, 'coverage_observed_at');
+  let chronologyAt;
+  if (!['selection-window', 'selection-snapshot'].includes(edition.coverage_kind)) {
+    errors.push(error('coverage_kind', `${path}/coverage_kind`, 'coverage_kind must identify a supported selection evidence branch'));
+  } else if (edition.coverage_kind === 'selection-window') {
+    if (!hasStart || !hasEnd) errors.push(error('coverage_branch_missing', path, 'selection-window requires start and end'));
+    if (hasObserved) errors.push(error('coverage_cross_branch_field', `${path}/coverage_observed_at`, 'selection-window forbids snapshot observation'));
+    if (hasStart && hasEnd && Date.parse(edition.coverage_start_at) > Date.parse(edition.coverage_end_at)) {
+      errors.push(error('coverage_window_order', `${path}/coverage_end_at`, 'coverage start must not be later than end'));
+    }
+    chronologyAt = edition.coverage_end_at;
+  } else {
+    if (!hasObserved) errors.push(error('coverage_branch_missing', path, 'selection-snapshot requires observation'));
+    if (hasStart || hasEnd) errors.push(error('coverage_cross_branch_field', path, 'selection-snapshot forbids interval bounds'));
+    chronologyAt = edition.coverage_observed_at;
+  }
+  if (chronologyAt && validDateTime(chronologyAt)) {
+    const jstDate = new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'Asia/Tokyo', year: 'numeric', month: '2-digit', day: '2-digit',
+    }).format(new Date(chronologyAt));
+    if (jstDate !== edition.edition_date) errors.push(error('coverage_date_coherence', `${path}/edition_date`, 'coverage chronology JST date must equal edition_date'));
   }
   const leadCount = edition.items.filter((item) => item.role === 'lead').length;
   const detourCount = edition.items.filter((item) => item.role === 'detour').length;
@@ -286,6 +313,9 @@ export function validatePublicCatalog(editions, contexts) {
   const validEditions = [];
   editions.forEach((edition, index) => {
     const path = `/editions/${index}`;
+    if (isObject(edition) && !['selection-window', 'selection-snapshot'].includes(edition.coverage_kind)) {
+      errors.push(error('coverage_kind', `${path}/coverage_kind`, 'coverage_kind must identify a supported selection evidence branch'));
+    }
     const schemaResult = validateDocument('edition', edition, path);
     errors.push(...schemaResult.errors);
     if (schemaResult.ok) {
@@ -366,6 +396,9 @@ export function validatePublicationBundle(bundle) {
   const publishedEditions = Array.isArray(bundle.published_editions) ? bundle.published_editions : [];
   const publishedContexts = Array.isArray(bundle.published_contexts) ? bundle.published_contexts : [];
   if (!isObject(edition)) errors.push(error('bundle_shape', '/edition', 'must be an object'));
+  if (isObject(edition) && !['selection-window', 'selection-snapshot'].includes(edition.coverage_kind)) {
+    errors.push(error('coverage_kind', '/edition/coverage_kind', 'coverage_kind must identify a supported selection evidence branch'));
+  }
   for (const key of ['contexts', 'context_transitions', 'previous_contexts', 'receipts', 'published_editions', 'published_contexts']) {
     if (!Array.isArray(bundle[key])) errors.push(error('bundle_shape', `/${key}`, 'must be an array'));
   }

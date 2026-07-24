@@ -1,0 +1,20 @@
+[
+  {
+    "schema_version": "aoi.news.edition-event.v1",
+    "event_id": "aoi-news-2026-07-22-0430-r001",
+    "edition_id": "2026-07-22-0430",
+    "edition_date": "2026-07-22",
+    "revision": 1,
+    "event_kind": "edition-published",
+    "title": "モデル性能の外側で、AI実装の差がつく",
+    "summary": "4件のSignalを公開Editionに掲載した。",
+    "published_at": "2026-07-25T06:12:29+09:00",
+    "edition_url": "https://aoifuture.com/news/2026-07-22-0430/",
+    "changed_signal_ids": [
+      "sig-google-codemender-preview-20260721",
+      "sig-cisco-antares-localization-20260721",
+      "sig-gemini-36-flash-cost-20260721",
+      "sig-nvidia-spectrum6-20260721"
+    ]
+  }
+]

@@ -1,0 +1,107 @@
+{
+  "schema_version": "aoi.news.edition.v1",
+  "edition_id": "2026-07-23-0430",
+  "edition_date": "2026-07-23",
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-07-23T04:30:00+09:00",
+  "publication_status": "public",
+  "generated_at": "2026-07-25T06:12:29+09:00",
+  "published_at": "2026-07-25T06:12:29+09:00",
+  "title": "AIを業務と研究へ入れる前に、権限を見える形にする",
+  "dek": "企業エージェントの承認と引き継ぎ、量子計算中の自動制御、n8nの権限昇格。誰が何を動かし、どこで止めるかを読む。",
+  "edition_note": "AIが業務、研究、機器制御へ入るほど、モデルの賢さだけでなく、実行権限、停止条件、人間への引き継ぎ、変更後の再評価が導入条件になる。",
+  "items": [
+    {
+      "id": "sig-openai-presence-public-20260722",
+      "title": "OpenAI Presenceが業務エージェントの制御境界を製品化",
+      "source_url": "https://openai.com/index/introducing-openai-presence/",
+      "source_title": "Introducing OpenAI Presence",
+      "source_domain": "openai.com",
+      "source_kind": "official",
+      "language": "en",
+      "context_ids": [
+        "ctx-operational-ai-authority"
+      ],
+      "source_fact": "OpenAIは、仕事ごとに知識とシステム権限を絞り、企業側が実行可能な操作と人間への引き継ぎ条件を設定するエージェント製品Presenceを発表した。",
+      "selection_reason": "企業エージェントの価値を回答精度ではなく、操作権限、承認、人間への引き継ぎという運用境界から確認できるため。",
+      "caveat": "対象企業向けの限定的な一般提供でセルフサービス製品ではない。解決率や引き継ぎ削減はOpenAI自身の運用実績で、独立比較ではない。",
+      "aoi_note": "導入時は、実行可能な操作、承認が必要な場面、人へ戻す条件、変更履歴を自社側で確認できるかを先に見たい。",
+      "topics": [
+        "operational-ai-authority"
+      ],
+      "role": "lead",
+      "observed_at": "2026-07-23T04:30:00+09:00",
+      "change": {
+        "kind": "new"
+      },
+      "verification": {
+        "status": "verified",
+        "checked_at": "2026-07-25T05:34:08+09:00"
+      }
+    },
+    {
+      "id": "sig-google-quantum-rl-control-20260722",
+      "title": "Googleは量子計算中の制御を強化学習で調整",
+      "source_url": "https://research.google/blog/towards-a-quantum-computer-that-learns-from-its-errors/",
+      "source_title": "Towards a quantum computer that learns from its errors",
+      "source_domain": "research.google",
+      "source_kind": "official",
+      "language": "en",
+      "context_ids": [
+        "ctx-operational-ai-authority"
+      ],
+      "source_fact": "Google Quantum AIはWillowプロセッサに人工的なドリフトを加えた実験で、強化学習による制御が誤り訂正コードの論理安定性を3.5倍にし、専門家の校正後にも論理誤り率を20%追加で下げたと報告した。",
+      "selection_reason": "AIが回答生成ではなく稼働中の機器制御を継続調整する例であり、人間の校正と自動制御の役割分担を具体的に考えられるため。",
+      "caveat": "Willow上の研究実験で、人工的なドリフトを含む条件での結果である。実用的な大規模量子計算の完成を示すものではない。",
+      "aoi_note": "自動調整の改善幅だけでなく、許容範囲、停止条件、人間の校正へ戻す閾値を観測可能にしたい。",
+      "topics": [
+        "operational-ai-authority"
+      ],
+      "role": "major",
+      "observed_at": "2026-07-23T04:30:00+09:00",
+      "change": {
+        "kind": "new"
+      },
+      "verification": {
+        "status": "verified",
+        "checked_at": "2026-07-25T05:34:08+09:00"
+      }
+    },
+    {
+      "id": "sig-n8n-agent-viewer-escalation-20260708",
+      "title": "n8nのAI Agentsで閲覧者がノード実行へ到達",
+      "source_url": "https://github.com/n8n-io/n8n/security/advisories/GHSA-x5vx-c2c8-m3w9",
+      "source_title": "AI Agents Project Viewer Privilege Escalation via run_node_tool",
+      "source_domain": "github.com",
+      "source_kind": "advisory",
+      "language": "en",
+      "context_ids": [
+        "ctx-operational-ai-authority"
+      ],
+      "source_fact": "n8nのAI Agents機能では、読み取り専用のProject Viewerがノードツール付きエージェントと対話し、利用者自身の実行権限を確認しないままプロジェクトの認証情報でノードを実行できる脆弱性があった。",
+      "selection_reason": "会話権限とツール実行権限を分けなかった場合に、エージェント経由で資格情報と操作へ到達する具体的な失敗を確認できるため。",
+      "caveat": "GitHub Advisoryは公開日を2026年7月8日と示しており、7月23日の新規発表ではなく当日の監視窓で確認された項目である。修正版は2.29.8および2.30.1以降。",
+      "aoi_note": "エージェントとの会話可否ではなく、要求した利用者が各ノードと資格情報を実行できるかをツール呼び出しごとに検証したい。",
+      "topics": [
+        "operational-ai-authority"
+      ],
+      "role": "major",
+      "observed_at": "2026-07-23T04:30:00+09:00",
+      "change": {
+        "kind": "new"
+      },
+      "verification": {
+        "status": "verified",
+        "checked_at": "2026-07-25T05:34:09+09:00"
+      }
+    }
+  ],
+  "topics": [
+    {
+      "id": "operational-ai-authority",
+      "label_ja": "運用AIの権限",
+      "label_en": "Operational AI authority",
+      "description": "業務と研究に入るAIの権限、引き継ぎ、継続調整、検証を扱う。"
+    }
+  ]
+}

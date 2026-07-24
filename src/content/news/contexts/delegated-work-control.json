@@ -1,0 +1,32 @@
+{
+  "schema_version": "aoi.news.context.v1",
+  "id": "ctx-delegated-work-control",
+  "slug": "delegated-work-control",
+  "publication_status": "public",
+  "title": "Delegated Work Control",
+  "current_view": "AIへの委任は担当の置き換えではなく、依頼、実行、検証、停止を追跡できる経路の設計として扱う必要がある。",
+  "updated_at": "2026-07-25T06:12:29+09:00",
+  "operator_context": {
+    "authority": "エージェントへ渡す作業範囲と接続先を列挙する。",
+    "control": "完了条件、承認、取り消し、停止、再開の主体を決める。",
+    "evidence": "単発操作だけでなく、行動系列と成果物の検証記録を残す。"
+  },
+  "supporting_signal_ids": [
+    "sig-jira-delegation-20260720",
+    "sig-openai-long-horizon-safety-20260720",
+    "sig-nvidia-siggraph-agentic-tools-20260720"
+  ],
+  "revisions": [
+    {
+      "id": "rev-delegated-work-control-001",
+      "changed_at": "2026-07-25T06:12:29+09:00",
+      "change_reason": "このEditionの公開情報から、運用判断に必要な境界を初期整理した。",
+      "resulting_view": "AIへの委任は担当の置き換えではなく、依頼、実行、検証、停止を追跡できる経路の設計として扱う必要がある。",
+      "evidence_signal_ids": [
+        "sig-jira-delegation-20260720",
+        "sig-openai-long-horizon-safety-20260720",
+        "sig-nvidia-siggraph-agentic-tools-20260720"
+      ]
+    }
+  ]
+}

@@ -30,6 +30,7 @@ export interface NewsSignal {
     previous_signal_ids?: string[];
   };
   source_fact: string;
+  selection_reason: string;
   aoi_note: string;
   caveat?: string;
   topics: string[];
@@ -49,7 +50,7 @@ export interface NewsTopic {
   description?: string;
 }
 
-export interface NewsEdition {
+interface NewsEditionBase {
   schema_version: 'aoi.news.edition.v1';
   edition_id: string;
   edition_date: string;
@@ -63,6 +64,21 @@ export interface NewsEdition {
   items: NewsSignal[];
   topics: NewsTopic[];
 }
+
+export type NewsEdition = NewsEditionBase & (
+  | {
+    coverage_kind: 'selection-window';
+    coverage_start_at: string;
+    coverage_end_at: string;
+    coverage_observed_at?: never;
+  }
+  | {
+    coverage_kind: 'selection-snapshot';
+    coverage_observed_at: string;
+    coverage_start_at?: never;
+    coverage_end_at?: never;
+  }
+);
 
 export interface NewsContextRevision {
   id: string;

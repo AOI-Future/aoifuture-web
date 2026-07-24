@@ -43,6 +43,7 @@ const routes = [
   ...visibleEditions.map((edition) => [`news/${edition.edition_id}/index.html`, `https://aoifuture.com/news/${edition.edition_id}/`, 'CollectionPage']),
   ...visibleContexts.map((context) => [`news/context/${context.slug}/index.html`, `https://aoifuture.com/news/context/${context.slug}/`, 'WebPage']),
   ['news/archive/index.html', 'https://aoifuture.com/news/archive/', 'CollectionPage'],
+  ['news/editorial-policy/index.html', 'https://aoifuture.com/news/editorial-policy/', 'WebPage'],
 ];
 const hiddenRoutes = [
   ...hiddenEditions.map((edition) => `news/${edition.edition_id}/index.html`),
@@ -53,6 +54,20 @@ const cssPaths = new Set();
 const latestReviewedAt = new Map(allEvents.map((event) => [event.edition_id, event.published_at]));
 const forbiddenFontOrigins = /(?:fonts\.googleapis\.com|fonts\.gstatic\.com)/i;
 const reviewOnlyWording = /EDITORIAL REVIEW PREVIEW|NON-PRODUCTION|review-only|No production publication/i;
+
+if (expectedMode === 'production') {
+  const expectedPublicIds = ['2026-07-21-0341', '2026-07-22-0430', '2026-07-23-0430', '2026-07-24'];
+  const actualPublicIds = visibleEditions.map((edition) => edition.edition_id).sort();
+  if (JSON.stringify(actualPublicIds) !== JSON.stringify(expectedPublicIds)) {
+    failures.push(`production Editions: expected ${expectedPublicIds.join(', ')}, received ${actualPublicIds.join(', ')}`);
+  }
+  const snapshot = visibleEditions.find((edition) => edition.edition_id === '2026-07-23-0430');
+  if (!snapshot || snapshot.coverage_kind !== 'selection-snapshot'
+    || snapshot.coverage_observed_at !== '2026-07-23T04:30:00+09:00'
+    || 'coverage_start_at' in snapshot || 'coverage_end_at' in snapshot) {
+    failures.push('production Editions: 2026-07-23-0430 must be the exact evidence-bounded selection snapshot');
+  }
+}
 
 for (const [relativePath, expectedCanonical, expectedType] of routes) {
   const path = join(clientRoot, relativePath);
@@ -79,6 +94,16 @@ for (const [relativePath, expectedCanonical, expectedType] of routes) {
       if (jsonLd['@type'] !== expectedType || JSON.stringify(jsonLd).includes('NewsArticle')) failures.push(`${relativePath}: JSON-LD type invalid`);
       const editionId = relativePath.match(/^news\/([0-9-]+)\/index\.html$/)?.[1];
       if (editionId && jsonLd.dateModified !== latestReviewedAt.get(editionId)) failures.push(`${relativePath}: dateModified invalid`);
+      if (editionId) {
+        const edition = visibleEditions.find((item) => item.edition_id === editionId);
+        const expectedCoverage = edition?.coverage_kind === 'selection-window'
+          ? `${edition.coverage_start_at}/${edition.coverage_end_at}`
+          : edition?.coverage_observed_at;
+        if (jsonLd.temporalCoverage !== expectedCoverage) failures.push(`${relativePath}: temporalCoverage invalid`);
+        for (const signal of edition?.items ?? []) {
+          if (!html.includes(signal.selection_reason)) failures.push(`${relativePath}: selection_reason missing for ${signal.id}`);
+        }
+      }
     } catch (cause) { failures.push(`${relativePath}: JSON-LD invalid (${cause.message})`); }
   }
   for (const [, href] of html.matchAll(/<link\b[^>]*\bhref=["']([^"']+\.css)["'][^>]*>/gi)) cssPaths.add(join(clientRoot, href.replace(/^\//, '')));
@@ -106,6 +131,15 @@ for (const route of hiddenRoutes) {
 }
 
 if (expectedMode === 'production') {
+  const visibleTerms = new Set([
+    ...visibleEditions.flatMap((edition) => [
+      edition.edition_id,
+      edition.title,
+      ...edition.items.flatMap((signal) => [signal.title, signal.source_url, signal.source_title]),
+    ]),
+    ...visibleContexts.flatMap((context) => [context.id, context.slug, context.title]),
+    ...visibleEvents.flatMap((event) => [event.event_id, event.title, event.summary, event.edition_url]),
+  ]);
   const hiddenTerms = [
     ...hiddenEditions.flatMap((edition) => [
       ...(edition.edition_id.length > 10 ? [edition.edition_id] : []),
@@ -114,7 +148,7 @@ if (expectedMode === 'production') {
     ]),
     ...hiddenContexts.flatMap((context) => [context.id, context.slug, context.title]),
     ...allEvents.filter((event) => !visibleIds.has(event.edition_id)).flatMap((event) => [event.event_id, event.title, event.summary, event.edition_url]),
-  ].filter((term) => typeof term === 'string' && term.length >= 4);
+  ].filter((term) => typeof term === 'string' && term.length >= 4 && !visibleTerms.has(term));
   const publicArtifacts = walk(clientRoot).filter((path) => /(?:\/news\/.*\.(?:html|xml)|sitemap.*\.xml)$/.test(path));
   const publicArtifactContents = publicArtifacts.map((path) => [path, readFileSync(path, 'utf8')]);
   const corpus = publicArtifactContents.map(([, content]) => content).join('\n');

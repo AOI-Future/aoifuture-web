@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  coverageChronologyAt,
   getContextBySlug,
   getEditionById,
   loadNewsCatalog,
@@ -18,13 +19,35 @@ const privateKeys = [
 ];
 
 describe('AOIFUTURE News public loader', () => {
+  it('projects four public Editions in evidence chronology with truthful coverage', () => {
+    const production = loadNewsCatalog('production');
+    expect(production.editions.map((edition) => edition.edition_id)).toEqual([
+      '2026-07-24',
+      '2026-07-23-0430',
+      '2026-07-22-0430',
+      '2026-07-21-0341',
+    ]);
+    expect(production.editions.map(coverageChronologyAt)).toEqual([
+      '2026-07-24T15:01:05+09:00',
+      '2026-07-23T04:30:00+09:00',
+      '2026-07-22T04:30:40+09:00',
+      '2026-07-21T03:41:00+09:00',
+    ]);
+    expect(production.editions.slice(1).map((edition) => edition.items.length)).toEqual([3, 4, 3]);
+    expect(production.editions.flatMap((edition) => edition.items).every((signal) => signal.selection_reason.trim().length > 0)).toBe(true);
+  });
+
   it('loads the staged catalog deterministically and never falls back for unknown keys', () => {
     const first = loadNewsCatalog();
     const second = loadNewsCatalog();
 
     expect(first).toEqual(second);
-    expect(first.editions.map((edition) => edition.edition_date)).toEqual(['2026-07-24', '2026-07-23']);
-    expect(first.contexts.map((context) => context.slug)).toEqual(['agent-authority', 'connected-ai-boundaries']);
+    expect(first.editions.map((edition) => edition.edition_id)).toEqual([
+      '2026-07-24', '2026-07-23-0900', '2026-07-23-0430', '2026-07-22-0430', '2026-07-21-0341',
+    ]);
+    expect(first.contexts.map((context) => context.slug)).toEqual([
+      'agent-authority', 'ai-delivery-evidence', 'connected-ai-boundaries', 'delegated-work-control', 'operational-ai-authority',
+    ]);
     expect(first.editions[0].items).toHaveLength(6);
     expect(first.editions[0].items.map((signal) => signal.id)).toEqual([
       'sig-openai-health-20260724',
@@ -35,7 +58,8 @@ describe('AOIFUTURE News public loader', () => {
       'sig-authjs-fail-open-20260724',
     ]);
     expect(getEditionById('2026-07-24')?.edition_id).toBe('2026-07-24');
-    expect(getEditionById('2026-07-23')?.edition_id).toBe('2026-07-23');
+    expect(getEditionById('2026-07-23-0430')?.edition_id).toBe('2026-07-23-0430');
+    expect(getEditionById('2026-07-23-0900')?.publication_status).toBe('review-only');
     expect(getEditionById('2099-01-01')).toBeUndefined();
     expect(getContextBySlug('agent-authority')?.id).toBe('ctx-agent-authority');
     expect(getContextBySlug('connected-ai-boundaries')?.id).toBe('ctx-connected-ai-boundaries');
@@ -95,9 +119,15 @@ describe('AOIFUTURE News public loader', () => {
   it('projects only the closed public graph in production', () => {
     const review = loadNewsCatalog('review');
     const production = loadNewsCatalog('production');
-    expect(review.editions.map((item) => item.edition_id)).toEqual(['2026-07-24', '2026-07-23']);
-    expect(production.editions.map((item) => item.edition_id)).toEqual(['2026-07-24']);
-    expect(production.contexts.map((item) => item.slug)).toEqual(['connected-ai-boundaries']);
+    expect(review.editions.map((item) => item.edition_id)).toEqual([
+      '2026-07-24', '2026-07-23-0900', '2026-07-23-0430', '2026-07-22-0430', '2026-07-21-0341',
+    ]);
+    expect(production.editions.map((item) => item.edition_id)).toEqual([
+      '2026-07-24', '2026-07-23-0430', '2026-07-22-0430', '2026-07-21-0341',
+    ]);
+    expect(production.contexts.map((item) => item.slug)).toEqual([
+      'ai-delivery-evidence', 'connected-ai-boundaries', 'delegated-work-control', 'operational-ai-authority',
+    ]);
   });
 
   it('orders equal publication instants by descending full Edition ID', () => {

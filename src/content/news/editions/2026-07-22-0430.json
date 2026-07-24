@@ -1,0 +1,139 @@
+{
+  "schema_version": "aoi.news.edition.v1",
+  "edition_id": "2026-07-22-0430",
+  "edition_date": "2026-07-22",
+  "coverage_kind": "selection-window",
+  "coverage_start_at": "2026-07-22T00:00:00+09:00",
+  "coverage_end_at": "2026-07-22T04:30:40+09:00",
+  "publication_status": "public",
+  "generated_at": "2026-07-25T06:12:29+09:00",
+  "published_at": "2026-07-25T06:12:29+09:00",
+  "title": "モデル性能の外側で、AI実装の差がつく",
+  "dek": "脆弱性の修正、ローカルでの切り分け、仕事単位の推論費用、GPU間通信。AIを動かし続ける基盤の新着を読む。",
+  "edition_note": "新しいモデルの点数だけでは、導入後の速さも安全性も決まらない。修正の承認、コードの持ち出し、総費用、通信待ちまで測る必要がある。",
+  "items": [
+    {
+      "id": "sig-google-codemender-preview-20260721",
+      "title": "CodeMenderが脆弱性の検証から修正案までを扱う",
+      "source_url": "https://cloud.google.com/blog/products/identity-security/find-and-fix-software-vulnerabilities-with-codemender/",
+      "source_title": "Now in preview: Find and fix software vulnerabilities with CodeMender",
+      "source_domain": "cloud.google.com",
+      "source_kind": "official",
+      "language": "en",
+      "context_ids": [
+        "ctx-ai-delivery-evidence"
+      ],
+      "source_fact": "Google Cloudは、コードを走査し、概念実証やシミュレーションで悪用可能性を確認し、修正案の作成まで行うCodeMenderをプレビュー公開した。",
+      "selection_reason": "脆弱性の検出数ではなく、悪用可能性の確認、修正差分、人間の承認、ロールバックまでを一つの運用として点検できるため。",
+      "caveat": "プレビュー段階のベンダー発表であり、誤修正率や一般環境での修正品質を示す独立比較ではない。",
+      "aoi_note": "自動修正を有効にする前に、再現テスト、差分承認、失敗時の復旧、修正後の回帰確認を同じ手順に入れたい。",
+      "topics": [
+        "ai-delivery-infrastructure"
+      ],
+      "role": "lead",
+      "observed_at": "2026-07-22T04:30:40+09:00",
+      "change": {
+        "kind": "new"
+      },
+      "verification": {
+        "status": "verified",
+        "checked_at": "2026-07-25T05:34:05+09:00"
+      }
+    },
+    {
+      "id": "sig-cisco-antares-localization-20260721",
+      "title": "Cisco Antaresは小型モデルで脆弱箇所を絞る",
+      "source_url": "https://blogs.cisco.com/ai/introducing-antares-the-most-efficient-open-weight-ai-models-for-vulnerability-localization",
+      "source_title": "Introducing Antares: Highly Efficient Open Weight AI Models for Vulnerability Localization",
+      "source_domain": "blogs.cisco.com",
+      "source_kind": "official",
+      "language": "en",
+      "published_at": "2026-07-21T21:55:52+09:00",
+      "context_ids": [
+        "ctx-ai-delivery-evidence"
+      ],
+      "source_fact": "Ciscoは、脆弱性の説明からコードベース内の該当箇所を探すAntares-350MとAntares-1Bをオープンウェイトで公開し、ローカル実行できる規模だと説明した。",
+      "selection_reason": "機密コードをクラウドへ送らずに一次切り分けを行う選択肢と、その機能範囲の限界を同時に確認できるため。",
+      "caveat": "Ciscoが示す優位性は脆弱箇所の特定タスクに関するベンチマークで、悪用再現、影響評価、修正までを担うモデルではない。",
+      "aoi_note": "ローカル実行の可否だけでなく、候補箇所の再現率、見逃し、専門家が読む差分量を自社コードで測りたい。",
+      "topics": [
+        "ai-delivery-infrastructure"
+      ],
+      "role": "major",
+      "observed_at": "2026-07-22T04:30:40+09:00",
+      "change": {
+        "kind": "new"
+      },
+      "verification": {
+        "status": "verified",
+        "checked_at": "2026-07-25T05:34:06+09:00"
+      }
+    },
+    {
+      "id": "sig-gemini-36-flash-cost-20260721",
+      "title": "Gemini 3.6 Flashは仕事単位の推論費用を下げる",
+      "source_url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-6-flash-3-5-flash-lite-3-5-flash-cyber/",
+      "source_title": "Introducing Gemini 3.6 Flash, 3.5 Flash-Lite, and 3.5 Flash Cyber",
+      "source_domain": "blog.google",
+      "source_kind": "official",
+      "language": "en",
+      "published_at": "2026-07-22T00:00:00+09:00",
+      "context_ids": [
+        "ctx-ai-delivery-evidence"
+      ],
+      "source_fact": "GoogleはGemini 3.6 Flashについて、Artificial Analysis Indexで3.5 Flashより出力トークンを17%減らし、価格を入力100万トークン1.50ドル、出力100万トークン7.50ドルにしたと発表した。",
+      "selection_reason": "モデルの単価だけでなく、推論手順、ツール呼び出し、再試行を含む一仕事あたりの総費用へ評価軸を移せるため。",
+      "caveat": "17%はGoogleが引用する特定評価での比較で、自社タスクの完了率や総費用が同じ割合で改善する保証はない。",
+      "aoi_note": "代表タスクを固定し、完了率、出力トークン、ツール呼び出し、再試行、確認時間を旧モデルと並べたい。",
+      "topics": [
+        "ai-delivery-infrastructure"
+      ],
+      "role": "major",
+      "observed_at": "2026-07-22T04:30:40+09:00",
+      "change": {
+        "kind": "new"
+      },
+      "verification": {
+        "status": "verified",
+        "checked_at": "2026-07-25T05:34:07+09:00"
+      }
+    },
+    {
+      "id": "sig-nvidia-spectrum6-20260721",
+      "title": "Spectrum-6はAI基盤の通信待ちを押し下げる",
+      "source_url": "https://blogs.nvidia.com/blog/nvidia-spectrum-six-arrives-in-gigascale-ai-factories/",
+      "source_title": "NVIDIA Spectrum-6 Arrives in Gigascale AI Factories",
+      "source_domain": "blogs.nvidia.com",
+      "source_kind": "official",
+      "language": "en",
+      "published_at": "2026-07-22T00:00:20+09:00",
+      "context_ids": [
+        "ctx-ai-delivery-evidence"
+      ],
+      "source_fact": "NVIDIAはVera Rubin基盤向けに、前世代の2倍となる102.4TbpsのEthernetスイッチシステムSpectrum-6を発表した。",
+      "selection_reason": "AI基盤の性能がGPU単体ではなく、分散処理の通信待ちとネットワーク設計にも左右されることを具体的な製品更新から確認できるため。",
+      "caveat": "ギガスケールのAI基盤を対象にしたNVIDIAの製品発表であり、一般企業の環境に同じ効果や投資対効果が当てはまるとは限らない。",
+      "aoi_note": "新しい機器を選ぶ前に、現在の待ち時間を計算、通信、ストレージ、レビューへ分解して測りたい。",
+      "topics": [
+        "ai-delivery-infrastructure"
+      ],
+      "role": "brief",
+      "observed_at": "2026-07-22T04:30:40+09:00",
+      "change": {
+        "kind": "new"
+      },
+      "verification": {
+        "status": "verified",
+        "checked_at": "2026-07-25T05:34:07+09:00"
+      }
+    }
+  ],
+  "topics": [
+    {
+      "id": "ai-delivery-infrastructure",
+      "label_ja": "AI実装基盤",
+      "label_en": "AI delivery infrastructure",
+      "description": "AIを安全かつ持続的に動かす修正、推論費用、ネットワーク、検証の基盤を扱う。"
+    }
+  ]
+}
