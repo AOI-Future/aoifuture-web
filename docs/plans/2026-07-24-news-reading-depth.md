@@ -2,9 +2,9 @@
 
 > **For Hermes:** Use subagent-driven-development skill to implement this plan task-by-task.
 
-**Goal:** Give readers four truthful public Editions, an understandable editorial policy, visibly bounded Signal cards, and guarded scroll-assisted access to older Editions without turning AOIFUTURE News into an infinite feed or a reader-tracking system.
+**Goal:** Give readers four truthful, evidence-bounded public Editions—including an honestly labeled 2026-07-23 selection snapshot—an understandable editorial policy, visibly bounded Signal cards, and guarded scroll-assisted access to older Editions without turning AOIFUTURE News into an infinite feed or a reader-tracking system.
 
-**Architecture:** Add explicit coverage-window timestamps to each Edition and make coverage end—not publication time or route date—the chronology key for latest, archive, and progressive history. Keep `published_at` and Edition-event timestamps as the real editorial review/publication events, preserve a fixture-only review sample, and backfill three public Editions only from separately approved DailyNews source selections. Render one server Edition and a normal previous-Edition link first; after a real user scroll, progressively enhance that link with a guarded `IntersectionObserver` which appends one exact same-origin server article at a time while retaining manual, no-JavaScript, failure, URL restoration, accessibility, finite-history, and privacy guarantees.
+**Architecture:** Model Edition coverage as an evidence-bounded discriminated union: a supported selection window or a single observed selection snapshot. Derive one chronology instant from the active branch—not publication time or route date—for latest, archive, and progressive history, while keeping `published_at` and Edition-event timestamps as real editorial review/publication events. Preserve a fixture-only review sample, backfill three public Editions only from separately approved DailyNews source selections, and render one server Edition plus a normal previous-Edition link first; after real user scroll, progressively enhance that link with a guarded `IntersectionObserver` which appends one exact same-origin server article at a time while retaining manual, no-JavaScript, failure, URL restoration, accessibility, finite-history, and privacy guarantees.
 
 **Tech Stack:** Astro 6, TypeScript, JSON Schema 2020-12, Vitest, Playwright, Node.js build verification, static JSON content, Vercel Preview/production gates.
 
@@ -15,12 +15,14 @@
 - Start from clean branch `feature/aoifuture-news-reading-depth` at production main `d73c2464b1c565b57790570da8ab3e459ce288de`. Before implementation, re-run `git status --short --branch`, `git rev-parse HEAD`, and `git diff --stat origin/main...HEAD`; stop if the base or cleanliness differs.
 - The only deliverable from this planning task is this plan. Implementation, content drafting, source approval, pushing, deployment, scheduler changes, DNS, analytics, and domain normalization are separate gated work.
 - `edition_id` remains immutable route identity. `edition_date` remains its calendar prefix. Neither field claims when source news happened or when the Edition was published.
-- Add required RFC 3339 `coverage_start_at` and `coverage_end_at`. They state the actual source-selection window represented by an Edition. Validate `coverage_start_at <= coverage_end_at` by parsed instant.
-- Date/identity coherence is explicit: in `Asia/Tokyo`, the calendar date of `coverage_end_at` must equal `edition_date`, and `edition_date` must equal `edition_id.slice(0, 10)`. Do not derive or rewrite IDs from timestamps.
-- Catalog chronology is descending `coverage_end_at`, then descending `coverage_start_at`, then descending `published_at`, then descending `edition_id`. The latter two keys are deterministic tie-breaks for equal windows; tests must use exact equal-window fixtures.
+- Add required `coverage_kind` as the discriminator with exactly two values: `selection-window` or `selection-snapshot`. A window requires RFC 3339 `coverage_start_at` and `coverage_end_at`, prohibits `coverage_observed_at`, and validates parsed `coverage_start_at <= coverage_end_at`. A snapshot requires RFC 3339 `coverage_observed_at` and prohibits both interval bounds in canonical Edition JSON. Both branches describe source **selection** coverage, not publication time.
+- A public source-selection packet may retain null placeholders for transport compatibility, but canonical Edition JSON must omit every inapplicable coverage key. Schema, importer, shared validator, and loader fail closed on unknown kind, both branches, neither branch, missing branch fields, null canonical placeholders, or cross-branch fields.
+- The 2026-07-23 public Edition is exactly a `selection-snapshot` observed at `2026-07-23T04:30:00+09:00` (minute-precision evidence expressed as an RFC 3339 instant). No lower bound, arrival interval, source window, or claim that all items arrived by/within a period may be inferred from that snapshot.
+- Define `coverageChronologyAt(edition)` once as `coverage_end_at` for `selection-window` and `coverage_observed_at` for `selection-snapshot`. Date/identity coherence is explicit: the `Asia/Tokyo` calendar date of that chronology instant must equal `edition_date`, and `edition_date` must equal `edition_id.slice(0, 10)`. Do not derive or rewrite IDs from timestamps.
+- Catalog chronology is descending `coverageChronologyAt`, then descending branch-detail instant (`coverage_start_at` for a window, the same supported `coverage_observed_at` for a snapshot), then descending `published_at`, then descending `edition_id`. This yields a total tuple for mixed kinds without inventing a snapshot lower bound and retains deterministic equal-window tie behavior; tests must cover mixed kinds and exact equal-sort fixtures.
 - `published_at`, `generated_at`, Signal `published_at`/`observed_at`, Context revision timestamps, and RSS Edition-event `published_at` retain their current meanings. Never copy a 2026-07-21..23 source date into Edition or RSS publication time to simulate historical publication.
-- RSS remains an event feed ordered by actual event `published_at`; coverage timestamps may be described in body/metadata but must not replace event `<pubDate>` or GUID/revision chronology.
-- Production must contain exactly four public Editions representing coverage ending 2026-07-24, 2026-07-23, 2026-07-22, and 2026-07-21. Review mode may additionally expose the existing non-production review sample if it is re-identified without colliding with the real public 2026-07-23 Edition.
+- RSS remains an event feed ordered by actual event `published_at`; truthful selection-window/snapshot metadata may be described in body/metadata but must not replace event `<pubDate>` or GUID/revision chronology.
+- Production must contain exactly four public Editions whose chronology instants have `Asia/Tokyo` dates 2026-07-24, 2026-07-23, 2026-07-22, and 2026-07-21. Review mode may additionally expose the existing non-production review sample if it is re-identified without colliding with the real public 2026-07-23 Edition.
 - The existing review sample must not masquerade as the public 2026-07-23 backfill. Move/re-identify it as `2026-07-23-0900` in review-only canonical content or keep it fixture-only; the implementation owner must choose the least disruptive route after the content graph test is RED. In either case, preserve its sample wording/status and add `selection_reason` to every sample Signal.
 - Backfill candidate inputs are the exact DailyNews artifacts below. They are editorial inputs, not automatic publication authority:
   - `Report/DailyNews/digest/2026-07-21_news-roundup.md`
@@ -44,10 +46,11 @@
 
 | Concern | Required proof |
 |---|---|
-| Coverage contract | Required fields, valid RFC 3339 instants, start <= end, JST end date = `edition_date`, ID/date coherence, deterministic equal-window sort |
+| Coverage contract | Required known discriminator; exactly one valid window/snapshot branch; no canonical null/cross-branch keys; window start <= end; JST chronology date = `edition_date`; ID/date coherence; deterministic mixed/equal sort; exact 2026-07-23 snapshot |
 | Publication truth | Backfills have actual review/publication timestamps; RSS event times remain actual; no date is backfilled merely to look historical |
 | Editorial depth | Exactly four public Editions; 3–5 approved strong Signals in each backfill; no normalized URL/claim duplication with public 2026-07-24 |
 | Selection clarity | Required non-empty `selection_reason` in all canonical and fixture Signals; visible on cards; no internal-workflow leakage |
+| Coverage clarity | UI says “Selection window” only for windows and “Selection snapshot observed at” for snapshots; no snapshot is presented as an arrival/source interval |
 | Policy | `/news/editorial-policy/` has metadata, canonical, robots mode, sitemap inclusion, header link, and card-level link |
 | Card boundary | Surface, 1px border/accent, padding/gaps, separated semantic regions, source footer, stable DOM/tab order, two columns, no overflow |
 | Observer guard | Initial intersection does nothing; real user scroll arms; one intersection appends one Edition; sentinel follows the tail |
@@ -57,9 +60,9 @@
 | Privacy | No analytics/ranking/profiling/read tracking; automatic path records only local URL state |
 | Release | Writer → source Debug → Editorial Reviewer → Engineer → Debug → image Reviewer → Preview → Release Reviewer → production |
 
-## Task 1: Lock the coverage-window and selection-reason contracts
+## Task 1: Lock the evidence-bounded coverage union and selection-reason contracts
 
-**Objective:** Make chronology and selection rationale explicit, required, and fail-closed before any content migration.
+**Objective:** Make selection-window/snapshot evidence, chronology, and selection rationale explicit, required, and fail-closed before any content migration.
 
 **Files:**
 - Modify: `schemas/aoi-news-edition-v1.schema.json:7-83`
@@ -72,18 +75,31 @@
 
 **Step 1: Write RED schema and semantic tests**
 
-Add fixture defaults and assertions equivalent to:
+Add one valid fixture per branch and assertions equivalent to:
 
 ```js
-const edition = () => ({
+const windowEdition = () => ({
   schema_version: 'aoi.news.edition.v1',
-  edition_id: '2026-07-23',
-  edition_date: '2026-07-23',
-  coverage_start_at: '2026-07-22T00:00:00+09:00',
-  coverage_end_at: '2026-07-23T08:59:59+09:00',
+  edition_id: '2026-07-22',
+  edition_date: '2026-07-22',
+  coverage_kind: 'selection-window',
+  coverage_start_at: '2026-07-21T09:00:00+09:00',
+  coverage_end_at: '2026-07-22T04:30:00+09:00',
   generated_at: stamp2,
   published_at: stamp2,
   // existing fields...
+});
+
+const snapshotEdition = () => ({
+  // same existing non-coverage fields as windowEdition(), without either bound
+  schema_version: 'aoi.news.edition.v1',
+  edition_id: '2026-07-23',
+  edition_date: '2026-07-23',
+  coverage_kind: 'selection-snapshot',
+  coverage_observed_at: '2026-07-23T04:30:00+09:00',
+  generated_at: stamp2,
+  published_at: stamp2,
+  // existing fields; coverage_start_at and coverage_end_at are omitted, never null
 });
 
 const item = (id, url, overrides = {}) => ({
@@ -93,16 +109,21 @@ const item = (id, url, overrides = {}) => ({
 });
 ```
 
-Cover all of these failures with stable codes/paths:
+Cover all of these failures/positive branches with stable codes/paths:
 
-1. either coverage field missing;
-2. malformed or impossible date-time;
-3. `coverage_start_at` later than `coverage_end_at`;
-4. coverage end whose JST date differs from `edition_date`;
-5. `edition_date` differing from the ID prefix;
-6. missing, empty, whitespace-only, HTML-bearing, or over-limit `selection_reason`;
-7. unknown/private selection fields such as `internal_score`, `rank`, or `selected_by_model`;
-8. current canonical Signals and the non-production fixture serialize with a non-empty reason.
+1. valid `selection-window` and valid `selection-snapshot` pass;
+2. missing or unknown `coverage_kind` fails;
+3. a window missing either bound, containing `coverage_observed_at`, containing canonical null placeholders, or having malformed/impossible bounds fails;
+4. a snapshot missing `coverage_observed_at`, containing either interval key, containing canonical null placeholders, or having a malformed/impossible observation instant fails;
+5. objects expressing both branches, neither branch, or a kind/field conflict fail closed;
+6. `coverage_start_at` later than `coverage_end_at` fails;
+7. active chronology instant whose JST date differs from `edition_date` fails for each branch;
+8. `edition_date` differing from the ID prefix fails for each branch;
+9. public source-pack transport objects with documented null placeholders can normalize to the active branch, but canonical serialization omits those keys rather than retaining null;
+10. missing, empty, whitespace-only, HTML-bearing, or over-limit `selection_reason` fails;
+11. unknown/private selection fields such as `internal_score`, `rank`, or `selected_by_model` fail;
+12. current canonical Signals and the non-production fixture serialize with a non-empty reason;
+13. the exact public 2026-07-23 fixture passes only as `selection-snapshot` at `2026-07-23T04:30:00+09:00` with no interval bounds.
 
 **Step 2: Run focused tests and confirm RED**
 
@@ -110,16 +131,17 @@ Cover all of these failures with stable codes/paths:
 npm run test:news -- --run tests/news-contract.test.mjs tests/news-ui.test.ts
 ```
 
-Expected: nonzero because coverage keys are unknown/missing, selection rationale is not in the schema/type, and chronology still uses publication time.
+Expected: nonzero because the discriminator/branch keys are unknown or unvalidated, selection rationale is not in the schema/type, and chronology still uses publication time.
 
 **Step 3: Implement the minimal contract**
 
-- Add both coverage keys to the Edition required/property lists with `format: date-time`.
+- Add required `coverage_kind` and encode the two exact-key branches with JSON Schema `oneOf`/conditionals: window requires both bounds and forbids observation; snapshot requires observation and forbids both bounds. Keep `additionalProperties: false` semantics and reject null in canonical JSON.
 - Add `selection_reason` to the Signal required/property lists using `text500` unless Editorial Reviewer approves a tighter existing text definition.
-- Add fields to exact-key allowlists, TypeScript interfaces, importer normalization, and public validation.
+- Define `NewsEdition` as a TypeScript discriminated union (or an Edition base intersected with the two coverage variants), then add the discriminator and branch fields to exact-key allowlists, importer normalization, and public validation without weakening unknown-key rejection.
+- Permit documented null placeholders only at the public source-pack/import boundary. Normalize them away before canonical validation/serialization; never make canonical fields nullable or silently repair a conflicting kind.
 - Parse instants rather than compare strings.
-- Convert `coverage_end_at` to an `Asia/Tokyo` date with `Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Tokyo', ... })`; do not use host-local timezone.
-- Emit distinct validation codes such as `coverage_window_order` and `coverage_date_coherence` in the shared validator; the Astro loader should surface those shared failures rather than implement contradictory semantics.
+- Centralize `coverageChronologyAt()` and branch-detail extraction, and convert the active chronology instant to an `Asia/Tokyo` date with `Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Tokyo', ... })`; do not use host-local timezone.
+- Emit distinct validation codes such as `coverage_kind`, `coverage_branch_missing`, `coverage_branch_conflict`, `coverage_cross_branch_field`, `coverage_window_order`, and `coverage_date_coherence` in the shared validator; the Astro loader should surface those shared failures rather than implement contradictory semantics.
 - Retain the ban on arbitrary private keys and HTML in public text.
 
 **Step 4: Run tests and confirm GREEN**
@@ -136,18 +158,19 @@ Expected: both exit 0; all negative cases fail only when individually injected.
 ```bash
 git add schemas/aoi-news-edition-v1.schema.json scripts/news-contract/validator.mjs src/lib/news/types.ts src/lib/news/load-news.ts fixtures/news-contract/non-production/import-bundle.json tests/news-contract.test.mjs tests/news-ui.test.ts
 git diff --cached --check
-git commit -m "feat: define News coverage and selection rationale"
+git commit -m "feat: define News coverage union and selection rationale"
 ```
 
 ## Task 2: Make coverage chronology the single catalog order
 
-**Objective:** Ensure latest, archive, static previous links, and progressive history all consume one deterministic coverage-based order while RSS remains publication-event ordered.
+**Objective:** Ensure latest, archive, static previous links, progressive history, UI labels, and metadata consume one truthful branch-aware coverage contract while RSS remains publication-event ordered.
 
 **Files:**
 - Modify: `src/lib/news/load-news.ts:169-221`
 - Modify: `src/pages/news/index.astro:10-27`
 - Modify: `src/pages/news/[editionId].astro:12-47`
 - Modify: `src/components/news/NewsArchiveNav.astro:8-76`
+- Modify: `src/components/news/NewsDeskHeader.astro`
 - Modify: `src/lib/news/metadata.mjs`
 - Modify: `scripts/news-contract/rolling-feed.mjs` only if coverage metadata is deliberately exposed without changing event order
 - Modify: `tests/news-ui.test.ts`
@@ -156,17 +179,19 @@ git commit -m "feat: define News coverage and selection rationale"
 
 **Step 1: Write RED chronology tests**
 
-Create isolated valid Editions with deliberately misleading publication order:
+Create isolated valid Editions with deliberately misleading publication order and mixed coverage kinds:
 
 ```ts
 const ordered = validateNewsCatalog([
-  { ...base, edition_id: '2026-07-21', edition_date: '2026-07-21', coverage_end_at: '2026-07-21T23:00:00+09:00', published_at: '2026-07-25T12:00:00+09:00' },
-  { ...next, edition_id: '2026-07-22', edition_date: '2026-07-22', coverage_end_at: '2026-07-22T23:00:00+09:00', published_at: '2026-07-25T11:00:00+09:00' },
+  { ...base, edition_id: '2026-07-21', edition_date: '2026-07-21', coverage_kind: 'selection-window', coverage_start_at: '2026-07-21T09:00:00+09:00', coverage_end_at: '2026-07-21T23:00:00+09:00', published_at: '2026-07-25T12:00:00+09:00' },
+  { ...next, edition_id: '2026-07-22', edition_date: '2026-07-22', coverage_kind: 'selection-snapshot', coverage_observed_at: '2026-07-22T23:00:00+09:00', published_at: '2026-07-25T11:00:00+09:00' },
 ], [], 'review');
 expect(ordered.editions.map(({ edition_id }) => edition_id)).toEqual(['2026-07-22', '2026-07-21']);
 ```
 
-Also prove equal end but different start, fully equal window but different publication time, and fully equal window/publication but different ID all sort by the fixed key sequence. Assert `/news/`, archive, and `previous` props use that exact array. Separately assert RSS event order still follows event `published_at`/revision rules and never uses coverage chronology for `<pubDate>`.
+Also prove: two windows with equal end sort by start; a window and snapshot with equal chronology instants sort by their branch-detail tuple without treating the snapshot as an interval; equal chronology/detail sorts by publication time and then ID; and an exact full-tie fixture is stable. Assert `/news/`, archive, and `previous` props use that exact array. Separately assert RSS event order still follows event `published_at`/revision rules and never uses coverage chronology for `<pubDate>`.
+
+Add UI and metadata assertions for both branches. A window renders a localized “Selection window” range; a snapshot renders a localized “Selection snapshot observed at” instant and never contains “arrival window,” “source window,” “from,” or an inferred lower bound. JSON-LD `temporalCoverage` is `start/end` for a window and the exact observation instant for a snapshot, while `datePublished` remains `edition.published_at` and `dateModified` remains event-derived.
 
 **Step 2: Run chronology tests and confirm RED**
 
@@ -182,13 +207,13 @@ Export or locally centralize:
 
 ```ts
 export const compareNewsEditions = (a: NewsEdition, b: NewsEdition) =>
-  Date.parse(b.coverage_end_at) - Date.parse(a.coverage_end_at)
-  || Date.parse(b.coverage_start_at) - Date.parse(a.coverage_start_at)
+  Date.parse(coverageChronologyAt(b)) - Date.parse(coverageChronologyAt(a))
+  || Date.parse(coverageBranchDetailAt(b)) - Date.parse(coverageBranchDetailAt(a))
   || Date.parse(b.published_at) - Date.parse(a.published_at)
   || b.edition_id.localeCompare(a.edition_id);
 ```
 
-Use only the sorted catalog array in latest-page selection, individual-page previous lookup, archive iteration, and history-link rendering. If JSON-LD exposes coverage, use `temporalCoverage` as an interval string while retaining `datePublished: edition.published_at` and event-derived `dateModified`.
+`coverageBranchDetailAt()` returns `coverage_start_at` for a window and the same evidence-supported `coverage_observed_at` for a snapshot; it does not invent a second snapshot bound. Use only the sorted catalog array in latest-page selection, individual-page previous lookup, archive iteration, and history-link rendering. Centralize branch-aware display/metadata helpers so the UI and JSON-LD cannot disagree: `temporalCoverage` uses an interval for a window and the exact instant for a snapshot, with unchanged publication/revision fields.
 
 **Step 4: Run chronology tests and confirm GREEN**
 
@@ -197,14 +222,14 @@ Run the Step 2 command again. Expected: exit 0, including the explicit RSS non-r
 **Step 5: Commit the chronology slice**
 
 ```bash
-git add src/lib/news/load-news.ts src/pages/news/index.astro src/pages/news/'[editionId].astro' src/components/news/NewsArchiveNav.astro src/lib/news/metadata.mjs scripts/news-contract/rolling-feed.mjs tests/news-ui.test.ts tests/news-metadata.test.mjs tests/news-rolling-feed.test.mjs
+git add src/lib/news/load-news.ts src/pages/news/index.astro src/pages/news/'[editionId].astro' src/components/news/NewsArchiveNav.astro src/components/news/NewsDeskHeader.astro src/lib/news/metadata.mjs scripts/news-contract/rolling-feed.mjs tests/news-ui.test.ts tests/news-metadata.test.mjs tests/news-rolling-feed.test.mjs
 git diff --cached --check
-git commit -m "feat: order News editions by coverage window"
+git commit -m "feat: order and label News selection coverage"
 ```
 
 ## Task 3: Prepare and approve the three source-selection packets
 
-**Objective:** Establish editorial authority, deduplication, truthful windows, and public-safe Signal copy before an Engineer changes canonical content.
+**Objective:** Establish editorial authority, deduplication, evidence-bounded window/snapshot coverage, and public-safe Signal copy before an Engineer changes canonical content.
 
 **Files:**
 - Create outside the app runtime in a task-owned review workspace: three source-selection packets for 2026-07-21, 2026-07-22, and 2026-07-23
@@ -216,7 +241,9 @@ git commit -m "feat: order News editions by coverage window"
 For each date, record:
 
 ```text
-coverage_start_at / coverage_end_at with evidence
+coverage_kind plus the supported branch fields with evidence
+  window: coverage_start_at / coverage_end_at
+  snapshot: coverage_observed_at only
 3–5 selected direct URLs
 source title / source kind / source publication timestamp when known
 one public-safe source_fact
@@ -231,7 +258,7 @@ Use `shugo-writer` for prose. Do not copy DailyNews body text as a public Signal
 
 **Step 2: Source Debug gate**
 
-An independent source Debugger reopens every selected direct URL and checks claim locator, source kind, title, publication timestamp, caveat, normalized URL, and whether the claimed coverage window is supported. It also computes normalized URL/claim overlap against public `src/content/news/editions/2026-07-24.json` and the other two packets.
+An independent source Debugger reopens every selected direct URL and checks claim locator, source kind, title, publication timestamp, caveat, normalized URL, and whether the declared coverage branch is supported. It also computes normalized URL/claim overlap against public `src/content/news/editions/2026-07-24.json` and the other two packets. Treat the approved public packet with SHA-256 `718b1301f7864acde929d9ce332ce14185df5293531f52b77df9eaa96a581bb6` as the evidence boundary: its 2026-07-23 record supports only a selection snapshot observed at `2026-07-23T04:30:00+09:00`, not a lower bound or all-item arrival interval.
 
 Required result: `PASS`, `FAIL`, or `BLOCKED`, with each source URL and claim location. A local review request, roundup score, or pipeline success is not approval.
 
@@ -245,7 +272,7 @@ If any date has fewer than three approved strong items, do not lower the bar or 
 
 **Step 5: Handoff only approved packets to Engineer**
 
-The handoff must name exact approved URLs, coverage instants, public text, receipt/claim-locator evidence, actual approval timestamp, and rejected items. No private source body, local secret, internal score, or hidden reasoning enters `src/content/news`.
+The handoff must name exact approved URLs, `coverage_kind`, only the supported branch timestamps, public text, receipt/claim-locator evidence, actual approval timestamp, and rejected items. Public packet transport may retain explicit null placeholders for the inactive branch; Engineer must omit them from canonical Edition JSON. No private source body, local secret, internal score, hidden reasoning, or unsupported interval enters `src/content/news`.
 
 ## Task 4: Backfill three truthful public Editions and preserve the review fixture
 
@@ -281,6 +308,19 @@ expect(loadNewsCatalog('production').editions.slice(1).every((e) => e.items.leng
 
 Add a normalized source-URL uniqueness assertion across all public Editions and a fixture assertion that the sample is review-only, non-colliding, visibly labeled, and carries `selection_reason`. Assert each new Edition's `published_at` and revision-1 event `published_at` equal recorded review/publication evidence and are not merely its `edition_date` at a fabricated time.
 
+Assert the canonical 2026-07-23 object is exactly the snapshot branch:
+
+```ts
+expect(publicEdition('2026-07-23')).toMatchObject({
+  coverage_kind: 'selection-snapshot',
+  coverage_observed_at: '2026-07-23T04:30:00+09:00',
+});
+expect(publicEdition('2026-07-23')).not.toHaveProperty('coverage_start_at');
+expect(publicEdition('2026-07-23')).not.toHaveProperty('coverage_end_at');
+```
+
+For every other Edition, import only the evidence-supported branch. Add content-graph negatives for inactive null keys, both/neither branch fields, conflicting kind, unknown kind, and snapshot prose that claims an arrival/source window.
+
 **Step 2: Run content tests and confirm RED**
 
 ```bash
@@ -306,6 +346,7 @@ Inspect every staged file before copying exact approved public JSON into canonic
 **Step 4: Preserve publication truth**
 
 - Set each Edition `published_at` to the actual recorded editorial approval/publication event, even if all three are published on the same later day.
+- Copy `coverage_kind` and only active branch fields from the approved packet; omit inactive keys. For 2026-07-23, write only `coverage_observed_at: '2026-07-23T04:30:00+09:00'` and do not manufacture midnight/start/end fields.
 - Create revision-1 events at actual event times and order them deterministically if multiple Editions are approved in one session.
 - Do not alter Signal source publication timestamps.
 - Keep the existing public 2026-07-24 event timestamp `2026-07-24T15:01:05+09:00` unless a real later reviewed revision is added; a new revision uses a new actual timestamp.
@@ -486,6 +527,7 @@ Add tests proving a shared append primitive:
 - accepts only the current server-provided same-origin exact href/target ID;
 - requires one matching `[data-news-edition]`, one heading, and one matching fetched loader;
 - appends one article and advances the persistent target once;
+- preserves each appended article's server-rendered, branch-correct coverage label/instant without client-side interval synthesis;
 - does not execute fetched scripts;
 - rejects non-HTML, non-2xx, cross-origin, duplicate/cycle, missing/multiple article, mismatched ID, malformed next link, and concurrent calls;
 - manual invocation focuses the appended H2; automatic invocation does not;
@@ -606,7 +648,7 @@ git commit -m "feat: load older News editions after reader scroll"
 
 **Step 1: Write RED history-mode tests**
 
-Cover a synthetic four-public-Edition chain:
+Cover a synthetic four-public-Edition chain containing both coverage kinds and deliberately mixed publication chronology:
 
 - manual append uses one `pushState` and Back truncates one explicit action;
 - automatic append uses `replaceState`; two automatic appends do not add two Back entries;
@@ -615,6 +657,7 @@ Cover a synthetic four-public-Edition chain:
 - valid Back/Forward truncates/restores exact chains and reconnects observer only after later real scroll;
 - unknown, malformed, hidden, cyclic, or unreachable `through` follows only server links, preserves the successful prefix, removes invalid state with `replaceState`, and keeps manual fallback;
 - canonical and JSON-LD remain query-free.
+- restored/appended articles retain their original window-versus-snapshot labels, and the 2026-07-23 article retains the exact `2026-07-23T04:30:00+09:00` snapshot with no inferred bound.
 
 **Step 2: Run history tests and confirm RED**
 
@@ -662,7 +705,9 @@ git commit -m "fix: preserve News history during automatic loading"
 Refactor the verifier enough to inject a fresh build root and assert nonzero for:
 
 - fewer/more than four public Editions;
-- wrong coverage order or invalid coverage metadata;
+- unknown/missing `coverage_kind`, malformed branch instants, missing/cross-branch/null canonical fields, both/neither branches, invalid window order, or chronology/date/ID incoherence;
+- wrong mixed-kind chronology, equal-sort tie behavior, or anything other than the exact 2026-07-23 snapshot at `2026-07-23T04:30:00+09:00`;
+- snapshot UI/metadata described as an interval, arrival window, or source window;
 - missing policy route, canonical, metadata, or sitemap URL;
 - missing `selection_reason` in generated card HTML;
 - leaked internal term in selection rationale (`FreshRSS`, score/rank, DailyNews path, review receipt, prompt);
@@ -682,8 +727,9 @@ Expected: nonzero because the verifier does not know the new route/contract.
 
 **Step 3: Implement deterministic verification**
 
-- Build expected Edition route sets from validated, coverage-sorted content.
-- Assert production count exactly four and exact coverage-end date sequence.
+- Build expected Edition route sets from validated, discriminated-union content sorted by the centralized chronology/detail/publication/ID tuple.
+- Assert production count exactly four and exact chronology-instant JST date sequence; assert 2026-07-23 is the exact snapshot branch with inactive interval keys omitted.
+- Assert generated HTML truthfully labels both branches, and JSON-LD `temporalCoverage` is an interval only for windows and an exact instant for snapshots while publication metadata remains event-based.
 - Add `/news/editorial-policy/` to route and sitemap expectations.
 - Scan public serialized content/HTML for required selection rationale and forbidden internal-workflow keys/terms without banning legitimate public words by accident.
 - Keep `datePublished`/event feed assertions tied to real publication/event timestamps.
@@ -752,7 +798,7 @@ VERCEL_ENV=preview npm run verify:news-build:review
 VERCEL_ENV=preview npm run test:news:e2e
 ```
 
-Expected: exit 0; review route set includes policy and any explicitly retained review fixture, all rationale text, no overflow, and guarded observer behavior.
+Expected: exit 0; review route set includes policy and any explicitly retained review fixture, all rationale text, truthful window/snapshot labels, no overflow, and guarded observer behavior.
 
 **Step 4: Build and verify production mode without destructive cleanup**
 
@@ -763,7 +809,7 @@ VERCEL_ENV=production npm run verify:news-build:production
 VERCEL_ENV=production npm run test:news:e2e
 ```
 
-Expected: exit 0; exactly four public Edition routes plus News index/archive/policy/public Context routes; review sample absent; RSS publication events remain truthful.
+Expected: exit 0; exactly four public Edition routes plus News index/archive/policy/public Context routes; exact 2026-07-23 snapshot and mixed chronology pass; review sample is absent; RSS publication events remain truthful.
 
 **Step 5: Run the repository-wide relevant check**
 
@@ -804,7 +850,7 @@ Debugger checks out the Engineer SHA and records commit/tree, Node/npm versions,
 
 Re-run or independently inspect:
 
-- coverage required/order/date coherence/equal-window tie cases;
+- coverage discriminator/branch exclusivity/RFC 3339/window order/date coherence, canonical omission, mixed chronology, equal-sort tie cases, and the exact 2026-07-23 snapshot;
 - four public Editions, 3–5 Signals in each backfill, source approval packets, normalized URL and material-claim deduplication;
 - actual Edition/RSS event timestamps versus approval records; no historical backdating;
 - required `selection_reason` in canonical current content and review fixture; internal-term leak negatives;
@@ -872,7 +918,7 @@ The decision packet must include:
 
 - exact candidate SHA/tree and Preview deployment ID/URL;
 - four-public-Edition route/feed/sitemap manifest;
-- coverage windows and actual publication/event timestamps;
+- each Edition's truthful selection-window or selection-snapshot evidence and actual publication/event timestamps;
 - approved source list and deduplication proof;
 - policy wording and no-comprehensiveness/ranking/sponsorship/pay-to-play assertions;
 - interaction/accessibility/privacy results;
@@ -904,9 +950,9 @@ Do not change DNS, scheduler, analytics, environment variables, project linkage,
 
 Fetch and browser-test:
 
-- `/news/` shows the latest coverage-end Edition;
+- `/news/` shows the latest Edition by the branch-derived chronology instant;
 - exactly four public Edition routes for 2026-07-21..24;
-- `/news/archive/` orders them by coverage end;
+- `/news/archive/` orders mixed coverage kinds by the centralized chronology tuple and labels window versus snapshot truthfully;
 - `/news/editorial-policy/` is indexable, canonical, linked, and in sitemap;
 - review fixture routes/context/events are absent;
 - RSS contains actual public Edition events in actual publication order/times;
@@ -926,9 +972,12 @@ PASS requires deployment ID, exact SHA/tree, alias, live route/feed/sitemap hash
 
 ## Final acceptance checklist
 
-- [ ] `coverage_start_at` and `coverage_end_at` are required, valid instants with start <= end.
-- [ ] Coverage end's JST date equals `edition_date`; Edition ID prefix equals `edition_date`.
-- [ ] Edition ordering is coverage end, coverage start, publication time, then Edition ID, all descending.
+- [ ] `coverage_kind` is exactly `selection-window` or `selection-snapshot`, and canonical Edition JSON contains exactly the active branch with inactive keys omitted.
+- [ ] Window bounds and snapshot observation are valid RFC 3339 instants; window start <= end; unknown, missing, both/neither, null, and cross-branch forms fail closed.
+- [ ] The active chronology instant's JST date equals `edition_date`; Edition ID prefix equals `edition_date`.
+- [ ] Edition ordering is chronology instant, branch-detail instant, publication time, then Edition ID, all descending; mixed kinds and equal-sort ties are deterministic.
+- [ ] Public 2026-07-23 is exactly a selection snapshot observed at `2026-07-23T04:30:00+09:00`, with no lower bound or interval claim.
+- [ ] UI/archive/history label windows and snapshots truthfully; JSON-LD uses interval versus exact instant accordingly without changing `datePublished`/`dateModified` semantics.
 - [ ] RSS and metadata retain actual publication/review event semantics; no backdated publication claims exist.
 - [ ] Production has exactly four public Editions covering 2026-07-21..24.
 - [ ] Each backfill contains 3–5 explicitly approved strong direct/primary Signals with no padding.
