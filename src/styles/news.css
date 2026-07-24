@@ -524,7 +524,7 @@ html {
     gap: 0 40px;
   }
 
-  .news-section-heading {
+  .news-signal-list > .news-section-heading {
     grid-column: 1 / -1;
     margin-bottom: 20px;
   }

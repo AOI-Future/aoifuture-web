@@ -140,6 +140,7 @@ test('Edition is finite, source-first, labeled, and explicitly non-production', 
 });
 
 test('Active Context renders current view before preserved chronology and links evidence', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/news/context/agent-authority/');
   const current = page.locator('#current-view');
   const history = page.locator('#context-history');
@@ -147,6 +148,7 @@ test('Active Context renders current view before preserved chronology and links 
   await expect(page.getByRole('heading', { name: 'How we got here' })).toBeVisible();
   expect(await current.evaluate((node) => node.compareDocumentPosition(document.querySelector('#context-history')!) & Node.DOCUMENT_POSITION_FOLLOWING)).toBeTruthy();
   await expect(history.locator('article')).toHaveCount(2);
+  await expect(history.locator(':scope > .news-section-heading')).toHaveCSS('margin-bottom', '42px');
   await expect(page.locator('time')).toHaveCount(3);
   for (const time of await page.locator('time').all()) {
     await expect(time).toHaveAttribute('datetime', /T/);
