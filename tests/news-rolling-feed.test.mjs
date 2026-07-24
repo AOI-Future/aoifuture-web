@@ -283,7 +283,9 @@ describe('deterministic Rolling Edition RSS', () => {
     expect(xml).toContain('<title>AOIFUTURE News Rolling Edition RSS</title>');
     expect(xml).toContain('aoi-news-2026-07-24-r001');
     expect(xml).not.toContain('2026-07-23');
-    expect(xml).not.toContain('NON-PRODUCTION SAMPLE');
+    for (const reviewOnlyWording of ['EDITORIAL REVIEW PREVIEW', 'NON-PRODUCTION', 'review-only']) {
+      expect(xml.toLowerCase()).not.toContain(reviewOnlyWording.toLowerCase());
+    }
     expect((xml.match(/<item>/g) ?? [])).toHaveLength(1);
   });
   it('renders the reviewed Preview event first with its deterministic GUID and preview boundary', () => {

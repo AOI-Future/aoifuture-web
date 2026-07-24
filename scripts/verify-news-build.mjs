@@ -52,6 +52,7 @@ const failures = [];
 const cssPaths = new Set();
 const latestReviewedAt = new Map(allEvents.map((event) => [event.edition_id, event.published_at]));
 const forbiddenFontOrigins = /(?:fonts\.googleapis\.com|fonts\.gstatic\.com)/i;
+const reviewOnlyWording = /EDITORIAL REVIEW PREVIEW|NON-PRODUCTION|review-only|No production publication/i;
 
 for (const [relativePath, expectedCanonical, expectedType] of routes) {
   const path = join(clientRoot, relativePath);
@@ -67,7 +68,7 @@ for (const [relativePath, expectedCanonical, expectedType] of routes) {
   }
   const robots = expectedMode === 'production' ? 'index, follow' : 'noindex, nofollow';
   if (!html.includes(`name="robots" content="${robots}"`)) failures.push(`${relativePath}: expected robots ${robots}`);
-  if (expectedMode === 'production' && /EDITORIAL REVIEW PREVIEW|NON-PRODUCTION|No production publication/i.test(html)) failures.push(`${relativePath}: review wording leaked`);
+  if (expectedMode === 'production' && reviewOnlyWording.test(html)) failures.push(`${relativePath}: review wording leaked`);
   if (expectedMode === 'review' && !html.includes('EDITORIAL REVIEW PREVIEW')) failures.push(`${relativePath}: review wording missing`);
   if (forbiddenFontOrigins.test(html)) failures.push(`${relativePath}: external font origin found`);
   const jsonLdMatch = html.match(/<script\s+type="application\/ld\+json">([\s\S]*?)<\/script>/);
@@ -115,7 +116,11 @@ if (expectedMode === 'production') {
     ...allEvents.filter((event) => !visibleIds.has(event.edition_id)).flatMap((event) => [event.event_id, event.title, event.summary, event.edition_url]),
   ].filter((term) => typeof term === 'string' && term.length >= 4);
   const publicArtifacts = walk(clientRoot).filter((path) => /(?:\/news\/.*\.(?:html|xml)|sitemap.*\.xml)$/.test(path));
-  const corpus = publicArtifacts.map((path) => readFileSync(path, 'utf8')).join('\n');
+  const publicArtifactContents = publicArtifacts.map((path) => [path, readFileSync(path, 'utf8')]);
+  const corpus = publicArtifactContents.map(([, content]) => content).join('\n');
+  for (const [path, content] of publicArtifactContents) {
+    if (reviewOnlyWording.test(content)) failures.push(`${path}: review wording leaked into production HTML/XML`);
+  }
   for (const term of hiddenTerms) if (corpus.includes(term)) failures.push(`production artifact leak: ${term}`);
 }
 
