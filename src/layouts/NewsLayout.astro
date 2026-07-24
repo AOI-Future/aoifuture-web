@@ -6,9 +6,11 @@ interface Props {
   title: string;
   description: string;
   canonical: string;
+  jsonLd: Record<string, unknown>;
 }
 
-const { title, description, canonical } = Astro.props;
+const { title, description, canonical, jsonLd } = Astro.props;
+const serializedJsonLd = JSON.stringify(jsonLd).replaceAll('<', '\\u003c');
 ---
 
 <!doctype html>
@@ -19,8 +21,17 @@ const { title, description, canonical } = Astro.props;
     <meta name="description" content={description} />
     <meta name="robots" content="noindex, nofollow" />
     <meta name="generator" content={Astro.generator} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="application/rss+xml" title="AOIFUTURE News Rolling Edition RSS" href="/news/feed.xml" />
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <script type="application/ld+json" set:html={serializedJsonLd}></script>
     <title>{title}</title>
   </head>
   <body class="news-body">

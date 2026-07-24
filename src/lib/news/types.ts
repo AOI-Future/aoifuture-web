@@ -96,6 +96,27 @@ export interface NewsCatalog {
   contexts: NewsContext[];
 }
 
+export type NewsEditionEventKind =
+  | 'edition-published'
+  | 'signals-added'
+  | 'signal-corrected'
+  | 'signal-withdrawn'
+  | 'edition-note-updated';
+
+export interface NewsEditionEvent {
+  schema_version: 'aoi.news.edition-event.v1';
+  event_id: string;
+  edition_id: string;
+  edition_date: string;
+  revision: number;
+  event_kind: NewsEditionEventKind;
+  title: string;
+  summary: string;
+  published_at: string;
+  edition_url: string;
+  changed_signal_ids: string[];
+}
+
 export interface NewsSignalReference {
   editionDate: string;
   signal: NewsSignal;

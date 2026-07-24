@@ -2,11 +2,13 @@ import { isIP } from 'node:net';
 import editionSchema from '../../schemas/aoi-news-edition-v1.schema.json' with { type: 'json' };
 import contextSchema from '../../schemas/aoi-news-context-v1.schema.json' with { type: 'json' };
 import receiptSchema from '../../schemas/aoi-news-source-read-v1.schema.json' with { type: 'json' };
+import editionEventSchema from '../../schemas/aoi-news-edition-event-v1.schema.json' with { type: 'json' };
 
 const schemas = {
   edition: editionSchema,
   context: contextSchema,
   receipt: receiptSchema,
+  editionEvent: editionEventSchema,
 };
 
 const error = (code, path, message) => ({ code, path, message });
@@ -66,6 +68,18 @@ function validateSchemaNode(value, node, schema, path, errors) {
     if (node.maxItems !== undefined && value.length > node.maxItems) errors.push(error('schema', path, `must have at most ${node.maxItems} items`));
     if (node.uniqueItems && !unique(value)) errors.push(error('schema', path, 'must contain unique items'));
     value.forEach((child, index) => validateSchemaNode(child, node.items, schema, pathJoin(path, index), errors));
+  } else if (node.type === 'integer') {
+    if (!Number.isInteger(value)) {
+      errors.push(error('schema', path, 'must be an integer'));
+      return;
+    }
+    if (node.minimum !== undefined && value < node.minimum) errors.push(error('schema', path, `must be at least ${node.minimum}`));
+  } else if (node.type === 'number') {
+    if (typeof value !== 'number' || !Number.isFinite(value)) {
+      errors.push(error('schema', path, 'must be a finite number'));
+      return;
+    }
+    if (node.minimum !== undefined && value < node.minimum) errors.push(error('schema', path, `must be at least ${node.minimum}`));
   } else if (node.type === 'string') {
     if (typeof value !== 'string') {
       errors.push(error('schema', path, 'must be a string'));
@@ -184,6 +198,12 @@ function checkEdition(edition, path, errors) {
       errors.push(error('invalid_lineage_kind', `${itemPath}/change/previous_signal_ids`, 'lineage is limited to correction, supersession, or withdrawal'));
     }
   });
+}
+
+export function validateEditionSnapshot(edition, path = '/edition') {
+  const errors = [...validateDocument('edition', edition, path).errors];
+  if (errors.length === 0) checkEdition(edition, path, errors);
+  return result(errors);
 }
 
 const isoTime = (value) => Date.parse(value);

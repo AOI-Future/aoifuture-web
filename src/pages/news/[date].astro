@@ -2,6 +2,7 @@
 import NewsEdition from '../../components/news/NewsEdition.astro';
 import NewsLayout from '../../layouts/NewsLayout.astro';
 import { loadNewsCatalog } from '../../lib/news/load-news';
+import { buildEditionMetadata } from '../../lib/news/metadata.mjs';
 import type { NewsEdition as NewsEditionType } from '../../lib/news/types';
 
 export const prerender = true;
@@ -25,6 +26,7 @@ const catalog = loadNewsCatalog();
   title={`${edition.title} | AOIFUTURE News`}
   description={edition.dek ?? edition.title}
   canonical={`https://aoifuture.com/news/${edition.edition_date}/`}
+  jsonLd={buildEditionMetadata(edition)}
 >
   <NewsEdition edition={edition} contexts={catalog.contexts} />
 </NewsLayout>

@@ -3,6 +3,7 @@ import NewsActiveContext from '../../../components/news/NewsActiveContext.astro'
 import NewsContextHistory from '../../../components/news/NewsContextHistory.astro';
 import NewsLayout from '../../../layouts/NewsLayout.astro';
 import { loadNewsCatalog } from '../../../lib/news/load-news';
+import { buildContextMetadata } from '../../../lib/news/metadata.mjs';
 import type { NewsContext } from '../../../lib/news/types';
 
 export const prerender = true;
@@ -19,12 +20,14 @@ interface Props {
 }
 
 const { context } = Astro.props;
+const catalog = loadNewsCatalog();
 ---
 
 <NewsLayout
   title={`${context.title} | Active Context | AOIFUTURE News`}
   description={context.current_view}
   canonical={`https://aoifuture.com/news/context/${context.slug}/`}
+  jsonLd={buildContextMetadata(context, catalog)}
 >
   <p class="news-sample-label news-sample-label--hero">NON-PRODUCTION SAMPLE</p>
   <NewsActiveContext context={context} />

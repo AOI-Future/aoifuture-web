@@ -2,6 +2,7 @@
 import NewsEdition from '../../components/news/NewsEdition.astro';
 import NewsLayout from '../../layouts/NewsLayout.astro';
 import { loadNewsCatalog } from '../../lib/news/load-news';
+import { buildIndexMetadata } from '../../lib/news/metadata.mjs';
 
 export const prerender = true;
 
@@ -14,6 +15,7 @@ if (!edition) throw new Error('AOIFUTURE News requires at least one staged Editi
   title={`${edition.title} | AOIFUTURE News`}
   description={edition.dek ?? edition.title}
   canonical="https://aoifuture.com/news/"
+  jsonLd={buildIndexMetadata(catalog)}
 >
   <NewsEdition edition={edition} contexts={catalog.contexts} />
 </NewsLayout>

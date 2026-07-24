@@ -1,0 +1,32 @@
+[
+  {
+    "schema_version": "aoi.news.edition-event.v1",
+    "event_id": "aoi-news-2026-07-23-r001",
+    "edition_id": "2026-07-23",
+    "edition_date": "2026-07-23",
+    "revision": 1,
+    "event_kind": "edition-published",
+    "title": "NON-PRODUCTION SAMPLE: エージェント運用境界 Edition",
+    "summary": "検証用 Edition に、OpenAI Presenceの業務エージェント制御境界に関するSignalを掲載した。",
+    "published_at": "2026-07-23T09:00:00+09:00",
+    "edition_url": "https://aoifuture.com/news/2026-07-23/",
+    "changed_signal_ids": [
+      "sig-openai-presence-20260722"
+    ]
+  },
+  {
+    "schema_version": "aoi.news.edition-event.v1",
+    "event_id": "aoi-news-2026-07-23-r002",
+    "edition_id": "2026-07-23",
+    "edition_date": "2026-07-23",
+    "revision": 2,
+    "event_kind": "signals-added",
+    "title": "NON-PRODUCTION SAMPLE: Managed Agents関連SDK Signalを追加",
+    "summary": "検証用 Edition に、Anthropic Python SDK v0.118.0のManaged Agents関連API対応に関するSignalを追加した。",
+    "published_at": "2026-07-23T09:05:00+09:00",
+    "edition_url": "https://aoifuture.com/news/2026-07-23/",
+    "changed_signal_ids": [
+      "sig-anthropic-sdk-20260722"
+    ]
+  }
+]

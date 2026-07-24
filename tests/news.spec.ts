@@ -25,6 +25,53 @@ test('News canonicals are singular HTTPS no-www URLs with trailing slashes', asy
   }
 });
 
+test('News exposes M2 JSON-LD, summary metadata, and Rolling Edition feed discovery', async ({ page }) => {
+  for (const route of newsRoutes) {
+    await page.goto(route);
+    await expect(page.locator('link[rel="alternate"][type="application/rss+xml"]')).toHaveAttribute('href', '/news/feed.xml');
+    await expect(page.locator('meta[property="og:title"]')).toHaveCount(1);
+    await expect(page.locator('meta[property="og:description"]')).toHaveCount(1);
+    await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', `https://aoifuture.com${route}`);
+    await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary');
+    await expect(page.locator('meta[property="og:image"], meta[name="twitter:image"]')).toHaveCount(0);
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, nofollow');
+  }
+
+  await page.goto('/news/2026-07-23/');
+  const editionMetadata = await page.locator('script[type="application/ld+json"]').evaluate((node) => JSON.parse(node.textContent ?? ''));
+  expect(editionMetadata['@type']).toBe('CollectionPage');
+  expect(editionMetadata.mainEntity['@type']).toBe('ItemList');
+  expect(editionMetadata.mainEntity.itemListElement.map((entry: { url: string }) => entry.url)).toEqual([
+    'https://aoifuture.com/news/2026-07-23/#sig-openai-presence-20260722',
+    'https://aoifuture.com/news/2026-07-23/#sig-anthropic-sdk-20260722',
+  ]);
+  expect(JSON.stringify(editionMetadata)).not.toContain('NewsArticle');
+
+  await page.goto('/news/context/agent-authority/');
+  const contextMetadata = await page.locator('script[type="application/ld+json"]').evaluate((node) => JSON.parse(node.textContent ?? ''));
+  expect(contextMetadata['@type']).toBe('WebPage');
+  expect(contextMetadata.dateModified).toBe('2026-07-23T09:00:00+09:00');
+  expect(contextMetadata.citation).toHaveLength(2);
+});
+
+test('Rolling Edition RSS is valid reviewed-event XML with the correct content type', async ({ page, request }) => {
+  const response = await request.get('/news/feed.xml');
+  expect(response.status()).toBe(200);
+  expect(response.headers()['content-type']).toMatch(/^application\/rss\+xml;\s*charset=utf-8/i);
+  const xml = await response.text();
+  const parseError = await page.evaluate((source) => {
+    const document = new DOMParser().parseFromString(source, 'application/xml');
+    return document.querySelector('parsererror')?.textContent ?? null;
+  }, xml);
+  expect(parseError).toBeNull();
+  expect(xml).toContain('<rss version="2.0"');
+  expect(xml).toContain('AOIFUTURE News Rolling Edition RSS — NON-PRODUCTION SAMPLE');
+  expect((xml.match(/<item>/g) ?? [])).toHaveLength(2);
+  expect(xml.indexOf('aoi-news-2026-07-23-r002')).toBeLessThan(xml.indexOf('aoi-news-2026-07-23-r001'));
+  expect(xml).not.toContain('reviewed_by');
+  expect(xml).not.toContain('source_fact');
+});
+
 test('News loads self-hosted fonts only and retains readable fallbacks', async ({ page }) => {
   const fontRequests: string[] = [];
   const externalFontRequests: string[] = [];

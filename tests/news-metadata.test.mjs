@@ -1,0 +1,68 @@
+import { describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
+import {
+  buildArchiveMetadata,
+  buildContextMetadata,
+  buildEditionMetadata,
+  buildIndexMetadata,
+} from '../src/lib/news/metadata.mjs';
+
+const readJson = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url), 'utf8'));
+const edition = readJson('../src/content/news/editions/2026-07-23.json');
+const context = readJson('../src/content/news/contexts/agent-authority.json');
+const catalog = { editions: [edition], contexts: [context] };
+const serializedTypes = (value) => JSON.stringify(value);
+
+describe('AOIFUTURE News M2 public metadata', () => {
+  it('describes the dated Edition as CollectionPage with exact-anchor ItemList entries', () => {
+    const metadata = buildEditionMetadata(edition);
+    expect(metadata['@type']).toBe('CollectionPage');
+    expect(metadata.url).toBe('https://aoifuture.com/news/2026-07-23/');
+    expect(metadata.mainEntity).toMatchObject({ '@type': 'ItemList', numberOfItems: 2 });
+    expect(metadata.mainEntity.itemListElement).toEqual(edition.items.map((signal, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: signal.title,
+      url: `https://aoifuture.com/news/${edition.edition_date}/#${signal.id}`,
+    })));
+    expect(serializedTypes(metadata)).not.toContain('NewsArticle');
+    expect(serializedTypes(metadata)).not.toContain('Article');
+  });
+
+  it('describes the News index and archive as collection pages, not authored articles', () => {
+    const index = buildIndexMetadata(catalog);
+    const archive = buildArchiveMetadata(catalog);
+    expect(index).toMatchObject({ '@type': 'CollectionPage', url: 'https://aoifuture.com/news/' });
+    expect(archive).toMatchObject({ '@type': 'CollectionPage', url: 'https://aoifuture.com/news/archive/' });
+    expect(index.mainEntity.itemListElement[0].url).toBe('https://aoifuture.com/news/2026-07-23/');
+    expect(serializedTypes([index, archive])).not.toContain('NewsArticle');
+  });
+
+  it('describes Active Context as WebPage with public modified time and supporting source references', () => {
+    const metadata = buildContextMetadata(context, catalog);
+    expect(metadata).toMatchObject({
+      '@type': 'WebPage',
+      url: 'https://aoifuture.com/news/context/agent-authority/',
+      dateModified: context.updated_at,
+    });
+    expect(metadata.citation).toEqual(edition.items.map((signal) => ({
+      '@type': 'CreativeWork',
+      name: signal.source_title,
+      url: signal.source_url,
+    })));
+    expect(serializedTypes(metadata)).not.toContain('NewsArticle');
+  });
+
+  it('uses public allowlisted values and excludes private metadata fields', () => {
+    const metadata = serializedTypes([
+      buildEditionMetadata(edition),
+      buildIndexMetadata(catalog),
+      buildArchiveMetadata(catalog),
+      buildContextMetadata(context, catalog),
+    ]);
+    for (const key of ['reviewed_by', 'receipt', 'claim_locator', 'internal_score', 'prompt', 'reader_id']) {
+      expect(metadata).not.toContain(key);
+    }
+    expect(metadata).not.toContain('www.aoifuture.com');
+  });
+});

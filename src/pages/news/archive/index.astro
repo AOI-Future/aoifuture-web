@@ -2,6 +2,7 @@
 import NewsArchiveNav from '../../../components/news/NewsArchiveNav.astro';
 import NewsLayout from '../../../layouts/NewsLayout.astro';
 import { loadNewsCatalog } from '../../../lib/news/load-news';
+import { buildArchiveMetadata } from '../../../lib/news/metadata.mjs';
 
 export const prerender = true;
 const catalog = loadNewsCatalog();
@@ -11,6 +12,7 @@ const catalog = loadNewsCatalog();
   title="Sample index | AOIFUTURE News"
   description="AOIFUTURE News non-production sample retrospective entry points."
   canonical="https://aoifuture.com/news/archive/"
+  jsonLd={buildArchiveMetadata(catalog)}
 >
   <header class="news-archive-header">
     <p class="news-sample-label news-sample-label--hero">NON-PRODUCTION SAMPLE</p>
