@@ -788,6 +788,44 @@ html {
   }
 }
 
+.news-history-loader {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+  width: min(100%, 1480px);
+  margin: 56px auto 0;
+  padding-inline: var(--news-page-gutter);
+}
+
+.news-history-loader__status {
+  min-height: 1.75em;
+  margin: 0;
+  color: var(--news-muted);
+  font-size: 14px;
+}
+
+.news-history-loader__link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  border: 1px solid var(--news-line-strong);
+  padding: 10px 18px;
+  color: var(--news-cyan);
+  font-family: var(--news-mono);
+  text-decoration: none;
+}
+
+.news-history-loader__link[aria-disabled='true'] {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+[data-news-history] > .news-edition {
+  margin-top: 72px;
+  border-top: 1px solid var(--news-line);
+  padding-top: 72px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

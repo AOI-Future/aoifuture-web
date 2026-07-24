@@ -1,0 +1,48 @@
+---
+import NewsEdition from '../../components/news/NewsEdition.astro';
+import NewsEditionHistoryLoader from '../../components/news/NewsEditionHistoryLoader.astro';
+import NewsLayout from '../../layouts/NewsLayout.astro';
+import { loadNewsCatalog } from '../../lib/news/load-news';
+import { getLatestReviewedEditionEvent } from '../../lib/news/load-news-events';
+import { buildEditionMetadata } from '../../lib/news/metadata.mjs';
+import { resolveNewsPublicationMode } from '../../lib/news/publication-mode.mjs';
+import type { NewsEdition as NewsEditionType, NewsPublicationMode } from '../../lib/news/types';
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  const mode = resolveNewsPublicationMode(process.env.VERCEL_ENV) as NewsPublicationMode;
+  const catalog = loadNewsCatalog(mode);
+  return catalog.editions.map((edition, index) => ({
+    params: { editionId: edition.edition_id },
+    props: {
+      edition,
+      previous: catalog.editions[index + 1],
+      latestReviewedAt: getLatestReviewedEditionEvent(edition.edition_id, mode).published_at,
+      mode,
+    },
+  }));
+}
+
+interface Props {
+  edition: NewsEditionType;
+  previous?: NewsEditionType;
+  latestReviewedAt: string;
+  mode: NewsPublicationMode;
+}
+
+const { edition, previous, latestReviewedAt, mode } = Astro.props;
+const catalog = loadNewsCatalog(mode);
+---
+
+<NewsLayout
+  title={`${edition.title} | AOIFUTURE News`}
+  description={edition.dek ?? edition.title}
+  canonical={`https://aoifuture.com/news/${edition.edition_id}/`}
+  jsonLd={buildEditionMetadata(edition, latestReviewedAt)}
+  mode={mode}
+>
+  <NewsEdition edition={edition} contexts={catalog.contexts} mode={mode} />
+  <div data-news-history></div>
+  <NewsEditionHistoryLoader current={edition} previous={previous} />
+</NewsLayout>

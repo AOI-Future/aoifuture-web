@@ -2,9 +2,11 @@ import type {
   NewsCatalog,
   NewsContext,
   NewsEdition,
+  NewsPublicationMode,
   NewsSignalReference,
 } from './types';
 import { validatePublicCatalog } from '../../../scripts/news-contract/validator.mjs';
+import { resolveNewsPublicationMode } from './publication-mode.mjs';
 
 const editionModules = import.meta.glob('../../content/news/editions/*.json', {
   eager: true,
@@ -17,7 +19,7 @@ const contextModules = import.meta.glob('../../content/news/contexts/*.json', {
 
 const EDITION_KEYS = new Set([
   'schema_version', 'edition_id', 'edition_date', 'generated_at', 'published_at',
-  'corrected_at', 'title', 'dek', 'edition_note', 'items', 'topics',
+  'publication_status', 'corrected_at', 'title', 'dek', 'edition_note', 'items', 'topics',
 ]);
 const SIGNAL_KEYS = new Set([
   'id', 'title', 'source_url', 'source_title', 'source_domain', 'source_kind',
@@ -29,7 +31,7 @@ const VERIFICATION_KEYS = new Set(['status', 'checked_at']);
 const TOPIC_KEYS = new Set(['id', 'label_ja', 'label_en', 'description']);
 const CONTEXT_KEYS = new Set([
   'schema_version', 'id', 'slug', 'title', 'current_view', 'updated_at',
-  'operator_context', 'supporting_signal_ids', 'revisions',
+  'publication_status', 'operator_context', 'supporting_signal_ids', 'revisions',
 ]);
 const OPERATOR_KEYS = new Set([
   'capability', 'authority', 'control', 'evidence', 'cost_route',
@@ -78,9 +80,11 @@ function validateEdition(value: unknown, index: number): NewsEdition {
   if (edition.schema_version !== 'aoi.news.edition.v1') throw new Error(`${path}.schema_version is unsupported`);
   const editionId = text(edition.edition_id, `${path}.edition_id`);
   const editionDate = text(edition.edition_date, `${path}.edition_date`);
-  if (editionId !== editionDate || !/^\d{4}-\d{2}-\d{2}$/.test(editionDate)) {
+  if (!/^\d{4}-\d{2}-\d{2}(?:-(?:[01]\d|2[0-3])[0-5]\d)?$/.test(editionId)
+    || editionDate !== editionId.slice(0, 10)) {
     throw new Error(`${path} has an invalid Edition date`);
   }
+  if (!['public', 'review-only'].includes(String(edition.publication_status))) throw new Error(`${path}.publication_status is invalid`);
   dateTime(edition.generated_at, `${path}.generated_at`);
   dateTime(edition.published_at, `${path}.published_at`);
   text(edition.title, `${path}.title`);
@@ -134,6 +138,7 @@ function validateContext(value: unknown, index: number): NewsContext {
   text(context.id, `${path}.id`);
   text(context.slug, `${path}.slug`);
   text(context.title, `${path}.title`);
+  if (!['public', 'review-only'].includes(String(context.publication_status))) throw new Error(`${path}.publication_status is invalid`);
   text(context.current_view, `${path}.current_view`);
   dateTime(context.updated_at, `${path}.updated_at`);
   textList(context.supporting_signal_ids, `${path}.supporting_signal_ids`);
@@ -161,13 +166,32 @@ function validateContext(value: unknown, index: number): NewsContext {
   return context as unknown as NewsContext;
 }
 
-export function validateNewsCatalog(editionsRaw: unknown[], contextsRaw: unknown[]): NewsCatalog {
+export function validateNewsCatalog(
+  editionsRaw: unknown[],
+  contextsRaw: unknown[],
+  mode: NewsPublicationMode = 'review',
+): NewsCatalog {
   const contract = validatePublicCatalog(editionsRaw, contextsRaw);
   if (!contract.ok) {
     throw new Error(`AOIFUTURE News public contract validation failed: ${contract.errors.map((entry) => `${entry.code} ${entry.path}: ${entry.message}`).join('; ')}`);
   }
-  const editions = editionsRaw.map(validateEdition).sort((a, b) => b.edition_date.localeCompare(a.edition_date));
-  const contexts = contextsRaw.map(validateContext).sort((a, b) => a.slug.localeCompare(b.slug));
+  const completeEditions = editionsRaw.map(validateEdition).sort((a, b) => (
+    Date.parse(b.published_at) - Date.parse(a.published_at)
+    || b.edition_id.localeCompare(a.edition_id)
+  ));
+  const completeContexts = contextsRaw.map(validateContext).sort((a, b) => a.slug.localeCompare(b.slug));
+  const editions = mode === 'production'
+    ? completeEditions.filter((edition) => edition.publication_status === 'public')
+    : completeEditions;
+  const contexts = mode === 'production'
+    ? completeContexts.filter((context) => context.publication_status === 'public')
+    : completeContexts;
+  if (mode === 'production') {
+    const publicContract = validatePublicCatalog(editions, contexts);
+    if (!publicContract.ok) {
+      throw new Error(`AOIFUTURE News public closure validation failed: ${publicContract.errors.map((entry) => `${entry.code} ${entry.path}: ${entry.message}`).join('; ')}`);
+    }
+  }
   const signals = new Map(editions.flatMap((edition) => edition.items.map((signal) => [signal.id, signal] as const)));
   const contextIds = new Set(contexts.map((context) => context.id));
   const topicIds = new Set(editions.flatMap((edition) => edition.topics.map((topic) => topic.id)));
@@ -197,24 +221,39 @@ export function validateNewsCatalog(editionsRaw: unknown[], contextsRaw: unknown
   return { editions, contexts };
 }
 
-const catalog = validateNewsCatalog(Object.values(editionModules), Object.values(contextModules));
+const catalogs = new Map<NewsPublicationMode, NewsCatalog>();
 
-export function loadNewsCatalog(): NewsCatalog {
+export function loadNewsCatalog(
+  mode: NewsPublicationMode = resolveNewsPublicationMode(process.env.VERCEL_ENV),
+): NewsCatalog {
+  const cached = catalogs.get(mode);
+  if (cached) return cached;
+  const catalog = validateNewsCatalog(Object.values(editionModules), Object.values(contextModules), mode);
+  catalogs.set(mode, catalog);
   return catalog;
 }
 
-export function getEditionByDate(date: string): NewsEdition | undefined {
-  return catalog.editions.find((edition) => edition.edition_date === date);
+export function getEditionById(
+  id: string,
+  mode: NewsPublicationMode = resolveNewsPublicationMode(process.env.VERCEL_ENV),
+): NewsEdition | undefined {
+  return loadNewsCatalog(mode).editions.find((edition) => edition.edition_id === id);
 }
 
-export function getContextBySlug(slug: string): NewsContext | undefined {
-  return catalog.contexts.find((context) => context.slug === slug);
+export function getContextBySlug(
+  slug: string,
+  mode: NewsPublicationMode = resolveNewsPublicationMode(process.env.VERCEL_ENV),
+): NewsContext | undefined {
+  return loadNewsCatalog(mode).contexts.find((context) => context.slug === slug);
 }
 
-export function getSignalReference(signalId: string): NewsSignalReference | undefined {
-  for (const edition of catalog.editions) {
+export function getSignalReference(
+  signalId: string,
+  mode: NewsPublicationMode = resolveNewsPublicationMode(process.env.VERCEL_ENV),
+): NewsSignalReference | undefined {
+  for (const edition of loadNewsCatalog(mode).editions) {
     const signal = edition.items.find((item) => item.id === signalId);
-    if (signal) return { editionDate: edition.edition_date, signal };
+    if (signal) return { editionId: edition.edition_id, editionDate: edition.edition_date, signal };
   }
   return undefined;
 }

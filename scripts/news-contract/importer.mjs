@@ -1,4 +1,4 @@
-import { mkdirSync, renameSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { normalizeEditionForImport, validatePublicationBundle } from './validator.mjs';
 
@@ -33,6 +33,25 @@ export function importNewsBundle(rawBundle, outputDirectory) {
     join(outputDirectory, 'editions', `${bundle.edition.edition_id}.json`),
     ...bundle.contexts.map((context) => join(outputDirectory, 'contexts', `${context.slug}.json`)),
   ];
+  if (existsSync(written[0])) {
+    let existing;
+    try {
+      existing = JSON.parse(readFileSync(written[0], 'utf8'));
+    } catch {
+      return {
+        ok: false,
+        errors: [{ code: 'edition_route_collision', path: '/edition/edition_id', message: `Edition route destination is unreadable: ${written[0]}` }],
+        written: [],
+      };
+    }
+    if (existing.edition_id !== bundle.edition.edition_id) {
+      return {
+        ok: false,
+        errors: [{ code: 'edition_route_collision', path: '/edition/edition_id', message: `Edition route destination is owned by ${String(existing.edition_id)}` }],
+        written: [],
+      };
+    }
+  }
   atomicWrite(written[0], stableJson(bundle.edition));
   bundle.contexts.forEach((context, index) => atomicWrite(written[index + 1], stableJson(context)));
   return { ok: true, errors: [], written };

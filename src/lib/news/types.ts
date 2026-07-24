@@ -11,6 +11,8 @@ export type NewsSourceKind =
 
 export type NewsSignalRole = 'lead' | 'major' | 'brief' | 'detour' | 'watch';
 export type NewsVerificationStatus = 'verified' | 'source-unavailable' | 'withdrawn';
+export type NewsPublicationStatus = 'public' | 'review-only';
+export type NewsPublicationMode = 'review' | 'production';
 
 export interface NewsSignal {
   id: string;
@@ -51,6 +53,7 @@ export interface NewsEdition {
   schema_version: 'aoi.news.edition.v1';
   edition_id: string;
   edition_date: string;
+  publication_status: NewsPublicationStatus;
   generated_at: string;
   published_at: string;
   corrected_at?: string;
@@ -83,6 +86,7 @@ export interface NewsContext {
   schema_version: 'aoi.news.context.v1';
   id: string;
   slug: string;
+  publication_status: NewsPublicationStatus;
   title: string;
   current_view: string;
   updated_at: string;
@@ -119,6 +123,7 @@ export interface NewsEditionEvent {
 }
 
 export interface NewsSignalReference {
+  editionId: string;
   editionDate: string;
   signal: NewsSignal;
 }

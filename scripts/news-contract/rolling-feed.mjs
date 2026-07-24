@@ -44,7 +44,7 @@ export function validateRevisionEvents(events, editions) {
       errors.push(error('unresolved_edition_reference', `${path}/edition_id`, 'event must reference a matching public Edition'));
       return;
     }
-    const expectedUrl = `https://aoifuture.com/news/${edition.edition_date}/`;
+    const expectedUrl = `https://aoifuture.com/news/${edition.edition_id}/`;
     if (event.edition_url !== expectedUrl) {
       errors.push(error('edition_url', `${path}/edition_url`, `must equal ${expectedUrl}`));
     }
@@ -263,7 +263,7 @@ const xmlEscape = (value) => String(value)
   .replaceAll('"', '&quot;')
   .replaceAll("'", '&apos;');
 
-export function renderRollingFeed(events, editions, { sample = false } = {}) {
+export function renderRollingFeed(events, editions, { mode = 'review' } = {}) {
   const validation = validateRevisionEvents(events, editions);
   if (!validation.ok) {
     throw new Error(`Revision event validation failed: ${validation.errors.map((entry) => `${entry.code} ${entry.path}`).join(', ')}`);
@@ -273,7 +273,7 @@ export function renderRollingFeed(events, editions, { sample = false } = {}) {
     Date.parse(right.published_at) - Date.parse(left.published_at)
     || right.event_id.localeCompare(left.event_id)
   ));
-  const channelTitle = sample
+  const channelTitle = mode === 'review'
     ? 'AOIFUTURE News Rolling Edition RSS — EDITORIAL REVIEW PREVIEW'
     : 'AOIFUTURE News Rolling Edition RSS';
   const items = newestFirst.map((event) => {
@@ -299,7 +299,7 @@ export function renderRollingFeed(events, editions, { sample = false } = {}) {
     '  <channel>',
     `    <title>${xmlEscape(channelTitle)}</title>`,
     '    <link>https://aoifuture.com/news/</link>',
-    '    <description>Reviewed public changes to the AOIFUTURE News daily Edition.</description>',
+    '    <description>Reviewed public changes to the AOIFUTURE News Rolling Edition.</description>',
     '    <language>ja</language>',
     '    <atom:link href="https://aoifuture.com/news/feed.xml" rel="self" type="application/rss+xml"/>',
     ...(items ? [items] : []),

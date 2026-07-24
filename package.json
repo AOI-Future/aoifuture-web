@@ -17,6 +17,8 @@
     "test:news:e2e": "playwright test --config=playwright.news.config.ts",
     "validate:news-contract": "node scripts/validate-news-contract.mjs fixtures/news-contract/non-production/import-bundle.json",
     "verify:news-build": "node scripts/verify-news-build.mjs",
+    "verify:news-build:review": "node scripts/verify-news-build.mjs dist/client review",
+    "verify:news-build:production": "node scripts/verify-news-build.mjs dist/client production",
     "evidence:news-layout": "node scripts/generate-news-layout-evidence.mjs"
   },
   "dependencies": {

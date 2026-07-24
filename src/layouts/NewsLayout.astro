@@ -1,5 +1,6 @@
 ---
 import NewsDeskHeader from '../components/news/NewsDeskHeader.astro';
+import type { NewsPublicationMode } from '../lib/news/types';
 import '../styles/news.css';
 
 interface Props {
@@ -7,9 +8,10 @@ interface Props {
   description: string;
   canonical: string;
   jsonLd: Record<string, unknown>;
+  mode: NewsPublicationMode;
 }
 
-const { title, description, canonical, jsonLd } = Astro.props;
+const { title, description, canonical, jsonLd, mode } = Astro.props;
 const serializedJsonLd = JSON.stringify(jsonLd).replaceAll('<', '\\u003c');
 ---
 
@@ -19,7 +21,7 @@ const serializedJsonLd = JSON.stringify(jsonLd).replaceAll('<', '\\u003c');
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <meta name="robots" content="noindex, nofollow" />
+    <meta name="robots" content={mode === 'production' ? 'index, follow' : 'noindex, nofollow'} />
     <meta name="generator" content={Astro.generator} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
@@ -29,20 +31,20 @@ const serializedJsonLd = JSON.stringify(jsonLd).replaceAll('<', '\\u003c');
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" type="application/rss+xml" title="AOIFUTURE News Rolling Edition RSS" href="/news/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title={mode === 'production' ? 'AOIFUTURE News Rolling Edition RSS' : 'AOIFUTURE News Rolling Edition RSS — EDITORIAL REVIEW PREVIEW'} href="/news/feed.xml" />
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <script type="application/ld+json" set:html={serializedJsonLd}></script>
     <title>{title}</title>
   </head>
   <body class="news-body">
     <a class="news-skip-link" href="#news-main">本文へ移動</a>
-    <NewsDeskHeader />
+    <NewsDeskHeader mode={mode} />
     <main id="news-main" class="news-main" tabindex="-1">
       <slot />
     </main>
     <footer class="news-site-footer">
-      <p>AOIFUTURE News / finite, source-first reading prototype</p>
-      <p>EDITORIAL REVIEW PREVIEW / No production publication or deployment authorized.</p>
+      <p>AOIFUTURE News / finite, source-first Rolling Editions</p>
+      {mode === 'review' && <p>EDITORIAL REVIEW PREVIEW / No production publication or deployment authorized.</p>}
     </footer>
   </body>
 </html>

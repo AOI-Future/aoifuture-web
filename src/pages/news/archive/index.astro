@@ -3,23 +3,30 @@ import NewsArchiveNav from '../../../components/news/NewsArchiveNav.astro';
 import NewsLayout from '../../../layouts/NewsLayout.astro';
 import { loadNewsCatalog } from '../../../lib/news/load-news';
 import { buildArchiveMetadata } from '../../../lib/news/metadata.mjs';
+import { resolveNewsPublicationMode } from '../../../lib/news/publication-mode.mjs';
 
 export const prerender = true;
-const catalog = loadNewsCatalog();
+const mode = resolveNewsPublicationMode(process.env.VERCEL_ENV);
+const catalog = loadNewsCatalog(mode);
 ---
 
 <NewsLayout
-  title="Editorial review index | AOIFUTURE News"
-  description="AOIFUTURE News editorial review Preview entry points. Not authorized for production publication."
+  title={mode === 'production' ? 'AOIFUTURE News index' : 'Editorial review index | AOIFUTURE News'}
+  description={mode === 'production' ? 'Finite, source-first Rolling Edition and Active Context archive.' : 'AOIFUTURE News editorial review Preview entry points. Not authorized for production publication.'}
   canonical="https://aoifuture.com/news/archive/"
   jsonLd={buildArchiveMetadata(catalog)}
+  mode={mode}
 >
   <header class="news-archive-header">
-    <p class="news-sample-label news-sample-label--hero">EDITORIAL REVIEW PREVIEW</p>
+    {mode === 'review' && <p class="news-sample-label news-sample-label--hero">EDITORIAL REVIEW PREVIEW</p>}
     <p class="news-kicker">RETROSPECTIVE ENTRY POINTS</p>
-    <h1>Editorial review index</h1>
-    <p class="news-archive-warning">EDITORIAL REVIEW INDEX — NOT PRODUCTION OR A COMPLETE ARCHIVE</p>
-    <p>このPreviewに含まれる Edition、Active Context、topic、source だけを示します。本番公開、サイト全体の検索、完全な履歴を表すものではありません。</p>
+    <h1>{mode === 'production' ? 'AOIFUTURE News index' : 'Editorial review index'}</h1>
+    {mode === 'review' ? (
+      <>
+        <p class="news-archive-warning">EDITORIAL REVIEW INDEX — NOT PRODUCTION OR A COMPLETE ARCHIVE</p>
+        <p>このPreviewに含まれる Edition、Active Context、topic、source だけを示します。本番公開、サイト全体の検索、完全な履歴を表すものではありません。</p>
+      </>
+    ) : <p>公開済みの Rolling Edition、Active Context、topic、source を有限の入口として示します。</p>}
   </header>
   <NewsArchiveNav catalog={catalog} />
 </NewsLayout>

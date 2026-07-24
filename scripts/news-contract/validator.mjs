@@ -28,6 +28,9 @@ const validDateTime = (value) => typeof value === 'string'
   && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(value)
   && validDate(value.slice(0, 10))
   && !Number.isNaN(Date.parse(value));
+export const validEditionId = (value) => typeof value === 'string'
+  && /^\d{4}-\d{2}-\d{2}(?:-(?:[01]\d|2[0-3])[0-5]\d)?$/.test(value)
+  && validDate(value.slice(0, 10));
 
 function resolveRef(schema, ref) {
   if (!ref.startsWith('#/')) throw new Error(`Unsupported schema reference: ${ref}`);
@@ -159,6 +162,9 @@ function checkPublicUrl(value, path, errors, { sameOrigin = false } = {}) {
 }
 
 function checkEdition(edition, path, errors) {
+  if (!validEditionId(edition.edition_id) || edition.edition_date !== edition.edition_id.slice(0, 10)) {
+    errors.push(error('edition_date_coherence', `${path}/edition_date`, 'edition_date must equal the valid calendar prefix of edition_id'));
+  }
   const leadCount = edition.items.filter((item) => item.role === 'lead').length;
   const detourCount = edition.items.filter((item) => item.role === 'detour').length;
   if (leadCount > 1) errors.push(error('role_cardinality', `${path}/items`, 'at most one lead is allowed'));
@@ -298,6 +304,15 @@ export function validatePublicCatalog(editions, contexts) {
     }
   });
 
+  const editionIds = new Set();
+  const editionRoutes = new Set();
+  validEditions.forEach(({ edition, path }) => {
+    const route = `/news/${edition.edition_id}/`;
+    if (editionIds.has(edition.edition_id)) errors.push(error('duplicate_edition_id', `${path}/edition_id`, `Edition ID ${edition.edition_id} is globally reused`));
+    if (editionRoutes.has(route)) errors.push(error('duplicate_edition_route', `${path}/edition_id`, `Edition route ${route} is globally reused`));
+    editionIds.add(edition.edition_id);
+    editionRoutes.add(route);
+  });
   const signalMap = new Map();
   validEditions.forEach(({ edition, path }) => edition.items.forEach((signal, index) => {
     const signalPath = `${path}/items/${index}`;
@@ -393,9 +408,17 @@ export function validatePublicationBundle(bundle) {
   });
   receipts.forEach((receipt, index) => errors.push(...validateDocument('receipt', receipt, `/receipts/${index}`).errors));
 
+  const editionIds = new Set();
+  const editionRoutes = new Set();
   const signalMap = new Map();
   allEditions.forEach((entry, editionIndex) => {
     if (!isObject(entry) || !Array.isArray(entry.items)) return;
+    const editionPath = editionIndex === allEditions.length - 1 ? '/edition' : `/published_editions/${editionIndex}`;
+    const route = `/news/${entry.edition_id}/`;
+    if (editionIds.has(entry.edition_id)) errors.push(error('duplicate_edition_id', `${editionPath}/edition_id`, `Edition ID ${entry.edition_id} is globally reused`));
+    if (editionRoutes.has(route)) errors.push(error('duplicate_edition_route', `${editionPath}/edition_id`, `Edition route ${route} is globally reused`));
+    editionIds.add(entry.edition_id);
+    editionRoutes.add(route);
     entry.items.forEach((signal, signalIndex) => {
       const path = editionIndex === allEditions.length - 1 ? `/edition/items/${signalIndex}` : `/published_editions/${editionIndex}/items/${signalIndex}`;
       if (signalMap.has(signal.id)) errors.push(error('duplicate_signal_id', `${path}/id`, `Signal ID ${signal.id} is globally reused`));

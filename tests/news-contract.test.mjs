@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { mkdtempSync, readFileSync, readdirSync, rmSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { importNewsBundle } from '../scripts/news-contract/importer.mjs';
@@ -36,6 +36,7 @@ const edition = () => ({
   schema_version: 'aoi.news.edition.v1',
   edition_id: '2026-07-23',
   edition_date: '2026-07-23',
+  publication_status: 'review-only',
   generated_at: stamp2,
   published_at: stamp2,
   title: '検証用 AOIFUTURE News サンプル',
@@ -49,6 +50,7 @@ const edition = () => ({
 
 const previousContext = () => ({
   schema_version: 'aoi.news.context.v1',
+  publication_status: 'review-only',
   id: 'ctx-agent-authority',
   slug: 'agent-authority',
   title: 'Agent Authority',
@@ -120,6 +122,42 @@ const expectInvalid = (bundle, code) => {
 };
 
 describe('AOIFUTURE News publication contract', () => {
+  it('accepts timestamped Edition identity while enforcing its calendar prefix', () => {
+    const bundle = validBundle();
+    bundle.edition.edition_id = '2026-07-23-1530';
+    expect(validatePublicationBundle(bundle)).toEqual({ ok: true, errors: [] });
+    bundle.edition.edition_date = '2026-07-22';
+    expectInvalid(bundle, 'edition_date_coherence');
+  });
+
+  it.each([
+    ['2026-07-23-x', 'schema'],
+    ['2026-02-31-1530', 'edition_date_coherence'],
+    ['2026-07-23-2400', 'schema'],
+    ['2026-07-23-1260', 'schema'],
+  ])(
+    'rejects malformed Edition identity %s',
+    (editionId, code) => {
+      const bundle = validBundle();
+      bundle.edition.edition_id = editionId;
+      expectInvalid(bundle, code);
+    },
+  );
+
+  it('requires explicit allowed publication status', () => {
+    const missing = validBundle();
+    delete missing.edition.publication_status;
+    expectInvalid(missing, 'schema');
+    const invalid = validBundle();
+    invalid.contexts[0].publication_status = 'draft';
+    expectInvalid(invalid, 'schema');
+  });
+
+  it('rejects duplicate Edition identity before map construction', () => {
+    const bundle = validBundle();
+    bundle.published_editions.push(structuredClone(bundle.edition));
+    expectInvalid(bundle, 'duplicate_edition_id');
+  });
   it('validates the explicit non-production fixture with two evidence-backed revisions', () => {
     expect(fixtureBundle.edition.dek).toContain('本番公開を意図しない');
     expect(fixtureBundle.contexts[0].revisions).toHaveLength(2);
@@ -315,6 +353,14 @@ describe('Active Context transition contract', () => {
 });
 
 describe('deterministic import normalization', () => {
+  it('keeps the canonical reviewed content publication assignments explicit', () => {
+    const content = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url), 'utf8'));
+    expect(content('../src/content/news/editions/2026-07-24.json').publication_status).toBe('public');
+    expect(content('../src/content/news/contexts/connected-ai-boundaries.json').publication_status).toBe('public');
+    expect(content('../src/content/news/editions/2026-07-23.json').publication_status).toBe('review-only');
+    expect(content('../src/content/news/contexts/agent-authority.json').publication_status).toBe('review-only');
+  });
+
   it('strips known tracking parameters and derives the source domain', () => {
     const raw = edition();
     raw.items[0].source_url = 'https://openai.com/index/introducing-openai-presence/?utm_source=mail&ref=kept';
@@ -343,6 +389,27 @@ describe('deterministic import normalization', () => {
     } finally {
       rmSync(first, { recursive: true, force: true });
       rmSync(second, { recursive: true, force: true });
+    }
+  });
+
+  it('rejects an Edition route destination owned by a different identity before writing', () => {
+    const output = mkdtempSync(join(tmpdir(), 'aoi-news-import-collision-'));
+    try {
+      const editionDirectory = join(output, 'editions');
+      mkdirSync(editionDirectory);
+      const destination = join(editionDirectory, '2026-07-23.json');
+      const sentinel = '{"edition_id":"2026-07-22"}\n';
+      writeFileSync(destination, sentinel);
+
+      const result = importNewsBundle(validBundle(), output);
+
+      expect(result.ok).toBe(false);
+      expect(result.errors.map(({ code }) => code)).toContain('edition_route_collision');
+      expect(result.written).toEqual([]);
+      expect(readFileSync(destination, 'utf8')).toBe(sentinel);
+      expect(readdirSync(output)).toEqual(['editions']);
+    } finally {
+      rmSync(output, { recursive: true, force: true });
     }
   });
 });

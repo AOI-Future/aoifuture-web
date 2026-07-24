@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import {
   getContextBySlug,
-  getEditionByDate,
+  getEditionById,
   loadNewsCatalog,
   validateNewsCatalog,
 } from '../src/lib/news/load-news';
+import { resolveNewsPublicationMode } from '../src/lib/news/publication-mode.mjs';
 
 const privateKeys = [
   'receipts',
@@ -33,9 +34,9 @@ describe('AOIFUTURE News public loader', () => {
       'sig-google-voicify-story-20260724',
       'sig-authjs-fail-open-20260724',
     ]);
-    expect(getEditionByDate('2026-07-24')?.edition_id).toBe('2026-07-24');
-    expect(getEditionByDate('2026-07-23')?.edition_id).toBe('2026-07-23');
-    expect(getEditionByDate('2099-01-01')).toBeUndefined();
+    expect(getEditionById('2026-07-24')?.edition_id).toBe('2026-07-24');
+    expect(getEditionById('2026-07-23')?.edition_id).toBe('2026-07-23');
+    expect(getEditionById('2099-01-01')).toBeUndefined();
     expect(getContextBySlug('agent-authority')?.id).toBe('ctx-agent-authority');
     expect(getContextBySlug('connected-ai-boundaries')?.id).toBe('ctx-connected-ai-boundaries');
     expect(getContextBySlug('missing-context')).toBeUndefined();
@@ -82,5 +83,32 @@ describe('AOIFUTURE News public loader', () => {
       '2026-07-22T09:00:00+09:00',
       '2026-07-23T09:00:00+09:00',
     ]);
+  });
+
+  it('fails closed to review unless VERCEL_ENV is exactly production', () => {
+    for (const value of [undefined, '', 'development', 'preview', 'Production', ' production ']) {
+      expect(resolveNewsPublicationMode(value)).toBe('review');
+    }
+    expect(resolveNewsPublicationMode('production')).toBe('production');
+  });
+
+  it('projects only the closed public graph in production', () => {
+    const review = loadNewsCatalog('review');
+    const production = loadNewsCatalog('production');
+    expect(review.editions.map((item) => item.edition_id)).toEqual(['2026-07-24', '2026-07-23']);
+    expect(production.editions.map((item) => item.edition_id)).toEqual(['2026-07-24']);
+    expect(production.contexts.map((item) => item.slug)).toEqual(['connected-ai-boundaries']);
+  });
+
+  it('orders equal publication instants by descending full Edition ID', () => {
+    const catalog = structuredClone(loadNewsCatalog('review'));
+    catalog.editions[0].items.forEach((signal) => { signal.context_ids = []; });
+    const laterIdentity = structuredClone(catalog.editions[0]);
+    laterIdentity.edition_id = '2026-07-24-1530';
+    laterIdentity.items = laterIdentity.items.map((signal) => ({ ...signal, id: `${signal.id}-later` }));
+    laterIdentity.items.forEach((signal) => { signal.context_ids = []; });
+    laterIdentity.topics = structuredClone(catalog.editions[0].topics);
+    const isolated = validateNewsCatalog([catalog.editions[0], laterIdentity], [], 'review');
+    expect(isolated.editions.map((item) => item.edition_id)).toEqual(['2026-07-24-1530', '2026-07-24']);
   });
 });

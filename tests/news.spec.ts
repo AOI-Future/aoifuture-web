@@ -8,14 +8,14 @@ const directSources = [
   'https://cloud.google.com/blog/topics/customers/bringing-delight-to-customer-phone-calls-with-ai/',
   'https://github.com/advisories/GHSA-8fpg-xm3f-6cx3',
 ];
+const production = process.env.VERCEL_ENV === 'production';
 
 const newsRoutes = [
   '/news/',
   '/news/2026-07-24/',
-  '/news/2026-07-23/',
   '/news/context/connected-ai-boundaries/',
-  '/news/context/agent-authority/',
   '/news/archive/',
+  ...(!production ? ['/news/2026-07-23/', '/news/context/agent-authority/'] : []),
 ];
 
 test('News canonicals are singular HTTPS no-www URLs with trailing slashes', async ({ page }) => {
@@ -40,7 +40,7 @@ test('News exposes M2 JSON-LD, summary metadata, and Rolling Edition feed discov
     await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', `https://aoifuture.com${route}`);
     await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary');
     await expect(page.locator('meta[property="og:image"], meta[name="twitter:image"]')).toHaveCount(0);
-    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, nofollow');
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', production ? 'index, follow' : 'noindex, nofollow');
   }
 
   await page.goto('/news/2026-07-24/');
@@ -50,12 +50,12 @@ test('News exposes M2 JSON-LD, summary metadata, and Rolling Edition feed discov
   expect(editionMetadata.mainEntity['@type']).toBe('ItemList');
   expect(editionMetadata.mainEntity.numberOfItems).toBe(6);
   expect(editionMetadata.mainEntity.itemListElement.map((entry: { url: string }) => entry.url)).toEqual([
-    'https://aoifuture.com/news/2026-07-24/#sig-openai-health-20260724',
-    'https://aoifuture.com/news/2026-07-24/#sig-claude-voice-tools-20260724',
-    'https://aoifuture.com/news/2026-07-24/#sig-langfuse-v4-rc0-20260724',
-    'https://aoifuture.com/news/2026-07-24/#sig-anthropic-sdk-0119-20260724',
-    'https://aoifuture.com/news/2026-07-24/#sig-google-voicify-story-20260724',
-    'https://aoifuture.com/news/2026-07-24/#sig-authjs-fail-open-20260724',
+    'https://aoifuture.com/news/2026-07-24/#edition-2026-07-24-sig-openai-health-20260724',
+    'https://aoifuture.com/news/2026-07-24/#edition-2026-07-24-sig-claude-voice-tools-20260724',
+    'https://aoifuture.com/news/2026-07-24/#edition-2026-07-24-sig-langfuse-v4-rc0-20260724',
+    'https://aoifuture.com/news/2026-07-24/#edition-2026-07-24-sig-anthropic-sdk-0119-20260724',
+    'https://aoifuture.com/news/2026-07-24/#edition-2026-07-24-sig-google-voicify-story-20260724',
+    'https://aoifuture.com/news/2026-07-24/#edition-2026-07-24-sig-authjs-fail-open-20260724',
   ]);
   expect(JSON.stringify(editionMetadata)).not.toContain('NewsArticle');
 
@@ -77,11 +77,11 @@ test('Rolling Edition RSS is valid reviewed-event XML with the correct content t
   }, xml);
   expect(parseError).toBeNull();
   expect(xml).toContain('<rss version="2.0"');
-  expect(xml).toContain('AOIFUTURE News Rolling Edition RSS — EDITORIAL REVIEW PREVIEW');
-  expect((xml.match(/<item>/g) ?? [])).toHaveLength(3);
-  expect(xml.indexOf('aoi-news-2026-07-24-r001')).toBeLessThan(xml.indexOf('aoi-news-2026-07-23-r002'));
+  expect(xml).toContain(production ? '<title>AOIFUTURE News Rolling Edition RSS</title>' : 'AOIFUTURE News Rolling Edition RSS — EDITORIAL REVIEW PREVIEW');
+  expect((xml.match(/<item>/g) ?? [])).toHaveLength(production ? 1 : 3);
+  if (!production) expect(xml.indexOf('aoi-news-2026-07-24-r001')).toBeLessThan(xml.indexOf('aoi-news-2026-07-23-r002'));
   expect(xml).toContain('<guid isPermaLink="false">aoi-news-2026-07-24-r001</guid>');
-  expect(xml.indexOf('aoi-news-2026-07-23-r002')).toBeLessThan(xml.indexOf('aoi-news-2026-07-23-r001'));
+  if (!production) expect(xml.indexOf('aoi-news-2026-07-23-r002')).toBeLessThan(xml.indexOf('aoi-news-2026-07-23-r001'));
   expect(xml).not.toContain('reviewed_by');
   expect(xml).not.toContain('source_fact');
 });
@@ -115,6 +115,7 @@ test('News loads self-hosted fonts only and retains readable fallbacks', async (
 });
 
 test('reviewed Preview Edition is finite, source-first, labeled, and explicitly outside production', async ({ page }) => {
+  test.skip(production, 'review-only presentation');
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('/news/2026-07-24/');
@@ -154,6 +155,7 @@ test('reviewed Preview Edition is finite, source-first, labeled, and explicitly 
 });
 
 test('Active Context renders current view before preserved chronology and links evidence', async ({ page }) => {
+  test.skip(production, 'review-only Context');
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/news/context/agent-authority/');
   const current = page.locator('#current-view');
@@ -168,13 +170,13 @@ test('Active Context renders current view before preserved chronology and links 
     await expect(time).toHaveAttribute('datetime', /T/);
     await expect(time).toContainText('JST');
   }
-  await expect(history.locator('a[href="/news/2026-07-23/#sig-openai-presence-20260722"]')).toBeVisible();
-  await expect(history.locator('a[href="/news/2026-07-23/#sig-anthropic-sdk-20260722"]')).toBeVisible();
+  await expect(history.locator('a[href="/news/2026-07-23/#edition-2026-07-23-sig-openai-presence-20260722"]')).toBeVisible();
+  await expect(history.locator('a[href="/news/2026-07-23/#edition-2026-07-23-sig-anthropic-sdk-20260722"]')).toBeVisible();
 });
 
 test('reviewed Connected AI Context links all six supporting Signals to the new Edition', async ({ page }) => {
   await page.goto('/news/context/connected-ai-boundaries/');
-  await expect(page.locator('.news-sample-label--hero')).toHaveText('EDITORIAL REVIEW PREVIEW');
+  await expect(page.locator('.news-sample-label--hero')).toHaveCount(production ? 0 : 1);
   await expect(page.locator('#context-history article')).toHaveCount(1);
   for (const signalId of [
     'sig-openai-health-20260724',
@@ -184,25 +186,26 @@ test('reviewed Connected AI Context links all six supporting Signals to the new 
     'sig-google-voicify-story-20260724',
     'sig-authjs-fail-open-20260724',
   ]) {
-    await expect(page.locator(`#context-history a[href="/news/2026-07-24/#${signalId}"]`)).toBeVisible();
+    await expect(page.locator(`#context-history a[href="/news/2026-07-24/#edition-2026-07-24-${signalId}"]`)).toBeVisible();
   }
 });
 
 test('archive exposes bounded Edition, Context, topic, and source entry points', async ({ page }) => {
   await page.goto('/news/archive/');
-  await expect(page.getByText('EDITORIAL REVIEW INDEX — NOT PRODUCTION OR A COMPLETE ARCHIVE', { exact: true })).toBeVisible();
+  if (production) await expect(page.getByRole('heading', { name: 'AOIFUTURE News index' })).toBeVisible();
+  else await expect(page.getByText('EDITORIAL REVIEW INDEX — NOT PRODUCTION OR A COMPLETE ARCHIVE', { exact: true })).toBeVisible();
   for (const label of ['By Edition', 'By Context', 'By topic', 'By source']) {
     await expect(page.getByRole('heading', { name: label })).toBeVisible();
   }
   const editionTimes = page.locator('section[aria-labelledby="archive-editions"] time');
-  await expect(editionTimes).toHaveCount(2);
+  await expect(editionTimes).toHaveCount(production ? 1 : 2);
   await expect(editionTimes.first()).toHaveAttribute('datetime', '2026-07-24');
   await expect(editionTimes.first()).toContainText('JST');
   const retainedSignals = [
-    '/news/2026-07-23/#sig-openai-presence-20260722',
-    '/news/2026-07-23/#sig-anthropic-sdk-20260722',
+    '/news/2026-07-23/#edition-2026-07-23-sig-openai-presence-20260722',
+    '/news/2026-07-23/#edition-2026-07-23-sig-anthropic-sdk-20260722',
   ];
-  for (const href of retainedSignals) {
+  for (const href of production ? [] : retainedSignals) {
     await expect(page.locator(`#archive-topics-list a[href="${href}"]`)).toHaveCount(1);
     await expect(page.locator(`#archive-sources-list a[href="${href}"]`)).toHaveCount(1);
   }
@@ -211,6 +214,7 @@ test('archive exposes bounded Edition, Context, topic, and source entry points',
 });
 
 test('visible Signal topic navigation reaches its grouped retained retrospective', async ({ page }) => {
+  test.skip(production, 'review-only Edition');
   await page.goto('/news/2026-07-23/');
   const topicLinks = page.locator('[data-news-signal] a[href="/news/archive/#topic-agent-operations"]');
   await expect(topicLinks).toHaveCount(2);
@@ -223,8 +227,8 @@ test('visible Signal topic navigation reaches its grouped retained retrospective
   await expect(topicTarget).toHaveText('エージェント運用');
   const topicGroup = topicTarget.locator('xpath=..');
   for (const href of [
-    '/news/2026-07-23/#sig-openai-presence-20260722',
-    '/news/2026-07-23/#sig-anthropic-sdk-20260722',
+    '/news/2026-07-23/#edition-2026-07-23-sig-openai-presence-20260722',
+    '/news/2026-07-23/#edition-2026-07-23-sig-anthropic-sdk-20260722',
   ]) {
     await expect(topicGroup.locator(`a[href="${href}"]`)).toHaveCount(1);
   }
@@ -237,7 +241,62 @@ test('News remains readable with JavaScript disabled', async ({ browser }) => {
   await page.goto('/news/');
   await expect(page.locator('[data-news-signal]')).toHaveCount(6);
   await expect(page.locator(`a[href="${directSources[0]}"]`)).toBeVisible();
+  const historyLink = page.locator('[data-news-history-loader] a');
+  await expect(historyLink).toHaveAttribute('href', production ? '/news/archive/' : '/news/2026-07-23/');
   await context.close();
+});
+
+test('previous Edition appends one exact server Edition with unique IDs, focus, and through history', async ({ page }) => {
+  await page.goto('/news/');
+  const loader = page.locator('[data-news-history-loader]');
+  if (production) {
+    await expect(loader.locator('[data-news-history-link]')).toHaveCount(0);
+    await expect(loader.getByRole('link', { name: 'Archiveを見る' })).toBeVisible();
+    return;
+  }
+
+  await expect(page.locator('[data-news-edition]')).toHaveCount(1);
+  await loader.getByRole('link', { name: '前のEditionを読む' }).click();
+  await expect(page.locator('[data-news-edition]')).toHaveCount(2);
+  await expect(page).toHaveURL(/\?through=2026-07-23$/);
+  const appendedHeading = page.locator('[data-news-edition="2026-07-23"] h2[data-news-edition-heading]');
+  await expect(appendedHeading).toBeFocused();
+  await expect(loader.locator('[data-news-history-status]')).toContainText('追加しました');
+  const ids = await page.locator('[id]').evaluateAll((nodes) => nodes.map((node) => node.id));
+  expect(new Set(ids).size).toBe(ids.length);
+
+  await page.goBack();
+  await expect(page.locator('[data-news-edition]')).toHaveCount(1);
+  await page.goForward();
+  await expect(page.locator('[data-news-edition]')).toHaveCount(2);
+  await page.reload();
+  await expect(page.locator('[data-news-edition]')).toHaveCount(2);
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://aoifuture.com/news/');
+});
+
+test('previous Edition fetch failure appends nothing and keeps the fallback link', async ({ page }) => {
+  test.skip(production, 'no previous public Edition');
+  await page.route('**/news/2026-07-23/', (route) => route.fulfill({ status: 503, contentType: 'text/html', body: 'unavailable' }));
+  await page.goto('/news/');
+  const link = page.locator('[data-news-history-link]');
+  await link.click();
+  await expect(page.locator('[data-news-edition]')).toHaveCount(1);
+  await expect(page.locator('[data-news-history-status]')).toContainText('読み込めませんでした');
+  await expect(link).toHaveAttribute('href', '/news/2026-07-23/');
+  await expect(link).not.toHaveAttribute('aria-disabled', 'true');
+});
+
+test('production omits review-only News routes, copy, feed events, and loader target', async ({ page, request }) => {
+  test.skip(!production, 'production-only boundary');
+  expect((await request.get('/news/2026-07-23/')).status()).toBe(404);
+  expect((await request.get('/news/context/agent-authority/')).status()).toBe(404);
+  await page.goto('/news/');
+  await expect(page.getByText('ROLLING EDITION', { exact: true })).toBeVisible();
+  await expect(page.getByText(/PREVIEW|NON-PRODUCTION|sample/i)).toHaveCount(0);
+  await expect(page.locator('[data-news-history-link]')).toHaveCount(0);
+  const feed = await (await request.get('/news/feed.xml')).text();
+  expect(feed).not.toContain('2026-07-23');
+  expect(feed).not.toContain('NON-PRODUCTION SAMPLE');
 });
 
 test('Edition density is responsive across phone, tablet, and two-column desktop widths', async ({ page }) => {

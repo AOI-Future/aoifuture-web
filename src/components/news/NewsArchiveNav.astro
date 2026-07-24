@@ -33,7 +33,7 @@ const sources = catalog.editions.flatMap((edition) => edition.items.map((signal)
     <h2 id="archive-editions">By Edition</h2>
     <ul>
       {catalog.editions.map((edition) => (
-        <li><a href={`/news/${edition.edition_date}/`}><time datetime={edition.edition_date}>{edition.edition_date} JST</time> / {edition.title}</a></li>
+        <li><a href={`/news/${edition.edition_id}/`}><time datetime={edition.edition_date}>{edition.edition_date} JST</time> / {edition.title}</a></li>
       ))}
     </ul>
   </section>
@@ -55,7 +55,7 @@ const sources = catalog.editions.flatMap((edition) => edition.items.map((signal)
           <ul>
             {records.map(({ edition, signal }) => (
               <li>
-                <a href={`/news/${edition.edition_date}/#${signal.id}`}>
+                <a href={`/news/${edition.edition_id}/#edition-${edition.edition_id}-${signal.id}`}>
                   <time datetime={edition.edition_date}>{edition.edition_date} JST</time> / {signal.title}
                 </a>
               </li>
@@ -69,7 +69,7 @@ const sources = catalog.editions.flatMap((edition) => edition.items.map((signal)
     <h2 id="archive-sources">By source</h2>
     <ul id="archive-sources-list">
       {sources.map(({ edition, signal }) => (
-        <li><a href={`/news/${edition.edition_date}/#${signal.id}`}>{signal.source_domain} / {signal.source_title}</a></li>
+        <li><a href={`/news/${edition.edition_id}/#edition-${edition.edition_id}-${signal.id}`}>{signal.source_domain} / {signal.source_title}</a></li>
       ))}
     </ul>
   </section>

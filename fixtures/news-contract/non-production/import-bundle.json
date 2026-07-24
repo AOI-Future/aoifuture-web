@@ -1,6 +1,7 @@
 {
   "edition": {
     "schema_version": "aoi.news.edition.v1",
+    "publication_status": "review-only",
     "edition_id": "2026-07-23",
     "edition_date": "2026-07-23",
     "generated_at": "2026-07-23T09:00:00+09:00",
@@ -60,6 +61,7 @@
   "contexts": [
     {
       "schema_version": "aoi.news.context.v1",
+      "publication_status": "review-only",
       "id": "ctx-agent-authority",
       "slug": "agent-authority",
       "title": "Agent Authority",
@@ -98,6 +100,7 @@
   "previous_contexts": [
     {
       "schema_version": "aoi.news.context.v1",
+      "publication_status": "review-only",
       "id": "ctx-agent-authority",
       "slug": "agent-authority",
       "title": "Agent Authority",
@@ -147,6 +150,7 @@
   "published_contexts": [
     {
       "schema_version": "aoi.news.context.v1",
+      "publication_status": "review-only",
       "id": "ctx-agent-authority",
       "slug": "agent-authority",
       "title": "Agent Authority",

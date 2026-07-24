@@ -278,6 +278,14 @@ describe('model-free meaningful-change proposal classifier', () => {
 });
 
 describe('deterministic Rolling Edition RSS', () => {
+  it('renders only public Edition events in production when passed the projected graph', () => {
+    const xml = renderRollingFeed(reviewedEvents, [reviewedEdition], { mode: 'production' });
+    expect(xml).toContain('<title>AOIFUTURE News Rolling Edition RSS</title>');
+    expect(xml).toContain('aoi-news-2026-07-24-r001');
+    expect(xml).not.toContain('2026-07-23');
+    expect(xml).not.toContain('NON-PRODUCTION SAMPLE');
+    expect((xml.match(/<item>/g) ?? [])).toHaveLength(1);
+  });
   it('renders the reviewed Preview event first with its deterministic GUID and preview boundary', () => {
     const allEvents = [...events, ...reviewedEvents];
     const xml = renderRollingFeed(allEvents, [edition, reviewedEdition], { sample: true });

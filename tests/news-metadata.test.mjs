@@ -29,7 +29,7 @@ describe('AOIFUTURE News M2 public metadata', () => {
       '@type': 'ListItem',
       position: index + 1,
       name: signal.title,
-      url: `https://aoifuture.com/news/${edition.edition_date}/#${signal.id}`,
+      url: `https://aoifuture.com/news/${edition.edition_id}/#edition-${edition.edition_id}-${signal.id}`,
     })));
     expect(serializedTypes(metadata)).not.toContain('NewsArticle');
     expect(serializedTypes(metadata)).not.toContain('Article');

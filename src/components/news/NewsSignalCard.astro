@@ -3,11 +3,13 @@ import type { NewsContext, NewsSignal, NewsTopic } from '../../lib/news/types';
 
 interface Props {
   signal: NewsSignal;
+  editionId: string;
   contextById: Map<string, NewsContext>;
   topicById: Map<string, NewsTopic>;
 }
 
-const { signal, contextById, topicById } = Astro.props;
+const { signal, editionId, contextById, topicById } = Astro.props;
+const id = `edition-${editionId}-${signal.id}`;
 const formatDate = (value: string) => new Intl.DateTimeFormat('ja-JP', {
   dateStyle: 'medium',
   timeStyle: 'short',
@@ -19,9 +21,9 @@ const sourceLanguage = signal.language === 'other' ? 'und' : signal.language;
 
 <article
   class:list={['news-signal', { 'news-signal--lead': signal.role === 'lead' }]}
-  id={signal.id}
+  id={id}
   data-news-signal
-  aria-labelledby={`${signal.id}-title`}
+  aria-labelledby={`${id}-title`}
 >
   <div class="news-signal__source" data-news-order="source">
     <div class="news-signal__flags">
@@ -33,21 +35,21 @@ const sourceLanguage = signal.language === 'other' ? 'und' : signal.language;
     </div>
   </div>
 
-  <h3 id={`${signal.id}-title`} data-news-order="headline">{signal.title}</h3>
+  <h3 id={`${id}-title`} data-news-order="headline">{signal.title}</h3>
 
-  <section class="news-reading-note" aria-labelledby={`${signal.id}-fact`} data-news-order="fact">
-    <h4 id={`${signal.id}-fact`}>Source fact</h4>
+  <section class="news-reading-note" aria-labelledby={`${id}-fact`} data-news-order="fact">
+    <h4 id={`${id}-fact`}>Source fact</h4>
     <p>{signal.source_fact}</p>
     {signal.caveat && (
-      <aside class="news-caveat" aria-labelledby={`${signal.id}-caveat`}>
-        <h4 id={`${signal.id}-caveat`}>Caveat</h4>
+      <aside class="news-caveat" aria-labelledby={`${id}-caveat`}>
+        <h4 id={`${id}-caveat`}>Caveat</h4>
         <p>{signal.caveat}</p>
       </aside>
     )}
   </section>
 
-  <section class="news-reading-note" aria-labelledby={`${signal.id}-note`} data-news-order="note">
-    <h4 id={`${signal.id}-note`}>AOI note</h4>
+  <section class="news-reading-note" aria-labelledby={`${id}-note`} data-news-order="note">
+    <h4 id={`${id}-note`}>AOI note</h4>
     <p>{signal.aoi_note}</p>
   </section>
 

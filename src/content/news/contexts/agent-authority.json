@@ -1,6 +1,7 @@
 {
   "current_view": "権限と引き継ぎに加え、SDK更新時のイベント順序と差分処理も運用検証の対象になる。",
   "id": "ctx-agent-authority",
+  "publication_status": "review-only",
   "operator_context": {
     "authority": "実行可能な操作と接続先を列挙する。",
     "control": "承認と人間への引き継ぎ条件を確認する。",

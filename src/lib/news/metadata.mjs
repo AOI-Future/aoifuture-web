@@ -19,7 +19,7 @@ export function buildEditionMetadata(edition, latestReviewedAt) {
   if (typeof latestReviewedAt !== 'string' || Number.isNaN(Date.parse(latestReviewedAt))) {
     throw new Error('Dated Edition metadata requires a validated reviewed revision event timestamp');
   }
-  const url = `${ORIGIN}/news/${edition.edition_date}/`;
+  const url = `${ORIGIN}/news/${edition.edition_id}/`;
   return schema('CollectionPage', {
     name: edition.title,
     description: edition.dek ?? edition.title,
@@ -28,7 +28,7 @@ export function buildEditionMetadata(edition, latestReviewedAt) {
     dateModified: latestReviewedAt,
     mainEntity: itemList(edition.items.map((signal) => ({
       name: signal.title,
-      url: `${url}#${signal.id}`,
+      url: `${url}#edition-${edition.edition_id}-${signal.id}`,
     }))),
   });
 }
@@ -40,7 +40,7 @@ export function buildIndexMetadata(catalog) {
     url: `${ORIGIN}/news/`,
     mainEntity: itemList(catalog.editions.map((edition) => ({
       name: edition.title,
-      url: `${ORIGIN}/news/${edition.edition_date}/`,
+      url: `${ORIGIN}/news/${edition.edition_id}/`,
     }))),
   });
 }
@@ -49,7 +49,7 @@ export function buildArchiveMetadata(catalog) {
   const entries = [
     ...catalog.editions.map((edition) => ({
       name: edition.title,
-      url: `${ORIGIN}/news/${edition.edition_date}/`,
+      url: `${ORIGIN}/news/${edition.edition_id}/`,
     })),
     ...catalog.contexts.map((context) => ({
       name: context.title,
@@ -57,8 +57,8 @@ export function buildArchiveMetadata(catalog) {
     })),
   ];
   return schema('CollectionPage', {
-    name: 'AOIFUTURE News Editorial review index',
-    description: 'Bounded entry points for the editorial review Preview; not authorized for production publication.',
+    name: 'AOIFUTURE News index',
+    description: 'Bounded entry points for finite, source-first Rolling Editions and Active Contexts.',
     url: `${ORIGIN}/news/archive/`,
     mainEntity: itemList(entries),
   });

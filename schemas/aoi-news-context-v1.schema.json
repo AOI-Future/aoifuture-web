@@ -4,11 +4,12 @@
   "title": "AOIFUTURE News Active Context v1",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "id", "slug", "title", "current_view", "updated_at", "supporting_signal_ids", "revisions"],
+  "required": ["schema_version", "id", "slug", "publication_status", "title", "current_view", "updated_at", "supporting_signal_ids", "revisions"],
   "properties": {
     "schema_version": { "const": "aoi.news.context.v1" },
     "id": { "$ref": "#/$defs/id" },
     "slug": { "$ref": "#/$defs/id" },
+    "publication_status": { "enum": ["public", "review-only"] },
     "title": { "$ref": "#/$defs/text200" },
     "current_view": { "$ref": "#/$defs/text2000" },
     "updated_at": { "type": "string", "format": "date-time" },

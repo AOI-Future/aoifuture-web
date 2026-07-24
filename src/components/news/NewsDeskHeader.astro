@@ -1,15 +1,22 @@
 ---
+import type { NewsPublicationMode } from '../../lib/news/types';
+
+interface Props {
+  mode: NewsPublicationMode;
+}
+
+const { mode } = Astro.props;
 ---
 
 <header class="news-site-header">
   <div class="news-site-header__brand">
     <a href="/news/" aria-label="AOIFUTURE News home">AOIFUTURE / NEWS</a>
-    <span class="news-sample-label">EDITORIAL REVIEW PREVIEW</span>
+    {mode === 'review' && <span class="news-sample-label">EDITORIAL REVIEW PREVIEW</span>}
   </div>
   <nav class="news-nav" aria-label="News">
     <a href="/news/">Edition</a>
     <a href="/news/context/connected-ai-boundaries/">Active Context</a>
-    <a href="/news/archive/">Review index</a>
+    <a href="/news/archive/">{mode === 'production' ? 'Archive' : 'Review index'}</a>
     <a href="/">AOIFUTURE</a>
   </nav>
 </header>
