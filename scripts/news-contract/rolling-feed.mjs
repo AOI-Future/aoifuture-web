@@ -48,13 +48,20 @@ export function validateRevisionEvents(events, editions) {
     if (event.edition_url !== expectedUrl) {
       errors.push(error('edition_url', `${path}/edition_url`, `must equal ${expectedUrl}`));
     }
+    const expectedEventId = `aoi-news-${event.edition_id}-r${String(event.revision).padStart(3, '0')}`;
+    if (event.event_id !== expectedEventId) {
+      errors.push(error('deterministic_event_id', `${path}/event_id`, `must equal ${expectedEventId}`));
+    }
+    if (event.revision === 1 && Date.parse(event.published_at) !== Date.parse(edition.published_at)) {
+      errors.push(error('publication_time', `${path}/published_at`, 'revision 1 timestamp must equal the Edition published_at instant'));
+    }
     const signalIds = new Set(edition.items.map((signal) => signal.id));
     event.changed_signal_ids.forEach((signalId, signalIndex) => {
       if (!signalIds.has(signalId)) {
         errors.push(error('unresolved_signal_reference', `${path}/changed_signal_ids/${signalIndex}`, `unknown public Signal ${signalId}`));
       }
     });
-    if (['signals-added', 'signal-corrected', 'signal-withdrawn'].includes(event.event_kind)
+    if (['signals-added', 'signal-corrected', 'signal-source-unavailable', 'signal-withdrawn'].includes(event.event_kind)
       && event.changed_signal_ids.length === 0) {
       errors.push(error('changed_signals_required', `${path}/changed_signal_ids`, `${event.event_kind} requires changed public Signals`));
     }
@@ -66,6 +73,7 @@ export function validateRevisionEvents(events, editions) {
   });
 
   for (const stream of streams.values()) {
+    const latestSignalEvent = new Map();
     stream.forEach(({ event, path }, index) => {
       if (event.revision !== index + 1) {
         errors.push(error('revision_sequence', `${path}/revision`, 'revisions must start at 1 and increase by exactly one'));
@@ -76,7 +84,20 @@ export function validateRevisionEvents(events, editions) {
       if (index > 0 && Date.parse(event.published_at) <= Date.parse(stream[index - 1].event.published_at)) {
         errors.push(error('event_time_order', `${path}/published_at`, 'event timestamps must be strictly increasing'));
       }
+      event.changed_signal_ids.forEach((signalId) => latestSignalEvent.set(signalId, { event, path }));
     });
+    const edition = editionMap.get(stream[0]?.event.edition_id);
+    const signalMap = new Map(edition?.items.map((signal) => [signal.id, signal]) ?? []);
+    for (const [signalId, { event, path }] of latestSignalEvent) {
+      const signal = signalMap.get(signalId);
+      if (event.event_kind === 'signal-source-unavailable' && signal?.verification.status !== 'source-unavailable') {
+        errors.push(error('source_unavailable_event_semantics', `${path}/event_kind`, 'the latest event for this Signal requires source-unavailable public verification state'));
+      }
+      if (event.event_kind === 'signal-withdrawn'
+        && (signal?.verification.status !== 'withdrawn' || signal.change?.kind !== 'withdrawn')) {
+        errors.push(error('withdrawal_event_semantics', `${path}/event_kind`, 'the latest event for this Signal requires explicit withdrawn public state'));
+      }
+    }
   }
   return result(errors);
 }
@@ -107,7 +128,7 @@ function validateClassifierInput(edition, contexts, side) {
   });
 }
 
-function comparableSignal(signal, { historical = false } = {}) {
+function comparableSignal(signal, { historical = false, withdrawn = false } = {}) {
   const copy = structuredClone(signal);
   delete copy.source_fact;
   delete copy.caveat;
@@ -118,7 +139,7 @@ function comparableSignal(signal, { historical = false } = {}) {
     delete copy.verification.checked_at;
     if (historical) delete copy.verification.status;
   }
-  if (historical) delete copy.role;
+  if (withdrawn) delete copy.role;
   return copy;
 }
 
@@ -136,6 +157,7 @@ export function classifyEditionChange(previous, candidate, contexts = []) {
 
   const added = [...candidateById.keys()].filter((id) => !previousById.has(id)).sort();
   const corrected = [];
+  const sourceUnavailable = [];
   const withdrawn = [];
   for (const [id, before] of previousById) {
     const after = candidateById.get(id);
@@ -144,15 +166,20 @@ export function classifyEditionChange(previous, candidate, contexts = []) {
     const correctionStateChanged = (before.change?.kind ?? null) !== (after.change?.kind ?? null)
       || (before.corrected_at ?? null) !== (after.corrected_at ?? null)
       || (before.correction_note ?? null) !== (after.correction_note ?? null);
-    const becameHistorical = before.verification.status !== after.verification.status
-      && ['source-unavailable', 'withdrawn'].includes(after.verification.status);
+    const becameSourceUnavailable = before.verification.status !== after.verification.status
+      && after.verification.status === 'source-unavailable';
+    const becameWithdrawn = before.verification.status !== after.verification.status
+      && after.verification.status === 'withdrawn';
     const withdrawalChange = before.change?.kind !== after.change?.kind && after.change?.kind === 'withdrawn';
-    const historical = becameHistorical || withdrawalChange;
-    if (canonical(comparableSignal(before, { historical })) !== canonical(comparableSignal(after, { historical }))) {
+    const historical = becameSourceUnavailable || becameWithdrawn || withdrawalChange;
+    const withdrawnState = becameWithdrawn || withdrawalChange;
+    if (canonical(comparableSignal(before, { historical, withdrawn: withdrawnState }))
+      !== canonical(comparableSignal(after, { historical, withdrawn: withdrawnState }))) {
       throw new Error(`Invalid public Edition snapshot transition: unsupported public Signal change (${id})`);
     }
-    if (becameHistorical || withdrawalChange) withdrawn.push(id);
-    if (!withdrawn.includes(id) && (publicTextChanged || correctionStateChanged)) {
+    if (becameSourceUnavailable) sourceUnavailable.push(id);
+    if (becameWithdrawn || withdrawalChange) withdrawn.push(id);
+    if (!sourceUnavailable.includes(id) && !withdrawn.includes(id) && (publicTextChanged || correctionStateChanged)) {
       if (after.change?.kind !== 'corrected' || !after.corrected_at || !after.correction_note) {
         throw new Error(`Invalid public Edition snapshot transition: public text correction requires explicit correction semantics (${id})`);
       }
@@ -188,9 +215,9 @@ export function classifyEditionChange(previous, candidate, contexts = []) {
   if (!corrected.length && editionCorrectionChanged) {
     throw new Error('Invalid public Edition snapshot transition: Edition corrected_at cannot advance without a Signal correction');
   }
-  if (!added.length && !corrected.length && !withdrawn.length && !noteChanged) return null;
+  if (!added.length && !corrected.length && !sourceUnavailable.length && !withdrawn.length && !noteChanged) return null;
 
-  const changedClasses = [added, corrected, withdrawn].filter((ids) => ids.length).length
+  const changedClasses = [added, corrected, sourceUnavailable, withdrawn].filter((ids) => ids.length).length
     + Number(noteChanged);
   if (changedClasses > 1) {
     throw new Error('Invalid public Edition snapshot transition: multiple event classes require separate reviewed revisions');
@@ -201,6 +228,9 @@ export function classifyEditionChange(previous, candidate, contexts = []) {
   if (withdrawn.length) {
     eventKind = 'signal-withdrawn';
     changedSignalIds = withdrawn;
+  } else if (sourceUnavailable.length) {
+    eventKind = 'signal-source-unavailable';
+    changedSignalIds = sourceUnavailable;
   } else if (corrected.length) {
     eventKind = 'signal-corrected';
     changedSignalIds = corrected;
@@ -219,7 +249,8 @@ export function classifyEditionChange(previous, candidate, contexts = []) {
     reasons: [
       ...added.map((id) => `signal-added:${id}`),
       ...corrected.map((id) => `signal-corrected:${id}`),
-      ...withdrawn.map((id) => `signal-historical:${id}`),
+      ...sourceUnavailable.map((id) => `signal-source-unavailable:${id}`),
+      ...withdrawn.map((id) => `signal-withdrawn:${id}`),
       ...(noteChanged ? ['edition-note-updated'] : []),
     ],
   };

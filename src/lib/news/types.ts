@@ -100,6 +100,7 @@ export type NewsEditionEventKind =
   | 'edition-published'
   | 'signals-added'
   | 'signal-corrected'
+  | 'signal-source-unavailable'
   | 'signal-withdrawn'
   | 'edition-note-updated';
 

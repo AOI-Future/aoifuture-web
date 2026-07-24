@@ -24,7 +24,7 @@ Required public fields should include:
 - stable event ID / GUID;
 - Edition ID and date;
 - monotonic revision number;
-- event kind (`edition-published`, `signals-added`, `signal-corrected`, `signal-withdrawn`, `edition-note-updated` or a smaller justified set);
+- event kind (`edition-published`, `signals-added`, `signal-corrected`, `signal-source-unavailable`, `signal-withdrawn`, `edition-note-updated` or a smaller justified set);
 - public title and short public summary;
 - event publication timestamp;
 - canonical Edition URL;
@@ -34,8 +34,9 @@ Rules:
 
 - additional fields fail closed;
 - no raw source body, copied RSS text, receipt, local path, private score, prompt, hidden reasoning, reviewer identity, unpublished URL, or reader identifier;
-- event IDs and revision numbers are unique and monotonic per Edition;
-- event timestamps are ordered;
+- event IDs are derived as `aoi-news-<edition_id>-rNNN`; arbitrary IDs are invalid;
+- revision numbers are unique and monotonic per Edition;
+- revision 1 uses the Edition publication instant; later event timestamps are strictly ordered;
 - changed Signal IDs resolve to the referenced public Edition state;
 - event URL is HTTPS, no-www `aoifuture.com`, trailing slash, and points to the matching dated Edition;
 - an update is append-only; prior published events may not be rewritten or deleted.
@@ -51,7 +52,8 @@ Meaningful proposal classes:
 - Signal added;
 - public Source fact or Caveat correction;
 - public correction note/change-kind change;
-- verification status moving to withdrawn/historical state;
+- verification status moving to source-unavailable, reported distinctly from withdrawal;
+- verification status and change semantics moving to withdrawn;
 - Edition note meaningfully changed.
 
 Non-event changes:

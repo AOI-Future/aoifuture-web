@@ -34,9 +34,12 @@ describe('Rolling Edition public revision-event contract', () => {
     ['fractional revision', (candidate) => { candidate[1].revision = 1.5; }, 'schema'],
     ['duplicate changed Signal', (candidate) => { candidate[0].changed_signal_ids.push(candidate[0].changed_signal_ids[0]); }, 'schema'],
     ['duplicate event ID', (candidate) => { candidate[1].event_id = candidate[0].event_id; }, 'duplicate_event_id'],
+    ['schema-shaped but non-derived event ID', (candidate) => { candidate[1].event_id = 'aoi-news-2026-07-22-r002'; }, 'deterministic_event_id'],
+    ['non-padded event revision ID', (candidate) => { candidate[1].event_id = 'aoi-news-2026-07-23-r2'; }, 'schema'],
     ['non-monotonic revision', (candidate) => { candidate[1].revision = 1; }, 'revision_sequence'],
     ['non-publication first revision', (candidate) => { candidate[0].event_kind = 'signals-added'; }, 'publication_event'],
     ['repeated publication event', (candidate) => { candidate[1].event_kind = 'edition-published'; }, 'publication_event'],
+    ['publication timestamp divergent from the Edition', (candidate) => { candidate[0].published_at = '2026-07-23T09:01:00+09:00'; }, 'publication_time'],
     ['unordered timestamp', (candidate) => { candidate[1].published_at = candidate[0].published_at; }, 'event_time_order'],
     ['wrong canonical host', (candidate) => { candidate[0].edition_url = 'https://www.aoifuture.com/news/2026-07-23/'; }, 'schema'],
     ['missing trailing slash', (candidate) => { candidate[0].edition_url = 'https://aoifuture.com/news/2026-07-23'; }, 'schema'],
@@ -75,6 +78,37 @@ describe('Rolling Edition public revision-event contract', () => {
     });
     expect(validateRevisionEventTransition(events, candidate, [edition])).toEqual({ ok: true, errors: [] });
   });
+
+  it('accepts a source-unavailable event as distinct from a withdrawal event', () => {
+    const candidateEdition = clone(edition);
+    candidateEdition.items[0].verification.status = 'source-unavailable';
+    const candidateEvents = clone(events);
+    candidateEvents.push({
+      ...candidateEvents[1],
+      event_id: 'aoi-news-2026-07-23-r003',
+      revision: 3,
+      event_kind: 'signal-source-unavailable',
+      title: 'NON-PRODUCTION SAMPLE: 公開ソース確認不能イベント',
+      summary: '検証用の公開ソース確認不能イベント。',
+      published_at: '2026-07-23T09:10:00+09:00',
+      changed_signal_ids: [candidateEdition.items[0].id],
+    });
+    expect(validateRevisionEvents(candidateEvents, [candidateEdition])).toEqual({ ok: true, errors: [] });
+  });
+
+  it('rejects a source-unavailable event when the resulting public Signal is still verified', () => {
+    const candidateEvents = clone(events);
+    candidateEvents.push({
+      ...candidateEvents[1],
+      event_id: 'aoi-news-2026-07-23-r003',
+      revision: 3,
+      event_kind: 'signal-source-unavailable',
+      published_at: '2026-07-23T09:10:00+09:00',
+      changed_signal_ids: [edition.items[0].id],
+    });
+    expect(codes(validateRevisionEvents(candidateEvents, [edition])))
+      .toContain('source_unavailable_event_semantics');
+  });
 });
 
 describe('model-free meaningful-change proposal classifier', () => {
@@ -111,6 +145,9 @@ describe('model-free meaningful-change proposal classifier', () => {
       candidate.items[1].verification.status = 'withdrawn';
       candidate.items[1].role = 'brief';
     }, 'signal-withdrawn'],
+    ['source unavailable', (candidate) => {
+      candidate.items[0].verification.status = 'source-unavailable';
+    }, 'signal-source-unavailable'],
     ['Edition note', (candidate) => { candidate.edition_note += ' 公開追記。'; }, 'edition-note-updated'],
   ])('proposes exactly one reviewed-public event class for %s', (_name, mutate, eventKind) => {
     const candidate = clone(edition);
@@ -118,6 +155,10 @@ describe('model-free meaningful-change proposal classifier', () => {
     const proposal = classifyEditionChange(edition, candidate, [context]);
     expect(proposal?.event_kind).toBe(eventKind);
     expect(proposal?.changed_signal_ids).toEqual(eventKind === 'edition-note-updated' ? [] : [edition.items[eventKind === 'signal-withdrawn' ? 1 : 0].id]);
+    if (eventKind === 'signal-source-unavailable') {
+      expect(proposal?.reasons).toEqual([`signal-source-unavailable:${edition.items[0].id}`]);
+      expect(proposal?.reasons.join(' ')).not.toContain('withdrawn');
+    }
     expect(proposal).not.toHaveProperty('published_at');
     expect(proposal).not.toHaveProperty('event_id');
   });
@@ -145,6 +186,13 @@ describe('model-free meaningful-change proposal classifier', () => {
     const previous = clone(edition);
     previous.items[0].verification.status = 'source-unavailable';
     expect(() => classifyEditionChange(previous, edition, [context])).toThrow(/unsupported public Signal change/i);
+  });
+
+  it('fails closed when source unavailability is combined with an unrelated role change', () => {
+    const candidate = clone(edition);
+    candidate.items[0].verification.status = 'source-unavailable';
+    candidate.items[0].role = 'brief';
+    expect(() => classifyEditionChange(edition, candidate, [context])).toThrow(/unsupported public Signal change/i);
   });
 
   it.each([
@@ -224,6 +272,7 @@ describe('deterministic Rolling Edition RSS', () => {
     expect(first).toContain('<atom:link href="https://aoifuture.com/news/feed.xml" rel="self" type="application/rss+xml"/>');
     expect(first.indexOf(events[1].event_id)).toBeLessThan(first.indexOf(events[0].event_id));
     for (const event of events) {
+      expect(event.event_id).toBe(`aoi-news-${event.edition_id}-r${String(event.revision).padStart(3, '0')}`);
       expect(first).toContain(`<guid isPermaLink="false">${event.event_id}</guid>`);
       expect(first).toContain(new Date(event.published_at).toUTCString());
     }
