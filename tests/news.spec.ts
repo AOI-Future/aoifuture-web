@@ -274,6 +274,26 @@ test('previous Edition appends one exact server Edition with unique IDs, focus, 
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://aoifuture.com/news/');
 });
 
+test('rolling history controls and appended Edition boundaries remain visible across required viewports', async ({ page }) => {
+  for (const width of [390, 768, 1024, 1280, 1440, 1728]) {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.goto('/news/');
+
+    const historyLink = page.locator('[data-news-history-loader] a');
+    await expect(historyLink).toHaveCSS('border-top-width', '1px');
+    await expect(historyLink).toHaveCSS('border-top-style', 'solid');
+    await expect(historyLink).toHaveCSS('border-top-color', 'rgb(43, 74, 74)');
+
+    if (!production) {
+      await historyLink.click();
+      const appendedEdition = page.locator('[data-news-history] > [data-news-edition="2026-07-23"]');
+      await expect(appendedEdition).toHaveCSS('border-top-width', '1px');
+      await expect(appendedEdition).toHaveCSS('border-top-style', 'solid');
+      await expect(appendedEdition).toHaveCSS('border-top-color', 'rgb(43, 74, 74)');
+    }
+  }
+});
+
 test('previous Edition fetch failure appends nothing and keeps the fallback link', async ({ page }) => {
   test.skip(production, 'no previous public Edition');
   await page.route('**/news/2026-07-23/', (route) => route.fulfill({ status: 503, contentType: 'text/html', body: 'unavailable' }));
