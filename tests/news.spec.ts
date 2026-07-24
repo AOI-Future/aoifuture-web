@@ -206,9 +206,51 @@ test('News remains readable with JavaScript disabled', async ({ browser }) => {
   await context.close();
 });
 
+test('Edition density is responsive at phone, tablet, and desktop widths', async ({ page }) => {
+  const expectations = [
+    { width: 390, height: 844, maximumPageHeight: 2750, columns: 1, maximumH1: 30, maximumSignalHeading: 22 },
+    { width: 768, height: 1024, maximumPageHeight: 2100, columns: 2, maximumH1: 48, maximumSignalHeading: 25 },
+    { width: 1024, height: 1366, maximumPageHeight: 2200, columns: 2, maximumH1: 48, maximumSignalHeading: 25 },
+    { width: 1440, height: 1000, minimumPageHeight: 2850, maximumPageHeight: 3000, columns: 1, maximumH1: 68, maximumSignalHeading: 44 },
+  ];
+
+  for (const expectation of expectations) {
+    await page.setViewportSize({ width: expectation.width, height: expectation.height });
+    await page.goto('/news/');
+    await page.evaluate(() => document.fonts.ready);
+    const metrics = await page.evaluate(() => {
+      const root = document.documentElement;
+      const signals = Array.from(document.querySelectorAll<HTMLElement>('[data-news-signal]'));
+      const interactiveTargets = Array.from(document.querySelectorAll<HTMLElement>('a.news-source-link, .news-nav a'));
+      const signalRects = signals.map((signal) => signal.getBoundingClientRect());
+      return {
+        pageHeight: root.scrollHeight,
+        scrollWidth: root.scrollWidth,
+        clientWidth: root.clientWidth,
+        columns: new Set(signalRects.map((rect) => Math.round(rect.left))).size,
+        signalTops: signalRects.map((rect) => Math.round(rect.top)),
+        minimumTargetHeight: Math.min(...interactiveTargets.map((target) => target.getBoundingClientRect().height)),
+        bodyFontSize: Number.parseFloat(getComputedStyle(document.querySelector('.news-body')!).fontSize),
+        h1FontSize: Number.parseFloat(getComputedStyle(document.querySelector('.news-edition h1')!).fontSize),
+        signalHeadingFontSize: Number.parseFloat(getComputedStyle(document.querySelector('.news-signal h3')!).fontSize),
+      };
+    });
+
+    expect(metrics.pageHeight, JSON.stringify({ expectation, metrics })).toBeLessThanOrEqual(expectation.maximumPageHeight);
+    if (expectation.minimumPageHeight) expect(metrics.pageHeight).toBeGreaterThanOrEqual(expectation.minimumPageHeight);
+    expect(metrics.columns).toBe(expectation.columns);
+    if (expectation.columns === 2) expect(new Set(metrics.signalTops).size).toBe(1);
+    expect(metrics.scrollWidth).toBeLessThanOrEqual(metrics.clientWidth + 1);
+    expect(metrics.minimumTargetHeight).toBeGreaterThanOrEqual(44);
+    expect(metrics.bodyFontSize).toBeGreaterThanOrEqual(14);
+    expect(metrics.h1FontSize).toBeLessThanOrEqual(expectation.maximumH1);
+    expect(metrics.signalHeadingFontSize).toBeLessThanOrEqual(expectation.maximumSignalHeading);
+  }
+});
+
 for (const route of newsRoutes) {
   test(`${route} has no horizontal overflow at mobile and desktop widths`, async ({ page }) => {
-    for (const width of [320, 1440]) {
+    for (const width of [320, 390, 768, 1024, 1440]) {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(route);
       const dimensions = await page.evaluate(() => ({
