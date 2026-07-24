@@ -516,11 +516,53 @@ test('skip link and primary controls are keyboard reachable with visible focus',
   expect(targets.every((height) => height >= 44)).toBe(true);
 });
 
-test('unknown News date and Context routes are 404 and Navigator has a direct NEWS entry', async ({ page, request }) => {
+test('unknown News date and Context routes are 404', async ({ request }) => {
   expect((await request.get('/news/2099-01-01/')).status()).toBe(404);
   expect((await request.get('/news/context/missing-context/')).status()).toBe(404);
-  await page.goto('/');
-  await expect(page.getByRole('link', { name: /NEWS/ })).toHaveAttribute('href', '/news/');
+});
+
+test('homepage exposes AOIFUTURE News as an unmistakable persistent link', async ({ page }) => {
+  for (const width of [390, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/');
+
+    const newsLink = page.getByRole('link', { name: 'AOIFUTURE Newsを読む', exact: true });
+    await expect(newsLink).toBeVisible();
+    await expect(newsLink).toHaveAttribute('href', '/news/');
+    await expect(newsLink).not.toHaveAttribute('target', /.+/);
+    await expect(newsLink.locator('[data-news-link-marker]')).toHaveText('>');
+    await expect(newsLink.getByText('AOIFUTURE NEWS', { exact: true })).toBeVisible();
+    await expect(newsLink.getByText('READ EDITIONS', { exact: true })).toBeVisible();
+
+    const metrics = await newsLink.evaluate((node) => {
+      const style = getComputedStyle(node);
+      const rect = node.getBoundingClientRect();
+      return {
+        borderWidth: style.borderTopWidth,
+        borderStyle: style.borderTopStyle,
+        borderColor: style.borderTopColor,
+        height: rect.height,
+        scrollWidth: document.documentElement.scrollWidth,
+        clientWidth: document.documentElement.clientWidth,
+      };
+    });
+    expect(metrics.borderWidth).toBe('1px');
+    expect(metrics.borderStyle).toBe('solid');
+    expect(metrics.borderColor).not.toBe('rgba(0, 0, 0, 0)');
+    expect(metrics.height).toBeGreaterThanOrEqual(44);
+    expect(metrics.scrollWidth).toBeLessThanOrEqual(metrics.clientWidth + 1);
+
+    for (let tab = 0; tab < 10 && !(await newsLink.evaluate((node) => node === document.activeElement)); tab += 1) {
+      await page.keyboard.press('Tab');
+    }
+    await expect(newsLink).toBeFocused();
+    await expect(newsLink).toHaveCSS('outline-style', 'solid');
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/\/news\/$/);
+  }
+});
+
+test('Navigator modal entries retain their hash behavior', async ({ page }) => {
   await page.goto('/#nictia');
   await expect(page).toHaveURL(/#nictia$/);
   await expect(page.getByRole('dialog')).toBeVisible();
