@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "baselineSha": "a0e3109bef6797a030b5bc6105645ec69a360507",
+  "route": "/news/",
+  "contentPolicy": "Only the two validated NON-PRODUCTION SAMPLE cards were used; 6/9/12 scenarios duplicate those cards locally and are not publishable reporting.",
+  "artifactRoots": {
+    "before": "/tmp/aoifuture-news-desktop-before-a0e3109",
+    "after": "/tmp/aoifuture-news-desktop-after",
+    "unchangedWidths": "/tmp/aoifuture-news-desktop-unchanged"
+  },
+  "unchangedScreenshotSha256": {
+    "390": "7f96051c333a847bd4308800773237c6fb8b7a6905d759d6a00ff690c32de938",
+    "768": "501ecc6c71f6e0582e4251da084f0198b1263c7790c53154baea923f5481dcdd",
+    "1024": "0144154d142bb5e329d2e1e59bbe6f2d4b7e7b5feb4c3604a619958c4a12066f"
+  },
+  "measurements": [
+    { "width": 1100, "signals": 2, "beforePageHeight": 1604, "afterPageHeight": 1604, "reductionPercent": 0, "beforeColumns": 2, "afterColumns": 2, "afterCardWidth": 520, "afterCopyPx": 14, "afterHeadingPx": 24, "beforeSha256": "9470fcdc0fe645ab2bedecc2188de1bef6827ed1498cd543058ca2ea165510b3", "afterSha256": "9470fcdc0fe645ab2bedecc2188de1bef6827ed1498cd543058ca2ea165510b3" },
+    { "width": 1101, "signals": 2, "beforePageHeight": 2892, "afterPageHeight": 1841, "reductionPercent": 36.3, "beforeColumns": 1, "afterColumns": 2, "afterCardWidth": 515, "afterCopyPx": 16, "afterHeadingPx": 28, "beforeSha256": "876369fd7c536c66da6871cad147cb94a4b9b00258edbcd4f7c6ba5d328586c7", "afterSha256": "9506f337e8c95553ef16379aade9fb8b18dda086015aaa1fd326b869f43aabb5" },
+    { "width": 1280, "signals": 2, "beforePageHeight": 2943, "afterPageHeight": 1861, "reductionPercent": 36.8, "beforeColumns": 1, "afterColumns": 2, "afterCardWidth": 540, "afterCopyPx": 16, "afterHeadingPx": 28, "beforeSha256": "27b7ad4e01ff97798bdafa4052151813bf612a211b2f1df00526f510cde8ff2b", "afterSha256": "62a01f381f688b7588b2def22e30e060f9bf6bcd39e4dc06ffd24d83e4f63f11" },
+    { "width": 1280, "signals": 6, "beforePageHeight": 6395, "afterPageHeight": 3368, "reductionPercent": 47.3, "beforeColumns": 1, "afterColumns": 2, "afterSha256": "565ec9a0320c7c23e5d10c82e1795d2cf3d8ad90b95e64b487e6fc2c8686fecc" },
+    { "width": 1280, "signals": 9, "beforePageHeight": 9013, "afterPageHeight": 4874, "reductionPercent": 45.9, "beforeColumns": 1, "afterColumns": 2, "afterSha256": "e9869d8161feef99248774d1b8c5c01e6d7a9dbb51ab3e2a96b8aa3628e8bb21" },
+    { "width": 1280, "signals": 12, "beforePageHeight": 11572, "afterPageHeight": 5628, "reductionPercent": 51.4, "beforeColumns": 1, "afterColumns": 2, "afterSha256": "c6007fe006c0452f4cb6e4820a18893b5df4a7effbf5f6f0d777a39e149b5bf4" },
+    { "width": 1440, "signals": 2, "beforePageHeight": 2943, "afterPageHeight": 1861, "reductionPercent": 36.8, "beforeColumns": 1, "afterColumns": 2, "afterCardWidth": 540, "afterCopyPx": 16, "afterHeadingPx": 28, "beforeSha256": "5d394e2be17ce4b8dd106754ca00cef676acf7eb4f79f11c2c83e141323f7f13", "afterSha256": "0ff3e5fd10b7977b727436f2e996f9360cc17e6509e4a96c8211f024ae41a4c6" },
+    { "width": 1440, "signals": 6, "beforePageHeight": 6395, "afterPageHeight": 3368, "reductionPercent": 47.3, "beforeColumns": 1, "afterColumns": 2, "afterSha256": "a5f33d2079d2bce6f50f9bb23ee9f827f1158456b5cbb0a9674fadc4806748ae" },
+    { "width": 1440, "signals": 9, "beforePageHeight": 9013, "afterPageHeight": 4874, "reductionPercent": 45.9, "beforeColumns": 1, "afterColumns": 2, "afterSha256": "40f2a94f50f004ca0b73f845308a3933acad7fbbffe04b3f2a2516edb4f1e272" },
+    { "width": 1440, "signals": 12, "beforePageHeight": 11572, "afterPageHeight": 5628, "reductionPercent": 51.4, "beforeColumns": 1, "afterColumns": 2, "afterSha256": "3a05930ebd64c9e3b493b1be32f627523a386b2ca15f8cfcc44c06a88fa2b20a" },
+    { "width": 1728, "signals": 2, "beforePageHeight": 2943, "afterPageHeight": 1861, "reductionPercent": 36.8, "beforeColumns": 1, "afterColumns": 2, "afterCardWidth": 540, "afterCopyPx": 16, "afterHeadingPx": 28, "beforeSha256": "e1cc543f90c21a0377ff6fd181817d607be3ef057129457f1bcb2a6e5f3ae453", "afterSha256": "292fc65a48e108a29a4d9ff0d55a2f634e6e32fc591d6044d644cf691e00222a" },
+    { "width": 1728, "signals": 6, "beforePageHeight": 6395, "afterPageHeight": 3368, "reductionPercent": 47.3, "beforeColumns": 1, "afterColumns": 2, "afterSha256": "e3d2dcb8e56958657ebdb3422460e0b5a1abd1491374b02b75dca889d863b03c" },
+    { "width": 1728, "signals": 9, "beforePageHeight": 9013, "afterPageHeight": 4874, "reductionPercent": 45.9, "beforeColumns": 1, "afterColumns": 2, "afterSha256": "26176bfc0b46028d889d0f5cfc873326539cfa466301674a33e8c87613cc9135" },
+    { "width": 1728, "signals": 12, "beforePageHeight": 11572, "afterPageHeight": 5628, "reductionPercent": 51.4, "beforeColumns": 1, "afterColumns": 2, "afterSha256": "5bb5865cc19a6b5dc14e766cf6e5cfc92419a54ffd3bd25e20a04ccf206bf1ba" }
+  ],
+  "acceptance": {
+    "horizontalOverflow": false,
+    "minimumInteractiveTargetPx": 44,
+    "desktopBodyPx": 16,
+    "desktopSignalCopyPx": 16,
+    "desktopSignalHeadingPx": 28,
+    "sourceFirstOrderValid": true,
+    "finiteNoPagination": true
+  }
+}

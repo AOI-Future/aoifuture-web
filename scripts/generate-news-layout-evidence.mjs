@@ -19,7 +19,7 @@ const viewports = [
   { name: 'desktop', width: 1440, height: 1000 },
   { name: 'mobile-390', width: 390, height: 844 },
 ];
-const densityScenarios = [6, 9, 12].flatMap((signalCount) =>
+const densityScenarios = [2, 6, 9, 12].flatMap((signalCount) =>
   viewports.map((viewport) => ({ kind: 'density', variant: 'none', signalCount, viewport })),
 );
 const detourScenarios = ['none', 'compact', 'full-width', 'overused'].flatMap((variant) =>
@@ -277,7 +277,7 @@ function buildReport(payload) {
     `- All four generated News routes contain exactly one \`https://aoifuture.com/.../\` canonical, without \`www\`, preserving trailing slashes.\n\n` +
     `## Density measurements\n\n` +
     `| Scenario | Page px | Viewports | X overflow | First source y | Final source y | PNG bytes | SHA-256 |\n| --- | ---: | ---: | --- | ---: | ---: | ---: | --- |\n` + table(density) + `\n\n` +
-    `Readback: all 6/9/12 compositions retained one finite Edition, one direct-source action per Signal, the Edition note, and the footer, with no pagination, collapse, or horizontal overflow. Six Signals is comfortable at both widths. Nine remains structurally clear but creates a long mobile scan. Twelve remains technically finite, but reaches ${desktop12.metrics.viewportMultiples} desktop and ${mobile12.metrics.viewportMultiples} mobile viewports; repeated two-card rhythm and distance to the final source/footer are the primary fatigue points. The footer and Edition note remain present and measurable, not sticky or hidden.\n\n` +
+    `Readback: all 2/6/9/12 compositions retained one finite Edition, one direct-source action per Signal, the Edition note, and the footer, with no pagination, collapse, or horizontal overflow. Two Signals verify the production-shaped sample. Six Signals is comfortable at both widths. Nine remains structurally clear but creates a long mobile scan. Twelve remains technically finite, but reaches ${desktop12.metrics.viewportMultiples} desktop and ${mobile12.metrics.viewportMultiples} mobile viewports; repeated two-card rhythm and distance to the final source/footer are the primary fatigue points. The footer and Edition note remain present and measurable, not sticky or hidden.\n\n` +
     `## Detour comparison\n\n` +
     `| Scenario | Page px | Viewports | X overflow | First source y | Final source y | PNG bytes | SHA-256 |\n| --- | ---: | ---: | --- | ---: | ---: | ---: | --- |\n` + table(detours) + `\n\n` +
     `Readback: no Detour preserves the strongest source-to-source rhythm. One compact block after Signal 3 is the least disruptive candidate if future information is genuinely distinct. The full-width block creates a stronger interruption, and the deliberately overused sample visibly and numerically extends the Edition without adding source actions. Because the neutral placeholder is not distinct from Source fact, AOI note, Caveat, Edition note, or Active Context, the default recommendation is **no separate Detour**; keep the full information in ordinary Edition content unless later real content proves an orientation benefit. The sample blocks are plain semantic HTML/CSS and do not require runtime JavaScript once composed.\n\n` +
@@ -347,7 +347,7 @@ try {
     .sort();
   const expectedDetourCounts = { none: 0, compact: 1, 'full-width': 1, overused: 4 };
   const acceptanceFailures = [];
-  if (results.length !== 14) acceptanceFailures.push(`expected 14 scenarios, received ${results.length}`);
+  if (results.length !== 16) acceptanceFailures.push(`expected 16 scenarios, received ${results.length}`);
   for (const result of results) {
     if (result.metrics.horizontalOverflow) acceptanceFailures.push(`${result.id}: horizontal overflow`);
     if (!result.metrics.finiteEdition) acceptanceFailures.push(`${result.id}: not a finite Edition`);

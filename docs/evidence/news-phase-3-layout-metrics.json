@@ -16,7 +16,7 @@
     "postBuild": {
       "assetCount": 5,
       "assetBytes": 3131360,
-      "generatedNewsHtmlBytes": 21282,
+      "generatedNewsHtmlBytes": 26814,
       "installedPackageBytes": 82200234,
       "files": [
         "jetbrains-mono-latin-500-normal.BWZEU5yA.woff2",
@@ -31,12 +31,12 @@
       "responseBytes": 2101020,
       "requests": [
         {
-          "url": "http://127.0.0.1:4332/node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-600-normal.woff2",
-          "bytes": 21860
-        },
-        {
           "url": "http://127.0.0.1:4332/node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff2",
           "bytes": 21832
+        },
+        {
+          "url": "http://127.0.0.1:4332/node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-600-normal.woff2",
+          "bytes": 21860
         },
         {
           "url": "http://127.0.0.1:4332/node_modules/@fontsource/noto-sans-jp/files/noto-sans-jp-japanese-700-normal.woff2",
@@ -58,6 +58,166 @@
   ],
   "scenarios": [
     {
+      "id": "density-2-desktop",
+      "kind": "density",
+      "variant": "none",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "metrics": {
+        "signalCount": 2,
+        "detourVariant": "none",
+        "pageHeight": 1952,
+        "viewportMultiples": 1.95,
+        "clientWidth": 1440,
+        "scrollWidth": 1440,
+        "horizontalOverflow": false,
+        "overflowOffenders": [],
+        "sourceActions": {
+          "count": 2,
+          "first": {
+            "top": 1607,
+            "bottom": 1698,
+            "left": 160,
+            "right": 700,
+            "width": 540,
+            "height": 91
+          },
+          "final": {
+            "top": 1607,
+            "bottom": 1698,
+            "left": 740,
+            "right": 1280,
+            "width": 540,
+            "height": 91
+          },
+          "meanInterval": 0,
+          "maximumInterval": 0
+        },
+        "rhythm": {
+          "minimumSignalHeight": 753,
+          "maximumSignalHeight": 753,
+          "meanSignalHeight": 753,
+          "signalHeightDeviation": 0
+        },
+        "readability": {
+          "headingCountChecked": 5,
+          "minimumHeadingPx": 12,
+          "navigationMinimumTargetPx": 44,
+          "headingsWithinWidth": true
+        },
+        "findability": {
+          "editionNote": {
+            "top": 726,
+            "bottom": 804,
+            "left": 160,
+            "right": 1280,
+            "width": 1120,
+            "height": 78
+          },
+          "footer": {
+            "top": 1834,
+            "bottom": 1952,
+            "left": 160,
+            "right": 1280,
+            "width": 1120,
+            "height": 118
+          }
+        },
+        "detours": [],
+        "finiteEdition": true,
+        "evidenceLabelPresent": true
+      },
+      "screenshot": {
+        "path": "/var/folders/96/74g8thcx2xv1bgf865bhmg1c0000gn/T/aoifuture-news-phase-3-21cf8b0/density-2-desktop.png",
+        "file": "density-2-desktop.png",
+        "bytes": 214858,
+        "sha256": "0f5f93f1db60b5f7cb8330f36f8a3d1a64d21f5e3a6806b67e676d67908b355e"
+      }
+    },
+    {
+      "id": "density-2-mobile-390",
+      "kind": "density",
+      "variant": "none",
+      "viewport": {
+        "name": "mobile-390",
+        "width": 390,
+        "height": 844
+      },
+      "metrics": {
+        "signalCount": 2,
+        "detourVariant": "none",
+        "pageHeight": 2646,
+        "viewportMultiples": 3.14,
+        "clientWidth": 390,
+        "scrollWidth": 390,
+        "horizontalOverflow": false,
+        "overflowOffenders": [],
+        "sourceActions": {
+          "count": 2,
+          "first": {
+            "top": 1545,
+            "bottom": 1628,
+            "left": 16,
+            "right": 210,
+            "width": 194,
+            "height": 83
+          },
+          "final": {
+            "top": 2340,
+            "bottom": 2423,
+            "left": 16,
+            "right": 225,
+            "width": 209,
+            "height": 83
+          },
+          "meanInterval": 795,
+          "maximumInterval": 795
+        },
+        "rhythm": {
+          "minimumSignalHeight": 770,
+          "maximumSignalHeight": 795,
+          "meanSignalHeight": 782.5,
+          "signalHeightDeviation": 12.5
+        },
+        "readability": {
+          "headingCountChecked": 5,
+          "minimumHeadingPx": 12,
+          "navigationMinimumTargetPx": 44,
+          "headingsWithinWidth": true
+        },
+        "findability": {
+          "editionNote": {
+            "top": 641,
+            "bottom": 759,
+            "left": 16,
+            "right": 374,
+            "width": 358,
+            "height": 118
+          },
+          "footer": {
+            "top": 2487,
+            "bottom": 2646,
+            "left": 16,
+            "right": 374,
+            "width": 358,
+            "height": 159
+          }
+        },
+        "detours": [],
+        "finiteEdition": true,
+        "evidenceLabelPresent": true
+      },
+      "screenshot": {
+        "path": "/var/folders/96/74g8thcx2xv1bgf865bhmg1c0000gn/T/aoifuture-news-phase-3-21cf8b0/density-2-mobile-390.png",
+        "file": "density-2-mobile-390.png",
+        "bytes": 189371,
+        "sha256": "9c0a08414ab94d4ad98442c876b3e4695cd621bf88f000ac4dab55c6880bd732"
+      }
+    },
+    {
       "id": "density-6-desktop",
       "kind": "density",
       "variant": "none",
@@ -69,8 +229,8 @@
       "metrics": {
         "signalCount": 6,
         "detourVariant": "none",
-        "pageHeight": 6485,
-        "viewportMultiples": 6.49,
+        "pageHeight": 3458,
+        "viewportMultiples": 3.46,
         "clientWidth": 1440,
         "scrollWidth": 1440,
         "horizontalOverflow": false,
@@ -78,29 +238,29 @@
         "sourceActions": {
           "count": 6,
           "first": {
-            "top": 1808,
-            "bottom": 1907,
+            "top": 1607,
+            "bottom": 1698,
             "left": 160,
-            "right": 354,
-            "width": 194,
-            "height": 99
+            "right": 700,
+            "width": 540,
+            "height": 91
           },
           "final": {
-            "top": 6092,
-            "bottom": 6191,
-            "left": 160,
-            "right": 369,
-            "width": 209,
-            "height": 99
+            "top": 3113,
+            "bottom": 3204,
+            "left": 740,
+            "right": 1280,
+            "width": 540,
+            "height": 91
           },
-          "meanInterval": 856.8,
-          "maximumInterval": 893
+          "meanInterval": 301.2,
+          "maximumInterval": 753
         },
         "rhythm": {
-          "minimumSignalHeight": 833,
-          "maximumSignalHeight": 893,
-          "meanSignalHeight": 863,
-          "signalHeightDeviation": 30
+          "minimumSignalHeight": 753,
+          "maximumSignalHeight": 753,
+          "meanSignalHeight": 753,
+          "signalHeightDeviation": 0
         },
         "readability": {
           "headingCountChecked": 6,
@@ -110,16 +270,16 @@
         },
         "findability": {
           "editionNote": {
-            "top": 766,
-            "bottom": 844,
+            "top": 726,
+            "bottom": 804,
             "left": 160,
             "right": 1280,
             "width": 1120,
             "height": 78
           },
           "footer": {
-            "top": 6367,
-            "bottom": 6485,
+            "top": 3340,
+            "bottom": 3458,
             "left": 160,
             "right": 1280,
             "width": 1120,
@@ -133,8 +293,8 @@
       "screenshot": {
         "path": "/var/folders/96/74g8thcx2xv1bgf865bhmg1c0000gn/T/aoifuture-news-phase-3-21cf8b0/density-6-desktop.png",
         "file": "density-6-desktop.png",
-        "bytes": 578139,
-        "sha256": "6418c8dcc5b89092f68689d89500dad4ee7ad17be274dfe35c81c7b94603e7fd"
+        "bytes": 438831,
+        "sha256": "c97dfaa1e297f521d3f6c78db63998b5d905b36497cf5746ec1c03d6f97f2cd2"
       }
     },
     {
@@ -149,8 +309,8 @@
       "metrics": {
         "signalCount": 6,
         "detourVariant": "none",
-        "pageHeight": 7041,
-        "viewportMultiples": 8.34,
+        "pageHeight": 5775,
+        "viewportMultiples": 6.84,
         "clientWidth": 390,
         "scrollWidth": 390,
         "horizontalOverflow": false,
@@ -158,29 +318,29 @@
         "sourceActions": {
           "count": 6,
           "first": {
-            "top": 1921,
-            "bottom": 2020,
+            "top": 1545,
+            "bottom": 1628,
             "left": 16,
             "right": 210,
             "width": 194,
-            "height": 99
+            "height": 83
           },
           "final": {
-            "top": 6687,
-            "bottom": 6786,
+            "top": 5470,
+            "bottom": 5553,
             "left": 16,
             "right": 225,
             "width": 209,
-            "height": 99
+            "height": 83
           },
-          "meanInterval": 953.2,
-          "maximumInterval": 970
+          "meanInterval": 785,
+          "maximumInterval": 795
         },
         "rhythm": {
-          "minimumSignalHeight": 942,
-          "maximumSignalHeight": 970,
-          "meanSignalHeight": 956,
-          "signalHeightDeviation": 14
+          "minimumSignalHeight": 770,
+          "maximumSignalHeight": 795,
+          "meanSignalHeight": 782.5,
+          "signalHeightDeviation": 12.5
         },
         "readability": {
           "headingCountChecked": 6,
@@ -190,16 +350,16 @@
         },
         "findability": {
           "editionNote": {
-            "top": 772,
-            "bottom": 921,
+            "top": 641,
+            "bottom": 759,
             "left": 16,
             "right": 374,
             "width": 358,
-            "height": 149
+            "height": 118
           },
           "footer": {
-            "top": 6882,
-            "bottom": 7041,
+            "top": 5617,
+            "bottom": 5775,
             "left": 16,
             "right": 374,
             "width": 358,
@@ -213,8 +373,8 @@
       "screenshot": {
         "path": "/var/folders/96/74g8thcx2xv1bgf865bhmg1c0000gn/T/aoifuture-news-phase-3-21cf8b0/density-6-mobile-390.png",
         "file": "density-6-mobile-390.png",
-        "bytes": 458801,
-        "sha256": "988d6de3a1891a33b2b2322b4459eef7afae6f8d910e99f8f37503e5b8fec2b7"
+        "bytes": 426569,
+        "sha256": "ade8862ca75511dd40b085929a23feb414048a3c0eca0a7b6fdda9720d0fcb2a"
       }
     },
     {
@@ -229,8 +389,8 @@
       "metrics": {
         "signalCount": 9,
         "detourVariant": "none",
-        "pageHeight": 9103,
-        "viewportMultiples": 9.1,
+        "pageHeight": 4965,
+        "viewportMultiples": 4.97,
         "clientWidth": 1440,
         "scrollWidth": 1440,
         "horizontalOverflow": false,
@@ -238,29 +398,29 @@
         "sourceActions": {
           "count": 9,
           "first": {
-            "top": 1808,
-            "bottom": 1907,
+            "top": 1607,
+            "bottom": 1698,
             "left": 160,
-            "right": 354,
-            "width": 194,
-            "height": 99
+            "right": 700,
+            "width": 540,
+            "height": 91
           },
           "final": {
-            "top": 8711,
-            "bottom": 8810,
+            "top": 4620,
+            "bottom": 4711,
             "left": 160,
-            "right": 354,
-            "width": 194,
-            "height": 99
+            "right": 700,
+            "width": 540,
+            "height": 91
           },
-          "meanInterval": 862.88,
-          "maximumInterval": 893
+          "meanInterval": 376.63,
+          "maximumInterval": 754
         },
         "rhythm": {
-          "minimumSignalHeight": 833,
-          "maximumSignalHeight": 893,
-          "meanSignalHeight": 866.33,
-          "signalHeightDeviation": 29.81
+          "minimumSignalHeight": 753,
+          "maximumSignalHeight": 753,
+          "meanSignalHeight": 753,
+          "signalHeightDeviation": 0
         },
         "readability": {
           "headingCountChecked": 6,
@@ -270,16 +430,16 @@
         },
         "findability": {
           "editionNote": {
-            "top": 766,
-            "bottom": 844,
+            "top": 726,
+            "bottom": 804,
             "left": 160,
             "right": 1280,
             "width": 1120,
             "height": 78
           },
           "footer": {
-            "top": 8986,
-            "bottom": 9103,
+            "top": 4847,
+            "bottom": 4965,
             "left": 160,
             "right": 1280,
             "width": 1120,
@@ -293,8 +453,8 @@
       "screenshot": {
         "path": "/var/folders/96/74g8thcx2xv1bgf865bhmg1c0000gn/T/aoifuture-news-phase-3-21cf8b0/density-9-desktop.png",
         "file": "density-9-desktop.png",
-        "bytes": 817198,
-        "sha256": "bf6bb8e017022decfa85f1fc4365cc65f42b2425217460ae80a5624e64e0d4b1"
+        "bytes": 626681,
+        "sha256": "c4075c8d46bbfbb437c85dffb71420d9fd1a8d1cf446447dcda985545c8b8c7e"
       }
     },
     {
@@ -309,8 +469,8 @@
       "metrics": {
         "signalCount": 9,
         "detourVariant": "none",
-        "pageHeight": 9923,
-        "viewportMultiples": 11.76,
+        "pageHeight": 8110,
+        "viewportMultiples": 9.61,
         "clientWidth": 390,
         "scrollWidth": 390,
         "horizontalOverflow": false,
@@ -318,29 +478,29 @@
         "sourceActions": {
           "count": 9,
           "first": {
-            "top": 1921,
-            "bottom": 2020,
+            "top": 1545,
+            "bottom": 1628,
             "left": 16,
             "right": 210,
             "width": 194,
-            "height": 99
+            "height": 83
           },
           "final": {
-            "top": 9570,
-            "bottom": 9669,
+            "top": 7804,
+            "bottom": 7887,
             "left": 16,
             "right": 210,
             "width": 194,
-            "height": 99
+            "height": 83
           },
-          "meanInterval": 956.13,
-          "maximumInterval": 971
+          "meanInterval": 782.38,
+          "maximumInterval": 795
         },
         "rhythm": {
-          "minimumSignalHeight": 942,
-          "maximumSignalHeight": 970,
-          "meanSignalHeight": 957.56,
-          "signalHeightDeviation": 13.91
+          "minimumSignalHeight": 770,
+          "maximumSignalHeight": 795,
+          "meanSignalHeight": 781.11,
+          "signalHeightDeviation": 12.42
         },
         "readability": {
           "headingCountChecked": 6,
@@ -350,16 +510,16 @@
         },
         "findability": {
           "editionNote": {
-            "top": 772,
-            "bottom": 921,
+            "top": 641,
+            "bottom": 759,
             "left": 16,
             "right": 374,
             "width": 358,
-            "height": 149
+            "height": 118
           },
           "footer": {
-            "top": 9765,
-            "bottom": 9923,
+            "top": 7951,
+            "bottom": 8110,
             "left": 16,
             "right": 374,
             "width": 358,
@@ -373,8 +533,8 @@
       "screenshot": {
         "path": "/var/folders/96/74g8thcx2xv1bgf865bhmg1c0000gn/T/aoifuture-news-phase-3-21cf8b0/density-9-mobile-390.png",
         "file": "density-9-mobile-390.png",
-        "bytes": 650829,
-        "sha256": "b08e71c459ea4e1a31a4f908e2907d15d82f311bb3c8a9dc0c2d6332b7f0706d"
+        "bytes": 605518,
+        "sha256": "4513fd4b26752498c3d01e85c0c0142577de606a7db0bf43753f9a5316667442"
       }
     },
     {
@@ -389,8 +549,8 @@
       "metrics": {
         "signalCount": 12,
         "detourVariant": "none",
-        "pageHeight": 11662,
-        "viewportMultiples": 11.66,
+        "pageHeight": 5718,
+        "viewportMultiples": 5.72,
         "clientWidth": 1440,
         "scrollWidth": 1440,
         "horizontalOverflow": false,
@@ -398,29 +558,29 @@
         "sourceActions": {
           "count": 12,
           "first": {
-            "top": 1808,
-            "bottom": 1907,
+            "top": 1607,
+            "bottom": 1698,
             "left": 160,
-            "right": 354,
-            "width": 194,
-            "height": 99
+            "right": 700,
+            "width": 540,
+            "height": 91
           },
           "final": {
-            "top": 11269,
-            "bottom": 11368,
-            "left": 160,
-            "right": 369,
-            "width": 209,
-            "height": 99
+            "top": 5373,
+            "bottom": 5464,
+            "left": 740,
+            "right": 1280,
+            "width": 540,
+            "height": 91
           },
-          "meanInterval": 860.09,
-          "maximumInterval": 893
+          "meanInterval": 342.36,
+          "maximumInterval": 754
         },
         "rhythm": {
-          "minimumSignalHeight": 833,
-          "maximumSignalHeight": 893,
-          "meanSignalHeight": 863,
-          "signalHeightDeviation": 30
+          "minimumSignalHeight": 753,
+          "maximumSignalHeight": 753,
+          "meanSignalHeight": 753,
+          "signalHeightDeviation": 0
         },
         "readability": {
           "headingCountChecked": 6,
@@ -430,16 +590,16 @@
         },
         "findability": {
           "editionNote": {
-            "top": 766,
-            "bottom": 844,
+            "top": 726,
+            "bottom": 804,
             "left": 160,
             "right": 1280,
             "width": 1120,
             "height": 78
           },
           "footer": {
-            "top": 11544,
-            "bottom": 11662,
+            "top": 5600,
+            "bottom": 5718,
             "left": 160,
             "right": 1280,
             "width": 1120,
@@ -453,8 +613,8 @@
       "screenshot": {
         "path": "/var/folders/96/74g8thcx2xv1bgf865bhmg1c0000gn/T/aoifuture-news-phase-3-21cf8b0/density-12-desktop.png",
         "file": "density-12-desktop.png",
-        "bytes": 1053426,
-        "sha256": "9c17cf1183ffb1a5ec17ff86c58fad3712b0ce965f0810bef90d45ec99b0c0bd"
+        "bytes": 774521,
+        "sha256": "769b9bc395d6ca8078ac64f5f6c5d2a059c029df87fc03d3b9fd42fe385f6f61"
       }
     },
     {
@@ -469,8 +629,8 @@
       "metrics": {
         "signalCount": 12,
         "detourVariant": "none",
-        "pageHeight": 12777,
-        "viewportMultiples": 15.14,
+        "pageHeight": 10469,
+        "viewportMultiples": 12.4,
         "clientWidth": 390,
         "scrollWidth": 390,
         "horizontalOverflow": false,
@@ -478,29 +638,29 @@
         "sourceActions": {
           "count": 12,
           "first": {
-            "top": 1921,
-            "bottom": 2020,
+            "top": 1545,
+            "bottom": 1628,
             "left": 16,
             "right": 210,
             "width": 194,
-            "height": 99
+            "height": 83
           },
           "final": {
-            "top": 12424,
-            "bottom": 12523,
+            "top": 10164,
+            "bottom": 10247,
             "left": 16,
             "right": 225,
             "width": 209,
-            "height": 99
+            "height": 83
           },
-          "meanInterval": 954.82,
-          "maximumInterval": 971
+          "meanInterval": 783.55,
+          "maximumInterval": 795
         },
         "rhythm": {
-          "minimumSignalHeight": 942,
-          "maximumSignalHeight": 970,
-          "meanSignalHeight": 956,
-          "signalHeightDeviation": 14
+          "minimumSignalHeight": 770,
+          "maximumSignalHeight": 795,
+          "meanSignalHeight": 782.5,
+          "signalHeightDeviation": 12.5
         },
         "readability": {
           "headingCountChecked": 6,
@@ -510,16 +670,16 @@
         },
         "findability": {
           "editionNote": {
-            "top": 772,
-            "bottom": 921,
+            "top": 641,
+            "bottom": 759,
             "left": 16,
             "right": 374,
             "width": 358,
-            "height": 149
+            "height": 118
           },
           "footer": {
-            "top": 12619,
-            "bottom": 12777,
+            "top": 10311,
+            "bottom": 10469,
             "left": 16,
             "right": 374,
             "width": 358,
@@ -533,8 +693,8 @@
       "screenshot": {
         "path": "/var/folders/96/74g8thcx2xv1bgf865bhmg1c0000gn/T/aoifuture-news-phase-3-21cf8b0/density-12-mobile-390.png",
         "file": "density-12-mobile-390.png",
-        "bytes": 840948,
-        "sha256": "5275690890eb995d5d0788c5cc4f5fadf1b412f619874691ab1d96844ba4e972"
+        "bytes": 782195,
+        "sha256": "99362f1cd16988422570516c6c4e03055923efbb0e58171934024b2e9d066a86"
       }
     },
     {
@@ -549,8 +709,8 @@
       "metrics": {
         "signalCount": 9,
         "detourVariant": "none",
-        "pageHeight": 9103,
-        "viewportMultiples": 9.1,
+        "pageHeight": 4965,
+        "viewportMultiples": 4.97,
         "clientWidth": 1440,
         "scrollWidth": 1440,
         "horizontalOverflow": false,
@@ -558,29 +718,29 @@
         "sourceActions": {
           "count": 9,
           "first": {
-            "top": 1808,
-            "bottom": 1907,
+            "top": 1607,
+            "bottom": 1698,
             "left": 160,
-            "right": 354,
-            "width": 194,
-            "height": 99
+            "right": 700,
+            "width": 540,
+            "height": 91
           },
           "final": {
-            "top": 8711,
-            "bottom": 8810,
+            "top": 4620,
+            "bottom": 4711,
             "left": 160,
-            "right": 354,
-            "width": 194,
-            "height": 99
+            "right": 700,
+            "width": 540,
+            "height": 91
           },
-          "meanInterval": 862.88,
-          "maximumInterval": 893
+          "meanInterval": 376.63,
+          "maximumInterval": 754
         },
         "rhythm": {
-          "minimumSignalHeight": 833,
-          "maximumSignalHeight": 893,
-          "meanSignalHeight": 866.33,
-          "signalHeightDeviation": 29.81
+          "minimumSignalHeight": 753,
+          "maximumSignalHeight": 753,
+          "meanSignalHeight": 753,
+          "signalHeightDeviation": 0
         },
         "readability": {
           "headingCountChecked": 6,
@@ -590,16 +750,16 @@
         },
         "findability": {
           "editionNote": {
-            "top": 766,
-            "bottom": 844,
+            "top": 726,
+            "bottom": 804,
             "left": 160,
             "right": 1280,
             "width": 1120,
             "height": 78
           },
           "footer": {
-            "top": 8986,
-            "bottom": 9103,
+            "top": 4847,
+            "bottom": 4965,
             "left": 160,
             "right": 1280,
             "width": 1120,
@@ -613,8 +773,8 @@
       "screenshot": {
         "path": "/var/folders/96/74g8thcx2xv1bgf865bhmg1c0000gn/T/aoifuture-news-phase-3-21cf8b0/detour-none-desktop.png",
         "file": "detour-none-desktop.png",
-        "bytes": 817198,
-        "sha256": "bf6bb8e017022decfa85f1fc4365cc65f42b2425217460ae80a5624e64e0d4b1"
+        "bytes": 626681,
+        "sha256": "c4075c8d46bbfbb437c85dffb71420d9fd1a8d1cf446447dcda985545c8b8c7e"
       }
     },
     {
@@ -629,8 +789,8 @@
       "metrics": {
         "signalCount": 9,
         "detourVariant": "none",
-        "pageHeight": 9923,
-        "viewportMultiples": 11.76,
+        "pageHeight": 8110,
+        "viewportMultiples": 9.61,
         "clientWidth": 390,
         "scrollWidth": 390,
         "horizontalOverflow": false,
@@ -638,29 +798,29 @@
         "sourceActions": {
           "count": 9,
           "first": {
-            "top": 1921,
-            "bottom": 2020,
+            "top": 1545,
+            "bottom": 1628,
             "left": 16,
             "right": 210,
             "width": 194,
-            "height": 99
+            "height": 83
           },
           "final": {
-            "top": 9570,
-            "bottom": 9669,
+            "top": 7804,
+            "bottom": 7887,
             "left": 16,
             "right": 210,
             "width": 194,
-            "height": 99
+            "height": 83
           },
-          "meanInterval": 956.13,
-          "maximumInterval": 971
+          "meanInterval": 782.38,
+          "maximumInterval": 795
         },
         "rhythm": {
-          "minimumSignalHeight": 942,
-          "maximumSignalHeight": 970,
-          "meanSignalHeight": 957.56,
-          "signalHeightDeviation": 13.91
+          "minimumSignalHeight": 770,
+          "maximumSignalHeight": 795,
+          "meanSignalHeight": 781.11,
+          "signalHeightDeviation": 12.42
         },
         "readability": {
           "headingCountChecked": 6,
@@ -670,16 +830,16 @@
         },
         "findability": {
           "editionNote": {
-            "top": 772,
-            "bottom": 921,
+            "top": 641,
+            "bottom": 759,
             "left": 16,
             "right": 374,
             "width": 358,
-            "height": 149
+            "height": 118
           },
           "footer": {
-            "top": 9765,
-            "bottom": 9923,
+            "top": 7951,
+            "bottom": 8110,
             "left": 16,
             "right": 374,
             "width": 358,
@@ -693,8 +853,8 @@
       "screenshot": {
         "path": "/var/folders/96/74g8thcx2xv1bgf865bhmg1c0000gn/T/aoifuture-news-phase-3-21cf8b0/detour-none-mobile-390.png",
         "file": "detour-none-mobile-390.png",
-        "bytes": 650678,
-        "sha256": "4c845f950d96c80a5904bb1d722099be2d29c8782ab7c75b22d4af5f14a806df"
+        "bytes": 605518,
+        "sha256": "4513fd4b26752498c3d01e85c0c0142577de606a7db0bf43753f9a5316667442"
       }
     },
     {
@@ -709,8 +869,8 @@
       "metrics": {
         "signalCount": 9,
         "detourVariant": "compact",
-        "pageHeight": 9370,
-        "viewportMultiples": 9.37,
+        "pageHeight": 4965,
+        "viewportMultiples": 4.97,
         "clientWidth": 1440,
         "scrollWidth": 1440,
         "horizontalOverflow": false,
@@ -718,29 +878,29 @@
         "sourceActions": {
           "count": 9,
           "first": {
-            "top": 1808,
-            "bottom": 1907,
+            "top": 1607,
+            "bottom": 1698,
             "left": 160,
-            "right": 354,
-            "width": 194,
-            "height": 99
+            "right": 700,
+            "width": 540,
+            "height": 91
           },
           "final": {
-            "top": 8977,
-            "bottom": 9076,
-            "left": 160,
-            "right": 354,
-            "width": 194,
-            "height": 99
+            "top": 4620,
+            "bottom": 4711,
+            "left": 740,
+            "right": 1280,
+            "width": 540,
+            "height": 91
           },
-          "meanInterval": 896.13,
-          "maximumInterval": 1100
+          "meanInterval": 376.63,
+          "maximumInterval": 754
         },
         "rhythm": {
-          "minimumSignalHeight": 833,
-          "maximumSignalHeight": 893,
-          "meanSignalHeight": 866.33,
-          "signalHeightDeviation": 29.81
+          "minimumSignalHeight": 753,
+          "maximumSignalHeight": 753,
+          "meanSignalHeight": 753,
+          "signalHeightDeviation": 0
         },
         "readability": {
           "headingCountChecked": 6,
@@ -750,16 +910,16 @@
         },
         "findability": {
           "editionNote": {
-            "top": 766,
-            "bottom": 844,
+            "top": 726,
+            "bottom": 804,
             "left": 160,
             "right": 1280,
             "width": 1120,
             "height": 78
           },
           "footer": {
-            "top": 9252,
-            "bottom": 9370,
+            "top": 4847,
+            "bottom": 4965,
             "left": 160,
             "right": 1280,
             "width": 1120,
@@ -769,12 +929,12 @@
         "detours": [
           {
             "variant": "compact",
-            "top": 3741,
-            "bottom": 3927,
-            "left": 160,
-            "right": 920,
-            "width": 760,
-            "height": 187
+            "top": 1766,
+            "bottom": 2439,
+            "left": 740,
+            "right": 1280,
+            "width": 540,
+            "height": 673
           }
         ],
         "finiteEdition": true,
@@ -783,8 +943,8 @@
       "screenshot": {
         "path": "/var/folders/96/74g8thcx2xv1bgf865bhmg1c0000gn/T/aoifuture-news-phase-3-21cf8b0/detour-compact-desktop.png",
         "file": "detour-compact-desktop.png",
-        "bytes": 838892,
-        "sha256": "2e47f1184d008b0ac8e6ba29c947cad12ac643f8107f3cf1834122e39c1213a9"
+        "bytes": 648244,
+        "sha256": "107242e5822496c3315e172b4237659713e15976fdc0c74200358cd2bed33ea9"
       }
     },
     {
@@ -799,8 +959,8 @@
       "metrics": {
         "signalCount": 9,
         "detourVariant": "compact",
-        "pageHeight": 10271,
-        "viewportMultiples": 12.17,
+        "pageHeight": 8450,
+        "viewportMultiples": 10.01,
         "clientWidth": 390,
         "scrollWidth": 390,
         "horizontalOverflow": false,
@@ -808,29 +968,29 @@
         "sourceActions": {
           "count": 9,
           "first": {
-            "top": 1921,
-            "bottom": 2020,
+            "top": 1545,
+            "bottom": 1628,
             "left": 16,
             "right": 210,
             "width": 194,
-            "height": 99
+            "height": 83
           },
           "final": {
-            "top": 9917,
-            "bottom": 10016,
+            "top": 8144,
+            "bottom": 8227,
             "left": 16,
             "right": 210,
             "width": 194,
-            "height": 99
+            "height": 83
           },
-          "meanInterval": 999.5,
-          "maximumInterval": 1290
+          "meanInterval": 824.88,
+          "maximumInterval": 1135
         },
         "rhythm": {
-          "minimumSignalHeight": 942,
-          "maximumSignalHeight": 970,
-          "meanSignalHeight": 957.56,
-          "signalHeightDeviation": 13.91
+          "minimumSignalHeight": 770,
+          "maximumSignalHeight": 795,
+          "meanSignalHeight": 781.11,
+          "signalHeightDeviation": 12.42
         },
         "readability": {
           "headingCountChecked": 6,
@@ -840,16 +1000,16 @@
         },
         "findability": {
           "editionNote": {
-            "top": 772,
-            "bottom": 921,
+            "top": 641,
+            "bottom": 759,
             "left": 16,
             "right": 374,
             "width": 358,
-            "height": 149
+            "height": 118
           },
           "footer": {
-            "top": 10112,
-            "bottom": 10271,
+            "top": 8291,
+            "bottom": 8450,
             "left": 16,
             "right": 374,
             "width": 358,
@@ -859,12 +1019,12 @@
         "detours": [
           {
             "variant": "compact",
-            "top": 4008,
-            "bottom": 4276,
+            "top": 3253,
+            "bottom": 3513,
             "left": 16,
             "right": 374,
             "width": 358,
-            "height": 268
+            "height": 260
           }
         ],
         "finiteEdition": true,
@@ -873,8 +1033,8 @@
       "screenshot": {
         "path": "/var/folders/96/74g8thcx2xv1bgf865bhmg1c0000gn/T/aoifuture-news-phase-3-21cf8b0/detour-compact-mobile-390.png",
         "file": "detour-compact-mobile-390.png",
-        "bytes": 670961,
-        "sha256": "6854fb3dbf0c75f1bf72e3d22925b9c880ef7b621bcec57ca6dd01aef4294d0a"
+        "bytes": 624757,
+        "sha256": "6bd4d0306b044a2bf5d1e52a8cd20beaf864fa598edcc304178b7cf647af788f"
       }
     },
     {
@@ -889,8 +1049,8 @@
       "metrics": {
         "signalCount": 9,
         "detourVariant": "full-width",
-        "pageHeight": 9374,
-        "viewportMultiples": 9.37,
+        "pageHeight": 4965,
+        "viewportMultiples": 4.97,
         "clientWidth": 1440,
         "scrollWidth": 1440,
         "horizontalOverflow": false,
@@ -898,29 +1058,29 @@
         "sourceActions": {
           "count": 9,
           "first": {
-            "top": 1808,
-            "bottom": 1907,
+            "top": 1607,
+            "bottom": 1698,
             "left": 160,
-            "right": 354,
-            "width": 194,
-            "height": 99
+            "right": 700,
+            "width": 540,
+            "height": 91
           },
           "final": {
-            "top": 8981,
-            "bottom": 9080,
-            "left": 160,
-            "right": 354,
-            "width": 194,
-            "height": 99
+            "top": 4620,
+            "bottom": 4711,
+            "left": 740,
+            "right": 1280,
+            "width": 540,
+            "height": 91
           },
-          "meanInterval": 896.63,
-          "maximumInterval": 1163
+          "meanInterval": 376.63,
+          "maximumInterval": 754
         },
         "rhythm": {
-          "minimumSignalHeight": 833,
-          "maximumSignalHeight": 893,
-          "meanSignalHeight": 866.33,
-          "signalHeightDeviation": 29.81
+          "minimumSignalHeight": 753,
+          "maximumSignalHeight": 753,
+          "meanSignalHeight": 753,
+          "signalHeightDeviation": 0
         },
         "readability": {
           "headingCountChecked": 6,
@@ -930,16 +1090,16 @@
         },
         "findability": {
           "editionNote": {
-            "top": 766,
-            "bottom": 844,
+            "top": 726,
+            "bottom": 804,
             "left": 160,
             "right": 1280,
             "width": 1120,
             "height": 78
           },
           "footer": {
-            "top": 9256,
-            "bottom": 9374,
+            "top": 4847,
+            "bottom": 4965,
             "left": 160,
             "right": 1280,
             "width": 1120,
@@ -949,12 +1109,12 @@
         "detours": [
           {
             "variant": "full-width",
-            "top": 4574,
-            "bottom": 4765,
+            "top": 2519,
+            "bottom": 3192,
             "left": 160,
-            "right": 1280,
-            "width": 1120,
-            "height": 191
+            "right": 700,
+            "width": 540,
+            "height": 673
           }
         ],
         "finiteEdition": true,
@@ -963,8 +1123,8 @@
       "screenshot": {
         "path": "/var/folders/96/74g8thcx2xv1bgf865bhmg1c0000gn/T/aoifuture-news-phase-3-21cf8b0/detour-full-width-desktop.png",
         "file": "detour-full-width-desktop.png",
-        "bytes": 838199,
-        "sha256": "3be0c807939ecc0ebededd4c3eb6f6371cee899fa0ce0de15f2e40cf7fa63428"
+        "bytes": 648802,
+        "sha256": "0315d22d395c005b754120d201144e5d24e83fc1f5d67aa9157cd349218c3907"
       }
     },
     {
@@ -979,8 +1139,8 @@
       "metrics": {
         "signalCount": 9,
         "detourVariant": "full-width",
-        "pageHeight": 10303,
-        "viewportMultiples": 12.21,
+        "pageHeight": 8482,
+        "viewportMultiples": 10.05,
         "clientWidth": 390,
         "scrollWidth": 390,
         "horizontalOverflow": false,
@@ -988,29 +1148,29 @@
         "sourceActions": {
           "count": 9,
           "first": {
-            "top": 1921,
-            "bottom": 2020,
+            "top": 1545,
+            "bottom": 1628,
             "left": 16,
             "right": 210,
             "width": 194,
-            "height": 99
+            "height": 83
           },
           "final": {
-            "top": 9949,
-            "bottom": 10048,
+            "top": 8176,
+            "bottom": 8259,
             "left": 16,
             "right": 210,
             "width": 194,
-            "height": 99
+            "height": 83
           },
-          "meanInterval": 1003.5,
-          "maximumInterval": 1350
+          "meanInterval": 828.88,
+          "maximumInterval": 1142
         },
         "rhythm": {
-          "minimumSignalHeight": 942,
-          "maximumSignalHeight": 970,
-          "meanSignalHeight": 957.56,
-          "signalHeightDeviation": 13.91
+          "minimumSignalHeight": 770,
+          "maximumSignalHeight": 795,
+          "meanSignalHeight": 781.11,
+          "signalHeightDeviation": 12.42
         },
         "readability": {
           "headingCountChecked": 6,
@@ -1020,16 +1180,16 @@
         },
         "findability": {
           "editionNote": {
-            "top": 772,
-            "bottom": 921,
+            "top": 641,
+            "bottom": 759,
             "left": 16,
             "right": 374,
             "width": 358,
-            "height": 149
+            "height": 118
           },
           "footer": {
-            "top": 10144,
-            "bottom": 10303,
+            "top": 8323,
+            "bottom": 8482,
             "left": 16,
             "right": 374,
             "width": 358,
@@ -1039,12 +1199,12 @@
         "detours": [
           {
             "variant": "full-width",
-            "top": 4950,
-            "bottom": 5250,
+            "top": 4048,
+            "bottom": 4340,
             "left": 16,
             "right": 374,
             "width": 358,
-            "height": 300
+            "height": 292
           }
         ],
         "finiteEdition": true,
@@ -1053,8 +1213,8 @@
       "screenshot": {
         "path": "/var/folders/96/74g8thcx2xv1bgf865bhmg1c0000gn/T/aoifuture-news-phase-3-21cf8b0/detour-full-width-mobile-390.png",
         "file": "detour-full-width-mobile-390.png",
-        "bytes": 671607,
-        "sha256": "111955c512e7befde87feaacfe07edb67dac4373e9e4f9419c7ee570b4bbe7be"
+        "bytes": 625204,
+        "sha256": "954f30eab475f63e1a2fab5618d6bbc17c39d20ab9f123b6763712e2a320e2f8"
       }
     },
     {
@@ -1069,8 +1229,8 @@
       "metrics": {
         "signalCount": 9,
         "detourVariant": "overused",
-        "pageHeight": 10027,
-        "viewportMultiples": 10.03,
+        "pageHeight": 6471,
+        "viewportMultiples": 6.47,
         "clientWidth": 1440,
         "scrollWidth": 1440,
         "horizontalOverflow": false,
@@ -1078,29 +1238,29 @@
         "sourceActions": {
           "count": 9,
           "first": {
-            "top": 1808,
-            "bottom": 1907,
+            "top": 1607,
+            "bottom": 1698,
             "left": 160,
-            "right": 354,
-            "width": 194,
-            "height": 99
+            "right": 700,
+            "width": 540,
+            "height": 91
           },
           "final": {
-            "top": 9634,
-            "bottom": 9733,
+            "top": 6127,
+            "bottom": 6218,
             "left": 160,
-            "right": 354,
-            "width": 194,
-            "height": 99
+            "right": 700,
+            "width": 540,
+            "height": 91
           },
-          "meanInterval": 978.25,
-          "maximumInterval": 1124
+          "meanInterval": 565,
+          "maximumInterval": 754
         },
         "rhythm": {
-          "minimumSignalHeight": 833,
-          "maximumSignalHeight": 893,
-          "meanSignalHeight": 866.33,
-          "signalHeightDeviation": 29.81
+          "minimumSignalHeight": 753,
+          "maximumSignalHeight": 753,
+          "meanSignalHeight": 753,
+          "signalHeightDeviation": 0
         },
         "readability": {
           "headingCountChecked": 6,
@@ -1110,16 +1270,16 @@
         },
         "findability": {
           "editionNote": {
-            "top": 766,
-            "bottom": 844,
+            "top": 726,
+            "bottom": 804,
             "left": 160,
             "right": 1280,
             "width": 1120,
             "height": 78
           },
           "footer": {
-            "top": 9909,
-            "bottom": 10027,
+            "top": 6354,
+            "bottom": 6471,
             "left": 160,
             "right": 1280,
             "width": 1120,
@@ -1129,39 +1289,39 @@
         "detours": [
           {
             "variant": "overused",
-            "top": 2836,
-            "bottom": 3023,
+            "top": 1754,
+            "bottom": 2463,
             "left": 160,
-            "right": 920,
-            "width": 760,
-            "height": 187
+            "right": 700,
+            "width": 540,
+            "height": 709
           },
           {
             "variant": "overused",
-            "top": 4793,
-            "bottom": 4979,
-            "left": 160,
-            "right": 920,
-            "width": 760,
-            "height": 187
+            "top": 2507,
+            "bottom": 3216,
+            "left": 740,
+            "right": 1280,
+            "width": 540,
+            "height": 709
           },
           {
             "variant": "overused",
-            "top": 6749,
-            "bottom": 6936,
+            "top": 4014,
+            "bottom": 4723,
             "left": 160,
-            "right": 920,
-            "width": 760,
-            "height": 187
+            "right": 700,
+            "width": 540,
+            "height": 709
           },
           {
             "variant": "overused",
-            "top": 8705,
-            "bottom": 8892,
-            "left": 160,
-            "right": 920,
-            "width": 760,
-            "height": 187
+            "top": 4767,
+            "bottom": 5476,
+            "left": 740,
+            "right": 1280,
+            "width": 540,
+            "height": 709
           }
         ],
         "finiteEdition": true,
@@ -1170,8 +1330,8 @@
       "screenshot": {
         "path": "/var/folders/96/74g8thcx2xv1bgf865bhmg1c0000gn/T/aoifuture-news-phase-3-21cf8b0/detour-overused-desktop.png",
         "file": "detour-overused-desktop.png",
-        "bytes": 897905,
-        "sha256": "542b167f8c206c55a11cc7db397d8071038f0d9fbe484fce1b7922ec3e1f7941"
+        "bytes": 780238,
+        "sha256": "308683d4104a5695b12e0c7fbbeb4313abefae76b3cad17db4aa6a1d209cb226"
       }
     },
     {
@@ -1186,8 +1346,8 @@
       "metrics": {
         "signalCount": 9,
         "detourVariant": "overused",
-        "pageHeight": 11169,
-        "viewportMultiples": 13.23,
+        "pageHeight": 9326,
+        "viewportMultiples": 11.05,
         "clientWidth": 390,
         "scrollWidth": 390,
         "horizontalOverflow": false,
@@ -1195,29 +1355,29 @@
         "sourceActions": {
           "count": 9,
           "first": {
-            "top": 1921,
-            "bottom": 2020,
+            "top": 1545,
+            "bottom": 1628,
             "left": 16,
             "right": 210,
             "width": 194,
-            "height": 99
+            "height": 83
           },
           "final": {
-            "top": 10816,
-            "bottom": 10915,
+            "top": 9020,
+            "bottom": 9103,
             "left": 16,
             "right": 210,
             "width": 194,
-            "height": 99
+            "height": 83
           },
-          "meanInterval": 1111.88,
-          "maximumInterval": 1282
+          "meanInterval": 934.38,
+          "maximumInterval": 1074
         },
         "rhythm": {
-          "minimumSignalHeight": 942,
-          "maximumSignalHeight": 970,
-          "meanSignalHeight": 957.56,
-          "signalHeightDeviation": 13.91
+          "minimumSignalHeight": 770,
+          "maximumSignalHeight": 795,
+          "meanSignalHeight": 781.11,
+          "signalHeightDeviation": 12.42
         },
         "readability": {
           "headingCountChecked": 6,
@@ -1227,16 +1387,16 @@
         },
         "findability": {
           "editionNote": {
-            "top": 772,
-            "bottom": 921,
+            "top": 641,
+            "bottom": 759,
             "left": 16,
             "right": 374,
             "width": 358,
-            "height": 149
+            "height": 118
           },
           "footer": {
-            "top": 11011,
-            "bottom": 11169,
+            "top": 9167,
+            "bottom": 9326,
             "left": 16,
             "right": 374,
             "width": 358,
@@ -1246,39 +1406,39 @@
         "detours": [
           {
             "variant": "overused",
-            "top": 3026,
-            "bottom": 3293,
+            "top": 2471,
+            "bottom": 2731,
             "left": 16,
             "right": 374,
             "width": 358,
-            "height": 268
+            "height": 260
           },
           {
             "variant": "overused",
-            "top": 5250,
-            "bottom": 5517,
+            "top": 4340,
+            "bottom": 4600,
             "left": 16,
             "right": 374,
             "width": 358,
-            "height": 268
+            "height": 260
           },
           {
             "variant": "overused",
-            "top": 7473,
-            "bottom": 7741,
+            "top": 6209,
+            "bottom": 6469,
             "left": 16,
             "right": 374,
             "width": 358,
-            "height": 268
+            "height": 260
           },
           {
             "variant": "overused",
-            "top": 9697,
-            "bottom": 9965,
+            "top": 8078,
+            "bottom": 8338,
             "left": 16,
             "right": 374,
             "width": 358,
-            "height": 268
+            "height": 260
           }
         ],
         "finiteEdition": true,
@@ -1287,8 +1447,8 @@
       "screenshot": {
         "path": "/var/folders/96/74g8thcx2xv1bgf865bhmg1c0000gn/T/aoifuture-news-phase-3-21cf8b0/detour-overused-mobile-390.png",
         "file": "detour-overused-mobile-390.png",
-        "bytes": 729971,
-        "sha256": "08521895491e9de6e5a228b963bd8db5ab3fa2739c45a9abf6b27399036fe6e7"
+        "bytes": 680846,
+        "sha256": "38fc0fe8906ba87c5783a2be1a77ffec6a10b4094214c81abcee2f99e410dd11"
       }
     }
   ]

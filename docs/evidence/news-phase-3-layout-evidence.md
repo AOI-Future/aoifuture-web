@@ -7,7 +7,7 @@ The harness duplicated only the two contract-validated public sample cards alrea
 ## Font and canonical readback
 
 - Before: 0 local font assets and 22386 generated News HTML bytes; generated News HTML referenced Google Fonts.
-- After: 5 same-origin WOFF2 assets / 3131360 build bytes and 21282 generated News HTML bytes. The pinned Fontsource packages occupy 82200234 bytes after `npm ci`; browser first load requested 4 font files / 2101020 bytes; external font requests: 0.
+- After: 5 same-origin WOFF2 assets / 3131360 build bytes and 26814 generated News HTML bytes. The pinned Fontsource packages occupy 82200234 bytes after `npm ci`; browser first load requested 4 font files / 2101020 bytes; external font requests: 0.
 - Delivery: Noto Sans JP 400/500/700 complete Japanese WOFF2 and JetBrains Mono 500/600 Latin WOFF2, all `font-display: swap`, package-lock pinned at Fontsource 5.3.0.
 - All four generated News routes contain exactly one `https://aoifuture.com/.../` canonical, without `www`, preserving trailing slashes.
 
@@ -15,27 +15,29 @@ The harness duplicated only the two contract-validated public sample cards alrea
 
 | Scenario | Page px | Viewports | X overflow | First source y | Final source y | PNG bytes | SHA-256 |
 | --- | ---: | ---: | --- | ---: | ---: | ---: | --- |
-| density-6-desktop | 6485 | 6.49 | NO | 1808 | 6092 | 578139 | `6418c8dcc5b89092f68689d89500dad4ee7ad17be274dfe35c81c7b94603e7fd` |
-| density-6-mobile-390 | 7041 | 8.34 | NO | 1921 | 6687 | 458801 | `988d6de3a1891a33b2b2322b4459eef7afae6f8d910e99f8f37503e5b8fec2b7` |
-| density-9-desktop | 9103 | 9.1 | NO | 1808 | 8711 | 817198 | `bf6bb8e017022decfa85f1fc4365cc65f42b2425217460ae80a5624e64e0d4b1` |
-| density-9-mobile-390 | 9923 | 11.76 | NO | 1921 | 9570 | 650829 | `b08e71c459ea4e1a31a4f908e2907d15d82f311bb3c8a9dc0c2d6332b7f0706d` |
-| density-12-desktop | 11662 | 11.66 | NO | 1808 | 11269 | 1053426 | `9c17cf1183ffb1a5ec17ff86c58fad3712b0ce965f0810bef90d45ec99b0c0bd` |
-| density-12-mobile-390 | 12777 | 15.14 | NO | 1921 | 12424 | 840948 | `5275690890eb995d5d0788c5cc4f5fadf1b412f619874691ab1d96844ba4e972` |
+| density-2-desktop | 1952 | 1.95 | NO | 1607 | 1607 | 214858 | `0f5f93f1db60b5f7cb8330f36f8a3d1a64d21f5e3a6806b67e676d67908b355e` |
+| density-2-mobile-390 | 2646 | 3.14 | NO | 1545 | 2340 | 189371 | `9c0a08414ab94d4ad98442c876b3e4695cd621bf88f000ac4dab55c6880bd732` |
+| density-6-desktop | 3458 | 3.46 | NO | 1607 | 3113 | 438831 | `c97dfaa1e297f521d3f6c78db63998b5d905b36497cf5746ec1c03d6f97f2cd2` |
+| density-6-mobile-390 | 5775 | 6.84 | NO | 1545 | 5470 | 426569 | `ade8862ca75511dd40b085929a23feb414048a3c0eca0a7b6fdda9720d0fcb2a` |
+| density-9-desktop | 4965 | 4.97 | NO | 1607 | 4620 | 626681 | `c4075c8d46bbfbb437c85dffb71420d9fd1a8d1cf446447dcda985545c8b8c7e` |
+| density-9-mobile-390 | 8110 | 9.61 | NO | 1545 | 7804 | 605518 | `4513fd4b26752498c3d01e85c0c0142577de606a7db0bf43753f9a5316667442` |
+| density-12-desktop | 5718 | 5.72 | NO | 1607 | 5373 | 774521 | `769b9bc395d6ca8078ac64f5f6c5d2a059c029df87fc03d3b9fd42fe385f6f61` |
+| density-12-mobile-390 | 10469 | 12.4 | NO | 1545 | 10164 | 782195 | `99362f1cd16988422570516c6c4e03055923efbb0e58171934024b2e9d066a86` |
 
-Readback: all 6/9/12 compositions retained one finite Edition, one direct-source action per Signal, the Edition note, and the footer, with no pagination, collapse, or horizontal overflow. Six Signals is comfortable at both widths. Nine remains structurally clear but creates a long mobile scan. Twelve remains technically finite, but reaches 11.66 desktop and 15.14 mobile viewports; repeated two-card rhythm and distance to the final source/footer are the primary fatigue points. The footer and Edition note remain present and measurable, not sticky or hidden.
+Readback: all 2/6/9/12 compositions retained one finite Edition, one direct-source action per Signal, the Edition note, and the footer, with no pagination, collapse, or horizontal overflow. Two Signals verify the production-shaped sample. Six Signals is comfortable at both widths. Nine remains structurally clear but creates a long mobile scan. Twelve remains technically finite, but reaches 5.72 desktop and 12.4 mobile viewports; repeated two-card rhythm and distance to the final source/footer are the primary fatigue points. The footer and Edition note remain present and measurable, not sticky or hidden.
 
 ## Detour comparison
 
 | Scenario | Page px | Viewports | X overflow | First source y | Final source y | PNG bytes | SHA-256 |
 | --- | ---: | ---: | --- | ---: | ---: | ---: | --- |
-| detour-none-desktop | 9103 | 9.1 | NO | 1808 | 8711 | 817198 | `bf6bb8e017022decfa85f1fc4365cc65f42b2425217460ae80a5624e64e0d4b1` |
-| detour-none-mobile-390 | 9923 | 11.76 | NO | 1921 | 9570 | 650678 | `4c845f950d96c80a5904bb1d722099be2d29c8782ab7c75b22d4af5f14a806df` |
-| detour-compact-desktop | 9370 | 9.37 | NO | 1808 | 8977 | 838892 | `2e47f1184d008b0ac8e6ba29c947cad12ac643f8107f3cf1834122e39c1213a9` |
-| detour-compact-mobile-390 | 10271 | 12.17 | NO | 1921 | 9917 | 670961 | `6854fb3dbf0c75f1bf72e3d22925b9c880ef7b621bcec57ca6dd01aef4294d0a` |
-| detour-full-width-desktop | 9374 | 9.37 | NO | 1808 | 8981 | 838199 | `3be0c807939ecc0ebededd4c3eb6f6371cee899fa0ce0de15f2e40cf7fa63428` |
-| detour-full-width-mobile-390 | 10303 | 12.21 | NO | 1921 | 9949 | 671607 | `111955c512e7befde87feaacfe07edb67dac4373e9e4f9419c7ee570b4bbe7be` |
-| detour-overused-desktop | 10027 | 10.03 | NO | 1808 | 9634 | 897905 | `542b167f8c206c55a11cc7db397d8071038f0d9fbe484fce1b7922ec3e1f7941` |
-| detour-overused-mobile-390 | 11169 | 13.23 | NO | 1921 | 10816 | 729971 | `08521895491e9de6e5a228b963bd8db5ab3fa2739c45a9abf6b27399036fe6e7` |
+| detour-none-desktop | 4965 | 4.97 | NO | 1607 | 4620 | 626681 | `c4075c8d46bbfbb437c85dffb71420d9fd1a8d1cf446447dcda985545c8b8c7e` |
+| detour-none-mobile-390 | 8110 | 9.61 | NO | 1545 | 7804 | 605518 | `4513fd4b26752498c3d01e85c0c0142577de606a7db0bf43753f9a5316667442` |
+| detour-compact-desktop | 4965 | 4.97 | NO | 1607 | 4620 | 648244 | `107242e5822496c3315e172b4237659713e15976fdc0c74200358cd2bed33ea9` |
+| detour-compact-mobile-390 | 8450 | 10.01 | NO | 1545 | 8144 | 624757 | `6bd4d0306b044a2bf5d1e52a8cd20beaf864fa598edcc304178b7cf647af788f` |
+| detour-full-width-desktop | 4965 | 4.97 | NO | 1607 | 4620 | 648802 | `0315d22d395c005b754120d201144e5d24e83fc1f5d67aa9157cd349218c3907` |
+| detour-full-width-mobile-390 | 8482 | 10.05 | NO | 1545 | 8176 | 625204 | `954f30eab475f63e1a2fab5618d6bbc17c39d20ab9f123b6763712e2a320e2f8` |
+| detour-overused-desktop | 6471 | 6.47 | NO | 1607 | 6127 | 780238 | `308683d4104a5695b12e0c7fbbeb4313abefae76b3cad17db4aa6a1d209cb226` |
+| detour-overused-mobile-390 | 9326 | 11.05 | NO | 1545 | 9020 | 680846 | `38fc0fe8906ba87c5783a2be1a77ffec6a10b4094214c81abcee2f99e410dd11` |
 
 Readback: no Detour preserves the strongest source-to-source rhythm. One compact block after Signal 3 is the least disruptive candidate if future information is genuinely distinct. The full-width block creates a stronger interruption, and the deliberately overused sample visibly and numerically extends the Edition without adding source actions. Because the neutral placeholder is not distinct from Source fact, AOI note, Caveat, Edition note, or Active Context, the default recommendation is **no separate Detour**; keep the full information in ordinary Edition content unless later real content proves an orientation benefit. The sample blocks are plain semantic HTML/CSS and do not require runtime JavaScript once composed.
 
