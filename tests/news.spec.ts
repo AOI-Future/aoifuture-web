@@ -559,30 +559,46 @@ test('homepage opens AOIFUTURE News as a Navigator layer and only its panel link
   }
 });
 
-test('home and News use one denied-by-default consent-mode GA tag and grant once after acceptance', async ({ browser }) => {
+test('home and News defer Google collection until consent and grant once after acceptance', async ({ browser }) => {
   for (const route of ['/', '/news/']) {
-    const context = await browser.newContext();
-    const page = await context.newPage();
-    await page.addInitScript(() => localStorage.clear());
-    await page.goto(route);
+    for (const width of [390, 1440]) {
+      const context = await browser.newContext();
+      const page = await context.newPage();
+      const collectRequests: string[] = [];
+      page.on('request', (request) => {
+        if (new URL(request.url()).hostname === 'www.google-analytics.com' && new URL(request.url()).pathname === '/g/collect') collectRequests.push(request.url());
+      });
+      await page.addInitScript(() => localStorage.clear());
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(route);
 
-    await expect(page.locator('script[src="https://www.googletagmanager.com/gtag/js?id=G-44419Y68H7"]')).toHaveCount(1);
-    if (route === '/news/') await expect(page.locator('script[data-sdkn="@vercel/analytics/astro"]')).toHaveCount(1);
-    await expect(page.getByText('このサイトではGoogle Analyticsを使用しています。')).toBeVisible();
-    const defaults = await page.evaluate(() => window.dataLayer.filter((entry: IArguments) => Array.from(entry).join('|') === 'consent|default|[object Object]'));
-    expect(defaults).toHaveLength(1);
-    expect(await page.evaluate(() => window.dataLayer.filter((entry: IArguments) => {
-      const [command, action, value] = Array.from(entry);
-      return command === 'consent' && action === 'default' && (value as { analytics_storage?: string }).analytics_storage === 'denied' && (value as { ad_storage?: string }).ad_storage === 'denied';
-    })).then((entries) => entries)).toHaveLength(1);
+      await expect(page.locator('script#google-analytics-script')).toHaveCount(0);
+      if (route === '/news/') await expect(page.locator('script[data-sdkn="@vercel/analytics/astro"]')).toHaveCount(1);
+      await expect(page.getByText('このサイトではGoogle Analyticsを使用しています。')).toBeVisible();
+      const bannerMetrics = await page.locator('#cookie-banner').evaluate((banner) => ({
+        position: getComputedStyle(banner).position,
+        bottom: getComputedStyle(banner).bottom,
+        buttonHeights: Array.from(banner.querySelectorAll('button')).map((button) => button.getBoundingClientRect().height),
+      }));
+      expect(bannerMetrics.position).toBe('fixed');
+      expect(bannerMetrics.bottom).toBe('0px');
+      expect(bannerMetrics.buttonHeights.every((height) => height >= 44)).toBe(true);
+      await page.waitForTimeout(750);
+      expect(collectRequests).toEqual([]);
+      expect(await page.evaluate(() => window.dataLayer.filter((entry: IArguments) => {
+        const [command, action, value] = Array.from(entry);
+        return command === 'consent' && action === 'default' && (value as { analytics_storage?: string }).analytics_storage === 'denied' && (value as { ad_storage?: string }).ad_storage === 'denied';
+      })).then((entries) => entries)).toHaveLength(1);
 
-    await page.getByRole('button', { name: '同意' }).click();
-    await expect(page.getByText('このサイトではGoogle Analyticsを使用しています。')).toBeHidden();
-    expect(await page.evaluate(() => window.dataLayer.filter((entry: IArguments) => {
-      const [command, action, value] = Array.from(entry);
-      return command === 'consent' && action === 'update' && (value as { analytics_storage?: string }).analytics_storage === 'granted';
-    })).then((entries) => entries)).toHaveLength(1);
-    await context.close();
+      await page.getByRole('button', { name: '同意' }).click();
+      await expect(page.getByText('このサイトではGoogle Analyticsを使用しています。')).toBeHidden();
+      await expect(page.locator('script#google-analytics-script')).toHaveCount(1);
+      expect(await page.evaluate(() => window.dataLayer.filter((entry: IArguments) => {
+        const [command, action, value] = Array.from(entry);
+        return command === 'consent' && action === 'update' && (value as { analytics_storage?: string }).analytics_storage === 'granted';
+      })).then((entries) => entries)).toHaveLength(1);
+      await context.close();
+    }
   }
 });
 
