@@ -135,8 +135,8 @@ test('reviewed Preview Edition is finite, source-first, labeled, and explicitly 
   await expect(page.locator('.news-site-footer')).toContainText('No production publication or deployment authorized.');
   await expect(page.locator('[data-news-signal]')).toHaveCount(6);
   await expect(page.getByText('Source fact', { exact: true })).toHaveCount(6);
-  await expect(page.getByText('AOI note', { exact: true })).toHaveCount(6);
-  await expect(page.getByText('Caveat', { exact: true })).toHaveCount(6);
+  await expect(page.locator('[data-news-signal] details')).toHaveCount(6);
+  await expect(page.locator('[data-news-signal] summary')).toHaveText(Array(6).fill('Why this signal matters'));
   for (const href of directSources) {
     const sourceLink = page.locator(`a[href="${href}"]`).first();
     await expect(sourceLink).toBeVisible();
@@ -148,11 +148,9 @@ test('reviewed Preview Edition is finite, source-first, labeled, and explicitly 
       'source',
       'headline',
       'fact',
-      'selection',
-      'caveat',
-      'note',
-      'metadata',
       'action',
+      'details',
+      'metadata',
     ]);
   }
 
@@ -396,7 +394,13 @@ test('Signal cards have defined boundaries, semantic regions, and source-first o
     expect(metrics.borderColor).not.toBe('rgb(0, 0, 0)');
     expect(metrics.paddingInline).toBeGreaterThanOrEqual(20);
     expect(metrics.paddingBlock).toBeGreaterThanOrEqual(20);
-    await expect(page.locator('[data-news-signal]').first().locator('[data-news-order="fact"], [data-news-order="selection"], [data-news-order="caveat"], [data-news-order="note"], [data-news-order="metadata"]')).toHaveCount(5);
+    const firstSignal = page.locator('[data-news-signal]').first();
+    await expect(firstSignal.locator('[data-news-order="fact"], [data-news-order="details"], [data-news-order="metadata"]')).toHaveCount(3);
+    await expect(firstSignal.locator('details summary')).toHaveCSS('min-height', '44px');
+    await firstSignal.locator('summary').click();
+    await expect(firstSignal.getByText('Why selected', { exact: true })).toBeVisible();
+    await expect(firstSignal.getByText('Caveat', { exact: true })).toBeVisible();
+    await expect(firstSignal.getByText('AOI note', { exact: true })).toBeVisible();
   }
 });
 
@@ -443,10 +447,10 @@ test('Edition density is responsive across phone, tablet, and two-column desktop
     { width: 768, height: 1024, maximumPageHeight: 5200, columns: 2, rows: 3, maximumH1: 48, minimumSignalCopy: 14, minimumSignalHeading: 24, maximumSignalHeading: 25 },
     { width: 1024, height: 1366, maximumPageHeight: 4600, columns: 2, rows: 3, maximumH1: 48, minimumSignalCopy: 14, minimumSignalHeading: 24, maximumSignalHeading: 25 },
     { width: 1100, height: 1000, maximumPageHeight: 4300, columns: 2, rows: 3, maximumH1: 48, minimumSignalCopy: 14, minimumSignalHeading: 24, maximumSignalHeading: 25 },
-    { width: 1101, height: 1000, maximumPageHeight: 5000, columns: 2, rows: 3, maximumH1: 68, minimumSignalCopy: 16, minimumSignalHeading: 28, maximumSignalHeading: 28 },
-    { width: 1280, height: 1000, maximumPageHeight: 4600, columns: 2, rows: 3, maximumH1: 68, minimumSignalCopy: 16, minimumSignalHeading: 28, maximumSignalHeading: 28 },
-    { width: 1440, height: 1000, maximumPageHeight: 4600, columns: 2, rows: 3, maximumH1: 68, minimumSignalCopy: 16, minimumSignalHeading: 28, maximumSignalHeading: 28 },
-    { width: 1728, height: 1000, maximumPageHeight: 4600, columns: 2, rows: 3, maximumH1: 68, minimumSignalCopy: 16, minimumSignalHeading: 28, maximumSignalHeading: 28 },
+    { width: 1101, height: 1000, maximumPageHeight: 5000, columns: 3, rows: 2, maximumH1: 68, minimumSignalCopy: 16, minimumSignalHeading: 24, maximumSignalHeading: 24 },
+    { width: 1280, height: 1000, maximumPageHeight: 4600, columns: 3, rows: 2, maximumH1: 68, minimumSignalCopy: 16, minimumSignalHeading: 24, maximumSignalHeading: 24 },
+    { width: 1440, height: 1000, maximumPageHeight: 4600, columns: 3, rows: 2, maximumH1: 68, minimumSignalCopy: 16, minimumSignalHeading: 24, maximumSignalHeading: 24 },
+    { width: 1728, height: 1000, maximumPageHeight: 4600, columns: 3, rows: 2, maximumH1: 68, minimumSignalCopy: 16, minimumSignalHeading: 24, maximumSignalHeading: 24 },
   ];
 
   for (const expectation of expectations) {
@@ -514,6 +518,12 @@ test('skip link and primary controls are keyboard reachable with visible focus',
   await expect(page.locator('#news-main')).toBeFocused();
   const targets = await page.locator('a.news-source-link, .news-nav a').evaluateAll((nodes) => nodes.map((node) => node.getBoundingClientRect().height));
   expect(targets.every((height) => height >= 44)).toBe(true);
+
+  const firstSource = page.locator('[data-news-signal]').first().locator('.news-source-link');
+  const firstDisclosure = page.locator('[data-news-signal]').first().locator('summary');
+  await firstSource.focus();
+  await page.keyboard.press('Tab');
+  await expect(firstDisclosure).toBeFocused();
 });
 
 test('unknown News date and Context routes are 404', async ({ request }) => {

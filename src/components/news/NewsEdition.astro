@@ -47,6 +47,24 @@ const coverageLabel = edition.coverage_kind === 'selection-window'
     </aside>
   )}
 
+  <nav class="news-signal-index" aria-labelledby={`${editionPrefix}-index-heading`}>
+    <div>
+      <p class="news-kicker">SCAN INDEX</p>
+      <h2 id={`${editionPrefix}-index-heading`}>Signals at a glance</h2>
+    </div>
+    <ol>
+      {edition.items.map((signal, index) => (
+        <li>
+          <a href={`#${editionPrefix}-${signal.id}`}>
+            <span class="news-signal-index__number">{String(index + 1).padStart(2, '0')}</span>
+            <span>{signal.title}</span>
+            <span class="news-signal-index__domain">{signal.source_domain}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </nav>
+
   <section class="news-signal-list" aria-labelledby={`${editionPrefix}-signals-heading`}>
     <div class="news-section-heading">
       <p class="news-kicker">SOURCE-FIRST SIGNALS</p>
