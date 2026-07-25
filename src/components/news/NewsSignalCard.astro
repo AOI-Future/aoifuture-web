@@ -37,28 +37,36 @@ const sourceLanguage = signal.language === 'other' ? 'und' : signal.language;
 
   <h3 id={`${id}-title`} data-news-order="headline">{signal.title}</h3>
 
-  <section class="news-reading-note" aria-labelledby={`${id}-fact`} data-news-order="fact">
+  <section class="news-reading-note news-reading-note--fact" aria-labelledby={`${id}-fact`} data-news-order="fact">
     <h4 id={`${id}-fact`}>Source fact</h4>
     <p>{signal.source_fact}</p>
   </section>
 
-  <section class="news-reading-note news-selection-reason" aria-labelledby={`${id}-selection`} data-news-order="selection">
-    <h4 id={`${id}-selection`}>Why selected</h4>
-    <p>{signal.selection_reason}</p>
-    <a class="news-policy-link" href="/news/editorial-policy/">選定方針</a>
-  </section>
+  <a class="news-source-link" href={signal.source_url} data-news-order="action">
+    Read the direct source <span aria-hidden="true">&gt;</span>
+    <span class="news-source-link__title" lang={sourceLanguage}>{signal.source_title}</span>
+  </a>
 
-  {signal.caveat && (
-    <aside class="news-reading-note news-caveat" aria-labelledby={`${id}-caveat`} data-news-order="caveat">
-      <h4 id={`${id}-caveat`}>Caveat</h4>
-      <p>{signal.caveat}</p>
-    </aside>
-  )}
+  <details class="news-signal__details" data-news-order="details">
+    <summary>Why this signal matters</summary>
+    <section class="news-reading-note news-selection-reason" aria-labelledby={`${id}-selection`}>
+      <h4 id={`${id}-selection`}>Why selected</h4>
+      <p>{signal.selection_reason}</p>
+      <a class="news-policy-link" href="/news/editorial-policy/">選定方針</a>
+    </section>
 
-  <section class="news-reading-note" aria-labelledby={`${id}-note`} data-news-order="note">
-    <h4 id={`${id}-note`}>AOI note</h4>
-    <p>{signal.aoi_note}</p>
-  </section>
+    {signal.caveat && (
+      <aside class="news-reading-note news-caveat" aria-labelledby={`${id}-caveat`}>
+        <h4 id={`${id}-caveat`}>Caveat</h4>
+        <p>{signal.caveat}</p>
+      </aside>
+    )}
+
+    <section class="news-reading-note" aria-labelledby={`${id}-note`}>
+      <h4 id={`${id}-note`}>AOI note</h4>
+      <p>{signal.aoi_note}</p>
+    </section>
+  </details>
 
   <footer class="news-signal__footer" data-news-order="metadata">
     <dl class="news-source-meta">
@@ -83,8 +91,4 @@ const sourceLanguage = signal.language === 'other' ? 'und' : signal.language;
     </div>
   </footer>
 
-  <a class="news-source-link" href={signal.source_url} data-news-order="action">
-    Read the direct source <span aria-hidden="true">&gt;</span>
-    <span class="news-source-link__title" lang={sourceLanguage}>{signal.source_title}</span>
-  </a>
 </article>

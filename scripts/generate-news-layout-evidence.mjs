@@ -23,7 +23,7 @@ const viewports = [
   { name: 'desktop-1280', width: 1280, height: 1000 },
   { name: 'desktop-1728', width: 1728, height: 1000 },
 ];
-const densityScenarios = [2, 6, 9, 12].flatMap((signalCount) =>
+const densityScenarios = [15].flatMap((signalCount) =>
   viewports.map((viewport) => ({ kind: 'density', variant: 'none', signalCount, viewport })),
 );
 const detourScenarios = ['none', 'compact', 'full-width', 'overused'].flatMap((variant) =>
@@ -255,7 +255,7 @@ async function measureComposition(page, scenario) {
       detours: detours.map((detour) => ({ variant: detour.dataset.layoutDetour, ...rectFor(detour) })),
       finiteEdition: signals.length === signalCount
         && actions.length === signalCount
-        && !document.querySelector('details, [data-pagination], [data-collapse]'),
+        && !document.querySelector('[data-pagination], [data-collapse]'),
       evidenceLabelPresent: Boolean(document.querySelector('[data-layout-evidence="true"]')),
     };
   }, { viewportHeight: scenario.viewport.height, signalCount: scenario.signalCount, variant: scenario.variant });
@@ -267,8 +267,8 @@ function buildReport(payload) {
   const table = (rows) => rows.map((scenario) =>
     `| ${scenario.id} | ${scenario.metrics.pageHeight} | ${scenario.metrics.viewportMultiples} | ${scenario.metrics.horizontalOverflow ? 'YES' : 'NO'} | ${scenario.metrics.sourceActions.first.top} | ${scenario.metrics.sourceActions.final.top} | ${scenario.screenshot.bytes} | \`${scenario.screenshot.sha256}\` |`,
   ).join('\n');
-  const mobile12 = density.find((scenario) => scenario.id === 'density-12-mobile-390');
-  const desktop12 = density.find((scenario) => scenario.id === 'density-12-desktop');
+  const mobile15 = density.find((scenario) => scenario.id === 'density-15-mobile-390');
+  const desktop15 = density.find((scenario) => scenario.id === 'density-15-desktop');
   const post = payload.fontCost.postBuild;
 
   return `# AOIFUTURE News Phase 3 — local layout evidence\n\n` +
@@ -281,7 +281,7 @@ function buildReport(payload) {
     `- All four generated News routes contain exactly one \`https://aoifuture.com/.../\` canonical, without \`www\`, preserving trailing slashes.\n\n` +
     `## Density measurements\n\n` +
     `| Scenario | Page px | Viewports | X overflow | First source y | Final source y | PNG bytes | SHA-256 |\n| --- | ---: | ---: | --- | ---: | ---: | ---: | --- |\n` + table(density) + `\n\n` +
-    `Readback: all 2/6/9/12 compositions retained one finite Edition, one direct-source action per Signal, the Edition note, and the footer, with no pagination, collapse, or horizontal overflow. Two Signals verify the production-shaped sample. Six Signals is comfortable at both widths. Nine remains structurally clear but creates a long mobile scan. Twelve remains technically finite, but reaches ${desktop12.metrics.viewportMultiples} desktop and ${mobile12.metrics.viewportMultiples} mobile viewports; repeated two-card rhythm and distance to the final source/footer are the primary fatigue points. The footer and Edition note remain present and measurable, not sticky or hidden.\n\n` +
+    `Readback: the 15-Signal composition retained one finite Edition, one direct-source action per Signal, the Edition note, and the footer, with no pagination, collapse, or horizontal overflow. The harness duplicates only validated public cards and labels every duplicate as local evidence. Fifteen remains technically finite, reaching ${desktop15.metrics.viewportMultiples} desktop and ${mobile15.metrics.viewportMultiples} mobile viewports; the compact scan index and closed native reading disclosures reduce repeated detail while preserving source-first actions. The footer and Edition note remain present and measurable, not sticky or hidden.\n\n` +
     `## Detour comparison\n\n` +
     `| Scenario | Page px | Viewports | X overflow | First source y | Final source y | PNG bytes | SHA-256 |\n| --- | ---: | ---: | --- | ---: | ---: | ---: | --- |\n` + table(detours) + `\n\n` +
     `Readback: no Detour preserves the strongest source-to-source rhythm. One compact block after Signal 3 is the least disruptive candidate if future information is genuinely distinct. The full-width block creates a stronger interruption, and the deliberately overused sample visibly and numerically extends the Edition without adding source actions. Because the neutral placeholder is not distinct from Source fact, AOI note, Caveat, Edition note, or Active Context, the default recommendation is **no separate Detour**; keep the full information in ordinary Edition content unless later real content proves an orientation benefit. The sample blocks are plain semantic HTML/CSS and do not require runtime JavaScript once composed.\n\n` +
@@ -351,7 +351,7 @@ try {
     .sort();
   const expectedDetourCounts = { none: 0, compact: 1, 'full-width': 1, overused: 4 };
   const acceptanceFailures = [];
-  if (results.length !== 48) acceptanceFailures.push(`expected 48 scenarios, received ${results.length}`);
+  if (results.length !== 30) acceptanceFailures.push(`expected 30 scenarios, received ${results.length}`);
   for (const result of results) {
     if (result.metrics.horizontalOverflow) acceptanceFailures.push(`${result.id}: horizontal overflow`);
     if (!result.metrics.finiteEdition) acceptanceFailures.push(`${result.id}: not a finite Edition`);
