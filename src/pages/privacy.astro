@@ -100,8 +100,8 @@ const lastUpdated = '2026-07-14';
             <h3 class="text-cyan-400/80 text-sm mb-2">a. 自動的に収集される情報</h3>
             <ul class="space-y-1 ml-4">
               <li>- IPアドレス、ブラウザ種別、OS、参照元URL</li>
-              <li>- ページ閲覧履歴、滞在時間、クリック等の行動データ（Google Analytics / Vercel Analytics経由）</li>
-              <li>- Cookie識別子（_ga、_gid 等）</li>
+              <li>- ページ閲覧履歴、滞在時間、クリック等の行動データ（Google Analytics / Vercel Analytics経由。Google Analyticsは同意後のみ）</li>
+              <li>- Cookie識別子（_ga、_gid 等。Google Analyticsへの同意後のみ）</li>
             </ul>
           </div>
           <div>
@@ -144,7 +144,7 @@ const lastUpdated = '2026-07-14';
           <p>当方のウェブサイトでは、以下のCookieおよび解析ツールを使用しています。</p>
           <div>
             <h3 class="text-cyan-400/80 text-sm mb-2">Google Analytics（GA4）</h3>
-            <p>Googleが提供するアクセス解析サービスです。Cookieを使用してウェブサイトの利用状況を分析します。収集されたデータはGoogleのプライバシーポリシーに基づいて管理されます。</p>
+            <p>Googleが提供するアクセス解析サービスです。Cookieを使用してウェブサイトの利用状況を分析します。当サイトでは、Cookie同意バナーで「同意」を選択した後にのみGA4のスクリプトを読み込みます。「拒否」を選択した場合、GA4は読み込まれません。収集されたデータはGoogleのプライバシーポリシーに基づいて管理されます。</p>
             <p class="mt-1">オプトアウト: <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline">Google Analytics オプトアウトアドオン</a></p>
           </div>
           <div>
@@ -153,7 +153,7 @@ const lastUpdated = '2026-07-14';
           </div>
           <div>
             <h3 class="text-cyan-400/80 text-sm mb-2">localStorage</h3>
-            <p>チャットウィジェットのセッション管理にlocalStorageを使用します。Cookieとは異なり、サーバーには自動送信されません。ブラウザの設定から削除できます。</p>
+            <p>チャットウィジェットのセッション管理に加え、Cookie同意バナーの選択結果を<code>cookie-consent</code>としてlocalStorageに保存します。値は「同意」または「拒否」で、再訪時にバナーの再表示とGA4の読み込み可否を判断するために使用します。Cookieとは異なり、localStorageの値はサーバーに自動送信されず、ブラウザの設定から削除できます。</p>
           </div>
           <div>
             <h3 class="text-cyan-400/80 text-sm mb-2">Cookieの無効化</h3>
