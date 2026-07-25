@@ -57,7 +57,6 @@ interface Section {
   label: string;
   sub: string;
   accent: Accent;
-  href?: string;
 }
 
 const SECTIONS: Section[] = [
@@ -65,14 +64,14 @@ const SECTIONS: Section[] = [
   { id: 'camino', label: 'AOI CAMINO', sub: 'AUTHOR', accent: 'amber' },
   { id: 'sound-umwelt', label: 'SOUND UMWELT', sub: 'PROJECT', accent: 'cyan' },
   { id: 'dispatch', label: 'DISPATCH', sub: 'MEDIA', accent: 'amber' },
-  { id: 'news', label: 'AOIFUTURE NEWS', sub: 'READ EDITIONS', accent: 'cyan', href: '/news/' },
+  { id: 'news', label: 'NEWS', sub: 'SOURCE DESK', accent: 'cyan' },
   { id: 'agent-security', label: 'AGENT.SECURITY', sub: 'FIELD MANUAL', accent: 'cyan' },
   { id: 'commission', label: 'WORK.COMMISSION', sub: 'SERVICE', accent: 'cyan' },
   { id: 'legal', label: 'LEGAL', sub: 'NOTICE', accent: 'cyan' },
 ];
 
 // ABOUT is opened from the logo button, not the menu — keep #about deep links valid
-const VALID_IDS = new Set([...SECTIONS.filter((section) => !section.href).map((section) => section.id), 'about']);
+const VALID_IDS = new Set([...SECTIONS.map((section) => section.id), 'about']);
 
 function readHash(): string | null {
   const h = window.location.hash.replace('#', '');
@@ -219,6 +218,24 @@ function DispatchPanel() {
       <ExternalLink accent="amber" href="https://dispatch.aoifuture.com/">
         READ FIELD NOTES
       </ExternalLink>
+    </div>
+  );
+}
+
+function NewsPanel() {
+  return (
+    <div className="panel-stagger space-y-6">
+      <div>
+        <Tag accent="cyan">DESK.TYPE: SOURCE-FIRST</Tag>
+        <h2 className="text-3xl md:text-5xl font-mono text-cyan-400 tracking-widest glow-cyan">
+          AOIFUTURE NEWS
+        </h2>
+        <p className="mt-3 text-cyan-400/60 font-mono text-sm">Rolling Editions / Source Desk</p>
+      </div>
+      <p className="text-cyan-400/80 font-sans text-sm md:text-base leading-relaxed">
+        AIと仕事の変化を、一次情報とともに読むための短いEdition。
+      </p>
+      <LaunchLink accent="cyan" href="/news/">READ AOIFUTURE NEWS</LaunchLink>
     </div>
   );
 }
@@ -410,6 +427,7 @@ const PANELS: Record<string, () => ReactNode> = {
   camino: CaminoPanel,
   'sound-umwelt': SoundUmweltPanel,
   dispatch: DispatchPanel,
+  news: NewsPanel,
   'agent-security': AgentSecurityPanel,
   commission: CommissionPanel,
   about: AboutPanel,
@@ -541,49 +559,14 @@ export default function Navigator() {
               );
               return (
                 <li key={s.id}>
-                  {s.href ? (
-                    <a
-                      href={s.href}
-                      aria-label="AOIFUTURE Newsを読む"
-                      className="group min-h-11 px-3 py-2 border border-cyan-400/30 bg-black/40
-                                 font-mono flex items-center gap-3 md:ml-auto
-                                 hover:bg-cyan-400/10 hover:border-cyan-400
-                                 focus-visible:outline focus-visible:outline-2
-                                 focus-visible:outline-offset-2 focus-visible:outline-cyan-300
-                                 transition-colors duration-300 ease-in-out"
-                    >
-                      <span
-                        data-news-link-marker
-                        aria-hidden="true"
-                        className="text-cyan-300 text-base leading-none menu-label"
-                      >
-                        {'>'}
-                      </span>
-                      <span className="flex flex-col items-start gap-0.5 leading-none">
-                        <span
-                          className={`${a.menu} ${a.menuHover} text-sm md:text-base tracking-[0.16em]
-                                      group-hover:tracking-[0.2em] transition-all duration-300 menu-label`}
-                        >
-                          {s.label}
-                        </span>
-                        <span className={`${a.dim} text-[10px] tracking-widest menu-label`}>
-                          {s.sub}
-                        </span>
-                      </span>
-                      <span className="ml-auto text-cyan-400/50 text-[10px] tracking-widest menu-label">
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
-                    </a>
-                  ) : (
-                    <button
-                      onClick={() => open(s.id)}
-                      className="group font-mono cursor-pointer bg-transparent
-                                 flex md:flex-row-reverse items-baseline gap-3 md:ml-auto
-                                 py-0.5"
-                    >
-                      {menuContent}
-                    </button>
-                  )}
+                  <button
+                    onClick={() => open(s.id)}
+                    className="group font-mono cursor-pointer bg-transparent
+                               flex md:flex-row-reverse items-baseline gap-3 md:ml-auto
+                               py-0.5"
+                  >
+                    {menuContent}
+                  </button>
                 </li>
               );
             })}

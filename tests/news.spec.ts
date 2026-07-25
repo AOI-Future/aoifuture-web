@@ -521,44 +521,68 @@ test('unknown News date and Context routes are 404', async ({ request }) => {
   expect((await request.get('/news/context/missing-context/')).status()).toBe(404);
 });
 
-test('homepage exposes AOIFUTURE News as an unmistakable persistent link', async ({ page }) => {
+test('homepage opens AOIFUTURE News as a Navigator layer and only its panel links to News', async ({ page }) => {
   for (const width of [390, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/');
 
-    const newsLink = page.getByRole('link', { name: 'AOIFUTURE Newsを読む', exact: true });
-    await expect(newsLink).toBeVisible();
-    await expect(newsLink).toHaveAttribute('href', '/news/');
-    await expect(newsLink).not.toHaveAttribute('target', /.+/);
-    await expect(newsLink.locator('[data-news-link-marker]')).toHaveText('>');
-    await expect(newsLink.getByText('AOIFUTURE NEWS', { exact: true })).toBeVisible();
-    await expect(newsLink.getByText('READ EDITIONS', { exact: true })).toBeVisible();
+    const newsButton = page.getByRole('button', { name: /NEWS/i });
+    await expect(newsButton).toBeVisible();
+    await expect(newsButton).toHaveText(/NEWS/);
+    await expect(newsButton).toHaveText(/SOURCE DESK/);
+    await expect(page.locator('nav a[href="/news/"]')).toHaveCount(0);
 
-    const metrics = await newsLink.evaluate((node) => {
-      const style = getComputedStyle(node);
-      const rect = node.getBoundingClientRect();
+    const closedMetrics = await newsButton.evaluate(() => {
       return {
-        borderWidth: style.borderTopWidth,
-        borderStyle: style.borderTopStyle,
-        borderColor: style.borderTopColor,
-        height: rect.height,
         scrollWidth: document.documentElement.scrollWidth,
         clientWidth: document.documentElement.clientWidth,
       };
     });
-    expect(metrics.borderWidth).toBe('1px');
-    expect(metrics.borderStyle).toBe('solid');
-    expect(metrics.borderColor).not.toBe('rgba(0, 0, 0, 0)');
-    expect(metrics.height).toBeGreaterThanOrEqual(44);
-    expect(metrics.scrollWidth).toBeLessThanOrEqual(metrics.clientWidth + 1);
+    expect(closedMetrics.scrollWidth).toBeLessThanOrEqual(closedMetrics.clientWidth + 1);
 
-    for (let tab = 0; tab < 10 && !(await newsLink.evaluate((node) => node === document.activeElement)); tab += 1) {
-      await page.keyboard.press('Tab');
-    }
-    await expect(newsLink).toBeFocused();
-    await expect(newsLink).toHaveCSS('outline-style', 'solid');
-    await page.keyboard.press('Enter');
+    await page.waitForTimeout(1_000);
+    await newsButton.click();
+    await expect(page).toHaveURL(/#news$/);
+    const dialog = page.getByRole('dialog');
+    await expect(dialog).toBeVisible();
+    const newsLink = dialog.getByRole('link', { name: /READ AOIFUTURE NEWS/i });
+    await expect(newsLink).toHaveAttribute('href', '/news/');
+    await expect(newsLink).not.toHaveAttribute('target', /.+/);
+    const openMetrics = await dialog.evaluate(() => ({
+      scrollWidth: document.documentElement.scrollWidth,
+      clientWidth: document.documentElement.clientWidth,
+    }));
+    expect(openMetrics.scrollWidth).toBeLessThanOrEqual(openMetrics.clientWidth + 1);
+
+    await newsLink.click();
     await expect(page).toHaveURL(/\/news\/$/);
+  }
+});
+
+test('home and News use one denied-by-default consent-mode GA tag and grant once after acceptance', async ({ browser }) => {
+  for (const route of ['/', '/news/']) {
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    await page.addInitScript(() => localStorage.clear());
+    await page.goto(route);
+
+    await expect(page.locator('script[src="https://www.googletagmanager.com/gtag/js?id=G-44419Y68H7"]')).toHaveCount(1);
+    if (route === '/news/') await expect(page.locator('script[data-sdkn="@vercel/analytics/astro"]')).toHaveCount(1);
+    await expect(page.getByText('このサイトではGoogle Analyticsを使用しています。')).toBeVisible();
+    const defaults = await page.evaluate(() => window.dataLayer.filter((entry: IArguments) => Array.from(entry).join('|') === 'consent|default|[object Object]'));
+    expect(defaults).toHaveLength(1);
+    expect(await page.evaluate(() => window.dataLayer.filter((entry: IArguments) => {
+      const [command, action, value] = Array.from(entry);
+      return command === 'consent' && action === 'default' && (value as { analytics_storage?: string }).analytics_storage === 'denied' && (value as { ad_storage?: string }).ad_storage === 'denied';
+    })).then((entries) => entries)).toHaveLength(1);
+
+    await page.getByRole('button', { name: '同意' }).click();
+    await expect(page.getByText('このサイトではGoogle Analyticsを使用しています。')).toBeHidden();
+    expect(await page.evaluate(() => window.dataLayer.filter((entry: IArguments) => {
+      const [command, action, value] = Array.from(entry);
+      return command === 'consent' && action === 'update' && (value as { analytics_storage?: string }).analytics_storage === 'granted';
+    })).then((entries) => entries)).toHaveLength(1);
+    await context.close();
   }
 });
 

@@ -1,5 +1,6 @@
 ---
 import NewsDeskHeader from '../components/news/NewsDeskHeader.astro';
+import ConsentAnalytics from '../components/ConsentAnalytics.astro';
 import type { NewsPublicationMode } from '../lib/news/types';
 import '../styles/news.css';
 
@@ -46,5 +47,6 @@ const serializedJsonLd = JSON.stringify(jsonLd).replaceAll('<', '\\u003c');
       <p>AOIFUTURE News / finite, source-first Rolling Editions</p>
       {mode === 'review' && <p>EDITORIAL REVIEW PREVIEW / No production publication or deployment authorized.</p>}
     </footer>
+    <ConsentAnalytics />
   </body>
 </html>
