@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aoifuture.com/schemas/aoi-news-review-candidate-v1.schema.json",
+  "title": "AOIFUTURE News review-only candidate v1",
+  "description": "Public-safe staging artifact. It is not an authorization to publish.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "publication_status", "edition"],
+  "properties": {
+    "schema_version": { "const": "aoi.news.review-candidate.v1" },
+    "publication_status": { "const": "review-only" },
+    "edition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "edition_id", "edition_date", "coverage_kind", "coverage_observed_at", "publication_status", "generated_at", "published_at", "title", "items", "topics"],
+      "properties": {
+        "schema_version": { "const": "aoi.news.edition.v1" },
+        "edition_id": { "type": "string" },
+        "edition_date": { "type": "string" },
+        "coverage_kind": { "const": "selection-snapshot" },
+        "coverage_observed_at": { "type": "string" },
+        "publication_status": { "const": "review-only" },
+        "generated_at": { "type": "string" },
+        "published_at": { "type": "string" },
+        "title": { "type": "string" },
+        "dek": { "type": "string" },
+        "edition_note": { "type": "string" },
+        "items": { "type": "array", "minItems": 1 },
+        "topics": { "type": "array", "minItems": 1 }
+      }
+    }
+  }
+}

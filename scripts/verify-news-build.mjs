@@ -2,6 +2,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { extname, join, resolve } from 'node:path';
 import { renderRollingFeed, validateRevisionEvents } from './news-contract/rolling-feed.mjs';
 import { validatePublicCatalog } from './news-contract/validator.mjs';
+import { scanPublicNewsTree } from './news-bridge/public-content-privacy.mjs';
 import { resolveNewsPublicationMode } from '../src/lib/news/publication-mode.mjs';
 
 const clientRoot = resolve(process.argv[2] ?? 'dist/client');
@@ -54,6 +55,10 @@ const cssPaths = new Set();
 const latestReviewedAt = new Map(allEvents.map((event) => [event.edition_id, event.published_at]));
 const forbiddenFontOrigins = /(?:fonts\.googleapis\.com|fonts\.gstatic\.com)/i;
 const reviewOnlyWording = /EDITORIAL REVIEW PREVIEW|NON-PRODUCTION|review-only|No production publication/i;
+
+for (const violation of scanPublicNewsTree('src/content/news')) {
+  failures.push(`tracked public News content privacy leak: ${violation.path} (${violation.marker})`);
+}
 
 if (expectedMode === 'production') {
   const expectedPublicIds = ['2026-07-21-0341', '2026-07-22-0430', '2026-07-23-0430', '2026-07-24'];
@@ -122,6 +127,9 @@ const walk = (directory) => readdirSync(directory, { withFileTypes: true }).flat
   const path = join(directory, entry.name);
   return entry.isDirectory() ? walk(path) : [path];
 });
+for (const violation of scanPublicNewsTree(join(clientRoot, 'news'))) {
+  failures.push(`generated public News artifact privacy leak: ${violation.path} (${violation.marker})`);
+}
 const sitemapFiles = walk(clientRoot).filter((path) => /sitemap.*\.xml$/.test(path));
 const sitemap = sitemapFiles.map((path) => readFileSync(path, 'utf8')).join('\n');
 for (const [, canonical] of routes) if (!sitemap.includes(canonical)) failures.push(`sitemap: missing ${canonical}`);

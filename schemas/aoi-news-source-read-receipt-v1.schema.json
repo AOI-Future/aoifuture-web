@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aoifuture.com/schemas/aoi-news-source-read-receipt-v1.schema.json",
+  "title": "AOIFUTURE News local-only source-read receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "candidate_id", "normalized_source_url", "source_kind", "checked_at", "claim_locator", "reviewed_by", "approved_at", "decision"],
+  "properties": {
+    "schema_version": { "const": "aoi.news.source-read-receipt.v1" },
+    "candidate_id": { "$ref": "#/$defs/id" },
+    "normalized_source_url": { "type": "string", "format": "uri", "pattern": "^https://" },
+    "source_kind": { "$ref": "#/$defs/sourceKind" },
+    "checked_at": { "type": "string", "format": "date-time" },
+    "claim_locator": { "$ref": "#/$defs/text500" },
+    "reviewed_by": { "$ref": "#/$defs/text100" },
+    "approved_at": { "type": "string", "format": "date-time" },
+    "decision": { "const": "approved" }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{2,79}$" },
+    "sourceKind": { "enum": ["official", "documentation", "release", "repository", "paper", "advisory", "regulator", "original-reporting", "analysis"] },
+    "text100": { "type": "string", "minLength": 3, "maxLength": 100, "pattern": "^(?=[^<>]*\\S)[^<>]*$" },
+    "text500": { "type": "string", "minLength": 8, "maxLength": 500, "pattern": "^(?=[^<>]*\\S)[^<>]*$" }
+  }
+}
