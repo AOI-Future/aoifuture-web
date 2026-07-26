@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { createHash } from 'node:crypto';
-import { mkdirSync, readFileSync, realpathSync, renameSync, rmSync, writeFileSync } from 'node:fs';
+import { lstatSync, mkdirSync, readFileSync, realpathSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { basename, dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { normalizePrivateSourceUrl } from './private-gate-validator.mjs';
@@ -170,19 +170,35 @@ function resolvePhysicalPath(path) {
   }
 }
 
-function assertPrivateOutputPath(outputPath) {
+function assertPrivateOutputPath(outputPath, inputPaths = []) {
   const resolvedOutputPath = resolve(outputPath);
+  try {
+    if (lstatSync(resolvedOutputPath).isSymbolicLink()) throw new TypeError('Refusing symlink adapter output path');
+  } catch (cause) {
+    if (cause.code !== 'ENOENT') throw cause;
+  }
   const physicalOutputPath = resolvePhysicalPath(resolvedOutputPath);
+  for (const inputPath of inputPaths) {
+    const resolvedInputPath = resolve(inputPath);
+    if (physicalOutputPath === resolvePhysicalPath(resolvedInputPath)) throw new TypeError('Output path must not alias an input path');
+    try {
+      const outputStat = statSync(resolvedOutputPath);
+      const inputStat = statSync(resolvedInputPath);
+      if (outputStat.dev === inputStat.dev && outputStat.ino === inputStat.ino) throw new TypeError('Output path must not alias an input path');
+    } catch (cause) {
+      if (cause.code !== 'ENOENT') throw cause;
+    }
+  }
   const publicRoot = publicOutputRoots.find((root) => isWithin(resolvedOutputPath, root) || isWithin(physicalOutputPath, resolvePhysicalPath(root)));
   if (publicRoot) throw new TypeError(`Refusing to write adapter output beneath public output root: ${publicRoot}`);
   return resolvedOutputPath;
 }
 
-function writeAtomically(outputPath, packet) {
-  const resolvedOutputPath = assertPrivateOutputPath(outputPath);
+function writeAtomically(outputPath, packet, inputPaths) {
+  const resolvedOutputPath = assertPrivateOutputPath(outputPath, inputPaths);
   const temporaryPath = `${resolvedOutputPath}.${process.pid}.tmp`;
   mkdirSync(dirname(resolvedOutputPath), { recursive: true });
-  assertPrivateOutputPath(outputPath);
+  assertPrivateOutputPath(outputPath, inputPaths);
   try {
     writeFileSync(temporaryPath, stableJson(packet), { encoding: 'utf8', flag: 'wx' });
     renameSync(temporaryPath, resolvedOutputPath);
@@ -202,6 +218,7 @@ function parseArguments(argv) {
   }
   if (Object.keys(options).length !== 3) throw new TypeError('Usage: adapt-content-radar-packet.mjs --packet <path> --config <path> --output <path>');
   if (resolve(options['--output']) === resolve(options['--packet']) || resolve(options['--output']) === resolve(options['--config'])) throw new TypeError('Output path must not replace an input path');
+  assertPrivateOutputPath(options['--output'], [options['--packet'], options['--config']]);
   return options;
 }
 
@@ -220,7 +237,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     const options = parseArguments(process.argv.slice(2));
     const result = adaptContentRadarPacket(readJson(options['--packet']), readJson(options['--config']));
     if (!result.ok) throw new TypeError(`Content Radar packet validation failed: ${JSON.stringify(result.errors)}`);
-    process.stdout.write(`${writeAtomically(options['--output'], result.packet)}\n`);
+    process.stdout.write(`${writeAtomically(options['--output'], result.packet, [options['--packet'], options['--config']])}\n`);
   } catch (cause) {
     process.stderr.write(`${cause.message}\n`);
     process.exitCode = 1;

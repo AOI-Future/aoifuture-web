@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { existsSync, linkSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -142,6 +142,46 @@ describe('Content Radar packet adapter', () => {
         '--config', join(directory, 'config.json'), '--output', join(alias, 'packet.json'),
       ], { cwd: root, encoding: 'utf8', stdio: 'pipe' })).toThrow();
       expect(existsSync(join(alias, 'packet.json'))).toBe(false);
+    } finally {
+      rmSync(directory, { recursive: true, force: true });
+    }
+  });
+
+  it('rejects symlink outputs and canonical aliases of either input without replacing private files', () => {
+    const directory = mkdtempSync(join(tmpdir(), 'content-radar-adapter-'));
+    try {
+      writeInputs(directory);
+      const packetPath = join(directory, 'packet.json');
+      const configPath = join(directory, 'config.json');
+      const args = (output, configInput = configPath) => [
+        'scripts/news-bridge/adapt-content-radar-packet.mjs', '--packet', packetPath,
+        '--config', configInput, '--output', output,
+      ];
+
+      const privateTarget = join(directory, 'private-target.json');
+      const privateContents = '{"private":"must remain unchanged"}\n';
+      writeFileSync(privateTarget, privateContents);
+      const outputLink = join(directory, 'output-link.json');
+      symlinkSync(privateTarget, outputLink, 'file');
+      expect(() => execFileSync('node', args(outputLink), { cwd: root, encoding: 'utf8', stdio: 'pipe' })).toThrow();
+      expect(readFileSync(privateTarget, 'utf8')).toBe(privateContents);
+
+      const packetContents = readFileSync(packetPath, 'utf8');
+      const packetAlias = join(directory, 'packet-alias.json');
+      symlinkSync(packetPath, packetAlias, 'file');
+      expect(() => execFileSync('node', args(packetAlias), { cwd: root, encoding: 'utf8', stdio: 'pipe' })).toThrow();
+      expect(readFileSync(packetPath, 'utf8')).toBe(packetContents);
+
+      const packetHardLink = join(directory, 'packet-hard-link.json');
+      linkSync(packetPath, packetHardLink);
+      expect(() => execFileSync('node', args(packetHardLink), { cwd: root, encoding: 'utf8', stdio: 'pipe' })).toThrow();
+      expect(readFileSync(packetPath, 'utf8')).toBe(packetContents);
+
+      const configContents = readFileSync(configPath, 'utf8');
+      const configAlias = join(directory, 'config-alias.json');
+      symlinkSync(configPath, configAlias, 'file');
+      expect(() => execFileSync('node', args(configPath, configAlias), { cwd: root, encoding: 'utf8', stdio: 'pipe' })).toThrow();
+      expect(readFileSync(configPath, 'utf8')).toBe(configContents);
     } finally {
       rmSync(directory, { recursive: true, force: true });
     }
