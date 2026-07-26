@@ -36,9 +36,11 @@ opaque IDs from the canonical source URL plus upstream integrity hash, and
 writes the allowlisted AOIFUTURE private packet atomically. It emits no source
 title, headline, summary, provenance locator, raw body, score, prompt,
 reviewer, decision, or upstream integrity data. `context_ids` is always empty.
-It refuses output beneath public roots and does not create an output file when
-validation fails. It neither creates receipts/decisions nor promotes, publishes,
-deploys, fetches, or schedules anything.
+It refuses every output lexically or physically/canonically beneath this
+repository, including `public`, `src/pages`, `src/content/news`, and `dist`, so
+the output must be in a separate local private workspace. It does not create an
+output file when validation fails. It neither creates receipts/decisions nor
+promotes, publishes, deploys, fetches, or schedules anything.
 Like the later review-candidate writer, its path-based guard requires trusted,
 locally controlled output ancestors and retains the documented residual
 ancestor-symlink TOCTOU risk; that limitation is not publication authorization.

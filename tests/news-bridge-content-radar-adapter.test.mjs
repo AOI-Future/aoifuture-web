@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { existsSync, linkSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { adaptContentRadarPacket, stableJson } from '../scripts/news-bridge/adapt-content-radar-packet.mjs';
 
@@ -114,7 +114,7 @@ describe('Content Radar packet adapter', () => {
     invalid((_sourcePacket, adapterConfig) => { adapterConfig.candidate_language = 'fr'; }, 'schema');
   });
 
-  it('writes only stable output atomically after valid input and refuses public roots and aliases', () => {
+  it('writes only stable output atomically after valid input and refuses repository outputs and aliases', () => {
     const directory = mkdtempSync(join(tmpdir(), 'content-radar-adapter-'));
     try {
       writeInputs(directory);
@@ -128,20 +128,39 @@ describe('Content Radar packet adapter', () => {
       execFileSync('node', args, { cwd: root, encoding: 'utf8' });
       expect(readFileSync(output, 'utf8')).toBe(first);
 
-      const publicOutput = new URL('../src/content/news/content-radar-adapter.json', import.meta.url).pathname;
-      expect(() => execFileSync('node', [
-        'scripts/news-bridge/adapt-content-radar-packet.mjs', '--packet', join(directory, 'packet.json'),
-        '--config', join(directory, 'config.json'), '--output', publicOutput,
-      ], { cwd: root, encoding: 'utf8', stdio: 'pipe' })).toThrow();
-      expect(existsSync(publicOutput)).toBe(false);
-
-      const alias = join(directory, 'public-alias');
-      symlinkSync(new URL('../dist/client', import.meta.url).pathname, alias, 'dir');
-      expect(() => execFileSync('node', [
-        'scripts/news-bridge/adapt-content-radar-packet.mjs', '--packet', join(directory, 'packet.json'),
-        '--config', join(directory, 'config.json'), '--output', join(alias, 'packet.json'),
-      ], { cwd: root, encoding: 'utf8', stdio: 'pipe' })).toThrow();
-      expect(existsSync(join(alias, 'packet.json'))).toBe(false);
+      const expectOutputRejected = (rejectedOutput) => {
+        expect(() => execFileSync('node', [
+          'scripts/news-bridge/adapt-content-radar-packet.mjs', '--packet', join(directory, 'packet.json'),
+          '--config', join(directory, 'config.json'), '--output', rejectedOutput,
+        ], { cwd: root, encoding: 'utf8', stdio: 'pipe' })).toThrow();
+        expect(existsSync(rejectedOutput)).toBe(false);
+      };
+      const repositoryOutput = new URL('../content-radar-output-boundary-test/private-candidate-packet.json', import.meta.url).pathname;
+      try {
+        expectOutputRejected(repositoryOutput);
+        expect(existsSync(dirname(repositoryOutput))).toBe(false);
+      } finally {
+        rmSync(dirname(repositoryOutput), { recursive: true, force: true });
+      }
+      const servedRoots = [
+        new URL('../public', import.meta.url).pathname,
+        new URL('../src/pages', import.meta.url).pathname,
+        new URL('../src/content/news', import.meta.url).pathname,
+        new URL('../dist/client', import.meta.url).pathname,
+      ];
+      for (const [index, servedRoot] of servedRoots.entries()) {
+        const directOutput = join(servedRoot, `content-radar-adapter-${index}.json`);
+        const alias = join(directory, `served-root-alias-${index}`);
+        const aliasOutput = join(alias, 'content-radar-adapter.json');
+        try {
+          expectOutputRejected(directOutput);
+          symlinkSync(servedRoot, alias, 'dir');
+          expectOutputRejected(aliasOutput);
+        } finally {
+          rmSync(directOutput, { force: true });
+          rmSync(aliasOutput, { force: true });
+        }
+      }
     } finally {
       rmSync(directory, { recursive: true, force: true });
     }

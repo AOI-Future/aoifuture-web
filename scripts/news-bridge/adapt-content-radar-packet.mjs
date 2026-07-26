@@ -18,7 +18,6 @@ const languages = new Set(['ja', 'en', 'other']);
 const error = (code, path, message) => ({ code, path, message });
 const isObject = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
-const publicOutputRoots = [resolve(repositoryRoot, 'src/content/news'), resolve(repositoryRoot, 'dist/client')];
 
 const validDate = (value) => typeof value === 'string'
   && /^\d{4}-\d{2}-\d{2}$/.test(value)
@@ -189,8 +188,9 @@ function assertPrivateOutputPath(outputPath, inputPaths = []) {
       if (cause.code !== 'ENOENT') throw cause;
     }
   }
-  const publicRoot = publicOutputRoots.find((root) => isWithin(resolvedOutputPath, root) || isWithin(physicalOutputPath, resolvePhysicalPath(root)));
-  if (publicRoot) throw new TypeError(`Refusing to write adapter output beneath public output root: ${publicRoot}`);
+  if (isWithin(resolvedOutputPath, repositoryRoot) || isWithin(physicalOutputPath, resolvePhysicalPath(repositoryRoot))) {
+    throw new TypeError('Adapter output must be outside the repository private workspace boundary');
+  }
   return resolvedOutputPath;
 }
 
