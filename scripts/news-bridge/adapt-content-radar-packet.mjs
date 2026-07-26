@@ -13,7 +13,10 @@ const integrityKeys = new Set(['algorithm', 'content_sha256']);
 const configKeys = new Set(['schema_version', 'candidate_language', 'edition']);
 const editionKeys = new Set(['edition_id', 'edition_date', 'coverage_kind', 'coverage_observed_at', 'generated_at', 'published_at', 'title', 'dek', 'edition_note', 'topics']);
 const topicKeys = new Set(['id', 'label_ja', 'label_en', 'description']);
-const sourceKinds = new Set(['official', 'documentation', 'release', 'repository', 'paper', 'advisory', 'regulator', 'original-reporting', 'analysis']);
+const upstreamV1SourceKindByHost = new Map([
+  ['arxiv.org', 'paper'],
+  ['github.com', 'repository'],
+]);
 const languages = new Set(['ja', 'en', 'other']);
 const error = (code, path, message) => ({ code, path, message });
 const isObject = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -73,10 +76,13 @@ function validateContentRadarPacket(packet) {
     if (!validText(item.source_type, 1, 64)) errors.push(error('schema', `${path}/source_type`, 'must be 1 through 64 non-blank characters'));
     if (!validText(item.provenance_locator, 1, 512)) errors.push(error('schema', `${path}/provenance_locator`, 'must be 1 through 512 non-blank characters'));
     if (!validDateTime(item.observed_at)) errors.push(error('schema', `${path}/observed_at`, 'must be an RFC 3339 date-time'));
-    if (!sourceKinds.has(item.source.kind)) errors.push(error('unsupported_source_kind', `${path}/source/kind`, 'source kind is unsupported'));
     try {
       const sourceUrl = normalizePrivateSourceUrl(item.source.url);
-      if (new URL(sourceUrl).hostname.toLowerCase() !== item.source.domain.toLowerCase()) errors.push(error('schema', `${path}/source/domain`, 'must match the source URL hostname'));
+      const sourceHost = new URL(sourceUrl).hostname.toLowerCase();
+      if (sourceHost !== item.source.domain.toLowerCase()) errors.push(error('schema', `${path}/source/domain`, 'must match the source URL hostname'));
+      const expectedSourceKind = upstreamV1SourceKindByHost.get(sourceHost) ?? 'unknown';
+      if (item.source.kind !== expectedSourceKind) errors.push(error('source_kind_mismatch', `${path}/source/kind`, 'must match the upstream v1 exact source host mapping'));
+      if (item.source.kind === 'unknown') errors.push(error('unsupported_source_kind', `${path}/source/kind`, 'unknown upstream source kinds are not accepted downstream'));
       normalizedItems.push({ sourceUrl, sourceKind: item.source.kind, observedAt: item.observed_at });
     } catch {
       errors.push(error('schema', `${path}/source/url`, 'must be a credential-free HTTPS URL'));

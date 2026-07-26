@@ -108,6 +108,44 @@ describe('Content Radar packet adapter', () => {
     }, 'duplicate_source_url');
   });
 
+  it('matches upstream v1 exact host-kind semantics after a packet hash is recomputed', () => {
+    invalid((sourcePacket) => {
+      sourcePacket.items[0].source = { ...sourcePacket.items[0].source, url: 'https://github.com/aoi-future/news-radar', domain: 'github.com', kind: 'paper' };
+      sourcePacket.integrity.content_sha256 = packetIntegrity(sourcePacket);
+    }, 'source_kind_mismatch');
+    invalid((sourcePacket) => {
+      sourcePacket.items[0].source = { ...sourcePacket.items[0].source, url: 'https://example.com/notice', domain: 'example.com', kind: 'official' };
+      sourcePacket.integrity.content_sha256 = packetIntegrity(sourcePacket);
+    }, 'source_kind_mismatch');
+    invalid((sourcePacket) => {
+      sourcePacket.items[0].source = { ...sourcePacket.items[0].source, url: 'https://api.github.com/repos/aoi-future/news-radar', domain: 'api.github.com', kind: 'repository' };
+      sourcePacket.integrity.content_sha256 = packetIntegrity(sourcePacket);
+    }, 'source_kind_mismatch');
+    invalid((sourcePacket) => {
+      sourcePacket.items[0].source = { ...sourcePacket.items[0].source, url: 'https://github.com.evil.example/aoi-future/news-radar', domain: 'github.com.evil.example', kind: 'repository' };
+      sourcePacket.integrity.content_sha256 = packetIntegrity(sourcePacket);
+    }, 'source_kind_mismatch');
+  });
+
+  it('accepts only exact upstream v1 arXiv and GitHub host-kind mappings', () => {
+    const arxivItem = packet().items[0];
+    const githubItem = {
+      ...arxivItem,
+      source: {
+        ...arxivItem.source,
+        url: 'https://github.com/aoi-future/news-radar?b=2&a=1#readme',
+        domain: 'github.com',
+        kind: 'repository',
+      },
+    };
+    const result = adaptContentRadarPacket(packet([arxivItem, githubItem]), config());
+    expect(result.ok, JSON.stringify(result.errors, null, 2)).toBe(true);
+    expect(result.packet.candidates.map((candidate) => [candidate.source_url, candidate.source_kind])).toEqual([
+      ['https://arxiv.org/abs/2607.01234?a=1&b=2', 'paper'],
+      ['https://github.com/aoi-future/news-radar?a=1&b=2', 'repository'],
+    ]);
+  });
+
   it('rejects an unexpected or malformed local framing config', () => {
     invalid((_sourcePacket, adapterConfig) => { adapterConfig.unexpected = 'private'; }, 'schema');
     invalid((_sourcePacket, adapterConfig) => { adapterConfig.edition.edition_date = '2026-07-28'; }, 'edition_date_coherence');
