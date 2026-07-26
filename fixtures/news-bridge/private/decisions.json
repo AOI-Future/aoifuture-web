@@ -1,0 +1,17 @@
+[
+  {
+    "schema_version": "aoi.news.editorial-decision.v1",
+    "candidate_id": "sig-radar-agent-controls-001",
+    "inclusion_decision": "approved",
+    "public_fields": {
+      "title": "Agent controls add a visible approval boundary",
+      "source_title": "Agent controls announcement",
+      "source_fact": "The primary source describes new controls for agent permissions.",
+      "selection_reason": "The update makes an operational approval boundary concrete.",
+      "aoi_note": "Review remains separate from any publication decision."
+    },
+    "role": "brief",
+    "topics": ["agent-operations"],
+    "approved_at": "2026-07-26T09:00:00+09:00"
+  }
+]

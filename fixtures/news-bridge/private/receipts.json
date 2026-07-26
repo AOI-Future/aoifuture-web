@@ -1,0 +1,13 @@
+[
+  {
+    "schema_version": "aoi.news.source-read-receipt.v1",
+    "candidate_id": "sig-radar-agent-controls-001",
+    "normalized_source_url": "https://example.com/news/agent-controls",
+    "source_kind": "official",
+    "checked_at": "2026-07-26T09:00:00+09:00",
+    "claim_locator": "Agent controls announcement, permissions section",
+    "reviewed_by": "news-editor",
+    "approved_at": "2026-07-26T09:00:00+09:00",
+    "decision": "approved"
+  }
+]

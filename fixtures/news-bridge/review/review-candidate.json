@@ -1,0 +1,52 @@
+{
+  "edition": {
+    "coverage_kind": "selection-snapshot",
+    "coverage_observed_at": "2026-07-26T09:00:00+09:00",
+    "dek": "公開前の編集レビューだけを目的とする候補。",
+    "edition_date": "2026-07-26",
+    "edition_id": "2026-07-26-0900",
+    "edition_note": "公開権限を持たない検証用の候補。",
+    "generated_at": "2026-07-26T09:00:00+09:00",
+    "items": [
+      {
+        "aoi_note": "Review remains separate from any publication decision.",
+        "change": {
+          "kind": "new"
+        },
+        "context_ids": [],
+        "id": "sig-radar-agent-controls-001",
+        "language": "en",
+        "observed_at": "2026-07-26T09:00:00+09:00",
+        "published_at": "2026-07-26T08:00:00+09:00",
+        "role": "brief",
+        "selection_reason": "The update makes an operational approval boundary concrete.",
+        "source_domain": "example.com",
+        "source_fact": "The primary source describes new controls for agent permissions.",
+        "source_kind": "official",
+        "source_title": "Agent controls announcement",
+        "source_url": "https://example.com/news/agent-controls",
+        "title": "Agent controls add a visible approval boundary",
+        "topics": [
+          "agent-operations"
+        ],
+        "verification": {
+          "checked_at": "2026-07-26T09:00:00+09:00",
+          "status": "verified"
+        }
+      }
+    ],
+    "publication_status": "review-only",
+    "published_at": "2026-07-26T09:00:00+09:00",
+    "schema_version": "aoi.news.edition.v1",
+    "title": "レビュー専用の運用境界候補",
+    "topics": [
+      {
+        "id": "agent-operations",
+        "label_en": "Agent operations",
+        "label_ja": "エージェント運用"
+      }
+    ]
+  },
+  "publication_status": "review-only",
+  "schema_version": "aoi.news.review-candidate.v1"
+}

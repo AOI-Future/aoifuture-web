@@ -1,0 +1,24 @@
+{
+  "schema_version": "aoi.news.private-candidate-packet.v1",
+  "edition": {
+    "edition_id": "2026-07-26-0900",
+    "edition_date": "2026-07-26",
+    "coverage_kind": "selection-snapshot",
+    "coverage_observed_at": "2026-07-26T09:00:00+09:00",
+    "generated_at": "2026-07-26T09:00:00+09:00",
+    "published_at": "2026-07-26T09:00:00+09:00",
+    "title": "レビュー専用の運用境界候補",
+    "dek": "公開前の編集レビューだけを目的とする候補。",
+    "edition_note": "公開権限を持たない検証用の候補。",
+    "topics": [{ "id": "agent-operations", "label_ja": "エージェント運用", "label_en": "Agent operations" }]
+  },
+  "candidates": [{
+    "candidate_id": "sig-radar-agent-controls-001",
+    "source_url": "https://example.com/news/agent-controls?utm_source=radar",
+    "source_kind": "official",
+    "language": "en",
+    "published_at": "2026-07-26T08:00:00+09:00",
+    "observed_at": "2026-07-26T09:00:00+09:00",
+    "context_ids": []
+  }]
+}
