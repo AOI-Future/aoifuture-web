@@ -17,6 +17,12 @@ function writeBridgeInputs(directory) {
 }
 
 describe('AOIFUTURE News bridge operation privacy contract', () => {
+  it('documents the trusted-output assumption and residual ancestor-symlink TOCTOU risk', () => {
+    const operationContract = readFileSync(new URL('../docs/news/content-radar-bridge-operation.md', import.meta.url), 'utf8');
+    expect(operationContract).toContain('trusted, locally controlled output directory and ancestors');
+    expect(operationContract).toContain('residual ancestor-symlink TOCTOU risk');
+  });
+
   it('keeps tracked public News content free of private bridge markers', () => {
     expect(scanPublicNewsTree(new URL('../src/content/news', import.meta.url).pathname)).toEqual([]);
   });
