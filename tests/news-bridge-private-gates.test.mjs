@@ -47,6 +47,13 @@ const gates = (overrides = {}) => ({
   ...overrides,
 });
 
+const unsafeUserinfoUrl = (() => {
+  const url = new URL('https://example.com/news/agents');
+  url.username = 'demo';
+  url.password = 'sample';
+  return url.href;
+})();
+
 const codes = (result) => result.errors.map((entry) => entry.code);
 const expectInvalid = (value, code) => {
   const result = validatePrivateGates(value);
@@ -66,8 +73,8 @@ describe('AOIFUTURE News private source-read and editorial gates', () => {
   });
 
   it('rejects credential-bearing receipt URLs before approval counting', () => {
-    expectInvalid(gates({ receipts: [receipt({ normalized_source_url: 'https://reader:secret@example.com/news/agents' })] }), 'schema');
-    expectInvalid(gates({ receipts: [receipt({ normalized_source_url: 'https://reader:secret@example.com/news/agents' })] }), 'missing_approved_receipt');
+    expectInvalid(gates({ receipts: [receipt({ normalized_source_url: unsafeUserinfoUrl })] }), 'schema');
+    expectInvalid(gates({ receipts: [receipt({ normalized_source_url: unsafeUserinfoUrl })] }), 'missing_approved_receipt');
   });
 
   it('rejects missing or rejected editorial inclusion decisions', () => {
