@@ -25,7 +25,7 @@ node scripts/news-bridge/prepare-review-candidate.mjs \
 node -e "const f=process.argv[1]; const c=require('node:fs').readFileSync(f, 'utf8'); console.log(c)" "$REVIEW_DIR/review-candidate.json"
 ```
 
-The output must retain `publication_status: "review-only"` at both wrapper and Edition levels. Inspect it in that local directory; do not place it beneath `src/content/news` or copy it into a production manifest. The bridge has no promotion command and never writes public content.
+The output must retain `publication_status: "review-only"` at both wrapper and Edition levels. Inspect it in that local directory; do not place it beneath `src/content/news`, `dist/client`, their traversal paths, or symlink aliases, or copy it into a production manifest. The bridge fail-closes before creating a directory or file beneath either public root, has no promotion command, and never writes public content.
 
 For the checked-in contract fixture, run:
 

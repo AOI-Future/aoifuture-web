@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-import { mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { mkdirSync, readFileSync, realpathSync, renameSync, rmSync, writeFileSync } from 'node:fs';
+import { basename, dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { validatePrivateGates, normalizePrivateSourceUrl } from './private-gate-validator.mjs';
 import { validatePublicCatalog, validEditionId } from '../news-contract/validator.mjs';
 
@@ -11,11 +12,47 @@ const topicKeys = new Set(['id', 'label_ja', 'label_en', 'description']);
 const error = (code, path, message) => ({ code, path, message });
 const isObject = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
 const stableJson = (value) => `${JSON.stringify(sortValue(value), null, 2)}\n`;
+const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
+const publicOutputRoots = [
+  resolve(repositoryRoot, 'src/content/news'),
+  resolve(repositoryRoot, 'dist/client'),
+];
 const sortValue = (value) => {
   if (Array.isArray(value)) return value.map(sortValue);
   if (!isObject(value)) return value;
   return Object.fromEntries(Object.keys(value).sort().map((key) => [key, sortValue(value[key])]));
 };
+
+function isWithin(path, root) {
+  const pathFromRoot = relative(root, path);
+  return pathFromRoot === '' || (!pathFromRoot.startsWith(`..${sep}`) && pathFromRoot !== '..' && !isAbsolute(pathFromRoot));
+}
+
+function resolvePhysicalPath(path) {
+  const missingSegments = [];
+  let existingPath = resolve(path);
+  while (true) {
+    try {
+      return missingSegments.reduce((physicalPath, segment) => join(physicalPath, segment), realpathSync(existingPath));
+    } catch (cause) {
+      if (!['ENOENT', 'ENOTDIR'].includes(cause.code)) throw cause;
+      const parentPath = dirname(existingPath);
+      if (parentPath === existingPath) throw cause;
+      missingSegments.unshift(basename(existingPath));
+      existingPath = parentPath;
+    }
+  }
+}
+
+function assertPrivateOutputDirectory(outputDirectory) {
+  const resolvedOutputDirectory = resolve(outputDirectory);
+  const physicalOutputDirectory = resolvePhysicalPath(resolvedOutputDirectory);
+  const publicRoot = publicOutputRoots.find((root) => (
+    isWithin(resolvedOutputDirectory, root) || isWithin(physicalOutputDirectory, resolvePhysicalPath(root))
+  ));
+  if (publicRoot) throw new TypeError(`Refusing to write review candidate beneath public output root: ${publicRoot}`);
+  return resolvedOutputDirectory;
+}
 
 function parseArguments(argv) {
   const options = {};
@@ -132,9 +169,11 @@ function prepareReviewCandidate(packet, receipts, decisions) {
 }
 
 function writeAtomically(outputDirectory, candidate) {
-  const outputPath = join(resolve(outputDirectory), 'review-candidate.json');
+  const resolvedOutputDirectory = assertPrivateOutputDirectory(outputDirectory);
+  const outputPath = join(resolvedOutputDirectory, 'review-candidate.json');
   const temporaryPath = `${outputPath}.${process.pid}.tmp`;
   mkdirSync(dirname(outputPath), { recursive: true });
+  assertPrivateOutputDirectory(outputDirectory);
   try {
     writeFileSync(temporaryPath, stableJson(candidate), { encoding: 'utf8', flag: 'wx' });
     renameSync(temporaryPath, outputPath);

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { prepareReviewCandidate, stableJson } from '../scripts/news-bridge/prepare-review-candidate.mjs';
@@ -69,6 +69,44 @@ describe('AOIFUTURE News review-only candidate bridge', () => {
         '--receipts', join(root, 'receipts.json'), '--decisions', join(root, 'decisions.json'), '--output-dir', join(root, 'output'),
       ], { cwd: new URL('..', import.meta.url), encoding: 'utf8', stdio: 'pipe' })).toThrow();
       expect(existsSync(join(root, 'output/review-candidate.json'))).toBe(false);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it.each([
+    ['tracked public News content', new URL('../src/content/news', import.meta.url).pathname],
+    ['tracked public News content through traversal', `${new URL('../src/content/news', import.meta.url).pathname}/../news`],
+    ['generated public site output', new URL('../dist/client/news', import.meta.url).pathname],
+    ['generated public site output through traversal', `${new URL('../dist/client/news', import.meta.url).pathname}/..`],
+  ])('refuses to write a review candidate into %s', (_name, outputDirectory) => {
+    const root = mkdtempSync(join(tmpdir(), 'news-bridge-'));
+    try {
+      writeInputs(root);
+      expect(() => execFileSync('node', [
+        'scripts/news-bridge/prepare-review-candidate.mjs', '--packet', join(root, 'packet.json'),
+        '--receipts', join(root, 'receipts.json'), '--decisions', join(root, 'decisions.json'), '--output-dir', outputDirectory,
+      ], { cwd: new URL('..', import.meta.url), encoding: 'utf8', stdio: 'pipe' })).toThrow();
+      expect(existsSync(join(outputDirectory, 'review-candidate.json'))).toBe(false);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it.each([
+    ['tracked public News content', new URL('../src/content/news', import.meta.url).pathname],
+    ['generated public site output', new URL('../dist/client', import.meta.url).pathname],
+  ])('refuses a symlink alias for %s before creating a review candidate', (_name, publicRoot) => {
+    const root = mkdtempSync(join(tmpdir(), 'news-bridge-'));
+    const outputDirectory = join(root, 'public-alias');
+    try {
+      writeInputs(root);
+      symlinkSync(publicRoot, outputDirectory, 'dir');
+      expect(() => execFileSync('node', [
+        'scripts/news-bridge/prepare-review-candidate.mjs', '--packet', join(root, 'packet.json'),
+        '--receipts', join(root, 'receipts.json'), '--decisions', join(root, 'decisions.json'), '--output-dir', outputDirectory,
+      ], { cwd: new URL('..', import.meta.url), encoding: 'utf8', stdio: 'pipe' })).toThrow();
+      expect(existsSync(join(publicRoot, 'review-candidate.json'))).toBe(false);
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
