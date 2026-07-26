@@ -65,6 +65,11 @@ describe('AOIFUTURE News private source-read and editorial gates', () => {
     expectInvalid(gates({ receipts: [receipt({ normalized_source_url: 'https://example.com/other' })] }), 'source_url_mismatch');
   });
 
+  it('rejects credential-bearing receipt URLs before approval counting', () => {
+    expectInvalid(gates({ receipts: [receipt({ normalized_source_url: 'https://reader:secret@example.com/news/agents' })] }), 'schema');
+    expectInvalid(gates({ receipts: [receipt({ normalized_source_url: 'https://reader:secret@example.com/news/agents' })] }), 'missing_approved_receipt');
+  });
+
   it('rejects missing or rejected editorial inclusion decisions', () => {
     expectInvalid(gates({ decisions: [] }), 'missing_approved_editorial_decision');
     expectInvalid(gates({ decisions: [decision({ inclusion_decision: 'rejected' })] }), 'missing_approved_editorial_decision');

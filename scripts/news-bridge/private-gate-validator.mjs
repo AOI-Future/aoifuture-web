@@ -114,17 +114,25 @@ export function validatePrivateGates(gates) {
     const path = `/receipts/${index}`;
     validateSchemaNode(receipt, receiptSchema, receiptSchema, path, errors);
     if (!isObject(receipt)) return;
+    let normalizedSourceUrl;
+    try {
+      normalizedSourceUrl = normalizePrivateSourceUrl(receipt.normalized_source_url);
+    } catch {
+      errors.push(error('schema', `${path}/normalized_source_url`, 'must be a credential-free HTTPS URL'));
+    }
     const identity = `${receipt.candidate_id}\u0000${receipt.normalized_source_url}`;
     if ([...receiptsByCandidate.values()].flat().some((entry) => entry.identity === identity)) errors.push(error('duplicate_receipt_identity', path, 'candidate/source receipt identity is duplicated'));
     const entries = receiptsByCandidate.get(receipt.candidate_id) ?? [];
-    entries.push({ receipt, path, identity });
+    entries.push({ receipt, path, identity, normalizedSourceUrl });
     receiptsByCandidate.set(receipt.candidate_id, entries);
     const candidateEntry = candidateById.get(receipt.candidate_id);
     if (!candidateEntry) errors.push(error('orphan_receipt', path, 'receipt references an unknown candidate'));
-    else {
+    else if (normalizedSourceUrl !== undefined) {
       try {
-        if (normalizePrivateSourceUrl(receipt.normalized_source_url) !== normalizePrivateSourceUrl(candidateEntry.candidate.source_url)) errors.push(error('source_url_mismatch', `${path}/normalized_source_url`, 'receipt URL must canonically equal the candidate source URL'));
+        if (normalizedSourceUrl !== normalizePrivateSourceUrl(candidateEntry.candidate.source_url)) errors.push(error('source_url_mismatch', `${path}/normalized_source_url`, 'receipt URL must canonically equal the candidate source URL'));
       } catch { /* Schema validation reports malformed URLs. */ }
+    }
+    if (candidateEntry) {
       if (receipt.source_kind !== candidateEntry.candidate.source_kind) errors.push(error('source_kind_mismatch', `${path}/source_kind`, 'receipt source kind must equal the candidate source kind'));
     }
   });
@@ -140,7 +148,7 @@ export function validatePrivateGates(gates) {
   });
 
   for (const [candidateId, { path }] of candidateById) {
-    const approvedReceipts = (receiptsByCandidate.get(candidateId) ?? []).filter(({ receipt }) => receipt.decision === 'approved');
+    const approvedReceipts = (receiptsByCandidate.get(candidateId) ?? []).filter(({ receipt, normalizedSourceUrl }) => receipt.decision === 'approved' && normalizedSourceUrl !== undefined);
     if (approvedReceipts.length !== 1) errors.push(error('missing_approved_receipt', path, 'candidate requires exactly one approved source-read receipt'));
     const approvedDecision = decisionsByCandidate.get(candidateId)?.decision;
     if (approvedDecision?.inclusion_decision !== 'approved') errors.push(error('missing_approved_editorial_decision', path, 'candidate requires exactly one approved editorial decision'));
