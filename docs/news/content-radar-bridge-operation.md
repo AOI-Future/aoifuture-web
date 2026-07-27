@@ -13,6 +13,54 @@ Private packet, source-read receipt, and editorial-decision inputs remain outsid
 
 ## Review candidate inspection
 
+### Content Radar packet adaptation
+
+An immutable Content Radar v1 private candidate packet can become the private
+input to the existing review-candidate gate only through the local adapter. It
+accepts the exact packet path, a separately supplied local framing config
+validated by `schemas/aoi-news-content-radar-adapter-config-v1.schema.json`,
+and one non-public output path:
+
+```sh
+node scripts/news-bridge/adapt-content-radar-packet.mjs \
+  --packet /approved/private/content-radar-packet.json \
+  --config /approved/private/aoi-news-edition-framing.json \
+  --output "$REVIEW_DIR/private-candidate-packet.json"
+```
+
+The config supplies only the edition framing and one explicit candidate
+language. The adapter verifies the upstream schema/version and canonical
+SHA-256 integrity, canonicalizes credential-free HTTPS source URLs, and applies
+the upstream v1 exact host-kind mapping to the URL host: `arxiv.org` is
+`paper`, `github.com` is `repository`, and every other host (including
+subdomains and lookalikes) is `unknown`. It rejects a declared host-kind
+mismatch and rejects `unknown` downstream, as well as duplicate canonical
+sources; it assigns opaque IDs from the canonical source URL plus upstream
+integrity hash and writes the allowlisted AOIFUTURE private packet atomically.
+It emits no source title, headline, summary, provenance locator, raw body,
+score, prompt, reviewer, decision, or upstream integrity data. `context_ids`
+is always empty.
+
+This has intentional narrower review-input rules, not a claim of full upstream
+schema equivalence or producer authentication: the adapter requires one through
+1000 items (where upstream v1 may validate an empty packet), accepts HTTPS only
+(where upstream accepts HTTP(S)), and rejects upstream-valid `unknown` kinds
+because review input needs an actionable mapped source. It also does not
+duplicate upstream's stored-URL canonical-equality or text-normalization and
+private-text checks, because those fields do not cross the AOIFUTURE boundary.
+Exact URL-host-to-kind semantics are mirrored specifically; other upstream
+validation differences are deliberate and documented here. The SHA-256 field
+proves canonical content consistency only; a locally recomputed hash does not
+prove that Content Radar produced the packet.
+It refuses every output lexically or physically/canonically beneath this
+repository, including `public`, `src/pages`, `src/content/news`, and `dist`, so
+the output must be in a separate local private workspace. It does not create an
+output file when validation fails. It neither creates receipts/decisions nor
+promotes, publishes, deploys, fetches, or schedules anything.
+Like the later review-candidate writer, its path-based guard requires trusted,
+locally controlled output ancestors and retains the documented residual
+ancestor-symlink TOCTOU risk; that limitation is not publication authorization.
+
 The bridge accepts explicit local paths and writes one deterministic, inspectable file only to the specified local output directory:
 
 ```sh

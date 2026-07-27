@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aoifuture.com/schemas/aoi-news-content-radar-adapter-config-v1.schema.json",
+  "title": "AOIFUTURE News Content Radar Adapter Config v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "candidate_language", "edition"],
+  "properties": {
+    "schema_version": { "const": "aoi.news.content-radar-adapter-config.v1" },
+    "candidate_language": { "enum": ["ja", "en", "other"] },
+    "edition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edition_id", "edition_date", "coverage_kind", "coverage_observed_at", "generated_at", "published_at", "title", "topics"],
+      "properties": {
+        "edition_id": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}(?:-(?:[01][0-9]|2[0-3])[0-5][0-9])?$" },
+        "edition_date": { "type": "string", "format": "date" },
+        "coverage_kind": { "const": "selection-snapshot" },
+        "coverage_observed_at": { "type": "string", "format": "date-time" },
+        "generated_at": { "type": "string", "format": "date-time" },
+        "published_at": { "type": "string", "format": "date-time" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "dek": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "edition_note": { "type": "string", "minLength": 1, "maxLength": 1000 },
+        "topics": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "label_ja"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{2,79}$" },
+              "label_ja": { "type": "string", "minLength": 1, "maxLength": 100 },
+              "label_en": { "type": "string", "minLength": 1, "maxLength": 100 },
+              "description": { "type": "string", "minLength": 1, "maxLength": 500 }
+            }
+          }
+        }
+      }
+    }
+  }
+}
