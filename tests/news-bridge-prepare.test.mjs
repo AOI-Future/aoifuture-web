@@ -36,6 +36,23 @@ describe('AOIFUTURE News review-only candidate bridge', () => {
     expect(validatePublicCatalog([result.candidate.edition], [])).toEqual({ ok: true, errors: [] });
   });
 
+  it('accepts a real-shape Signal without source publication time and keeps it review-only', () => {
+    const candidatePacket = packet();
+    delete candidatePacket.candidates[0].published_at;
+
+    const result = prepareReviewCandidate(candidatePacket, receipts(), decisions());
+
+    expect(result.ok, JSON.stringify(result.errors, null, 2)).toBe(true);
+    expect(result.candidate.publication_status).toBe('review-only');
+    expect(result.candidate.edition.publication_status).toBe('review-only');
+    expect(result.candidate.edition.items[0]).not.toHaveProperty('published_at');
+    expect(validatePublicCatalog([result.candidate.edition], [])).toEqual({ ok: true, errors: [] });
+  });
+
+  it('rejects an invalid optional Signal source publication time', () => {
+    expectInvalid((candidatePacket) => { candidatePacket.candidates[0].published_at = '2026-02-30T08:00:00+09:00'; }, 'schema');
+  });
+
   it('is byte-stable through the explicit-path CLI and never emits gate-only fields', () => {
     const root = mkdtempSync(join(tmpdir(), 'news-bridge-'));
     try {

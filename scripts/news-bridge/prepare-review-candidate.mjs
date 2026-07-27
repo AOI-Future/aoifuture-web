@@ -8,9 +8,14 @@ import { validatePublicCatalog, validEditionId } from '../news-contract/validato
 const packetKeys = new Set(['schema_version', 'edition', 'candidates']);
 const editionKeys = new Set(['edition_id', 'edition_date', 'coverage_kind', 'coverage_observed_at', 'generated_at', 'published_at', 'title', 'dek', 'edition_note', 'topics']);
 const packetCandidateKeys = new Set(['candidate_id', 'source_url', 'source_kind', 'language', 'published_at', 'observed_at', 'context_ids']);
+const requiredPacketCandidateKeys = new Set(['candidate_id', 'source_url', 'source_kind', 'language', 'observed_at', 'context_ids']);
 const topicKeys = new Set(['id', 'label_ja', 'label_en', 'description']);
 const error = (code, path, message) => ({ code, path, message });
 const isObject = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
+const isRfc3339DateTime = (value) => typeof value === 'string'
+  && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(value)
+  && !Number.isNaN(Date.parse(value))
+  && new Date(`${value.slice(0, 10)}T00:00:00Z`).toISOString().slice(0, 10) === value.slice(0, 10);
 const stableJson = (value) => `${JSON.stringify(sortValue(value), null, 2)}\n`;
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const publicOutputRoots = [
@@ -100,7 +105,10 @@ function validatePacket(packet) {
   else packet.candidates.forEach((candidate, index) => {
     if (!isObject(candidate)) return errors.push(error('schema', `/candidates/${index}`, 'must be an object'));
     for (const key of Object.keys(candidate)) if (!packetCandidateKeys.has(key)) errors.push(error('schema', `/candidates/${index}/${key}`, 'unknown field'));
-    for (const key of packetCandidateKeys) if (!Object.hasOwn(candidate, key)) errors.push(error('schema', `/candidates/${index}/${key}`, 'is required'));
+    for (const key of requiredPacketCandidateKeys) if (!Object.hasOwn(candidate, key)) errors.push(error('schema', `/candidates/${index}/${key}`, 'is required'));
+    if (Object.hasOwn(candidate, 'published_at') && !isRfc3339DateTime(candidate.published_at)) {
+      errors.push(error('schema', `/candidates/${index}/published_at`, 'must be an RFC 3339 date-time'));
+    }
   });
   return errors;
 }
