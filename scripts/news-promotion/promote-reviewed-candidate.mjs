@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { createHash, randomUUID } from 'node:crypto';
-import { existsSync, linkSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, unlinkSync, writeFileSync } from 'node:fs';
+import { existsSync, linkSync, mkdirSync, readFileSync, readdirSync, rmSync, unlinkSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { validateDocument, validatePublicCatalog } from '../news-contract/validator.mjs';
 
@@ -196,6 +196,22 @@ function writeTemporary(path, content) {
   return temporary;
 }
 
+function acquirePromotionLock(catalogDirectory) {
+  mkdirSync(catalogDirectory, { recursive: true });
+  const lockPath = join(catalogDirectory, '.news-promotion.lock');
+  // Every promotion writer must acquire this atomic directory lock before
+  // reading or changing the tracked Edition/Event outputs. This contract
+  // serializes promotion and makes rollback ownership unambiguous; it does
+  // not claim safety against writers that deliberately bypass the protocol.
+  // It assumes the catalog filesystem provides atomic mkdir() across writers.
+  mkdirSync(lockPath);
+  return lockPath;
+}
+
+function releasePromotionLock(lockPath) {
+  rmSync(lockPath, { recursive: true });
+}
+
 function commitPromotionArtifacts(outputs, commit = linkSync) {
   const staged = [];
   const committed = [];
@@ -211,13 +227,12 @@ function commitPromotionArtifacts(outputs, commit = linkSync) {
     const rollbackErrors = [];
     for (const { path, temporary } of committed.reverse()) {
       try {
-        const output = statSync(path);
-        const stagedOutput = statSync(temporary);
-        // Only remove the hard link created by this invocation. A concurrent
-        // writer may have replaced the pathname after commit succeeded.
-        if (output.dev === stagedOutput.dev && output.ino === stagedOutput.ino) unlinkSync(path);
+        // The exclusive catalog lock prevents a compliant promotion writer
+        // from replacing this pathname before rollback. No pathname identity
+        // check can make arbitrary external replacement safe to unlink.
+        unlinkSync(path);
       } catch (rollbackCause) {
-        rollbackErrors.push(rollbackCause.message);
+        if (rollbackCause.code !== 'ENOENT') rollbackErrors.push(rollbackCause.message);
       }
     }
     const message = rollbackErrors.length
@@ -235,22 +250,52 @@ function commitPromotionArtifacts(outputs, commit = linkSync) {
   }
 }
 
-function promoteReviewedCandidate(candidate, approval, catalogDirectory, { commit = linkSync } = {}) {
+function promoteReviewedCandidate(candidate, approval, catalogDirectory, {
+  commit = linkSync,
+  acquireLock = acquirePromotionLock,
+  releaseLock = releasePromotionLock,
+} = {}) {
   const resolvedDirectory = resolve(catalogDirectory);
-  const { errors, artifacts, idempotent } = validatePromotion(candidate, approval, resolvedDirectory);
-  if (errors.length) return { ...sortedResult(errors), written: [] };
-  const editionPath = join(resolvedDirectory, 'editions', `${artifacts.edition.edition_id}.json`);
-  const eventPath = join(resolvedDirectory, 'events', `${artifacts.edition.edition_id}.json`);
-  if (idempotent) return { ok: true, errors: [], edition: artifacts.edition, event: artifacts.event, written: [] };
-  if (existsSync(editionPath) || existsSync(eventPath)) {
-    return { ok: false, errors: [error('tracked_output_collision', '', 'refusing to overwrite an existing tracked public output')], written: [] };
+  let lockPath;
+  try {
+    lockPath = acquireLock(resolvedDirectory);
+  } catch (cause) {
+    return {
+      ok: false,
+      errors: [error(cause.code === 'EEXIST' ? 'promotion_locked' : 'promotion_lock', join(resolvedDirectory, '.news-promotion.lock'), `cannot acquire exclusive promotion lock: ${cause.message}`)],
+      written: [],
+    };
   }
-  const committed = commitPromotionArtifacts([
-    { path: editionPath, content: stableJson(artifacts.edition) },
-    { path: eventPath, content: stableJson([artifacts.event]) },
-  ], commit);
-  if (!committed.ok) return committed;
-  return { ok: true, errors: [], edition: artifacts.edition, event: artifacts.event, written: committed.written };
+
+  let result;
+  try {
+    const { errors, artifacts, idempotent } = validatePromotion(candidate, approval, resolvedDirectory);
+    if (errors.length) result = { ...sortedResult(errors), written: [] };
+    else {
+      const editionPath = join(resolvedDirectory, 'editions', `${artifacts.edition.edition_id}.json`);
+      const eventPath = join(resolvedDirectory, 'events', `${artifacts.edition.edition_id}.json`);
+      if (idempotent) result = { ok: true, errors: [], edition: artifacts.edition, event: artifacts.event, written: [] };
+      else if (existsSync(editionPath) || existsSync(eventPath)) {
+        result = { ok: false, errors: [error('tracked_output_collision', '', 'refusing to overwrite an existing tracked public output')], written: [] };
+      } else {
+        const committed = commitPromotionArtifacts([
+          { path: editionPath, content: stableJson(artifacts.edition) },
+          { path: eventPath, content: stableJson([artifacts.event]) },
+        ], commit);
+        result = committed.ok
+          ? { ok: true, errors: [], edition: artifacts.edition, event: artifacts.event, written: committed.written }
+          : committed;
+      }
+    }
+  } finally {
+    try {
+      releaseLock(lockPath);
+    } catch (cause) {
+      const cleanupError = error('promotion_lock_cleanup', lockPath, `cannot release exclusive promotion lock: ${cause.message}`);
+      result = { ...result, ok: false, errors: [...(result?.errors ?? []), cleanupError] };
+    }
+  }
+  return result;
 }
 
 export { candidateHash, promoteReviewedCandidate, stableJson };

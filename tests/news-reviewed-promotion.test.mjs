@@ -131,7 +131,7 @@ describe('AOIFUTURE News reviewed candidate promotion', () => {
     }
   });
 
-  it('preserves a concurrent replacement when rolling back a failed Event commit', () => {
+  it('rejects a competing promotion while the exclusive catalog lock is held, then rolls back only its own Edition', () => {
     const candidate = reviewCandidate();
     const directory = mkdtempSync(join(tmpdir(), 'news-reviewed-promotion-'));
     try {
@@ -142,8 +142,9 @@ describe('AOIFUTURE News reviewed candidate promotion', () => {
         commit: (temporary, output) => {
           commits += 1;
           if (commits === 2) {
-            unlinkSync(editionPath);
-            writeFileSync(editionPath, 'concurrent replacement');
+            const competing = promoteReviewedCandidate(candidate, approvalFor(candidate), outputDirectory);
+            expect(competing).toMatchObject({ ok: false, written: [] });
+            expect(competing.errors.map((entry) => entry.code)).toContain('promotion_locked');
             throw new Error('injected Event commit failure');
           }
           linkSync(temporary, output);
@@ -152,8 +153,51 @@ describe('AOIFUTURE News reviewed candidate promotion', () => {
       expect(result.ok).toBe(false);
       expect(result.errors.map((entry) => entry.code)).toContain('promotion_commit');
       expect(commits).toBe(2);
-      expect(readFileSync(editionPath, 'utf8')).toBe('concurrent replacement');
+      expect(existsSync(editionPath)).toBe(false);
       expect(existsSync(eventPath)).toBe(false);
+      const retry = promoteReviewedCandidate(candidate, approvalFor(candidate), outputDirectory);
+      expect(retry.ok, JSON.stringify(retry.errors, null, 2)).toBe(true);
+    } finally {
+      rmSync(directory, { recursive: true, force: true });
+    }
+  });
+
+  it('treats a missing rollback output as already cleaned up after a failed Event commit', () => {
+    const candidate = reviewCandidate();
+    const directory = mkdtempSync(join(tmpdir(), 'news-reviewed-promotion-'));
+    try {
+      const outputDirectory = catalog(directory);
+      const [editionPath] = outputPaths(outputDirectory, candidate.edition.edition_id);
+      let commits = 0;
+      const result = promoteReviewedCandidate(candidate, approvalFor(candidate), outputDirectory, {
+        commit: (temporary, output) => {
+          commits += 1;
+          if (commits === 2) {
+            unlinkSync(editionPath);
+            throw new Error('injected Event commit failure');
+          }
+          linkSync(temporary, output);
+        },
+      });
+      expect(result.ok).toBe(false);
+      expect(result.errors.map((entry) => entry.code)).toEqual(['promotion_commit']);
+      expectNoOutput(outputDirectory, candidate.edition.edition_id);
+    } finally {
+      rmSync(directory, { recursive: true, force: true });
+    }
+  });
+
+  it('reports lock cleanup failure without hiding committed output', () => {
+    const candidate = reviewCandidate();
+    const directory = mkdtempSync(join(tmpdir(), 'news-reviewed-promotion-'));
+    try {
+      const outputDirectory = catalog(directory);
+      const result = promoteReviewedCandidate(candidate, approvalFor(candidate), outputDirectory, {
+        releaseLock: () => { throw new Error('injected lock cleanup failure'); },
+      });
+      expect(result.ok).toBe(false);
+      expect(result.errors.map((entry) => entry.code)).toContain('promotion_lock_cleanup');
+      expect(outputPaths(outputDirectory).every((path) => existsSync(path))).toBe(true);
     } finally {
       rmSync(directory, { recursive: true, force: true });
     }
