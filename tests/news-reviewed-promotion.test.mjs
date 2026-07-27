@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, linkSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { candidateHash, promoteReviewedCandidate, stableJson } from '../scripts/news-promotion/promote-reviewed-candidate.mjs';
@@ -100,6 +100,53 @@ describe('AOIFUTURE News reviewed candidate promotion', () => {
       expect(result.ok).toBe(false);
       expect(result.errors.map((entry) => entry.code)).toContain('duplicate_edition_id');
       expect(outputPaths(outputDirectory).map((path) => readFileSync(path, 'utf8'))).toEqual(before);
+    } finally {
+      rmSync(directory, { recursive: true, force: true });
+    }
+  });
+
+  it('rolls back the Edition when committing the Event fails, without changing pre-existing catalog files', () => {
+    const candidate = reviewCandidate();
+    const directory = mkdtempSync(join(tmpdir(), 'news-reviewed-promotion-'));
+    try {
+      const outputDirectory = catalog(directory);
+      const retainedPath = join(outputDirectory, 'contexts', '.gitkeep');
+      writeFileSync(retainedPath, 'retained before promotion');
+      const retainedBytes = readFileSync(retainedPath, 'utf8');
+      let commits = 0;
+      const result = promoteReviewedCandidate(candidate, approvalFor(candidate), outputDirectory, {
+        commit: (temporary, output) => {
+          commits += 1;
+          if (commits === 2) throw new Error('injected Event commit failure');
+          writeFileSync(output, readFileSync(temporary));
+        },
+      });
+      expect(result.ok).toBe(false);
+      expect(result.errors.map((entry) => entry.code)).toContain('promotion_commit');
+      expect(commits).toBe(2);
+      expectNoOutput(outputDirectory, candidate.edition.edition_id);
+      expect(readFileSync(retainedPath, 'utf8')).toBe(retainedBytes);
+    } finally {
+      rmSync(directory, { recursive: true, force: true });
+    }
+  });
+
+  it('does not clobber an output created after validation but before commit', () => {
+    const candidate = reviewCandidate();
+    const directory = mkdtempSync(join(tmpdir(), 'news-reviewed-promotion-'));
+    try {
+      const outputDirectory = catalog(directory);
+      const [editionPath, eventPath] = outputPaths(outputDirectory, candidate.edition.edition_id);
+      const result = promoteReviewedCandidate(candidate, approvalFor(candidate), outputDirectory, {
+        commit: (temporary, output) => {
+          writeFileSync(output, 'concurrent pre-existing Edition');
+          linkSync(temporary, output);
+        },
+      });
+      expect(result.ok).toBe(false);
+      expect(result.errors.map((entry) => entry.code)).toContain('tracked_output_collision');
+      expect(readFileSync(editionPath, 'utf8')).toBe('concurrent pre-existing Edition');
+      expect(existsSync(eventPath)).toBe(false);
     } finally {
       rmSync(directory, { recursive: true, force: true });
     }

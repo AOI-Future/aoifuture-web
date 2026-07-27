@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from 'node:fs';
+import { createHash, randomUUID } from 'node:crypto';
+import { existsSync, linkSync, mkdirSync, readFileSync, readdirSync, rmSync, unlinkSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { validateDocument, validatePublicCatalog } from '../news-contract/validator.mjs';
 
@@ -189,18 +189,49 @@ function validatePromotion(candidate, approval, catalogDirectory) {
   return { errors, artifacts };
 }
 
-function writeAtomically(path, content) {
+function writeTemporary(path, content) {
   mkdirSync(dirname(path), { recursive: true });
-  const temporary = `${path}.${process.pid}.tmp`;
+  const temporary = `${path}.${process.pid}.${randomUUID()}.tmp`;
+  writeFileSync(temporary, content, { encoding: 'utf8', flag: 'wx' });
+  return temporary;
+}
+
+function commitPromotionArtifacts(outputs, commit = linkSync) {
+  const staged = [];
+  const committed = [];
   try {
-    writeFileSync(temporary, content, { encoding: 'utf8', flag: 'wx' });
-    renameSync(temporary, path);
+    for (const { path, content } of outputs) staged.push({ path, temporary: writeTemporary(path, content) });
+    for (const { path, temporary } of staged) {
+      // link() creates the destination only when absent, avoiding rename() overwrite races.
+      commit(temporary, path);
+      committed.push(path);
+    }
+    return { ok: true, written: committed };
+  } catch (cause) {
+    const rollbackErrors = [];
+    for (const path of committed.reverse()) {
+      try {
+        unlinkSync(path);
+      } catch (rollbackCause) {
+        rollbackErrors.push(rollbackCause.message);
+      }
+    }
+    const message = rollbackErrors.length
+      ? `failed to commit promotion output: ${cause.message}; rollback failed: ${rollbackErrors.join('; ')}`
+      : `failed to commit promotion output: ${cause.message}`;
+    return {
+      ok: false,
+      errors: [error(cause.code === 'EEXIST' ? 'tracked_output_collision' : 'promotion_commit', '', message)],
+      written: [],
+    };
   } finally {
-    rmSync(temporary, { force: true });
+    for (const { temporary } of staged) {
+      rmSync(temporary, { force: true });
+    }
   }
 }
 
-function promoteReviewedCandidate(candidate, approval, catalogDirectory) {
+function promoteReviewedCandidate(candidate, approval, catalogDirectory, { commit = linkSync } = {}) {
   const resolvedDirectory = resolve(catalogDirectory);
   const { errors, artifacts, idempotent } = validatePromotion(candidate, approval, resolvedDirectory);
   if (errors.length) return { ...sortedResult(errors), written: [] };
@@ -210,9 +241,12 @@ function promoteReviewedCandidate(candidate, approval, catalogDirectory) {
   if (existsSync(editionPath) || existsSync(eventPath)) {
     return { ok: false, errors: [error('tracked_output_collision', '', 'refusing to overwrite an existing tracked public output')], written: [] };
   }
-  writeAtomically(editionPath, stableJson(artifacts.edition));
-  writeAtomically(eventPath, stableJson([artifacts.event]));
-  return { ok: true, errors: [], edition: artifacts.edition, event: artifacts.event, written: [editionPath, eventPath] };
+  const committed = commitPromotionArtifacts([
+    { path: editionPath, content: stableJson(artifacts.edition) },
+    { path: eventPath, content: stableJson([artifacts.event]) },
+  ], commit);
+  if (!committed.ok) return committed;
+  return { ok: true, errors: [], edition: artifacts.edition, event: artifacts.event, written: committed.written };
 }
 
 export { candidateHash, promoteReviewedCandidate, stableJson };
