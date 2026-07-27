@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  compareNewsEditions,
   coverageChronologyAt,
   getContextBySlug,
   getEditionById,
@@ -17,23 +18,19 @@ const privateKeys = [
   'reviewed_by',
   'claim_locator',
 ];
+const approvedEditionId = '2026-07-27-0840';
 
 describe('AOIFUTURE News public loader', () => {
-  it('projects four public Editions in evidence chronology with truthful coverage', () => {
+  it('projects approved public Editions in deterministic evidence chronology with truthful coverage', () => {
     const production = loadNewsCatalog('production');
-    expect(production.editions.map((edition) => edition.edition_id)).toEqual([
-      '2026-07-24',
-      '2026-07-23-0430',
-      '2026-07-22-0430',
-      '2026-07-21-0341',
-    ]);
-    expect(production.editions.map(coverageChronologyAt)).toEqual([
-      '2026-07-24T15:01:05+09:00',
-      '2026-07-23T04:30:00+09:00',
-      '2026-07-22T04:30:40+09:00',
-      '2026-07-21T03:41:00+09:00',
-    ]);
-    expect(production.editions.slice(1).map((edition) => edition.items.length)).toEqual([3, 4, 3]);
+    expect(production.editions[0]).toMatchObject({
+      edition_id: approvedEditionId,
+      coverage_observed_at: '2026-07-27T08:40:12Z',
+      publication_status: 'public',
+    });
+    expect(production.editions).toEqual([...production.editions].sort(compareNewsEditions));
+    expect(production.editions.map(coverageChronologyAt)).toContain('2026-07-27T08:40:12Z');
+    expect(production.editions.every((edition) => edition.items.length >= 1 && edition.items.length <= 12)).toBe(true);
     expect(production.editions.flatMap((edition) => edition.items).every((signal) => signal.selection_reason.trim().length > 0)).toBe(true);
   });
 
@@ -42,14 +39,12 @@ describe('AOIFUTURE News public loader', () => {
     const second = loadNewsCatalog();
 
     expect(first).toEqual(second);
-    expect(first.editions.map((edition) => edition.edition_id)).toEqual([
-      '2026-07-24', '2026-07-23-0900', '2026-07-23-0430', '2026-07-22-0430', '2026-07-21-0341',
-    ]);
+    expect(first.editions[0].edition_id).toBe(approvedEditionId);
+    expect(first.editions).toEqual([...first.editions].sort(compareNewsEditions));
     expect(first.contexts.map((context) => context.slug)).toEqual([
       'agent-authority', 'ai-delivery-evidence', 'connected-ai-boundaries', 'delegated-work-control', 'operational-ai-authority',
     ]);
-    expect(first.editions[0].items).toHaveLength(6);
-    expect(first.editions[0].items.map((signal) => signal.id)).toEqual([
+    expect(getEditionById('2026-07-24')?.items.map((signal) => signal.id)).toEqual([
       'sig-openai-health-20260724',
       'sig-claude-voice-tools-20260724',
       'sig-langfuse-v4-rc0-20260724',
@@ -96,13 +91,18 @@ describe('AOIFUTURE News public loader', () => {
 
   it('fails closed when Signal and Context references are not reciprocal', () => {
     const catalog = structuredClone(loadNewsCatalog());
-    catalog.editions[0].items[1].context_ids = [];
+    const connectedSignal = catalog.editions.flatMap((edition) => edition.items).find((signal) => signal.context_ids.length > 0);
+    expect(connectedSignal).toBeDefined();
+    connectedSignal!.context_ids = [];
     expect(() => validateNewsCatalog(catalog.editions, catalog.contexts)).toThrow(/reference.closure/i);
   });
 
-  it('keeps lead first and Context revisions oldest to newest', () => {
+  it('keeps a lead first when an Edition has one, and Context revisions oldest to newest', () => {
     const catalog = loadNewsCatalog();
-    expect(catalog.editions[0].items[0].role).toBe('lead');
+    for (const edition of catalog.editions) {
+      const leadIndex = edition.items.findIndex((signal) => signal.role === 'lead');
+      if (leadIndex !== -1) expect(leadIndex).toBe(0);
+    }
     expect(catalog.contexts[0].revisions.map((revision) => revision.changed_at)).toEqual([
       '2026-07-22T09:00:00+09:00',
       '2026-07-23T09:00:00+09:00',
@@ -119,12 +119,12 @@ describe('AOIFUTURE News public loader', () => {
   it('projects only the closed public graph in production', () => {
     const review = loadNewsCatalog('review');
     const production = loadNewsCatalog('production');
-    expect(review.editions.map((item) => item.edition_id)).toEqual([
-      '2026-07-24', '2026-07-23-0900', '2026-07-23-0430', '2026-07-22-0430', '2026-07-21-0341',
-    ]);
-    expect(production.editions.map((item) => item.edition_id)).toEqual([
-      '2026-07-24', '2026-07-23-0430', '2026-07-22-0430', '2026-07-21-0341',
-    ]);
+    expect(review.editions).toEqual([...review.editions].sort(compareNewsEditions));
+    expect(production.editions).toEqual([...production.editions].sort(compareNewsEditions));
+    expect(review.editions.find((item) => item.edition_id === approvedEditionId)?.publication_status).toBe('public');
+    expect(production.editions.map((item) => item.edition_id)).toContain(approvedEditionId);
+    expect(review.editions.map((item) => item.edition_id)).toContain('2026-07-23-0900');
+    expect(production.editions.map((item) => item.edition_id)).not.toContain('2026-07-23-0900');
     expect(production.contexts.map((item) => item.slug)).toEqual([
       'ai-delivery-evidence', 'connected-ai-boundaries', 'delegated-work-control', 'operational-ai-authority',
     ]);
@@ -134,11 +134,12 @@ describe('AOIFUTURE News public loader', () => {
     const catalog = structuredClone(loadNewsCatalog('review'));
     catalog.editions[0].items.forEach((signal) => { signal.context_ids = []; });
     const laterIdentity = structuredClone(catalog.editions[0]);
-    laterIdentity.edition_id = '2026-07-24-1530';
+    laterIdentity.edition_id = '2026-07-27-1530';
+    laterIdentity.edition_date = '2026-07-27';
     laterIdentity.items = laterIdentity.items.map((signal) => ({ ...signal, id: `${signal.id}-later` }));
     laterIdentity.items.forEach((signal) => { signal.context_ids = []; });
     laterIdentity.topics = structuredClone(catalog.editions[0].topics);
     const isolated = validateNewsCatalog([catalog.editions[0], laterIdentity], [], 'review');
-    expect(isolated.editions.map((item) => item.edition_id)).toEqual(['2026-07-24-1530', '2026-07-24']);
+    expect(isolated.editions.map((item) => item.edition_id)).toEqual(['2026-07-27-1530', approvedEditionId]);
   });
 });

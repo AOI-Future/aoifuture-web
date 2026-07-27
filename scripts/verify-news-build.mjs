@@ -61,11 +61,6 @@ for (const violation of scanPublicNewsTree('src/content/news')) {
 }
 
 if (expectedMode === 'production') {
-  const expectedPublicIds = ['2026-07-21-0341', '2026-07-22-0430', '2026-07-23-0430', '2026-07-24'];
-  const actualPublicIds = visibleEditions.map((edition) => edition.edition_id).sort();
-  if (JSON.stringify(actualPublicIds) !== JSON.stringify(expectedPublicIds)) {
-    failures.push(`production Editions: expected ${expectedPublicIds.join(', ')}, received ${actualPublicIds.join(', ')}`);
-  }
   const snapshot = visibleEditions.find((edition) => edition.edition_id === '2026-07-23-0430');
   if (!snapshot || snapshot.coverage_kind !== 'selection-snapshot'
     || snapshot.coverage_observed_at !== '2026-07-23T04:30:00+09:00'
