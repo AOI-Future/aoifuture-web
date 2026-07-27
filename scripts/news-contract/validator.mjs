@@ -3,12 +3,16 @@ import editionSchema from '../../schemas/aoi-news-edition-v1.schema.json' with {
 import contextSchema from '../../schemas/aoi-news-context-v1.schema.json' with { type: 'json' };
 import receiptSchema from '../../schemas/aoi-news-source-read-v1.schema.json' with { type: 'json' };
 import editionEventSchema from '../../schemas/aoi-news-edition-event-v1.schema.json' with { type: 'json' };
+import reviewCandidateSchema from '../../schemas/aoi-news-review-candidate-v1.schema.json' with { type: 'json' };
+import publicPromotionApprovalSchema from '../../schemas/aoi-news-public-promotion-approval-v1.schema.json' with { type: 'json' };
 
 const schemas = {
   edition: editionSchema,
   context: contextSchema,
   receipt: receiptSchema,
   editionEvent: editionEventSchema,
+  reviewCandidate: reviewCandidateSchema,
+  publicPromotionApproval: publicPromotionApprovalSchema,
 };
 
 const error = (code, path, message) => ({ code, path, message });
@@ -70,7 +74,7 @@ function validateSchemaNode(value, node, schema, path, errors) {
     if (node.minItems !== undefined && value.length < node.minItems) errors.push(error('schema', path, `must have at least ${node.minItems} items`));
     if (node.maxItems !== undefined && value.length > node.maxItems) errors.push(error('schema', path, `must have at most ${node.maxItems} items`));
     if (node.uniqueItems && !unique(value)) errors.push(error('schema', path, 'must contain unique items'));
-    value.forEach((child, index) => validateSchemaNode(child, node.items, schema, pathJoin(path, index), errors));
+    if (node.items) value.forEach((child, index) => validateSchemaNode(child, node.items, schema, pathJoin(path, index), errors));
   } else if (node.type === 'integer') {
     if (!Number.isInteger(value)) {
       errors.push(error('schema', path, 'must be an integer'));
