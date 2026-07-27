@@ -85,13 +85,18 @@ This performs an equivalent temporary-output inspection and proves that preparat
 
 ## Promotion boundary
 
-Promotion is a future, separately reviewed operation. It must:
+Promotion is a distinct local contract, not a deploy, publish, feed, or scheduling command. It accepts exactly one explicit `aoi.news.review-candidate.v1` file and one separate `aoi.news.public-promotion-approval.v1` file; raw Content Radar packets, receipts, and editorial decisions are not CLI inputs. The approval binds both `edition_id` and the deterministic SHA-256 hash of the canonical review-candidate JSON, and may target only `public`.
 
-- begin from the explicitly inspected review candidate, not from a raw collection packet;
-- apply the existing public catalog/revision validation and public-field allowlist;
-- use a distinct human approval for the public Edition/event change;
-- stage and review only the intended public content files; and
-- run review and production build verification before any deployment decision.
+```sh
+node scripts/news-promotion/promote-reviewed-candidate.mjs \
+  --candidate /approved/review/review-candidate.json \
+  --approval /approved/review/public-promotion-approval.json \
+  --catalog-dir src/content/news
+```
+
+Before it writes, the promotion contract verifies the review-only status at both candidate levels, rejects private fields and local paths, validates the complete existing public Edition/Context catalog and Edition-event history, and rejects Edition, route, Signal, event-ID, and event-revision conflicts. It allowlists only the reviewed public Edition fields and derives the revision-1 `edition-published` event. Invalid input writes no tracked output. An exact pre-existing Edition/event pair is a no-write idempotent result; any differing duplicate is rejected. The only possible content writes are `src/content/news/editions/<edition_id>.json` and `src/content/news/events/<edition_id>.json` when that directory is selected explicitly.
+
+Promotion must still stage and review only the intended public content files and run review and production build verification before any deployment decision.
 
 Neither a successful bridge test nor a successfully generated review candidate is publication approval.
 
