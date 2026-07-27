@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { createHash, randomUUID } from 'node:crypto';
-import { existsSync, linkSync, mkdirSync, readFileSync, readdirSync, rmSync, unlinkSync, writeFileSync } from 'node:fs';
+import { existsSync, linkSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, unlinkSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { validateDocument, validatePublicCatalog } from '../news-contract/validator.mjs';
 
@@ -204,14 +204,18 @@ function commitPromotionArtifacts(outputs, commit = linkSync) {
     for (const { path, temporary } of staged) {
       // link() creates the destination only when absent, avoiding rename() overwrite races.
       commit(temporary, path);
-      committed.push(path);
+      committed.push({ path, temporary });
     }
-    return { ok: true, written: committed };
+    return { ok: true, written: committed.map(({ path }) => path) };
   } catch (cause) {
     const rollbackErrors = [];
-    for (const path of committed.reverse()) {
+    for (const { path, temporary } of committed.reverse()) {
       try {
-        unlinkSync(path);
+        const output = statSync(path);
+        const stagedOutput = statSync(temporary);
+        // Only remove the hard link created by this invocation. A concurrent
+        // writer may have replaced the pathname after commit succeeded.
+        if (output.dev === stagedOutput.dev && output.ino === stagedOutput.ino) unlinkSync(path);
       } catch (rollbackCause) {
         rollbackErrors.push(rollbackCause.message);
       }

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { execFileSync } from 'node:child_process';
-import { existsSync, linkSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, linkSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, unlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { candidateHash, promoteReviewedCandidate, stableJson } from '../scripts/news-promotion/promote-reviewed-candidate.mjs';
@@ -118,7 +118,7 @@ describe('AOIFUTURE News reviewed candidate promotion', () => {
         commit: (temporary, output) => {
           commits += 1;
           if (commits === 2) throw new Error('injected Event commit failure');
-          writeFileSync(output, readFileSync(temporary));
+          linkSync(temporary, output);
         },
       });
       expect(result.ok).toBe(false);
@@ -126,6 +126,34 @@ describe('AOIFUTURE News reviewed candidate promotion', () => {
       expect(commits).toBe(2);
       expectNoOutput(outputDirectory, candidate.edition.edition_id);
       expect(readFileSync(retainedPath, 'utf8')).toBe(retainedBytes);
+    } finally {
+      rmSync(directory, { recursive: true, force: true });
+    }
+  });
+
+  it('preserves a concurrent replacement when rolling back a failed Event commit', () => {
+    const candidate = reviewCandidate();
+    const directory = mkdtempSync(join(tmpdir(), 'news-reviewed-promotion-'));
+    try {
+      const outputDirectory = catalog(directory);
+      const [editionPath, eventPath] = outputPaths(outputDirectory, candidate.edition.edition_id);
+      let commits = 0;
+      const result = promoteReviewedCandidate(candidate, approvalFor(candidate), outputDirectory, {
+        commit: (temporary, output) => {
+          commits += 1;
+          if (commits === 2) {
+            unlinkSync(editionPath);
+            writeFileSync(editionPath, 'concurrent replacement');
+            throw new Error('injected Event commit failure');
+          }
+          linkSync(temporary, output);
+        },
+      });
+      expect(result.ok).toBe(false);
+      expect(result.errors.map((entry) => entry.code)).toContain('promotion_commit');
+      expect(commits).toBe(2);
+      expect(readFileSync(editionPath, 'utf8')).toBe('concurrent replacement');
+      expect(existsSync(eventPath)).toBe(false);
     } finally {
       rmSync(directory, { recursive: true, force: true });
     }
