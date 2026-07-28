@@ -1,0 +1,79 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-07-27T08:40:12Z",
+  "dek": "Two primary-source research signals selected for a bounded review snapshot.",
+  "edition_date": "2026-07-27",
+  "edition_id": "2026-07-27-0840",
+  "edition_note": "This selection snapshot contains only source-validated research items; it is not a ranking or a comprehensive feed.",
+  "generated_at": "2026-07-27T08:40:12Z",
+  "items": [
+    {
+      "aoi_note": "エージェントの品質を『採用した結果』だけで測ると、最初の候補化で消えた重要項目は見えない。選外をサンプリングする設計は、監査可能性を後付けのログではなく選定工程の要件として扱う出発点になる。",
+      "caveat": "理論的な枠組みであり、特定の商用AIエージェントや実運用の候補生成で有効性が実証されたことを示すものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cr-f374c2ab45f12a65df331320600dab21ae34983bcf2bcd67724473ec09da1d57",
+      "language": "en",
+      "observed_at": "2026-07-26T20:30:46.015089+00:00",
+      "role": "major",
+      "selection_reason": "AIエージェントが大量候補から何を残し、何を落としたかを説明する際に、選ばれなかった側を監査するという具体的な視点を与えるため。",
+      "source_domain": "arxiv.org",
+      "source_fact": "この研究は、高再現率の候補生成で後段に渡らなかった項目を対象に、有限標本で見逃し量を評価・証明するための理論を扱う。候補集合の内側だけを確認しても見逃し量の非自明な保証はできず、除外された集合を監査する必要があると論じる。",
+      "source_kind": "paper",
+      "source_title": "Finite-Sample Coverage Audits for High-Recall Candidate Generation",
+      "source_url": "https://arxiv.org/abs/2607.21480",
+      "title": "候補生成の「見逃し」を、除外プールの監査で測る",
+      "topics": [
+        "agent-evaluation"
+      ],
+      "verification": {
+        "checked_at": "2026-07-27T08:40:12Z",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "『何回考えたか』は、エージェントの能力そのものではない。どの計算手順が訓練で選ばれ、どこで止めるべきかまで観測して初めて、反復を機能として扱える。",
+      "caveat": "結果は統制されたgroup word problemの実験に基づく。一般的なLLMや実務タスクへの直接の性能主張として読むべきではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cr-5bde78f760f48ec44143fefaf1b2ff0aed6e3a87f19eedef0a5d09ea327c651e",
+      "language": "en",
+      "observed_at": "2026-07-26T20:30:46.015089+00:00",
+      "role": "brief",
+      "selection_reason": "反復回数を増やすだけで推論能力が伸びるという見方を避け、学習条件と停止規則まで含めて反復を評価する必要を示すため。",
+      "source_domain": "arxiv.org",
+      "source_fact": "この研究は、同じblockを繰り返し適用するweight-tied looped transformerを、群のword problem上で調べ、学習時の計算予算、architectureの設計、訓練カリキュラムが収束挙動と外挿にどう関わるかを報告する。",
+      "source_kind": "paper",
+      "source_title": "When Does Recurrence Become an Algorithm? Convergence Selection in Weight-Tied Looped Transformers",
+      "source_url": "https://arxiv.org/abs/2607.20594",
+      "title": "反復はいつアルゴリズムになるのか：looped transformerの収束を読む",
+      "topics": [
+        "reasoning-systems"
+      ],
+      "verification": {
+        "checked_at": "2026-07-27T08:40:12Z",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-07-27T08:40:12Z",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — Research Signals",
+  "topics": [
+    {
+      "id": "agent-evaluation",
+      "label_en": "Agent evaluation and audit",
+      "label_ja": "AIエージェントの評価と監査"
+    },
+    {
+      "id": "reasoning-systems",
+      "label_en": "Reasoning systems",
+      "label_ja": "推論システム"
+    }
+  ]
+}
