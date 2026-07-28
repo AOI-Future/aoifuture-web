@@ -1,0 +1,18 @@
+[
+  {
+    "changed_signal_ids": [
+      "cr-5bde78f760f48ec44143fefaf1b2ff0aed6e3a87f19eedef0a5d09ea327c651e",
+      "cr-f374c2ab45f12a65df331320600dab21ae34983bcf2bcd67724473ec09da1d57"
+    ],
+    "edition_date": "2026-07-27",
+    "edition_id": "2026-07-27-0840",
+    "edition_url": "https://aoifuture.com/news/2026-07-27-0840/",
+    "event_id": "aoi-news-2026-07-27-0840-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-07-27T08:40:12Z",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "Two primary-source research signals selected for a bounded review snapshot.",
+    "title": "AOIFUTURE News — Research Signals"
+  }
+]
