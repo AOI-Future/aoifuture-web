@@ -1,0 +1,76 @@
+---
+import ReliefLayout from '../../layouts/ReliefLayout.astro';
+import { kumamotoReliefItems } from '../../data/kumamoto-relief';
+import '../../styles/kumamoto-relief.css';
+
+const title = '令和8年熊本地震 支援ガイド | AOI Future';
+const description = '令和8年熊本地震について、公式情報を確認してから支援につなげるための安全なガイドです。';
+const canonical = 'https://aoifuture.com/support/kumamoto-2026/';
+const formatSourceDate = (sourceUpdatedAt: string) => sourceUpdatedAt === 'not-published'
+  ? '公式更新日：ページ上で確認できず'
+  : `公式更新日：${sourceUpdatedAt}`;
+---
+<ReliefLayout {title} {description} {canonical}>
+  <div class="relief-shell">
+    <header class="relief-header">
+      <div class="relief-header-inner">
+        <p class="relief-kicker">令和8年熊本地震 / 公式情報の確認入口</p>
+        <h1>令和8年熊本地震 支援ガイド</h1>
+        <p class="relief-lead">支援は、どこに・何に届くのか。支援先や活動の対象を確認し、必要なときだけ公式ページへ進めます。</p>
+        <p class="relief-not-official">このページは公的機関のサイトではありません。公式情報を確認できる支援ガイドとして、一次情報への入口を整理しています。</p>
+      </div>
+    </header>
+
+    <main class="relief-main">
+      <section class="relief-section" aria-labelledby="support-heading">
+        <h2 id="support-heading">支援は、どこに・何に届くのか</h2>
+        <p class="relief-section-intro">カードの「支援を受ける人・つながる先」と「使われ方」を先に確認してください。受付状況は変わるため、公式ページの内容を優先します。</p>
+        <div class="relief-cards">
+          {kumamotoReliefItems.map((item) => (
+            <article class="relief-card" data-relief-card>
+              <h3>{item.name}</h3>
+              <dl>
+                <dt>支援を受ける人・つながる先</dt>
+                <dd>{item.recipient}</dd>
+                <dt>使われ方</dt>
+                <dd>{item.purpose}</dd>
+              </dl>
+              <p class="relief-card-note">{item.notes}</p>
+              <p class="relief-card-meta">{formatSourceDate(item.sourceUpdatedAt)}<br />確認日：{item.checkedAtJst}（日本時間）</p>
+              <a class="relief-action" href={item.status === 'open' ? item.actionUrl : item.officialUrl} target="_blank" rel="noopener noreferrer">{item.actionLabel}</a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="relief-section" aria-labelledby="policy-heading">
+        <h2 id="policy-heading">掲載方針</h2>
+        <div class="relief-policy">
+          <ul>
+            <li><strong>公式一次情報を優先</strong>し、支援先の意味と受付状況を公式ページで照合します。</li>
+            <li>Xは掲載根拠でなく候補検知のために扱い、Xの投稿だけで受付中とは判断しません。</li>
+            <li>各カードの確認日（<code>checkedAtJst</code>）と公式更新日を表示します。情報の変化に注意してください。</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="relief-section" aria-labelledby="safety-heading">
+        <h2 id="safety-heading">安全に確認するために</h2>
+        <div class="relief-safety">
+          <ul>
+            <li>県社協の情報カードは確認入口です。物資の無断送付や独自の現地訪問を前提にせず、募集条件と変更を公式情報で確認してください。</li>
+            <li>SNS投稿のみを根拠に送金せず、公式ページで送付先・名義を確認してください。</li>
+            <li>このページ自体には、口座番号・決済フォーム・寄付受付を置いていません。</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="relief-footer">
+      <div class="relief-footer-inner">
+        <p><strong>情報の利用について</strong></p>
+        <p>最新の条件・受付状況は、各カードの公式ページでご自身でも確認してください。</p>
+      </div>
+    </footer>
+  </div>
+</ReliefLayout>
