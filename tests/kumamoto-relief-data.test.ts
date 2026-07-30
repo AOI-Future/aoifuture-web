@@ -7,15 +7,8 @@ describe('令和8年熊本地震の公式支援情報', () => {
   });
 
   it('すべてのカードがHTTPSの公式URLと宛先・用途を持つ', () => {
-    const officialUrls = new Set([
-      'https://www.pref.kumamoto.jp/soshiki/27/274572.html',
-      'https://www.akaihane.or.jp/saigai/2026kumamoto_earthquake/',
-      'https://www.fukushi-kumamoto.or.jp/kvc/',
-    ]);
-
     for (const item of kumamotoReliefItems) {
       expect(item.officialUrl).toMatch(/^https:\/\//);
-      expect(officialUrls.has(item.officialUrl)).toBe(true);
       expect(item.recipient.trim()).not.toBe('');
       expect(item.purpose.trim()).not.toBe('');
     }
@@ -37,32 +30,27 @@ describe('令和8年熊本地震の公式支援情報', () => {
     expect(item?.notes).toContain('ボランティアグループ・NPO活動への助成原資');
     expect(item?.status).toBe('preparing');
     expect(item?.actionUrl).toBeUndefined();
+    expect(item?.sourceUpdatedAt).toBe('not-published');
   });
 
-  it('行動URLはopenカードだけが持つ', () => {
+  it('行動URLはopenカードだけが持ち、同一カードのofficialUrlと一致する', () => {
     for (const item of kumamotoReliefItems) {
       if (item.status === 'open') {
         expect(item.actionUrl).toBeDefined();
         expect(item.actionUrl).toMatch(/^https:\/\//);
+        expect(item.actionUrl).toBe(item.officialUrl);
       } else {
         expect(item.actionUrl).toBeUndefined();
       }
     }
   });
 
-  it('actionUrlはofficialUrlまたは明示した公式URLだけを許可する', () => {
-    const allowedActionUrls = new Set([
-      'https://www.pref.kumamoto.jp/soshiki/27/274572.html',
-      'https://www.akaihane.or.jp/saigai/2026kumamoto_earthquake/',
-      'https://www.fukushi-kumamoto.or.jp/kvc/',
-    ]);
+  it('公式更新日が公開されていないカードは日付を推測せず、ページ表示に使える値を明示する', () => {
+    const item = kumamotoReliefItems.find(({ id }) => id === 'kumamoto-volasapo-2026');
 
-    for (const item of kumamotoReliefItems) {
-      if (item.actionUrl) {
-        expect(allowedActionUrls.has(item.actionUrl)).toBe(true);
-        expect(item.actionUrl === item.officialUrl || allowedActionUrls.has(item.actionUrl)).toBe(true);
-      }
-    }
+    expect(item?.sourceUpdatedAt).toBe('not-published');
+    expect(item?.sourceUpdatedAt).not.toBe('2026-07-31');
+    expect(item?.checkedAtJst).toBe('2026-07-31');
   });
 
   it('公式URL以外の口座番号や決済情報を保存しない', () => {

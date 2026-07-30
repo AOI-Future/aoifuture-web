@@ -1,7 +1,8 @@
 export type KumamotoReliefStatus = 'open' | 'preparing' | 'information';
 export type KumamotoReliefKind = 'donation' | 'activity-support' | 'information';
+export type KumamotoReliefSourceUpdatedAt = `${number}-${number}-${number}` | 'not-published';
 
-export interface KumamotoReliefItem {
+type KumamotoReliefBase = {
   id: string;
   name: string;
   kind: KumamotoReliefKind;
@@ -9,12 +10,22 @@ export interface KumamotoReliefItem {
   purpose: string;
   actionLabel: string;
   officialUrl: `https://${string}`;
-  actionUrl?: `https://${string}`;
-  sourceUpdatedAt: string;
+  sourceUpdatedAt: KumamotoReliefSourceUpdatedAt;
   checkedAtJst: string;
-  status: KumamotoReliefStatus;
   notes: string;
-}
+};
+
+type OpenKumamotoReliefItem = KumamotoReliefBase & {
+  status: 'open';
+  actionUrl: `https://${string}`;
+};
+
+type NonOpenKumamotoReliefItem = KumamotoReliefBase & {
+  status: 'preparing' | 'information';
+  actionUrl?: never;
+};
+
+export type KumamotoReliefItem = OpenKumamotoReliefItem | NonOpenKumamotoReliefItem;
 
 /**
  * 令和8年熊本地震に関する、一次情報で確認した支援先・確認入口。
@@ -44,7 +55,7 @@ export const kumamotoReliefItems: readonly KumamotoReliefItem[] = [
     purpose: '被災地で活動するボランティアグループ・NPOの活動を支えるため',
     actionLabel: '中央共同募金会の公式ページで確認する',
     officialUrl: 'https://www.akaihane.or.jp/saigai/2026kumamoto_earthquake/',
-    sourceUpdatedAt: '2026-07-31',
+    sourceUpdatedAt: 'not-published',
     checkedAtJst: '2026-07-31',
     status: 'preparing',
     notes: '被災者へ直接配分する義援金ではなく、ボランティアグループ・NPO活動への助成原資です。終了日や対象となる活動、受付状況は公式ページで未確認のため、中央共同募金会の公式ページで確認してください。',
