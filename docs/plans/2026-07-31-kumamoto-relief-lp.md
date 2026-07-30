@@ -53,7 +53,7 @@ Expected: FAIL because the data module does not exist.
 **Step 3: Write minimal implementation**
 
 Create the typed data model with exactly these initial items:
-- 熊本県の義援金: 被災された方々へ配分される義援金。受付期間は公式情報をカードの補足に表示。行動先は熊本県公式ページ。
+- 熊本県の義援金: 被災された方々の支援を目的に熊本県が開設した義援金。配分先・配分時期は公式ページで未確認のため断定しない。受付期間は公式情報をカードの補足に表示。行動先は熊本県公式ページ。
 - ボラサポ・令和8年熊本地震: 被災地の災害ボランティアセンター等と連携するボランティアグループ/NPOの活動を支える支援金。行動先は中央共同募金会公式ページ。
 - 熊本県災害ボランティア情報: 物資支援、活動支援金、募集状況の公式確認入口。`information` 扱いで、支援を募集していると断定しない。
 
@@ -170,6 +170,7 @@ Use `npm run preview` and a browser readback. Confirm on a mobile viewport that 
 ## Rejected alternatives
 
 - **Public Notion only:** fast to edit, but poor for action-first mobile design, source-status visualization, accessibility controls, and code-reviewed history. Use Notion only as an optional internal update queue later, not the public canonical experience.
+- **`/apps/` 配下:** 既存の `/apps/<slug>` は自社開発アプリの製品導線として明文化されており、本件は公的機関ではないAOI Futureが提供する公式情報ガイドである。プロダクト一覧に混在させないため、`/support/kumamoto-2026` を独立した情報LPとして実装する。
 - **wfhradio.tokyo:** its advertising/reporting context risks making a disaster-support page look monetized or editorialized.
 - **nozaki.com:** personal voice is valuable for an explanatory post, but a single person’s site is a weaker long-running operational home than a neutral, dedicated AOI Future public-benefit route.
 - **Embedded third-party donation widgets:** introduce privacy, availability, and recipient-identity ambiguity. Direct official links keep the money and personal data out of this project.
