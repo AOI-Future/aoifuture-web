@@ -33,24 +33,32 @@ describe('令和8年熊本地震の公式支援情報', () => {
     expect(item?.sourceUpdatedAt).toBe('not-published');
   });
 
-  it('行動URLはopenカードだけが持ち、同一カードのofficialUrlと一致する', () => {
+  it('openは公式URLと同じactionUrlを必須とし、non-openはCTA用actionUrlを持たない', () => {
     for (const item of kumamotoReliefItems) {
       if (item.status === 'open') {
         expect(item.actionUrl).toBeDefined();
         expect(item.actionUrl).toMatch(/^https:\/\//);
         expect(item.actionUrl).toBe(item.officialUrl);
       } else {
-        expect(item.actionUrl).toBeUndefined();
+        expect(item).not.toHaveProperty('actionUrl');
       }
     }
   });
 
-  it('公式更新日が公開されていないカードは日付を推測せず、ページ表示に使える値を明示する', () => {
+  it('公式更新日が公開されていないカードは日付を推測せず、安全な確認入口として表示する', () => {
     const item = kumamotoReliefItems.find(({ id }) => id === 'kumamoto-volasapo-2026');
 
     expect(item?.sourceUpdatedAt).toBe('not-published');
     expect(item?.sourceUpdatedAt).not.toBe('2026-07-31');
-    expect(item?.checkedAtJst).toBe('2026-07-31');
+    expect(item?.checkedAtJst).toBe('2026-07-31T08:00:00+09:00');
+    expect(item?.status).toBe('preparing');
+    expect(item?.actionUrl).toBeUndefined();
+  });
+
+  it('すべてのcheckedAtJstは監査用のISO JST datetime形式である', () => {
+    for (const item of kumamotoReliefItems) {
+      expect(item.checkedAtJst).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+09:00$/);
+    }
   });
 
   it('公式URL以外の口座番号や決済情報を保存しない', () => {
