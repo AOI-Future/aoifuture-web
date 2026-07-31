@@ -15,6 +15,15 @@ describe('令和8年熊本地震の公式支援情報', () => {
     ]);
   });
 
+  it('各カードが支援の届き方による表示分類を持つ', () => {
+    expect(kumamotoReliefItems.map(({ id, supportCategory }) => ({ id, supportCategory }))).toEqual([
+      { id: 'kumamoto-prefecture-relief-fund', supportCategory: '被災された方への義援金' },
+      { id: 'kumamoto-volasapo-2026', supportCategory: '現地で活動する団体への支援金' },
+      { id: 'kumamoto-disaster-volunteer-information', supportCategory: '公式情報の確認入口' },
+      { id: 'nippon-foundation-kumamoto-2026', supportCategory: '現地で活動する団体への支援金' },
+    ]);
+  });
+
   it('日本財団支援金は被災者への直接義援金と混同せず、用途と留保を明記する', () => {
     const item = kumamotoReliefItems.find(({ id }) => id === 'nippon-foundation-kumamoto-2026');
 
@@ -48,9 +57,15 @@ describe('令和8年熊本地震の公式支援情報', () => {
     const item = kumamotoReliefItems.find(({ id }) => id === 'kumamoto-prefecture-relief-fund');
 
     expect(item?.purpose).toContain('被災された方々を支援するため');
+    expect(item?.notes).toContain('被災者への支援を目的とする義援金');
     expect(item?.purpose).not.toContain('配分するため');
     expect(item?.notes).toContain('配分先・配分時期は公式ページで未確認');
     expect(item?.notes).toContain('断定しない');
+  });
+
+  it('分類表示に根拠のない比較・順位づけを含めない', () => {
+    const serialized = JSON.stringify(kumamotoReliefItems);
+    expect(serialized).not.toMatch(/中間マージン|手数料|最も届く|一番効果|効率順位|直接性の順位/);
   });
 
   it('ボラサポは直接配分ではなく活動助成の原資で、終了日未確認ならpreparingにする', () => {

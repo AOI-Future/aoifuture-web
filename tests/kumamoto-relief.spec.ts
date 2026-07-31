@@ -23,13 +23,26 @@ test.describe('令和8年熊本地震 支援ガイド', () => {
     await expect(page.getByText('日本財団｜令和8年熊本地震 支援金')).toBeVisible();
     await expect(page.getByText(/管理費には使わない/)).toBeVisible();
     await expect(page.getByText(/将来災害の被災地/)).toBeVisible();
+    await expect(page.getByRole('heading', { name: '支援の届き方から選ぶ' })).toBeVisible();
+    await expect(page.getByText('掲載順は優劣や資金効率の順位ではありません。支援の届き方・用途の違いを分けて表示しています。')).toBeVisible();
+    await expect(cards.locator('.relief-card-category').filter({ hasText: '被災された方への義援金' })).toHaveCount(1);
+    await expect(cards.locator('.relief-card-category').filter({ hasText: '現地で活動する団体への支援金' })).toHaveCount(2);
+    await expect(cards.locator('.relief-card-category').filter({ hasText: '公式情報の確認入口' })).toHaveCount(1);
 
     for (const card of await cards.all()) {
       const text = await card.innerText();
-      expect(text.indexOf('支援を受ける人・つながる先')).toBeLessThan(text.indexOf('公式'));
-      expect(text.indexOf('使われ方')).toBeLessThan(text.indexOf('公式'));
+      expect(text.indexOf('支援の種類')).toBeLessThan(text.indexOf('支援を受ける人・つながる先'));
+      expect(text.indexOf('支援の種類')).toBeLessThan(text.indexOf('使われ方'));
+      expect(text.indexOf('支援を受ける人・つながる先')).toBeLessThan(text.indexOf('根拠：'));
+      expect(text.indexOf('使われ方')).toBeLessThan(text.indexOf('根拠：'));
     }
-    await expect(page.getByRole('heading', { name: '支援は、どこに・何に届くのか' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: '支援の届き方から選ぶ' })).toBeVisible();
+  });
+
+  test('does not make unsupported comparison claims', async ({ page }) => {
+    await page.goto(route);
+    const text = await page.locator('body').innerText();
+    expect(text).not.toMatch(/中間マージン|手数料|最も届く|一番効果|効率順位|直接性の順位/);
   });
 
   test('makes status, policy, and safety guidance visible', async ({ page }) => {

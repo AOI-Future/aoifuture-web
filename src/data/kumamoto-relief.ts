@@ -7,6 +7,7 @@ type KumamotoReliefBase = {
   id: string;
   name: string;
   kind: KumamotoReliefKind;
+  supportCategory: '被災された方への義援金' | '現地で活動する団体への支援金' | '公式情報の確認入口';
   recipient: string;
   purpose: string;
   actionLabel: string;
@@ -39,6 +40,7 @@ export const kumamotoReliefItems: readonly KumamotoReliefItem[] = [
     id: 'kumamoto-prefecture-relief-fund',
     name: '熊本県義援金',
     kind: 'donation',
+    supportCategory: '被災された方への義援金',
     recipient: '令和8年熊本地震で被災された方々',
     purpose: '被災された方々を支援するため',
     actionLabel: '熊本県の公式ページで確認する',
@@ -48,12 +50,13 @@ export const kumamotoReliefItems: readonly KumamotoReliefItem[] = [
     sourceUpdatedAt: '2026-07-29',
     checkedAtJst: '2026-07-31T08:00:00+09:00',
     status: 'open',
-    notes: '受付期間は2026年7月29日から10月30日まで。配分先・配分時期は公式ページで未確認であり、断定しない。受付条件や方法は、必ず公式ページで確認してください。',
+    notes: '被災者への支援を目的とする義援金です。受付期間は2026年7月29日から10月30日まで。配分先・配分時期は公式ページで未確認であり、断定しない。受付条件や方法は、必ず公式ページで確認してください。',
   },
   {
     id: 'kumamoto-volasapo-2026',
     name: 'ボラサポ・令和8年熊本地震',
     kind: 'activity-support',
+    supportCategory: '現地で活動する団体への支援金',
     recipient: '被災地の災害ボランティアセンター等と連携するボランティアグループ・NPO',
     purpose: '被災地で活動するボランティアグループ・NPOの活動を支えるため',
     actionLabel: '中央共同募金会の公式ページで確認する',
@@ -68,6 +71,7 @@ export const kumamotoReliefItems: readonly KumamotoReliefItem[] = [
     id: 'kumamoto-disaster-volunteer-information',
     name: '熊本県災害ボランティア情報',
     kind: 'information',
+    supportCategory: '公式情報の確認入口',
     recipient: '熊本県内で支援を必要とする地域と、支援を検討する人',
     purpose: '物資支援、活動支援金、災害ボランティア募集状況を公式情報で確認するため',
     actionLabel: '公式の最新情報を確認する',
@@ -82,6 +86,7 @@ export const kumamotoReliefItems: readonly KumamotoReliefItem[] = [
     id: 'nippon-foundation-kumamoto-2026',
     name: '日本財団｜令和8年熊本地震 支援金',
     kind: 'activity-support',
+    supportCategory: '現地で活動する団体への支援金',
     recipient: '被災地域で現地救援活動を行うNGO・ボランティア等',
     purpose: '2026年7月28日熊本地震の被災地域で、NGO・ボランティア等が行う現地救援活動を支えるため',
     actionLabel: '日本財団の基金ページで確認して支援する',
