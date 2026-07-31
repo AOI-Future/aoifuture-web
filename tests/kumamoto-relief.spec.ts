@@ -41,25 +41,33 @@ test.describe('令和8年熊本地震 支援ガイド', () => {
     await expect(page.getByText(/口座番号・決済フォーム・寄付受付を置いていません/)).toBeVisible();
   });
 
-  test('provides a safe candidate-submission route through the existing Other contact option', async ({ page }) => {
+  test('provides a safe candidate-submission route according to the consultation feature flag', async ({ page }, testInfo) => {
     await page.goto(route);
-    const section = page.getByRole('region', { name: '公式情報の掲載候補をお寄せください' });
+    const consultationEnabled = testInfo.project.metadata?.consultationFlag !== 'disabled';
+    const section = page.getByRole('region', { name: consultationEnabled ? '公式情報の掲載候補をお寄せください' : '公式情報の掲載候補について' });
     await expect(section).toBeVisible();
-    await expect(section).toContainText('民間団体やNPO等の公式支援情報');
-    await expect(section).toContainText('お問い合わせフォームで「その他」を選択');
-    await expect(section).toContainText('公式URL・団体名・分かる範囲の受付状況');
     await expect(section).toContainText('個人情報・口座番号・決済情報は送らない');
     await expect(section).toContainText('SNS投稿だけでは掲載しません');
     await expect(section).toContainText('AOI Futureが公式一次情報を確認できたものだけ掲載候補');
     await expect(section).toContainText('AOI Futureは寄付金を受け取らず');
     await expect(section).toContainText('掲載を保証しません');
 
-    const link = section.getByRole('link', { name: 'お問い合わせ（その他）から情報を送る' });
-    await expect(link).toHaveAttribute('href', '/contact');
-    await expect(link).not.toHaveAttribute('target');
-    await link.focus();
-    await expect(link).toHaveCSS('outline-style', 'solid');
-    await expect(link).toHaveCSS('min-height', '48px');
+    if (consultationEnabled) {
+      await expect(section).toContainText('公式URL・団体名・分かる範囲の受付状況');
+      await expect(section).toContainText('民間団体やNPO等の公式支援情報');
+      await expect(section).toContainText('お問い合わせフォームで「その他」を選択');
+      const link = section.getByRole('link', { name: 'お問い合わせ（その他）から情報を送る' });
+      await expect(link).toHaveAttribute('href', '/contact');
+      await expect(link).not.toHaveAttribute('target');
+      await link.focus();
+      await expect(link).toHaveCSS('outline-style', 'solid');
+      await expect(link).toHaveCSS('min-height', '48px');
+    } else {
+      await expect(section).toContainText('この情報提供フォームは現在利用できません');
+      await expect(section).toContainText('現在は情報提供を受け付けていません');
+      await expect(section.getByRole('link', { name: 'お問い合わせ（その他）から情報を送る' })).toHaveCount(0);
+      await expect(section).not.toContainText('お問い合わせフォームで「その他」を選択');
+    }
   });
 
   test('external links have safe attributes and the document has no analytics', async ({ page }) => {
