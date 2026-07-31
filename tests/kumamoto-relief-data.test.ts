@@ -9,7 +9,7 @@ describe('令和8年熊本地震の公式支援情報', () => {
   it('各カードの根拠URLは対応する公式ページである', () => {
     expect(kumamotoReliefItems.map(({ id, sourceUrl }) => ({ id, sourceUrl }))).toEqual([
       { id: 'kumamoto-prefecture-relief-fund', sourceUrl: 'https://www.pref.kumamoto.jp/soshiki/27/274572.html' },
-      { id: 'kumamoto-volasapo-2026', sourceUrl: 'https://www.akaihane.or.jp/saigai/2026kumamoto_earthquake/' },
+      { id: 'kumamoto-volasapo-2026', sourceUrl: 'https://www.akaihane.or.jp/saigai-news/vorasapo/49434/' },
       { id: 'kumamoto-disaster-volunteer-information', sourceUrl: 'https://www.fukushi-kumamoto.or.jp/kvc/' },
       { id: 'nippon-foundation-kumamoto-2026', sourceUrl: 'https://en.nippon-foundation.or.jp/news/articles/2026/20260731-113468.html' },
     ]);
@@ -68,14 +68,21 @@ describe('令和8年熊本地震の公式支援情報', () => {
     expect(serialized).not.toMatch(/中間マージン|手数料|最も届く|一番効果|効率順位|直接性の順位/);
   });
 
-  it('ボラサポは直接配分ではなく活動助成の原資で、終了日未確認ならpreparingにする', () => {
+  it('ボラサポは直接配分ではなく活動助成の原資で、公式告知の寄付受付開始をopenとして示す', () => {
     const item = kumamotoReliefItems.find(({ id }) => id === 'kumamoto-volasapo-2026');
 
     expect(item?.notes).toContain('被災者へ直接配分する義援金ではなく');
     expect(item?.notes).toContain('ボランティアグループ・NPO活動への助成原資');
-    expect(item?.status).toBe('preparing');
-    expect(item?.actionUrl).toBeUndefined();
-    expect(item?.sourceUpdatedAt).toBe('not-published');
+    expect(item?.status).toBe('open');
+    expect(item?.actionLabel).toBe('寄付受付を公式に確認する');
+    expect(item?.officialUrl).toBe('https://www.akaihane.or.jp/saigai-news/vorasapo/49434/');
+    expect(item?.actionUrl).toBe(item?.officialUrl);
+    expect(item?.sourceUrl).toBe(item?.officialUrl);
+    expect(item?.sourceUpdatedAt).toBe('2026-07-29');
+    expect(item?.checkedAtJst).toBe('2026-07-31T19:52:00+09:00');
+    expect(item?.notes).not.toContain('受付状況は未確認');
+    expect(item?.notes).not.toContain('終了日や対象となる活動、受付状況は公式ページで未確認');
+    expect(item?.notes).not.toMatch(/終了日.*\d{4}年|\d{4}年\d+月\d+日まで/);
   });
 
   it('openは公式URLと同じactionUrlを必須とし、non-openはCTA用actionUrlを持たない', () => {
@@ -90,14 +97,14 @@ describe('令和8年熊本地震の公式支援情報', () => {
     }
   });
 
-  it('公式更新日が公開されていないカードは日付を推測せず、安全な確認入口として表示する', () => {
+  it('ボラサポは公式告知日を表示し、受付期間・終了日を断定しない', () => {
     const item = kumamotoReliefItems.find(({ id }) => id === 'kumamoto-volasapo-2026');
 
-    expect(item?.sourceUpdatedAt).toBe('not-published');
-    expect(item?.sourceUpdatedAt).not.toBe('2026-07-31');
-    expect(item?.checkedAtJst).toBe('2026-07-31T08:00:00+09:00');
-    expect(item?.status).toBe('preparing');
-    expect(item?.actionUrl).toBeUndefined();
+    expect(item?.sourceUpdatedAt).toBe('2026-07-29');
+    expect(item?.checkedAtJst).toBe('2026-07-31T19:52:00+09:00');
+    expect(item?.status).toBe('open');
+    expect(item?.actionUrl).toBe(item?.officialUrl);
+    expect(item?.notes).not.toMatch(/終了日.*(?:未確認|\d{4}年\d+月\d+日まで)/);
   });
 
   it('すべてのcheckedAtJstは監査用のISO JST datetime形式である', () => {

@@ -50,7 +50,7 @@ test.describe('令和8年熊本地震 支援ガイド', () => {
     await expect(page.getByRole('heading', { name: '掲載方針' })).toBeVisible();
     await expect(page.getByText('公式一次情報を優先')).toBeVisible();
     await expect(page.getByText(/Xは掲載根拠でなく候補検知/)).toBeVisible();
-    await expect(page.getByText(/公式更新日：ページ上で確認できず/)).toBeVisible();
+    await expect(page.getByText('公式更新日：2026-07-29')).toHaveCount(2);
     await expect(page.getByText(/物資の無断送付/)).toBeVisible();
     await expect(page.getByText(/独自の現地訪問/)).toBeVisible();
     await expect(page.getByText(/SNS投稿のみを根拠に送金せず/)).toBeVisible();
