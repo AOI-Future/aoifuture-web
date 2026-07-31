@@ -1,11 +1,13 @@
 ---
 import ReliefLayout from '../../layouts/ReliefLayout.astro';
 import { kumamotoReliefItems } from '../../data/kumamoto-relief';
+import { getConsultationConfig } from '../../lib/consultation-config';
 import '../../styles/kumamoto-relief.css';
 
 const title = '令和8年熊本地震 支援ガイド | AOI Future';
 const description = '令和8年熊本地震について、公式情報を確認してから支援につなげるための安全なガイドです。';
 const canonical = 'https://aoifuture.com/support/kumamoto-2026/';
+const consultationConfig = getConsultationConfig();
 const formatSourceDate = (sourceUpdatedAt: string) => sourceUpdatedAt === 'not-published'
   ? '公式更新日：ページ上で確認できず'
   : `公式更新日：${sourceUpdatedAt}`;
@@ -62,6 +64,23 @@ const formatSourceDate = (sourceUpdatedAt: string) => sourceUpdatedAt === 'not-p
             <li>SNS投稿のみを根拠に送金せず、公式ページで送付先・名義を確認してください。</li>
             <li>このページ自体には、口座番号・決済フォーム・寄付受付を置いていません。</li>
           </ul>
+        </div>
+      </section>
+
+      <section class="relief-section" aria-labelledby="submission-heading">
+        <h2 id="submission-heading">{consultationConfig.enabled ? '公式情報の掲載候補をお寄せください' : '公式情報の掲載候補について'}</h2>
+        <div class="relief-submission" data-relief-submission>
+          {consultationConfig.enabled ? (
+            <p>民間団体やNPO等の公式支援情報をご存じの場合は、AOI Futureのお問い合わせフォームで「その他」を選択し、公式URL・団体名・分かる範囲の受付状況を送ってください。</p>
+          ) : (
+            <p>この情報提供フォームは現在利用できません。掲載候補の案内は準備中です。受付中と誤認させないため、現在は情報提供を受け付けていません。</p>
+          )}
+          <ul>
+            <li>個人情報・口座番号・決済情報は送らないでください。</li>
+            <li>SNS投稿だけでは掲載しません。AOI Futureが公式一次情報を確認できたものだけ掲載候補として扱います。</li>
+            <li>AOI Futureは寄付金を受け取らず、掲載を保証しません。内容の真偽、団体の正当性、受付状態を、ユーザー投稿だけで断定することもありません。</li>
+          </ul>
+          {consultationConfig.enabled && <a class="relief-action" href="/contact">お問い合わせ（その他）から情報を送る</a>}
         </div>
       </section>
     </main>

@@ -49,6 +49,11 @@ a:focus-visible { outline: 3px solid var(--relief-focus); outline-offset: 3px; }
 .relief-policy ul, .relief-safety ul { margin: 0; padding-left: 1.25rem; }
 .relief-policy li + li, .relief-safety li + li { margin-top: 8px; }
 .relief-safety { border-color: #e8b08e; background: #fff8f3; }
+.relief-submission { padding: 20px; border: 1px solid var(--relief-line); border-radius: 12px; background: #eef8fb; }
+.relief-submission p { margin: 0; }
+.relief-submission ul { margin: 14px 0 0; padding-left: 1.25rem; }
+.relief-submission li + li { margin-top: 8px; }
+.relief-submission .relief-action { width: 100%; }
 .relief-footer { border-top: 1px solid var(--relief-line); background: var(--relief-surface); }
 .relief-footer-inner { padding: 22px 0 32px; color: var(--relief-muted); font-size: .9rem; }
 .relief-footer p { margin: 6px 0; }
