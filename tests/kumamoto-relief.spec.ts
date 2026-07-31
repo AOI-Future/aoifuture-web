@@ -41,6 +41,27 @@ test.describe('令和8年熊本地震 支援ガイド', () => {
     await expect(page.getByText(/口座番号・決済フォーム・寄付受付を置いていません/)).toBeVisible();
   });
 
+  test('provides a safe candidate-submission route through the existing Other contact option', async ({ page }) => {
+    await page.goto(route);
+    const section = page.getByRole('region', { name: '公式情報の掲載候補をお寄せください' });
+    await expect(section).toBeVisible();
+    await expect(section).toContainText('民間団体やNPO等の公式支援情報');
+    await expect(section).toContainText('お問い合わせフォームで「その他」を選択');
+    await expect(section).toContainText('公式URL・団体名・分かる範囲の受付状況');
+    await expect(section).toContainText('個人情報・口座番号・決済情報は送らない');
+    await expect(section).toContainText('SNS投稿だけでは掲載しません');
+    await expect(section).toContainText('AOI Futureが公式一次情報を確認できたものだけ掲載候補');
+    await expect(section).toContainText('AOI Futureは寄付金を受け取らず');
+    await expect(section).toContainText('掲載を保証しません');
+
+    const link = section.getByRole('link', { name: 'お問い合わせ（その他）から情報を送る' });
+    await expect(link).toHaveAttribute('href', '/contact');
+    await expect(link).not.toHaveAttribute('target');
+    await link.focus();
+    await expect(link).toHaveCSS('outline-style', 'solid');
+    await expect(link).toHaveCSS('min-height', '48px');
+  });
+
   test('external links have safe attributes and the document has no analytics', async ({ page }) => {
     await page.goto(route);
     const externalLinks = page.locator('a[href^="https://"]');
