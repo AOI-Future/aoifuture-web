@@ -25,12 +25,13 @@ const formatSourceDate = (sourceUpdatedAt: string) => sourceUpdatedAt === 'not-p
 
     <main class="relief-main">
       <section class="relief-section" aria-labelledby="support-heading">
-        <h2 id="support-heading">支援は、どこに・何に届くのか</h2>
-        <p class="relief-section-intro">カードの「支援を受ける人・つながる先」と「使われ方」を先に確認してください。受付状況は変わるため、公式ページの内容を優先します。</p>
+        <h2 id="support-heading">支援の届き方から選ぶ</h2>
+        <p class="relief-section-intro">掲載順は優劣や資金効率の順位ではありません。支援の届き方・用途の違いを分けて表示しています。</p>
         <div class="relief-cards">
           {kumamotoReliefItems.map((item) => (
             <article class="relief-card" data-relief-card>
               <h3>{item.name}</h3>
+              <p class="relief-card-category"><span>支援の種類</span>{item.supportCategory}</p>
               <dl>
                 <dt>支援を受ける人・つながる先</dt>
                 <dd>{item.recipient}</dd>
@@ -39,6 +40,7 @@ const formatSourceDate = (sourceUpdatedAt: string) => sourceUpdatedAt === 'not-p
               </dl>
               <p class="relief-card-note">{item.notes}</p>
               <p class="relief-card-meta">{formatSourceDate(item.sourceUpdatedAt)}<br />確認日：{item.checkedAtJst}（日本時間）</p>
+              <p class="relief-card-source">根拠：<a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">公式発表を確認する</a></p>
               <a class="relief-action" href={item.status === 'open' ? item.actionUrl : item.officialUrl} target="_blank" rel="noopener noreferrer">{item.actionLabel}</a>
             </article>
           ))}
