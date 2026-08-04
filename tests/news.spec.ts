@@ -48,8 +48,17 @@ test('News exposes M2 JSON-LD, summary metadata, and Rolling Edition feed discov
     await expect(page.locator('meta[property="og:title"]')).toHaveCount(1);
     await expect(page.locator('meta[property="og:description"]')).toHaveCount(1);
     await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', `https://aoifuture.com${route}`);
-    await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary');
-    await expect(page.locator('meta[property="og:image"], meta[name="twitter:image"]')).toHaveCount(0);
+    await expect(page.locator('meta[property="og:site_name"]')).toHaveAttribute('content', 'AOIFUTURE');
+    await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute('content', 'ja_JP');
+    await expect(page.locator('meta[property="og:image"]')).toHaveCount(1);
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', 'https://aoifuture.com/og/aoifuture-social-card.png');
+    await expect(page.locator('meta[property="og:image:width"]')).toHaveAttribute('content', '1200');
+    await expect(page.locator('meta[property="og:image:height"]')).toHaveAttribute('content', '630');
+    await expect(page.locator('meta[property="og:image:alt"]')).toHaveAttribute('content', 'AOIFUTURE — Ideas into trusted action.');
+    await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
+    await expect(page.locator('meta[name="twitter:image"]')).toHaveCount(1);
+    await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', 'https://aoifuture.com/og/aoifuture-social-card.png');
+    await expect(page.locator('meta[name="twitter:image:alt"]')).toHaveAttribute('content', 'AOIFUTURE — Ideas into trusted action.');
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', production ? 'index, follow' : 'noindex, nofollow');
   }
 
