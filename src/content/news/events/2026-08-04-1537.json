@@ -1,0 +1,18 @@
+[
+  {
+    "changed_signal_ids": [
+      "agent-failure-repair-2608-02464",
+      "cross-session-misuse-2608-02518"
+    ],
+    "edition_date": "2026-08-04",
+    "edition_id": "2026-08-04-1537",
+    "edition_url": "https://aoifuture.com/news/2026-08-04-1537/",
+    "event_id": "aoi-news-2026-08-04-1537-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-04T06:37:59Z",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "実行中の失敗を見つけて巻き戻す仕組みと、複数セッションに分散した能力蓄積を追う仕組みは、別々の安全境界として設計する必要がある。",
+    "title": "AOIFUTURE News — エージェント障害を「検知」で終わらせない"
+  }
+]

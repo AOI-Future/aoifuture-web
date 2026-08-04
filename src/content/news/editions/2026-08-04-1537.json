@@ -1,0 +1,81 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-04T06:37:59Z",
+  "dek": "実行中の失敗を見つけて巻き戻す仕組みと、複数セッションに分散した能力蓄積を追う仕組みは、別々の安全境界として設計する必要がある。",
+  "edition_date": "2026-08-04",
+  "edition_id": "2026-08-04-1537",
+  "edition_note": "2件のarXiv v1論文を一次資料として確認した限定的な選定スナップショット。数値・比較・設計上の主張は著者報告であり、独立再現や本番導入を示すものではない。",
+  "generated_at": "2026-08-04T06:37:59Z",
+  "items": [
+    {
+      "aoi_note": "監視モデルのスコアだけを公開判断に使わず、決定論的に再計算できる不変条件と、失敗時に戻せる実行境界を組み合わせる。検知率ではなく、誤検知予算、復旧率、再実行コストまで同じ監査記録に残すべきだ。",
+      "caveat": "arXiv v1の著者報告で独立再現はない。学習型監視は配備ごとの健全データで再校正が必要で、要旨の結果を未検証のモデル、業務、フレームワークへ一般化できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "agent-failure-repair-2608-02464",
+      "language": "en",
+      "observed_at": "2026-08-04T06:37:59Z",
+      "published_at": "2026-08-03T16:34:46Z",
+      "role": "lead",
+      "selection_reason": "障害を見つけるだけでなく、受け取ったツール結果の再計算、必須呼び出しの確認、巻き戻しと再実行を一つの運用ループとして扱っているため。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは2,823件のエージェント実行を用い、学習型監視と決定論的検証を評価した。要旨では、巻き戻しとライブ再実行により障害の45%を回復し、タスク成功率が52%から73%へ上がったと報告している。",
+      "source_kind": "paper",
+      "source_title": "Real-Time Detection and Repair of LLM Agent Failures",
+      "source_url": "https://arxiv.org/abs/2608.02464v1",
+      "title": "実行時の障害検知を、検証・巻き戻し・再実行まで閉じる",
+      "topics": [
+        "agent-reliability"
+      ],
+      "verification": {
+        "checked_at": "2026-08-04T06:37:59Z",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "越境相関は検知機能であると同時に強い監視権限でもある。相関キー、保持期間、閲覧権限、誤結合への異議申立てを定義せず、会話履歴を広く束ねてはならない。",
+      "caveat": "arXiv v1の著者報告で独立再現はない。要旨には定量的な検知性能、ベンチマーク規模、誤検知・見逃し率がなく、本番運用の有効性は確認できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cross-session-misuse-2608-02518",
+      "language": "en",
+      "observed_at": "2026-08-04T06:37:59Z",
+      "published_at": "2026-08-03T17:15:55Z",
+      "role": "major",
+      "selection_reason": "単一実行の障害回復では捉えられない、セッションをまたぐ能力蓄積を補助的な脅威モデルとして示すため。",
+      "source_domain": "arxiv.org",
+      "source_fact": "論文要旨は、個々には無害に見える複数のセッションで成果物を蓄積し、有害な目的に向けて能力を合成する脅威を述べ、会話をまたいで関連能力を集約する検知方式Magnetを提案する。",
+      "source_kind": "paper",
+      "source_title": "Magnet: Detecting Cross-Session AI Misuse Through Capability Accumulation",
+      "source_url": "https://arxiv.org/abs/2608.02518v1",
+      "title": "無害に見える会話の間で、能力が積み上がる危険を追う",
+      "topics": [
+        "agent-security"
+      ],
+      "verification": {
+        "checked_at": "2026-08-04T06:37:59Z",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-04T06:37:59Z",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — エージェント障害を「検知」で終わらせない",
+  "topics": [
+    {
+      "id": "agent-reliability",
+      "label_en": "Agent reliability",
+      "label_ja": "AIエージェントの信頼性"
+    },
+    {
+      "id": "agent-security",
+      "label_en": "Agent security",
+      "label_ja": "AIエージェントのセキュリティ"
+    }
+  ]
+}
