@@ -1,0 +1,24 @@
+[
+  {
+    "changed_signal_ids": [
+      "cloudflare-agent-development-lifecycle",
+      "cloudflare-identity-aware-ai-gateway",
+      "coinrag-kv-cache-reuse-2608-07458",
+      "creativeinstruct-2608-07460",
+      "github-agent-app-usage-metrics-2026-08",
+      "github-copilot-roi-dashboard-2026-08",
+      "open-source-ai-risk-tool-taxonomy-2608-07446",
+      "uk-sovereign-ai-chip-investment-2026-08"
+    ],
+    "edition_date": "2026-08-10",
+    "edition_id": "2026-08-10-1512",
+    "edition_url": "https://aoifuture.com/news/2026-08-10-1512/",
+    "event_id": "aoi-news-2026-08-10-1512-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-10T06:12:00Z",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "AIエージェントの開発・計測・監視、RAGの計算再利用、創造性の学習、AI半導体政策まで。深掘り2件と短報6件で、異なる領域の動きを一度に見渡す。",
+    "title": "AOIFUTURE News — エージェント運用から創造性まで、8つの変化を横断する"
+  }
+]

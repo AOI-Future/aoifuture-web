@@ -1,0 +1,287 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-10T05:23:51Z",
+  "dek": "AIエージェントの開発・計測・監視、RAGの計算再利用、創造性の学習、AI半導体政策まで。深掘り2件と短報6件で、異なる領域の動きを一度に見渡す。",
+  "edition_date": "2026-08-10",
+  "edition_id": "2026-08-10-1512",
+  "edition_note": "8件すべて一次情報を確認した選定ウィンドウ。製品発表は提供元の説明であり効果を独立検証したものではない。arXiv論文3件の数値は著者報告で、1件は7日以内の文脈記事として収録した。",
+  "generated_at": "2026-08-10T06:12:00Z",
+  "items": [
+    {
+      "aoi_note": "AI安全ツールを選ぶときは製品一覧から始めず、守るべきリスク分類を先に置く。未対応カテゴリを可視化すれば、ツール追加では埋まらない組織ルールや法務判断の不足も区別できる。",
+      "caveat": "arXiv v1の著者報告であり、分類、評価者間一致、F1値は独立再現されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "open-source-ai-risk-tool-taxonomy-2608-07446",
+      "language": "en",
+      "observed_at": "2026-08-10T05:23:51Z",
+      "published_at": "2026-08-07T17:33:09Z",
+      "role": "lead",
+      "selection_reason": "ツール数の多さとリスク領域の網羅性は同じではないことを、運用ポートフォリオの点検に使える分類として示しているため。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らはオープンソースのLLM評価・セキュリティツール21件を、32のリスク緩和サブカテゴリへ対応付けた。技術的な評価や防御に比べ、ガバナンス、法規制、財務・市場に関する対策は相対的に手薄だと報告している。",
+      "source_kind": "paper",
+      "source_title": "Taxonomy-Driven Analysis of Open-Source AI Risk Mitigation Tools",
+      "source_url": "https://arxiv.org/abs/2608.07446v1",
+      "title": "AIリスク対策ツールは増えても、組織と制度のリスクには空白が残る",
+      "topics": [
+        "ai-security",
+        "ai-governance"
+      ],
+      "verification": {
+        "checked_at": "2026-08-10T05:23:51Z",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェント導入の評価軸を生成速度だけに置かず、変更の承認者、デプロイ証跡、ロールバック、運用中の責任者まで含める。生成後の工程が詰まるなら、そこが次の自動化対象だ。",
+      "caveat": "公開から5日後に収録した文脈記事で、ベンダーによる製品発表であり運用効果の独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-agent-development-lifecycle",
+      "language": "en",
+      "observed_at": "2026-08-10T05:23:51Z",
+      "published_at": "2026-08-04T13:00:00Z",
+      "role": "major",
+      "selection_reason": "コード生成が速くなるほど、レビュー、権限、配備、保守を一つのライフサイクルとして設計する必要が高まるため。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは、エージェントが書いたコードをレビューし、配備し、継続管理するためのAgent Development Lifecycleと関連機能を発表した。",
+      "source_kind": "release",
+      "source_title": "The Agent Development Lifecycle has arrived on Cloudflare",
+      "source_url": "https://blog.cloudflare.com/agent-development-lifecycle/",
+      "title": "エージェント開発のボトルネックは、生成からレビューと運用へ移る",
+      "topics": [
+        "ai-agents",
+        "developer-tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-10T05:23:51Z",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ROI表示は結論ではなく仮説として扱い、採用率、レビュー負荷、品質、リードタイムと一緒に追うと判断材料になる。",
+      "caveat": "推計値であり、Copilotが生産性向上を因果的にもたらしたことを単独で示すものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-roi-dashboard-2026-08",
+      "language": "en",
+      "observed_at": "2026-08-10T05:23:51Z",
+      "published_at": "2026-08-07T21:05:37Z",
+      "role": "brief",
+      "selection_reason": "利用率だけでなく、費用と開発出力を比較する管理指標が製品側へ組み込まれ始めたため。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはCopilot impact dashboardに、Copilotへの支出とプルリクエスト出力を結び付けるPotential return on investmentセクションを追加した。",
+      "source_kind": "release",
+      "source_title": "Copilot impact dashboard adds a return on investment section",
+      "source_url": "https://github.blog/changelog/2026-08-07-copilot-impact-dashboard-adds-a-return-on-investment-section/",
+      "title": "GitHub Copilotの管理画面にROI推計が加わる",
+      "topics": [
+        "developer-tools",
+        "ai-measurement"
+      ],
+      "verification": {
+        "checked_at": "2026-08-10T05:23:51Z",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "活動量を比較できても、成果や安全性は別指標である。完了タスク、レビュー差し戻し、障害、コストとの対応を追加して読む必要がある。",
+      "caveat": "利用テレメトリであり、品質、安全性、事業成果を測定する指標ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-agent-app-usage-metrics-2026-08",
+      "language": "en",
+      "observed_at": "2026-08-10T05:23:51Z",
+      "published_at": "2026-08-07T18:20:47Z",
+      "role": "brief",
+      "selection_reason": "複数エージェントの利用状況を同じ管理面から観測できるようになるため。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはCopilot usage metrics APIを拡張し、GitHub上で動くClaudeやCodexなどのパートナー製エージェントアプリの活動を含めた。",
+      "source_kind": "release",
+      "source_title": "Copilot usage metrics API adds agent app activity",
+      "source_url": "https://github.blog/changelog/2026-08-07-copilot-usage-metrics-api-adds-agent-app-activity/",
+      "title": "GitHubの利用指標にClaudeやCodexのエージェント活動が入る",
+      "topics": [
+        "ai-agents",
+        "ai-measurement",
+        "developer-tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-10T05:23:51Z",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントの通信監視では共有APIキーを避け、実行主体へ追跡可能なIDを割り当てる。異常検知後に停止できる権限境界までセットで設計したい。",
+      "caveat": "ベンダーによる製品発表で、検知精度や誤検知率はこの発表からは確認できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-identity-aware-ai-gateway",
+      "language": "en",
+      "observed_at": "2026-08-10T05:23:51Z",
+      "published_at": "2026-08-05T13:00:00Z",
+      "role": "brief",
+      "selection_reason": "モデル内部の安全策だけでなく、誰またはどのエージェントが通信したかを使う運用監視が具体化しているため。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは、人とエージェントごとの通信を基準化して異常挙動を示すidentity-aware AI Gateway analyticsのオープンベータを発表した。",
+      "source_kind": "release",
+      "source_title": "Catching rogue AI behavior with identity-aware analytics",
+      "source_url": "https://blog.cloudflare.com/identity-aware-ai-gateway/",
+      "title": "人とエージェントの識別情報から、異常なAI通信を見つける",
+      "topics": [
+        "ai-security",
+        "ai-agents"
+      ],
+      "verification": {
+        "checked_at": "2026-08-10T05:23:51Z",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "RAG基盤では検索精度と同時に、再利用単位、キャッシュ無効化、更新文書の反映時間を測ると、速度と鮮度の交換条件が見える。",
+      "caveat": "arXiv v1。要旨だけではレイテンシ予算、ベースライン構成、信頼区間の全詳細を確認できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "coinrag-kv-cache-reuse-2608-07458",
+      "language": "en",
+      "observed_at": "2026-08-10T05:23:51Z",
+      "published_at": "2026-08-07T17:51:49Z",
+      "role": "brief",
+      "selection_reason": "長文RAGの最適化対象が、取得チャンク数から再利用可能な計算単位へ広がっているため。",
+      "source_domain": "arxiv.org",
+      "source_fact": "CoinRAGは意味単位ごとに事前計算したKVキャッシュを再利用し、LongBenchのマルチホップQAで、所定の高速prefillレイテンシ予算下において相対F1が5.3パーセント向上したと報告している。",
+      "source_kind": "paper",
+      "source_title": "CoinRAG: Contextualized Information Nugget KV Cache Reuse for Long-Context RAG",
+      "source_url": "https://arxiv.org/abs/2608.07458v1",
+      "title": "RAGの高速化は、検索結果だけでなく計算済みKVキャッシュも再利用する",
+      "topics": [
+        "ai-infrastructure",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-10T05:23:51Z",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "創作支援モデルの評価では平均品質だけでなく、案同士の距離、反復時の類似度、人が残したい意外性を分けて測るとよい。",
+      "caveat": "arXiv v1。要旨には評価者数、ベンチマーク規模、信頼区間の全情報が記載されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "creativeinstruct-2608-07460",
+      "language": "en",
+      "observed_at": "2026-08-10T05:23:51Z",
+      "published_at": "2026-08-07T17:55:48Z",
+      "role": "watch",
+      "selection_reason": "創造性を温度設定だけで調整するのではなく、品質や多様性と両立させる学習対象として扱う提案だから。",
+      "source_domain": "arxiv.org",
+      "source_fact": "CreativeInstructは創造性に関わる区間を明示して学習させ、物語生成評価で、既存のpost-trained model出力に対し創造性の人手選好率70.3パーセントを報告した。",
+      "source_kind": "paper",
+      "source_title": "CreativeInstruct: Scalably Teaching LLMs to Balance Quality, Creativity, and Diversity",
+      "source_url": "https://arxiv.org/abs/2608.07460v1",
+      "title": "創造性をサンプリング設定ではなく、学習する振る舞いとして扱う",
+      "topics": [
+        "creative-ai",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-10T05:23:51Z",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "各国のAI戦略を見るときはモデル政策だけでなく、電力、データセンター、チップ、人材への資金配分を並べると実装優先度が見える。",
+      "caveat": "7日以内の文脈記事。政府発表だけでは技術成果や商業的成功を確認できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "uk-sovereign-ai-chip-investment-2026-08",
+      "language": "en",
+      "observed_at": "2026-08-10T05:23:51Z",
+      "published_at": "2026-08-03T08:23:01Z",
+      "role": "brief",
+      "selection_reason": "AI政策が規制だけでなく、計算資源と半導体への直接投資として表れているため。",
+      "source_domain": "www.gov.uk",
+      "source_fact": "英国政府は、AIチップ技術を開発する国内スタートアップへのSovereign AI投資を発表した。",
+      "source_kind": "official",
+      "source_title": "Sovereign AI invests in UK startup reinventing AI chips",
+      "source_url": "https://www.gov.uk/government/news/sovereign-ai-invests-in-uk-startup-reinventing-ai-chips",
+      "title": "英国のAI政策が、国内半導体スタートアップへの投資として動く",
+      "topics": [
+        "ai-policy",
+        "ai-infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-08-10T05:23:51Z",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-10T06:12:00Z",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — エージェント運用から創造性まで、8つの変化を横断する",
+  "topics": [
+    {
+      "id": "ai-agents",
+      "label_en": "AI agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "id": "ai-security",
+      "label_en": "AI security",
+      "label_ja": "AIセキュリティ"
+    },
+    {
+      "id": "ai-governance",
+      "label_en": "AI governance",
+      "label_ja": "AIガバナンス"
+    },
+    {
+      "id": "developer-tools",
+      "label_en": "Developer tools",
+      "label_ja": "開発ツール"
+    },
+    {
+      "id": "ai-measurement",
+      "label_en": "AI measurement",
+      "label_ja": "AIの効果測定"
+    },
+    {
+      "id": "ai-infrastructure",
+      "label_en": "AI infrastructure",
+      "label_ja": "AIインフラ"
+    },
+    {
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "創造的AI"
+    },
+    {
+      "id": "ai-policy",
+      "label_en": "AI policy",
+      "label_ja": "AI政策"
+    }
+  ]
+}
