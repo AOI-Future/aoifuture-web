@@ -1,0 +1,18 @@
+[
+  {
+    "changed_signal_ids": [
+      "agent-skill-retrieval-2608-06196",
+      "visual-tool-use-causal-audit-2608-06270"
+    ],
+    "edition_date": "2026-08-10",
+    "edition_id": "2026-08-10-0923",
+    "edition_url": "https://aoifuture.com/news/2026-08-10-0923/",
+    "event_id": "aoi-news-2026-08-10-0923-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-10T00:23:25Z",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "画像操作ツールとスキル検索グラフの検証から見えるのは、機能の追加数ではなく、観測や構造が実際に答えへ寄与した経路を測る必要性だ。",
+    "title": "AOIFUTURE News — ツールを増やす前に、効いている経路を測る"
+  }
+]

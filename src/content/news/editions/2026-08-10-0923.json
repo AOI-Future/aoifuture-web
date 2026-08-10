@@ -1,0 +1,88 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-10T00:22:23Z",
+  "dek": "画像操作ツールとスキル検索グラフの検証から見えるのは、機能の追加数ではなく、観測や構造が実際に答えへ寄与した経路を測る必要性だ。",
+  "edition_date": "2026-08-10",
+  "edition_id": "2026-08-10-0923",
+  "edition_note": "2件のarXiv v1論文について公式ページと本文を確認した選定スナップショット。数値・比較・因果分析は著者報告であり、独立再現や他環境への一般化を示すものではない。",
+  "generated_at": "2026-08-10T00:23:25Z",
+  "items": [
+    {
+      "aoi_note": "マルチモーダル運用では、cropやzoomを使ったかではなく、返却観測、回答差分、追加トークン、失敗時の直接推論結果を同じreceiptへ残す。効果が確認できない呼び出しは、効果未確認のコストとして管理する。",
+      "caveat": "arXiv v1の著者報告で独立再現はない。評価対象は論文で選ばれたモデルとベンチマークに限られ、個別の業務画像、ツール実装、モデル更新後の効果を保証しない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "visual-tool-use-causal-audit-2608-06270",
+      "language": "en",
+      "observed_at": "2026-08-10T00:22:23Z",
+      "published_at": "2026-08-06T17:01:08Z",
+      "role": "lead",
+      "selection_reason": "ツール呼び出し回数や総合精度だけでは、追加コストが実際の判断改善へ結びついたか分からないことを、観測単位の検証問題として示しているため。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは視覚ツール利用を因果グラフとして捉え、方策・軌跡・個別ステップの介入で、返された画像観測が回答へ寄与したかを監査した。6モデルと5つの細粒度知覚ベンチマークで、観測が回答へ影響しない「Calling Without Looking」と、観測は有益でも呼び出し計画が不整合な「Looking Without Planning」を報告している。",
+      "source_kind": "paper",
+      "source_title": "The Illusion of Visual Tool-Use: A Causal Audit of Thinking with Images",
+      "source_url": "https://arxiv.org/abs/2608.06270v1",
+      "title": "画像ツールを呼んだ事実ではなく、返った観測が答えを変えたかを測る",
+      "topics": [
+        "visual-tool-use",
+        "agent-evaluation"
+      ],
+      "verification": {
+        "checked_at": "2026-08-10T00:22:23Z",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "大規模スキル基盤では、グラフの有無より候補生成源の独立性を監査する。検索器と同じembedding近傍だけでエッジを作るなら、依存関係の説明には使えても未到達スキルの救済経路とは見なさない。",
+      "caveat": "単一組織の単一コーパス、117質問、単一embedding構成による著者報告である。レイテンシや最終タスク成功率は測定されず、依存関係や実利用ログから独立に構築したグラフへ結果を一般化できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "agent-skill-retrieval-2608-06196",
+      "language": "en",
+      "observed_at": "2026-08-10T00:22:23Z",
+      "published_at": "2026-08-06T15:54:23Z",
+      "role": "major",
+      "selection_reason": "構造化すれば検索範囲が広がるという直感に対し、候補エッジの作り方が既存検索器に依存すると到達範囲も同じ信号に縛られることを、設計上の境界として示しているため。",
+      "source_domain": "arxiv.org",
+      "source_fact": "690スキルと117件の非エコー質問による著者評価では、lexicalとdenseを組み合わせた検索器のtop-5到達率は73.5%±8.0だった。同じ候補予算で追加の検索結果をグラフ近傍へ置き換えると11.2ポイント低下し、生成された型付きエッジの98.6%は埋め込み近傍が既に結んだスキル間だったと報告している。",
+      "source_kind": "paper",
+      "source_title": "Comparative Approaches to Agent Retrieval over Large Skill Libraries",
+      "source_url": "https://arxiv.org/abs/2608.06196v1",
+      "title": "検索器と同じ近傍から作ったグラフは、検索の届く範囲を広げられない",
+      "topics": [
+        "agent-skill-retrieval",
+        "agent-evaluation"
+      ],
+      "verification": {
+        "checked_at": "2026-08-10T00:22:23Z",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-10T00:23:25Z",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — ツールを増やす前に、効いている経路を測る",
+  "topics": [
+    {
+      "id": "visual-tool-use",
+      "label_en": "Visual tool use",
+      "label_ja": "視覚ツール利用"
+    },
+    {
+      "id": "agent-skill-retrieval",
+      "label_en": "Agent skill retrieval",
+      "label_ja": "エージェントのスキル検索"
+    },
+    {
+      "id": "agent-evaluation",
+      "label_en": "Agent evaluation",
+      "label_ja": "AIエージェント評価"
+    }
+  ]
+}
