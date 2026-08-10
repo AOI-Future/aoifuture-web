@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "cloudflare-unified-ai-control-plane",
+      "github-copilot-review-effort-levels",
+      "google-workspace-gemini-notebook-source-automation",
+      "harnessopt-bench-agent-harness-optimization",
+      "mirrorworld-reflection-aware-video",
+      "openai-critical-cyber-capability-response"
+    ],
+    "edition_date": "2026-08-11",
+    "edition_id": "2026-08-11-0056",
+    "edition_url": "https://aoifuture.com/news/2026-08-11-0056/",
+    "event_id": "aoi-news-2026-08-11-0056-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-10T15:56:00Z",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "サイバー能力の予防的判断から、エージェントの実行環境評価、統合AI基盤、レビュー深度、知識更新、動画生成まで。一次情報6件を深掘り2件と短報4件で横断する。",
+    "title": "AOIFUTURE News — 能力の上昇を、制御・評価・創作の設計へつなぐ"
+  }
+]

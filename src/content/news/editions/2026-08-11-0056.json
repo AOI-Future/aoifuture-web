@@ -1,0 +1,229 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-10T15:56:00Z",
+  "dek": "サイバー能力の予防的判断から、エージェントの実行環境評価、統合AI基盤、レビュー深度、知識更新、動画生成まで。一次情報6件を深掘り2件と短報4件で横断する。",
+  "edition_date": "2026-08-11",
+  "edition_id": "2026-08-11-0056",
+  "edition_note": "6件すべて一次情報を直接確認したレビュー候補。製品発表は提供元の説明であり効果の独立検証ではない。arXiv論文2件の結果は著者報告として留保を付けた。",
+  "generated_at": "2026-08-10T15:56:00Z",
+  "items": [
+    {
+      "aoi_note": "能力ラベルだけでなく、誰が利用できるか、どの操作を止めるか、防御側へ何を先行提供するかまで一つの運用設計として読む。",
+      "caveat": "評価はOpenAI自身によるもので、Astraは今後提供予定のモデルである。Critical能力が実証済みだという発表ではなく、否定できないという予防的判断だ。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-critical-cyber-capability-response",
+      "language": "en",
+      "observed_at": "2026-08-10T15:56:00Z",
+      "published_at": "2026-08-07T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "モデル能力の評価結果が、公開判断、アクセス制御、防御側支援へどう接続されるかを一次情報で示している。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは、次期モデルAstraの社内評価と専門家評価を踏まえ、Preparedness Framework上のCriticalなサイバー能力を否定できないと公表し、段階的な安全策を説明した。",
+      "source_kind": "official",
+      "source_title": "Responding to the next frontier of critical cyber capabilities",
+      "source_url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities/",
+      "title": "「Critical」を否定できない段階で、モデル公開前の防御を組み替える",
+      "topics": [
+        "security",
+        "models",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-08-10T15:56:00Z",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "本番改善ではモデル交換とハーネス変更を分離し、同じ評価予算、保持テスト、候補版の証跡で差分を測る。",
+      "caveat": "arXiv v1の著者報告であり、全モデル・タスク別スコア、信頼区間、実運用での再現性は要旨だけでは確認できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "harnessopt-bench-agent-harness-optimization",
+      "language": "en",
+      "observed_at": "2026-08-10T15:56:00Z",
+      "published_at": "2026-08-06T17:21:05Z",
+      "role": "major",
+      "selection_reason": "エージェント性能をモデル名だけで比較せず、周辺設計を再現可能な評価対象として扱う視点を提供する。",
+      "source_domain": "arxiv.org",
+      "source_fact": "HarnessOpt-Benchは、プロンプト、ツール、制御フロー、メモリ、オーケストレーションコードを含むエージェントのハーネス最適化を、5つのフロンティアLLM、4タスク、111回のスコア付き実行で評価したと報告している。",
+      "source_kind": "paper",
+      "source_title": "HarnessOpt-Bench: Evaluating LLMs at Harness Optimization",
+      "source_url": "https://arxiv.org/abs/2608.06301v1",
+      "title": "モデルだけでなく、プロンプト・ツール・記憶を含む「実行環境」も最適化対象になる",
+      "topics": [
+        "agents",
+        "research",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-10T15:56:00Z",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ルーティングを増やす前に、全経路で共通に残すID、コスト、遅延、ポリシー判定、失敗理由を定義する。",
+      "caveat": "Cloudflareによる製品計画の発表であり、移行時期、全機能の同等性、運用効果は独立検証されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-unified-ai-control-plane",
+      "language": "en",
+      "observed_at": "2026-08-10T15:56:00Z",
+      "published_at": "2026-08-07T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "複数モデルの採用が、呼び出し先の選択よりも統一された観測・制御面の設計へ移っている。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "CloudflareはWorkers AIとAI Gatewayを統合し、管理GPUと外部モデル提供者への接続を、観測、課金、セキュリティ、ログを含む単一経路へ収束させる計画を発表した。",
+      "source_kind": "release",
+      "source_title": "Unifying Workers AI and AI Gateway into a single AI control plane",
+      "source_url": "https://blog.cloudflare.com/workers-ai-gateway-unification/",
+      "title": "内製GPUと外部モデルを、一つのAIコントロールプレーンで扱う",
+      "topics": [
+        "tools",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-08-10T15:56:00Z",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ドキュメント変更と認証・決済・権限変更を同じレビュー設定にせず、変更種別ごとの最低深度を決める。",
+      "caveat": "GitHubの機能発表であり、レビュー品質や欠陥検出率の改善を独立に示すものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-review-effort-levels",
+      "language": "en",
+      "observed_at": "2026-08-10T15:56:00Z",
+      "published_at": "2026-08-07T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "すべての変更へ同じ推論コストをかけず、変更リスクに応じてレビュー深度を調整する実務的な設計だから。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはCopilot code reviewのLiteとBalancedを一般提供し、レビューごとの選択と組織既定値を提供した。",
+      "source_kind": "release",
+      "source_title": "Copilot code review effort levels are generally available",
+      "source_url": "https://github.blog/changelog/2026-08-07-copilot-code-review-effort-levels-are-generally-available/",
+      "title": "コードレビューの深さを、変更の複雑さとリスクに合わせて選ぶ",
+      "topics": [
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-08-10T15:56:00Z",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "自動追加では、取得元、追加時刻、重複、削除・更新の扱い、信頼できない入力の隔離をノート側にも残す。",
+      "caveat": "段階展開の製品機能であり、利用可否は契約、管理者設定、ロールアウト時期に依存する。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-workspace-gemini-notebook-source-automation",
+      "language": "en",
+      "observed_at": "2026-08-10T15:56:00Z",
+      "published_at": "2026-08-07T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "ノート型AIの鮮度維持が、手作業の追加から更新ワークフローの設計へ移る例だから。",
+      "source_domain": "workspaceupdates.googleblog.com",
+      "source_fact": "Google WorkspaceはWorkspace StudioにGemini Notebookへテキスト、Driveファイル、YouTubeやWebのURLを追加するステップを導入し、定期ワークフローで情報源を更新できると発表した。",
+      "source_kind": "release",
+      "source_title": "Automatically add sources to your Gemini Notebooks in Workspace Studio",
+      "source_url": "https://workspaceupdates.googleblog.com/",
+      "title": "Gemini Notebookの情報源を、定期ワークフローから自動追加する",
+      "topics": [
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-08-10T15:56:00Z",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "創作ツールの評価では見た目の鮮明さだけでなく、反射、影、時間的一貫性など関係性の破綻を別指標で確認する。",
+      "caveat": "arXiv v1の著者報告。要旨にはデータ規模、評価指標、数値差、ベースライン条件がなく、改善幅は確認できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "mirrorworld-reflection-aware-video",
+      "language": "en",
+      "observed_at": "2026-08-10T15:56:00Z",
+      "published_at": "2026-08-07T17:58:10Z",
+      "role": "watch",
+      "selection_reason": "動画生成の難所を、意味的一貫性と空間配置という別々の問題へ分解した具体例として有用だ。",
+      "source_domain": "arxiv.org",
+      "source_fact": "MirrorWorldは、意味関係の蒸留と幾何変換の整合を組み合わせ、4つの既存動画鏡面データセットを再構成したベンチマークで比較改善を報告している。",
+      "source_kind": "paper",
+      "source_title": "MirrorWorld: Taming Video Diffusion Models for Mirror Reflection Generation",
+      "source_url": "https://arxiv.org/abs/2608.07463v1",
+      "title": "鏡像の「何を映すか」と「どこへ映すか」を分けて動画生成を改善する",
+      "topics": [
+        "creative-ai",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-10T15:56:00Z",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-10T15:56:00Z",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — 能力の上昇を、制御・評価・創作の設計へつなぐ",
+  "topics": [
+    {
+      "description": "モデルやエージェントの能力評価、防御、アクセス制御。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "モデル能力、提供形態、複数モデルの運用。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "公開判断、透明性、運用ルール。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・ガバナンス"
+    },
+    {
+      "description": "ツール利用、ハーネス、継続的な実行設計。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "一次論文で提示された手法と評価。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "開発、レビュー、知識更新を支える製品機能。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "画像・動画生成と創作支援の技術。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}
