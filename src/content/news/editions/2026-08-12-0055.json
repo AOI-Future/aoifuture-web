@@ -1,0 +1,229 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-11T15:55:11Z",
+  "dek": "エージェントの安全ハーネスとRaspberry Pi上のエッジAIを深掘りし、価格、認証、OSベータ、合成音声評価の一次情報を短報でつなぐ。",
+  "edition_date": "2026-08-12",
+  "edition_id": "2026-08-12-0055",
+  "edition_note": "一次情報6件を直接確認したレビュー候補。深掘り2件、Brief/Watch 4件。研究結果と提供元ベンチマークには留保を付け、公開操作は行っていない。",
+  "generated_at": "2026-08-11T15:55:11Z",
+  "items": [
+    {
+      "aoi_note": "実運用では自動更新そのものを信用せず、どの失敗がどの境界変更を生んだか、保持テストと承認証跡を残したい。",
+      "caveat": "arXiv v1の著者報告。絶対的な攻撃成功率、全モデル、評価手順は要旨に示されず、未見リスクへの一般化も独立検証されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "she-safety-harness-evolution",
+      "language": "en",
+      "observed_at": "2026-08-11T15:55:11Z",
+      "published_at": "2026-08-10T17:35:08Z",
+      "role": "lead",
+      "selection_reason": "モデル本体だけでなく、権限やツールを束ねる実行環境を継続的な安全改善の対象にする具体案だから。",
+      "source_domain": "arxiv.org",
+      "source_fact": "SHEは、システムプロンプト、ルールバンク、安全メモリ、ツールポリシーを分離し、失敗軌跡の診断から各境界を更新する。著者らはAgent-SafetyBenchで静的SafeHarness比3.1倍の攻撃成功率低減と良性タスク効用の改善を報告した。",
+      "source_kind": "paper",
+      "source_title": "SHE: Trajectory-driven Safety Harness Evolution for LLM Agents",
+      "source_url": "https://arxiv.org/abs/2608.09885v1",
+      "title": "失敗軌跡から、エージェントの安全ハーネスを更新する",
+      "topics": [
+        "security",
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-11T15:55:11Z",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エッジAIの可否は平均速度だけでなく、ピークメモリ、熱、並行処理、モデル配布条件、入力データの端末外送信有無で評価する。",
+      "caveat": "Googleと協力各社による公式デモ・測定で、設定、持続負荷、熱条件、品質比較の全詳細は記事だけでは確認できない。Gemma 4やHailo対応の一部は提供状況に注意が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-litert-gemma-raspberry-pi",
+      "language": "en",
+      "observed_at": "2026-08-11T15:55:11Z",
+      "published_at": "2026-08-11T00:00:00Z",
+      "role": "major",
+      "selection_reason": "小型端末上のAIを「モデル単体」ではなく、CPU/GPU分担と変換・量子化・推論を含む実装経路として示している。",
+      "source_domain": "developers.googleblog.com",
+      "source_fact": "GoogleはLiteRTとGemmaをRaspberry Pi 5で組み合わせる構成を公開し、Gemma 4 E2Bでプリフィル99 tokens/s、デコード9 tokens/s、ピークメモリ1432 MBを報告した。Reachy Miniの例では視覚をGPU、音声認識・推論・音声合成をCPUへ分担する。",
+      "source_kind": "release",
+      "source_title": "Mastering Edge AI on Raspberry Pi with LiteRT and Gemma",
+      "source_url": "https://developers.googleblog.com/en/mastering-edge-ai-on-raspberry-pi-with-litert-and-gemma/",
+      "title": "Raspberry Pi 5で、視覚・音声・言語をクラウドなしに動かす",
+      "topics": [
+        "tools",
+        "open-source",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-08-11T15:55:11Z",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "価格表だけでなく、同じ入力が新トークナイザーで約1.0〜1.35倍のトークンになるという脚注も総費用試算へ入れる。",
+      "caveat": "価格はAnthropicの公式発表で、実際の費用はトークン化、キャッシュ、利用量、提供経路、将来の改定に左右される。モデル自体の初出は6月30日で、今回は価格の重要更新である。",
+      "change": {
+        "kind": "updated"
+      },
+      "context_ids": [],
+      "id": "anthropic-sonnet5-permanent-pricing",
+      "language": "en",
+      "observed_at": "2026-08-11T15:55:11Z",
+      "published_at": "2026-08-10T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "モデル選定の前提となる継続コストが明確に変わる、実務的で検証可能な更新だから。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "Anthropicは8月10日の更新で、Sonnet 5の100万入力トークン当たり2ドル、出力10ドルという導入価格を恒久化し、9月1日に予定していた3ドル／15ドルへの移行を取りやめた。",
+      "source_kind": "official",
+      "source_title": "Introducing Claude Sonnet 5",
+      "source_url": "https://www.anthropic.com/news/claude-sonnet-5",
+      "title": "Claude Sonnet 5の導入価格が、そのまま恒久価格になった",
+      "topics": [
+        "models",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-08-11T15:55:11Z",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "導入時はスキルの便利さより先に、許可するAWS操作、対象環境、変更前後の差分、ロールバック、承認必須操作を固定する。",
+      "caveat": "AWSの製品発表であり、設定の正しさや安全性を自動的に保証するものではない。8月7日公開のため72時間外だが、7日以内の文脈Briefとして収録した。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-cognito-agent-toolkit-skill",
+      "language": "en",
+      "observed_at": "2026-08-11T15:55:11Z",
+      "published_at": "2026-08-07T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "認証という高リスク設定をエージェント化する際、実行権限と監査ログを製品契約として明示している。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSはAgent Toolkit for AWSにCognito用のaws-authスキルを追加した。ユーザープール、OAuth 2.0、JWT、passkey/WebAuthn、脅威保護などを扱い、AWS MCP Server併用時はIAMガードレールとCloudTrail監査下でCLIを実行する。",
+      "source_kind": "release",
+      "source_title": "Amazon Cognito now available as a skill in the Agent Toolkit for AWS",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/08/aws-auth-agent-skill/",
+      "title": "認証設定をAIエージェントへ任せるなら、IAMとCloudTrailまで一組にする",
+      "topics": [
+        "agents",
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-11T15:55:11Z",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "本番端末へ急いで入れず、検証機でビルド番号、主要ツール、権限、ネットワーク、ロールバック手順を確認する。",
+      "caveat": "一覧ページから確認できるのは名称、ビルド、日付、リンクまでで、変更内容やAI関連の具体差分はこの読み取りでは確認していない。ベータ版である。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "apple-macos27-beta5",
+      "language": "en",
+      "observed_at": "2026-08-11T15:55:11Z",
+      "published_at": "2026-08-10T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "開発・検証環境へ影響しうる新しいOSベータの存在を、一次情報で短く把握できる。",
+      "source_domain": "developer.apple.com",
+      "source_fact": "Apple Developerは8月10日、macOS 27.0 beta 5、ビルド26A5406eを公開し、ダウンロードとリリースノートへの導線を掲載した。",
+      "source_kind": "release",
+      "source_title": "macOS 27.0 beta 5 (26A5406e)",
+      "source_url": "https://developer.apple.com/news/releases/?id=08102026h",
+      "title": "macOS 27 beta 5が開発者向けに公開",
+      "topics": [
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-11T15:55:11Z",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "音声制作のQAではMOSだけでなく、発音、韻律、強勢、リズム、意味に沿った間などを人間レビューと分けて記録する。",
+      "caveat": "arXiv v1でWork in progress。標本抽出、評価者間一致、モデル版、プロンプト、統計的不確実性は要旨に示されず、結論は著者報告の範囲に限る。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "tts-evaluator-linguistic-dimensions",
+      "language": "en",
+      "observed_at": "2026-08-11T15:55:11Z",
+      "published_at": "2026-08-10T17:59:51Z",
+      "role": "watch",
+      "selection_reason": "生成音声の品質評価を単一スコアから、聞き手が知覚する具体的な誤りへ分解する視点を与える。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは音声の自然さを10の知覚次元へ分解し、訓練を受けた言語学評価者が注釈した860発話で、4つのMOS予測器と4つのAudio-LLM判定器を比較した。どちらも広範な言語構造上の誤りを安定して捉えられないと報告した。",
+      "source_kind": "paper",
+      "source_title": "Beyond Naturalness: Probing Automated Text-To-Speech Evaluators on Linguistically Grounded Dimensions",
+      "source_url": "https://arxiv.org/abs/2608.09930v1",
+      "title": "「自然に聞こえる」だけでは、合成音声の誤りを測りきれない",
+      "topics": [
+        "creative-ai",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-11T15:55:11Z",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-11T15:55:11Z",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — 安全な実行環境から、手元で動くAIと音声評価まで",
+  "topics": [
+    {
+      "description": "ツール、権限、記憶、実行環境を含むエージェント設計。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "AIシステムの攻撃耐性、認証、監査可能性。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "開発・運用を具体化する製品、ランタイム、ワークフロー。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "公開モデル、コード、再利用可能な実装資産。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "モデルの提供条件、性能、コストの変化。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "音声・画像・映像など創作支援技術と評価。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    },
+    {
+      "description": "一次論文が提案する手法、ベンチマーク、限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    }
+  ]
+}

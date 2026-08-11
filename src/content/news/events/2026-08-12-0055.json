@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "anthropic-sonnet5-permanent-pricing",
+      "apple-macos27-beta5",
+      "aws-cognito-agent-toolkit-skill",
+      "google-litert-gemma-raspberry-pi",
+      "she-safety-harness-evolution",
+      "tts-evaluator-linguistic-dimensions"
+    ],
+    "edition_date": "2026-08-12",
+    "edition_id": "2026-08-12-0055",
+    "edition_url": "https://aoifuture.com/news/2026-08-12-0055/",
+    "event_id": "aoi-news-2026-08-12-0055-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-11T15:55:11Z",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "エージェントの安全ハーネスとRaspberry Pi上のエッジAIを深掘りし、価格、認証、OSベータ、合成音声評価の一次情報を短報でつなぐ。",
+    "title": "AOIFUTURE News — 安全な実行環境から、手元で動くAIと音声評価まで"
+  }
+]
