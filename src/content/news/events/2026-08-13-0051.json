@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "dsle-dark-souls-agent-benchmark",
+      "github-copilot-jetbrains-memory-ollama",
+      "github-copilot-per-model-token-report",
+      "openai-gpt-56-sol-chat-update",
+      "polis-institutional-multi-agent-safety",
+      "wordpress-704-security-release"
+    ],
+    "edition_date": "2026-08-13",
+    "edition_id": "2026-08-13-0051",
+    "edition_url": "https://aoifuture.com/news/2026-08-13-0051/",
+    "event_id": "aoi-news-2026-08-13-0051-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-13T06:05:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "委任の来歴を追う安全設計と、難しい環境でのエージェント評価を深掘りし、AI利用計測、IDE、モデル、CMS更新を短報で追う。",
+    "title": "AOIFUTURE News — エージェントを「制度」と「失敗」で評価する"
+  }
+]
