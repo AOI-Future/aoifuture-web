@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "github-agent-plugins-1",
+      "go-ai-assisted-engineering",
+      "opencode-11817",
+      "pixel-11-gemini",
+      "simulator-collapse-marl",
+      "socratic-tutor-withholding"
+    ],
+    "edition_date": "2026-08-14",
+    "edition_id": "2026-08-14-0050",
+    "edition_url": "https://aoifuture.com/news/2026-08-14-0050/",
+    "event_id": "aoi-news-2026-08-14-0050-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-14T00:50:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "答えを抑えるチューターと、単一シミュレーターへの過適合を深掘り。プラグイン標準、端末AI、エージェント運用改善を短報で追う。",
+    "title": "AOIFUTURE News — エージェントは「答え」と「環境」を制御できるか"
+  }
+]

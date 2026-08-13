@@ -1,0 +1,233 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-14T00:50:00+09:00",
+  "dek": "答えを抑えるチューターと、単一シミュレーターへの過適合を深掘り。プラグイン標準、端末AI、エージェント運用改善を短報で追う。",
+  "edition_date": "2026-08-14",
+  "edition_id": "2026-08-14-0050",
+  "edition_note": "一次情報6件を直接確認したレビュー候補。深掘り2件、Brief/Watch 4件。4ドメイン・4ソース種別・7トピックを満たし、公開操作は行っていない。",
+  "generated_at": "2026-08-14T00:50:00+09:00",
+  "items": [
+    {
+      "aoi_note": "拒否や抑制をプロンプトだけに任せず、決定的な境界と判定を分離する。",
+      "caveat": "arXiv v1の単著プレプリントで、4つの受入基準、試行数、モデル名は要旨だけでは十分に確認できない。満点適合は著者報告で独立検証前。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "socratic-tutor-withholding",
+      "language": "en",
+      "observed_at": "2026-08-14T00:50:00+09:00",
+      "published_at": "2026-08-12T17:35:58Z",
+      "role": "lead",
+      "selection_reason": "能力の追加ではなく、持っている能力を出さない制御を実行時契約として設計している。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者は、信頼済み学習状態から8段階の支援上限を決める非LLMポリシー、解答コードを除く決定的検出器、危険な応答を確認する別LLM判定器からなる配備済み学習支援システムを報告した。",
+      "source_kind": "paper",
+      "source_title": "Teaching a Large Language Model Tutor to Withhold the Answer: A Supervisor Architecture and an Evidence-Driven Method for Tuning Socratic Behavior",
+      "source_url": "https://arxiv.org/abs/2608.12292v1",
+      "title": "答えを「出さない」能力を、機械検査できる契約にする",
+      "topics": [
+        "agents",
+        "security",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-14T00:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "本番相手を一つの模擬人格で代表させず、環境側の多様性と転移失敗を測る。",
+      "caveat": "arXiv v1の著者報告。改善率の基準、信頼区間、人間研究の規模は要旨だけでは確認できず、実環境一般への外挿はできない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "simulator-collapse-marl",
+      "language": "en",
+      "observed_at": "2026-08-14T00:50:00+09:00",
+      "published_at": "2026-08-12T16:55:50Z",
+      "role": "major",
+      "selection_reason": "エージェント評価では、方策だけでなく訓練環境の多様性が一般化を左右することを具体化している。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、単一LLM模擬器に対する強化学習が未知の模擬器や実ユーザーへ移りにくい「simulator collapse」を報告し、Verbalized Samplingで最大9%、複数模擬器Co-Trainingで最大14%のheld-out成功率改善を報告した。",
+      "source_kind": "paper",
+      "source_title": "One Frozen Simulator Is Not Enough: Simulator Collapse in Multi-Agent RL",
+      "source_url": "https://arxiv.org/abs/2608.12253v1",
+      "title": "単一のユーザー模擬器で学ぶエージェントは、その癖に過適合する",
+      "topics": [
+        "agents",
+        "research",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-08-14T00:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "移植性が上がるほど、許可するプラグインとMCP能力の審査・配布統制が重要になる。",
+      "caveat": "GitHubの製品発表。対応クライアント、管理機能、互換性は各製品の更新状況に依存する。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-agent-plugins-1",
+      "language": "en",
+      "observed_at": "2026-08-14T00:50:00+09:00",
+      "published_at": "2026-08-12T18:39:11Z",
+      "role": "brief",
+      "selection_reason": "複数クライアントをまたぐ再利用と、組織単位の配布管理を同じ形式で扱える。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは、エージェントスキルとMCPサーバーを単一の導入可能なプラグインへまとめるAgent Plugins 1.0を、VS Code、Copilot CLI、Copilotアプリで利用できると発表した。",
+      "source_kind": "release",
+      "source_title": "Agent Plugins 1.0 in VS Code, Copilot CLI, and the Copilot app",
+      "source_url": "https://github.blog/changelog/2026-08-12-agent-plugins-1-0-in-vs-code-copilot-cli-and-the-copilot-app/",
+      "title": "Agent Plugins 1.0が、スキルとMCPの持ち運び方を共通化",
+      "topics": [
+        "agents",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-08-14T00:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "便利さだけでなく、個人化に使うデータ範囲と端末・クラウド処理の境界を確認したい。",
+      "caveat": "Googleの製品発表であり、速度や体験の改善は同社説明。機能、地域、言語、提供時期は構成により異なる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "pixel-11-gemini",
+      "language": "en",
+      "observed_at": "2026-08-14T00:50:00+09:00",
+      "published_at": "2026-08-12T14:00:00Z",
+      "role": "brief",
+      "selection_reason": "生成AIが単独アプリではなく、端末の通知、カメラ、日常操作へ組み込まれる流れを示す。",
+      "source_domain": "blog.google",
+      "source_fact": "GoogleはPixel 11シリーズにTensor G6、更新されたカメラ、HiLight通知、より高速なGemini AI対応を搭載すると発表した。",
+      "source_kind": "release",
+      "source_title": "The Pixel 11 series: Your most personal Pixel yet",
+      "source_url": "https://blog.google/products-and-platforms/devices/pixel/google-pixel-11-pro-xl/",
+      "title": "Pixel 11はGeminiを端末体験の中心へ寄せる",
+      "topics": [
+        "models",
+        "tools",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-08-14T00:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "自律実行では、要約品質と再試行上限を独立した信頼性指標として監視する。",
+      "caveat": "リポジトリのリリースノートに基づく。全環境での改善や後方互換性を独立検証したものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "opencode-11817",
+      "language": "en",
+      "observed_at": "2026-08-14T00:50:00+09:00",
+      "published_at": "2026-08-12T20:25:07Z",
+      "role": "watch",
+      "selection_reason": "長時間エージェントの文脈劣化と再試行ストームという運用上の失敗を直接扱う更新。",
+      "source_domain": "api.github.com",
+      "source_fact": "OpenCode v1.18.17は、小型モデル向けに最近の会話ターンを完全に保持する圧縮改善、自動セッション再試行の上限とジッター、対応するCopilotモデルへのPDF添付を追加した。",
+      "source_kind": "repository",
+      "source_title": "OpenCode v1.18.17",
+      "source_url": "https://api.github.com/repos/anomalyco/opencode/releases/tags/v1.18.17",
+      "title": "OpenCode 1.18.17は、圧縮と自動再試行の暴走を抑える",
+      "topics": [
+        "agents",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-08-14T00:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AIコーディングの速度を上げるほど、コンパイラ、フォーマッタ、互換性規約へ検証を寄せる。",
+      "caveat": "Googleの技術解説・主張で、Goが他言語より優れることを比較実験で証明した発表ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "go-ai-assisted-engineering",
+      "language": "en",
+      "observed_at": "2026-08-14T00:50:00+09:00",
+      "published_at": "2026-08-11T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "モデル能力だけでなく、言語とツールチェーンを決定的なガードレールとして選ぶ視点を提供する。",
+      "source_domain": "developers.googleblog.com",
+      "source_fact": "Google Developers Blogは、Goの厳格なコンパイラ、統合ツールチェーン、標準化された可読性が、AI生成コードの自己修正と検証を助けるという設計論を公開した。",
+      "source_kind": "release",
+      "source_title": "Why Go is an Ideal Language for AI-Assisted Software Engineering",
+      "source_url": "https://developers.googleblog.com/why-go-is-an-ideal-language-for-ai-assisted-software-engineering/",
+      "title": "AI生成コード時代に、Goの制約をレビュー支援へ使う",
+      "topics": [
+        "tools",
+        "agents",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-08-14T00:50:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-14T00:50:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — エージェントは「答え」と「環境」を制御できるか",
+  "topics": [
+    {
+      "description": "権限、訓練環境、実行制御を含むエージェント設計。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "能力の抑制、監査、失敗封じ込め。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "一次論文の手法、結果、限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "モデルの能力と利用条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "開発・運用を具体化する製品と基盤。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "再利用可能な公開仕様と実装。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "端末、映像、音声、デザインへ組み込まれるAI。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}
