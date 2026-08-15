@@ -1,0 +1,234 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-16T00:55:00+09:00",
+  "dek": "長期研究エージェントとHumanTrackerを深掘り。OAuth、AI就業訓練、オープンモデル、空間推論を短報で追う。",
+  "edition_date": "2026-08-16",
+  "edition_id": "2026-08-16-0055",
+  "edition_note": "一次情報6件を直接確認したレビュー候補。深掘り2件、Brief/Watch 4件。公開操作は行っていない。",
+  "generated_at": "2026-08-16T00:55:00+09:00",
+  "items": [
+    {
+      "aoi_note": "長期タスクでは成果物だけでなく、途中の判断、再試行、経験の再利用が本当に改善へ寄与したかを記録する。",
+      "caveat": "arXiv v1の著者報告で独立検証前。36タスク、7モデル、評価ハーネスの条件を超えて一般化できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "long-horizon-rd-agents",
+      "language": "en",
+      "observed_at": "2026-08-16T00:55:00+09:00",
+      "published_at": "2026-08-13T16:11:22Z",
+      "role": "lead",
+      "selection_reason": "最終スコアだけでは見えない、問題設定・実行・フィードバック制御・経験再利用の差を評価対象にした。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは7つのフロンティアモデルを36件の長期タスクで評価し、現行エージェントは実用解を組み立てられる一方、試行間のばらつきが大きく、真に新しい方法の創出はまれだと報告した。",
+      "source_kind": "paper",
+      "source_title": "Beyond Final Scores: A Systematic Evaluation of Agents for Long-Horizon AI Research and Development",
+      "source_url": "https://arxiv.org/abs/2608.13417v1",
+      "title": "長期研究エージェントは「自律研究者」より、まだ工学的な最適化役に近い",
+      "topics": [
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-16T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "生成映像やロボット動作でも、数値誤差と人が感じる自然さを別々に測る設計が必要になる。",
+      "caveat": "arXiv v1の著者報告で独立検証前。データ利用条件、比較対象、統計的不確実性、実環境での妥当性は要確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "humantracker-human-aligned-motion",
+      "language": "en",
+      "observed_at": "2026-08-16T00:55:00+09:00",
+      "published_at": "2026-08-13T17:59:40Z",
+      "role": "major",
+      "selection_reason": "足滑りや接地タイミングなど、平均的な姿勢誤差では落ちやすい身体的な破綻を人の知覚に寄せて評価する。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは約153時間の光学式モーション軌跡を含むHumanTrackerと、12,000組・24,000モーションの選好データで学習したHumanScoreを提示した。",
+      "source_kind": "paper",
+      "source_title": "HumanTracker: Towards Comprehensive and Human-Aligned Motion Tracking Benchmark",
+      "source_url": "https://arxiv.org/abs/2608.13555v1",
+      "title": "人型ロボットの動きは、姿勢誤差だけではなく「人が違和感を持つ失敗」で測る",
+      "topics": [
+        "research",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-08-16T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ワイルドカードは便利さより乗っ取り面が増えるため、不要なら無効化し、callback先の所有境界を点検する。",
+      "caveat": "GitHubの製品発表。ワイルドカード照合は、ユーザー生成コンテンツを置くサブドメインや経路で悪用され得るとGitHub自身が警告している。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-oauth-token-refresh",
+      "language": "en",
+      "observed_at": "2026-08-16T00:55:00+09:00",
+      "published_at": "2026-08-14T15:43:44-07:00",
+      "role": "brief",
+      "selection_reason": "エージェント連携の認証を、長寿命トークン前提からローテーション可能な設計へ移す具体的な更新。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはOAuthアプリ向けに8時間のアクセストークンと6か月のリフレッシュトークン、最大10件のリダイレクトURI、任意のワイルドカード照合を追加し、新規アプリでは短命トークンを既定にした。",
+      "source_kind": "release",
+      "source_title": "Multiple redirect URIs and token refresh for OAuth apps",
+      "source_url": "https://github.blog/changelog/2026-08-14-multiple-redirect-uris-and-token-refresh-for-oauth-apps/",
+      "title": "GitHub OAuth、短命トークンと複数リダイレクトURIを追加",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-16T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "参加者数だけでなく、修了、実習移行、雇用継続、地域差を追って初めて政策効果を判断できる。",
+      "caveat": "政府発表の試行計画で、雇用成果はまだ出ていない。全国展開はパイロット結果を踏まえる予定。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "uk-ai-youth-bootcamp",
+      "language": "en",
+      "observed_at": "2026-08-16T00:55:00+09:00",
+      "published_at": "2026-08-14T00:01:00+01:00",
+      "role": "watch",
+      "selection_reason": "AI教育を座学で終わらせず、責任ある利用、人の監督、品質管理、就業経路まで一体で試す公共施策。",
+      "source_domain": "www.gov.uk",
+      "source_fact": "英国政府は最大70人の16〜21歳を対象に、3週間のAI・職場スキル訓練と、その後の地域企業・公共部門の実習機会を組み合わせる試行を開始した。",
+      "source_kind": "regulator",
+      "source_title": "AI bootcamp launched in north-west to combat youth unemployment",
+      "source_url": "https://www.gov.uk/government/news/ai-bootcamp-launched-in-north-west-to-combat-youth-unemployment",
+      "title": "英国北西部、16〜21歳向けAI就業ブートキャンプを試行",
+      "topics": [
+        "policy",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-16T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "モデル選定では話題性や公開数ではなく、更新継続、実行環境、利用実績、ライセンスを並べて確認する。",
+      "caveat": "Hugging Face自身によるHubデータ分析。集計定義、Hub外の利用、重複・派生リポジトリの影響を含むため、市場全体の利用率ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "hf-open-models-summer-2026",
+      "language": "en",
+      "observed_at": "2026-08-16T00:55:00+09:00",
+      "published_at": "2026-08-14T00:00:00.732Z",
+      "role": "brief",
+      "selection_reason": "公開件数の増加と実利用の集中を分けて見せ、open weightの活況を採用実態へ読み替える材料になる。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Hugging Faceは2026年1〜8月に公開モデルリポジトリが243万から296万へ増えた一方、85.6%は生涯ダウンロード200未満で、1.5%のリポジトリが全ダウンロードの99.2%を占めたと報告した。",
+      "source_kind": "official",
+      "source_title": "State of Open Models: Summer 2026 Observations",
+      "source_url": "https://huggingface.co/blog/state-of-open-models-summer-2026",
+      "title": "オープンモデルは増えたが、ダウンロードはごく一部へ集中",
+      "topics": [
+        "open-source",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-08-16T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "視覚エージェントのゲートには単発QAだけでなく、状態遷移後の接続・内外・順序を保つテストを入れる。",
+      "caveat": "Microsoft Researchによる研究紹介で独立検証前。8月12日公開のため72時間枠外のcontextual Briefとして採用した。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "microsoft-mindtopo-vlm",
+      "language": "en",
+      "observed_at": "2026-08-16T00:55:00+09:00",
+      "published_at": "2026-08-12T16:00:00Z",
+      "role": "watch",
+      "selection_reason": "ロボットや操作エージェントで、見えている状態を答える力と、変化後も制約を守る力を分離して評価できる。",
+      "source_domain": "www.microsoft.com",
+      "source_fact": "Microsoft Researchは連結、分離、順序、包囲、結び目を推論・計画の両方で測るMindTopoを紹介し、現行VLMは静的認識より対話的な操作計画で構造関係を維持しにくいと報告した。",
+      "source_kind": "official",
+      "source_title": "MindTopo reveals VLMs' spatial reasoning abilities",
+      "source_url": "https://www.microsoft.com/en-us/research/blog/mindtopo-reveals-vlms-spatial-reasoning-abilities/",
+      "title": "VLMは静止画の空間認識より、変化を伴う計画でトポロジーを失いやすい",
+      "topics": [
+        "research",
+        "models",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-08-16T00:55:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-16T00:55:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — 最終スコアの先で、AIの動きと権限を測り直す",
+  "topics": [
+    {
+      "description": "計画、ツール利用、長期実行を担うAIシステム。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "一次研究の方法、結果、限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "身体、画像、映像などを扱うAI応用。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    },
+    {
+      "description": "認証、権限、攻撃経路、失敗封じ込め。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "開発・運用・学習を具体化する製品や仕組み。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "行政、教育、雇用におけるAI導入。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・公共"
+    },
+    {
+      "description": "公開モデルと共同開発エコシステム。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "基盤モデルの能力、評価、提供構造。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    }
+  ]
+}

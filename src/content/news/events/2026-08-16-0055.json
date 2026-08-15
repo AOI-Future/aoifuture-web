@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "github-oauth-token-refresh",
+      "hf-open-models-summer-2026",
+      "humantracker-human-aligned-motion",
+      "long-horizon-rd-agents",
+      "microsoft-mindtopo-vlm",
+      "uk-ai-youth-bootcamp"
+    ],
+    "edition_date": "2026-08-16",
+    "edition_id": "2026-08-16-0055",
+    "edition_url": "https://aoifuture.com/news/2026-08-16-0055/",
+    "event_id": "aoi-news-2026-08-16-0055-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-16T00:55:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "長期研究エージェントとHumanTrackerを深掘り。OAuth、AI就業訓練、オープンモデル、空間推論を短報で追う。",
+    "title": "AOIFUTURE News — 最終スコアの先で、AIの動きと権限を測り直す"
+  }
+]
