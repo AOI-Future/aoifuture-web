@@ -1,0 +1,239 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-15T00:50:00+09:00",
+  "dek": "Gemini 3.7 FlashとQuoteBenchを深掘り。スキルの資源浪費、ライセンス判定、公共AI、Copilot展開を短報で追う。",
+  "edition_date": "2026-08-15",
+  "edition_id": "2026-08-15-0050",
+  "edition_note": "一次情報6件を直接確認したレビュー候補。深掘り2件、Brief/Watch 4件。4ドメイン・4ソース種別・8トピックを満たし、公開操作は行っていない。",
+  "generated_at": "2026-08-15T00:50:00+09:00",
+  "items": [
+    {
+      "aoi_note": "エージェントの品質ゲートは最終スコアだけでなく、モデル出力から実行までの変換段階ごとに分ける。",
+      "caveat": "arXiv v1の著者報告。タスク集合、構成、回復幅は評価条件に依存し、一般的なシェル実行へそのまま外挿できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "quotebench-command-path",
+      "language": "en",
+      "observed_at": "2026-08-15T00:50:00+09:00",
+      "published_at": "2026-08-13T17:57:20Z",
+      "role": "lead",
+      "selection_reason": "モデル評価だけでは見えない、シリアライズ、ラップ、再解釈という実行経路の故障を測定対象にした。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者は56件・14系統の一回実行タスクを使うQuoteBenchを提示し、同一の応答を追加パーサー経由で再生すると、8構成で成功率が55.4〜73.2ポイント低下したと報告した。",
+      "source_kind": "paper",
+      "source_title": "QuoteBench: How Matched Scores Can Hide Command-Path Failures",
+      "source_url": "https://arxiv.org/abs/2608.13547v1",
+      "title": "同じスコアでも、コマンドが通る経路で安全性は崩れる",
+      "topics": [
+        "agents",
+        "security",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-15T00:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "モデル名より、同じタスクでの品質、レイテンシ、失敗率、総コストを運用ログで比較する。",
+      "caveat": "ベンチマーク、価格、可用性、安全対策はGoogleの発表で、独立検証前。導入価格と提供条件は期間・製品・地域に依存する。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "gemini-37-flash",
+      "language": "en",
+      "observed_at": "2026-08-15T00:50:00+09:00",
+      "published_at": "2026-08-13T17:04:18Z",
+      "role": "major",
+      "selection_reason": "低コスト帯のモデル選定が、単純応答から継続的なコード・エージェント処理へ広がる転換を具体的に示す。",
+      "source_domain": "blog.google",
+      "source_fact": "GoogleはGemini 3.7 Flashをコーディングとエージェント向けのworkhorse modelとして発表し、FrontierCode 1.1 Mainで43.6%対34.4%、DeepSWE v1.1で65.3%対49.0%と、3.6 Flashからの改善を報告した。",
+      "source_kind": "release",
+      "source_title": "Gemini 3.7 Flash: our most intelligent workhorse model",
+      "source_url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-3-7-flash/",
+      "title": "Gemini 3.7 Flashは、速度だけでなくエージェント実務へ軸足を移す",
+      "topics": [
+        "models",
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-15T00:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "成功・失敗に加え、不要スキル数、トークン、時間、外部呼び出しの上限を独立に監視する。",
+      "caveat": "arXiv v1の著者報告で独立検証前。数値は評価したモデル、タスク、攻撃条件に限定される。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "convergent-detour-hijacking",
+      "language": "en",
+      "observed_at": "2026-08-15T00:50:00+09:00",
+      "published_at": "2026-08-12T17:12:49Z",
+      "role": "brief",
+      "selection_reason": "タスク完了率だけでは検出できない、成功を維持したままのコスト増幅を示す。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者は第三者スキルの説明と本文を連動させるConvergent Detour Hijackingを提示し、491件のheld-outタスクで、特定構成における選択率80.02%、完了した該当実行のトークン増66.91%、実行時間増92.45%を報告した。",
+      "source_kind": "paper",
+      "source_title": "Convergent Detour Hijacking: Task-Preserving Resource Amplification in Skill-Based LLM Agents",
+      "source_url": "https://arxiv.org/abs/2608.12273v1",
+      "title": "タスクを成功させたまま、スキルが資源だけを浪費させる",
+      "topics": [
+        "agents",
+        "security",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-15T00:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "自動生成PRでも依存関係、ライセンス、出典を通常のサプライチェーン検査から外さない。",
+      "caveat": "GitHubの製品更新。判定精度の改善幅や、各レジストリの誤記・未登録をどこまで補えるかは示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-license-data-quality",
+      "language": "en",
+      "observed_at": "2026-08-15T00:50:00+09:00",
+      "published_at": "2026-08-13T19:14:12Z",
+      "role": "brief",
+      "selection_reason": "AI生成コードで依存導入が増えるほど、ライセンスの出所と欠落を機械的に追う価値が高まる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはdependency graphのソフトウェア部品について、npmjs.orgやPyPIなどのパッケージレジストリも参照してライセンス情報の正確性と完全性を改善すると発表した。",
+      "source_kind": "release",
+      "source_title": "License data quality improvements",
+      "source_url": "https://github.blog/changelog/2026-08-13-license-data-quality-improvements/",
+      "title": "依存関係のライセンス判定に、パッケージレジストリの情報を追加",
+      "topics": [
+        "open-source",
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-15T00:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "公共導入では便利さだけでなく、誤照合、写真の扱い、代替窓口、成果測定を確認する。",
+      "caveat": "州と提携先の発表で、再会率、誤照合率、プライバシー評価の数値は本文で確認できない。時刻は記事の日付のみのため東部時間00:00として表現した。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "delaware-lost-pet-ai",
+      "language": "en",
+      "observed_at": "2026-08-15T00:50:00+09:00",
+      "published_at": "2026-08-13T00:00:00-04:00",
+      "role": "watch",
+      "selection_reason": "生成AI以外でも、行政サービスの検索と照合にAIを組み込む具体例として読者の視野を広げる。",
+      "source_domain": "news.delaware.gov",
+      "source_fact": "デラウェア州公衆衛生局の動物福祉室は、Petco Love Lostの無料全国データベースを州の公式な迷子・保護ペット報告システムとして採用する提携を発表した。",
+      "source_kind": "regulator",
+      "source_title": "DPH Office of Animal Welfare Using Innovative AI Technology from Petco Love Lost to Reunite Lost Pets with Families",
+      "source_url": "https://news.delaware.gov/2026/08/13/dph-office-of-animal-welfare-using-innovative-ai-technology-from-petco-love-lost-to-reunite-lost-pets-with-families/",
+      "title": "デラウェア州、迷子ペット照合に画像ベースのAI検索を導入",
+      "topics": [
+        "policy",
+        "tools",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-08-15T00:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "同じモデルでもホスト製品ごとに権限、ログ、課金、コンテキスト注入の境界を確認する。",
+      "caveat": "GitHubの早期テストと提供発表で、プラン、地域、展開時期、各クライアントの機能差に依存する。Google側のモデル発表と同一モデルだが、別の配布更新として扱う。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "gemini-37-github-copilot",
+      "language": "en",
+      "observed_at": "2026-08-15T00:50:00+09:00",
+      "published_at": "2026-08-13T14:00:53Z",
+      "role": "watch",
+      "selection_reason": "モデル発表と実際の開発者向け配布面を分けて追うことで、利用可能性を具体化できる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはGemini 3.7 FlashをCopilotへ順次展開し、VS Code、Visual Studio、Copilot CLI、cloud agent、Copilot appのモデル選択肢として提供すると発表した。",
+      "source_kind": "release",
+      "source_title": "Gemini 3.7 Flash is now available in GitHub Copilot",
+      "source_url": "https://github.blog/changelog/2026-08-13-gemini-3-7-flash-is-now-available-in-github-copilot/",
+      "title": "Gemini 3.7 FlashがGitHub Copilotへ展開、選択肢が実装面まで広がる",
+      "topics": [
+        "models",
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-08-15T00:50:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-15T00:50:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — スコアの外側で、エージェントの失敗を測る",
+  "topics": [
+    {
+      "description": "計画、ツール利用、継続実行を行うAIシステム。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "基盤モデルの能力、価格、提供条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "開発と運用を具体化する製品・連携。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "一次論文の方法、結果、限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "攻撃経路、サプライチェーン、失敗封じ込め。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "公開ソフトウェアと依存関係の運用。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "行政・公共サービスにおけるAI導入。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・公共"
+    },
+    {
+      "description": "画像などのメディアを使うAI応用。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}
