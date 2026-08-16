@@ -1,0 +1,239 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-17T08:21:04+09:00",
+  "dek": "文章透かしとRAG汚染検知を深掘り。世界モデル評価、Copilot、Gemini、研究再現を短報で追う。",
+  "edition_date": "2026-08-17",
+  "edition_id": "2026-08-17-0821",
+  "edition_note": "一次情報6件を直接確認したレビュー候補。深掘り2件、Brief/Watch 4件。公開操作は行っていない。",
+  "generated_at": "2026-08-17T08:21:04+09:00",
+  "items": [
+    {
+      "aoi_note": "透かし検出を二値の真贋判定として扱わず、文章長・編集履歴・検出閾値を含む確率的証拠として運用する。",
+      "caveat": "Anthropic自身の説明と内部評価に基づく。短文、強い編集、翻訳後の検出性能や、検出鍵へのアクセス条件は本文だけでは評価できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "claude-text-watermark",
+      "language": "en",
+      "observed_at": "2026-08-17T08:21:04+09:00",
+      "published_at": "2026-08-14T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "EU AI Act対応を、表示ラベルだけでなく生成過程の確率的な来歴へ落とし込む具体例。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "Anthropicは将来のClaudeモデルにSynthID-Text系の文章透かしを導入し、隠し文字や個人識別情報を加えず、候補語の選び方へ統計的なパターンを形成すると説明した。",
+      "source_kind": "official",
+      "source_title": "How Claude’s text watermark works",
+      "source_url": "https://www.anthropic.com/news/claude-text-watermark",
+      "title": "Claudeの文章透かしは、隠し文字ではなく語の選択確率に痕跡を残す",
+      "topics": [
+        "security",
+        "policy",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-08-17T08:21:04+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "導入時は検出率だけでなく、正常文書の除去率、検索品質、攻撃成功率を同時に監視する。",
+      "caveat": "arXiv v1の著者報告で独立検証前。未評価の汚染手法、未知コーパス、実運用の検索系へ一般化できるとは限らず、正常検索F1も41.3%と報告されている。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "ragsieve-rag-poison-detection",
+      "language": "en",
+      "observed_at": "2026-08-17T08:21:04+09:00",
+      "published_at": "2026-08-13T09:29:48Z",
+      "role": "major",
+      "selection_reason": "RAG防御を、既知攻撃の署名や信頼済み参照集合だけに依存しない局所的な異常検知として設計できる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは検索上位5件と6〜20位、または意味的に近く語彙の異なる近傍を比較するRAGSieveを提示し、3つのQAデータセットと6種の汚染構成で、併用時に攻撃成功率を67.4%から14.0%へ下げたと報告した。",
+      "source_kind": "paper",
+      "source_title": "RAGSieve: Self-Referenced Local Contrast for Knowledge-Poison Detection in Retrieval-Augmented Generation",
+      "source_url": "https://arxiv.org/abs/2608.13010v1",
+      "title": "RAG汚染を、信頼済みコーパスなしで局所比較から見つける",
+      "topics": [
+        "security",
+        "research",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-08-17T08:21:04+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "生成映像の見栄えだけでなく、見えなくなった物体や状態が長時間後も維持されるかを評価する。",
+      "caveat": "arXiv v1の著者報告で独立検証前。171シナリオ、9モデル、Agent Playerの能力と評価設計を超えて一般化できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "playworld-agent-player-benchmark",
+      "language": "en",
+      "observed_at": "2026-08-17T08:21:04+09:00",
+      "published_at": "2026-08-13T17:59:30Z",
+      "role": "brief",
+      "selection_reason": "同じ目的でもモデルごとに必要な操作が違うため、固定アクション列より実際の対話に近い比較軸を与える。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは171シナリオでマルチモーダルAgent Playerが長期目標を追うPlayWorldを提示し、9つの世界モデルは空間的一貫性や永続状態の変化でなお不安定だと報告した。",
+      "source_kind": "paper",
+      "source_title": "PlayWorld: Benchmarking World Models with Agent Players over Long-Horizon Objectives",
+      "source_url": "https://arxiv.org/abs/2608.13552v1",
+      "title": "世界モデルを固定操作列ではなく、目的を追うエージェントで評価する",
+      "topics": [
+        "agents",
+        "research",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-08-17T08:21:04+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "新モデルを自動で許可せず、利用者、コスト上限、データ境界、ロールバック条件を管理者ポリシーへ結び付ける。",
+      "caveat": "GitHub自身の製品発表と内部テストに基づく。評価データや数値は非公開で、利用可否はSKU、クライアント、管理者設定、段階展開に左右される。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-grok-4-6-copilot",
+      "language": "en",
+      "observed_at": "2026-08-17T08:21:04+09:00",
+      "published_at": "2026-08-14T16:17:46Z",
+      "role": "brief",
+      "selection_reason": "モデル追加を能力比較だけでなく、課金、段階ロールアウト、管理者の明示許可を含む運用変更として読める。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはGrok 4.6をCopilotの複数クライアントと有料SKUへ段階提供し、使用量課金の対象とした。Business/Enterpriseでは管理者ポリシーが既定で無効だと説明している。",
+      "source_kind": "release",
+      "source_title": "Grok 4.6 is now available in GitHub Copilot",
+      "source_url": "https://github.blog/changelog/2026-08-14-grok-4-6-is-now-available-in-github-copilot/",
+      "title": "GitHub CopilotでGrok 4.6が段階提供、企業設定は既定で無効",
+      "topics": [
+        "models",
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-08-17T08:21:04+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "導入価格だけで固定せず、通常価格への移行日、品質、遅延、失敗率を既存モデルと並行測定する。",
+      "caveat": "Googleのリリースノートで、比較評価の数値や通常価格、各ワークロードでの品質差はこの記載だけでは確認できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "gemini-3-7-flash-ga",
+      "language": "en",
+      "observed_at": "2026-08-17T08:21:04+09:00",
+      "published_at": "2026-08-13T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "高速モデルをサブエージェントや反復処理へ採用する際の、新しい安定版候補になる。",
+      "source_domain": "ai.google.dev",
+      "source_fact": "GoogleはGemini 3.7 Flashを一般提供し、ソフトウェア工学、Web開発、エージェント型ワークフローの改善と、2026年末までの導入価格を案内した。",
+      "source_kind": "release",
+      "source_title": "Gemini API release notes — August 13, 2026",
+      "source_url": "https://ai.google.dev/gemini-api/docs/changelog",
+      "title": "Gemini 3.7 Flashが一般提供、エージェントとコーディングを主対象に",
+      "topics": [
+        "models",
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-08-17T08:21:04+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "件数を成果と同一視せず、主張、実験、ログ、反証、著者応答を追跡できる再現記録として評価する。",
+      "caveat": "Hugging Faceによるイベント総括で、再現の成功基準、品質、参加者選択、誤判定率は一様ではない。論文の正しさを2,226件確認したという意味ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "hf-icml-open-reproductions",
+      "language": "en",
+      "observed_at": "2026-08-17T08:21:04+09:00",
+      "published_at": "2026-08-13T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "エージェントが実験量を増やす一方、人間が主張単位の確認、反証、著者対話を担う研究監査の実例になる。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Hugging Faceは、1,200人超が各自のコーディングエージェントを使う19日間の企画で、6,816件のTrackioログブックとICML 2026論文2,226本の再現作業を公開したと報告した。",
+      "source_kind": "official",
+      "source_title": "What We Learned by Reproducing 2,200 papers from ICML",
+      "source_url": "https://huggingface.co/blog/icml-2026-open-reproductions",
+      "title": "1,200人超とコーディングエージェントがICML論文2,226本を再現",
+      "topics": [
+        "research",
+        "agents",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-08-17T08:21:04+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-17T08:21:04+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — AIを信じる前に、痕跡・汚染・再現性を測る",
+  "topics": [
+    {
+      "description": "認証、来歴、攻撃経路、失敗封じ込め。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "AIの制度、透明性、社会実装。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・公共"
+    },
+    {
+      "description": "基盤モデルの能力、効率、提供構造。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "一次研究の方法、結果、限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "計画、ツール利用、長期実行を担うAIシステム。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "画像、映像、音声、身体表現を扱うAI。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    },
+    {
+      "description": "開発・運用を具体化する製品や仕組み。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "公開資産と共同検証のエコシステム。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    }
+  ]
+}

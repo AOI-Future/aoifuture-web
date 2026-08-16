@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "claude-text-watermark",
+      "gemini-3-7-flash-ga",
+      "github-grok-4-6-copilot",
+      "hf-icml-open-reproductions",
+      "playworld-agent-player-benchmark",
+      "ragsieve-rag-poison-detection"
+    ],
+    "edition_date": "2026-08-17",
+    "edition_id": "2026-08-17-0821",
+    "edition_url": "https://aoifuture.com/news/2026-08-17-0821/",
+    "event_id": "aoi-news-2026-08-17-0821-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-17T08:21:04+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "文章透かしとRAG汚染検知を深掘り。世界モデル評価、Copilot、Gemini、研究再現を短報で追う。",
+    "title": "AOIFUTURE News — AIを信じる前に、痕跡・汚染・再現性を測る"
+  }
+]
