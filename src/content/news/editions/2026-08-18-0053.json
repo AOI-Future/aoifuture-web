@@ -1,0 +1,233 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-18T00:53:08+09:00",
+  "dek": "検証可能な世界モデルとセッション引き継ぎを深掘り。安全介入、工学、クラウド、スポーツAIを短報で追う。",
+  "edition_date": "2026-08-18",
+  "edition_id": "2026-08-18-0053",
+  "edition_note": "一次情報6件を直接確認したレビュー候補。深掘り2件、Brief/Watch 4件。公開操作は行っていない。",
+  "generated_at": "2026-08-18T00:53:08+09:00",
+  "items": [
+    {
+      "aoi_note": "高リスクな自動操作では、実行前に既知履歴との整合性を確認し、不一致を次の修正入力として保存する。",
+      "caveat": "arXiv v1の著者報告で独立検証前。数値はARC-AGI-3と特定の基盤モデル・ハーネスに限られ、他の環境や実世界へ一般化できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "twin-test-time-world-model",
+      "language": "en",
+      "observed_at": "2026-08-18T00:53:08+09:00",
+      "published_at": "2026-08-14T17:06:00Z",
+      "role": "lead",
+      "selection_reason": "エージェントの長期実行を、推測の連鎖ではなく、反例で更新される検証可能なモデルへ変える設計例になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、コーディングエージェントが観測から実行可能な世界モデルを作り、過去の全遷移を再現できるまで次の行動を止めるTwinを提示し、ARC-AGI-3で183レベル中179をクリアしたと報告した。",
+      "source_kind": "paper",
+      "source_title": "Twin: Playing an Unknown Game with a Test-Time Digital Twin",
+      "source_url": "https://arxiv.org/abs/2608.14490v1",
+      "title": "未知ゲームのルールを実行可能なデジタルツインとして書き、行動前に全履歴を再生検証する",
+      "topics": [
+        "agents",
+        "research",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-08-18T00:53:08+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "引き継ぎでは決定・制約を完全保持し、反復証拠だけを目的に合う統計へ圧縮し、例外的観測は原文で残す。",
+      "caveat": "arXiv v1の理論研究で独立検証前。主結果は外生性条件や回帰設定に依存し、一般のLLMエージェントで同じ十分性が成立するとは限らない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "icl-state-session-handover",
+      "language": "en",
+      "observed_at": "2026-08-18T00:53:08+09:00",
+      "published_at": "2026-08-14T17:47:13Z",
+      "role": "major",
+      "selection_reason": "長いエージェント作業で、何を全文保持し、何を圧縮し、何を原文のまま残すべきかを理論的に切り分ける。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、セッション引き継ぎをタスク相対のin-context learning状態の転送として定式化し、決定と制約、反復証拠の十分統計、統計で保持できない原観測から成る三部記録を提案した。",
+      "source_kind": "paper",
+      "source_title": "Handover of In-Context Learning State Across Session Boundaries",
+      "source_url": "https://arxiv.org/abs/2608.14528v1",
+      "title": "セッションをまたぐ引き継ぎを、全文保存ではなく予測に必要な状態の保存として定式化する",
+      "topics": [
+        "agents",
+        "research",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-08-18T00:53:08+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "安全機構は攻撃成功率だけでなく、通常利用時の効用低下と未評価攻撃への耐性を別々に監視する。",
+      "caveat": "arXiv v1の著者報告で独立検証前。4種類の攻撃と評価モデルに限られ、未知攻撃や実運用での検出誤差は示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "tripwire-safety-neurons",
+      "language": "en",
+      "observed_at": "2026-08-18T00:53:08+09:00",
+      "published_at": "2026-08-14T15:33:11Z",
+      "role": "brief",
+      "selection_reason": "常時介入で通常利用を損なうのではなく、検出ゲートと局所介入を分ける防御設計として読める。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、偽発見率を制御する仮説検定と効用フィルターで安全特有のニューロンを選び、検出時だけ拒否挙動を起動する介入を提示し、4モデル・4攻撃で平均攻撃成功率2.0%以下と報告した。",
+      "source_kind": "paper",
+      "source_title": "Tripwire: Triggering Aligned Refusal via Statistically Certified Safety Neurons",
+      "source_url": "https://arxiv.org/abs/2608.14392v1",
+      "title": "攻撃時だけ安全ニューロンを作動させる、学習不要の拒否介入",
+      "topics": [
+        "security",
+        "research",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-08-18T00:53:08+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "能力評価だけでなく、利用資格、操作記録、データ境界、用途制限を同じ導入判断に含める。",
+      "caveat": "AWSとOpenAIによる製品発表で、適格性審査が必要。独立した安全性評価、価格、地域別の実利用条件はこの告知だけでは確認できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-daybreak-bedrock",
+      "language": "en",
+      "observed_at": "2026-08-18T00:53:08+09:00",
+      "published_at": "2026-08-13T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "強力なサイバーAIを一般公開ではなく、利用者審査とクラウド側の統制へ結び付ける提供モデルが具体化した。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは、OpenAIのDaybreak RedとDaybreak BlueをAmazon Bedrockで適格顧客向けに提供し、承認制のDaybreak AccessとBedrockのセキュリティ・ガバナンス機能を組み合わせると発表した。",
+      "source_kind": "release",
+      "source_title": "Daybreak Red and Daybreak Blue from OpenAI are now available to eligible customers on Amazon Bedrock",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/08/openai-daybreak-red-and-blue-on-amazon-bedrock/",
+      "title": "AWS BedrockがOpenAIの防御向けサイバーモデルを承認制で提供",
+      "topics": [
+        "security",
+        "tools",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-08-18T00:53:08+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "工学AIの評価では、生成量ではなく、根拠、変更履歴、承認者、差し戻し可能性を成果物へ残す。",
+      "caveat": "UKAEAの発表で、投資額、契約規模、導入効果や実運用の性能は示されていない。coEngenの能力は開発側の説明である。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "singular-machines-coengen",
+      "language": "en",
+      "observed_at": "2026-08-18T00:53:08+09:00",
+      "published_at": "2026-08-17T10:42:00Z",
+      "role": "brief",
+      "selection_reason": "高保証工学では、AIの速さよりも根拠の追跡性と専門家の最終判断を製品要件に据える動きが見える。",
+      "source_domain": "www.gov.uk",
+      "source_fact": "英国原子力公社は、工学判断の追跡性、保証、専門家の判断を保つエージェント型AI基盤coEngenを開発するSingular Machinesが投資ラウンドとArupとの契約を得たと発表した。",
+      "source_kind": "official",
+      "source_title": "UKAEA spins out Singular Machines",
+      "source_url": "https://www.gov.uk/government/news/ukaea-spins-out-singular-machines",
+      "title": "英国の核融合研究所から、判断の追跡性を重視するエージェント型工学基盤がスピンアウト",
+      "topics": [
+        "agents",
+        "tools",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-08-18T00:53:08+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "提携の効果は機能数ではなく、男女チームの露出、利用地域、ファンの継続利用、権利処理を含めて測る。",
+      "caveat": "Google自身の提携発表で、機能の地域別提供時期、商業条件、観客効果の測定値は示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "gemini-pixel-football-clubs",
+      "language": "en",
+      "observed_at": "2026-08-18T00:53:08+09:00",
+      "published_at": "2026-08-17T08:00:00Z",
+      "role": "watch",
+      "selection_reason": "AIが単独アプリではなく、スポーツIP、映像制作、ファン接点へ組み込まれる事例で、クリエイティブAIの流通面を示す。",
+      "source_domain": "blog.google",
+      "source_fact": "GoogleはArsenal、FC Barcelona、FC Bayern München、Liverpool、Paris Saint-Germainの5クラブと提携し、Geminiの試合情報とPixelによる舞台裏コンテンツを男女両チームで展開すると発表した。",
+      "source_kind": "official",
+      "source_title": "Get closer to the game with Gemini and Pixel",
+      "source_url": "https://blog.google/products-and-platforms/products/gemini/google-gemini-pixel-football-club-partnerships/",
+      "title": "GeminiとPixelが欧州5クラブと提携し、試合情報と舞台裏コンテンツへ入る",
+      "topics": [
+        "creative-ai",
+        "tools",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-08-18T00:53:08+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-18T00:53:08+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — エージェントは、記憶より先に検証できる世界を持て",
+  "topics": [
+    {
+      "description": "計画、検証、引き継ぎ、長期実行を担うAIシステム。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "一次研究の方法、結果、適用限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "基盤モデルの能力、介入、提供構造。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "攻撃、拒否、安全な利用境界。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "AIを実作業へ接続する製品と運用基盤。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "公的研究、産業化、説明責任。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・公共"
+    },
+    {
+      "description": "映像、スポーツ、メディア体験に入るAI。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}
