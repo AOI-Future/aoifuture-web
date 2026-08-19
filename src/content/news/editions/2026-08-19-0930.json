@@ -1,0 +1,226 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-19T09:30:39+09:00",
+  "dek": "計算来歴と組合せ型誘導を深掘り。協調計測、企業統治、地域投資、反復検索を短報で追う。",
+  "edition_date": "2026-08-19",
+  "edition_id": "2026-08-19-0930",
+  "edition_note": "一次情報6件を直接確認したレビュー候補。深掘り2件、Brief/Watch 4件。公開操作は行っていない。",
+  "generated_at": "2026-08-19T09:30:39+09:00",
+  "items": [
+    {
+      "aoi_note": "監査では答えの正誤だけでなく、根拠状態を改ざん耐性のある別系統の証拠へ結ぶ。",
+      "caveat": "arXiv v1の制御実験で独立検証前。自然に学習された内部状態を同じ方法で回収できたわけではなく、実運用への一般化は未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "computational-provenance",
+      "language": "en",
+      "observed_at": "2026-08-19T09:30:39+09:00",
+      "published_at": "2026-08-17T17:50:04Z",
+      "role": "lead",
+      "selection_reason": "出力だけでは分からない計算経路を、限定条件ながら検証可能な証拠へ結び付ける研究。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、認証した離散的な内部状態に応じた微細な統計パターンを生成文へ載せる制御実験を行い、公開・封印評価の各128組で状態由来信号を検出したと報告した。",
+      "source_kind": "paper",
+      "source_title": "Towards Computational Provenance: Carrying Causal-State Evidence in Generated Text",
+      "source_url": "https://arxiv.org/abs/2608.16868v1",
+      "title": "同じ答えでも「どの内部状態を通ったか」を検出可能にする計算来歴",
+      "topics": [
+        "research",
+        "models",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-08-19T09:30:39+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "単語単位の禁止リストではなく、複数の弱い特徴が合成された時の挙動変化を評価する。",
+      "caveat": "arXiv v1の著者報告で独立検証前。攻撃条件、成功率、実サービスでの再現性は本文全体と追試で確認が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "model-hypnosis",
+      "language": "en",
+      "observed_at": "2026-08-19T09:30:39+09:00",
+      "published_at": "2026-08-17T17:20:10Z",
+      "role": "major",
+      "selection_reason": "露骨な命令だけを探す入力防御では捉えにくい、組合せ型の誘導リスクを示す。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、単独では弱く無関係に見える言い換えや誤字などの手掛かりを組み合わせると、複数のモデル群・規模で挙動を強く制御でき、モデル間転移も生じたと報告した。",
+      "source_kind": "paper",
+      "source_title": "Model Hypnosis: Strong control of AI via additive subliminal effects",
+      "source_url": "https://arxiv.org/abs/2608.16834v1",
+      "title": "弱い言い換えや誤字を重ね、モデル挙動を強く誘導する「Model Hypnosis」",
+      "topics": [
+        "security",
+        "models",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-19T09:30:39+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "調整役を置いた事実ではなく、メッセージ、ファイル競合、コスト、成功率を同じ時系列で観測する。",
+      "caveat": "arXiv v1の著者報告で独立検証前。タスク、ハーネス、モデル構成への依存があり、一般化は未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "multi-agent-coordination-measure",
+      "language": "en",
+      "observed_at": "2026-08-19T09:30:39+09:00",
+      "published_at": "2026-08-17T16:57:38Z",
+      "role": "brief",
+      "selection_reason": "エージェント数や役名より、通信・ファイル・テスト結果の実測が協調設計を左右する。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは1902回のコーディング実行を時系列ネットワーク化し、8エージェントの通信負荷が大きい作業では共有ファイルが出力トークンを約42%削減する一方、名目上の調整役は通信ハブにも安定した成功改善にもならなかったと報告した。",
+      "source_kind": "paper",
+      "source_title": "When Agents Coordinate: Measuring Coordination in Multi-Agent AI Coding",
+      "source_url": "https://arxiv.org/abs/2608.16801v1",
+      "title": "1902回の実行ネットワークから、マルチエージェント協調を測る",
+      "topics": [
+        "agents",
+        "tools",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-19T09:30:39+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "MCP許可先、権限モード、監査テレメトリを同じ配布・例外管理プロセスに載せる。",
+      "caveat": "GitHub自身の製品発表。適用範囲、優先順位、クライアント側回避耐性は実環境での確認が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-jetbrains-governance",
+      "language": "en",
+      "observed_at": "2026-08-19T09:30:39+09:00",
+      "published_at": "2026-08-18T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "エージェント機能の導入が、個人設定から組織の権限・観測ポリシーへ移っている。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは、JetBrains向けCopilotでプラグイン統治、MCPサーバーアクセス、OpenTelemetry、権限モードなどを企業管理者が一貫設定できるようになったと発表した。",
+      "source_kind": "release",
+      "source_title": "Enterprise managed settings in GitHub Copilot for JetBrains",
+      "source_url": "https://github.blog/changelog/2026-08-18-enterprise-managed-settings-in-github-copilot-for-jetbrains/",
+      "title": "JetBrains版Copilotに、企業管理のMCP・権限・観測設定",
+      "topics": [
+        "tools",
+        "agents",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-08-19T09:30:39+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "投資額だけでなく、稼働容量、電源、地域採用、訓練実績を継続指標にする。",
+      "caveat": "英国政府の発表で、投資・雇用は計画または見込みを含む。実行時期、電力・水利用、地域便益の独立検証は未了。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "lanarkshire-ai-growth-zone",
+      "language": "en",
+      "observed_at": "2026-08-19T09:30:39+09:00",
+      "published_at": "2026-08-18T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "AI基盤投資を地域雇用・電力・技能形成と一体で評価する政策案件。",
+      "source_domain": "www.gov.uk",
+      "source_fact": "英国政府は、Lanarkshire AI Growth Zoneへの3億ポンド投資とDellのスコットランド拠点を発表し、3400件超の雇用支援を見込むと説明した。",
+      "source_kind": "official",
+      "source_title": "Lanarkshire AI Growth Zone secures £300 million investment as Dell establishes Scottish base",
+      "source_url": "https://www.gov.uk/government/news/lanarkshire-ai-growth-zone-secures-300-million-investment-as-dell-establishes-scottish-base",
+      "title": "英Lanarkshire AI Growth Zoneに3億ポンド投資、雇用3400件超を見込む",
+      "topics": [
+        "policy",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-19T09:30:39+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "本番評価では回答率だけでなく、根拠適合率、追加検索回数、棄権率、遅延を測る。",
+      "caveat": "Google Cloud自身の紹介記事で、独立比較ではない。精度改善幅、遅延、費用、対象データでの再現性は導入側の評価が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-cloud-agentic-rag",
+      "language": "en",
+      "observed_at": "2026-08-19T09:30:39+09:00",
+      "published_at": "2026-08-19T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "RAGの有無ではなく、検索の反復、根拠不足の検知、回答停止条件が品質差になる。",
+      "source_domain": "cloud.google.com",
+      "source_fact": "Google Cloudは、企業検索で一度だけ検索する標準RAGに対し、追加検索と検証を行うagentic RAGを紹介し、Gemini Enterprise Agent PlatformのPublic Preview機能として提供中だと説明した。",
+      "source_kind": "official",
+      "source_title": "Meet the researcher fighting AI hallucinations at Google Cloud",
+      "source_url": "https://cloud.google.com/transform/meet-the-researcher-fighting-ai-hallucinations-at-google-cloud",
+      "title": "Google Cloudが説明する、反復検索型RAGの幻覚低減",
+      "topics": [
+        "tools",
+        "models",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-19T09:30:39+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-19T09:30:39+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — AIの信頼性は、答えの前後に残る証拠で決まる",
+  "topics": [
+    {
+      "description": "計画、協調、ツール利用を担うAIシステム。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "基盤モデルの挙動、能力、信頼性。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "AIを実作業へ接続する製品と運用基盤。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "一次研究の方法、結果、適用限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "攻撃、監査、安全な利用境界。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "公共投資、制度、説明責任。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・公共"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "computational-provenance",
+      "github-copilot-jetbrains-governance",
+      "google-cloud-agentic-rag",
+      "lanarkshire-ai-growth-zone",
+      "model-hypnosis",
+      "multi-agent-coordination-measure"
+    ],
+    "edition_date": "2026-08-19",
+    "edition_id": "2026-08-19-0930",
+    "edition_url": "https://aoifuture.com/news/2026-08-19-0930/",
+    "event_id": "aoi-news-2026-08-19-0930-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-19T09:30:39+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "計算来歴と組合せ型誘導を深掘り。協調計測、企業統治、地域投資、反復検索を短報で追う。",
+    "title": "AOIFUTURE News — AIの信頼性は、答えの前後に残る証拠で決まる"
+  }
+]
