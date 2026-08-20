@@ -1,0 +1,238 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-21T00:50:00+09:00",
+  "dek": "自己生成する訓練環境とAIセキュリティ標準を深掘り。潜在通信、音声復元、コード品質、macOS検証を短報で追う。",
+  "edition_date": "2026-08-21",
+  "edition_id": "2026-08-21-0050",
+  "edition_note": "8月17〜20日に公開・更新された一次情報6件を直接確認したレビュー候補。深掘り2件、Brief/Watch 4件。公開操作は行っていない。",
+  "generated_at": "2026-08-21T00:50:00+09:00",
+  "items": [
+    {
+      "aoi_note": "訓練環境の生成能力そのものを評価し、難易度・多様性・安全性の監査を別ゲートに置く。",
+      "caveat": "arXiv v1の著者報告で独立検証前。改善値は記載された30B規模、ベンチマーク、実装条件に限られ、実環境の安全性や一般化を証明しない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "spade-adaptive-executable-environments",
+      "language": "en",
+      "observed_at": "2026-08-21T00:50:00+09:00",
+      "published_at": "2026-08-19T17:58:56Z",
+      "role": "lead",
+      "selection_reason": "能力向上を固定問題集ではなく、実行可能で状態を持つ課題の生成へ広げる研究。",
+      "source_domain": "arxiv.org",
+      "source_fact": "単一のLLMが環境設計者と推論エージェントを担う自己遊戯RLを提案し、30B規模で8つの保持ベンチマーク平均が固定環境ベースラインを5.3ポイント上回ったと著者らは報告した。",
+      "source_kind": "paper",
+      "source_title": "SPADE: Self-Play in Adaptive Synthetic Executable Environments",
+      "source_url": "https://arxiv.org/abs/2608.19197v1",
+      "title": "エージェントが訓練環境まで作る、SPADEの自己遊戯学習",
+      "topics": [
+        "agents",
+        "models",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-21T00:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AI出力を最終判断にせず、根拠、検証、人間の承認、再現可能な報告を運用設計へ落とす。",
+      "caveat": "初期公開草案であり最終標準ではない。採用前に正式版との差分、組織のCSFプロファイル、規制要件を確認する必要がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nist-ai-csf-analysis-draft",
+      "language": "en",
+      "observed_at": "2026-08-21T00:50:00+09:00",
+      "published_at": "2026-08-19T12:00:00Z",
+      "role": "major",
+      "selection_reason": "AIによるセキュリティ分析を導入する際の共通手順と説明責任を、標準化の入口から確認できる。",
+      "source_domain": "www.nist.gov",
+      "source_fact": "NISTはCybersecurity Framework 2.0の分析と報告にAIを用いるためのSpecial Publication 1353初期公開草案を公表し、公開コメントを募集した。",
+      "source_kind": "official",
+      "source_title": "Seeking Public Comment! Using Artificial Intelligence for Cybersecurity Framework 2.0 Analysis and Reporting",
+      "source_url": "https://www.nist.gov/news-events/news/2026/08/seeking-public-comment-using-artificial-intelligence-cybersecurity",
+      "title": "NIST、AIを使うCSF 2.0分析・報告ガイドの初稿を公開",
+      "topics": [
+        "policy",
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-21T00:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "arXiv v1の著者報告で独立検証前。小規模モデルと管理されたオークションでの結果で、他モデル・通信方式・実運用へ一般化できない。",
+      "caveat": "潜在通信を使う設計では、イベントID、公開行動、監視可能性を実装前の要件にする。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "latent-agent-covert-coordination",
+      "language": "en",
+      "observed_at": "2026-08-21T00:50:00+09:00",
+      "published_at": "2026-08-19T17:43:22Z",
+      "role": "brief",
+      "selection_reason": "マルチエージェント監査では会話記録だけでなく、内部通信と結果の対応付けが課題になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "VLAは非公開の連続潜在状態と公開行動を共通イベントIDで結び、異常・反実仮想影響・解釈支援を組み合わせて監視する枠組みを提案した。管理されたオークションで著者らは同種エージェント0.993、異種ペア0.854の平均AUROCを報告した。",
+      "source_kind": "paper",
+      "source_title": "Beyond the Transcript: Detecting Covert Co ordination in Latent Multi-Agent Communication",
+      "source_url": "https://arxiv.org/abs/2608.19161v1",
+      "title": "会話ログに出ないエージェント協調を、潜在状態から監視するVLA",
+      "topics": [
+        "agents",
+        "security",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-21T00:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "arXiv v1の著者報告で独立検証前。要約では改善量、データセット、計算コストが示されず、知覚品質や実時間性は未確認。",
+      "caveat": "制作利用では音質だけでなく、遅延、計算量、編集耐性、権利処理を別々に測る。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "audio-codec-geometric-retrieval",
+      "language": "en",
+      "observed_at": "2026-08-21T00:50:00+09:00",
+      "published_at": "2026-08-19T17:29:56Z",
+      "role": "brief",
+      "selection_reason": "生成音声の品質改善を、モデル大型化以外の復元アルゴリズムから考える材料になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "残差ベクトル量子化の層構造を反復分解として使い、単発分類や回帰ではなく対照検索で粗いcodec tokenから音声を復元する方法を提案し、音声と音楽の復元課題で比較法を上回ったと著者らは述べた。",
+      "source_kind": "paper",
+      "source_title": "Geometric Iterative Retrieval for Neural Audio Codec Resynthesis",
+      "source_url": "https://arxiv.org/abs/2608.19141v1",
+      "title": "粗い音声トークンからの復元を、反復検索として組み立てる",
+      "topics": [
+        "creative-ai",
+        "models",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-21T00:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "GitHubの製品更新であり、検査精度や脆弱性検出能力そのものの改善を意味しない。既存のフィルタやダッシュボードは新しい識別方法への更新確認が必要。",
+      "caveat": "運用ダッシュボードと課金集計が旧actor名へ依存していないか確認する。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-code-quality-actions-path",
+      "language": "en",
+      "observed_at": "2026-08-21T00:50:00+09:00",
+      "published_at": "2026-08-20T14:29:27Z",
+      "role": "brief",
+      "selection_reason": "自動コード検査の実行量とコストを識別しやすくし、AI生成コードを含む品質ゲートの観測性を高める。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはCode QualityのCodeQL Actionsワークフロー向け専用経路を一般提供し、実行履歴とActions利用レポートでCode Quality実行を他のgithub-advanced-security actor実行から区別できるようにした。",
+      "source_kind": "release",
+      "source_title": "Separate GitHub Actions path for GitHub Code Quality",
+      "source_url": "https://github.blog/changelog/2026-08-20-separate-github-actions-path-for-github-code-quality/",
+      "title": "GitHub Code Quality、Actions上で専用の実行経路と識別を追加",
+      "topics": [
+        "security",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-08-21T00:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ベータ版であり本番導入向けではない。公開ページだけでは個別の変更点や既知問題を十分確認できないため、対象アプリごとにリリースノートと隔離環境での検証が必要。",
+      "caveat": "本番端末へ広げず、テスト機でモデルランタイム、権限、GPU、音声・映像ツールの回帰を確認する。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "apple-macos27-beta6",
+      "language": "en",
+      "observed_at": "2026-08-21T00:50:00+09:00",
+      "published_at": "2026-08-17T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "AI・制作ツールをmacOS上で運用するチームには、次期OSとの互換性確認を始める時点を示す。",
+      "source_domain": "developer.apple.com",
+      "source_fact": "AppleはmacOS 27.0 beta 6をビルド26A5416bとして開発者向けリリース一覧に掲載し、ダウンロードとリリースノートへの導線を公開した。",
+      "source_kind": "release",
+      "source_title": "macOS 27.0 beta 6 (26A5416b)",
+      "source_url": "https://developer.apple.com/news/releases/?id=08172026c",
+      "title": "macOS 27 beta 6、開発者向け検証ビルドを更新",
+      "topics": [
+        "tools",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-08-21T00:50:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-21T00:50:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — AIが学ぶ環境と、AIを監督する基準を同時に育てる",
+  "topics": [
+    {
+      "description": "計画、委任、ツール実行を担うAIシステム。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "基盤モデルの挙動、学習、表現。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "AIを実作業へ接続する製品と運用基盤。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "一次研究の方法、結果、適用限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "攻撃、監査、安全な利用境界。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "制度、標準、公共ルール。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・標準"
+    },
+    {
+      "description": "公開コード、開発基盤、共同改善。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "映像、音声、デザイン、制作支援。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}

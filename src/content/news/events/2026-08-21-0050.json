@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "apple-macos27-beta6",
+      "audio-codec-geometric-retrieval",
+      "github-code-quality-actions-path",
+      "latent-agent-covert-coordination",
+      "nist-ai-csf-analysis-draft",
+      "spade-adaptive-executable-environments"
+    ],
+    "edition_date": "2026-08-21",
+    "edition_id": "2026-08-21-0050",
+    "edition_url": "https://aoifuture.com/news/2026-08-21-0050/",
+    "event_id": "aoi-news-2026-08-21-0050-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-21T00:50:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "自己生成する訓練環境とAIセキュリティ標準を深掘り。潜在通信、音声復元、コード品質、macOS検証を短報で追う。",
+    "title": "AOIFUTURE News — AIが学ぶ環境と、AIを監督する基準を同時に育てる"
+  }
+]
