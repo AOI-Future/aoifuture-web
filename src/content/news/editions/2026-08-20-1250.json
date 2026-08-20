@@ -1,0 +1,232 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-20T12:50:00+09:00",
+  "dek": "実行バイトへ結ぶ承認とエージェント型コード監査を深掘り。幻覚検出、静的解析、ローカル支援、基盤脆弱性を短報で追う。",
+  "edition_date": "2026-08-20",
+  "edition_id": "2026-08-20-1250",
+  "edition_note": "8月18〜19日に公開・更新された一次情報6件を直接確認したレビュー候補。深掘り2件、Brief/Watch 4件。公開操作は行っていない。",
+  "generated_at": "2026-08-20T12:50:00+09:00",
+  "items": [
+    {
+      "aoi_note": "承認は文言だけでなく、ポリシー版、シミュレーション、期限、最終実行バイトへ結び付ける。",
+      "caveat": "arXiv v1の著者報告で独立検証前。結果は再現用サンドボックス内のlogic-level safetyであり、実運用DeFiの安全性を証明しない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "pace-policy-attested-execution",
+      "language": "en",
+      "observed_at": "2026-08-20T12:50:00+09:00",
+      "published_at": "2026-08-18T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "自然言語の承認を、再生・期限・実行内容まで検証できる機械的な境界へ変える研究。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、型付き取引意図、決定論的ポリシー検証、署名付きPolicy Decision Recordを組み合わせ、承認した意図・ポリシー・シミュレーションを実行バイトへ暗号学的に結び付けるPACEを提案した。40タスク・2800試行の決定論的サンドボックスでunsafe execution rate 0.00と報告している。",
+      "source_kind": "paper",
+      "source_title": "PACE: Policy-Attested Contract Execution for Safe AI Agents in Decentralized Finance",
+      "source_url": "https://arxiv.org/abs/2608.17220v1",
+      "title": "承認内容を実行バイトへ結び付ける、DeFiエージェントのPACE",
+      "topics": [
+        "agents",
+        "security",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-20T12:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "モデルの発見をそのまま脆弱性扱いせず、再現・人間確認・責任ある開示を別ゲートにする。",
+      "caveat": "Googleの自社事例で、検出精度、誤検知率、対象コードの分布は公開情報だけでは十分に独立評価できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-agentic-code-review",
+      "language": "en",
+      "observed_at": "2026-08-20T12:50:00+09:00",
+      "published_at": "2026-08-19T00:00:00Z",
+      "role": "major",
+      "selection_reason": "AI監査の価値を、単発の指摘ではなく再現、検証、ベンダー通知まで含む運用として捉えられる。",
+      "source_domain": "cloud.google.com",
+      "source_fact": "Google Threat Intelligence Groupは、複数段階のエージェント型ソースコードレビュー手法を公開し、社内ツールが顧客コードで数百件の脆弱性候補を発見し、割当済みまたは保留中のCVEを伴う多数のベンダー通知につながったと説明した。",
+      "source_kind": "official",
+      "source_title": "Staying Ahead of Adversarial AI Through Agentic Source Code Review",
+      "source_url": "https://cloud.google.com/blog/topics/threat-intelligence/staying-ahead-of-adversarial-ai-through-agentic-source-code-review/",
+      "title": "AIによるコード監査を、検証と反復を含む脆弱性発見パイプラインへ",
+      "topics": [
+        "agents",
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-20T12:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "評価では回答単位とトークン単位を分け、ラベル生成器の偏りも記録する。",
+      "caveat": "arXiv v1の著者報告で独立検証前。ラベルはLLM-as-a-judgeで作られ、MoE内部信号へアクセスできる構成に限られる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "innerexpert-hallucination-signals",
+      "language": "en",
+      "observed_at": "2026-08-20T12:50:00+09:00",
+      "published_at": "2026-08-18T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "回答全体の信頼度だけでなく、疑わしい区間を局所化する手掛かりになる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らはMoEのルーターエントロピー、専門家間の不一致、利用パターンを使うInnerExpertを提案し、5データセットと2つのMoE構成で最大0.91の回答単位AUROC、0.76のトークン単位AUROCを報告した。",
+      "source_kind": "paper",
+      "source_title": "Mixture-of-Expert Blocks Contain Strong Hallucination Detection Signals",
+      "source_url": "https://arxiv.org/abs/2608.17687v1",
+      "title": "MoE内部のルーティング信号で、幻覚箇所をトークン単位に検出",
+      "topics": [
+        "models",
+        "research",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-08-20T12:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "解析エンジン更新時は、新規検出だけでなく消失した警告とクエリ互換性も差分確認する。",
+      "caveat": "GitHubのリリース説明であり、既存リポジトリでの検出増減や誤検知は各環境での再スキャンが必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "codeql-2263-actions-modeling",
+      "language": "en",
+      "observed_at": "2026-08-20T12:50:00+09:00",
+      "published_at": "2026-08-19T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "AI生成コードや自動化ワークフローを含む開発基盤では、静的解析側のモデル更新も防御品質を左右する。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはCodeQL 2.26.3でJavaScript、TypeScript、Vueのソースモデルを追加し、merge_groupイベントのgithub.event.merge_groupを未信頼入力として扱うなどGitHub Actionsクエリを改善した。",
+      "source_kind": "release",
+      "source_title": "CodeQL 2.26.3 improves GitHub Actions queries and JavaScript modeling",
+      "source_url": "https://github.blog/changelog/2026-08-19-codeql-2-26-3-improves-github-actions-queries-and-javascript-modeling/",
+      "title": "CodeQL 2.26.3、GitHub ActionsとJavaScript系のデータフロー精度を更新",
+      "topics": [
+        "security",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-08-20T12:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ローカルアシスタントは品質と同時にVRAM占有、待機負荷、ゲーム・制作アプリとの競合を測る。",
+      "caveat": "NVIDIA自身の製品発表で、40%削減の測定条件、実タスク性能、対応機能差は個別環境で確認が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-gassist-memory-update",
+      "language": "en",
+      "observed_at": "2026-08-20T12:50:00+09:00",
+      "published_at": "2026-08-19T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "ローカルAI支援は最大性能だけでなく、常駐時のメモリ予算と対応ハードウェアの広さが利用可能性を決める。",
+      "source_domain": "www.nvidia.com",
+      "source_fact": "NVIDIAはNVIDIA Appの更新でProject G-Assistを6GB以上のVRAMを持つGeForce RTX GPUへ広げ、新モデルは従来より40%少ないメモリを使うと発表した。",
+      "source_kind": "release",
+      "source_title": "NVIDIA App Update Adds Global DLSS Overrides, Smooth Motion For GeForce RTX 40 Series GPUs, Project G-Assist Enhancements & More",
+      "source_url": "https://www.nvidia.com/en-us/geforce/news/nvidia-app-global-dlss-overrides-rtx-40-series-smooth-motion/",
+      "title": "NVIDIA G-Assist、対応GPUを広げつつモデル使用メモリを40%削減",
+      "topics": [
+        "creative-ai",
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-20T12:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "資産照合後に個別アドバイザリを読み、露出、固定版、保守窓、ロールバックを分けて判断する。",
+      "caveat": "これは複数アドバイザリの総覧。影響製品、該当バージョン、露出条件は各個別アドバイザリで確認が必要で、回避策はないと記載されている。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisco-august-security-hardening",
+      "language": "en",
+      "observed_at": "2026-08-20T12:50:00+09:00",
+      "published_at": "2026-08-19T16:00:00Z",
+      "role": "watch",
+      "selection_reason": "AI基盤を支えるネットワークとワークロード管理の脆弱性は、モデル層とは別の運用優先度を持つ。",
+      "source_domain": "sec.cloudapps.cisco.com",
+      "source_fact": "Cisco PSIRTは8月19日の一括公開で、CrossworkとSecure WorkloadのSecurity Hardening ReleaseをCritical・CVSS 10.0として掲載し、修正版への更新を推奨した。",
+      "source_kind": "advisory",
+      "source_title": "Cisco Advance Notification for Publication of August 19, 2026, Security Advisories",
+      "source_url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-notice-LDquvx5d",
+      "title": "Ciscoの8月セキュリティ公開、CrossworkとSecure WorkloadにCVSS 10.0",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-20T12:50:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-20T12:50:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — AIの実行力を、承認と検証の境界で支える",
+  "topics": [
+    {
+      "description": "計画、委任、ツール実行を担うAIシステム。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "基盤モデルの挙動、能力、信頼性。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "AIを実作業へ接続する製品と運用基盤。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "一次研究の方法、結果、適用限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "攻撃、監査、安全な利用境界。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "公開コード、開発基盤、共同改善。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "映像、音声、デザイン、制作支援。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}

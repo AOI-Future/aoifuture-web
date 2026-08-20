@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "cisco-august-security-hardening",
+      "codeql-2263-actions-modeling",
+      "google-agentic-code-review",
+      "innerexpert-hallucination-signals",
+      "nvidia-gassist-memory-update",
+      "pace-policy-attested-execution"
+    ],
+    "edition_date": "2026-08-20",
+    "edition_id": "2026-08-20-1250",
+    "edition_url": "https://aoifuture.com/news/2026-08-20-1250/",
+    "event_id": "aoi-news-2026-08-20-1250-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-20T12:50:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "実行バイトへ結ぶ承認とエージェント型コード監査を深掘り。幻覚検出、静的解析、ローカル支援、基盤脆弱性を短報で追う。",
+    "title": "AOIFUTURE News — AIの実行力を、承認と検証の境界で支える"
+  }
+]
