@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "ai4ai-bench",
+      "cisa-trueconf-kev",
+      "google-photoscan",
+      "lfm25-dspark",
+      "midtool-agentic-tool-use",
+      "witheveryone-group-image"
+    ],
+    "edition_date": "2026-08-22",
+    "edition_id": "2026-08-22-0053",
+    "edition_url": "https://aoifuture.com/news/2026-08-22-0053/",
+    "event_id": "aoi-news-2026-08-22-0053-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-22T00:53:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "ツール利用の中間学習とスマホ健康推定を深掘り。自己改善評価、集団画像、悪用脆弱性、推論高速化を短報で追う。",
+    "title": "AOIFUTURE News — エージェントの学び方から、健康・創作・安全の境界まで"
+  }
+]

@@ -1,0 +1,240 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-22T00:53:00+09:00",
+  "dek": "ツール利用の中間学習とスマホ健康推定を深掘り。自己改善評価、集団画像、悪用脆弱性、推論高速化を短報で追う。",
+  "edition_date": "2026-08-22",
+  "edition_id": "2026-08-22-0053",
+  "edition_note": "8月17〜21日の一次情報6件を直接確認したレビュー候補。深掘り2件、Brief/Watch 4件。公開操作は行っていない。",
+  "generated_at": "2026-08-22T00:53:00+09:00",
+  "items": [
+    {
+      "aoi_note": "導入時はAPI権限、引数根拠、失敗回復を別々の監査項目にする。",
+      "caveat": "arXiv v1の著者報告で独立検証前。要約には改善幅、データ構成、ライセンス、ベースライン詳細がなく、実運用の安全性を証明しない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "midtool-agentic-tool-use",
+      "language": "en",
+      "observed_at": "2026-08-22T00:53:00+09:00",
+      "published_at": "2026-08-20T17:53:59Z",
+      "role": "lead",
+      "selection_reason": "ツール呼び出しを後段の微調整だけでなく、基礎学習と運用データ設計の問題として捉え直す。",
+      "source_domain": "arxiv.org",
+      "source_fact": "Web、PDF、コードに実在API、MCPスキル、文書ワークフロー由来の合成教師を組み合わせ、Qwen3-4B/8Bの中間学習後にBFCL、tau2-Bench、MCP Universeで一貫した改善を著者らは報告した。",
+      "source_kind": "paper",
+      "source_title": "MidTool: Mid-training Data Synthesis for Agentic Tool Use",
+      "source_url": "https://arxiv.org/abs/2608.20314v1",
+      "title": "ツール利用エージェントを「中間学習」から育てるMidTool",
+      "topics": [
+        "agents",
+        "tools",
+        "research",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-08-22T00:53:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "利便性だけでなく、集団差、同意、画像保護、誤判定時の人間確認を先に設計する。",
+      "caveat": "研究プロトタイプであり臨床診断用ではない。独立検証群は132人で、DXAがより正確と公式ページも明記している。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-photoscan",
+      "language": "en",
+      "observed_at": "2026-08-22T00:53:00+09:00",
+      "published_at": "2026-08-17T00:00:00Z",
+      "role": "major",
+      "selection_reason": "身近な撮影入力が健康指標へ接続される可能性と、臨床利用前に必要な検証境界を同時に示す。",
+      "source_domain": "research.google",
+      "source_fact": "Google Researchは2Dスマホ写真から体脂肪率、A/G比、V/S比を推定する研究用PhotoScanを紹介し、独立検証132人で体脂肪率の平均絶対誤差2.13、インスリン抵抗性分類AUROC 0.760を報告した。",
+      "source_kind": "official",
+      "source_title": "Seeing beyond BMI: Estimating cardiometabolic risk with smartphone imagery",
+      "source_url": "https://research.google/blog/seeing-beyond-bmi-estimating-cardiometabolic-risk-with-smartphone-imagery/",
+      "title": "スマホ写真から体組成リスクを推定するPhotoScan",
+      "topics": [
+        "models",
+        "research",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-08-22T00:53:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "改変能力と、改変を本番へ採用する権限は分離する。",
+      "caveat": "arXiv v1の著者報告で独立検証前。結果は指定された10課題、B300一基、時間制約、評価器設計に限定される。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "ai4ai-bench",
+      "language": "en",
+      "observed_at": "2026-08-22T00:53:00+09:00",
+      "published_at": "2026-08-20T17:56:59Z",
+      "role": "brief",
+      "selection_reason": "自己改善を抽象論ではなく、時間・計算資源・隠し評価器を固定した実行課題として比較できる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "10の凍結研究リポジトリで学習アルゴリズム改変を評価し、6システム29構成の平均0.166、最良0.250と著者らは報告した。",
+      "source_kind": "paper",
+      "source_title": "AI4AI-Bench: Benchmarking LLM Agents in Algorithmic Design for Recursive Self-Improvement",
+      "source_url": "https://arxiv.org/abs/2608.20318v1",
+      "title": "AIが学習アルゴリズムを書き換える力を測るAI4AI-Bench",
+      "topics": [
+        "agents",
+        "models",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-22T00:53:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "制作運用では本人同意、参照画像の保存期間、誤同定、透かしを品質指標と並べる。",
+      "caveat": "arXiv v1の著者報告で独立検証前。比較条件、統計的不確実性、コード公開状況、肖像権・同意の扱いは要約だけでは確認できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "witheveryone-group-image",
+      "language": "en",
+      "observed_at": "2026-08-22T00:53:00+09:00",
+      "published_at": "2026-08-20T17:59:53Z",
+      "role": "brief",
+      "selection_reason": "複数人物を扱う生成では画質だけでなく、誰をどこに描いたかという配置と本人性の監査が重要になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "最大10人の参照人物を指定トークンと構造化配置計画で扱い、本人性の被覆率97.3%、重複率2.8%を著者らは報告した。",
+      "source_kind": "paper",
+      "source_title": "WithEveryone: Unified Planning and Identity Grounding for Group Image Generation",
+      "source_url": "https://arxiv.org/abs/2608.20336v1",
+      "title": "最大10人の顔を保ちながら集団画像を生成するWithEveryone",
+      "topics": [
+        "creative-ai",
+        "models",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-22T00:53:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "資産台帳で対象有無を確認し、該当時だけベンダー手順に沿って期限付きで是正する。",
+      "caveat": "KEV登録は悪用確認と優先対応の根拠だが、個別環境の侵害を意味しない。対象製品・バージョン・ベンダー緩和策の照合が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-trueconf-kev",
+      "language": "en",
+      "observed_at": "2026-08-22T00:53:00+09:00",
+      "published_at": "2026-08-20T12:00:00Z",
+      "role": "watch",
+      "selection_reason": "AI会議支援や音声・映像処理の入口となる通信基盤も、モデルとは別の優先修正面になる。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "CISAはTrueConf ServerのCVE-2026-72529とCVE-2026-72530を、実際の悪用証拠に基づきKEV Catalogへ追加した。",
+      "source_kind": "official",
+      "source_title": "CISA Adds Two Known Exploited Vulnerabilities to Catalog",
+      "source_url": "https://www.cisa.gov/news-events/alerts/2026/08/20/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+      "title": "CISA、TrueConf Serverの2件を悪用確認済み脆弱性へ追加",
+      "topics": [
+        "security",
+        "policy",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-22T00:53:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "採用前に同一プロンプト集合で速度、出力一致、メモリ、電力を再測定する。",
+      "caveat": "ベンダー公開値であり、速度向上はハードウェア、バッチ、受理率、量子化、実装条件に依存する。品質・メモリ・消費電力は環境別に測る必要がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "lfm25-dspark",
+      "language": "en",
+      "observed_at": "2026-08-22T00:53:00+09:00",
+      "published_at": "2026-08-20T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "小型の下書きモデルで生成を先読みする手法は、モデル交換なしにローカル推論の待ち時間を下げる選択肢になる。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Liquid AIはLFM2.5の3モデル向けDSpark draft checkpointを公開し、対象構成で最大3.2倍の推論高速化を報告した。",
+      "source_kind": "release",
+      "source_title": "Up to 3.2x Faster Inference with LFM2.5-DSpark",
+      "source_url": "https://huggingface.co/blog/LiquidAI/lfm25-dspark",
+      "title": "LFM2.5向け投機デコード用DSparkチェックポイントを公開",
+      "topics": [
+        "models",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-08-22T00:53:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-22T00:53:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — エージェントの学び方から、健康・創作・安全の境界まで",
+  "topics": [
+    {
+      "description": "計画、委任、ツール実行を担うAIシステム。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "基盤モデルの挙動、学習、表現。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "AIを実作業へ接続する製品と運用基盤。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "一次研究の方法、結果、適用限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "攻撃、監査、安全な利用境界。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "制度、標準、公共ルール。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・標準"
+    },
+    {
+      "description": "公開コード、開発基盤、共同改善。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "映像、音声、デザイン、制作支援。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}
