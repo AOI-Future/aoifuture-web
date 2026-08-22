@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "anthropic-protein-design-chemistry",
+      "cisa-zimbra-kev",
+      "google-biomarker-discovery",
+      "google-mobility-pois",
+      "phantom-gains-self-improvement",
+      "rulemaze-multimodal-planning"
+    ],
+    "edition_date": "2026-08-23",
+    "edition_id": "2026-08-23-0651",
+    "edition_url": "https://aoifuture.com/news/2026-08-23-0651/",
+    "event_id": "aoi-news-2026-08-23-0651-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-23T06:51:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "タンパク質設計とバイオマーカー探索を深掘り。場所表現、悪用脆弱性、自己改善監査、マルチモーダル計画を短報で追う。",
+    "title": "AOIFUTURE News — AIが研究工程へ入るとき、何を分けて検証するか"
+  }
+]

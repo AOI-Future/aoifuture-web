@@ -1,0 +1,227 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-23T06:51:00+09:00",
+  "dek": "タンパク質設計とバイオマーカー探索を深掘り。場所表現、悪用脆弱性、自己改善監査、マルチモーダル計画を短報で追う。",
+  "edition_date": "2026-08-23",
+  "edition_id": "2026-08-23-0651",
+  "edition_note": "8月18〜21日の一次情報6件を直接確認したレビュー候補。深掘り2件、Brief/Watch 4件。公開操作は行っていない。",
+  "generated_at": "2026-08-23T06:51:00+09:00",
+  "items": [
+    {
+      "aoi_note": "モデル単体の能力ではなく、入力データ、外部ツール、実験者、再現手順を一つの検証可能な工程として設計する。",
+      "caveat": "Anthropicによる自社実験の報告で、独立査読研究ではない。タンパク質設計は専門モデルや外部資源、最大12,500 H100時間を含み、Claude単体の効果や一般的な研究環境への再現性を示さない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "anthropic-protein-design-chemistry",
+      "language": "en",
+      "observed_at": "2026-08-23T06:51:00+09:00",
+      "published_at": "2026-08-18T14:45:31Z",
+      "role": "lead",
+      "selection_reason": "AIが文章生成を越えて、計算資源、専門モデル、外部ラボ、測定データを束ねる研究工程へ入る具体例になる。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "Anthropicは、Claude Mythos PreviewとOpus 4.8を使った15標的のタンパク質結合体設計で14標的への設計に成功し、外部評価機関が実験検証したと報告した。分析化学では、Claude Opus 5がNMRとLC-MSの生データから23分・19分で結果を返し、委託ラボの水素数と純度分析に一致したとしている。",
+      "source_kind": "official",
+      "source_title": "How Claude is accelerating protein design and analytical chemistry",
+      "source_url": "https://www.anthropic.com/research/Claude-accelerates-protein-design",
+      "title": "Claudeを「答えるAI」から、実験を回す研究工程へ",
+      "topics": [
+        "agents",
+        "research",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-23T06:51:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "候補生成、統計計算、反証、最終判断の担当と証跡を分離すると、研究支援AIの監査性が上がる。",
+      "caveat": "公式発表に基づく関連・仮説の報告で、因果関係や臨床有効性を証明しない。コホート間で評価項目と特徴定義も異なる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-biomarker-discovery",
+      "language": "en",
+      "observed_at": "2026-08-23T06:51:00+09:00",
+      "published_at": "2026-08-21T00:00:00Z",
+      "role": "major",
+      "selection_reason": "研究支援AIの価値を、一発の回答ではなく、役割分離された分析と専門家レビューの反復として示す。",
+      "source_domain": "research.google",
+      "source_fact": "Google Researchは、人間の監督下で仮説生成、決定論的統計解析、モデル学習、反証、文献確認、報告を反復するBiomarker Discovery Frameworkを公開し、3コホート計9,279 participant-observationsで既知の信号と候補指標を評価した。",
+      "source_kind": "official",
+      "source_title": "An AI tool for prioritizing candidate biomarkers from wearable sensor data",
+      "source_url": "https://research.google/blog/an-ai-tool-for-prioritizing-candidate-biomarkers-from-wearable-sensor-data/",
+      "title": "ウェアラブルデータから候補バイオマーカーを絞るマルチエージェント研究",
+      "topics": [
+        "agents",
+        "research",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-23T06:51:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "用途ごとに再識別リスクと地域偏りを検証し、集約表現を個人追跡へ転用しない。",
+      "caveat": "公式発表の相対改善値で独立検証前。評価地域・課題・データに限定され、個人推論や個別最適化はできないと明記されている。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-mobility-pois",
+      "language": "en",
+      "observed_at": "2026-08-23T06:51:00+09:00",
+      "published_at": "2026-08-21T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "言語だけでは捉えにくい時間的な場所利用を表現へ加える一方、集約と個人推論の境界も明示している。",
+      "source_domain": "research.google",
+      "source_fact": "Google Researchは、場所の説明文と集約・匿名化した移動パターンを組み合わせるMobility-Embedded POIsを紹介し、ロサンゼルスとヒューストンの未見地点で営業時間、価格帯、閉店、訪問目的、混雑予測を評価した。",
+      "source_kind": "official",
+      "source_title": "How mobility gives language models a deeper understanding of place",
+      "source_url": "https://research.google/blog/how-mobility-gives-language-models-a-deeper-understanding-of-place/",
+      "title": "匿名化モビリティで「場所の使われ方」を表すME-POIs",
+      "topics": [
+        "models",
+        "research",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-08-23T06:51:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "資産台帳で該当製品と版を確認し、ベンダー緩和策と期限を結び付けて対応する。",
+      "caveat": "KEV登録は優先対応の根拠だが、個別環境が侵害されたことを意味しない。製品・バージョン・緩和策の照合が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-zimbra-kev",
+      "language": "en",
+      "observed_at": "2026-08-23T06:51:00+09:00",
+      "published_at": "2026-08-21T12:00:00Z",
+      "role": "watch",
+      "selection_reason": "AI運用の周辺にあるメール・協働基盤も、認証情報や業務データへ到達する重要な攻撃面になる。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "CISAはZimbra Collaboration SuiteのOS Command Injection脆弱性CVE-2026-73570を、実際の悪用証拠に基づいてKnown Exploited Vulnerabilities Catalogへ追加した。",
+      "source_kind": "advisory",
+      "source_title": "CISA Adds One Known Exploited Vulnerability to Catalog",
+      "source_url": "https://www.cisa.gov/news-events/alerts/2026/08/21/cisa-adds-one-known-exploited-vulnerability-catalog",
+      "title": "CISA、ZimbraのOSコマンド注入を悪用確認済み脆弱性へ追加",
+      "topics": [
+        "security",
+        "policy",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-23T06:51:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "改善評価には凍結対照、複数デコード、事前登録した指標、再現可能な集計を入れる。",
+      "caveat": "arXiv v1の著者報告で独立検証前。特定モデル、LoRA設定、監査設計に限定され、他の自己学習法への一般化は未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "phantom-gains-self-improvement",
+      "language": "en",
+      "observed_at": "2026-08-23T06:51:00+09:00",
+      "published_at": "2026-08-20T17:30:14Z",
+      "role": "brief",
+      "selection_reason": "自己改善の主張を、同じ推論・集計揺らぎを受ける未学習対照と比較する重要性を示す。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らはQwen3-8Bのrank-32 LoRA自己学習を同一パイプラインの凍結対照と比較し、対照なしでは結論を反転させる7種類の測定失敗を報告した。",
+      "source_kind": "paper",
+      "source_title": "Phantom Gains: Auditing Self-Improvement Against a Measured Null",
+      "source_url": "https://arxiv.org/abs/2608.20290v1",
+      "title": "自己改善の「伸び」を凍結対照で疑うPhantom Gains",
+      "topics": [
+        "models",
+        "research",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-08-23T06:51:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "実環境エージェントでも、知覚、計画、実行、ルール検証を別ログにして失敗箇所を追えるようにする。",
+      "caveat": "arXiv v1の著者による要約レベルの報告で独立検証前。実環境、安全クリティカル用途、異なる視覚条件への一般化や実運用成熟度は示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "rulemaze-multimodal-planning",
+      "language": "en",
+      "observed_at": "2026-08-23T06:51:00+09:00",
+      "published_at": "2026-08-20T16:28:28Z",
+      "role": "brief",
+      "selection_reason": "マルチモーダルAIの評価を正解到達だけでなく、途中の制約遵守と検証可能な分解へ広げる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、マルチモーダル言語モデルが自然言語ルールを守りながら迷路を進むRuleMazeを提案し、知覚、実行、ルール検証を分離するDisentangled Multimodal Planningがエンドツーエンドのテキスト計画基準よりルール遵守と計画成功を改善したと報告した。",
+      "source_kind": "paper",
+      "source_title": "Rule-Compliant Visual Spatial Planning for Multimodal Large Language Models",
+      "source_url": "https://arxiv.org/abs/2608.20237v1",
+      "title": "画像を見て進むだけでなく、自然言語のルールを守れるか",
+      "topics": [
+        "agents",
+        "models",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-23T06:51:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-23T06:51:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — AIが研究工程へ入るとき、何を分けて検証するか",
+  "topics": [
+    {
+      "description": "計画、委任、ツール実行を担うAIシステム。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "基盤モデルの挙動、学習、表現。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "AIを実作業へ接続する製品と運用基盤。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "一次研究の方法、結果、適用限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "攻撃、監査、安全な利用境界。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "制度、標準、公共ルール。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・標準"
+    }
+  ]
+}
