@@ -1,0 +1,20 @@
+[
+  {
+    "changed_signal_ids": [
+      "cr-0b6d82fb04fc5e3b385d199e3fdb7dc8",
+      "cr-522d87ad060b81a7c1c3bedb819924d9",
+      "cr-86af988a737d9a17a7789dd5728381cd",
+      "cr-e713bad4c35bab9f47a3c87cc4795f55"
+    ],
+    "edition_date": "2026-08-22",
+    "edition_id": "2026-08-22-0817",
+    "edition_url": "https://aoifuture.com/news/2026-08-22-0817/",
+    "event_id": "aoi-news-2026-08-22-0817-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-22T08:30:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "エージェントのスキル蓄積が逆に効く条件、推論コストの適応配分、法律相談の欠落認識、記憶による推論歪みを一次情報で確認。",
+    "title": "AOIFUTURE News — スキル移転、推論コスト、欠落認識、記憶の罠"
+  }
+]

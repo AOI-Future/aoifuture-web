@@ -1,0 +1,154 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-22T08:30:00+09:00",
+  "dek": "エージェントのスキル蓄積が逆に効く条件、推論コストの適応配分、法律相談の欠落認識、記憶による推論歪みを一次情報で確認。",
+  "edition_date": "2026-08-22",
+  "edition_id": "2026-08-22-0817",
+  "edition_note": "8月22日08:17JSTのAoi000 discovery handoff（arXiv 4件）を原典直接読みでレビューした候補。公開操作は行っていない。",
+  "generated_at": "2026-08-22T08:30:00+09:00",
+  "items": [
+    {
+      "aoi_note": "「経験から学ぶ」を謳うエージェント実装では、スキルの切り出し粒度が暗黙の前提になりがちだ。タスク単位で丸ごと保存すると移転で損が出る、という結果は、サブタスク単位への分解とテキスト表現の優先を設計判断の根拠にできる。",
+      "caveat": "arXiv v1の著者報告であり独立検証前。要約にはタスクスイートの全体、使用モデル、サンプル数、効果量の詳細がなく、報告された実験設定を超える一般化は示していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cr-0b6d82fb04fc5e3b385d199e3fdb7dc8",
+      "language": "en",
+      "observed_at": "2026-08-22T08:30:00+09:00",
+      "published_at": "2026-08-20T17:12:08Z",
+      "role": "lead",
+      "selection_reason": "エージェントが経験からスキルを蓄積して成長する設計は実装が進む一方、蓄積したスキルが逆に性能を落とすケースの定量評価は少ない。どの粒度・形式でスキルを切り出すかが移転を左右する点は、スキルメモリ設計の要件として直接使える。",
+      "source_domain": "arxiv.org",
+      "source_fact": "完了タスクから誘導したスキルが他タスクへ移転する際の挙動を、タスク単位とサブタスク単位の誘導、テキストとコードの形式という2軸で制御実験した。タスク単位のスキルはメモリなしベースラインを下回る場合が多く、サブタスク単位は平均で上回った。テキストスキルはコードスキルより移転が良かった。特異性と抽象性のいずれか単独ではタスク成功を予測しないが、両者の合成スコア（スキル・ユーティリティ）は移転成功と相関し、タスク実行なしで計算できる。",
+      "source_kind": "paper",
+      "source_title": "Break It Down, Pass It On: Cross-Task Skill Transfer in LLM Agents",
+      "source_url": "https://arxiv.org/abs/2608.20274v1",
+      "title": "タスク単位のスキルは逆に効かない：LLMエージェントのスキル移転を制御実験で読む",
+      "topics": [
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-22T08:30:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "「長く考えれば正確」はコストと引き換えの前提だった。先頭トークンのモード選択で難易度ソートが機能し、短いモードの方が高精度という結果は、推論コストを問題難易度で正規化できる可能性を示す。",
+      "caveat": "arXiv v1の著者報告であり独立検証前。主実験は1.5B蒸留モデル・MATH訓練・3シード・記載ベンチマークに限定され、他のモデル・タスク・トークナイザ設定への移転は示していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cr-86af988a737d9a17a7789dd5728381cd",
+      "language": "en",
+      "observed_at": "2026-08-22T08:30:00+09:00",
+      "published_at": "2026-08-20T16:54:08Z",
+      "role": "major",
+      "selection_reason": "推論モデルのトークンコストは実運用の主要な制約だが、難易度に応じた計算量配分をモデル自身に学習させる手法は少ない。固定予算の過計算・計算不足をどう解消するかが、推論APIの価格設計にも直結する。",
+      "source_domain": "arxiv.org",
+      "source_fact": "応答の先頭トークンでNoThink・Short・Longの3モードを選び、GRPO内で報酬形成とモード別トークン上限により選択を学習させる。MATHで訓練した1.5B蒸留モデルでは3モードが崩壊せず出現し、短いモードの方がLongより高精度だった。3シード平均でMATH500はベースの0.796に対し0.782、平均応答長は4,796から2,811トークンへ41%短縮。GSM8Kでは76%のトークン削減で同長ベースラインより高精度と報告。",
+      "source_kind": "paper",
+      "source_title": "Learning When to Think: Adaptive Reasoning for Test-Time Compute Allocation",
+      "source_url": "https://arxiv.org/abs/2608.20256v1",
+      "title": "考える量をモデル自身に決めさせる：推論コストの適応配分",
+      "topics": [
+        "models",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-22T08:30:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "「質問が不十分」を失敗ではなく設計対象として扱う視点転換が核心だ。どの情報が法的に重要かをモデルが判断できない限り、留保の質は保証できない。この評価軸は法律以外のドメインへの応用も想定できる。",
+      "caveat": "arXiv v1の著者報告であり独立検証前。記載の米24州・6分野・アノテーション・評価対象モデルに限定され、それ以外の法制度での性能は示していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cr-e713bad4c35bab9f47a3c87cc4795f55",
+      "language": "en",
+      "observed_at": "2026-08-22T08:30:00+09:00",
+      "published_at": "2026-08-20T16:14:47Z",
+      "role": "major",
+      "selection_reason": "法律AIは実利用で増えているが、既存ベンチマークは質問が完全に指定されると仮定している。実際にはユーザーが重要な事実を省略するため、欠落認識能力の評価は実務品質の下限を測る指標になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "法的に重要な事実が欠落した質問に対し、モデルが欠落を認識し、何が足りないかを特定し、早急な結論を避けるかを評価するベンチマークを提案。8つの欠落要素カテゴリと3つの構造失敗モード（switch・gating・fatal prerequisite）を形式化し、6法域分野・24米州にまたがる202項目（ベース58・欠落バリアント144）を実務弁護士がアノテーション。10のフロンティアモデルを評価し、欠落要素特定でF2=0.46を超えるモデルはなく、中央値リコールは0.44。モデルは無差別に留保するか、捏造した前提で黙って答えるかの二択だった。",
+      "source_kind": "paper",
+      "source_title": "InsufficiencyBench: Evaluating LLM legal advice on underspecified user queries",
+      "source_url": "https://arxiv.org/abs/2608.20220v1",
+      "title": "情報が足りない質問にLLMは答えられるか：法律相談の欠落評価ベンチマーク",
+      "topics": [
+        "research",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-08-22T08:30:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "記憶を「正しく保存・検索できれば良い」とする前提が崩れる結果だ。関連する記憶ほど推論を固定化しうる、という点は、メモリ付きエージェントのデグレ原因として実運用で確認すべき項目になる。",
+      "caveat": "arXiv v1の著者報告であり独立検証前。使用モデル・フレームワーク実装・ベンチ規模・指標定義の詳細が要約になく、報告された評価を超える一般化は示していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cr-522d87ad060b81a7c1c3bedb819924d9",
+      "language": "en",
+      "observed_at": "2026-08-22T08:30:00+09:00",
+      "published_at": "2026-08-20T16:00:17Z",
+      "role": "major",
+      "selection_reason": "メモリ付きエージェントは実装が進むが、検索した記憶が推論を歪める方向の評価はほぼ未開拓。記憶の「正しさ」ではなく「推論への影響」を測る軸は、メモリ設計の品質基準として新しい。",
+      "source_domain": "arxiv.org",
+      "source_fact": "忠実に記録され意味的に関連する記憶でも、モデルの推論や信念を歪めて現在のタスク性能を落とす「認知トラップ」をReasoning FixationとBelief Distortionの2形態として特定し、MemTrapBenchで評価した。2モデルファミリー・5メモリフレームワークの実験で、全メモリ戦略がメモリなし設定を下回り、最良の方法でも10%超の性能低下。推論時手法AdaptiveMemはトラップを緩和しつつ、標準メモリベンチマークの性能を維持・改善した。",
+      "source_kind": "paper",
+      "source_title": "MemTrapBench: Benchmarking Cognitive Traps in LLM Memory Use",
+      "source_url": "https://arxiv.org/abs/2608.20202v1",
+      "title": "記憶が推論を歪める：LLMメモリの認知トラップを測る",
+      "topics": [
+        "agents",
+        "models",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-22T08:30:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-22T08:30:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — スキル移転、推論コスト、欠落認識、記憶の罠",
+  "topics": [
+    {
+      "description": "計画、委任、ツール実行を担うAIシステム。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "基盤モデルの挙動、学習、表現。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "一次研究の方法、結果、適用限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "攻撃、監査、安全な利用境界。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    }
+  ]
+}
