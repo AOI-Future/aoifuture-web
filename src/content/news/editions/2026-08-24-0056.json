@@ -1,0 +1,232 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-24T00:56:19+09:00",
+  "dek": "エージェント向け文書とゲーム世界の長期学習を深掘り。天文学の前提、視覚API、会議内エージェント、AI活用型CSFを短報で追う。",
+  "edition_date": "2026-08-24",
+  "edition_id": "2026-08-24-0056",
+  "edition_note": "8月19〜21日の一次情報6件を直接確認したレビュー候補。深掘り2件、Brief/Watch 4件。公開操作は行っていない。",
+  "generated_at": "2026-08-24T00:56:19+09:00",
+  "items": [
+    {
+      "aoi_note": "指示、根拠、実行、テストのリンクを機械可読にし、「読んだ」ことと「確かめた」ことを別の証跡にする。",
+      "caveat": "arXiv v1の観察研究で、因果関係は示さない。2つの公開データセット、著者の分類法、対象エージェントやリポジトリに依存し、全ての開発環境へ一般化できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "agent-friendly-documentation",
+      "language": "en",
+      "observed_at": "2026-08-24T00:56:19+09:00",
+      "published_at": "2026-08-20T15:35:36Z",
+      "role": "lead",
+      "selection_reason": "人間向け文書を増やすだけでは足りず、エージェントが読んだ後に検証へ進める構造まで設計対象になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは557件のエージェント型コーディングセッションと33,097件のエージェント型プルリクエストを分析し、文書参照の60.5%が指示ファイルと作業ノートで、APIリファレンスは1.3%だったと報告した。明示的な文書ベースの検証系列は観測されず、参照後の即時テストも少なかった。",
+      "source_kind": "paper",
+      "source_title": "From Agent Behaviour to Agent-Friendly Documentation: An Empirical Study of How Coding Agents Discover, Read, and Write Technical Documentation",
+      "source_url": "https://arxiv.org/abs/2608.20195v1",
+      "title": "コーディングエージェントは、どの文書を読み、どこで検証を止めるのか",
+      "topics": [
+        "agents",
+        "research",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-24T00:56:19+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "派手な成功率だけでなく、長期記憶の更新、他エージェントとの競合、途中介入、失敗回復を継続ログで評価する。",
+      "caveat": "Google DeepMind自身による提携・試作の紹介で、独立評価ではない。研究目標と一部機能を示すが、汎用性、性能、安全性、一般提供時期を保証しない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "deepmind-games-eve-agents",
+      "language": "en",
+      "observed_at": "2026-08-24T00:56:19+09:00",
+      "published_at": "2026-08-21T00:00:00Z",
+      "role": "major",
+      "selection_reason": "ゲームは、現実の業務エージェントにも必要な長期計画、他者との共存、失敗からの学習を安全に観察できる複雑系になる。",
+      "source_domain": "deepmind.google",
+      "source_fact": "Google DeepMindはFenris Creationsとの研究提携で、EVE Online、EVE Vanguard、EVE Frontierを使い、継続学習、記憶、長期計画、複雑なマルチエージェント相互作用を研究すると発表した。Geminiを使うプレイヤー支援機能Aura Guidanceも紹介している。",
+      "source_kind": "official",
+      "source_title": "From Atari to EVE Online: Building on 15 Years of AI Research in Games",
+      "source_url": "https://deepmind.google/blog/from-atari-to-eve-online-building-on-15-years-of-ai-research-in-games/",
+      "title": "ゲーム世界は、長期記憶と協調を試すAIエージェントの実験場になる",
+      "topics": [
+        "agents",
+        "research",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-08-24T00:56:19+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "異常値を新クラスと断定する前に、計測条件と暗黙の低密度仮定を感度分析し、代替モデルで再推定する。",
+      "caveat": "arXiv v1の著者報告で独立検証前。対象は4銀河で、比率や影響を初期宇宙の銀河全般へ一般化できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "jwst-density-metallicity",
+      "language": "en",
+      "observed_at": "2026-08-24T00:56:19+09:00",
+      "published_at": "2026-08-20T17:59:58Z",
+      "role": "brief",
+      "selection_reason": "AI時代の観測解釈でも、モデルの前提が外れると「新発見」に見える分類そのものが反転し得ることを示す。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らはJWST/NIRSpecで4銀河を解析し、3銀河の電子密度が約10^5〜10^6 cm^-3に達したと報告した。高密度による[OIII]線の抑制を無視すると、金属量を最大約1.1 dex過小評価し得るとしている。",
+      "source_kind": "paper",
+      "source_title": "An Optical Illusion: High Electron Densities Create Extremely Metal-Poor Galaxy Impostors",
+      "source_url": "https://arxiv.org/abs/2608.20339v1",
+      "title": "JWSTが見つけた「極端に金属が少ない銀河」は、密度の見落としだったかもしれない",
+      "topics": [
+        "research",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-08-24T00:56:19+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "画像入力の出所、保持、外部URL取得、ツール実行権限を分け、視覚認識の誤りが操作へ直結しない承認境界を置く。",
+      "caveat": "実験版であり、ベンチマーク比較はベンダー自身の主張。精度、安全性、外部URL画像の扱い、料金、互換性は用途ごとの検証が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "deepseek-v4-flash-vision-exp",
+      "language": "en",
+      "observed_at": "2026-08-24T00:56:19+09:00",
+      "published_at": "2026-08-21T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "画像理解を既存のエージェントAPIと同じ操作面へ載せることで、画面・文書・現場写真を扱う実務フローの組み込みが容易になる。",
+      "source_domain": "api-docs.deepseek.com",
+      "source_fact": "DeepSeekはV4-Flash-Vision-ExpをAPIで公開し、テキストと画像の混在入力、Chat Completions・Messages・Responses、Files APIに対応すると案内した。画像は1枚最大384トークンとして課金される。",
+      "source_kind": "release",
+      "source_title": "DeepSeek-V4-Flash-Vision-Exp Release: Multimodal API Now Live",
+      "source_url": "https://api-docs.deepseek.com/news/news260821/",
+      "title": "DeepSeek、画像とツール利用を結ぶ実験的マルチモーダルAPIを公開",
+      "topics": [
+        "models",
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-08-24T00:56:19+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "会話参加権、リポジトリ書き込み権、PR承認権を分離し、共有スレッドの合意を実行許可へ自動変換しない。",
+      "caveat": "有料Copilot向け公開プレビューで、AIクレジットとcloud sandboxは課金対象。管理者設定、書き込み権限、追加承認が必要で、会話参加だけで安全な変更を保証しない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-teams-agent",
+      "language": "en",
+      "observed_at": "2026-08-24T00:56:19+09:00",
+      "published_at": "2026-08-21T16:03:36Z",
+      "role": "brief",
+      "selection_reason": "エージェント作業が個人IDEから会議・チャネルへ移り、共同指示と権限、責任の境界が製品機能として可視化され始めた。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはMicrosoft Teams内で@GitHubを呼び出し、参加者が同じCopilot cloud agentセッションを閲覧・誘導できる公開プレビューを開始した。リポジトリへの書き込み権限を持つ参加者だけが変更を起動でき、統合IDのPRに追加承認を要求する設定も提供する。",
+      "source_kind": "release",
+      "source_title": "Shared agentic work with GitHub Copilot in Microsoft Teams",
+      "source_url": "https://github.blog/changelog/2026-08-21-shared-agentic-work-with-github-copilot-in-microsoft-teams/",
+      "title": "会議の会話から、その場で共有エージェント作業へ",
+      "topics": [
+        "agents",
+        "tools",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-08-24T00:56:19+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "プラグインごとに由来、バージョン、権限、入出力、ロールバックを記録し、基盤更新と機能追加を同じ承認で通さない。",
+      "caveat": "開発者プレビューで、READMEは互換性を壊す変更があると明記している。性能、セキュリティ、プラグイン品質は独立検証されておらず、本番採用には固定版と監査が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "deepseek-harness-plugin-architecture",
+      "language": "en",
+      "observed_at": "2026-08-24T00:56:19+09:00",
+      "published_at": "2026-08-21T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "エージェント基盤の交換可能性を高める一方、プラグイン境界そのものが権限・供給網・互換性の設計対象になる。",
+      "source_domain": "github.com",
+      "source_fact": "DeepSeekは、すべてをプラグインとして構成するオープンソースのエージェント基盤DeepSeek Harnessを公開した。公式READMEは開発者プレビュー、MITライセンス、npmからのローカルWeb UI起動、エージェント向けAGENTS.mdを明記している。",
+      "source_kind": "release",
+      "source_title": "DeepSeek Harness: Everything is a Plugin",
+      "source_url": "https://github.com/deepseek-ai/deepseek-harness",
+      "title": "DeepSeek、すべてをプラグインとして組み替えるオープンなエージェント基盤を公開",
+      "topics": [
+        "agents",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-08-24T00:56:19+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-24T00:56:19+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — AIエージェントは「読む・記憶する・共同で動く」をどう検証するか",
+  "topics": [
+    {
+      "description": "計画、委任、ツール実行を担うAIシステム。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "一次研究の方法、結果、適用限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "AIを実作業へ接続する製品と運用基盤。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "ゲーム、映像、音声、デザインとAIの接点。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    },
+    {
+      "description": "基盤モデルの挙動、学習、表現。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "制度、標準、公共ルール。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・標準"
+    },
+    {
+      "description": "公開コード、モデル、共同開発の基盤。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    }
+  ]
+}

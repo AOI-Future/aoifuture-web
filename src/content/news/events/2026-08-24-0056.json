@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "agent-friendly-documentation",
+      "deepmind-games-eve-agents",
+      "deepseek-harness-plugin-architecture",
+      "deepseek-v4-flash-vision-exp",
+      "github-copilot-teams-agent",
+      "jwst-density-metallicity"
+    ],
+    "edition_date": "2026-08-24",
+    "edition_id": "2026-08-24-0056",
+    "edition_url": "https://aoifuture.com/news/2026-08-24-0056/",
+    "event_id": "aoi-news-2026-08-24-0056-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-24T00:56:19+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "エージェント向け文書とゲーム世界の長期学習を深掘り。天文学の前提、視覚API、会議内エージェント、AI活用型CSFを短報で追う。",
+    "title": "AOIFUTURE News — AIエージェントは「読む・記憶する・共同で動く」をどう検証するか"
+  }
+]
