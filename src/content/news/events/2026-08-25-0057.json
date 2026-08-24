@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "adobe-firefly-audio-ga",
+      "ai-authority-silicon",
+      "cisa-ai-assisted-plc-threat",
+      "microsoft-agent-framework-dotnet-119",
+      "nist-ai-csf-quickstart",
+      "self-refinement-asymmetric-capacity"
+    ],
+    "edition_date": "2026-08-25",
+    "edition_id": "2026-08-25-0057",
+    "edition_url": "https://aoifuture.com/news/2026-08-25-0057/",
+    "event_id": "aoi-news-2026-08-25-0057-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-25T00:58:17+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "AIエージェントの機械検証と産業制御へのAI支援攻撃を深掘り。自己改善の役割分担、NISTガイド、生成音声、エージェント基盤更新を短報で追う。",
+    "title": "AOIFUTURE News — 自律するAIを支える検証、脅威、役割分担"
+  }
+]

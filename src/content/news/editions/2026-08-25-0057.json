@@ -1,0 +1,240 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-25T00:58:17+09:00",
+  "dek": "AIエージェントの機械検証と産業制御へのAI支援攻撃を深掘り。自己改善の役割分担、NISTガイド、生成音声、エージェント基盤更新を短報で追う。",
+  "edition_date": "2026-08-25",
+  "edition_id": "2026-08-25-0057",
+  "edition_note": "8月19〜22日の一次情報6件を直接確認したレビュー候補。深掘り2件、Brief/Watch 4件。公開操作は行っていない。",
+  "generated_at": "2026-08-25T00:58:17+09:00",
+  "items": [
+    {
+      "aoi_note": "委任範囲を広げる前に、主張・コード・回路の各段階で独立に再検査できる成果物を要求する。",
+      "caveat": "arXiv v1の単一事例で、工程、テープアウト、検証連鎖、ゼロ誤証明の主張は著者報告。別の設計、ツールチェーン、研究者、製造工程への一般化は未検証。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "ai-authority-silicon",
+      "language": "en",
+      "observed_at": "2026-08-25T00:58:17+09:00",
+      "published_at": "2026-08-21T17:59:16Z",
+      "role": "lead",
+      "selection_reason": "エージェントの自律性を、人間の逐次レビューではなく検証可能な成果物と機械的な境界で支える実例を提示する。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者は、1人の研究者が5週間にわたりAIエージェント群を指揮し、アプリケーションコードから検証済みコンパイラ、RISC-Vプロセッサのテープアウトまで進めたと報告した。数学的主張はLean 4カーネルなどで検査可能な成果物として受け渡した。",
+      "source_kind": "paper",
+      "source_title": "AI with Authority, from Application to Silicon",
+      "source_url": "https://arxiv.org/abs/2608.21356v1",
+      "title": "AIエージェントの速度を支えるのは、自由ではなく機械検証だった",
+      "topics": [
+        "agents",
+        "research",
+        "security",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-08-25T00:58:17+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AI利用の有無に関係なく、資産台帳、外部公開面、ネットワーク分離、変更監視を先に閉じる。",
+      "caveat": "勧告は米国で観測された活動とSiemens S7を中心にする。個別組織の侵害を意味せず、適用する緩和策は現場の安全要件とベンダー手順に合わせる必要がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-ai-assisted-plc-threat",
+      "language": "en",
+      "observed_at": "2026-08-25T00:58:17+09:00",
+      "published_at": "2026-08-19T00:00:00Z",
+      "role": "major",
+      "selection_reason": "AIの実務効果が防御側だけでなく攻撃開発の時間と専門性の障壁も下げることを、稼働中の重要インフラ脅威として示す。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "CISAなど米政府機関は、攻撃者が公開情報とAI支援を使ってSiemens S7 PLC向けの攻撃スクリプトを作り、正規監視ツールを装う活動を確認したと警告した。インターネット非公開化、パッチ、分離、監視を主要対策に挙げた。",
+      "source_kind": "advisory",
+      "source_title": "Defending Against an Active Threat to Siemens S7 Series PLCs",
+      "source_url": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-231a",
+      "title": "AI生成の攻撃スクリプトが、産業制御システムの参入障壁を下げる",
+      "topics": [
+        "security",
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-25T00:58:17+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "生成・批評・改稿を一括で同じモデルへ寄せず、段階別の失敗率と費用を測る。",
+      "caveat": "arXiv v1の著者報告。要旨だけではベンチマーク名、効果量、統計的不確実性、費用、他モデルへの一般化を確認できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "self-refinement-asymmetric-capacity",
+      "language": "en",
+      "observed_at": "2026-08-25T00:58:17+09:00",
+      "published_at": "2026-08-21T17:52:17Z",
+      "role": "brief",
+      "selection_reason": "複数段階のエージェントを、役割ごとの限界効用に合わせて安価に構成できる可能性を示す。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らはQwen3の6サイズとGemma 3の4サイズを5ベンチマークで比較し、生成器と改稿器は大きいほど概して改善する一方、批評器のサイズには性能が鈍感で、小さな批評器でも批評なしを上回ったと報告した。",
+      "source_kind": "paper",
+      "source_title": "Asymmetric Capacity Allocation in Self-Refinement Pipelines",
+      "source_url": "https://arxiv.org/abs/2608.21345v1",
+      "title": "自己改善パイプラインは、全段階を同じ大きさのモデルにしなくていい",
+      "topics": [
+        "models",
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-25T00:58:17+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AI出力は証拠ではない。CSF成果、根拠資料、責任者、再確認手順へ結び付ける。",
+      "caveat": "初期公開草案であり最終標準ではない。構造化プロンプトの利用は、入力データの保護、結果検証、組織固有のリスク判断を置き換えない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nist-ai-csf-quickstart",
+      "language": "en",
+      "observed_at": "2026-08-25T00:58:17+09:00",
+      "published_at": "2026-08-19T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "AIをセキュリティ統制の代替ではなく、既存フレームワークの分析・記録補助として位置づける公的な設計材料になる。",
+      "source_domain": "www.nist.gov",
+      "source_fact": "NISTはSP 1353初期公開草案を発表し、CSF 2.0の成果に向けた分析、計画、実装、監視でAIを使う実践的な方法と構造化プロンプトを示した。意見募集は2026年10月15日まで。",
+      "source_kind": "official",
+      "source_title": "Using AI for CSF 2.0 Analysis and Reporting—New Quick-Start Guide Available for Comment",
+      "source_url": "https://www.nist.gov/news-events/news/2026/08/using-ai-csf-20-analysis-and-reporting-new-quick-start-guide-available",
+      "title": "NIST、AIでCSF 2.0の分析と報告を支援するガイド案を公開",
+      "topics": [
+        "security",
+        "policy",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-25T00:58:17+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "生成物の出所、利用条件、音声の同意、最終編集をプロジェクト単位で記録する。",
+      "caveat": "機能、商用安全性、品質に関する説明はAdobe自身による。地域、プラン、言語、生成物の権利条件は利用前に個別確認が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "adobe-firefly-audio-ga",
+      "language": "en",
+      "observed_at": "2026-08-25T00:58:17+09:00",
+      "published_at": "2026-08-20T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "生成AIの制作導線が静止画や動画から音声へ広がり、編集ツール間の往復を減らす実用的な更新。",
+      "source_domain": "blog.adobe.com",
+      "source_fact": "AdobeはFireflyのGenerate Music、Generate Speech、Generate Sound Effectsを広く一般提供し、画像・動画・デザインと同じ制作環境で音声素材を生成できるようにしたと発表した。",
+      "source_kind": "release",
+      "source_title": "Adobe Firefly expands its creative AI studio: generate music, speech, and sound effects in one place",
+      "source_url": "https://blog.adobe.com/en/publish/2026/08/20/adobe-firefly-expands-its-creative-ai-studio-generate-music-speech-and-sound-effects-in-one-place",
+      "title": "Adobe Firefly、音楽・音声・効果音の生成を一般提供",
+      "topics": [
+        "creative-ai",
+        "tools",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-08-25T00:58:17+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "実験的フックは固定版で検証し、どの処理を観測・拒否・再試行できるかをテストに落とす。",
+      "caveat": "リリースノートに基づく更新概要で、実験機能を含む。互換性、安定性、セキュリティ特性は採用環境でのテストが必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "microsoft-agent-framework-dotnet-119",
+      "language": "en",
+      "observed_at": "2026-08-25T00:58:17+09:00",
+      "published_at": "2026-08-22T12:48:00Z",
+      "role": "watch",
+      "selection_reason": "長時間動くエージェントで、会話経路の再現性と実行前後の介入点をフレームワーク側へ持たせる更新。",
+      "source_domain": "github.com",
+      "source_fact": "Microsoft Agent Frameworkの.NET 1.19.0は、セッションに永続化されるチャットクライアントルーティング、エージェントフックの実験的な介入契約、AG-UI関連更新などを含む。",
+      "source_kind": "release",
+      "source_title": "Microsoft Agent Framework dotnet-1.19.0",
+      "source_url": "https://github.com/microsoft/agent-framework/releases/tag/dotnet-1.19.0",
+      "title": "Microsoft Agent Framework、セッション永続ルーティングと実行フックを追加",
+      "topics": [
+        "agents",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-08-25T00:58:17+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-25T00:58:17+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — 自律するAIを支える検証、脅威、役割分担",
+  "topics": [
+    {
+      "description": "計画、委任、ツール実行を担うAIシステム。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "一次研究の方法、結果、適用限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "AIとデジタル基盤の脅威、統制、検証。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "公開コード、モデル、共同開発の基盤。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "基盤モデルの挙動、学習、構成。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "制度、標準、公共ルール。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・標準"
+    },
+    {
+      "description": "AIを実作業へ接続する製品と運用基盤。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "音声、映像、デザインとAIの接点。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}
