@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "bpco-stable-critic",
+      "github-alt-text-model-check",
+      "mcp-python-sdk-210",
+      "meta-metaroce",
+      "reworld-long-memory",
+      "swe-refactor-bench"
+    ],
+    "edition_date": "2026-08-26",
+    "edition_id": "2026-08-26-0052",
+    "edition_url": "https://aoifuture.com/news/2026-08-26-0052/",
+    "event_id": "aoi-news-2026-08-26-0052-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-26T00:52:56+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "全体移行に挑むコーディングエージェントとAI規模Ethernetを深掘り。アクセシビリティ検査、学習critic、世界モデル記憶、MCP安全更新を短報で追う。",
+    "title": "AOIFUTURE News — AI基盤を支える移行、ネットワーク、記憶と安全境界"
+  }
+]

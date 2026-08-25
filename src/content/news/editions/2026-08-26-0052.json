@@ -1,0 +1,234 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-26T00:52:56+09:00",
+  "dek": "全体移行に挑むコーディングエージェントとAI規模Ethernetを深掘り。アクセシビリティ検査、学習critic、世界モデル記憶、MCP安全更新を短報で追う。",
+  "edition_date": "2026-08-26",
+  "edition_id": "2026-08-26-0052",
+  "edition_note": "8月24〜25日の一次情報6件を直接確認したレビュー候補。深掘り2件、Brief/Watch 4件。公開操作は行っていない。",
+  "generated_at": "2026-08-26T00:52:56+09:00",
+  "items": [
+    {
+      "aoi_note": "完了宣言ではなく、移行監査、振る舞いテスト、独立検証を別々のゲートにする。",
+      "caveat": "arXiv v1の著者報告。20課題、8モデル、26設定に限定され、エージェント生成テストが隠れた差分を完全に捉える保証はない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "swe-refactor-bench",
+      "language": "en",
+      "observed_at": "2026-08-26T00:52:56+09:00",
+      "published_at": "2026-08-24T17:59:04Z",
+      "role": "lead",
+      "selection_reason": "短い修正では見えにくい、長期・全体移行におけるコーディングエージェントの限界を定量化する。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは20件のリポジトリ全体移行を520回評価し、監査・固定テスト・独立エージェント検証の3段階をすべて通過したのは28回（5.4%）、20課題中13件は受理解がゼロだったと報告した。",
+      "source_kind": "paper",
+      "source_title": "SWE Refactor Bench: Can Coding Agents Complete a Long-Horizon, Whole-Repository Stack Migration?",
+      "source_url": "https://arxiv.org/abs/2608.23564v1",
+      "title": "リポジトリ全体の移行、AIコーディングエージェントの完走率は5.4%",
+      "topics": [
+        "agents",
+        "research",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-08-26T00:52:56+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ベンダー数値だけで採用せず、対象トポロジー、損失条件、NIC実装、回復挙動を自環境で再測定する。",
+      "caveat": "性能値はMetaとAMDの特定構成による自己報告。仕様、参照実装、適合枠組みは2026年10月公開予定で、現時点では利用可能性と再現性を確認できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "meta-metaroce",
+      "language": "en",
+      "observed_at": "2026-08-26T00:52:56+09:00",
+      "published_at": "2026-08-24T18:02:29Z",
+      "role": "major",
+      "selection_reason": "モデル性能の競争を支えるネットワーク層で、汎用EthernetをAI規模へ拡張する設計を示す。",
+      "source_domain": "engineering.fb.com",
+      "source_fact": "Metaは、パケット分散、順不同配送、経路別の輻輳・損失処理を備え、PFCを使わないAI向けRDMAトランスポートを設計した。64ノードのAMD GPUクラスタで、1%損失時に約86%のスループットを報告した。",
+      "source_kind": "official",
+      "source_title": "MetaRoCE: A New RDMA Transport Built for AI-Scale Ethernet",
+      "source_url": "https://engineering.fb.com/2026/08/24/networking-traffic/metaroce-rdma-transport-ai-ethernet/",
+      "title": "Meta、AIクラスタ向けEthernet RDMA「MetaRoCE」を発表",
+      "topics": [
+        "models",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-08-26T00:52:56+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "モデル検査を既定で外し、送信データ、費用、誤判定、人間レビューを明示的に選べるようにする。",
+      "caveat": "GitHub自身の実装説明で独立評価ではない。モデルは誤り得て、評価ハーネスはスキャン全体を検証しない。任意ルールはページ由来データを外部モデルへ送る。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-alt-text-model-check",
+      "language": "en",
+      "observed_at": "2026-08-26T00:52:56+09:00",
+      "published_at": "2026-08-24T20:56:32Z",
+      "role": "brief",
+      "selection_reason": "形式的なアクセシビリティ検査と、文脈に合う説明品質を別問題として扱う実装例になる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはAccessibility Scanner向けに、既定で動く5つの決定論的ルールと、画像・代替テキスト・周辺文脈をGitHub Modelsへ送る任意の品質検査ルールを実装した。",
+      "source_kind": "official",
+      "source_title": "Your alt text passes automated checks. That doesn’t mean it’s any good.",
+      "source_url": "https://github.blog/engineering/user-experience/your-alt-text-passes-automated-checks-that-doesnt-mean-its-any-good/",
+      "title": "「検査に合格した代替テキスト」と「役に立つ説明」は同じではない",
+      "topics": [
+        "tools",
+        "models",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-08-26T00:52:56+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "報酬設計、criticの特権情報、標本効率を分けて評価し、再現実験なしに一般化しない。",
+      "caveat": "arXiv v1の要旨レベルの著者報告。ベンチマーク名、効果量、不確実性、他課題・モデルへの一般化は要旨だけでは確認できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "bpco-stable-critic",
+      "language": "en",
+      "observed_at": "2026-08-26T00:52:56+09:00",
+      "published_at": "2026-08-24T17:59:39Z",
+      "role": "brief",
+      "selection_reason": "推論学習の効率化で、critic設計と標本数のトレードオフを再考する材料になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らはBPCOを提案し、数学推論課題の1.5B〜30B-A3Bモデルで、強いcriticベースラインを一貫して改善し、1プロンプト1応答の標本でgroup-basedベースラインに並ぶか上回ったと報告した。",
+      "source_kind": "paper",
+      "source_title": "How to Train a Critic Stably and Efficiently",
+      "source_url": "https://arxiv.org/abs/2608.23566v1",
+      "title": "LLM強化学習のcriticを安定化するBPCO",
+      "topics": [
+        "models",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-26T00:52:56+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "短期状態、長期ランドマーク、再訪時の整合性を別メトリクスで測る。",
+      "caveat": "arXiv v1の著者報告。比較、データ、ハードウェア、ロールアウト条件に限定され、再現性や実運用への一般化は未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "reworld-long-memory",
+      "language": "en",
+      "observed_at": "2026-08-26T00:52:56+09:00",
+      "published_at": "2026-08-24T17:59:05Z",
+      "role": "brief",
+      "selection_reason": "長時間の生成世界で、無制限な文脈保持ではなく役割別の記憶構造を採る設計を示す。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは短期制御と長期記憶を分離し、固定KVキャッシュとランドマークバンクを用いるReWorldを提案した。6つの比較モデルに対し、記載プロトコル下で制御忠実度と生成品質が最良だったと報告した。",
+      "source_kind": "paper",
+      "source_title": "ReWorld: An Interactive World Model with Long-Horizon Memory",
+      "source_url": "https://arxiv.org/abs/2608.23565v1",
+      "title": "ReWorld、短期制御と長期記憶を分ける対話型世界モデル",
+      "topics": [
+        "models",
+        "research",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-08-26T00:52:56+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "上限、例外公開、互換性を本番前テストに固定し、旧clientとのwire差分を確認する。",
+      "caveat": "リリースノートに基づく更新概要。挙動変更を含むため、既存のstructuredContent、例外処理、旧仕様sessionとの互換性を採用環境で確認する必要がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "mcp-python-sdk-210",
+      "language": "en",
+      "observed_at": "2026-08-26T00:52:56+09:00",
+      "published_at": "2026-08-24T19:00:24Z",
+      "role": "watch",
+      "selection_reason": "エージェント接続基盤で、入力サイズ制限と内部例外の露出抑制を標準実装へ寄せる更新。",
+      "source_domain": "github.com",
+      "source_fact": "MCP Python SDK 2.1.0は、4MiBのリクエスト本文上限をSSE transportとOAuth endpointへ拡張し、予期しないhandler例外の詳細をclientへ返さず一般化したエラーだけを返すよう変更した。",
+      "source_kind": "release",
+      "source_title": "modelcontextprotocol/python-sdk v2.1.0",
+      "source_url": "https://github.com/modelcontextprotocol/python-sdk/releases/tag/v2.1.0",
+      "title": "MCP Python SDK 2.1.0、SSEとOAuthにも4MiB制限を拡張",
+      "topics": [
+        "agents",
+        "tools",
+        "security",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-08-26T00:52:56+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-26T00:52:56+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — AI基盤を支える移行、ネットワーク、記憶と安全境界",
+  "topics": [
+    {
+      "description": "計画、委任、ツール実行を担うAIシステム。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "基盤モデルの学習、推論、評価。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "AIを実作業へ接続する製品と開発基盤。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "一次研究の方法、結果、適用限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "AIとデジタル基盤の脅威、統制、検証。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "公開コード、仕様、共同開発の基盤。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "映像、体験設計、制作とAIの接点。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}
