@@ -1,0 +1,236 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-27T01:23:38+09:00",
+  "dek": "身体性を持つXRエージェントと、検索結果を判断へ統合できない問題を深掘り。映像データ、モデル配備、SDK移行を短報で追う。",
+  "edition_date": "2026-08-27",
+  "edition_id": "2026-08-27-0123",
+  "edition_note": "8月25〜26日の一次情報6件を直接確認した再構成レビュー候補。公開済みURL1件を除外し、深掘り2件、Brief/Watch 4件で再検証した。公開操作は行っていない。",
+  "generated_at": "2026-08-27T01:23:38+09:00",
+  "items": [
+    {
+      "aoi_note": "身体表現を足す前に、対象物の登録、指示との同期、誤指示時の安全停止を個別に検証する。",
+      "caveat": "Google Researchによるプロトタイプと小規模研究の自己報告。効果量や信頼区間、独立再現は示されず、一般製品や広範な実運用を意味しない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-agenthands",
+      "language": "en",
+      "observed_at": "2026-08-27T01:23:38+09:00",
+      "published_at": "2026-08-25T19:10:59Z",
+      "role": "lead",
+      "selection_reason": "会話エージェントが画面内の言葉から、身体・視線・空間を扱うインターフェースへ進む設計例になる。",
+      "source_domain": "research.google",
+      "source_fact": "Google Researchは、視線とシーン再構成で物体を登録し、LLMがGestureEventを生成して音声と手振りを同期するXR研究プロトタイプAgentHandsを紹介した。N=12の被験者内研究で、音声のみの基準より空間理解と複雑な手順の追従が改善したと報告している。",
+      "source_kind": "official",
+      "source_title": "AgentHands: Generating interactive hand gestures for spatially grounded agent conversations in XR",
+      "source_url": "https://research.google/blog/agenthands-generating-interactive-hand-gestures-for-spatially-grounded-agent-conversations-in-xr/",
+      "title": "AgentHands、XR会話に視線・空間・手振りを統合",
+      "topics": [
+        "agents",
+        "research",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-08-27T01:23:38+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "検索、要約、判断への統合を別々に測り、最終出力が根拠へ追跡可能かを検証する。",
+      "caveat": "arXiv v1の要旨レベルの著者報告。モデル名、標本数、効果量、統計詳細、独立再現は要旨だけでは確認できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "reading-not-using",
+      "language": "en",
+      "observed_at": "2026-08-27T01:23:38+09:00",
+      "published_at": "2026-08-25T17:31:25Z",
+      "role": "major",
+      "selection_reason": "RAGの検索成功率だけでは、最終判断に根拠が統合されたことを保証できないという実務的な警告になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、無関係な文脈を2,000から128,000トークンへ増やすと、リスク開示を正確に検索できても投資判断への影響がノイズ水準まで低下すると報告した。対象情報を判断直前に構造化して再提示すると影響が戻ったとしている。",
+      "source_kind": "paper",
+      "source_title": "Reading Is Not Using: Retrieval, Judgment, and the Design of AI Financial Research Workflows",
+      "source_url": "https://arxiv.org/abs/2608.24842v1",
+      "title": "AIは情報を読めても、判断に使うとは限らない",
+      "topics": [
+        "agents",
+        "research",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-08-27T01:23:38+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "規模だけで評価せず、同意・権利・除外手続き、由来追跡、フィルタ誤差を採用条件に含める。",
+      "caveat": "arXivプレプリントの要旨レベルの自己報告。権利処理、フィルタリング誤差、アクセス条件、ベンチマーク詳細は要旨だけでは確認できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "laion-bvd",
+      "language": "en",
+      "observed_at": "2026-08-27T01:23:38+09:00",
+      "published_at": "2026-08-25T17:34:19Z",
+      "role": "brief",
+      "selection_reason": "マルチモーダル学習の規模と、映像・音声・静止画を横断するデータ設計を考える材料になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らはCommonCrawlから13億件の動画URLを集め、8,000万本・合計1,000万時間を取得し、映像・音声・画像のマルチモーダル事前学習向けにLAION-BVDを構成したと報告した。",
+      "source_kind": "paper",
+      "source_title": "LAION-BVD: A 10-Million-Hour Open Video Dataset for Multimodal Pre-training",
+      "source_url": "https://arxiv.org/abs/2608.24845v1",
+      "title": "LAION-BVD、1,000万時間規模のオープン映像データを提案",
+      "topics": [
+        "research",
+        "models",
+        "creative-ai",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-08-27T01:23:38+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "採用前に対象入力、必要コンテキスト長、配備フレームワーク、評価条件を固定し、既存モデルとの同一タスク比較を行う。",
+      "caveat": "Z.ai自身のモデルカードと評価説明に基づく。ベンチマーク値、価格比較、他モデルとの優劣は独立評価ではなく、実運用の品質・コスト・安全性は個別検証が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "glm-53-flash",
+      "language": "en",
+      "observed_at": "2026-08-27T01:23:38+09:00",
+      "published_at": "2026-08-25T06:43:14Z",
+      "role": "brief",
+      "selection_reason": "モデル性能の数値だけでなく、長文処理コスト、マルチモーダル入力、ローカル配備経路を同時に評価する一次資料になる。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Z.aiはGLM-5.3-Flashのモデルカードを公開し、320B総パラメータ・18B活性パラメータ、疎注意と線形注意を組み合わせたハイブリッド構成、ネイティブマルチモーダル対応を説明した。",
+      "source_kind": "official",
+      "source_title": "GLM-5.3-Flash",
+      "source_url": "https://huggingface.co/zai-org/GLM-5.3-Flash",
+      "title": "GLM-5.3-Flash、ネイティブマルチモーダルと効率設計を公開",
+      "topics": [
+        "models",
+        "agents",
+        "open-source",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-27T01:23:38+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "モデル追加だけを見ず、依存固定、互換性、既存推論経路の回帰を同じテストで確認する。",
+      "caveat": "GitHubリリースノートに基づく概要。モデル性能の記述は上流側の主張を含み、独立評価ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "transformers-5161",
+      "language": "en",
+      "observed_at": "2026-08-27T01:23:38+09:00",
+      "published_at": "2026-08-26T14:50:01Z",
+      "role": "brief",
+      "selection_reason": "新モデル対応と互換性・依存固定が同じパッチで動くため、導入時の回帰確認が必要になる。",
+      "source_domain": "github.com",
+      "source_fact": "Hugging Face Transformers 5.16.1はGLM-5.3-Flash対応を追加し、tensor parallelismの後方互換挙動やセキュリティ上の理由によるカーネル固定を含む小規模修正をまとめた。",
+      "source_kind": "release",
+      "source_title": "Release v5.16.1",
+      "source_url": "https://github.com/huggingface/transformers/releases/tag/v5.16.1",
+      "title": "Transformers 5.16.1、GLM-5.3-Flash対応と小規模修正",
+      "topics": [
+        "models",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-08-27T01:23:38+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "更新前にimport利用箇所を列挙し、移行ガイドと固定バージョンの両方を確認する。",
+      "caveat": "単一変更のパッチリリース。実際の破壊的影響は既存コードのimport経路と利用バージョンに依存する。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "mcp-python-sdk-211",
+      "language": "en",
+      "observed_at": "2026-08-27T01:23:38+09:00",
+      "published_at": "2026-08-25T15:58:21Z",
+      "role": "watch",
+      "selection_reason": "基盤SDKのメジャー移行では、import経路と移行手順の不一致が実装停止や誤った互換性判断につながる。",
+      "source_domain": "github.com",
+      "source_fact": "MCP Python SDK 2.1.1は、mcp.server.fastmcpのimport利用者を移行ガイドへ案内する変更を収録した。",
+      "source_kind": "release",
+      "source_title": "v2.1.1",
+      "source_url": "https://github.com/modelcontextprotocol/python-sdk/releases/tag/v2.1.1",
+      "title": "MCP Python SDK 2.1.1、FastMCP移行案内を修正",
+      "topics": [
+        "agents",
+        "tools",
+        "open-source",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-08-27T01:23:38+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-27T01:23:38+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — AIが「見る・読む・つくる」を実務へつなぐ条件",
+  "topics": [
+    {
+      "description": "計画、委任、ツール実行を担うAIシステム。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "一次研究の方法、結果、適用限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "映像、音声、体験設計、制作とAIの接点。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    },
+    {
+      "description": "基盤モデルの学習、推論、評価。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "公開コード、仕様、共同開発の基盤。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "AIを実作業へ接続する製品と開発基盤。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "AIとデジタル基盤の脅威、統制、検証。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    }
+  ]
+}

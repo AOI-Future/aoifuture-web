@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "glm-53-flash",
+      "google-agenthands",
+      "laion-bvd",
+      "mcp-python-sdk-211",
+      "reading-not-using",
+      "transformers-5161"
+    ],
+    "edition_date": "2026-08-27",
+    "edition_id": "2026-08-27-0123",
+    "edition_url": "https://aoifuture.com/news/2026-08-27-0123/",
+    "event_id": "aoi-news-2026-08-27-0123-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-27T01:23:38+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "身体性を持つXRエージェントと、検索結果を判断へ統合できない問題を深掘り。映像データ、モデル配備、SDK移行を短報で追う。",
+    "title": "AOIFUTURE News — AIが「見る・読む・つくる」を実務へつなぐ条件"
+  }
+]
