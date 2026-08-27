@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "deepmind-double-blind-evals",
+      "fact-check-cross-benchmark",
+      "github-global-model-policy",
+      "google-glucofm",
+      "recuris-agent-memory",
+      "stepguard-agent-actions"
+    ],
+    "edition_date": "2026-08-28",
+    "edition_id": "2026-08-28-0051",
+    "edition_url": "https://aoifuture.com/news/2026-08-28-0051/",
+    "event_id": "aoi-news-2026-08-28-0051-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-28T00:51:14+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "二重盲検のモデル評価と、自動ファクトチェックの検索限界を深掘り。モデル統制、医療時系列、実行前ガード、長期記憶を短報で追う。",
+    "title": "AOIFUTURE News — AIの評価・検索・記憶を「信じられる工程」に変える"
+  }
+]

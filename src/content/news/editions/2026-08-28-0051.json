@@ -1,0 +1,227 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-28T00:51:14+09:00",
+  "dek": "二重盲検のモデル評価と、自動ファクトチェックの検索限界を深掘り。モデル統制、医療時系列、実行前ガード、長期記憶を短報で追う。",
+  "edition_date": "2026-08-28",
+  "edition_id": "2026-08-28-0051",
+  "edition_note": "8月25〜27日の一次情報6件を直接確認したレビュー候補。深掘り2件、Brief/Watch 4件で構成し、公開操作は行っていない。",
+  "generated_at": "2026-08-28T00:51:14+09:00",
+  "items": [
+    {
+      "aoi_note": "評価前の秘密保持、実行時の隔離、結果の監査を分け、第三者が再現できる証跡を残す。",
+      "caveat": "パイロットの設計発表であり、評価結果や独立監査結果は未提示。「世界初」はGoogleの表現で、一次ページだけでは独立確認できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "deepmind-double-blind-evals",
+      "language": "en",
+      "observed_at": "2026-08-28T00:51:14+09:00",
+      "published_at": "2026-08-27T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "ベンチマーク汚染を契約だけでなく技術境界でも抑える、評価ガバナンスの具体例になる。",
+      "source_domain": "deepmind.google",
+      "source_fact": "Google DeepMindは、機密ベンチマークを暗号学的な環境に隔離し、モデル提供者が評価内容を事前に見られない二重盲検評価のパイロットを発表した。Gemini Flash Liteを対象に、Singapore AI Safety Institute、OpenMined、AVERI、MLCommonsと検証する。",
+      "source_kind": "official",
+      "source_title": "Piloting the world’s first double-blind AI evaluations",
+      "source_url": "https://deepmind.google/blog/piloting-the-worlds-first-double-blind-ai-evaluations/",
+      "title": "モデル評価を「事前に見せない」仕組みで守る",
+      "topics": [
+        "security",
+        "models",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-28T00:51:14+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "検索、証拠の質、最終判定を別々に測り、単一ベンチマークの順位を運用品質へ直結させない。",
+      "caveat": "arXiv v1の要旨に基づく著者報告。査読状況、詳細な誤差分析、独立再現はこの確認範囲に含まれない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "fact-check-cross-benchmark",
+      "language": "en",
+      "observed_at": "2026-08-28T00:51:14+09:00",
+      "published_at": "2026-08-26T00:00:00Z",
+      "role": "major",
+      "selection_reason": "検索と真偽判定を一つの精度でまとめず、ドメイン移動時の崩れを測る必要性を示す。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは9モデルを4データセットで比較し、最良モデルがSciFactのmacro-F1 0.70からClimateCheckでは0.31へ低下したと報告した。取得証拠を正解注釈へ置き換えると検証精度が14〜22ポイント改善し、検索が主要なボトルネックだと結論づけた。",
+      "source_kind": "paper",
+      "source_title": "How Robust Are Automated Fact-Checking Systems? A Cross-Benchmark Evaluation",
+      "source_url": "https://arxiv.org/abs/2608.25934v1",
+      "title": "自動ファクトチェックは、検索段階で大きくつまずく",
+      "topics": [
+        "research",
+        "tools",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-08-28T00:51:14+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "既定値を確認したうえで、例外モデルだけを明示管理し、展開期間中の組織差を監視する。",
+      "caveat": "段階的展開のため、同じ日でも組織ごとに適用時点が異なる。利用可能性や個別モデルの品質を保証する発表ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-global-model-policy",
+      "language": "en",
+      "observed_at": "2026-08-28T00:51:14+09:00",
+      "published_at": "2026-08-26T22:08:38Z",
+      "role": "brief",
+      "selection_reason": "モデル追加のたびに個別設定が抜ける問題を、組織既定値で抑える変更になる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはCopilot BusinessとEnterpriseの一般提供モデルに対するglobal model policyの強制を段階的に開始し、9月1日までに展開すると発表した。未設定および新規の一般提供モデルはglobal policyの状態を継承する。",
+      "source_kind": "release",
+      "source_title": "Global model policy generally available",
+      "source_url": "https://github.blog/changelog/2026-08-26-global-model-policy-generally-available/",
+      "title": "GitHub Copilotのモデル既定方針、段階的な強制へ",
+      "topics": [
+        "tools",
+        "models",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-08-28T00:51:14+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "臨床導入では、対象集団ごとの外部検証、欠測や機器差、意思決定への影響をモデル性能と分けて確認する。",
+      "caveat": "Google Researchの自己報告。臨床的有用性、集団間の公平性、独立再現、実装時の規制適合は別途検証が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-glucofm",
+      "language": "en",
+      "observed_at": "2026-08-28T00:51:14+09:00",
+      "published_at": "2026-08-26T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "時系列の異なる変化を分離して表現学習する設計は、医療以外のセンサーデータにも示唆がある。",
+      "source_domain": "research.google",
+      "source_fact": "Google Researchは、連続血糖モニタリングの遅い傾向と短期偏差を別ストリームで扱う軽量・自己教師あり基盤モデルGlucoFMを紹介し、糖尿病リスクやインスリン抵抗性など複数の代謝予測へ転用可能だと報告した。",
+      "source_kind": "official",
+      "source_title": "GlucoFM: Foundation model for continuous glucose monitoring",
+      "source_url": "https://research.google/blog/glucofm-foundation-model-for-continuous-glucose-monitoring/",
+      "title": "GlucoFM、血糖の長短期変動を分けて学習",
+      "topics": [
+        "research",
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-28T00:51:14+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "実環境では許可リスト、承認、ロールバック、監査ログと組み合わせ、未知のツールや文脈での誤検知を測る。",
+      "caveat": "arXiv v1の著者報告で、比較条件と数値は独立検証していない。公開ベンチマークの改善が実運用の安全性を保証するものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "stepguard-agent-actions",
+      "language": "en",
+      "observed_at": "2026-08-28T00:51:14+09:00",
+      "published_at": "2026-08-25T16:17:27Z",
+      "role": "brief",
+      "selection_reason": "完了後の軌跡監査だけでなく、危険な操作の直前に止める制御を評価できる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らはエージェントの各ツール操作を実行前に検査するStepGuardを提案し、AgentDojoとAgentDynで無防御時に比べ平均攻撃成功率を77.3%相対削減、平均utility低下を2.8ポイントに抑えたと報告した。",
+      "source_kind": "paper",
+      "source_title": "StepGuard: Learning Step-Level Guardrails with Scalable Supervision and Safety-Utility Balancing",
+      "source_url": "https://arxiv.org/abs/2608.24777v1",
+      "title": "StepGuard、ツール実行前に危険な一手を検査",
+      "topics": [
+        "agents",
+        "security",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-28T00:51:14+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "更新対象を局所化し、変更前後の評価、ロールバック、汚染された経験の隔離を必須にする。",
+      "caveat": "arXiv v1の著者報告。SOTAや改善幅は提示条件に依存し、コード、全実験、汚染耐性、長期運用での再現はこの確認範囲外。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "recuris-agent-memory",
+      "language": "en",
+      "observed_at": "2026-08-28T00:51:14+09:00",
+      "published_at": "2026-08-25T17:56:35Z",
+      "role": "watch",
+      "selection_reason": "長い履歴を丸ごと抱える代わりに、現在状態と再利用スキルを分けて改善する設計案になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは作業記憶と経験記憶を結び、実行証拠からSkill Memoryを検証付きで局所更新するRecurisを提案した。4ベンチマーク・10モデルで、完了した37組中35組の成功率が改善したと報告している。",
+      "source_kind": "paper",
+      "source_title": "Recursive Experiential-Working Memory Evolution for Long-Horizon Agent Harnesses",
+      "source_url": "https://arxiv.org/abs/2608.24876v1",
+      "title": "長期タスクの記憶を、失敗証拠から局所更新",
+      "topics": [
+        "agents",
+        "research",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-08-28T00:51:14+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-28T00:51:14+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — AIの評価・検索・記憶を「信じられる工程」に変える",
+  "topics": [
+    {
+      "description": "AIとデジタル基盤の脅威、統制、検証。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "基盤モデルの学習、推論、評価。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "一次研究の方法、結果、適用限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "AIを実作業へ接続する製品と開発基盤。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "計画、委任、ツール実行を担うAIシステム。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "公開コード、仕様、共同開発の基盤。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    }
+  ]
+}
