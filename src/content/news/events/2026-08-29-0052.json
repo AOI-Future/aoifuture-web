@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "anthropic-model-hardware-standard",
+      "aws-agentcore-region-expansion",
+      "gemini-notebook-expert-intelligence",
+      "gemini-transcribe-35",
+      "khanmigo-teacher-controlled-tools",
+      "wikiskill-persistent-knowledge"
+    ],
+    "edition_date": "2026-08-29",
+    "edition_id": "2026-08-29-0052",
+    "edition_url": "https://aoifuture.com/news/2026-08-29-0052/",
+    "event_id": "aoi-news-2026-08-29-0052-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-29T00:52:52+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "物理装置を扱う共通仕様と、経験をSkillへ変える知識層を深掘り。音声認識、書籍利用、教師確認、エージェント基盤の地域展開を短報で追う。",
+    "title": "AOIFUTURE News — AIが現場へ入るとき、仕様・知識・権利をどう守るか"
+  }
+]

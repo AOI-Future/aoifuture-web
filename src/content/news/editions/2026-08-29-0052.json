@@ -1,0 +1,239 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-29T00:52:52+09:00",
+  "dek": "物理装置を扱う共通仕様と、経験をSkillへ変える知識層を深掘り。音声認識、書籍利用、教師確認、エージェント基盤の地域展開を短報で追う。",
+  "edition_date": "2026-08-29",
+  "edition_id": "2026-08-29-0052",
+  "edition_note": "8月26〜27日の一次情報6件を直接確認したレビュー候補。深掘り2件、Brief/Watch 4件で構成し、公開操作は行っていない。",
+  "generated_at": "2026-08-29T00:52:52+09:00",
+  "items": [
+    {
+      "aoi_note": "装置ごとの許可、操作上限、緊急停止、実行ログを標準ドライバーの外側も含めて設計する。",
+      "caveat": "研究プレビュー段階であり、導入事例の成功率や高速化はAnthropicと提携先の自己報告。物理・空間推論には専門家の監督が必要で、プログラム可能な接口のない装置は対象外。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "anthropic-model-hardware-standard",
+      "language": "en",
+      "observed_at": "2026-08-29T00:52:52+09:00",
+      "published_at": "2026-08-27T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "AIの作用範囲が情報処理から物理装置へ広がるとき、相互運用性と安全評価を同じ仕様面で扱う具体例になる。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "Anthropicは、顕微鏡、液体処理装置、ロボットアームなどをAIエージェントが操作する共有仕様MHSの研究プレビューを開始した。標準ドライバーとread/writeプリミティブを使い、MCP、CLI、APIから接続できるモデル非依存の設計だ。",
+      "source_kind": "official",
+      "source_title": "Previewing the Model Hardware Standard",
+      "source_url": "https://www.anthropic.com/news/model-hardware-standard-research-preview",
+      "title": "AIが実験装置を扱う共通仕様、Model Hardware Standard",
+      "topics": [
+        "agents",
+        "tools",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-08-29T00:52:52+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "採用時は原経験を保存し、知識昇格とSkill変更をレビュー可能な別工程にして、誤った経験の固定化を防ぐ。",
+      "caveat": "arXiv v1の著者報告で、査読、独立再現、長期運用での汚染耐性は未確認。比較優位は要旨と論文内の評価条件に依存する。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "wikiskill-persistent-knowledge",
+      "language": "en",
+      "observed_at": "2026-08-29T00:52:52+09:00",
+      "published_at": "2026-08-27T17:59:11Z",
+      "role": "major",
+      "selection_reason": "一回の成功例をそのまま手順化せず、経験、正準知識、実行Skillを分けて更新する設計を評価できる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、実行経験、蓄積知識、実行可能Skillを分離し、経験をWikiへ継続統合してSkill更新へ再利用するWikiSkillを提案した。要旨では複数モデル・ベンチマークで既存のSkill進化法を上回り、モデル間転移も確認したと報告している。",
+      "source_kind": "paper",
+      "source_title": "WikiSkill: Compiling Agent Experience into Persistent Knowledge for Skill Evolution",
+      "source_url": "https://arxiv.org/abs/2608.27454v1",
+      "title": "経験をWikiに蓄え、エージェントのSkillを育てる",
+      "topics": [
+        "agents",
+        "research",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-08-29T00:52:52+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "実データで言語、雑音、固有名詞、話者数ごとの誤りを測り、要約などの後段処理と文字起こし精度を分けて監視する。",
+      "caveat": "精度、遅延、Chirp 3との比較はGoogleが紹介する測定値。開発者・企業向け提供は公開プレビューを含み、3人超の話者分離は実験的。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "gemini-transcribe-35",
+      "language": "en",
+      "observed_at": "2026-08-29T00:52:52+09:00",
+      "published_at": "2026-08-26T17:01:00Z",
+      "role": "brief",
+      "selection_reason": "会議、字幕、通話分析で、ストリーミングと後処理を同じモデル系列で設計できる選択肢が増える。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleは、リアルタイム向けLive APIと録音向けInteractions APIでGemini 3.5 Transcribeを提供すると発表した。85超の言語、自動言語検出、カスタム語彙、録音の話者分離と単語タイムスタンプを掲げている。",
+      "source_kind": "official",
+      "source_title": "Intelligent transcription with Gemini 3.5 Transcribe",
+      "source_url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-5-transcribe/",
+      "title": "Gemini 3.5 Transcribe、音声認識を二つのAPIで提供",
+      "topics": [
+        "models",
+        "tools",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-08-29T00:52:52+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "出典表示、引用範囲、共同編集者の権利確認を保ち、生成物が原著の代替配布にならないかを用途ごとに確認する。",
+      "caveat": "10万冊超などの規模はGoogleの自己申告。対象書籍や地域には条件があり、第三者購読や調査レポートへの拡張は将来計画。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "gemini-notebook-expert-intelligence",
+      "language": "en",
+      "observed_at": "2026-08-29T00:52:52+09:00",
+      "published_at": "2026-08-27T19:30:00Z",
+      "role": "brief",
+      "selection_reason": "AIで著作物を使う際に、購入権と共有先の利用権を製品動作へ組み込む実装例になる。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleは、Google Play Booksで購入した対象書籍をGemini Notebookへ追加し、その書籍に根拠を置く質問応答や音声概要、クイズを作れるExpert Intelligenceを開始した。共有相手も書籍を所有しなければ、その書籍は利用できない。",
+      "source_kind": "official",
+      "source_title": "Expert Intelligence: a new way for you to engage with trusted content",
+      "source_url": "https://blog.google/innovation-and-ai/products/gemini-notebook/expert-intelligence-leading-sources/",
+      "title": "購入した電子書籍をGemini Notebookの根拠に",
+      "topics": [
+        "tools",
+        "creative-ai",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-08-29T00:52:52+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "教師の確認時間、誤問の見逃し、学習効果を測り、AI生成数ではなく授業結果と負担の両方で評価する。",
+      "caveat": "効果はGoogleとKhan Academyの初期観測で、測定方法や数値は示されていない。利用対象はKhanmigo導入地区で、一般化には独立評価が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "khanmigo-teacher-controlled-tools",
+      "language": "en",
+      "observed_at": "2026-08-29T00:52:52+09:00",
+      "published_at": "2026-08-27T16:00:00Z",
+      "role": "brief",
+      "selection_reason": "教育AIで人間の確認を抽象的な原則ではなく、配布前の必須操作へ落とし込む例になる。",
+      "source_domain": "blog.google",
+      "source_fact": "GoogleとKhan Academyは、Khanmigoに操作できる数学・科学の図解と、教師が資料を入力して問題を編集・却下・確認できるPractice My Knowledgeを追加した。教師が全問題を確認してから生徒へ配布する設計としている。",
+      "source_kind": "official",
+      "source_title": "Partnering with Khan Academy on building AI tools for classrooms",
+      "source_url": "https://blog.google/products-and-platforms/products/education/khan-academy-back-to-school/",
+      "title": "Khanmigo、教師が最終確認する教材生成へ",
+      "topics": [
+        "tools",
+        "policy",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-08-29T00:52:52+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "地域追加を安全性の保証とみなさず、実際のサービス別データ経路、権限境界、ログ保存、障害時の退避先を確認する。",
+      "caveat": "機能と低遅延はAWSの提供情報。利用可能性、価格、データ所在要件、全機能の地域差は個別ドキュメントと実環境での確認が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-agentcore-region-expansion",
+      "language": "en",
+      "observed_at": "2026-08-29T00:52:52+09:00",
+      "published_at": "2026-08-27T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "エージェント基盤の地域選択肢が増え、遅延やデータ所在と、ID・ポリシー・監査を同じ展開計画で扱いやすくなる。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSはAmazon Bedrock AgentCoreを米国西部北カリフォルニアとアジア太平洋ハイデラバードで提供開始した。ランタイム、ID・アクセス制御、ポリシー管理、セッション永続化、ツール接続、評価、可観測性を開始時から提供するとしている。",
+      "source_kind": "release",
+      "source_title": "Amazon Bedrock AgentCore expands to two new regions",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/08/bedrock-agentcore-two-new-regions/",
+      "title": "Amazon Bedrock AgentCore、2地域へ拡大",
+      "topics": [
+        "agents",
+        "tools",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-08-29T00:52:52+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-29T00:52:52+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — AIが現場へ入るとき、仕様・知識・権利をどう守るか",
+  "topics": [
+    {
+      "description": "計画、委任、ツール実行を担うAIシステム。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "AIを実作業へ接続する製品と開発基盤。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "AIとデジタル基盤の脅威、統制、検証。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "一次研究の方法、結果、適用限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "公開仕様、コード、共同開発の基盤。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "基盤モデルの学習、推論、評価。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "音声、映像、文章、学習素材を扱う生成AI。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    },
+    {
+      "description": "AI利用の権利、責任、運用ルール。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "ポリシー"
+    }
+  ]
+}
