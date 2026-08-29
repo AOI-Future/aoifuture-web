@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "anthropic-automated-alignment-researchers",
+      "clap-cross-embodiment-world-model",
+      "github-copilot-policy-billing-20260828",
+      "model-security-scanner-coverage",
+      "openai-cursor-contract-winddown",
+      "openai-thailand-accelerator"
+    ],
+    "edition_date": "2026-08-30",
+    "edition_id": "2026-08-30-0124",
+    "edition_url": "https://aoifuture.com/news/2026-08-30-0124/",
+    "event_id": "aoi-news-2026-08-30-0124-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-30T01:24:08+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "モデル供給契約と検査の網羅性を深掘り。Copilot運用、自動アラインメント研究、地域支援、物理AI研究を短報で追う。",
+    "title": "AOIFUTURE News — AIの依存先と安全検証を、どう運用へ落とすか"
+  }
+]

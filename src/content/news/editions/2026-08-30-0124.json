@@ -1,0 +1,233 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-30T01:24:08+09:00",
+  "dek": "モデル供給契約と検査の網羅性を深掘り。Copilot運用、自動アラインメント研究、地域支援、物理AI研究を短報で追う。",
+  "edition_date": "2026-08-30",
+  "edition_id": "2026-08-30-0124",
+  "edition_note": "8月27〜28日の一次情報6件を直接確認した置換レビュー候補。深掘り2件、Brief/Watch 4件で構成し、公開操作は行っていない。",
+  "generated_at": "2026-08-30T01:24:08+09:00",
+  "items": [
+    {
+      "aoi_note": "モデル供給元の変更支配条項、終了通知期間、代替モデルへの切替手順を契約と運用の両方で確認する。",
+      "caveat": "契約内容、違反に関する主張、買収の詳細はOpenAI側の説明であり独立確認していない。予定日は変更される可能性がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-cursor-contract-winddown",
+      "language": "en",
+      "observed_at": "2026-08-30T00:52:38+09:00",
+      "published_at": "2026-08-28T06:00:00Z",
+      "role": "lead",
+      "selection_reason": "AI製品の継続性がモデル供給契約と利用規約の統治に左右される具体例で、依存先の切替計画を考える材料になる。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIはSpaceXに対し、CursorへOpenAIモデルを提供する契約を終了する意向を通知し、2026年11月12日を停止予定日として提案した。変更支配後の契約上の取消期間を使い、今後のモデルは提供しないとしている。",
+      "source_kind": "official",
+      "source_title": "Our decision on Cursor following its acquisition by SpaceX",
+      "source_url": "https://openai.com/index/our-decision-on-cursor-following-its-acquisition-by-spacex/",
+      "title": "OpenAI、Cursorへのモデル提供契約を終了へ",
+      "topics": [
+        "policy",
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-30T00:52:38+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "検査結果にはprecision/recallだけでなく、解析完了率、確定判定率、unsupported件数、代替検査での回復率を併記する。",
+      "caveat": "arXiv v1の著者報告で未査読。合成ベンチマークと特定形式に限定され、標本設計やツール版、一般化可能性は独立確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "model-security-scanner-coverage",
+      "language": "en",
+      "observed_at": "2026-08-30T00:52:38+09:00",
+      "published_at": "2026-08-27T17:49:28Z",
+      "role": "major",
+      "selection_reason": "セキュリティ検査の品質を正解率だけでなく、未判定と失敗回復まで含めて測る必要性を示す。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは170件のPickle・PyTorch系成果物を使い、ModelScan、ModelAudit、Ficklingを評価した。要旨では、確定判定の網羅率に大差があり、ModelScanが判定できた範囲で高いF1でも、多数の悪性ファミリーで解析を完了できなかったと報告する。",
+      "source_kind": "paper",
+      "source_title": "Beyond F1: Evaluating Coverage and Failure Recovery in AI Model Security Scanners",
+      "source_url": "https://arxiv.org/abs/2608.27424v1",
+      "title": "AIモデル検査、F1だけでなく「判定できた範囲」を測る",
+      "topics": [
+        "security",
+        "research",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-08-30T00:52:38+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "9月28日前に統合体験の許可、保持期間、レビュー努力レベルを明示設定し、既定値への依存を避ける。",
+      "caveat": "将来予定を含み、開始日は延期され得る。契約プラン、支払方法、地域によって影響が異なるため管理画面と正式条件の再確認が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-policy-billing-20260828",
+      "language": "en",
+      "observed_at": "2026-08-30T00:52:38+09:00",
+      "published_at": "2026-08-28T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "管理者が費用だけでなく、既定有効化、データ保持、クラウドエージェント利用方針を期限前に見直す必要がある。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはCopilot Business/Enterpriseの座席課金を前払いへ移し、9月28日以降にgithub.com、Mobile、cloud agentを統合体験へ移行する予定を示した。統合後はチャットデータ保持がアカウント存続期間にそろうとしている。",
+      "source_kind": "release",
+      "source_title": "Upcoming changes to GitHub Copilot policies and billing",
+      "source_url": "https://github.blog/changelog/2026-08-28-upcoming-changes-to-github-copilot-policies-and-billing/",
+      "title": "GitHub Copilot、統合ポリシーと課金運用を変更",
+      "topics": [
+        "tools",
+        "policy",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-08-30T00:52:38+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "自動安全改善は、未提示テスト、一般能力の非劣化、スケール外挿、提案前監視を別々のGateとして記録する。",
+      "caveat": "Anthropic自身の研究報告であり、評価設計、ベンチマーク汚染、比較した人間研究者の条件、実運用での一般化は独立確認していない。10分類を個別に改善した結果で、複合的な失敗を一括して解決した証拠ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "anthropic-automated-alignment-researchers",
+      "language": "en",
+      "observed_at": "2026-08-30T01:24:08+09:00",
+      "published_at": "2026-08-28T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "安全研究をエージェントへ委任する際、探索性能だけでなく、未提示評価、能力劣化、規模外挿、監視エージェントという検証条件を具体化している。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "Anthropicは、Claudeが文献探索、手法とデータの提案、訓練、試験を反復し、10種類のアラインメント不具合すべてで対象ベンチマークを改善したと報告した。最良手法は未提示評価やPetriでも有効で、探索時より最大4.7倍大きいモデルにも効果が残ったとしている。",
+      "source_kind": "official",
+      "source_title": "Automated researchers can reliably mitigate alignment failures",
+      "source_url": "https://www.anthropic.com/research/automated-researchers-mitigate-alignment-failures",
+      "title": "Anthropic、自動研究エージェントで10種のアラインメント不具合を緩和",
+      "topics": [
+        "agents",
+        "security",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-30T01:24:08+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "支援額や参加数ではなく、利用者検証、安全策、終了後の費用継続性、地域データ要件で成果を評価する。",
+      "caveat": "参加支援と利用成長はOpenAIの発表・内部データ。プログラム成果や事業化、安全性はまだ実証されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-thailand-accelerator",
+      "language": "en",
+      "observed_at": "2026-08-30T00:52:38+09:00",
+      "published_at": "2026-08-28T02:00:00Z",
+      "role": "watch",
+      "selection_reason": "基盤モデル企業と政府が、地域課題に沿ったプロトタイプを実運用へ移す支援モデルを試す動きとして確認できる。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIとタイ高等教育・科学・研究・イノベーション省は、医療、ウェルネス、教育の10社を対象に8週間のAIアクセラレーターを開始した。各社へAPIクレジット、技術支援、メンターを提供するとしている。",
+      "source_kind": "official",
+      "source_title": "Supporting Thailand’s next generation of AI startups",
+      "source_url": "https://openai.com/index/supporting-next-generation-ai-startups-thailand/",
+      "title": "OpenAIとタイ政府、10社向けAIアクセラレーター",
+      "topics": [
+        "policy",
+        "tools",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-08-30T00:52:38+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "実機採用前に対象機体ごとの安全制約、失敗時停止、データ分布差、シミュレーションと実環境の乖離を別々に評価する。",
+      "caveat": "arXiv v1の著者報告で未査読。ゼロショットの定義、比較条件、実機安全性、公開コード・モデルの再現性は独立確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "clap-cross-embodiment-world-model",
+      "language": "en",
+      "observed_at": "2026-08-30T00:52:38+09:00",
+      "published_at": "2026-08-27T17:35:10Z",
+      "role": "watch",
+      "selection_reason": "物理AIの学習資産を機体ごとに閉じず、異なる身体間で共有する設計の可能性を示す。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、人間と複数のロボットの映像を横断して学習し、エンドエフェクタ姿勢、言語指示、潜在行動で行動空間を接続するCLAPを提案した。要旨ではDROIDなどで既存の単一身体モデルに近づくか上回ると報告する。",
+      "source_kind": "paper",
+      "source_title": "CLAP: Cross-Embodiment Video World Models are Zero-Shot Physical Simulators",
+      "source_url": "https://arxiv.org/abs/2608.27406v1",
+      "title": "人とロボットの映像から学ぶクロス身体ワールドモデル",
+      "topics": [
+        "research",
+        "models",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-08-30T00:52:38+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-30T01:24:08+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — AIの依存先と安全検証を、どう運用へ落とすか",
+  "topics": [
+    {
+      "description": "計画、委任、ツール実行を担うAIシステム。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "基盤モデルの学習、推論、評価。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "AIを実作業へ接続する製品と開発基盤。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "一次研究の方法、結果、適用限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "AIとデジタル基盤の脅威、統制、検証。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "AI利用の権利、責任、運用ルール。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "ポリシー"
+    },
+    {
+      "description": "音声、映像、文章などを扱う生成AI。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}
