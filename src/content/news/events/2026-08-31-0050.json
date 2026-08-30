@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "cisa-kev-20260827-three",
+      "eval-awareness-framing-compliance",
+      "github-copilot-visual-studio-august",
+      "harnesslens-behavior-aware-verification",
+      "llm-judge-censored-rating-bias",
+      "nist-mngac-database-access-control"
+    ],
+    "edition_date": "2026-08-31",
+    "edition_id": "2026-08-31-0050",
+    "edition_url": "https://aoifuture.com/news/2026-08-31-0050/",
+    "event_id": "aoi-news-2026-08-31-0050-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-08-31T00:50:55+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "エージェント基盤の挙動別検証とLLM審査の尺度問題を深掘り。IDE運用、DB認可、実悪用脆弱性、評価意識研究を短報で追う。",
+    "title": "AOIFUTURE News — エージェント改善とAI評価を、証拠から見直す"
+  }
+]

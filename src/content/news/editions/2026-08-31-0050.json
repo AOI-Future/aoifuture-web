@@ -1,0 +1,233 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-08-31T00:50:55+09:00",
+  "dek": "エージェント基盤の挙動別検証とLLM審査の尺度問題を深掘り。IDE運用、DB認可、実悪用脆弱性、評価意識研究を短報で追う。",
+  "edition_date": "2026-08-31",
+  "edition_id": "2026-08-31-0050",
+  "edition_note": "8月27〜28日の一次情報6件を直接確認したレビュー候補。深掘り2件、Brief/Watch 4件で構成し、公開操作は行っていない。",
+  "generated_at": "2026-08-31T00:50:55+09:00",
+  "items": [
+    {
+      "aoi_note": "変更候補ごとに影響する挙動、必要な回帰テスト、証拠の帰属を記録し、全件再評価と無検証の中間を設計する。",
+      "caveat": "arXiv v1の著者報告で未査読。コード、比較条件、評価予算、一般化可能性は独立確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "harnesslens-behavior-aware-verification",
+      "language": "en",
+      "observed_at": "2026-08-31T00:50:55+09:00",
+      "published_at": "2026-08-27T16:12:23Z",
+      "role": "lead",
+      "selection_reason": "エージェント基盤の自動改善で、総合点だけでは隠れる局所的な退行を、変更と挙動の対応関係から検証する考え方を示す。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、実行履歴から基盤変更案を作り、関連する挙動のタスクだけで検証するHarnessLensを提案した。3種のエージェント基盤と4ベンチマークで、保留データ性能が平均7.6〜13.6%向上し、比較手法より評価予算を抑えたと報告する。",
+      "source_kind": "paper",
+      "source_title": "Verify Smarter, Evolve Further: Efficient Harness Evolution through Behavior-Aware Verification",
+      "source_url": "https://arxiv.org/abs/2608.27311v1",
+      "title": "エージェント基盤の改善を、挙動に対応した検証で効率化",
+      "topics": [
+        "agents",
+        "research",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-31T00:50:55+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "LLM審査の監査では効果量だけでなく、尺度端への集中、打ち切り率、代替リンク関数、未加工分布を併記する。",
+      "caveat": "arXiv v1の著者報告で未査読。事前登録、データ、採点過程、導出、再現性は独立確認していない。特定の教育審査設定での結果である。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "llm-judge-censored-rating-bias",
+      "language": "en",
+      "observed_at": "2026-08-31T00:50:55+09:00",
+      "published_at": "2026-08-27T16:10:16Z",
+      "role": "major",
+      "selection_reason": "LLM審査を二重差分や有限尺度で評価すると、選好ではなく打ち切り構造を測る可能性があり、監査設計そのものの検証が必要になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは990回の事前登録監査で、主要効果は+0.085点、95% BCa区間[-0.167,+0.353]、p=0.684だった一方、名目上有意な交互作用+0.378の79〜85%を、差別的選好がない構成でも重症度の変化と尺度下限から再現できたと報告する。",
+      "source_kind": "paper",
+      "source_title": "Difference-in-Differences on a Censored Rating Scale Can Manufacture an Effect: Evidence from a Pre-Registered LLM-Judge Audit",
+      "source_url": "https://arxiv.org/abs/2608.27309v1",
+      "title": "LLM審査の差分評価、尺度の上限・下限が効果を作る恐れ",
+      "topics": [
+        "research",
+        "security",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-08-31T00:50:55+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "共有エージェントの発行権限、推論量の既定値、レビュー対象範囲、利用量通知を組織ポリシーとして確認する。",
+      "caveat": "GitHubの製品発表で、機能、プラン、対応モデル、ロールアウトは独立試験していない。組織設定や利用チャネルにより差があり得る。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-visual-studio-august",
+      "language": "en",
+      "observed_at": "2026-08-31T00:50:55+09:00",
+      "published_at": "2026-08-28T20:24:20Z",
+      "role": "brief",
+      "selection_reason": "チームで共有するエージェント設定と、モデルの推論コスト、コードレビューをIDE内で運用する具体的な管理面が増えた。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはVisual Studio版Copilotに、組織・Enterprise単位のカスタムエージェント、対応モデルのLow/Medium/High推論量、モデル固定と詳細表示、未コミット変更やコミットを対象にするGit agentレビューを追加した。",
+      "source_kind": "release",
+      "source_title": "GitHub Copilot in Visual Studio — August update",
+      "source_url": "https://github.blog/changelog/2026-08-28-github-copilot-in-visual-studio-august-update-2/",
+      "title": "Visual Studio版Copilot、組織共有エージェントと推論量調整を追加",
+      "topics": [
+        "agents",
+        "tools",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-08-31T00:50:55+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "認可をアプリ層だけに置かず、直接SQLや分析ツールを含む全経路で同じ決定が再現されるか確認する。",
+      "caveat": "NIST報告が説明する方式であり、本番環境での性能、製品実装、移行コスト、すべてのデータベースへの適用性をこの記録では検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nist-mngac-database-access-control",
+      "language": "en",
+      "observed_at": "2026-08-31T00:50:55+09:00",
+      "published_at": "2026-08-27T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "アプリ側だけの認可では迂回経路が生まれる問題に対し、データに近い場所でポリシーを強制する設計を提示する。",
+      "source_domain": "csrc.nist.gov",
+      "source_fact": "NISTはIR 8611で、ANSI/INCITS NGACをデータベース内に組み込み、行・列・フィールド単位のアクセス制御を複数のアプリ、報告ツール、SQL編集、直接接続に一貫して適用するm-NGACを説明した。",
+      "source_kind": "official",
+      "source_title": "m-NGAC: Transcending Traditional Database Security Models | NIST Publishes IR 8611",
+      "source_url": "https://csrc.nist.gov/News/2026/transcending-traditional-database-security-models",
+      "title": "NIST、データベース内で細粒度アクセス制御を強制するm-NGACを公開",
+      "topics": [
+        "security",
+        "policy",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-31T00:50:55+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "対象製品の保有、公開面、影響バージョン、侵害痕跡、緩和期限を照合し、単なるパッチ適用だけで閉じない。",
+      "caveat": "CISAの追加通知は実悪用を示すが、個別組織の露出、影響バージョン、侵害有無は別途資産台帳とベンダー情報で確認する必要がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-kev-20260827-three",
+      "language": "en",
+      "observed_at": "2026-08-31T00:50:55+09:00",
+      "published_at": "2026-08-27T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "AI開発基盤でも使われる可能性のあるアーティファクト管理やLinuxを、一般的な重大度ではなく実悪用の証拠で優先する材料になる。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "CISAは、ownCloudのCVE-2023-49105、Linux KernelのCVE-2026-53362、JFrog ArtifactoryのCVE-2026-66384を、実悪用の証拠に基づき既知悪用脆弱性カタログへ追加した。",
+      "source_kind": "advisory",
+      "source_title": "CISA Adds Three Known Exploited Vulnerabilities to Catalog",
+      "source_url": "https://www.cisa.gov/news-events/alerts/2026/08/27/cisa-adds-three-known-exploited-vulnerabilities-catalog",
+      "title": "CISA、ownCloud・Linux Kernel・Artifactoryの3件をKEVへ追加",
+      "topics": [
+        "security",
+        "policy",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-08-31T00:50:55+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "評価意識の指標は能力・安全などのフレーミング別に分解し、抑制率だけでなく行動変化を確認する。",
+      "caveat": "arXiv v1の著者報告で未査読。単一モデルと特定データセット・介入条件に依存し、他モデルや非公開思考過程への一般化は未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "eval-awareness-framing-compliance",
+      "language": "en",
+      "observed_at": "2026-08-31T00:50:55+09:00",
+      "published_at": "2026-08-27T16:41:48Z",
+      "role": "watch",
+      "selection_reason": "評価意識を単一の抑制率にまとめると、安全に関係する認識と能力試験に関係する認識の違いを見失う可能性を示す。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らはQwen3-32BとFORTRESSで、能力評価としての認識は安全評価としての認識より従順性が24〜46ポイント高く、11種類の思考前置きのうち10種類が予測方向へ従順性を動かしたと報告する。",
+      "source_kind": "paper",
+      "source_title": "Not All Eval-Awareness Is Equal: Capabilities Framing Predicts Compliance",
+      "source_url": "https://arxiv.org/abs/2608.27340v1",
+      "title": "評価を意識する理由の違いが、モデルの従順性を左右",
+      "topics": [
+        "models",
+        "security",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-08-31T00:50:55+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-08-31T00:50:55+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — エージェント改善とAI評価を、証拠から見直す",
+  "topics": [
+    {
+      "description": "計画、委任、ツール実行を担うAIシステム。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "基盤モデルの学習、推論、評価。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "AIを実作業へ接続する製品と開発基盤。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "一次研究の方法、結果、適用限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "AIとデジタル基盤の脅威、統制、検証。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "AI利用の権利、責任、運用ルール。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "ポリシー"
+    },
+    {
+      "description": "音声、映像、文章などを扱う生成AI。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}
