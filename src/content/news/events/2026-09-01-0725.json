@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "cloudflare-adaptive-intelligence",
+      "cloudflare-ai-search-glm53",
+      "logos-cross-process-agent-harness",
+      "nasa-roman-space-telescope-launch",
+      "uk-sovereign-ai-rd-procurement",
+      "user-permission-policy-overreach"
+    ],
+    "edition_date": "2026-09-01",
+    "edition_id": "2026-09-01-0725",
+    "edition_url": "https://aoifuture.com/news/2026-09-01-0725/",
+    "event_id": "aoi-news-2026-09-01-0725-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-09-01T07:25:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "利用者ルールの限界とプロセス分離型ハーネスを深掘り。モデル、防御、公共AI調達、宇宙観測データの運用を短報で追う。",
+    "title": "AOIFUTURE News — 権限設計から、大規模観測データの運用まで"
+  }
+]

@@ -1,0 +1,235 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-09-01T07:25:00+09:00",
+  "dek": "利用者ルールの限界とプロセス分離型ハーネスを深掘り。モデル、防御、公共AI調達、宇宙観測データの運用を短報で追う。",
+  "edition_date": "2026-09-01",
+  "edition_id": "2026-09-01-0725",
+  "edition_note": "8月27〜31日の一次情報6件を直接確認した回復用レビュー候補。深掘り2件、Brief/Watch 4件で構成し、公開操作は行っていない。",
+  "generated_at": "2026-09-01T07:25:00+09:00",
+  "items": [
+    {
+      "aoi_note": "方針設定の負担、実行時プロンプト数、阻止率を別々に測り、事前許可と実行時ゲートの役割を分離する。",
+      "caveat": "arXiv v1の著者報告で未査読。模擬された1日、特定UI、非専門職113人の結果であり、実環境や別の行動空間へ一般化できるとは限らない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "user-permission-policy-overreach",
+      "language": "en",
+      "observed_at": "2026-09-01T07:25:00+09:00",
+      "published_at": "2026-08-27T17:56:38Z",
+      "role": "lead",
+      "selection_reason": "エージェント権限を「利用者が最初にルールを書く」だけで完結させず、実行時確認や自動審査との組み合わせを設計する根拠になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "非ソフトウェア専門職113人が18件の模擬行動を監督した研究で、利用者が事前作成した方針は、人による都度承認より逸脱阻止率が20.1ポイント、自動モデル審査より14.5ポイント低かったと著者は報告した。",
+      "source_kind": "paper",
+      "source_title": "Do User-Authored Permission Policies Improve Protection Against AI Agent Overreach?",
+      "source_url": "https://arxiv.org/abs/2608.27443v1",
+      "title": "事前ルールだけでは、AIエージェントの逸脱を十分に止められない",
+      "topics": [
+        "agents",
+        "security",
+        "policy",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-09-01T07:25:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ツール効果の冪等性、追記ログ、プロセス境界、再開テストを一体で設計し、単一障害点を減らす。",
+      "caveat": "arXiv v1の著者報告で未査読。80セッションの条件、単一プロセス比較、負荷、性能コスト、実装の一般性は独立確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "logos-cross-process-agent-harness",
+      "language": "en",
+      "observed_at": "2026-09-01T07:25:00+09:00",
+      "published_at": "2026-08-28T17:30:10Z",
+      "role": "major",
+      "selection_reason": "長時間稼働するエージェントで、再開可能性と障害分離を同じ状態モデルから扱う具体例になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、各プラグインを別プロセスにし、共有状態を追記専用トランスクリプトに限定するLogosを構築した。ツール呼び出し境界で停止させた80セッションが効果を重複せず再開し、障害が1ノードに留まったと報告する。",
+      "source_kind": "paper",
+      "source_title": "Logos: An Agent Harness on a Cross-Process Bus",
+      "source_url": "https://arxiv.org/abs/2608.28553v1",
+      "title": "エージェントの障害範囲を、単一プロセスから分離する",
+      "topics": [
+        "agents",
+        "tools",
+        "research",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-01T07:25:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "公称コンテキスト長だけでなく、検索品質、遅延、料金、実効入力長を実ワークロードで確認する。",
+      "caveat": "Cloudflareの製品告知であり、アカウント別の提供状況、実効コンテキスト長、品質、遅延、料金は独立試験していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-ai-search-glm53",
+      "language": "en",
+      "observed_at": "2026-09-01T07:25:00+09:00",
+      "published_at": "2026-08-30T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "検索と生成を組み合わせる構成で、長文入力を扱う新しいモデル選択肢が増えた。",
+      "source_domain": "developers.cloudflare.com",
+      "source_fact": "CloudflareはAI Searchのテキスト生成モデルとしてWorkers AI上のGLM-5.3 Flashを追加し、コンテキスト長を1,048,576トークンと記載した。",
+      "source_kind": "release",
+      "source_title": "AI Search now supports GLM-5.3 Flash",
+      "source_url": "https://developers.cloudflare.com/changelog/post/2026-08-30-glm-5.3-flash/",
+      "title": "Cloudflare AI SearchがGLM-5.3 Flashに対応",
+      "topics": [
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-01T07:25:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "検知率だけでなく、誤検知、ルール寿命、説明可能性、適用範囲、ロールバックを継続監査する。",
+      "caveat": "Cloudflare自身の製品説明であり、他方式との優位性、誤検知率、顧客別の有効性、提供条件は独立検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-adaptive-intelligence",
+      "language": "en",
+      "observed_at": "2026-09-01T07:25:00+09:00",
+      "published_at": "2026-08-31T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "固定ルールを回避する攻撃に対し、防御側の適応速度と誤検知管理を運用指標にする動きとして注目できる。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "CloudflareはBot Management内で、ライブ通信のメタシグナルから攻撃パターンを継続学習し、使い捨ての検知ルールを展開するAdaptive Intelligenceを開始したと発表した。",
+      "source_kind": "release",
+      "source_title": "Introducing Adaptive Intelligence: undermining the economics of every bot attack",
+      "source_url": "https://blog.cloudflare.com/introducing-adaptive-intelligence/",
+      "title": "Cloudflare、変化し続けるボット攻撃向けの適応型検知を発表",
+      "topics": [
+        "security",
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-09-01T07:25:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ミッションの公称性能だけでなく、試運転、データ配布、処理基盤、発見の再現性を段階別に追跡する。",
+      "caveat": "NASAの打ち上げ発表であり、観測性能、初画像の時期、日量1.4TBの運用成果は今後の試運転と実データで確認が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nasa-roman-space-telescope-launch",
+      "language": "en",
+      "observed_at": "2026-09-01T07:25:00+09:00",
+      "published_at": "2026-08-30T13:18:10Z",
+      "role": "watch",
+      "selection_reason": "大規模な科学データをAIと市民科学で処理する計画は、モデル性能だけでなく、データ供給と検証可能性を含む運用設計の実例になる。",
+      "source_domain": "www.nasa.gov",
+      "source_fact": "NASAはNancy Grace Roman宇宙望遠鏡が8月30日に打ち上げられ、約3か月の試運転へ移ったと発表した。日量1.4TBのデータを返し、機械学習、AI、市民科学が重要な発見候補の抽出を支援すると説明している。",
+      "source_kind": "official",
+      "source_title": "NASA’s Dark Universe-Seeking Nancy Grace Roman Space Telescope Launches",
+      "source_url": "https://www.nasa.gov/news-release/nasas-dark-universe-seeking-nancy-grace-roman-space-telescope-launches/",
+      "title": "NASAのRoman宇宙望遠鏡、日量1.4TBの観測データ運用へ",
+      "topics": [
+        "research",
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-01T07:25:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "応募条件、評価基準、知財条件、実証環境、成果公開、安全性評価の独立性を個別に確認する。",
+      "caveat": "政府発表であり、採択先、実証成果、費用対効果、公共サービス改善は未確定。制度の実効性は今後の調達と評価に依存する。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "uk-sovereign-ai-rd-procurement",
+      "language": "en",
+      "observed_at": "2026-09-01T07:25:00+09:00",
+      "published_at": "2026-08-31T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "政府が助成だけでなく初期顧客として実証段階を支え、エージェント安全性を独立した調達課題に置いた点が実装市場を広げる。",
+      "source_domain": "www.gov.uk",
+      "source_fact": "英国政府は1億ポンドのSovereign AI研究開発調達制度で、NHS生産性、計算効率、防衛環境へのAI統合、エージェントの安全性・回復力試験の4競争を開始した。採択企業は作成した知的財産を保持するとしている。",
+      "source_kind": "official",
+      "source_title": "£100 million competition to back British AI companies to fix public services",
+      "source_url": "https://www.gov.uk/government/news/100-million-competition-to-back-british-ai-companies-to-fix-public-services",
+      "title": "英国、公共課題向けAIの1億ポンド調達競争を開始",
+      "topics": [
+        "policy",
+        "security",
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-09-01T07:25:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-09-01T07:25:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — 権限設計から、大規模観測データの運用まで",
+  "topics": [
+    {
+      "description": "計画、委任、ツール実行を担うAIシステム。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "基盤モデルの学習、推論、評価。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "AIを実作業へ接続する製品と開発基盤。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "一次研究の方法、結果、適用限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "AIとデジタル基盤の脅威、統制、検証。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "AI利用の権利、責任、運用ルール。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "ポリシー"
+    },
+    {
+      "description": "公開されたコード、モデル、データと共同開発。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    }
+  ]
+}
