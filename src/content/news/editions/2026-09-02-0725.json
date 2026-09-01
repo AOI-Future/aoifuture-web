@@ -1,0 +1,233 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-09-02T07:25:00+09:00",
+  "dek": "企業エージェントの安全監視とロボット学習を深掘り。サイバー能力、音声認識、時系列予測、資産管理を短報で追う。",
+  "edition_date": "2026-09-02",
+  "edition_id": "2026-09-02-0725",
+  "edition_note": "8月31日〜9月1日の一次情報6件を直接確認。深掘り2件、Brief/Watch 4件、公開スキーマ上の3 source kindsで構成し、公開操作は行っていない。",
+  "generated_at": "2026-09-02T07:25:00+09:00",
+  "items": [
+    {
+      "aoi_note": "導入時は保存場所だけでなく、検知精度、誤検知、監視者、例外処理、対応製品ごとの実装差を確認する。",
+      "caveat": "Anthropic自身の製品発表で、実装、検知性能、顧客適格性、提供時期、各クラウドでの対応状況は独立検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "anthropic-enterprise-frontier-safeguards",
+      "language": "en",
+      "observed_at": "2026-09-02T07:25:00+09:00",
+      "published_at": "2026-09-01T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "安全監視とデータ管理を同じベンダー境界に閉じず、顧客側の鍵・アクセス方針・監査ログへ寄せる設計が、企業エージェント運用の具体例になる。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "Anthropicは、ゼロデータ保持と不正利用検知を組み合わせ、活動データを顧客管理のクラウド環境に保存するEnterprise Frontier Safeguardsを発表した。2026年秋後半から段階導入するとしている。",
+      "source_kind": "release",
+      "source_title": "Developing Enterprise Frontier Safeguards with our customers",
+      "source_url": "https://www.anthropic.com/news/enterprise-frontier-safeguards",
+      "title": "Anthropic、顧客管理クラウドに安全監視を置く企業向けEFSを発表",
+      "topics": [
+        "agents",
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-02T07:25:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "評価では平均値だけでなく、タスク別結果、実機差、失敗モード、手動報酬なしという条件の範囲を追う。",
+      "caveat": "arXiv v1の著者報告で未査読。比較条件、分散、タスク別結果、実機設定、一般化性能は独立確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "sun-language-grounded-robot-programs",
+      "language": "en",
+      "observed_at": "2026-09-02T07:25:00+09:00",
+      "published_at": "2026-08-31T17:59:16Z",
+      "role": "major",
+      "selection_reason": "計画時に確認した意味が学習時の報酬設計で失われる問題へ、実行可能な共通表現を持ち込む点が重要だ。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、幾何・接触関係を一度定義し、MPCコスト、達成条件、強化学習報酬、遷移ガード、診断へ変換するSUN Programsを提案した。9タスクで82.03%のマクロ成功率を報告している。",
+      "source_kind": "paper",
+      "source_title": "SUN: Persistent Programs For Language-Grounded Control-to-Learning-to-Real Policies",
+      "source_url": "https://arxiv.org/abs/2608.31167v1",
+      "title": "ロボット制御の目標を、学習後まで同じ意味で保つSUN Programs",
+      "topics": [
+        "agents",
+        "research",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-09-02T07:25:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "採用判断にはベンチマーク名、WER差、処理速度、言語別性能、幻覚ループの再現条件が必要になる。",
+      "caveat": "arXiv v1の著者報告で未査読。要旨には数値、評価データ、言語別結果、設定、統計的不確実性が示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "whisperx-context-aware-batching",
+      "language": "en",
+      "observed_at": "2026-09-02T07:25:00+09:00",
+      "published_at": "2026-08-31T17:59:46Z",
+      "role": "brief",
+      "selection_reason": "速度と文脈保持の二者択一を緩和し、会議・講義・番組など長時間音声の実務品質を上げる可能性がある。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、VADで得た区間境界を使い、バッチ処理中も過去テキストの条件付けを維持する手法を提案し、長時間音声でWERと固有名詞転写が改善したと報告した。",
+      "source_kind": "paper",
+      "source_title": "Context-Aware Interleaved Batching for WhisperX",
+      "source_url": "https://arxiv.org/abs/2608.31170v1",
+      "title": "WhisperXの高速バッチ処理に、過去文脈を戻す提案",
+      "topics": [
+        "research",
+        "tools",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-09-02T07:25:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "公開ベンチマークの順位だけでなく、自社データの欠損、分布変化、予測区間、推論コストで確認する。",
+      "caveat": "Google自身の研究発表で、ベンチマーク優位性、実務データでの再現性、推論効率、BigQuery統合時期は独立検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-timesfm-3-multivariate",
+      "language": "en",
+      "observed_at": "2026-09-02T07:25:00+09:00",
+      "published_at": "2026-08-31T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "売上と販促、需要と天候のように複数要因が動く実務予測を、用途別微調整なしで始める選択肢になる。",
+      "source_domain": "research.google",
+      "source_fact": "Google Researchは、3.3億パラメータで1兆超の時系列点を事前学習し、複数系列と既知の将来共変量をゼロショットで扱うTimesFM-3を発表し、GitHubとHugging Faceで公開した。",
+      "source_kind": "release",
+      "source_title": "TimesFM-3: A zero-shot foundation model for multivariate forecasting",
+      "source_url": "https://research.google/blog/timesfm-3-a-zero-shot-foundation-model-for-multivariate-forecasting/",
+      "title": "Google、外部要因を同時に扱うTimesFM-3を公開",
+      "topics": [
+        "models",
+        "research",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-02T07:25:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "台帳の存在だけで統制済みとせず、登録強制、所有者、権限失効、実行時ポリシーとの接続を検証する。",
+      "caveat": "AWS自身の製品発表で、検出網羅性、検索品質、承認迂回耐性、料金、既存資産の移行負荷は独立検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-agent-registry-ga",
+      "language": "en",
+      "observed_at": "2026-09-02T07:25:00+09:00",
+      "published_at": "2026-08-31T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "増え続けるエージェント資産を一覧化し、承認と監査を接続する企業向けの管理面が製品化された。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは、エージェント、ツール、スキル、MCPサーバーを組織内で検索・管理するAWS Agent Registryを正式提供した。承認ワークフロー、CloudTrail監査、MCP経由の検索を含む。",
+      "source_kind": "release",
+      "source_title": "AWS Agent Registry for centralized agent discovery and governance is now generally available",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/08/aws-agent-registry-generally-available/",
+      "title": "AWS Agent Registryが正式提供、エージェントとMCPを統合管理",
+      "topics": [
+        "agents",
+        "tools",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-09-02T07:25:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "能力評価の数字だけでなく、アクセス制限、実行時監視、停止権限、独立評価、未公開のシステムカードを分けて確認する。",
+      "caveat": "OpenAI自身の安全評価で、Astraは未公開。内部ベンチマーク、ゼロデイ発見、拒否率、監視性能は独立検証しておらず、詳細なシステムカードは公開時まで未提示。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-astra-critical-cyber-safeguards",
+      "language": "en",
+      "observed_at": "2026-09-02T07:25:00+09:00",
+      "published_at": "2026-09-01T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "未公開モデルをCritical cyber capabilityと評価し、能力向上と同時にアクセス制限・監視・訓練環境の統制を強める事例として重要だ。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは、未公開のAstraがPreparedness FrameworkのCritical cybersecurity capability閾値に達したと評価し、一部の開発・公開を遅らせ、限定アクセス、拒否訓練、悪用検知、未承認行動の監視を強化したと報告した。",
+      "source_kind": "official",
+      "source_title": "Path to Astra: critical capabilities and frontier safeguards",
+      "source_url": "https://openai.com/index/path-to-astra/",
+      "title": "OpenAI、未公開AstraをCritical cyber capabilityと評価",
+      "topics": [
+        "security",
+        "models",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-09-02T07:25:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-09-02T07:25:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — エージェント統制とサイバー能力の境界を測る",
+  "topics": [
+    {
+      "description": "計画、委任、ツール実行を担うAIシステム。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "基盤モデルの学習、推論、評価。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "AIを実作業へ接続する製品と開発基盤。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "一次研究の方法、結果、適用限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "AIとデジタル基盤の脅威、統制、検証。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "公開されたコード、モデル、データと共同開発。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "画像、音声、映像、デザインの生成・編集技術。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "anthropic-enterprise-frontier-safeguards",
+      "aws-agent-registry-ga",
+      "google-timesfm-3-multivariate",
+      "openai-astra-critical-cyber-safeguards",
+      "sun-language-grounded-robot-programs",
+      "whisperx-context-aware-batching"
+    ],
+    "edition_date": "2026-09-02",
+    "edition_id": "2026-09-02-0725",
+    "edition_url": "https://aoifuture.com/news/2026-09-02-0725/",
+    "event_id": "aoi-news-2026-09-02-0725-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-09-02T07:25:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "企業エージェントの安全監視とロボット学習を深掘り。サイバー能力、音声認識、時系列予測、資産管理を短報で追う。",
+    "title": "AOIFUTURE News — エージェント統制とサイバー能力の境界を測る"
+  }
+]
