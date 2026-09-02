@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "google-agentic-video-understanding",
+      "google-pics-workspace",
+      "nist-secure-hardware-standards-ir8615",
+      "openai-ai-native-workflows",
+      "openai-healthcare-ehr-public-data",
+      "unified-multimodal-synergy"
+    ],
+    "edition_date": "2026-09-03",
+    "edition_id": "2026-09-03-0051",
+    "edition_url": "https://aoifuture.com/news/2026-09-03-0051/",
+    "event_id": "aoi-news-2026-09-03-0051-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-09-03T00:51:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "医療データ接続と動画理解を深掘り。マルチモーダル研究、業務エージェント、画像制作、ハードウェア標準を短報で追う。",
+    "title": "AOIFUTURE News — データ接続と選択的な観測が、AIの実装を変える"
+  }
+]

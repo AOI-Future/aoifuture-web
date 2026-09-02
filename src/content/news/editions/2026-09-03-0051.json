@@ -1,0 +1,238 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-09-03T00:51:00+09:00",
+  "dek": "医療データ接続と動画理解を深掘り。マルチモーダル研究、業務エージェント、画像制作、ハードウェア標準を短報で追う。",
+  "edition_date": "2026-09-03",
+  "edition_id": "2026-09-03-0051",
+  "edition_note": "9月1日の一次情報6件を直接確認。深掘り2件、Brief/Watch 4件、4ドメイン・3 source kindsで構成し、公開操作は行っていない。",
+  "generated_at": "2026-09-03T00:51:00+09:00",
+  "items": [
+    {
+      "aoi_note": "導入時は権限継承、出典リンク、監査ログ、誤要約時の確認手順を、組織ごとに検証する。",
+      "caveat": "OpenAI自身の製品発表と評価結果で、Epic環境ごとの適格性、評価設計、臨床成績、個別導入でのHIPAA適合性は独立検証していない。公開日は日付精度。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-healthcare-ehr-public-data",
+      "language": "en",
+      "observed_at": "2026-09-03T00:51:00+09:00",
+      "published_at": "2026-09-01T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "医療AIの価値がモデル単体から、権限を保ったデータ接続と根拠参照へ移る具体例になる。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは、Epicの許可済み患者情報をChatGPT for Healthcareで参照できる連携と、PubMedやDailyMedなど9つの公的医療データ源を構造化検索するプラグインを発表した。医師評価4,363件では回答の99.1%が安全と評価されたとしている。",
+      "source_kind": "release",
+      "source_title": "Healthcare organizations can now connect EHR and additional industry data to ChatGPT",
+      "source_url": "https://openai.com/index/chatgpt-connects-health-records-and-healthcare-sources/",
+      "title": "ChatGPT for Healthcare、Epicと9つの公的医療データ源を接続",
+      "topics": [
+        "tools",
+        "agents",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-09-03T00:51:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "採用時は動画種別ごとの再現率、探索失敗、タイムコード精度、費用を固定フレーム方式と比較する。",
+      "caveat": "Google自身のベンチマークで、「最大」の改善値は全動画や用途を保証しない。GeminiアプリとAsk YouTubeへの展開は今後の予定。公開日は日付精度。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-agentic-video-understanding",
+      "language": "en",
+      "observed_at": "2026-09-03T00:51:00+09:00",
+      "published_at": "2026-09-01T00:00:00Z",
+      "role": "major",
+      "selection_reason": "長時間映像を一律サンプリングする代わりに、問いに応じて観測箇所を選ぶ設計が、動画分析の費用と見落としの両方に影響する。",
+      "source_domain": "blog.google",
+      "source_fact": "GoogleはGemini 3.7 Flash、3.6 Flash、3.5 Flash-Liteに、映像・音声・文字起こしから必要な区間を動的に探索する動画理解機能を導入した。標準ベンチマークでトークンを最大88%、費用を最大66%削減し、精度を最大7%改善したとしている。",
+      "source_kind": "release",
+      "source_title": "Introducing agentic video understanding with Gemini",
+      "source_url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-agentic-video-in-gemini/",
+      "title": "Gemini、必要な場面だけを探すエージェント型動画理解を導入",
+      "topics": [
+        "agents",
+        "models",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-09-03T00:51:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "再現にはモデル、データ、比較条件、効果量、計算量の本文確認が必要になる。",
+      "caveat": "arXiv v1の著者報告で未査読。要旨だけではモデル名、データ規模、効果量、統計的不確実性を確認できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "unified-multimodal-synergy",
+      "language": "en",
+      "observed_at": "2026-09-03T00:51:00+09:00",
+      "published_at": "2026-09-01T17:59:59Z",
+      "role": "brief",
+      "selection_reason": "理解と生成の統合では、機能追加だけでなく計算経路の競合管理が設計課題になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、画像理解と生成を一つのモデルで扱うと相互に表現を改善できる一方、同じ計算経路へ強制すると一方が支配し得ると報告し、競合する視覚計算を分離する構成を提案した。",
+      "source_kind": "paper",
+      "source_title": "Uncovering Understanding-Generation Synergy in Native Unified Multimodal Models: From Representation, Task to System",
+      "source_url": "https://arxiv.org/abs/2609.01607v1",
+      "title": "理解と生成を同居させるマルチモーダルモデルの相互作用を検証",
+      "topics": [
+        "research",
+        "models",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-09-03T00:51:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "顧客事例とOpenAI自身の分析であり、削減時間や利用量は各社の報告。別組織での再現性は独立検証していない。",
+      "caveat": "OpenAIによる顧客事例と自社調査の解説。効果指標、比較条件、選定バイアスは独立検証していない。公開日は日付精度。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-ai-native-workflows",
+      "language": "en",
+      "observed_at": "2026-09-03T00:51:00+09:00",
+      "published_at": "2026-09-01T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "AI導入量ではなく、完了条件、例外、証拠、レビュー負荷を測ることが業務能力への移行点になる。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIはBasis、Clay、Exa Labsの事例を通じ、明確な仕事、永続的な文脈、必要な権限、テスト、人間レビューを組み合わせてエージェント業務を反復可能にする運用パターンを紹介した。",
+      "source_kind": "official",
+      "source_title": "How AI-native companies turn workflows into operating capability",
+      "source_url": "https://openai.com/index/ai-native-company-workflows/",
+      "title": "エージェントを実験から反復可能な業務へ変える3社の設計",
+      "topics": [
+        "agents",
+        "tools",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-09-03T00:51:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "提供地域、契約種別、権利条件、ブランド一貫性、編集精度は実案件で確認が必要。",
+      "caveat": "Google自身の製品発表。段階展開中で全顧客への即時提供を意味せず、品質、生産性、権利上の扱いは独立検証していない。公開日は日付精度。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-pics-workspace",
+      "language": "en",
+      "observed_at": "2026-09-03T00:51:00+09:00",
+      "published_at": "2026-09-01T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "生成画像を別アプリから移すのではなく、共同編集する文書の中で修正できることが制作工程を変える。",
+      "source_domain": "blog.google",
+      "source_fact": "GoogleはNano Bananaを基盤とする画像生成・編集ツールGoogle Picsを発表し、AI Pro・Ultra利用者と多くのWorkspace法人顧客へ段階提供を開始した。DocsとSlidesへの統合は開始済みで、Drive統合は今後としている。",
+      "source_kind": "release",
+      "source_title": "Try Google Pics: Easy image creation and editing in Google Workspace",
+      "source_url": "https://blog.google/products-and-platforms/products/workspace/google-pics/",
+      "title": "Google Pics、画像生成と精密編集をDocs・Slidesへ接続",
+      "topics": [
+        "creative-ai",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-03T00:51:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ワークショップ報告は強制規格ではない。組織別の実装要件や適合基準は今後の標準・調達条件を確認する必要がある。",
+      "caveat": "NISTのワークショップ報告であり、規制や強制規格の発効を意味しない。公開日は日付精度。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nist-secure-hardware-standards-ir8615",
+      "language": "en",
+      "observed_at": "2026-09-03T00:51:00+09:00",
+      "published_at": "2026-09-01T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "AIハードウェアの安全性を、チップ単体でなく供給網、証明、運用、廃棄まで連続した標準化課題として見る材料になる。",
+      "source_domain": "csrc.nist.gov",
+      "source_fact": "NISTはIR 8615を公開し、共通用語と信頼モデル、半導体ライフサイクルの来歴・追跡性、供給網、継続的な検証、担い手育成の5領域を優先事項として整理した。AI支援分析や形式手法、ファジングも検証手段に含める。",
+      "source_kind": "official",
+      "source_title": "Workshop Report on Rolling Next-Generation Secure Hardware into Standards | NIST IR 8615 Available September 01, 2026",
+      "source_url": "https://csrc.nist.gov/News/2026/next-generation-secure-hardware-into-standards",
+      "title": "NIST、次世代ハードウェア安全性を標準へつなぐ5つの優先領域を整理",
+      "topics": [
+        "security",
+        "policy",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-03T00:51:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-09-03T00:51:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News — データ接続と選択的な観測が、AIの実装を変える",
+  "topics": [
+    {
+      "description": "計画、委任、ツール実行を担うAIシステム。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "AIエージェント"
+    },
+    {
+      "description": "基盤モデルの学習、推論、評価。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "AIを実作業へ接続する製品と開発基盤。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "一次研究の方法、結果、適用限界。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "AIとデジタル基盤の脅威、統制、検証。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "政府方針、標準化、制度設計。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・標準"
+    },
+    {
+      "description": "公開されたコード、モデル、データと共同開発。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "画像、音声、映像、デザインの生成・編集技術。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}
