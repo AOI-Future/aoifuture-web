@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "google-fairwind-cyber-defense-program",
+      "google-gemini-38-flash-cyber",
+      "google-mapl-emit-methane",
+      "nasa-saturn-south-pole-decagon",
+      "safeevolve-harness-policy-coevolution",
+      "web-agent-discriminative-world-model"
+    ],
+    "edition_date": "2026-09-04",
+    "edition_id": "2026-09-04-0123",
+    "edition_url": "https://aoifuture.com/news/2026-09-04-0123/",
+    "event_id": "aoi-news-2026-09-04-0123-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-09-04T01:23:10+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "Gemini 3.8とWebエージェント世界モデルを深掘り。惑星観測、メタン監視、限定サイバー防御、エージェント安全を短報で追う。",
+    "title": "AOIFUTURE News：行動を見分ける世界モデルと、防御へ向かう高速AI"
+  }
+]

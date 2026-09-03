@@ -1,0 +1,226 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-09-04T01:23:10+09:00",
+  "dek": "Gemini 3.8とWebエージェント世界モデルを深掘り。惑星観測、メタン監視、限定サイバー防御、エージェント安全を短報で追う。",
+  "edition_date": "2026-09-04",
+  "edition_id": "2026-09-04-0123",
+  "edition_note": "直近72時間を中心に一次情報6件を直接確認。深掘り2件、Brief/Watch 4件、4ドメイン・3 source kindsで構成し、公開操作は行っていない。",
+  "generated_at": "2026-09-04T01:23:10+09:00",
+  "items": [
+    {
+      "aoi_note": "導入判断では、公開ベンチマークの再現、総トークン量、道具実行の失敗率、修正パッチのレビュー負荷を別々に測る。",
+      "caveat": "性能・価格・比較値はGoogleの発表。社内評価の詳細や信頼区間は示されず、Cyber版はFairwind Programの信頼された防御担当者に限定される。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-gemini-38-flash-cyber",
+      "language": "en",
+      "observed_at": "2026-09-04T00:54:00+09:00",
+      "published_at": "2026-09-02T15:00:00Z",
+      "role": "lead",
+      "selection_reason": "高速モデルの競争が、長時間の道具利用と脆弱性発見・修正を同じ基盤で扱う段階へ進んだ。",
+      "source_domain": "blog.google",
+      "source_fact": "GoogleはGemini 3.8 Flashと、信頼された防御担当者向けの3.8 Flash Cyberを発表した。Flashは入力100万トークン0.75ドル、出力3.75ドルの導入価格で、HLE-Verified 54.9%と報告。Cyberは20言語の社内脆弱性発見評価で成功率70%超、CWE-Benchでpass@1 47.2%とする。",
+      "source_kind": "release",
+      "source_title": "Introducing Gemini 3.8 Flash and 3.8 Flash Cyber",
+      "source_url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/3-8-flash-and-3-8-flash-cyber/",
+      "title": "Gemini 3.8 Flash、長期エージェントと防御向けCyber版を投入",
+      "topics": [
+        "models",
+        "agents",
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-04T00:54:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "実務では、予測文の自然さではなく、誤行動を落とせるか、代替行動間の差を保持できるか、追加推論費用に見合うかを評価する。",
+      "caveat": "arXiv v1の著者報告で未査読。要旨には絶対スコア、統計的不確実性、実運用サイトへの一般化条件がない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "web-agent-discriminative-world-model",
+      "language": "en",
+      "observed_at": "2026-09-04T00:54:00+09:00",
+      "published_at": "2026-09-02T17:59:40Z",
+      "role": "major",
+      "selection_reason": "エージェントの予測器は「もっともらしい画面」を作るだけでなく、選択肢の差を判別できる必要があるという設計転換を示す。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、候補行動ごとの結果状態を識別させるpredicted-state matchingを提案した。WebArena Go-Browse由来の分岐データで学習し、保持評価、WebPRMBenchの行動順位付け、WebArena-Liteのタスク成功で、教師あり次状態予測を使う比較法を上回ったと報告する。",
+      "source_kind": "paper",
+      "source_title": "Discriminative World Models for Web Agents",
+      "source_url": "https://arxiv.org/abs/2609.02885v1",
+      "title": "Webエージェントの世界モデルを「次状態の再現」から「行動の識別」へ",
+      "topics": [
+        "agents",
+        "research",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-09-04T00:54:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "観測AIでも、単発の検出精度だけでなく、時系列の整合性と観測条件の変化を残すことが重要になる。",
+      "caveat": "NASAと研究者の報告で、形成機構、寿命、北極の六角形との関係は未確定。正確な時刻はNASA公式RSS由来。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nasa-saturn-south-pole-decagon",
+      "language": "en",
+      "observed_at": "2026-09-04T00:54:00+09:00",
+      "published_at": "2026-09-02T18:00:37Z",
+      "role": "brief",
+      "selection_reason": "長期の反復観測が、一枚の画像では捉えにくい惑星大気の形成過程を可視化した。",
+      "source_domain": "science.nasa.gov",
+      "source_fact": "NASAは、ハッブルの2023年以降の観測から、土星南極を囲む進化中の10辺の大気波を確認したと発表した。南半球で大規模な規則多角形ジェットが観測されたのは初めてで、複数の大気層にまたがるという。",
+      "source_kind": "official",
+      "source_title": "NASA’s Hubble Tracks New Decagon Encircling Saturn’s South Pole",
+      "source_url": "https://science.nasa.gov/missions/hubble/nasas-hubble-tracks-new-decagon-encircling-saturns-south-pole/",
+      "title": "土星南極に進化中の十角形波、ハッブルが複数年で追跡",
+      "topics": [
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-09-04T00:54:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "利用時は信頼度閾値別の見逃しと誤検出、地形別の偏り、現地確認コストを合わせて記録する。",
+      "caveat": "結果はGoogle Researchの報告で独立検証していない。複雑な地形での誤検出は継続課題と明記されている。公開日は日付精度。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-mapl-emit-methane",
+      "language": "en",
+      "observed_at": "2026-09-04T00:54:00+09:00",
+      "published_at": "2026-09-01T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "環境監視で、モデル、データ、推論ライブラリを同時公開し、検出から検証へ進める材料になる。",
+      "source_domain": "research.google",
+      "source_fact": "Google Researchは、NASA EMITのハイパースペクトルデータからメタン濃度、プルーム境界、発生源を推定するMAPL-EMITを公開した。360万の模擬プルームで学習し、専門家注釈で84%の再現率、約1,100グラニュールで約50%多い妥当なプルームを検出したと報告する。",
+      "source_kind": "official",
+      "source_title": "Mapping global methane emissions from space with deep learning",
+      "source_url": "https://research.google/blog/mapping-global-methane-emissions-from-space-with-deep-learning/",
+      "title": "衛星画像の深層学習でメタン排出源を世界規模に地図化",
+      "topics": [
+        "research",
+        "models",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-04T00:54:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "導入前に、対象リポジトリ、修正権限、検証環境、レビュー担当、ロールバック条件を分離し、自動修正の速度と誤修正リスクを同時に測る。",
+      "caveat": "提供範囲、参加条件、能力はGoogle自身の発表で独立検証していない。限定アクセスであり、生成された修正が各環境で安全とは限らない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-fairwind-cyber-defense-program",
+      "language": "en",
+      "observed_at": "2026-09-04T01:23:10+09:00",
+      "published_at": "2026-09-02T15:40:00Z",
+      "role": "brief",
+      "selection_reason": "高度なサイバー防御モデルを単体提供ではなく、限定参加、認証、修正ハーネスを含む運用境界として設計した。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleは、政府機関と信頼されたパートナー向けの限定アクセス制度Fairwind Programを発表した。Gemini 3.8 Flash CyberとCodeMenderを組み合わせ、脆弱性の発見、検証、修正を支援すると説明している。",
+      "source_kind": "release",
+      "source_title": "Proactive cyber defense for governments and enterprises",
+      "source_url": "https://blog.google/innovation-and-ai/technology/safety-security/fairwind-program/",
+      "title": "Google、限定参加のサイバー防御制度Fairwind Programを開始",
+      "topics": [
+        "security",
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-04T01:23:10+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "自動更新には、変更単位、ロールバック、評価データ汚染、攻撃成功率と良性効用の同時監視が必要。",
+      "caveat": "arXiv v1の著者報告で未査読。数値は指定モデルとAgentDojoに限定され、他環境への一般化や独立再現は未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "safeevolve-harness-policy-coevolution",
+      "language": "en",
+      "observed_at": "2026-09-04T00:54:00+09:00",
+      "published_at": "2026-09-02T16:19:54Z",
+      "role": "watch",
+      "selection_reason": "安全対策を固定ルールかモデル学習の二者択一にせず、監査可能な実行層と方策を分離して更新する研究例になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "SafeEvolveは、完了したオンポリシー軌跡の安全証拠から、安全プロンプトと階層スキルを限定更新し、SFTとRLで方策側も共同改善する枠組みを提案する。Qwen3.5-4BでAgentDojoの攻撃成功率を3分の1にし、良性効用を59.79%から61.86%へ高めたと報告する。",
+      "source_kind": "paper",
+      "source_title": "SafeEvolve: Harness-Policy Co-Evolution from Agent Experience for Safety Alignment",
+      "source_url": "https://arxiv.org/abs/2609.02786v1",
+      "title": "エージェントの実行経験からハーネスと方策を共同更新するSafeEvolve",
+      "topics": [
+        "security",
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-09-04T00:54:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-09-04T01:23:10+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：行動を見分ける世界モデルと、防御へ向かう高速AI",
+  "topics": [
+    {
+      "description": "推論、生成、予測を担う基盤モデル。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "環境を観測し、道具を使って複数段階の仕事を進めるAI。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "脆弱性、安全性、攻撃耐性、制御に関する動向。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "AIを実務へ接続する製品、API、運用手段。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "新しい方法、評価、観測結果を示す研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "再利用可能なコード、モデル、データの公開。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    }
+  ]
+}
