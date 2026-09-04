@@ -1,0 +1,289 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-09-05T00:50:00+09:00",
+  "dek": "完全公開のモデル群K2 Horizonと気象AIの新世代を深掘り。エージェント攻撃、既知の悪用脆弱性、音声機能、動画編集AI、欧州の技術主権を短報で追う。",
+  "edition_date": "2026-09-05",
+  "edition_id": "2026-09-05-0050",
+  "edition_note": "直近72時間を中心に一次情報8件を直接確認。深掘り2件、Brief/Watch 6件、6ドメイン・4 source kinds・7トピックで構成し、公開操作は行っていない。",
+  "generated_at": "2026-09-05T00:50:00+09:00",
+  "items": [
+    {
+      "aoi_note": "導入判断では、衛星データの遅延なし利用、解像度別の更新頻度、地域別の降水精度差を、既存の数値予報の運用と別に測る。",
+      "caveat": "能力、精度比較、展開状況はGoogle DeepMind/Google Researchの発表で独立検証していない。CRPS改善比は比較対象・先行時間に依存し、全地域・全変数で保証されるものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-deepmind-weathernext-3",
+      "language": "en",
+      "observed_at": "2026-09-05T00:30:00+09:00",
+      "published_at": "2026-09-03T15:02:08Z",
+      "role": "lead",
+      "selection_reason": "AI気象予報が実時間の静止衛星観測を直接学習し、5km解像度・毎時更新で主要製品へ広がる段階に入ったことを示す。",
+      "source_domain": "blog.google",
+      "source_fact": "Google DeepMindとGoogle Researchは、実時間の全球静止衛星モザイクを学習するWeatherNext 3を発表した。毎時更新・最大5km解像度の予報を生成し、100m風速、雲量、日射量を再生可能エネルギー運用向けに予測。対IMERGで最大60%、対MRMSで30%、対雨量計で10%のCRPS改善を報告し、当日からGoogle検索、Geminiアプリ、Maps、Maps Platform Weather API、Earth Engineに導入したとしている。",
+      "source_kind": "release",
+      "source_title": "Introducing WeatherNext 3, our most advanced and accurate global weather AI model",
+      "source_url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/introducing-weathernext-3/",
+      "title": "Google、衛星観測を直接学習する気象AI「WeatherNext 3」を主要製品へ",
+      "topics": [
+        "models",
+        "research",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-05T00:30:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "完全開示の規模と実用性は別で、小モデルでもSWE-bench等の実タスク値を確認し、ライセンスとデータ再配布条件を個別に確認する。",
+      "caveat": "性能値、小規模帯でのSOTA主張、トレーニングデータ開示の範囲はIFMの発表で独立検証していない。約20兆トークンという学習規模や全モデルの公開度は、検証後の受入判断が別途必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "ifm-k2-horizon-open-fleet",
+      "language": "en",
+      "observed_at": "2026-09-05T00:30:00+09:00",
+      "published_at": "2026-09-03T00:00:00Z",
+      "role": "major",
+      "selection_reason": "オープンウェイトの競争が、最終重みだけではなく訓練過程の全段階を公開する「完全公開」の方向へ進んだことを示す。",
+      "source_domain": "ifm.ai",
+      "source_fact": "Institute of Foundation Modelsは、375B-A23Bから0.9Bまでの6モデルで構成するK2 Horizonを公開した。全モデルの重み、中間チェックポイント、訓練データまたはデータ構成レシピ、アーキテクチャ、混合構成、訓練コード、設定、ログ、評価結果をApache 2.0で公開。0.9B・3.7B・7Bモデルが各サイズ帯で最先端と主張し、36B-A4BはMoVA（Mixture-of-Value-Attention）機構を導入した。Hugging FaceとvLLM・SGLangで当日から利用可能。",
+      "source_kind": "release",
+      "source_title": "Introducing K2 Horizon: Frontier Performance, Radically Open",
+      "source_url": "https://ifm.ai/blog/k2/",
+      "title": "IFM、訓練過程まで開示する6モデル構成のオープン群「K2 Horizon」を公開",
+      "topics": [
+        "models",
+        "open-source",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-09-05T00:30:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "評価時は、検出率だけでなく、偽陽性・誤検出コスト、更新経路の検証、ホスト権限で実行されるフックの監査を独立に測る。",
+      "caveat": "arXiv v1の著者報告で未査読。対象ハーネスとバックエンドの組み合わせは25種で、全エージェント系に一般化できるとは限らない。攻撃成功率と防御評価は著者実装の結果。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-hookpry-agent-harness-supply-chain",
+      "language": "en",
+      "observed_at": "2026-09-05T00:30:00+09:00",
+      "published_at": "2026-09-03T14:08:42Z",
+      "role": "brief",
+      "selection_reason": "AIエージェントのライフサイクルフック更新経路が、プラグイン更新という形のサプライチェーン攻撃に対して盲目的に信頼されているという攻撃面を示す。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、AIエージェントハーネスがセッション開始やツール呼び出し等の実行時イベントにシェルコマンドを束ねるライフサイクルフックを、ホスト権限で実行されるとしながら盲目的に信頼している点を攻撃面と指摘した。攻撃者がプラグインのメタデータとフック設定のみを制御するというサプライチェーン脅威モデル下で、自動攻撃フレームワークHookPryを提案。25種のハーネス・バックエンド組み合わせ×1,000回の実行で、評価した7種すべてのハーネスを侵害、ハーネスごとの成功率は最高92.5%と報告した。Microsoft Defenderは再現率0%、静的防御3種の併用でも悪性成果物の47.5%を検出漏れしたとする。",
+      "source_kind": "paper",
+      "source_title": "A Blind Trust, the Bloody Thrust: When Attacker-Controlled Hook Updates Steer AI Agent Harnesses towards Malicious Behaviors",
+      "source_url": "https://arxiv.org/abs/2609.03884v1",
+      "title": "エージェントのライフサイクルフック更新を狙うサプライチェーン攻撃「HookPry」",
+      "topics": [
+        "security",
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-09-05T00:30:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "神経科学でも、大規模モデルと人間専門家の協働が、コネクトームと呼ばれる全神経回路マップの解釈を支える材料になる。",
+      "caveat": "プロジェクトの記述と可視化記事で、方法論やコンパニオン研究の査読状況は本文だけでは確立されない。HHMI Janelia、Google Research、共同研究者の共同成果。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-research-male-fruit-fly-brain-map",
+      "language": "en",
+      "observed_at": "2026-09-05T00:30:00+09:00",
+      "published_at": "2026-09-03T15:05:00Z",
+      "role": "brief",
+      "selection_reason": "AI支援の画像統合が、成人オスミバエの脳と中枢神経の全神経接続を初めてマップする規模の研究を可能にしたことを示す。",
+      "source_domain": "blog.google",
+      "source_fact": "HHMI Janelia、Google Research、共同研究者は、成人オスのミバエ（キイロショウジョウバエ）の脳と中枢神経系の全神経接続を初めてマップしたと発表した。16万6,000以上のニューロンを含み、中枢神経系で11,691種のニューロン細胞種を報告。コンピュータとAIが数百万枚の2D画像を統合して3Dの神経形状を作り上げたとし、視覚系、味覚、社会的行動に関する3件のコンパニオン研究も同日公開した。",
+      "source_kind": "release",
+      "source_title": "5 amazing visuals show how the male fruit fly’s brain map is advancing neuroscience",
+      "source_url": "https://blog.google/innovation-and-ai/technology/research/male-fruit-fly-brain-map/",
+      "title": "成人ミバエの脳全体を初めてマップ、AIが数百万画像を統合",
+      "topics": [
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-09-05T00:30:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "更新時は、脆弱性の実証的悪用有無と公開露出を、BOD 26-04のリスクベースの優先順位付けに合わせて確認する。",
+      "caveat": "CISAの発表で、各脆弱性の攻撃手法や影響範囲は本稿では詳述していない。BOD 26-04は連邦行政機関向けだが、CISAは全組織への適用を推奨している。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-seven-kev-additions",
+      "language": "en",
+      "observed_at": "2026-09-05T00:30:00+09:00",
+      "published_at": "2026-09-02T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "実際に悪用された証拠のある脆弱性が、SQLインジェクションからLLMゲートウェイまで幅広く追加され、運用上の優先更新対象が広がったことを示す。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "CISAは、実証的に悪用された証拠に基づき、Known Exploited Vulnerabilitiesカタログに7件の脆弱性を追加した。対象はSangoma SwitchvoxのSQLインジェクション、Kludex StarletteのHTTPリクエスト/レスポンススモグリング、Kestra OSSのOSコマンドインジェクション、BerriAI LiteLLMの不適切な認証、JFrog Artifactoryの不適切な認証、SonicWall SMA1000のSSRFとOSコマンドインジェクション。BOD 26-04に基づき、全制御を奪う有望な公開資産について優先更新を求めた。",
+      "source_kind": "advisory",
+      "source_title": "CISA Adds Seven Known Exploited Vulnerabilities to Catalog",
+      "source_url": "https://www.cisa.gov/news-events/alerts/2026/09/02/cisa-adds-seven-known-exploited-vulnerabilities-catalog",
+      "title": "CISA、実際に悪用された脆弱性7件（LiteLLM認証を含む）をカタログに追加",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-09-05T00:30:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "導入時は、音声入力の精度、対象範囲（受信トレイ・ドキュメント・メモ）と権限、対応モデル契約を確認する。",
+      "caveat": "機能、対象範囲、権限、契約条件はGoogleの発表で独立検証していない。展開は発表週、一部機能はGoogle AI Plus/Pro/Ultra契約者向けで、Workspaceビジネス向けは時期未定。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-workspace-voice-features",
+      "language": "en",
+      "observed_at": "2026-09-05T00:30:00+09:00",
+      "published_at": "2026-09-03T16:00:00Z",
+      "role": "brief",
+      "selection_reason": "音声モデルが、メール検索、文書作成、メモ整理という日常的な実務へ入り、権限付きの情報取得を伴う形で広がったことを示す。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleは、Gemini AudioモデルをGmail、Docs、Keepに正式に展開すると発表した。Gmail Liveは会話型の受信トレイ検索、Docs Liveは音声での文書起草と構造化（Gmail、Drive、Chat、Webへの権限付きアクセス）、Keep Liveは発話の構造化・整理を提供。発表週から展開し、GmailとKeepはGoogle AI Plus/Pro/Ultra、DocsはPro/Ultra契約者向けとしている。",
+      "source_kind": "release",
+      "source_title": "Use your voice to get more done in Gmail, Docs, and Keep",
+      "source_url": "https://blog.google/products-and-platforms/products/workspace/voice-features-gmail-docs-keep/",
+      "title": "Google、Gmail・Docs・Keepに音声モデル機能「Live」を展開",
+      "topics": [
+        "tools",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-09-05T00:30:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "採用検討では、AIアシスタント編集が実タイムライン上で検証可能なこと、手動編集が無料で保たれることを、生成系モデル利用の信用消費と別に確認する。",
+      "caveat": "機能、利用条件、モデル数はinvideoの発表で独立検証していない。アシスタント編集と生成系モデルは信用消費制、手動編集のみ無料と説明される。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "invideo-agentic-video-editor",
+      "language": "en",
+      "observed_at": "2026-09-05T00:30:00+09:00",
+      "published_at": "2026-09-01T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "動画編集のアシスタントが、足を観察してカットし、タイムラインに編集可能なクリップを置く「エージェント的編集」の方向を示す。",
+      "source_domain": "invideo.io",
+      "source_fact": "invideoは、ブラウザで動作するプロフェッショナル動画エディタ「invideo Editor」を発表した。音声指示で編集を任せるAIアシスタント編集者が、フッテージを観察してファーストカット、マルチカム、フッテージ検索、参照動画のペーシング一致、ストック素材や生成B-rollの挿入を行い、結果を編集可能なマルチトラックタイムラインに置く。手動編集は無料で全ユーザーに開放、アシスタント編集と生成系モデルは信用消費制。200以上の動画・画像・音声モデルと数百万本のライセンス済みクリップに接続するとしている。",
+      "source_kind": "release",
+      "source_title": "Introducing invideo Editor: The Agentic Video Editor",
+      "source_url": "https://invideo.io/news/introducing-invideo-editor/",
+      "title": "invideo、人間の編集を観察して代行するエージェント的動画エディタを公開",
+      "topics": [
+        "tools",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-09-05T00:30:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "政策動向では、AI・計算資源・半導体・重要鉱物の依存関係を1つの流れとして捉え、欧州内の需要と供給の接続を注視する。",
+      "caveat": "外交声明で、政策成果や資金配分の決定を伴わない。欧州委員会の具体的な法改正や資金枠と合わせて判断する必要がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "franco-dutch-tech-dialogue",
+      "language": "en",
+      "observed_at": "2026-09-05T00:30:00+09:00",
+      "published_at": "2026-09-02T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "フランスとオランダが、AI・計算資源を欧州の技術主権の中核と位置づけ、需要創出と供給の接続を求める政策の方向性を示した。",
+      "source_domain": "www.government.nl",
+      "source_fact": "フランスとオランダは、フランス・オランダ技術対話で、AIと計算資源を欧州の将来に不可欠な基幹技術と位置づけ、EU技術主権パッケージ（Chips Act 2.0、Cloud and AI Development Act含む）を支持すると表明した。公開調達・公的支援における欧州コンテンツ基準、クラウド主権の保護枠組み、国境を越えた権利外法への対策を求め、欧州内での需要と供給の接続、フロンティアAIモデルの開発とアクセス強化を提唱した。",
+      "source_kind": "official",
+      "source_title": "FRANCO-DUTCH TECH DIALOGUE: Europe will bridge the tech gap!",
+      "source_url": "https://www.government.nl/documents/2026/09/02/franco-dutch-tech-dialogue-europe-will-bridge-the-tech-gap",
+      "title": "仏蘭技術対話、AIと計算資源を欧州技術主権の中核に位置づけ",
+      "topics": [
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-09-05T00:30:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-09-05T00:50:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：完全公開のオープン群と、実時間衛星を学ぶ気象AI",
+  "topics": [
+    {
+      "description": "推論、生成、予測を担う基盤モデル。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "環境を観測し、道具を使って複数段階の仕事を進めるAI。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "脆弱性、安全性、攻撃耐性、制御に関する動向。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "AIを実務へ接続する製品、API、運用手段。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "新しい方法、評価、観測結果を示す研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "再利用可能なコード、モデル、データの公開。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "メディア、音声、映像、デザイン、制作に関わるAI。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    },
+    {
+      "description": "規制、標準、政府・公的機関による決定と指針。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策"
+    }
+  ]
+}
