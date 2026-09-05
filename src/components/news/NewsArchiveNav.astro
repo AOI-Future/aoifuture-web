@@ -1,4 +1,5 @@
 ---
+import { displayEditionTitle } from '../../lib/news/display-title.mjs';
 import type { NewsCatalog, NewsTopic } from '../../lib/news/types';
 
 interface Props {
@@ -33,7 +34,7 @@ const sources = catalog.editions.flatMap((edition) => edition.items.map((signal)
     <h2 id="archive-editions">By Edition</h2>
     <ul>
       {catalog.editions.map((edition) => (
-        <li><a href={`/news/${edition.edition_id}/`}><time datetime={edition.edition_date}>{edition.edition_date} JST</time> / {edition.title}</a></li>
+        <li><a href={`/news/${edition.edition_id}/`}><time datetime={edition.edition_date}>{edition.edition_date} JST</time> / {displayEditionTitle(edition.title)}</a></li>
       ))}
     </ul>
   </section>

@@ -2,6 +2,7 @@
 import NewsEdition from '../../components/news/NewsEdition.astro';
 import NewsEditionHistoryLoader from '../../components/news/NewsEditionHistoryLoader.astro';
 import NewsLayout from '../../layouts/NewsLayout.astro';
+import { displayEditionTitle } from '../../lib/news/display-title.mjs';
 import { loadNewsCatalog } from '../../lib/news/load-news';
 import { getLatestReviewedEditionEvent } from '../../lib/news/load-news-events';
 import { buildEditionMetadata } from '../../lib/news/metadata.mjs';
@@ -36,8 +37,8 @@ const catalog = loadNewsCatalog(mode);
 ---
 
 <NewsLayout
-  title={`${edition.title} | AOIFUTURE News`}
-  description={edition.dek ?? edition.title}
+  title={`${displayEditionTitle(edition.title)} | AOIFUTURE News`}
+  description={edition.dek ?? displayEditionTitle(edition.title)}
   canonical={`https://aoifuture.com/news/${edition.edition_id}/`}
   jsonLd={buildEditionMetadata(edition, latestReviewedAt)}
   mode={mode}

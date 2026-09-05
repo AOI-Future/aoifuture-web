@@ -1,3 +1,5 @@
+import { displayEditionTitle } from './display-title.mjs';
+
 const ORIGIN = 'https://aoifuture.com';
 const schema = (type, values) => ({
   '@context': 'https://schema.org',
@@ -21,8 +23,8 @@ export function buildEditionMetadata(edition, latestReviewedAt) {
   }
   const url = `${ORIGIN}/news/${edition.edition_id}/`;
   return schema('CollectionPage', {
-    name: edition.title,
-    description: edition.dek ?? edition.title,
+    name: displayEditionTitle(edition.title),
+    description: edition.dek ?? displayEditionTitle(edition.title),
     url,
     datePublished: edition.published_at,
     dateModified: latestReviewedAt,
@@ -50,7 +52,7 @@ export function buildIndexMetadata(catalog) {
     description: 'Finite, source-first AOIFUTURE News Editions.',
     url: `${ORIGIN}/news/`,
     mainEntity: itemList(catalog.editions.map((edition) => ({
-      name: edition.title,
+      name: displayEditionTitle(edition.title),
       url: `${ORIGIN}/news/${edition.edition_id}/`,
     }))),
   });
@@ -59,7 +61,7 @@ export function buildIndexMetadata(catalog) {
 export function buildArchiveMetadata(catalog) {
   const entries = [
     ...catalog.editions.map((edition) => ({
-      name: edition.title,
+      name: displayEditionTitle(edition.title),
       url: `${ORIGIN}/news/${edition.edition_id}/`,
     })),
     ...catalog.contexts.map((context) => ({

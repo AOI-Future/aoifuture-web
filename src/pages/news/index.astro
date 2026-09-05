@@ -2,6 +2,7 @@
 import NewsEdition from '../../components/news/NewsEdition.astro';
 import NewsEditionHistoryLoader from '../../components/news/NewsEditionHistoryLoader.astro';
 import NewsLayout from '../../layouts/NewsLayout.astro';
+import { displayEditionTitle } from '../../lib/news/display-title.mjs';
 import { loadNewsCatalog } from '../../lib/news/load-news';
 import { buildIndexMetadata } from '../../lib/news/metadata.mjs';
 import { resolveNewsPublicationMode } from '../../lib/news/publication-mode.mjs';
@@ -16,8 +17,8 @@ if (!edition) throw new Error('AOIFUTURE News requires at least one staged Editi
 ---
 
 <NewsLayout
-  title={`${edition.title} | AOIFUTURE News`}
-  description={edition.dek ?? edition.title}
+  title={`${displayEditionTitle(edition.title)} | AOIFUTURE News`}
+  description={edition.dek ?? displayEditionTitle(edition.title)}
   canonical="https://aoifuture.com/news/"
   jsonLd={buildIndexMetadata(catalog)}
   mode={mode}

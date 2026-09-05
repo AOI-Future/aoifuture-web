@@ -1,5 +1,6 @@
 ---
 import type { NewsContext, NewsEdition, NewsPublicationMode } from '../../lib/news/types';
+import { displayEditionTitle } from '../../lib/news/display-title.mjs';
 import NewsSignalCard from './NewsSignalCard.astro';
 
 interface Props {
@@ -27,7 +28,7 @@ const coverageLabel = edition.coverage_kind === 'selection-window'
     <p class="news-kicker">EDITION <time datetime={edition.edition_date}>{edition.edition_date} JST</time></p>
     {mode === 'review' && <p class="news-sample-label news-sample-label--hero">EDITORIAL REVIEW PREVIEW</p>}
     {mode === 'production' && <p class="news-kicker">ROLLING EDITION</p>}
-    <h1 id={`${editionPrefix}-heading`} data-news-edition-heading>{edition.title}</h1>
+    <h1 id={`${editionPrefix}-heading`} data-news-edition-heading>{displayEditionTitle(edition.title)}</h1>
     {edition.dek && <p class="news-dek">{edition.dek}</p>}
     <dl class="news-edition__meta">
       <div><dt>Published</dt><dd><time datetime={edition.published_at}>{formatDate(edition.published_at)} JST</time></dd></div>

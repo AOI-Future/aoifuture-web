@@ -2,6 +2,7 @@ import {
   validateDocument,
   validateEditionSnapshot,
 } from './validator.mjs';
+import { displayEditionTitle } from '../../src/lib/news/display-title.mjs';
 
 const canonical = (value) => {
   if (Array.isArray(value)) return `[${value.map(canonical).join(',')}]`;
@@ -285,7 +286,7 @@ export function renderRollingFeed(events, editions, { mode = 'review' } = {}) {
       : event.summary;
     return [
       '    <item>',
-      `      <title>${xmlEscape(event.title)}</title>`,
+      `      <title>${xmlEscape(displayEditionTitle(event.title))}</title>`,
       `      <link>${xmlEscape(event.edition_url)}</link>`,
       `      <guid isPermaLink="false">${xmlEscape(event.event_id)}</guid>`,
       `      <pubDate>${new Date(event.published_at).toUTCString()}</pubDate>`,
