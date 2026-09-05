@@ -1,0 +1,23 @@
+[
+  {
+    "changed_signal_ids": [
+      "arxiv-pretraining-auxiliary-views",
+      "cisa-kev-chromium-v8-one",
+      "google-ai-educator-series",
+      "nvidia-acquire-huggingface",
+      "nvidia-dlss5-3d-guided-rendering",
+      "openai-gpt6-astra",
+      "xai-grok-bot-enterprise"
+    ],
+    "edition_date": "2026-09-06",
+    "edition_id": "2026-09-06-0050",
+    "edition_url": "https://aoifuture.com/news/2026-09-06-0050/",
+    "event_id": "aoi-news-2026-09-06-0050-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-09-06T00:50:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "新世代エージェント基盤「GPT-6 Astra」と、オープン基盤の所有権が動くNVIDIA×Hugging Face買収を深掘り。エンタープライズBot統制、悪用済み脆弱性、生成型レンダリング、事前学習知見、教育AIを短報で追う。",
+    "title": "AOIFUTURE News：新世代エージェント基盤と、動くオープン基盤の所有権"
+  }
+]

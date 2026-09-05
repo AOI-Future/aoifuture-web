@@ -1,0 +1,256 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-09-06T00:50:00+09:00",
+  "dek": "新世代エージェント基盤「GPT-6 Astra」と、オープン基盤の所有権が動くNVIDIA×Hugging Face買収を深掘り。エンタープライズBot統制、悪用済み脆弱性、生成型レンダリング、事前学習知見、教育AIを短報で追う。",
+  "edition_date": "2026-09-06",
+  "edition_id": "2026-09-06-0050",
+  "edition_note": "直近72時間を中心に一次情報7件を直接確認。深掘り2件、Brief/Watch 5件、7ドメイン・4 source kinds・7トピックで構成し、公開操作は行っていない。",
+  "generated_at": "2026-09-06T00:50:00+09:00",
+  "items": [
+    {
+      "aoi_note": "委譲時は、実行範囲の明示と監査痕跡が鍵。高いコンピュータ利用・脆弱性能力を持つため、承認境界とロールバックを事前に決める。",
+      "caveat": "性能値・能力・安全評価はOpenAIの発表で独立再現していない。ExploitBench 100%等は製品セーフガードなしの評価環境であり、実運用・防御ワークフローへの適用をそのまま保証するものではない。公開日は日付精度。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-gpt6-astra",
+      "language": "en",
+      "observed_at": "2026-09-06T00:45:00+09:00",
+      "published_at": "2026-09-03T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "コンピュータ利用・コーディング・サイバー・科学を統合した新世代フロンティアモデルの開始が、エージェント主導の業務委譲の基準を一段引き上げた。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIはGPT-6 Astraを発表した。Arc-AGI-3で99.9%、ExploitBenchで100%、FrontierMath Tier 4で98%を報告し、OSWorld 2.0でタスクあたり約40分で72.6%（GPT-5.6 Solは約75分で65.7%）と、より速く高いコンピュータ利用性能を主張。Preparedness FrameworkでサイバーセキュリティのCritical閾値に達するとし、製造物セーフガードなしの評価ではExploitGym 42.4%（Sol 30.3%）、SRE-Bench 88.0%（単一試行）/99.2%（4試行）を報告。限られた組織から先行展開し、数日内にChatGPT Plus/Pro/Business/Enterprise、API、AWSへ拡大するとした。",
+      "source_kind": "release",
+      "source_title": "GPT-6 Astra: A new generation of intelligence",
+      "source_url": "https://openai.com/index/gpt-6-astra/",
+      "title": "OpenAI、コンピュータ利用とサイバーで最高水準を謳うGPT-6 Astraを段階展開",
+      "topics": [
+        "models",
+        "agents",
+        "research",
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-06T00:45:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "オープン基盤の継続が条件。買収後もモデル選択・クラウド・アクセラレータが独立に選べるか、ライセンスと再配布条件が保たれるかを個別に確認する。",
+      "caveat": "買収条件、完了時期、規制承認、プラットフォームの中立性維持の保証範囲は発表時点の声明であり、取引完了と今後の運用は未確定。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-acquire-huggingface",
+      "language": "en",
+      "observed_at": "2026-09-06T00:45:00+09:00",
+      "published_at": "2026-09-03T00:00:00Z",
+      "role": "major",
+      "selection_reason": "オープンモデル開発コミュニティと3万超モデルを持つHugging Faceが、ハードウェア大手の傘下へ移ることで、オープンウェイト経済の主導権が変わる可能性を示す。",
+      "source_domain": "blogs.nvidia.com",
+      "source_fact": "NVIDIAは、Hugging Faceを129億3030万ドルで買収することで合意したと発表した。Hugging Faceは1,800万人超の開発者・研究者・クリエイターが、300万超のモデル、50万超のデータセット、100万超のアプリケーションを共有し、20万社超が利用するプラットフォームと説明。買収後もHugging Faceはオープンなプラットフォームとして全エコシステムに開放され、モデル・フレームワーク・クラウド・推論プロバイダ・コンピューティングを自由に選べるとし、オープンウェイトとオープンソースモデルへの支援を継続すると表明した。",
+      "source_kind": "release",
+      "source_title": "NVIDIA to Acquire Hugging Face",
+      "source_url": "https://blogs.nvidia.com/blog/nvidia-to-acquire-hugging-face/",
+      "title": "NVIDIA、Hugging Faceを約129億ドルで買収へ オープン性は継続と表明",
+      "topics": [
+        "open-source",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-06T00:45:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エンタープライズ導入では、Botの権限・ネットワーク・監査の統制が機能するか、既存のSSOと監査基盤へどう接続するかを確認する。",
+      "caveat": "機能、利用条件、2週間の無料期間、統制設定の詳細はSpaceXAIの発表で独立検証していない。具体的な導入実績の規模は記事内の顧客名のみで確認できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "xai-grok-bot-enterprise",
+      "language": "en",
+      "observed_at": "2026-09-06T00:45:00+09:00",
+      "published_at": "2026-09-03T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "自律Botを組織規模で統制するアクセス・ネットワーク・監査の仕組みが、エンタープライズ向けに正式提供されたことを示す。",
+      "source_domain": "x.ai",
+      "source_fact": "SpaceXAIは、自律的に業務を完遂するBotを組織規模で統治するため、Grok Botをエンタープライズ向けに提供開始したと発表した。アクセス、ネットワーク、監査の制御を追加し、GrokおよびCursorのエンタープライズ顧客は2週間無料で、シートを持たない人を含め組織全体を招待できる。各Botはクラウド上の専用コンピュータで実行され、アプリやWebサイトを人が使うのと同じ方法で操作すると説明した。",
+      "source_kind": "official",
+      "source_title": "Grok Bot for Enterprise",
+      "source_url": "https://x.ai/news/grok-bot-for-enterprise",
+      "title": "SpaceXAI、自律Botのアクセス・監査を統制するGrok Botをエンタープライズ向けに提供",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-06T00:45:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "Chromium系ブラウザを更新管理する組織は、担当範囲でCVEの適用有無と回避策を確認し、KIVカタログの期日通りに更新する。",
+      "caveat": "CISAの発表で、実際の攻撃手法・影響範囲・被害報告は本文では詳述していない。CVE-2026-85046の適用範囲はブラウザ配布と環境に依存する。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-kev-chromium-v8-one",
+      "language": "en",
+      "observed_at": "2026-09-06T00:45:00+09:00",
+      "published_at": "2026-09-04T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "実際に悪用された証拠のある脆弱性として、ブラウザのJavaScriptエンジン型混乱が追加され、更新優先度が高まったことを示す。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "CISAは、実証的に悪用された証拠に基づき、Known Exploited VulnerabilitiesカタログにCVE-2026-85046（Google Chromium V8型混乱の脆弱性）1件を追加した。追加日は2026年9月4日。V8型混乱は悪意のあるサイバー攻撃の頻出ベクトルであると説明し、カタログに基づく優先更新を求めた。",
+      "source_kind": "advisory",
+      "source_title": "CISA Adds One Known Exploited Vulnerability to Catalog",
+      "source_url": "https://www.cisa.gov/news-events/alerts/2026/09/04/cisa-adds-one-known-exploited-vulnerability-catalog",
+      "title": "CISA、悪用確認のChromium V8型混乱（CVE-2026-85046）をカタログに追加",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-09-06T00:45:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "導入判断では、生成型の光・材質の見た目だけでなく、キャラクタの同一性保持、フレーム間の安定性、アーティストの意図尊重を実地で確認する。",
+      "caveat": "性能、対応GPU、ゲーム動作、5倍改善等はNVIDIAの発表で独立検証していない。対応はRTX 50シリーズとGeForce NOWに限定、提供タイトルは当面NBA 2K27。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-dlss5-3d-guided-rendering",
+      "language": "en",
+      "observed_at": "2026-09-06T00:45:00+09:00",
+      "published_at": "2026-09-03T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "ゲームレンダリングの最終段階に生成AIを置き、決定的・時間的に安定したライティングと材質を実時間で作り出す方向を示す。",
+      "source_domain": "www.nvidia.com",
+      "source_fact": "NVIDIAは、9月3日にリリースされるDLSS 5で3Dガイド型ニューラルレンダリングを導入すると発表した。ゲームエンジンの描画フレームを基盤に、ライティング反射、肌のサブサーフェス散乱、布・直毛の光透過などを生成する。1フレーム入力・1フレーム出力の決定的で時間的に安定したモデルとして、RTX 50シリーズの1枚のGPUで最大4Kの実時間描画を実現し、NBA 2K27で初めて利用可能になるとした。",
+      "source_kind": "release",
+      "source_title": "NVIDIA DLSS 5 Available September 3rd: 3D-Guided Neural Rendering Debuts In NBA 2K27",
+      "source_url": "https://www.nvidia.com/en-eu/geforce/news/dlss-5-3d-guided-neural-rendering/",
+      "title": "NVIDIA DLSS 5、3Dガイド型ニューラルレンダリングで生成AIをゲーム描画へ",
+      "topics": [
+        "creative-ai",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-06T00:45:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "事前学習の理解では、反復回数と補助表現へのトークン配分が学習結果を左右する点を、データ設計の実務に反映できる。",
+      "caveat": "arXiv v1の著者報告で未査読。制御実験の結果であり、実規模の事前学習、実アーキテクチャへの一般化、ベンチマーク絶対値は本文だけでは確立されない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-pretraining-auxiliary-views",
+      "language": "en",
+      "observed_at": "2026-09-06T00:45:00+09:00",
+      "published_at": "2026-09-03T17:57:02Z",
+      "role": "brief",
+      "selection_reason": "事前学習で知識獲得がなぜ起きるかを、反復と「補助表現」へのトークン配分という制御実験で分解し、データ多様性の意義を説明する研究例になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、大規模言語モデルの事前学習中の知識獲得を、知識の再表現である「補助ビュー（auxiliary views）」の観点から制御実験で調べた。反復が獲得に必要であることを確認し、トークン予算を固定したまま文書の反復から補助ビューへトークンを割り当てると、事実想起でも学習が向上すると報告。補助ビューの効果はそれを生成する教師モデルの強さに依存せず、文脈的・基礎的知識が学習を助ける形を特定したと述べた。",
+      "source_kind": "paper",
+      "source_title": "Knowledge Acquisition During Pre-training? Large Language Models Learn Better With Auxiliary Views",
+      "source_url": "https://arxiv.org/abs/2609.04180",
+      "title": "事前学習の知識獲得は反復と補助表現へのトークン配分で決まる",
+      "topics": [
+        "research",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-09-06T00:45:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "教育現場の導入判断では、無料であること、短時間で受講できること、毎月第一水曜の追加を確認し、ICT支援体制と予算を別に整える。",
+      "caveat": "無料期間、モジュール追加、「15分未満」等はGoogleの発表で独立検証していない。Badge-a-thonへの登録・出席・成果は本稿では確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-ai-educator-series",
+      "language": "en",
+      "observed_at": "2026-09-06T00:45:00+09:00",
+      "published_at": "2026-09-03T17:00:00Z",
+      "role": "watch",
+      "selection_reason": "教育向けに、短時間の無料AI研修が毎月追加され、9月19日にオンラインでデジタルバッジを取得できるイベントが開催されることで、AIリテラシー普及が進むことを示す。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleは、K-12教員向けの無料・オンデマンド研修プログラム「Google AI Educator Series」に新モジュールを追加すると発表した。毎月第一水曜日に、理解度チェック付きの新モジュールを追加する。また、2026年9月19日に、10時間の無料バーチャルイベント「Badge-a-thon」を開催し、参加者は公式デジタルバッジを取得できると説明した。研修は15分未満で受講でき、ISTE+ASCDといった専門機関と連携しているとした。",
+      "source_kind": "official",
+      "source_title": "Start the year AI-ready with the Google AI Educator Series",
+      "source_url": "https://blog.google/products-and-platforms/products/education/new-ai-educator-trainings-september-2026/",
+      "title": "Google、教育向けAI研修シリーズを毎月追加し9月19日にバッジイベントを開催",
+      "topics": [
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-06T00:45:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-09-06T00:50:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：新世代エージェント基盤と、動くオープン基盤の所有権",
+  "topics": [
+    {
+      "description": "推論、生成、予測を担う基盤モデル。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "環境を観測し、道具を使って複数段階の仕事を進めるAI。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "脆弱性、安全性、攻撃耐性、制御に関する動向。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "AIを実務へ接続する製品、API、運用手段。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "新しい方法、評価、観測結果を示す研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "再利用可能なコード、モデル、データの公開。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "メディア、音声、映像、デザイン、制作に関わるAI。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}
