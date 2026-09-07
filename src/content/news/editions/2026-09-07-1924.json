@@ -1,0 +1,231 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-09-07T19:24:23+09:00",
+  "dek": "OpenClawの長期運用改善とAWSのMCP診断を深掘り。RAG同期、Copilot移行、会話内制作、小型地球観測モデルを追う。",
+  "edition_date": "2026-09-07",
+  "edition_id": "2026-09-07-1924",
+  "edition_note": "一次情報6件を直接確認。深掘り2件、Brief/Watch 4件、5ドメイン・3 source kindsで構成し、公開操作は行っていない。",
+  "generated_at": "2026-09-07T19:24:23+09:00",
+  "items": [
+    {
+      "aoi_note": "導入時は平均応答時間だけでなく、長期セッション、履歴読み込み、ディスク圧迫時のp95遅延と操作失敗を分けて測る。",
+      "caveat": "機能説明はプロジェクト自身のリリースノート。個別修正の回帰リスクや全環境での性能改善は独立検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openclaw-2026-9-2",
+      "language": "en",
+      "observed_at": "2026-09-07T19:24:23+09:00",
+      "published_at": "2026-09-05T20:00:07Z",
+      "role": "lead",
+      "selection_reason": "エージェント基盤の品質はモデル性能だけでなく、履歴増大時に制御面が固まらないことでも決まる。",
+      "source_domain": "github.com",
+      "source_fact": "OpenClaw 2026.9.2は、長い会話履歴やディスク処理中でもチャット、ダッシュボード、セッション操作の応答性を保つ改善を含む。ダッシュボードの直接参照、コールドロード削減、Gatewayイベントループ外での履歴読み取りを導入した。",
+      "source_kind": "release",
+      "source_title": "openclaw 2026.9.2",
+      "source_url": "https://github.com/openclaw/openclaw/releases/tag/v2026.9.2",
+      "title": "OpenClaw 2026.9.2、長い履歴を抱えた対話の応答性と運用耐性を改善",
+      "topics": [
+        "agents",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-07T19:24:23+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "本番利用では、読み取り権限、対象アカウント、取得期間、表示可能な構成情報、実行系ツールとの分離を先に固定する。",
+      "caveat": "能力とトークン削減効果はAWSの説明で独立検証していない。MCP Server自体の稼働リージョンは米国東部と欧州フランクフルトで、対象サービスへの権限設計が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-mcp-server-serverless",
+      "language": "en",
+      "observed_at": "2026-09-07T19:24:23+09:00",
+      "published_at": "2026-09-04T16:31:00Z",
+      "role": "major",
+      "selection_reason": "道具利用エージェントが単一サービスのログ要約から、依存関係を含む運用診断へ広がった。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWS MCP ServerはLambda向けserverless診断を追加した。API Gateway、EventBridge、S3、DynamoDB、SNS、SQS、Step Functionsとの接続を調べ、7日間の基準との差、反復エラー、構成、変更履歴、遅延を一度に分析できるとする。",
+      "source_kind": "official",
+      "source_title": "AWS MCP Server adds a serverless capability for AWS Lambda functions",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/09/aws-mcp-server-serverless/",
+      "title": "AWS MCP Server、Lambda障害を接続資源まで横断診断",
+      "topics": [
+        "agents",
+        "tools",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-09-07T19:24:23+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "同期成功だけでなく、最終反映時刻、削除伝播、失敗時の古い索引利用、再試行を監視する。",
+      "caveat": "発表は同期機能の提供を示すもので、情報の正確性や即時反映を保証しない。利用可能リージョンと料金は個別確認が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "bedrock-kb-sync-scheduling",
+      "language": "en",
+      "observed_at": "2026-09-07T19:24:23+09:00",
+      "published_at": "2026-09-04T21:01:00Z",
+      "role": "brief",
+      "selection_reason": "RAGの鮮度維持が個別スクリプトから管理機能へ移り、運用負担を減らせる。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "Amazon Bedrock Managed Knowledge Baseは、ネイティブのデータソースコネクターに日次、週次、月次の自動同期スケジュールを追加した。Confluence、SharePoint、Amazon S3などの更新頻度に合わせられる。",
+      "source_kind": "official",
+      "source_title": "Amazon Bedrock Managed Knowledge Base now supports automatic sync scheduling for data source connectors",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/09/amazon-bedrock-managed-knowledge-base-automatic-sync-scheduling-data-source-connectors/",
+      "title": "Bedrock Knowledge Bases、データソースの定期同期を標準機能に",
+      "topics": [
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-09-07T19:24:23+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "モデル名を設定、プロンプト、評価台帳から検索し、代替モデルで品質・費用・権限の回帰試験を行う。",
+      "caveat": "管理者のモデルポリシーによって代替モデルが利用者に見えない場合がある。廃止対象と日程は今後更新される可能性がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-model-deprecation-oct2",
+      "language": "en",
+      "observed_at": "2026-09-07T19:24:23+09:00",
+      "published_at": "2026-09-03T19:40:14Z",
+      "role": "brief",
+      "selection_reason": "モデル選択を固定したエージェントや評価基準には、期限付きの移行対応が必要になる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはCopilotの全体験でGemini 3.5 Flash、Gemini 3.6 Flash、Kimi K2.7 Code、Claude Opus 4.7を2026年10月2日に廃止し、代替モデルへの移行を求めると告知した。",
+      "source_kind": "release",
+      "source_title": "Upcoming deprecation of selected GitHub Copilot models",
+      "source_url": "https://github.blog/changelog/2026-09-03-upcoming-deprecation-of-selected-github-copilot-models/",
+      "title": "GitHub Copilot、旧モデル群を10月2日に廃止へ",
+      "topics": [
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-07T19:24:23+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "会話文脈の利用範囲、Creative Cloud資産の検索権限、外部共有前のレビュー、生成物の権利表示を分離する。",
+      "caveat": "提供内容はAdobe自身の発表。追加機能にはAdobeアカウントや生成AI機能の条件があり、Slack内の情報境界は組織設定に依存する。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "adobe-for-slack",
+      "language": "en",
+      "observed_at": "2026-09-07T19:24:23+09:00",
+      "published_at": "2026-09-02T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "生成AIの入口が専用アプリから、仕事の会話と承認が存在する共同作業面へ移っている。",
+      "source_domain": "blog.adobe.com",
+      "source_fact": "Adobe for SlackはFirefly、Photoshop、Premiere、Acrobatなど70超の制作・文書ツールをSlackbotから呼び出し、会話、ファイル、Canvasの文脈を使って画像、動画、文書を作成・編集できる。Business+とEnterprise+向けに提供された。",
+      "source_kind": "official",
+      "source_title": "Introducing Adobe for Slack: Turn your ideas and conversations into high-quality content",
+      "source_url": "https://blog.adobe.com/en/publish/2026/09/02/introducing-adobe-for-slack",
+      "title": "Adobeの70超ツール、Slackの会話文脈から制作へ接続",
+      "topics": [
+        "creative-ai",
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-09-07T19:24:23+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "採用判断ではパラメータ数だけでなく、センサー欠測、地域外転移、入力解像度、推論電力、比較条件を揃える。",
+      "caveat": "arXiv v1の著者報告で未査読。比較値は論文記載の特定課題と設定に限られ、実運用での精度や計算効率は未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "meox-compact-earth-observation-moe",
+      "language": "en",
+      "observed_at": "2026-09-07T19:24:23+09:00",
+      "published_at": "2026-09-04T16:59:36Z",
+      "role": "watch",
+      "selection_reason": "大規模化だけでなく、欠測や異種センサーを小さなモデルで扱う設計がエッジ観測の選択肢になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "MEOXは総約311.5万パラメータのマルチモーダルMasked Autoencoderで、センサー別アダプター、妥当性信号、疎な専門家層を使う。122.8万件のMMEarth64で事前学習し、6つのGEO-Bench課題で凍結転移を評価したと報告する。",
+      "source_kind": "paper",
+      "source_title": "MEOX: Compact Multimodal Mixture-of-Experts for Earth Observation",
+      "source_url": "https://arxiv.org/abs/2609.05351v1",
+      "title": "300万規模の小型MoE、複数センサーの地球観測を統合",
+      "topics": [
+        "research",
+        "models",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-07T19:24:23+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-09-07T19:24:23+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：止まらないエージェント基盤と、運用へ入るMCP",
+  "topics": [
+    {
+      "description": "環境を観測し、道具を使って複数段階の仕事を進めるAI。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "推論、生成、予測を担う基盤モデル。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "AIを実務へ接続する製品、API、運用手段。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "新しい方法、評価、観測結果を示す研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "脆弱性、安全性、攻撃耐性、制御に関する動向。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "再利用可能なコード、モデル、データの公開。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "画像、動画、音声、デザイン制作を支援するAI。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}

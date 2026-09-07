@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "adobe-for-slack",
+      "aws-mcp-server-serverless",
+      "bedrock-kb-sync-scheduling",
+      "github-copilot-model-deprecation-oct2",
+      "meox-compact-earth-observation-moe",
+      "openclaw-2026-9-2"
+    ],
+    "edition_date": "2026-09-07",
+    "edition_id": "2026-09-07-1924",
+    "edition_url": "https://aoifuture.com/news/2026-09-07-1924/",
+    "event_id": "aoi-news-2026-09-07-1924-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-09-07T19:24:23+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "OpenClawの長期運用改善とAWSのMCP診断を深掘り。RAG同期、Copilot移行、会話内制作、小型地球観測モデルを追う。",
+    "title": "AOIFUTURE News：止まらないエージェント基盤と、運用へ入るMCP"
+  }
+]
