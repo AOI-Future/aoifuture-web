@@ -1,0 +1,239 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-09-08T14:21:27+09:00",
+  "dek": "ベンガルの土地台帳と危機相談の技能評価を深掘り。AI配備マニフェスト、全二重音声データ、LangChain修正、GPUバッチ推論を追う。",
+  "edition_date": "2026-09-08",
+  "edition_id": "2026-09-08-1421",
+  "edition_note": "一次資料6件を直接確認。深掘り2件、Brief/Watch 4件、4ドメイン・4 source kindsで構成し、公開操作は行っていない。",
+  "generated_at": "2026-09-08T14:21:27+09:00",
+  "items": [
+    {
+      "aoi_note": "導入前に、対象地域の実帳票、固有記号、数値計算、根拠箇所の照合を別々に試験する。",
+      "caveat": "arXiv v1の著者報告で未査読。ベンチマークの外部再現や実務システムでの性能は独立検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "khatian-doc-bengali-land-records",
+      "language": "en",
+      "observed_at": "2026-09-08T14:21:27+09:00",
+      "published_at": "2026-09-03T09:46:41Z",
+      "role": "lead",
+      "selection_reason": "AIが扱いやすい文書だけで評価すると、現実の権利情報を取りこぼす問題を可視化する。",
+      "source_domain": "arxiv.org",
+      "source_fact": "KhatianDocは、バングラデシュの権利記録に使われる独自の16進分数表記を含む手書きRS Khatianから、人手検証済みの4課題ベンチマークを構築した。著者らは、この記号体系が主要なOCRやトークナイザーで未対応だと説明する。",
+      "source_kind": "paper",
+      "source_title": "KhatianDoc: A Human-Verified Benchmark Diagnosing Multimodal LLM Failure on Bengali Legal Land Records",
+      "source_url": "https://arxiv.org/abs/2609.03597v1",
+      "title": "土地台帳を読めないAI：ベンガル固有の分数表記でマルチモーダルLLMを検証",
+      "topics": [
+        "research",
+        "models",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-09-08T14:21:27+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "生成マニフェストは提案として扱い、最小権限、対象Notebook、差分、ロールバックを人間が確認する。",
+      "caveat": "機能と安全既定値はAWS自身の説明。生成物の正確性や既存環境との互換性は個別検証が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "sagemaker-cicd-ai-manifest",
+      "language": "en",
+      "observed_at": "2026-09-08T14:21:27+09:00",
+      "published_at": "2026-09-02T00:00:00Z",
+      "role": "major",
+      "selection_reason": "AI生成を本番変更へ直結させず、dry-runと環境昇格の境界を製品機能として持ち込んだ。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "SageMaker Unified Studio CI/CDは、プロジェクトの接続、ストレージ、ワークフローを調べて配備マニフェストを生成するエージェント技能と、Notebookの環境間昇格を追加した。dry-runでS3接続、IAM権限、Notebook数を検証できる。",
+      "source_kind": "official",
+      "source_title": "Amazon SageMaker Unified Studio CI/CD adds notebook promotion and AI-assisted manifest generation",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/09/sagemaker-cicd-notebook-ai-manifest/",
+      "title": "AIが配備マニフェストを下書きし、Notebookを環境間で昇格",
+      "topics": [
+        "agents",
+        "tools",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-09-08T14:21:27+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "支援配分に使う場合は、誤判定、相談員への心理的影響、組織ごとの差を検証する。",
+      "caveat": "arXiv v1の著者報告で、EMNLP 2026発表予定。臨床効果や他組織への一般化は確認されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "crisis-counselor-skill-development",
+      "language": "en",
+      "observed_at": "2026-09-08T14:21:27+09:00",
+      "published_at": "2026-09-03T18:14:04Z",
+      "role": "brief",
+      "selection_reason": "平均評価だけでなく、失敗局面からどう回復するかを長期学習の信号として捉える。",
+      "source_domain": "arxiv.org",
+      "source_fact": "本研究は、メンタルヘルス危機相談の会話が悪化した局面への対応から、相談員が長期的に会話技能を伸ばすかを予測する課題を扱い、支援が必要な相談員を早期に見つける方法を検討した。",
+      "source_kind": "paper",
+      "source_title": "Adapting from Downturns: Prediction of Long-Term Conversational-Skill Development in Mental-Health Crisis Counselors",
+      "source_url": "https://arxiv.org/abs/2609.04350v1",
+      "title": "会話が悪化した局面から、危機相談員の長期的な技能向上を予測",
+      "topics": [
+        "research",
+        "agents",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-09-08T14:21:27+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "利用前にデータカード、ライセンス、話者分布、同時発話率を確認し、実際の割り込み処理で評価する。",
+      "caveat": "公開者自身の紹介であり、収録同意、話者分布、音声品質、ライセンス適合性は利用者がデータカードで再確認する必要がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "open-yap-1k",
+      "language": "en",
+      "observed_at": "2026-09-08T14:21:27+09:00",
+      "published_at": "2026-09-03T23:58:59Z",
+      "role": "brief",
+      "selection_reason": "音声エージェントの評価を、交互発話だけでなく同時発話や割り込みまで広げる材料になる。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Open Yap 1Kは、話者別チャンネルを持つ英語の自然な二者会話1,000時間を公開し、商用利用可能なデータとして全二重音声モデルや割り込み処理の研究用途を提示した。",
+      "source_kind": "original-reporting",
+      "source_title": "Open Yap 1K: 1,000 hours of full-duplex natural conversation, free for commercial use",
+      "source_url": "https://huggingface.co/blog/TheAgenticDataCompany/open-yap-1k",
+      "title": "全二重の自然会話1,000時間、音声エージェント向けデータを公開",
+      "topics": [
+        "creative-ai",
+        "models",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-08T14:21:27+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "更新前後で入力の不変性、非同期ツールの完了順、再試行時の同一性を回帰試験する。",
+      "caveat": "リリースノートに基づく要約。影響範囲や回帰の有無は利用中の統合とテストで確認が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "langchain-core-1-6-2",
+      "language": "en",
+      "observed_at": "2026-09-08T14:21:27+09:00",
+      "published_at": "2026-09-04T21:29:42Z",
+      "role": "brief",
+      "selection_reason": "エージェント実行では、入力オブジェクトの暗黙変更が再試行や監査の再現性を壊すため、小さな修正でも運用上重要になる。",
+      "source_domain": "github.com",
+      "source_fact": "LangChain Core 1.6.2はOpenAI連携の非同期ツール対応を追加し、Google GenAIとBedrock Converseの標準コンテンツ処理で入力を変異させる問題を修正した。依存ライブラリの更新も含む。",
+      "source_kind": "release",
+      "source_title": "langchain-core==1.6.2",
+      "source_url": "https://github.com/langchain-ai/langchain/releases/tag/langchain-core%3D%3D1.6.2",
+      "title": "LangChain Core 1.6.2、非同期ツール対応と入力変異の修正",
+      "topics": [
+        "agents",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-08T14:21:27+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "オンライン推論と分け、完了時間、GPU使用率、転送費、失敗時の再実行単位を比較する。",
+      "caveat": "対応リージョンは限定され、性能と費用はモデル、バッチサイズ、入出力転送を含めて測る必要がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "sagemaker-batch-transform-g6e",
+      "language": "en",
+      "observed_at": "2026-09-08T14:21:27+09:00",
+      "published_at": "2026-09-04T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "常時エンドポイントを持たず、大量生成や評価をバッチへ分離する選択肢が増える。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "Amazon SageMaker AI Batch Transformは、最大8基のNVIDIA L40S GPUを備えるG6eインスタンスを追加し、LLMや画像・動画・音声の拡散モデルを含むGPU負荷の高いオフライン推論を対象にした。",
+      "source_kind": "official",
+      "source_title": "Amazon SageMaker AI Batch Transform now supports G6e instances",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/09/sagemaker-batch-transform-g6e-instances/",
+      "title": "SageMaker Batch Transform、L40S搭載G6eで生成AIのオフライン推論に対応",
+      "topics": [
+        "models",
+        "tools",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-09-08T14:21:27+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-09-08T14:21:27+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：読めない現実を測るAIと、配備を支える運用道具",
+  "topics": [
+    {
+      "description": "環境を観測し、道具を使って複数段階の仕事を進めるAI。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "推論、生成、予測を担う基盤モデル。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "AIを実務へ接続する製品、API、運用手段。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "新しい方法、評価、観測結果を示す研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "脆弱性、安全性、攻撃耐性、制御に関する動向。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "AIの利用条件、制度、社会的影響に関する動向。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・制度"
+    },
+    {
+      "description": "再利用可能なコード、モデル、データの公開。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "画像、動画、音声、デザイン制作を支援するAI。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}

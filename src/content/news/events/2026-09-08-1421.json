@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "crisis-counselor-skill-development",
+      "khatian-doc-bengali-land-records",
+      "langchain-core-1-6-2",
+      "open-yap-1k",
+      "sagemaker-batch-transform-g6e",
+      "sagemaker-cicd-ai-manifest"
+    ],
+    "edition_date": "2026-09-08",
+    "edition_id": "2026-09-08-1421",
+    "edition_url": "https://aoifuture.com/news/2026-09-08-1421/",
+    "event_id": "aoi-news-2026-09-08-1421-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-09-08T14:21:27+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "ベンガルの土地台帳と危機相談の技能評価を深掘り。AI配備マニフェスト、全二重音声データ、LangChain修正、GPUバッチ推論を追う。",
+    "title": "AOIFUTURE News：読めない現実を測るAIと、配備を支える運用道具"
+  }
+]
