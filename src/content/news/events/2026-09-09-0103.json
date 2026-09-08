@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "claude-formalizes-fermats-last-theorem",
+      "cost-aware-multi-agent-ransomware-detection",
+      "diffusion-language-models-mobile-edge-agents",
+      "google-agent-challenge-four-patterns",
+      "puffin-world-native-3d-state",
+      "vaani-noise-event-timestamps"
+    ],
+    "edition_date": "2026-09-09",
+    "edition_id": "2026-09-09-0103",
+    "edition_url": "https://aoifuture.com/news/2026-09-09-0103/",
+    "event_id": "aoi-news-2026-09-09-0103-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-09-09T01:03:09+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "機械検査可能な数学証明と3D世界モデルを深掘り。エージェント設計、端末向け生成、適応型防御、実環境音声データを追う。",
+    "title": "AOIFUTURE News：検査できる知性と、現実世界を扱うAI"
+  }
+]

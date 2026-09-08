@@ -1,0 +1,233 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-09-09T01:03:09+09:00",
+  "dek": "機械検査可能な数学証明と3D世界モデルを深掘り。エージェント設計、端末向け生成、適応型防御、実環境音声データを追う。",
+  "edition_date": "2026-09-09",
+  "edition_id": "2026-09-09-0103",
+  "edition_note": "一次資料6件を直接確認。深掘り2件、Brief/Watch 4件、4ドメイン・3 source kindsで構成し、公開操作は行っていない。",
+  "generated_at": "2026-09-09T01:03:09+09:00",
+  "items": [
+    {
+      "aoi_note": "大規模な自律作業では、途中成果の依存関係と機械検査結果を別々に保存する。",
+      "caveat": "Anthropic自身の報告。Leanによる型検査は形式化された命題を検証するが、作業効率や他分野への一般化を保証しない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "claude-formalizes-fermats-last-theorem",
+      "language": "en",
+      "observed_at": "2026-09-09T01:03:09+09:00",
+      "published_at": "2026-09-04T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "長時間のエージェント協働を、自然言語の自己申告ではなく機械検査可能な証明へ着地させた事例。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "Anthropicは、Claudeの複数エージェントが11日間でフェルマーの最終定理をLeanに形式化し、最終証明で約29,500の中間定理を使ったと報告した。",
+      "source_kind": "official",
+      "source_title": "Formalizing Fermat's Last Theorem",
+      "source_url": "https://www.anthropic.com/news/formalizing-fermats-last-theorem",
+      "title": "Claudeがフェルマーの最終定理をLeanで形式化",
+      "topics": [
+        "agents",
+        "research",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-09T01:03:09+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "カメラ軌跡が大きい場面で、水平維持、奥行き整合性、再構成誤差を分けて評価する。",
+      "caveat": "著者による紹介記事。提示例とベンチマークは独立再現しておらず、実環境の物理的一貫性を保証しない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "puffin-world-native-3d-state",
+      "language": "en",
+      "observed_at": "2026-09-09T01:03:09+09:00",
+      "published_at": "2026-09-02T13:12:13Z",
+      "role": "major",
+      "selection_reason": "見た目の生成だけでなく、座標系と幾何を保持する設計が映像制作やロボット知覚の接点になる。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Puffin-Worldはカメラ、奥行き、外観をネイティブな状態として共同モデル化し、単一画像やテキストからカメラ制御付きの複数視点と3D再構成を生成する研究モデルとして紹介された。",
+      "source_kind": "original-reporting",
+      "source_title": "Puffin-World: Scaling a Unified Multimodal Model with Native 3D World States",
+      "source_url": "https://huggingface.co/blog/KangLiao/puffin-world",
+      "title": "カメラ・奥行き・外観を一体で扱う3D世界モデル",
+      "topics": [
+        "models",
+        "research",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-09-09T01:03:09+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "自分のワークフローでは、フォールバック時にも同じ受入テストを通す。",
+      "caveat": "コンテスト提出物をGoogleが振り返った定性的観察で、統制された比較実験ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-agent-challenge-four-patterns",
+      "language": "en",
+      "observed_at": "2026-09-09T01:03:09+09:00",
+      "published_at": "2026-09-02T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "モデルの大きさより、連携、並行性、劣化防止、費用制御の設計が結果を左右した観察として使える。",
+      "source_domain": "developers.googleblog.com",
+      "source_fact": "GoogleはAI Agents Challengeの上位提出物に、双方向MCP、イベント駆動並行処理、同一品質基準のフォールバック、段階的ルーティングという4パターンが繰り返し現れたと報告した。",
+      "source_kind": "official",
+      "source_title": "4 engineering patterns behind the strongest AI Agents Challenge submissions",
+      "source_url": "https://developers.googleblog.com/4-engineering-patterns-behind-the-strongest-ai-agents-challenge-submissions/",
+      "title": "強いAIエージェントに共通した4つの設計パターン",
+      "topics": [
+        "agents",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-09T01:03:09+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "同じ端末とタスクで、初動時間、完了時間、消費電力、品質を自己回帰モデルと比較する。",
+      "caveat": "arXiv v1のサーベイで未査読。方式の可能性を整理したもので、特定端末での優位性を実証した製品評価ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "diffusion-language-models-mobile-edge-agents",
+      "language": "en",
+      "observed_at": "2026-09-09T01:03:09+09:00",
+      "published_at": "2026-09-04T06:16:49Z",
+      "role": "brief",
+      "selection_reason": "逐次デコード前提ではない生成方式が、端末内エージェントの遅延設計を再検討する材料になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "このサーベイは、拡散言語モデルが複数の不確実なトークンを並行更新し、双方向文脈を使うことで、エッジ上のエージェントに品質と遅延の別の調整余地を与えると整理した。",
+      "source_kind": "paper",
+      "source_title": "Diffusion Language Models for Mobile Edge Agentic AI: Foundations, Applications, and Challenges",
+      "source_url": "https://arxiv.org/abs/2609.04778v1",
+      "title": "拡散言語モデルをモバイル・エッジのエージェントへ",
+      "topics": [
+        "models",
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-09-09T01:03:09+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "未知系統、難読化、誤検知コストを含む外部データで再評価する。",
+      "caveat": "arXiv v1の著者提案で未査読。実運用ネットワークでの検知率や回避耐性は独立検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cost-aware-multi-agent-ransomware-detection",
+      "language": "en",
+      "observed_at": "2026-09-09T01:03:09+09:00",
+      "published_at": "2026-09-04T07:17:09Z",
+      "role": "brief",
+      "selection_reason": "すべての解析を常時実行せず、疑わしさに応じて高価な検査へ進む設計の具体例になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、静的・動的などの専門解析を階層化し、必要なモダリティだけを選ぶことで計算量と遅延を抑えるランサムウェア検知・系統分類方式を提案した。",
+      "source_kind": "paper",
+      "source_title": "Cost-Aware Hierarchical Multi-Agent Ransomware Detection and Family Attribution",
+      "source_url": "https://arxiv.org/abs/2609.04820v1",
+      "title": "必要な解析だけを呼ぶ多段ランサムウェア検知",
+      "topics": [
+        "security",
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-09-09T01:03:09+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "利用時は検証済み約22時間と未検証約100時間を分離し、言語・地域・雑音種別ごとの偏りを確認する。",
+      "caveat": "公開者の記事に基づく。未検証区間が大半を占め、ライセンス、話者同意、注釈一致率の詳細はデータカードで再確認が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "vaani-noise-event-timestamps",
+      "language": "en",
+      "observed_at": "2026-09-09T01:03:09+09:00",
+      "published_at": "2026-09-07T07:59:04Z",
+      "role": "watch",
+      "selection_reason": "静かな収録だけでなく、交通や生活音が重なる音声AIを評価する一次データになる。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Vaani Noise Event Timestamp Datasetは、58のインド言語、122時間超の現場音声に雑音イベントをミリ秒単位で付与し、約22時間を複数注釈者の一致で検証済みとして公開した。",
+      "source_kind": "original-reporting",
+      "source_title": "A Real-World Dataset for Noise-Robust Speech AI: 100+ Timestamped Noise Types Across 58 Indian Languages",
+      "source_url": "https://huggingface.co/blog/ARTPARK-IISc/a-real-world-dataset-for-noise-robust-speech-ai",
+      "title": "58言語の実環境音声に雑音イベントを時刻注釈",
+      "topics": [
+        "creative-ai",
+        "models",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-09T01:03:09+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-09-09T01:03:09+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：検査できる知性と、現実世界を扱うAI",
+  "topics": [
+    {
+      "description": "環境を観測し、道具を使って複数段階の仕事を進めるAI。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "推論、生成、予測を担う基盤モデル。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "AIを実務へ接続する製品、API、運用手段。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "新しい方法、評価、観測結果を示す研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "脆弱性、安全性、攻撃耐性、制御に関する動向。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "再利用可能なコード、モデル、データの公開。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "画像、動画、音声、デザイン制作を支援するAI。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}
