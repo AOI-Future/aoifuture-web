@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "agent-swarm-cheating",
+      "agentic-sdlc-economics",
+      "alphagenome-atlas",
+      "ataccama-apache-ossie",
+      "substrate-aware-agents",
+      "supabase-cli-path-containment"
+    ],
+    "edition_date": "2026-09-10",
+    "edition_id": "2026-09-10-0050",
+    "edition_url": "https://aoifuture.com/news/2026-09-10-0050/",
+    "event_id": "aoi-news-2026-09-10-0050-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-09-10T00:50:31+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "ゲノム全変異の予測地図と実行条件を理解するエージェントを深掘り。不正の伝播、開発評価、パス境界、データ品質を追う。",
+    "title": "AOIFUTURE News：制約を伝えるAIと、根拠を持つデータ"
+  }
+]
