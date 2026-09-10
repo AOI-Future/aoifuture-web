@@ -1,17 +1,17 @@
 # aoifuture-web — AGENTS.md
 
-Astro + React + Tailwind v4 site for AOI Future. This repo is the **reference
-implementation** of **AOI Future Design System v2.0.0 — 蒼硝子 (Liquid Glass)**.
-Apply the DS here most faithfully; other repos derive from it.
+Astro + React + Tailwind v4 site for AOI Future. This repo is a Web consumer and
+reference implementation of **AOI Future Design System v2.1**. The canonical
+source is `AOI-Future/aoi-design-system`; product-specific adoption is recorded
+in `DESIGN_SYSTEM.md`. Other repos must not derive rules directly from this site.
 
 ## Design System v2 — 蒼硝子 (Liquid Glass)
 
-The full, framework-agnostic, machine-readable spec (`:root` tokens, `.aoi-glass`
-5-layer CSS, variants, `applyTint()`, concentric geometry, 3-zone typography,
-floating-bar JS, a11y `@media`, v1→v2 diff) is the DS bundle `AGENTS.md`. Treat
-it as canonical. Key invariants (do not violate):
+Use the canonical `docs/FOUNDATIONS.md`, `docs/WEB.md`, and versioned token file.
+This repository's CSS is a product implementation, not the canonical source.
+Key invariants:
 
-1. **Reflectivity is system-owned.** `--g-specular` readability ceiling = **0.32**
+1. **Reflectivity is AOI Web token-owned.** `--g-specular` readability ceiling = **0.32**
    (glow ON). Default 0.20. Reduce = 0.06. Never exceed.
 2. **Glass = floating/controls only.** Never lay glass under wide body surfaces.
    No glass-on-glass.
@@ -21,7 +21,7 @@ it as canonical. Key invariants (do not violate):
 5. **3 typography zones:** no <12px text in the specular band (top ~28%); ≥12px
    from each edge (dark-edge margin).
 6. **Contrast ≥ 4.5:1 / min 12px chrome, 14px JP body / tap 44px.**
-7. **Motion 200–500ms, linear / ease-in-out only.** No bounce/spring.
+7. **AOI custom motion is 200–500ms, linear / ease-in-out.** Do not override native system interaction rules.
 8. **Reduce Transparency / Motion follow OS settings.** Never disable.
 9. **No emoji.** Use bracketed ASCII (`[ON]` `[×]`) + monospace glyphs (`>` `<` `·` `|`).
 10. **Pure black `#000000` ground.** Brand = cyan, layered by alpha.
@@ -35,7 +35,7 @@ it as canonical. Key invariants (do not violate):
 Both surfaces share the same 蒼硝子 structure (geometry, type roles, motion,
 concentric radius); only the tint/palette differs.
 
-## Reference-implementation map (this repo)
+## Web implementation map (this repo)
 
 | Concern | Location |
 |---|---|
@@ -73,5 +73,5 @@ these are reusable building blocks; existing pages are untouched.
 - **Non-destructive first.** `npm run build` must pass; if not, shrink the change.
   v1 `cyber-*` and `.glass` are the alias/compat layer — keep them.
 - Runtime: project-local Node only. No global installs.
-- Assets (icons/logo/fonts) live in the DS bundle; import as needed, don't invent
-  token names.
+- Use the canonical token file and licensed product assets. Do not copy the
+  unlicensed source-bundle font or the dynamic-eval reference runtime.
