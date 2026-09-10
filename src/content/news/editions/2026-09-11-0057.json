@@ -1,0 +1,239 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-09-11T00:57:24+09:00",
+  "dek": "参照を保つ画像編集と企業エージェント評価を深掘り。安全規制、トレース監査、隔離作業、時系列モデルを追う。",
+  "edition_date": "2026-09-11",
+  "edition_id": "2026-09-11-0057",
+  "edition_note": "一次資料6件を直接確認。深掘り2件、Brief/Watch 4件、4ドメイン・4 source kindsで構成し、公開操作は行っていない。",
+  "generated_at": "2026-09-11T00:57:24+09:00",
+  "items": [
+    {
+      "aoi_note": "参照画像、部分編集、速度を分けて自分の制作素材で比較し、共有前に権利と本人同意を確認する。",
+      "caveat": "品質と最大50%の遅延短縮は提供者評価で、具体的な入力・地域・負荷条件によって差がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-images",
+      "language": "en",
+      "observed_at": "2026-09-11T00:57:24+09:00",
+      "published_at": "2026-09-08T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "画像制作で、生成よりも「同じ被写体を保ったまま修正する」反復工程を短くできる。",
+      "source_domain": "openai.com",
+      "source_fact": "ChatGPT Images 2.5は参照画像の主体保持、複数ターン編集、生成速度を改善し、APIにはFlareとSunburstの2モデルが追加された。",
+      "source_kind": "official",
+      "source_title": "Introducing ChatGPT Images 2.5 | OpenAI",
+      "source_url": "https://openai.com/index/introducing-chatgpt-images-2-5/",
+      "title": "ChatGPT Images 2.5、参照を保つ反復編集へ",
+      "topics": [
+        "creative-ai",
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-11T00:57:24+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "合成環境の得点を本番適格性と同一視せず、実運用では権限逸脱、監査証跡、失敗回復を別に試す。",
+      "caveat": "arXiv v1の未査読研究で、23社の生成品質や33問の比較が実企業の例外・権限・データ汚染を十分再現するかは未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "era-eon-benchmark",
+      "language": "en",
+      "observed_at": "2026-09-11T00:57:24+09:00",
+      "published_at": "2026-09-09T08:06:46Z",
+      "role": "major",
+      "selection_reason": "顧客の本番データを使わずに、複数システムを横断するエージェントを再現可能な正解で評価する道具になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、架空企業の一貫したデータ、業務アプリのシミュレーター、計算済み正解を備えた企業エージェント評価基盤を提示し、9モデルを33問で比較した。",
+      "source_kind": "paper",
+      "source_title": "The Era by Eon Benchmark: A Generated Enterprise Estate with Exact Ground Truth for Benchmarking LLM Agents",
+      "source_url": "https://arxiv.org/abs/2609.09853v1",
+      "title": "架空企業に正解を埋め込み、業務エージェントを測る",
+      "topics": [
+        "agents",
+        "research",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-11T00:57:24+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "支持表明と成立済み規制を混同せず、対象法案の原文と施行状況を別途確認する。",
+      "caveat": "企業による政策提言であり、法案の成立・施行や実効性を示すものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-policy-window",
+      "language": "en",
+      "observed_at": "2026-09-11T00:57:24+09:00",
+      "published_at": "2026-09-09T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "自主的な安全原則だけでなく、独立評価者や監査人の資格まで制度設計の論点になっている。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは能力ベースの連邦AI安全規制を求め、独立評価、監査人基準、青少年保護、バイオ脅威対策に関するカリフォルニア州4法案への支持を表明した。",
+      "source_kind": "official",
+      "source_title": "The AI policy window is open. We need to act. | OpenAI",
+      "source_url": "https://openai.com/index/ai-policy-window/",
+      "title": "OpenAI、能力ベースの安全規制と独立評価を提言",
+      "topics": [
+        "policy",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-09-11T00:57:24+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "削除APIはテナント境界と上限を確認し、既存Factory設定は破壊的変更を移行してから更新する。",
+      "caveat": "破壊的なトレース削除やFactoryの破壊的変更を含むため、導入には移行試験と権限確認が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "mastra-1-65",
+      "language": "en",
+      "observed_at": "2026-09-11T00:57:24+09:00",
+      "published_at": "2026-09-09T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "エージェントの実行履歴を検索・削除・可視化する際に、境界と識別子をAPI契約として持てる。",
+      "source_domain": "github.com",
+      "source_fact": "Mastra core 1.65.0は、時間範囲と再帰条件を制約した高度なトレース照会、テナント単位のトレース削除、制御フローブロックの安定IDとメタデータを追加した。",
+      "source_kind": "release",
+      "source_title": "September 9, 2026 · mastra-ai/mastra",
+      "source_url": "https://github.com/mastra-ai/mastra/releases/tag/%40mastra%2Fcore%401.65.0",
+      "title": "Mastra、トレース照会とワークフロー識別を強化",
+      "topics": [
+        "agents",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-11T00:57:24+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "更新前に隔離環境でresume、plugin、approvalの回帰試験を行い、既存作業ツリーを直接使わない。",
+      "caveat": "大規模な変更を含むリリースで、既存設定・プラグイン・自動承認との互換性は環境ごとの回帰試験が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "codex-0-154",
+      "language": "en",
+      "observed_at": "2026-09-11T00:57:24+09:00",
+      "published_at": "2026-09-09T22:37:29Z",
+      "role": "brief",
+      "selection_reason": "並行作業の分離と、作業ディレクトリを信頼する前の実行境界が同じリリースで強化された。",
+      "source_domain": "github.com",
+      "source_fact": "Codex 0.154.0は隔離worktree作成、作業中の質問応答、プラグイン更新後のツール再読込を追加し、workspace信頼前の補助実行とmacOS端末入力注入を防ぐ修正を含む。",
+      "source_kind": "release",
+      "source_title": "rust-v0.154.0 · openai/codex",
+      "source_url": "https://github.com/openai/codex/releases/tag/rust-v0.154.0",
+      "title": "Codex 0.154.0、隔離作業と信頼前実行を強化",
+      "topics": [
+        "agents",
+        "tools",
+        "open-source",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-09-11T00:57:24+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "自社時系列の季節性・欠損・予測幅で基準モデルと比較し、ライセンスと学習データ文書も確認する。",
+      "caveat": "順位はIBM著者による2026年9月8日時点のGIFT-Eval比較で、実データの分布ずれ、欠損、運用コストは利用者側で検証が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "granite-timeseries-r2",
+      "language": "en",
+      "observed_at": "2026-09-11T00:57:24+09:00",
+      "published_at": "2026-09-09T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "巨大な汎用モデル以外にも、需要・設備・運用時系列をゼロショットで予測する小型の専用基盤モデルという選択肢が増える。",
+      "source_domain": "huggingface.co",
+      "source_fact": "IBMは約3億8500万パラメータ、8192ステップ文脈、99分位予測に対応するGranite Time Series PatchTST-FM-r2を公開し、重み・実装・評価再現資材を提供した。",
+      "source_kind": "official",
+      "source_title": "IBM releases SOTA Granite Time Series PatchTST-FM-r2 model with commercial-friendly license",
+      "source_url": "https://huggingface.co/blog/ibm-research/ibm-releases-sota-granite-time-series",
+      "title": "IBM、3.85億パラメータの時系列基盤モデルを公開",
+      "topics": [
+        "models",
+        "research",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-11T00:57:24+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-09-11T00:57:24+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：編集の反復、評価の正解、実行の境界",
+  "topics": [
+    {
+      "description": "画像、音声、映像、デザインの制作を支えるAI。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    },
+    {
+      "description": "推論、生成、予測を担う基盤モデル。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "AIを実務へ接続する製品、API、運用手段。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "環境を観測し、道具を使って複数段階の仕事を進めるAI。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "新しい方法、評価、観測結果を示す研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "AIの開発・利用を形づくる制度、標準、公共判断。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策"
+    },
+    {
+      "description": "脆弱性、安全性、攻撃耐性、制御に関する動向。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "再利用可能なコード、モデル、データの公開。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    }
+  ]
+}

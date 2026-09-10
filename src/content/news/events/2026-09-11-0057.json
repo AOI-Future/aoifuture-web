@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "codex-0-154",
+      "era-eon-benchmark",
+      "granite-timeseries-r2",
+      "mastra-1-65",
+      "openai-images",
+      "openai-policy-window"
+    ],
+    "edition_date": "2026-09-11",
+    "edition_id": "2026-09-11-0057",
+    "edition_url": "https://aoifuture.com/news/2026-09-11-0057/",
+    "event_id": "aoi-news-2026-09-11-0057-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-09-11T00:57:24+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "参照を保つ画像編集と企業エージェント評価を深掘り。安全規制、トレース監査、隔離作業、時系列モデルを追う。",
+    "title": "AOIFUTURE News：編集の反復、評価の正解、実行の境界"
+  }
+]
