@@ -1,0 +1,238 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-09-12T01:23:42+09:00",
+  "dek": "モデル蒸留への共同勧告と、見える画像制作工程を深掘り。XR作品、Windows常駐AI、音声エージェント、仕事の経済性を追う。",
+  "edition_date": "2026-09-12",
+  "edition_id": "2026-09-12-0124",
+  "edition_note": "一次資料6件を直接確認。CISA項目のみ7日以内の文脈Briefとして明記し、公開操作は行っていない。",
+  "generated_at": "2026-09-12T01:23:42+09:00",
+  "items": [
+    {
+      "aoi_note": "自社データでは、整った写真ではなく実運用の暗さ、遮蔽、画角で評価し、未知種の作話率も測る。",
+      "caveat": "arXiv v1の未査読研究で、96種・特定データセットの結果を他の生物や現場へ一般化できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "edge-vlm-species",
+      "language": "en",
+      "observed_at": "2026-09-12T01:23:42+09:00",
+      "published_at": "2026-09-10T17:57:32Z",
+      "role": "lead",
+      "selection_reason": "端末へ載る汎用モデルの便利さと、専門データで訓練した小型モデルの強さを同じ現場条件で比較できる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは2B〜8B級の4つの視覚言語モデルとBioCLIPを96種の識別で比較し、全モデルが野外カメラ画像で9.6〜26.6ポイント低下し、専門モデルが小型VLMを上回ったと報告した。",
+      "source_kind": "paper",
+      "source_title": "Can Edge-Deployable Vision-Language Models Identify Species?",
+      "source_url": "https://arxiv.org/abs/2609.11916v1",
+      "title": "小型VLMの野外認識、専門モデルとの隔たりを測る",
+      "topics": [
+        "models",
+        "research",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-12T01:23:42+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "まず自分の代表的な1工程をノード化し、出力再現性、モデル権利、失敗時の中間生成物を確認する。",
+      "caveat": "紹介記事は実装者側の説明であり、AUTOMATIC1111との完全互換性や大規模運用性能を保証しない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "workflow1111",
+      "language": "en",
+      "observed_at": "2026-09-12T01:23:42+09:00",
+      "published_at": "2026-09-10T00:00:00Z",
+      "role": "major",
+      "selection_reason": "複雑な画像生成UIを、再利用・観察・差し替え可能な処理グラフとして扱う具体例になる。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Hugging Faceの技術記事は、AUTOMATIC1111の主要機能を11本のメディア処理パイプラインと73ノードからなる単一のGradio Workflowキャンバスとして再構成した。",
+      "source_kind": "official",
+      "source_title": "Rebuilding AUTOMATIC1111 with Gradio Workflow",
+      "source_url": "https://huggingface.co/blog/gradio-workflow-1111",
+      "title": "73ノードの画像制作工程を、見えるワークフローへ",
+      "topics": [
+        "creative-ai",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-12T01:23:42+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "検知根拠、誤検知時の救済、応答変更の監査を分離し、正当な研究利用を一律に遮断しない。",
+      "caveat": "政府機関による脅威評価であり、名指しされた組織に関する個別主張は司法判断ではない。公開日は優先72時間外のため7日以内の文脈項目として扱う。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-ai-distillation",
+      "language": "en",
+      "observed_at": "2026-09-12T01:23:42+09:00",
+      "published_at": "2026-09-08T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "モデルAPIの不正利用を、単なる利用規約違反ではなく継続監視が必要な供給網・知財リスクとして捉え直せる。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "CISA、NSA、FBIなどは、米国AI企業を狙う大規模なモデル蒸留活動を共同勧告として公開し、アカウント・利用挙動の監視と情報共有を含む緩和策を示した。",
+      "source_kind": "advisory",
+      "source_title": "China-Based Artificial Intelligence Companies Conducting Industrial-Scale Distillation Campaigns Against U.S. AI Companies",
+      "source_url": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-251a",
+      "title": "米当局、AIモデル蒸留を産業規模の脅威として勧告",
+      "topics": [
+        "security",
+        "policy",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-09-12T01:23:42+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "技術デモとしてではなく、観客が何を選び、物語がどう応答するかを体験設計として見る。",
+      "caveat": "Googleが支援した作品の紹介であり、一般提供される制作ツールや観客評価を示すものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-venice-xr",
+      "language": "en",
+      "observed_at": "2026-09-12T01:23:42+09:00",
+      "published_at": "2026-09-11T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "生成映像だけでなく、観客との会話や空間体験までAI表現の設計対象になっている。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleの100 ZEROSチームが支援した3本のXR作品がヴェネチア国際映画祭で初公開され、GeminiやVertex AIによる対話、空間映像、立体奥行きを作品表現に用いた。",
+      "source_kind": "official",
+      "source_title": "Three Google supported projects premiere during the 83rd Venice International Film Festival.",
+      "source_url": "https://blog.google/innovation-and-ai/technology/xr-ar/three-google-supported-projects-premiere-during-the-83rd-venice-international-film-festival/",
+      "title": "ヴェネチアで、対話AIと空間映像を物語へ",
+      "topics": [
+        "creative-ai",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-12T01:23:42+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "導入前にファイル、Gmail、Driveへの接続範囲と、常駐時のデータ境界を確認する。",
+      "caveat": "AIサブスクリプションや年齢などの条件があり、機能提供範囲は地域・プランで異なる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "gemini-windows",
+      "language": "en",
+      "observed_at": "2026-09-12T01:23:42+09:00",
+      "published_at": "2026-09-10T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "ブラウザの対話欄から、作業中の画面とファイルに近い常駐支援へ利用面が移る。",
+      "source_domain": "blog.google",
+      "source_fact": "GoogleはWindows 10と11向けGeminiアプリを世界提供し、Alt+Space呼び出し、Googleアプリ連携、画像・動画生成、複数段階タスクの委任を案内した。",
+      "source_kind": "official",
+      "source_title": "The Gemini app is now available for Windows",
+      "source_url": "https://blog.google/innovation-and-ai/products/gemini-app/gemini-app-now-on-windows/",
+      "title": "GeminiがWindows常駐アプリとして展開",
+      "topics": [
+        "tools",
+        "agents",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-09-12T01:23:42+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "音声応答の中断、実行キュー、権限確認、結果の読み戻しを別々に試す。",
+      "caveat": "単一チームの実装記録で、独立ベンチマークや広い端末互換性は確認されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aiden-voice-agent",
+      "language": "en",
+      "observed_at": "2026-09-12T01:23:42+09:00",
+      "published_at": "2026-09-10T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "低遅延の対話と重い実行を同じモデルに背負わせず、役割と失敗範囲を分ける設計例になる。",
+      "source_domain": "huggingface.co",
+      "source_fact": "実装者は、全二重のリアルタイム音声モデルと、視覚推論や長時間タスクを担う別エージェントを協調させる構成を技術記事として公開した。",
+      "source_kind": "official",
+      "source_title": "Coordinating a real-time voice model with a separate task-execution agent: a practical architecture",
+      "source_url": "https://huggingface.co/blog/NatalieY/when-voice-meets-the-physical-world-inside-aiden",
+      "title": "会話と実行を分ける、音声エージェントの二層設計",
+      "topics": [
+        "agents",
+        "tools",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-09-12T01:23:42+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-09-12T01:23:42+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：守るモデル、分ける実行、広がる表現",
+  "topics": [
+    {
+      "description": "画像、音声、映像、デザインの制作を支えるAI。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    },
+    {
+      "description": "AIを実務へ接続する製品、API、運用手段。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "再利用可能なコード、モデル、データの公開。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "脆弱性、安全性、攻撃耐性、制御に関する動向。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "AIの開発・利用を形づくる制度、標準、公共判断。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策"
+    },
+    {
+      "description": "推論、生成、予測を担う基盤モデル。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "環境を観測し、道具を使って複数段階の仕事を進めるAI。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "新しい方法、評価、観測結果を示す研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    }
+  ]
+}

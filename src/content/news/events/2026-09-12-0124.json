@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "aiden-voice-agent",
+      "cisa-ai-distillation",
+      "edge-vlm-species",
+      "gemini-windows",
+      "google-venice-xr",
+      "workflow1111"
+    ],
+    "edition_date": "2026-09-12",
+    "edition_id": "2026-09-12-0124",
+    "edition_url": "https://aoifuture.com/news/2026-09-12-0124/",
+    "event_id": "aoi-news-2026-09-12-0124-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-09-12T01:23:42+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "モデル蒸留への共同勧告と、見える画像制作工程を深掘り。XR作品、Windows常駐AI、音声エージェント、仕事の経済性を追う。",
+    "title": "AOIFUTURE News：守るモデル、分ける実行、広がる表現"
+  }
+]
