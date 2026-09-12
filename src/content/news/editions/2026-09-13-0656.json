@@ -1,0 +1,237 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-09-13T06:56:08+09:00",
+  "dek": "スキル最適化と人・AI協働の暗黙知を深掘り。継続する操作契約、学校のAI保護、若年層の参加設計、低VRAM音声生成を追う。",
+  "edition_date": "2026-09-13",
+  "edition_id": "2026-09-13-0656",
+  "edition_note": "直近72時間の一次資料6件を直接確認。未査読研究と開発元の自己測定は制約を明記し、公開操作は行っていない。",
+  "generated_at": "2026-09-13T06:56:08+09:00",
+  "items": [
+    {
+      "aoi_note": "自分のワークフローでは、採用率だけでなく評価回数、失敗分類、改善後の再現性を同じ台帳で追う。",
+      "caveat": "arXiv v1の未査読研究で、比較対象・ハーネス・各ベンチマークへの依存がある。費用削減値は著者らの実験結果。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cobra-skills",
+      "language": "en",
+      "observed_at": "2026-09-13T06:56:08+09:00",
+      "published_at": "2026-09-10T15:12:24Z",
+      "role": "lead",
+      "selection_reason": "実行評価が高価なエージェント改善で、全候補を試さずに学習予算を配る具体策を示す。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、文脈付きバンディットで評価対象を選ぶスキル最適化手法を提案し、6ベンチマーク・3モデルで比較手法より高い平均性能と、SkillOpt比55〜58%の最適化費用削減を報告した。",
+      "source_kind": "paper",
+      "source_title": "COBRA-Skills: Contextual Bandit-Guided Evolution for Agent Skill Optimization",
+      "source_url": "https://arxiv.org/abs/2609.11682v1",
+      "title": "少ない評価回数で、エージェントのスキルを育てる",
+      "topics": [
+        "agents",
+        "research",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-13T06:56:08+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "共同作業の評価では最終得点に加え、曖昧な指示、途中介入、相手固有の慣習への適応を別に試す。",
+      "caveat": "arXiv v1の未査読研究で、Hanabiという限定環境と既存データセットに基づく。実務一般への外挿には追加検証が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "convention-gap",
+      "language": "en",
+      "observed_at": "2026-09-13T06:56:08+09:00",
+      "published_at": "2026-09-10T12:57:03Z",
+      "role": "major",
+      "selection_reason": "AI同士の成績だけでは、人間との協働で必要な暗黙知や期待の読み取りを見落とす可能性を定量化している。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは協調時の暗黙的な慣習を測る「convention gap」を提案し、Hanabiの約10万1千行動で、人同士+26.2ポイント、AI同士-0.7ポイント、人とAI+16.4ポイントと報告した。",
+      "source_kind": "paper",
+      "source_title": "The Convention Gap: Towards Measuring Implicit Communication in Cooperative AI Evaluation",
+      "source_url": "https://arxiv.org/abs/2609.11489v1",
+      "title": "人とAIの協働は、言葉にしない約束で崩れる",
+      "topics": [
+        "research",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-09-13T06:56:08+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "承認時点だけでなく、対象ファイルや利用者の意図が変わった時点で権限を再判定する。",
+      "caveat": "arXiv v1の概念・研究課題提示であり、広範な実装評価や運用実績はまだ示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "agent-interaction-contracts",
+      "language": "en",
+      "observed_at": "2026-09-13T06:56:08+09:00",
+      "published_at": "2026-09-10T11:17:19Z",
+      "role": "brief",
+      "selection_reason": "長時間動くエージェントを、単発の許可ではなく変化に追随する契約と証拠で制御する設計論になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、利用者が共有対象や目標を変更し続ける状況に向け、権限、制御遷移、結果証拠を結ぶ interaction contracts と continuous assurance を提案した。",
+      "source_kind": "paper",
+      "source_title": "Agent-Integrated Software: Interaction Contracts and Continuous Assurance",
+      "source_url": "https://arxiv.org/abs/2609.11381v1",
+      "title": "エージェント内蔵ソフトに、継続して効く操作契約を",
+      "topics": [
+        "agents",
+        "security",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-09-13T06:56:08+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "教育分野に限らず、AI調達ではデータ用途、保持、モデル学習、変更通知、人の最終判断を契約項目にする。",
+      "caveat": "当事者団体とMicrosoftの合意であり、連邦法や全事業者を拘束する公的標準ではない。各学区での採用と執行は別途必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "school-ai-privacy-standard",
+      "language": "en",
+      "observed_at": "2026-09-13T06:56:08+09:00",
+      "published_at": "2026-09-09T00:00:00-04:00",
+      "role": "brief",
+      "selection_reason": "抽象的な原則を、解約や救済につながる契約条項へ落とす実例になる。",
+      "source_domain": "www.aft.org",
+      "source_fact": "AFT、UFT、Microsoftは、児童・教職員データをAI学習へ使わないこと、追跡禁止、人間の監督、平易な説明などを学校のMicrosoft顧客契約へ組み込める基準として公表した。",
+      "source_kind": "official",
+      "source_title": "AFT, UFT and Microsoft Announce ‘National AI Safety & Privacy Standard’ for Schools to Protect Students, Families and Educators",
+      "source_url": "https://www.aft.org/press-release/aft-uft-and-microsoft-announce-national-ai-safety-privacy-standard-schools-protect",
+      "title": "学校のAI契約に、学習利用禁止と人の監督を入れる",
+      "topics": [
+        "policy",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-09-13T06:56:08+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "年齢確認だけで済ませず、既定値、機能制限、保護者説明、異議申立てを利用場面ごとに設計する。",
+      "caveat": "Microsoft自身の枠組みで、独立監査結果や法的強制力を示すものではない。今後の研究や社会的期待に応じて更新するとしている。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "microsoft-safe-participation",
+      "language": "en",
+      "observed_at": "2026-09-13T06:56:08+09:00",
+      "published_at": "2026-09-10T16:00:17Z",
+      "role": "watch",
+      "selection_reason": "利用禁止だけでなく、機能設計と保護策を段階化して若年層の参加機会を残す考え方を示す。",
+      "source_domain": "blogs.microsoft.com",
+      "source_fact": "Microsoftは若年層向けに、安全設計、年齢相応の体験、プライバシー保護、参加機会を並立させるSafe Participation Frameworkを公開した。",
+      "source_kind": "official",
+      "source_title": "Safe Participation Framework: Opportunity and Safety for the Next Generation in the Age of AI",
+      "source_url": "https://blogs.microsoft.com/on-the-issues/2026/09/10/safe-participation-framework-opportunity-and-safety-for-the-next-generation-in-the-age-of-ai/",
+      "title": "子どものAI利用を、禁止か放任かの二択にしない",
+      "topics": [
+        "policy",
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-13T06:56:08+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "導入前に同じ音源・seedでピークVRAM、処理時間、継ぎ目、音質を自分のGPU上で比較する。",
+      "caveat": "数値は開発チームによるTesla T4上の自己測定で、音質の独立評価や幅広いGPUでの再現性は未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "audiyo-low-vram",
+      "language": "en",
+      "observed_at": "2026-09-13T06:56:08+09:00",
+      "published_at": "2026-09-11T18:20:27Z",
+      "role": "watch",
+      "selection_reason": "高品質な音声生成を消費者向けGPUで試すための、CPUオフロードと分割デコードの具体例になる。",
+      "source_domain": "huggingface.co",
+      "source_fact": "AudiyoチームはStable Audio Open向けのオープンソース実装を公開し、Tesla T4で10秒音声生成時のピークVRAMを13.8GBから5.86GBへ下げたと報告した。",
+      "source_kind": "release",
+      "source_title": "How to run Stable Audio Open with 8GB of RAM using Audiyo.",
+      "source_url": "https://huggingface.co/blog/Monster-Code/audiyo-release",
+      "title": "音声生成を8GB級GPUへ近づける、メモリ節約の実装",
+      "topics": [
+        "creative-ai",
+        "open-source",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-13T06:56:08+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-09-13T06:56:08+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：協働の暗黙知を測り、権限と保護を設計する",
+  "topics": [
+    {
+      "description": "環境を観測し、道具を使って複数段階の仕事を進めるAI。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "推論、生成、予測を担う基盤モデル。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "AIを実務へ接続する製品、API、運用手段。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "新しい方法、評価、観測結果を示す研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "脆弱性、安全性、攻撃耐性、制御に関する動向。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "AIの開発・利用を形づくる制度、標準、公共判断。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策"
+    },
+    {
+      "description": "再利用可能なコード、モデル、データの公開。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "画像、音声、映像、デザインの制作を支えるAI。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}
