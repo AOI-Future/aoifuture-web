@@ -8,6 +8,7 @@ export class Soundscape {
   volume = .45;
   nextNote = 0;
   note = 0;
+  nextSignal = 0;
   async start() {
     if (!this.ctx) {
       this.ctx = new AudioContext();
@@ -31,20 +32,27 @@ export class Soundscape {
   }
   setVolume(value: number) { this.volume = value; this.master?.gain.setTargetAtTime(this.muted ? 0 : value, this.ctx!.currentTime, .08); }
   toggle() { this.muted = !this.muted; this.setVolume(this.volume); }
-  tone(frequency: number, duration: number, level: number, type: OscillatorType = 'sine') {
+  tone(frequency: number, duration: number, level: number, type: OscillatorType = 'sine', pan = 0) {
     if (!this.ctx || this.ctx.state !== 'running') return;
     const ctx = this.ctx, t = ctx.currentTime, osc = ctx.createOscillator(), gain = ctx.createGain();
     osc.type = type; osc.frequency.setValueAtTime(frequency, t); gain.gain.setValueAtTime(0, t);
     gain.gain.linearRampToValueAtTime(level, t + .025); gain.gain.exponentialRampToValueAtTime(.0001, t + duration);
-    osc.connect(gain); gain.connect(this.master!); gain.connect(this.wet!); osc.start(t); osc.stop(t + duration + .02);
-    osc.onended = () => { osc.disconnect(); gain.disconnect(); };
+    const stereo=ctx.createStereoPanner();stereo.pan.value=Math.max(-1,Math.min(1,pan));
+    osc.connect(gain); gain.connect(stereo); stereo.connect(this.master!); gain.connect(this.wet!); osc.start(t); osc.stop(t + duration + .02);
+    osc.onended = () => { osc.disconnect(); gain.disconnect(); stereo.disconnect(); };
   }
-  tick(theme: number, proximity: number) {
-    if (!this.ctx || this.ctx.state !== 'running' || this.ctx.currentTime < this.nextNote) return;
+  tick(theme: number, proximity: number, pan = 0) {
+    if (!this.ctx || this.ctx.state !== 'running') return;
+    const now=this.ctx.currentTime;
+    if(now>=this.nextSignal) {
+      // A quiet, directional tone carries beyond the streamed geometry.
+      this.tone(660+proximity*220,1.4,.006+.035*proximity,'sine',pan);
+      this.nextSignal=now+2.8-proximity*1.5;
+    }
+    if(now<this.nextNote)return;
     const scale = [220, 261.63, 329.63, 392, 440, 523.25, 659.25, 392];
-    this.tone(scale[this.note++ % scale.length] * [1, .75, 1.125][theme % 3], 3.8, .035);
-    if (proximity > .7) this.tone(880, .7, .015 * proximity);
-    this.nextNote = this.ctx.currentTime + 1.6;
+    this.tone(scale[this.note++ % scale.length] * [1, .75, 1.125][theme % 3], 3.8, .025);
+    this.nextNote = now + 1.6;
   }
   space(echo: number) { if(this.ctx && this.wet) this.wet.gain.setTargetAtTime(echo,this.ctx.currentTime,.6); }
   step(surface: Surface) {

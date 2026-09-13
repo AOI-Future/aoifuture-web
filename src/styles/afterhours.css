@@ -56,3 +56,5 @@ body { margin:0; background:#000; }
 @media (pointer:coarse) { .ah-bookmark { left:20px; top:184px; bottom:auto; }.ah-bookmark span { display:none; } }
 @media (max-width:760px) { .ah-location { max-width:calc(100% - 181px); }.ah-location p { line-height:1.5; }#place-name { font-size:14px; }.ah-bookmark { left:16px; top:202px; bottom:auto; }.ah-toast { bottom:195px; } }
 @media (max-width:360px) { .ah-bookmark { top:242px; } }
+
+.ah-lift { position:absolute; left:50%; bottom:150px; transform:translateX(-50%); min-height:44px; pointer-events:auto; }

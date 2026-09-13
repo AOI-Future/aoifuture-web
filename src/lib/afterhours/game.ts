@@ -1,18 +1,21 @@
 import * as THREE from 'three';
-import { World, ROOM, PLACES, describeRoom, hash } from './world';
+import { World, ROOM, PLACES, describeRoom } from './world';
+import { floorSeed, floorLabel, shaftAt, nextResonance, resonancePoint } from './geography';
 import { Soundscape } from './audio';
 
-type Mark = { x: number; z: number };
-type Save = { seen: number; marks: Mark[]; version: 1; seed: number; x: number; z: number; yaw: number; count: number; targetX: number; targetZ: number };
+type Mark = { x: number; z: number; level: number };
+type Save = { level: number; targetLevel: number; seen: number; marks: Mark[]; version: 1; seed: number; x: number; z: number; yaw: number; count: number; targetX: number; targetZ: number };
 const SAVE_KEY = 'aoi.afterhours.v1';
-function fresh(): Save { return { seen: 0, marks: [], version: 1, seed: Math.floor(Math.random() * 1e8), x: 0, z: 6, yaw: 0, count: 0, targetX: 0, targetZ: -12 }; }
+function fresh(): Save { return { level: 0, targetLevel: 0, seen: 0, marks: [], version: 1, seed: Math.floor(Math.random() * 1e8), x: 0, z: 6, yaw: 0, count: 0, targetX: 0, targetZ: -12 }; }
 function readSave(): Save | undefined {
   try {
     const s = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null');
     if (s?.version !== 1 || !['seed', 'x', 'z', 'yaw', 'count', 'targetX', 'targetZ'].every(k => Number.isFinite(s[k]))) return;
     if (!Number.isInteger(s.count) || s.count < 0 || !Number.isInteger(s.seed) || Math.abs(s.x) > 1e9 || Math.abs(s.z) > 1e9 || Math.abs(s.targetX) > 1e9 || Math.abs(s.targetZ) > 1e9) return;
+    s.level = Number.isInteger(s.level) && s.level>=0 && s.level<=1000000 ? s.level : 0;
+    s.targetLevel = Number.isInteger(s.targetLevel) && s.targetLevel>=0 && s.targetLevel<=1000000 ? s.targetLevel : s.level;
     s.seen = Number.isInteger(s.seen) && s.seen >= 0 && s.seen < 256 ? s.seen : 0;
-    s.marks = Array.isArray(s.marks) ? s.marks.filter((m: Mark) => m && Number.isInteger(m.x) && Number.isInteger(m.z) && Math.abs(m.x) < 3e7 && Math.abs(m.z) < 3e7).slice(0,8) : [];
+    s.marks = Array.isArray(s.marks) ? s.marks.filter((m: Mark) => m && Number.isInteger(m.x) && Number.isInteger(m.z) && Math.abs(m.x) < 3e7 && Math.abs(m.z) < 3e7).slice(0,8).map((m:Mark)=>({...m,level:Number.isInteger(m.level)&&m.level>=0&&m.level<=1000000?m.level:0})) : [];
     return s;
   } catch { return; }
 }
@@ -26,8 +29,8 @@ export function initGame() {
   catch { status.textContent = '3D描画を開始できません。WebGL対応ブラウザで開いてください。'; start.textContent = '3D描画を利用できません'; return; }
   const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(68, 1, .08, 180);
   const saved = readSave(); let state = saved || fresh();
-  let world = new World(scene, state.seed);
-  let location = describeRoom(Math.round(state.x / ROOM), Math.round(state.z / ROOM), state.seed);
+  let world = new World(scene, state.seed, state.level);
+  let location = describeRoom(Math.round(state.x / ROOM), Math.round(state.z / ROOM), world.seed);
   let locationKey = '', guide: Mark | undefined;
   scene.add(new THREE.HemisphereLight(0xfff6d7, 0x4c463d, 2.2));
   const sun = new THREE.DirectionalLight(0xffffff, 1.1); sun.position.set(3, 8, 2); scene.add(sun);
@@ -63,13 +66,42 @@ export function initGame() {
   };
   resize(); world.update(state.x, state.z, radius);
   world.ambience(state.x,state.z,10,false);
-  // Earlier saves may now be inside new furniture. Move only to the nearest open aisle.
-  if (world.blocked(state.x,state.z)) {
-    const cx=Math.round(state.x/ROOM)*ROOM, cz=Math.round(state.z/ROOM)*ROOM;
-    if (Math.abs(state.x-cx) < Math.abs(state.z-cz) && !world.blocked(cx,state.z)) state.x=cx;
-    else if (!world.blocked(state.x,cz)) state.z=cz;
-    else {state.x=cx;state.z=cz;}
+  // Layout revisions retain progress; relocate only positions now inside walls.
+  function safePosition() {
+    if(!world.blocked(state.x,state.z))return;
+    const x=state.x,z=state.z;
+    for(let r=.5;r<=24;r+=.5)for(let a=0;a<16;a++) {
+      const px=x+Math.cos(a*Math.PI/8)*r,pz=z+Math.sin(a*Math.PI/8)*r;
+      if(!world.blocked(px,pz)){state.x=px;state.z=pz;return;}
+    }
+    const point=resonancePoint(Math.round(x/ROOM),Math.round(z/ROOM),world.seed);state.x=point.x;state.z=point.z;
   }
+  safePosition();
+  const targetSeed=floorSeed(state.seed,state.targetLevel);
+  const targetPlan=resonancePoint(Math.round(state.targetX/ROOM),Math.round(state.targetZ/ROOM),targetSeed);
+  if(state.count>0 && world.blocked(state.targetX,state.targetZ) && state.targetLevel===state.level) {
+    state.targetX=targetPlan.x;state.targetZ=targetPlan.z;
+  }
+  let transition: {elapsed:number;down:boolean}|undefined, shaftLatched=false;
+  function changeFloor(down:boolean) {
+    if(transition||(!down&&state.level===0)||state.level>=1000000&&down)return;
+    transition={elapsed:0,down};resetInput();sound.tone(down?70:180,1.3,.06);el('lift').hidden=true;
+  }
+  function nearbyShaft() {
+    const cx=Math.round(state.x/ROOM),cz=Math.round(state.z/ROOM);
+    let best={x:0,z:0,d:Infinity};
+    for(let x=cx-5;x<=cx+5;x++)for(let z=cz-5;z<=cz+5;z++) {
+      const shaft=shaftAt(x,z);if(!shaft)continue;
+      const px=x*ROOM+(state.level<(guide?.level??state.targetLevel)?shaft.x:shaft.liftX),pz=z*ROOM+shaft.z;
+      const d=Math.hypot(px-state.x,pz-state.z);if(d<best.d)best={x:px,z:pz,d};
+    }
+    return best;
+  }
+  function atLift() {
+    const cx=Math.round(state.x/ROOM),cz=Math.round(state.z/ROOM),shaft=shaftAt(cx,cz);
+    return !!shaft&&state.level>0&&Math.hypot(state.x-cx*ROOM-shaft.liftX,state.z-cz*ROOM-shaft.liftZ)<1.6;
+  }
+  el('lift').addEventListener('click',()=>{if(active&&atLift())changeFloor(false);},options);
   window.addEventListener('resize', resize, options);
   el('quality').addEventListener('change', resize, options);
   el('volume').addEventListener('input', e => sound.setVolume(Number((e.target as HTMLInputElement).value) / 100), options);
@@ -98,7 +130,7 @@ export function initGame() {
   el('new-game').addEventListener('click', () => {
     if (!confirm('保存された探索を置き換えて、新しい空間を始めますか？')) return;
     for (const g of world.chunks.values()) scene.remove(g);
-    world.dispose(); state = fresh(); world = new World(scene, state.seed); locationKey = ''; guide = undefined; pitch = 0; renderNotes(); begin(); save();
+    world.dispose(); state = fresh(); world = new World(scene, state.seed, state.level); locationKey = ''; guide = undefined; transition=undefined;shaftLatched=false;canvas.style.opacity='1';pitch = 0; renderNotes(); begin(); save();
   }, options);
   pauseButton.addEventListener('click', () => pause(), options);
   document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); }, options);
@@ -107,6 +139,7 @@ export function initGame() {
   window.addEventListener('keydown', e => {
     if (!active) return;
     if (e.code === 'Escape') { pause(); return; }
+    if (e.code === 'KeyE' && !e.repeat && atLift()) { changeFloor(false); return; }
     if (e.code === 'KeyB' && !e.repeat) { bookmark(); return; }
     if (movementKeys.includes(e.code)) { e.preventDefault(); keys.add(e.code); }
   }, options);
@@ -149,9 +182,9 @@ export function initGame() {
     el('discovered-places').textContent = discovered.length ? discovered.map(p=>p.ja).join(' / ') : 'まだ足を踏み入れていない場所がある。';
     const list = el('bookmarks'); list.replaceChildren();
     for (const mark of state.marks) {
-      const room = describeRoom(mark.x,mark.z,state.seed), row=document.createElement('li');
+      const room = describeRoom(mark.x,mark.z,floorSeed(state.seed,mark.level)), row=document.createElement('li');
       const go = document.createElement('button'); go.type='button'; go.className='ah-note-go';
-      go.textContent = `${room.place.ja} · ${room.id} →`;
+      go.textContent = `${floorLabel(mark.level)} · ${room.place.ja} · ${room.id} →`;
       go.addEventListener('click',()=>{guide=mark;begin();});
       const remove=document.createElement('button');remove.type='button';remove.className='ah-note-remove';remove.textContent='×';remove.setAttribute('aria-label',`${room.place.ja} ${room.id}の記録を削除`);
       remove.addEventListener('click',()=>{state.marks=state.marks.filter(m=>m!==mark);if(guide===mark)guide=undefined;save();renderNotes();});
@@ -161,10 +194,10 @@ export function initGame() {
   }
   function bookmark() {
     if (!active) return;
-    const room=describeRoom(Math.round(state.x/ROOM),Math.round(state.z/ROOM),state.seed);
-    if(state.marks.some(m=>m.x===room.x&&m.z===room.z)) el('toast').textContent='この場所は、すでに手帳に記録している。';
+    const room=describeRoom(Math.round(state.x/ROOM),Math.round(state.z/ROOM),world.seed);
+    if(state.marks.some(m=>m.x===room.x&&m.z===room.z&&m.level===state.level)) el('toast').textContent='この場所は、すでに手帳に記録している。';
     else if(state.marks.length>=8) el('toast').textContent='手帳は8件まで。一時停止して記録を整理できます。';
-    else {state.marks.push({x:room.x,z:room.z});el('toast').textContent=`${room.place.ja}を記録。手帳から帰り道をたどれます。`;save();renderNotes();}
+    else {state.marks.push({x:room.x,z:room.z,level:state.level});el('toast').textContent=`${room.place.ja}を記録。手帳から帰り道をたどれます。`;save();renderNotes();}
     toastUntil=performance.now()+4500;
   }
   el('bookmark').addEventListener('click',bookmark,options);
@@ -172,10 +205,9 @@ export function initGame() {
   renderNotes();
   function collect(now: number) {
     state.count++; sound.collect();
-    const cx = Math.round(state.targetX / ROOM), cz = Math.round(state.targetZ / ROOM);
-    const direction = Math.floor(hash(state.count, cx + cz, state.seed) * 4);
-    const dirs = [[0, -1], [1, 0], [0, 1], [-1, 0]];
-    state.targetX = (cx + dirs[direction][0]) * ROOM; state.targetZ = (cz + dirs[direction][1]) * ROOM;
+    state.targetLevel=Math.min(1000000,state.level+(state.count%3===0?1:0));
+    const point=nextResonance(state.x,state.z,floorSeed(state.seed,state.targetLevel),state.count);
+    state.targetX=point.x;state.targetZ=point.z;
     el('toast').textContent = `残響 ${String(state.count).padStart(2, '0')} — 次の光が呼んでいる`;
     toastUntil = now + 4200; save();
   }
@@ -183,7 +215,21 @@ export function initGame() {
     frame = requestAnimationFrame(render);
     if (document.hidden) { previous = now; return; }
     const dt = Math.min((now - previous) / 1000, .05); previous = now;
-    if (active) {
+    if(active && transition) {
+      transition.elapsed+=dt;
+      const t=transition.elapsed;
+      const fade=reducedMotion.matches?Math.min(1,t/.25):Math.max(0,Math.min(1,(t-.65)/.25));
+      canvas.style.opacity=String(1-fade);
+      camera.position.set(state.x,1.7-(transition.down&&!reducedMotion.matches?Math.min(8,t*t*10):0),state.z);
+      camera.rotation.set(pitch,state.yaw,0,'YXZ');
+      if(t>=(reducedMotion.matches?.4:1)) {
+        state.level+=transition.down?1:-1;world.setFloor(state.level);
+        const cx=Math.round(state.x/ROOM),cz=Math.round(state.z/ROOM),shaft=shaftAt(cx,cz)!;
+        state.x=cx*ROOM+shaft.liftX;state.z=cz*ROOM+shaft.liftZ;
+        world.update(state.x,state.z,radius);safePosition();world.ambience(state.x,state.z,10,false);
+        transition=undefined;shaftLatched=true;locationKey='';canvas.style.opacity='1';save();
+      }
+    } else if (active) {
       if (keys.has('ArrowLeft')) state.yaw += dt * 1.6;
       if (keys.has('ArrowRight')) state.yaw -= dt * 1.6;
       let forward = Number(keys.has('KeyW') || keys.has('ArrowUp')) - Number(keys.has('KeyS') || keys.has('ArrowDown')) - stickY;
@@ -196,8 +242,13 @@ export function initGame() {
       if (!world.blocked(state.x + dx, state.z)) state.x += dx;
       if (!world.blocked(state.x, state.z + dz)) state.z += dz;
       const moved = Math.hypot(state.x - oldX, state.z - oldZ); travel += moved;
-      location = describeRoom(Math.round(state.x/ROOM),Math.round(state.z/ROOM),state.seed);
-      const key = `${location.x},${location.z}`;
+      location = describeRoom(Math.round(state.x/ROOM),Math.round(state.z/ROOM),world.seed);
+      const shaft=shaftAt(location.x,location.z);
+      const inHole=!!shaft&&Math.abs(state.x-location.x*ROOM-shaft.x)<.95&&Math.abs(state.z-location.z*ROOM-shaft.z)<.95;
+      if(inHole&&!shaftLatched)changeFloor(true);
+      if(!inHole)shaftLatched=false;
+      el('lift').hidden=!atLift()||!!transition;
+      const key = `${state.level},${location.x},${location.z}`;
       if (key !== locationKey) {
         const discovered = !(state.seen & (1 << location.index));
         state.seen |= 1 << location.index;
@@ -210,22 +261,27 @@ export function initGame() {
       }
       if (travel > 1.7) { sound.step(location.place.surface); travel %= 1.7; }
       const distance = Math.hypot(state.targetX - state.x, state.targetZ - state.z);
-      if (distance < 1.5) collect(now);
-      sound.tick(location.index, Math.max(0, 1 - distance / 50));
+      if (distance < 1.5 && state.targetLevel===state.level && !transition) collect(now);
+      const sameFloor=state.targetLevel===state.level;
+      const angle=Math.atan2(-(state.targetX-state.x),-(state.targetZ-state.z));
+      sound.tick(location.index, Math.exp(-distance/85)*(sameFloor?1:.3),Math.sin(state.yaw-angle));
       world.update(state.x, state.z, radius);
       const bob = motion.checked && !reducedMotion.matches && moved > .001 ? Math.sin(now * .009) * .035 : 0;
       camera.position.set(state.x, 1.7 + bob, state.z); camera.rotation.set(pitch, state.yaw, 0, 'YXZ');
       if (now - lastHud > 120) {
         el('count').textContent = String(state.count).padStart(2, '0'); el('zone').textContent = location.place.name;
-        el('place-name').textContent = `${location.place.ja} / ${location.id}`;
+        el('place-name').textContent = `${floorLabel(state.level)} · ${location.place.ja} / ${location.id}`;
         el('coordinates').textContent = `${Math.round(state.x)} : ${Math.round(state.z)}`;
-        const targetX = guide ? guide.x*ROOM : state.targetX, targetZ = guide ? guide.z*ROOM : state.targetZ;
+        const destinationLevel=guide?.level??state.targetLevel;
+        const otherFloor=destinationLevel!==state.level;
+        const destination=otherFloor?nearbyShaft():guide?resonancePoint(guide.x,guide.z,world.seed):{x:state.targetX,z:state.targetZ};
+        const targetX=destination.x,targetZ=destination.z;
         const guideDistance = Math.hypot(targetX-state.x,targetZ-state.z);
         el('guide-type').textContent = guide ? 'BOOKMARK' : 'RESONANCE';
-        el('distance').textContent = `${guide ? '記録した場所' : '次の残響'}まで ${Math.round(guideDistance)} m`;
-        el('signal-meter').style.width = `${Math.max(2, 100 - guideDistance * 2)}%`;
+        el('distance').textContent = otherFloor?`${floorLabel(destinationLevel)} の${guide?'記録':'残響'} · ${destinationLevel>state.level?'下り穴':'昇降機'}まで ${Math.round(guideDistance)} m`:`${guide ? '記録した場所' : '次の残響'}まで ${Math.round(guideDistance)} m`;
+        el('signal-meter').style.width = `${Math.max(2,100*Math.exp(-guideDistance/70))}%`;
         const targetAngle = Math.atan2(-(targetX - state.x), -(targetZ - state.z));
-        if (guide && guideDistance < 2) { guide = undefined; el('toast').textContent = '記録した場所に戻ってきた。'; toastUntil=now+4000; }
+        if (guide && !otherFloor && guideDistance < 2) { guide = undefined; el('toast').textContent = '記録した場所に戻ってきた。'; toastUntil=now+4000; }
         el('bearing').style.transform = `rotate(${state.yaw - targetAngle}rad)`;
         if (now > toastUntil) el('toast').textContent = '';
         lastHud = now;
@@ -236,6 +292,7 @@ export function initGame() {
       camera.rotation.set(0, state.yaw + (reducedMotion.matches ? -.35 : -.35 + Math.sin(now * .00008) * .12), 0, 'YXZ');
     }
     world.ambience(state.x,state.z,dt,!reducedMotion.matches);
+    ring.visible=state.targetLevel===state.level&&!transition;
     ring.position.set(state.targetX, 1.8 + (reducedMotion.matches ? 0 : Math.sin(now * .0018) * .12), state.targetZ);
     ring.rotation.y = reducedMotion.matches ? 0 : now * .0006; core.rotation.z = reducedMotion.matches ? 0 : now * .0005;
     renderer.render(scene, camera);
