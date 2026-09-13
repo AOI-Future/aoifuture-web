@@ -29,7 +29,9 @@ export function passage(x:number,z:number,seed:number,dx:number,dz:number) {
   const a=describeRoom(x,z,seed),b=describeRoom(x+dx,z+dz,seed);
   const merged=a.index===b.index && ['concourse','pool','atrium','garden'].includes(a.place.key);
   const edge=hash(Math.min(x,x+dx)*2+(dx===0?1:0),Math.min(z,z+dz),seed^551);
-  return {width:merged?(edge<.5?24:18):6,height:merged?a.place.height:Math.min(4.6,a.place.height-.35,b.place.height-.35)};
+  const tutorial=(x===0&&z===0)||(x+dx===0&&z+dz===0);
+  const offset=merged||tutorial?0:([-9,0,9][Math.floor(edge*3)]);
+  return {offset,width:merged?(edge<.5?24:18):6,height:merged?a.place.height:Math.min(4.6,a.place.height-.35,b.place.height-.35)};
 }
 export type MaterialKey = 'wall' | 'floor' | 'ceiling' | 'light' | 'trim' | 'wood' | 'metal' | 'water' | 'leaf' | 'screen' | 'dark' | 'art';
 export type BoxSpec = { x: number; y: number; z: number; w: number; h: number; d: number; material: MaterialKey; solid: boolean };
@@ -40,17 +42,52 @@ export function roomPlan(x: number, z: number, seed: number) {
   // Matching large spaces merge into wider halls. Both sides derive the same opening.
   for (const axis of ['x','z'] as const) for (const side of [-1,1]) {
     const connection=passage(x,z,seed,axis==='x'?side:0,axis==='z'?side:0);
-    const opening=connection.width, flank=(ROOM-opening)/2, offset=(ROOM+opening)/4;
-    for(const sign of [-1,1]) {
-      box('wall',axis==='x'?side*15.8:sign*offset,height/2,axis==='x'?sign*offset:side*15.8,axis==='x'?.4:flank,height,axis==='x'?flank:.4);
-      box('trim',axis==='x'?side*15.55:sign*offset,.16,axis==='x'?sign*offset:side*15.55,axis==='x'?.12:flank,.32,axis==='x'?flank:.12);
+    const opening=connection.width, centre=connection.offset;
+    for(const [lo,hi] of [[-16,centre-opening/2],[centre+opening/2,16]]) {
+      const length=hi-lo, offset=(hi+lo)/2;
+      box('wall',axis==='x'?side*15.8:offset,height/2,axis==='x'?offset:side*15.8,axis==='x'?.4:length,height,axis==='x'?length:.4);
+      box('trim',axis==='x'?side*15.55:offset,.16,axis==='x'?offset:side*15.55,axis==='x'?.12:length,.32,axis==='x'?length:.12);
     }
     const doorway=connection.height;
-    if(height>doorway) box('wall',axis==='x'?side*15.8:0,(height+doorway)/2,axis==='x'?0:side*15.8,axis==='x'?.4:opening,height-doorway,axis==='x'?opening:.4,false);
-    box('light',axis==='x'?side*15.5:0,doorway-.12,axis==='x'?0:side*15.5,axis==='x'?.1:opening-.2,.07,axis==='x'?opening-.2:.1,false);
+    if(height>doorway) box('wall',axis==='x'?side*15.8:centre,(height+doorway)/2,axis==='x'?centre:side*15.8,axis==='x'?.4:opening,height-doorway,axis==='x'?opening:.4,false);
+    box('light',axis==='x'?side*15.5:centre,doorway-.12,axis==='x'?centre:side*15.5,axis==='x'?.1:opening-.2,.07,axis==='x'?opening-.2:.1,false);
   }
   const interiorStart=boxes.length;
-  if (key === 'concourse') {
+  const maze = ['archive','office','gallery','service'].includes(key);
+  if (maze) {
+    // A spanning tree joins all sixteen suites; a few extra doors introduce loops.
+    // Seven-metre cells leave generous touch-friendly passages and no pixel-perfect turns.
+    const edges = suiteDoors(x,z,seed);
+    const partition = (axis:'x'|'z', at:number, along:number, open:boolean) => {
+      const pieces = open ? [[-3.5,-1.35],[1.35,3.5]] : [[-3.5,3.5]];
+      for(const [lo,hi] of pieces) box('wall',axis==='x'?at:along+(lo+hi)/2,height/2,axis==='x'?along+(lo+hi)/2:at,axis==='x'?.24:hi-lo,height,axis==='x'?hi-lo:.24);
+      if(open && height>2.65)box('wall',axis==='x'?at:along,(height+2.65)/2,axis==='x'?along:at,axis==='x'?.24:2.7,height-2.65,axis==='x'?2.7:.24,false);
+      if(open) box('light',axis==='x'?at:along,2.55,axis==='x'?along:at,axis==='x'?.27:2.6,.06,axis==='x'?2.6:.27,false);
+    };
+    for(let row=0;row<4;row++) for(let col=0;col<4;col++) {
+      const id=row*4+col, px=-10.5+col*7, pz=-10.5+row*7;
+      if(col<3) partition('x',px+3.5,pz,edges.has(edgeKey(id,id+1)));
+      if(row<3) partition('z',pz+3.5,px,edges.has(edgeKey(id,id+4)));
+      box('light',px,height-.1,pz,1.8,.06,.6,false);
+      // Objects stay in the corner; all cell centres and door approaches remain clear.
+      if(key==='archive') {
+        box('wood',px-1.9,1.3,pz-2.85,2.5,2.6,.5);
+        for(let shelf=0;shelf<4;shelf++)for(let book=0;book<5;book++)
+          box(book%3===room.variant?'art':'trim',px-2.9+book*.45,.4+shelf*.57,pz-2.55,.28,.4,.12,false);
+      } else if(key==='office') {
+        box('wood',px-1.9,.8,pz-2.6,2.5,.15,1.2);
+        box('metal',px-1.9,.4,pz-2.6,1.8,.8,.6);
+        box('screen',px-1.9,1.25,pz-2.9,.9,.6,.08,false);
+      } else {
+        box('trim',px-2.25,.7,pz-2.25,1.1,1.4,1.1);
+        box(key==='service'?'screen':'art',px-2.25,1.65,pz-2.25,.65,.45,.65,false);
+      }
+    }
+    for(const side of [-1,1]) for(let i=0;i<4;i++) {
+      partition('x',side*14,-10.5+i*7,i===(side===-1?1:2));
+      partition('z',side*14,-10.5+i*7,i===(side===-1?2:1));
+    }
+  } else if (key === 'concourse') {
     for (const sx of [-1,1]) for (const sz of [-1,1]) {
       box('wall',sx*9,height/2,sz*9,1.4,height,1.4);
       box('wood',sx*7,.55,sz*10,5,.25,1.1);
@@ -59,17 +96,6 @@ export function roomPlan(x: number, z: number, seed: number) {
       box('light',sx*8,height-.12,sz*7,.7,.08,5,false);
     }
     box('metal',-7,1.1,-13,4,2.2,1.2); box('screen',-7,1.6,-12.36,3.6,.55,.04,false);
-  } else if (key === 'archive') {
-    for (const sx of [-1,1]) for (const sz of [-1,1]) for (let row=0; row<3; row++) {
-      const px=sx*(5+row*3.7), pz=sz*9;
-      box('wood',px,1.35,pz,.65,2.7,9);
-      for (let shelf=0;shelf<4;shelf++) {
-        box('trim',px,.45+shelf*.58,pz,.8,.07,9,false);
-        // Dense book spines are batched into one draw call per material.
-        for (let book=0;book<6;book++) box(book%3===room.variant?'art':'wall',px,.65+shelf*.58,pz-3.7+book*1.4,.72,.3+(book%2)*.12,.85,false);
-      }
-    }
-    for (const sx of [-1,1]) box('light',sx*7,height-.1,0,.45,.06,26,false);
   } else if (key === 'pool') {
     for (const sx of [-1,1]) for (const sz of [-1,1]) {
       const px=sx*8.8,pz=sz*8.8;
@@ -87,35 +113,6 @@ export function roomPlan(x: number, z: number, seed: number) {
     }
     for (const side of [-1,1]) box('trim',0,7,side*12.5,26,.5,2,false);
     box('light',0,height-.15,0,8,.1,8,false);
-  } else if (key === 'office') {
-    for (const sx of [-1,1]) for (const sz of [-1,1]) {
-      box('wall',sx*9,.8,sz*8,10,1.6,.2);
-      for (let i=0;i<3;i++) {
-        const px=sx*(5+i*3.4), pz=sz*10;
-        box('wood',px,.78,pz,2.6,.15,1.8); box('metal',px,.35,pz,2,.7,.8);
-        box('metal',px,1.13,pz+sz*.4,.9,.6,.15); box('screen',px,1.13,pz+sz*.49,.78,.45,.025,false);
-        box('dark',px,.45,pz-sz*1.5,.8,.9,.8);
-      }
-      box('light',sx*8,height-.08,sz*8,2,.05,2,false);
-    }
-  } else if (key === 'gallery') {
-    for (const sx of [-1,1]) for (const sz of [-1,1]) {
-      box('wall',sx*9,2.2,sz*8,9,4.4,.45);
-      box('trim',sx*9,2.35,sz*8-sz*.26,3.4,2.3,.1,false);
-      box('art',sx*9,2.35,sz*8-sz*.33,3.05,1.95,.05,false);
-      box('light',sx*9,3.8,sz*8-sz*.8,2,.07,.12,false);
-      box('trim',sx*7,.5,sz*12,2,1,2); box('art',sx*7,1.6,sz*12,.65,1.2,.65);
-    }
-  } else if (key === 'service') {
-    for (const sx of [-1,1]) {
-      box('metal',sx*9,1.4,10,7,2.8,3);
-      for (let i=0;i<4;i++) {
-        box('trim',sx*9,1.3,8.45+i*.1,6,2,.035,false);
-        box('screen',sx*(6+i*1.4),2.25,8.44,.2,.2,.03,false);
-      }
-      for (const z of [-10,10]) box('metal',sx*12,height/2,z,.5,height,.5);
-      box('light',sx*5,height-.15,0,.16,.08,28,false);
-    }
   } else {
     for (const sx of [-1,1]) for (const sz of [-1,1]) {
       box('trim',sx*9,.3,sz*9,7,.6,7); box('dark',sx*9,.62,sz*9,6.6,.06,6.6,false);
@@ -124,12 +121,60 @@ export function roomPlan(x: number, z: number, seed: number) {
     }
     for (let i=-12;i<=12;i+=6) { box('metal',i,height-.35,0,.12,.4,31,false); box('metal',0,height-.35,i,31,.4,.12,false); }
   }
-  if(room.variant===1) for(const b of boxes.slice(interiorStart)) {
+  if(!maze && room.variant===1) for(const b of boxes.slice(interiorStart)) {
     const previousX=b.x, previousW=b.w;b.x=-b.z;b.z=previousX;b.w=b.d;b.d=previousW;
   }
-  return { ...room, boxes };
+  // The outer promenade links offset thresholds without furniture blocking a doorway.
+  if(!maze) for(let i=boxes.length-1;i>=interiorStart;i--) {
+    const b=boxes[i];
+    if(b.solid && (Math.abs(b.x)+b.w/2>13.5 || Math.abs(b.z)+b.d/2>13.5)) boxes.splice(i,1);
+  }
+  const shaft=shaftAt(x,z);
+  if(shaft) {
+    // Keep the shaft, lift, and their approach free of decorative furniture.
+    for(let i=boxes.length-1;i>=interiorStart;i--) {
+      const b=boxes[i];
+      if(!maze && Math.abs(b.x-shaft.x)<b.w/2+2.9 && Math.abs(b.z-shaft.z)<b.d/2+2.2) boxes.splice(i,1);
+    }
+  }
+  return { ...room, boxes, maze, shaft };
 }
 export function obstacles(x:number,z:number,seed:number) {
   return roomPlan(x,z,seed).boxes.filter(b=>b.solid && b.y-b.h/2<1.9 && b.y+b.h/2>.1)
     .map(b=>({...b,x:b.x+x*ROOM,z:b.z+z*ROOM}));
+}
+
+const edgeKey=(a:number,b:number)=>`${Math.min(a,b)},${Math.max(a,b)}`;
+export function suiteDoors(x:number,z:number,seed:number) {
+  const doors=new Set<string>(), visited=new Set([0]), stack=[0];
+  while(stack.length) {
+    const a=stack[stack.length-1],col=a%4,row=Math.floor(a/4);
+    const neighbours=[col>0?a-1:-1,col<3?a+1:-1,row>0?a-4:-1,row<3?a+4:-1].filter(b=>b>=0&&!visited.has(b));
+    if(!neighbours.length){stack.pop();continue;}
+    const b=neighbours[Math.floor(hash(a+31*x,stack.length+31*z,seed^713)*neighbours.length)];
+    doors.add(edgeKey(a,b));visited.add(b);stack.push(b);
+  }
+  for(let a=0;a<16;a++)for(const b of [a%4<3?a+1:-1,a<12?a+4:-1])
+    if(b>=0&&hash(x*16+a,z*16+b,seed^829)<.13)doors.add(edgeKey(a,b));
+  return doors;
+}
+// Shafts line up on every floor so the return lift always reaches the same address.
+export function shaftAt(x:number,z:number) {
+  return (x===0&&z===0)||hash(x,z,71429)<.16 ? {x:9.3,z:10.5,liftX:12.4,liftZ:10.5} : undefined;
+}
+export function floorSeed(seed:number,level:number) {return level===0?seed:(seed^Math.imul(level,104729))>>>0;}
+export function floorLabel(level:number) {return level===0?'L0':`B${level}`;}
+export function resonancePoint(x:number,z:number,seed:number) {
+  const plan=roomPlan(x,z,seed);
+  if(plan.maze) {
+    const cell=Math.floor(hash(x,z,seed^1907)*15); // Last suite belongs to the shaft.
+    return {x:x*ROOM-10.5+(cell%4)*7,z:z*ROOM-10.5+Math.floor(cell/4)*7};
+  }
+  return {x:x*ROOM,z:z*ROOM};
+}
+export function nextResonance(x:number,z:number,seed:number,count:number) {
+  const direction=Math.floor(hash(count,Math.round(x+z),seed^923)*4);
+  const span=3+Math.floor(hash(count,17,seed)*3),side=Math.floor(hash(count,19,seed)*3)-1;
+  const [dx,dz]=[[side,-span],[span,side],[side,span],[-span,side]][direction];
+  return resonancePoint(Math.round(x/ROOM)+dx,Math.round(z/ROOM)+dz,seed);
 }

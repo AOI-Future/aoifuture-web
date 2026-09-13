@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { ROOM, PLACES, describeRoom, hash, roomPlan, type MaterialKey, type Surface, type BoxSpec } from './geography';
+import { ROOM, PLACES, describeRoom, hash, roomPlan, passage, floorSeed, floorLabel, type MaterialKey, type Surface, type BoxSpec } from './geography';
 export { ROOM, PLACES, describeRoom, hash, obstacles, roomPlan } from './geography';
 
 type Materials = Record<MaterialKey, THREE.Material>;
@@ -14,7 +14,9 @@ export class World {
   private pipe = new THREE.CylinderGeometry(1,1,1,8);
   private lastArea = '';
   private water: THREE.CanvasTexture;
-  constructor(public scene: THREE.Scene, public seed: number) {
+  seed:number;
+  constructor(public scene: THREE.Scene, private baseSeed: number, public level=0) {
+    this.seed=floorSeed(baseSeed,level);
     const surfaces = Object.fromEntries(['carpet','tile','stone','concrete'].map(s=>[s,this.texture(s as Surface)]));
     this.water = this.texture('water');
     this.palettes = PLACES.map((p,i) => ({
@@ -74,20 +76,47 @@ export class World {
     g.position.set(x*ROOM,0,z*ROOM);g.userData.disposables=[];
     g.userData.colliders=plan.boxes.filter(b=>b.solid&&b.y-b.h/2<1.9&&b.y+b.h/2>.1);
     const boxes:BoxSpec[]=[...plan.boxes,
-      {x:0,y:-.15,z:0,w:32,h:.3,d:32,material:'floor',solid:false},
+
       {x:0,y:h+.1,z:0,w:32,h:.2,d:32,material:'ceiling',solid:false},
     ];
+    if(plan.shaft) {
+      const {x:sx,z:sz,liftX,liftZ}=plan.shaft,half=1.25;
+      for(const [px,pz,w,d] of [[(-16+sx-half)/2,0,sx-half+16,32],[(sx+half+16)/2,0,16-sx-half,32],[sx,(-16+sz-half)/2,half*2,sz-half+16],[sx,(sz+half+16)/2,half*2,16-sz-half]])
+        boxes.push({x:px,y:-.15,z:pz,w,h:.3,d,material:'floor',solid:false});
+      // A visible shaft with repeated landings suggests the floors below, without streaming them.
+      for(let floor=1;floor<=3;floor++) {
+        const y=-floor*3.4;
+        for(const side of [-1,1]) {
+          boxes.push({x:sx+side*1.45,y:y+1.5,z:sz,w:.3,h:3.4,d:2.8,material:'wall',solid:false});
+          boxes.push({x:sx,y:y+1.5,z:sz+side*1.45,w:2.8,h:3.4,d:.3,material:'wall',solid:false});
+          boxes.push({x:sx,y:y+.25,z:sz+side*1.24,w:2.4,h:.1,d:.14,material:'light',solid:false});
+          boxes.push({x:sx,y:y+1.3,z:sz+side*1.28,w:.85,h:2.2,d:.04,material:'dark',solid:false});
+        }
+      }
+      boxes.push({x:sx,y:-10.8,z:sz,w:2.5,h:.1,d:2.5,material:'dark',solid:false});
+      for(const side of [-1,1]) {
+        boxes.push({x:sx+side*1.3,y:.015,z:sz,w:.1,h:.03,d:2.7,material:'trim',solid:false});
+        boxes.push({x:sx,y:.015,z:sz+side*1.3,w:2.7,h:.03,d:.1,material:'trim',solid:false});
+      }
+      boxes.push({x:liftX,y:.02,z:liftZ,w:1.25,h:.04,d:1.8,material:this.level>0?'light':'trim',solid:false});
+      this.sign(g,`DOWN / ${floorLabel(this.level+1)}`,this.level>0?`LIFT TO ${floorLabel(this.level-1)} / E`:'OPEN SHAFT',liftX,2.4,sz+1.7,2.2);
+    } else boxes.push({x:0,y:-.15,z:0,w:32,h:.3,d:32,material:'floor',solid:false});
     // A fixed address and a directional destination at each threshold make revisiting legible.
-    this.sign(g,plan.place.name,`SECTOR ${plan.id}`,7,2.3,-15.56,5.2);
+    this.sign(g,plan.place.name,`${floorLabel(this.level)} / ${plan.id}`,7,2.3,-15.56,5.2);
     const north=describeRoom(x,z-1,this.seed), east=describeRoom(x+1,z,this.seed);
-    this.sign(g,north.place.name,'NORTH / NEXT SPACE',0,Math.min(h-.6,3.5),-15.52,3.8);
-    this.sign(g,east.place.name,'EAST / NEXT SPACE',15.52,Math.min(h-.6,3.5),0,3.8,-Math.PI/2);
+    this.sign(g,north.place.name,'NORTH / NEXT SPACE',passage(x,z,this.seed,0,-1).offset,Math.min(h-.6,3.5),-15.52,3.8);
+    this.sign(g,east.place.name,'EAST / NEXT SPACE',15.52,Math.min(h-.6,3.5),passage(x,z,this.seed,1,0).offset,3.8,-Math.PI/2);
     if(plan.place.key==='concourse') {
       const clock=this.shape(g,this.ring,m.light,-7,3.4,-15.5,.9,.9,.9);
       this.shape(g,this.box,m.dark,-7,3.7,-15.46,.06,.6,.06);
       this.shape(g,this.box,m.dark,-6.8,3.4,-15.46,.4,.06,.06);clock.rotation.z=plan.variant*.2;
     }
     if(plan.place.key==='atrium') {
+      for(let level=1;level<=3;level++)for(const side of [-1,1])for(let door=-10;door<=10;door+=5){
+        boxes.push({x:door,y:level*3-.2,z:side*14,w:4.9,h:.2,d:2,material:'trim',solid:false});
+        boxes.push({x:door,y:level*3+1,z:side*15.55,w:1.2,h:2.2,d:.06,material:'dark',solid:false});
+        boxes.push({x:door,y:level*3+.7,z:side*13,w:4.9,h:.08,d:.06,material:'metal',solid:false});
+      }
       const halo=this.shape(g,this.ring,m.light,0,9.4,0,5,5,5);halo.rotation.x=Math.PI/2;
       for(const sx of [-1,1])for(const sz of [-1,1]){
         const sculpture=this.shape(g,this.ring,m.art,sx*8,3.1,sz*8,1.4,1.4,1.4);sculpture.rotation.y=plan.variant*Math.PI/3;
@@ -115,6 +144,11 @@ export class World {
     if(plan.variant===1) for(const side of [-1,1]) boxes.push({x:side*4,y:h-.35,z:0,w:.18,h:.3,d:30,material:'trim',solid:false});
     if(plan.variant===2) for(const side of [-1,1]) boxes.push({x:0,y:h-.35,z:side*4,w:30,h:.3,d:.18,material:'trim',solid:false});
     this.boxes(g,boxes,m);return g;
+  }
+  setFloor(level:number) {
+    if(level===this.level)return;
+    for(const g of this.chunks.values())this.release(g);
+    this.chunks.clear();this.lastArea='';this.level=level;this.seed=floorSeed(this.baseSeed,level);
   }
   update(px:number,pz:number,radius:number) {
     const cx=Math.round(px/ROOM),cz=Math.round(pz/ROOM),area=`${cx},${cz},${radius}`;

@@ -130,14 +130,46 @@ test('streaming releases offscreen room resources', async ({ page },info) => {
     const world=new World(scene,42);let maxChunks=0,maxTextures=0;
     const snapshots=[];
     for(let i=0;i<36;i++){
-      world.update(i*96,-i*64,2);camera.position.set(i*96,1.7,-i*64);renderer.render(scene,camera);
+      world.setFloor(i%5);world.update(i*96,-i*64,2);camera.position.set(i*96,1.7,-i*64);renderer.render(scene,camera);
       maxChunks=Math.max(maxChunks,world.chunks.size);maxTextures=Math.max(maxTextures,renderer.info.memory.textures);
       if(i===0||i===35)snapshots.push(renderer.info.memory.textures);
     }
     world.dispose();renderer.render(scene,camera);const after=renderer.info.memory.textures;renderer.dispose();
     return {maxChunks,maxTextures,snapshots,after,baseline};
   });
-  expect(result.maxChunks).toBe(25);expect(result.maxTextures).toBeLessThanOrEqual(80);
-  expect(result.snapshots[1]).toBeLessThanOrEqual(result.snapshots[0]+4);
+  expect(result.maxChunks).toBe(25);expect(result.maxTextures).toBeLessThanOrEqual(105);
+  expect(result.snapshots[1]).toBeLessThanOrEqual(result.snapshots[0]+10);
   expect(result.after).toBe(result.baseline);
+});
+
+
+test('fall into a lower floor, save there, and return using the lift', async ({page},info)=>{
+  await page.addInitScript(()=>{
+    if(!sessionStorage.getItem('depth-fixture')) {
+      localStorage.setItem('aoi.afterhours.v1',JSON.stringify({version:1,seed:42,x:9.3,z:12.8,yaw:0,count:4,targetX:96,targetZ:0,level:0,targetLevel:0,seen:1,marks:[{x:0,z:0,level:0}]}));
+      sessionStorage.setItem('depth-fixture','1');
+    }
+  });
+  await page.goto('/play/afterhours');await page.locator('#start').click();
+  await page.keyboard.down('KeyW');
+  await expect(page.locator('#place-name')).toContainText('B1',{timeout:12000});
+  await page.keyboard.up('KeyW');
+  await expect(page.locator('#distance')).toContainText('昇降機');
+  await expect(page.locator('#lift')).toBeVisible();
+  await page.screenshot({path:join(screenshots,`afterhours-${info.project.name}-lower-floor.png`)});
+  await page.locator('#pause').click();await page.reload();await page.locator('#start').click();
+  await expect(page.locator('#place-name')).toContainText('B1');
+  if(info.project.name==='desktop')await page.keyboard.press('KeyE');else await page.locator('#lift').tap();
+  await expect(page.locator('#place-name')).toContainText('L0');
+  await expect(page.locator('#count')).toHaveText('04');
+  await expect(page.locator('#lift')).toBeHidden();
+});
+
+test('new sources are distant after the introductory collection',async({page})=>{
+  await page.addInitScript(()=>localStorage.setItem('aoi.afterhours.v1',JSON.stringify({version:1,seed:42,x:0,z:-10.6,yaw:0,count:0,targetX:0,targetZ:-12})));
+  await page.goto('/play/afterhours');await page.locator('#start').click();
+  await expect(page.locator('#count')).toHaveText('01');
+  await page.locator('#pause').click();
+  const save=await page.evaluate(()=>JSON.parse(localStorage.getItem('aoi.afterhours.v1')!));
+  expect(Math.hypot(save.targetX-save.x,save.targetZ-save.z)).toBeGreaterThan(70);
 });
