@@ -57,12 +57,14 @@ interface Section {
   label: string;
   sub: string;
   accent: Accent;
+  href?: string;
 }
 
 const SECTIONS: Section[] = [
   { id: 'nictia', label: 'NICTIA', sub: 'AI ARTIST', accent: 'purple' },
   { id: 'camino', label: 'AOI CAMINO', sub: 'AUTHOR', accent: 'amber' },
   { id: 'sound-umwelt', label: 'SOUND UMWELT', sub: 'PROJECT', accent: 'cyan' },
+  { id: 'apps', label: 'APPS', sub: 'APPS & GAMES', accent: 'cyan', href: '/apps' },
   { id: 'dispatch', label: 'DISPATCH', sub: 'MEDIA', accent: 'amber' },
   { id: 'news', label: 'NEWS', sub: 'SOURCE DESK', accent: 'cyan' },
   { id: 'agent-security', label: 'AGENT.SECURITY', sub: 'FIELD MANUAL', accent: 'cyan' },
@@ -71,7 +73,7 @@ const SECTIONS: Section[] = [
 ];
 
 // ABOUT is opened from the logo button, not the menu — keep #about deep links valid
-const VALID_IDS = new Set([...SECTIONS.map((section) => section.id), 'about']);
+const VALID_IDS = new Set([...SECTIONS.filter((section) => !section.href).map((section) => section.id), 'about']);
 
 function readHash(): string | null {
   const h = window.location.hash.replace('#', '');
@@ -559,14 +561,25 @@ export default function Navigator() {
               );
               return (
                 <li key={s.id}>
-                  <button
-                    onClick={() => open(s.id)}
-                    className="group font-mono cursor-pointer bg-transparent
-                               flex md:flex-row-reverse items-baseline gap-3 md:ml-auto
-                               py-0.5"
-                  >
-                    {menuContent}
-                  </button>
+                  {s.href ? (
+                    <a
+                      href={s.href}
+                      className="group font-mono flex md:flex-row-reverse items-center gap-3 md:ml-auto
+                                 min-h-11 w-fit focus-visible:outline focus-visible:outline-2
+                                 focus-visible:outline-cyan-400 focus-visible:outline-offset-4"
+                    >
+                      {menuContent}
+                    </a>
+                  ) : (
+                    <button
+                      onClick={() => open(s.id)}
+                      className="group font-mono cursor-pointer bg-transparent
+                                 flex md:flex-row-reverse items-baseline gap-3 md:ml-auto
+                                 py-0.5"
+                    >
+                      {menuContent}
+                    </button>
+                  )}
                 </li>
               );
             })}
