@@ -1,0 +1,235 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-09-14T07:02:21+09:00",
+  "dek": "権限を絞る知識基盤と、持続するエージェントの整合性を深掘り。コードレビュー、健康AI、推論基盤、AI観測の更新を追う。",
+  "edition_date": "2026-09-14",
+  "edition_id": "2026-09-14-0702",
+  "edition_note": "直近72時間を中心に、7日以内の文脈記事1件を含む一次資料6件を直接確認。研究・自社測定・移行条件の制約を保持し、公開操作は行っていない。",
+  "generated_at": "2026-09-14T07:02:21+09:00",
+  "items": [
+    {
+      "aoi_note": "既存キーは広い権限のままなので、新規発行だけでなく既存キーの棚卸しと段階的な置換を行う。",
+      "caveat": "既存キーは自動で限定されない。内蔵Weaviate利用者には、12マイナーバージョンをまたぐ段階アップグレードも必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "dify-scoped-keys",
+      "language": "en",
+      "observed_at": "2026-09-14T07:02:21+09:00",
+      "published_at": "2026-09-10T10:04:06Z",
+      "role": "lead",
+      "selection_reason": "AIワークフローで広すぎた共有鍵を、実際のデータ境界へ縮める具体的なリリースだ。",
+      "source_domain": "github.com",
+      "source_fact": "Dify 1.17.1は、知識ベース用APIキーを特定データセットへ限定できる機能を追加し、別データセットへのアクセスを403で拒否する。",
+      "source_kind": "release",
+      "source_title": "v1.17.1 - Bug Fixes and Improvements",
+      "source_url": "https://github.com/langgenius/dify/releases/tag/1.17.1",
+      "title": "知識ベースの鍵を、データセット単位まで絞る",
+      "topics": [
+        "security",
+        "tools",
+        "open-source",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-09-14T07:02:21+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "長期タスクでは、観測、権限、状態、出所、停止条件を毎回の応答ではなく継続する実行境界へ結ぶ。",
+      "caveat": "arXiv v1の未査読研究で、主張は最小の仮想Petri dish実験に基づく。大規模な実運用での有効性は未検証。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "artificial-id-alignment",
+      "language": "en",
+      "observed_at": "2026-09-14T07:02:21+09:00",
+      "published_at": "2026-09-10T17:56:41Z",
+      "role": "major",
+      "selection_reason": "単発応答ではなく、状態を持って続くエージェントの整合性をどこで守るかを具体化する。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者は、目的を明示しない小規模な仮想実験でも行動を続ける方向性が生じ、環境変化に応じて学習済みの感覚対応を置き換えたと報告した。",
+      "source_kind": "paper",
+      "source_title": "Artificial Id: Drive and Persistent Alignment in Agentic AI",
+      "source_url": "https://arxiv.org/abs/2609.11911v1",
+      "title": "続き続けるエージェントには、持続する境界が要る",
+      "topics": [
+        "agents",
+        "research",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-09-14T07:02:21+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "自動解決を完了証明にせず、重要指摘は修正差分とテスト結果を別に保持する。",
+      "caveat": "高・中・低重大度コメントへの対応増加率と費用削減はGitHubの実験値で、各リポジトリでの再現性は未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "copilot-review-rereview",
+      "language": "en",
+      "observed_at": "2026-09-14T07:02:21+09:00",
+      "published_at": "2026-09-11T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "レビュー結果を出すだけでなく、後続コミットとの対応を追って未解決事項を絞る運用へ進んでいる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHub Copilot code reviewは再レビュー時に修正済みコメントを自動解決し、Liteでは複数エージェントとシェルツールによる分析を導入した。",
+      "source_kind": "release",
+      "source_title": "Auto-resolution and analysis updates in Copilot code review",
+      "source_url": "https://github.blog/changelog/2026-09-11-auto-resolution-and-analysis-updates-in-copilot-code-review/",
+      "title": "コードレビューAIが、修正済み指摘を自動で閉じる",
+      "topics": [
+        "agents",
+        "tools",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-09-14T07:02:21+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "健康系AIでは、測定対象、端末要件、地域差、医療用途かウェルネス用途かを機能ごとに分けて読む。",
+      "caveat": "Appleの自社発表で、心拍精度はApple実施の研究に基づく。Vitalsはウェルネス用途で医療用途ではなく、地域・言語・端末による制限がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "apple-health-intelligence",
+      "language": "en",
+      "observed_at": "2026-09-14T07:02:21+09:00",
+      "published_at": "2026-09-09T00:00:00-07:00",
+      "role": "brief",
+      "selection_reason": "センサー計測、端末内推論、クラウド機能、健康助言の境界を一つの製品で確認できる。",
+      "source_domain": "www.apple.com",
+      "source_fact": "Appleは、Apple Watchの心拍・HRV測定頻度を高め、端末上の動作評価とApple IntelligenceによるHealthアプリの個別インサイトを発表した。",
+      "source_kind": "official",
+      "source_title": "Apple advances health and fitness capabilities using Apple Intelligence and the most accurate heart rate sensing in a wearable",
+      "source_url": "https://www.apple.com/newsroom/2026/09/apple-advances-health-and-fitness-capabilities-using-apple-intelligence/",
+      "title": "健康AIは、洞察より先に測定条件を読む",
+      "topics": [
+        "models",
+        "tools",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-09-14T07:02:21+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "更新評価では性能だけでなく、対応演算子、量子化条件、入力検証、既存モデルの回帰を同じテスト表で確認する。",
+      "caveat": "幅広い変更を含むメジャー寄りのリリースで、実際の速度・互換性はハードウェアとモデルごとの検証が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "onnxruntime-130",
+      "language": "en",
+      "observed_at": "2026-09-14T07:02:21+09:00",
+      "published_at": "2026-09-10T16:55:55Z",
+      "role": "watch",
+      "selection_reason": "推論高速化と、モデル・入力を信頼しすぎない実装が同じリリースで進んでいる。",
+      "source_domain": "github.com",
+      "source_fact": "ONNX Runtime 1.30.0は、連続バッチ向け推論、INT4 KVキャッシュ、WebGPU PagedAttentionを拡張し、モデル読み込みやGPU境界の入力検証も強化した。",
+      "source_kind": "release",
+      "source_title": "ONNX Runtime v1.30.0",
+      "source_url": "https://github.com/microsoft/onnxruntime/releases/tag/v1.30.0",
+      "title": "生成AI推論基盤が、速度と入力検証を同時に更新",
+      "topics": [
+        "models",
+        "tools",
+        "open-source",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-09-14T07:02:21+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "導入時はトレース量より、失敗分類、評価データ、再実行結果が一つの作業単位へ結びつくかを確認する。",
+      "caveat": "開発元の1.0リリースノートに基づく機能説明で、大規模環境での運用品質や移行負荷は独立検証されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openobserve-ai-observability",
+      "language": "en",
+      "observed_at": "2026-09-14T07:02:21+09:00",
+      "published_at": "2026-09-11T06:23:24Z",
+      "role": "watch",
+      "selection_reason": "エージェントの観測をログ収集だけで終わらせず、評価、注釈、比較実験へ接続する構成を示す。",
+      "source_domain": "github.com",
+      "source_fact": "OpenObserve 1.0.0は、LLM・エージェント向けにトレースとセッション評価、評価スケジューラ、注釈キュー、データセット、実験ワークフローを追加した。",
+      "source_kind": "release",
+      "source_title": "Release v1.0.0",
+      "source_url": "https://github.com/openobserve/openobserve/releases/tag/v1.0.0",
+      "title": "AIの観測を、トレースから評価運用までつなぐ",
+      "topics": [
+        "agents",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-14T07:02:21+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-09-14T07:02:21+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：AIを動かす前に、権限と観測の境界をつくる",
+  "topics": [
+    {
+      "description": "環境を観測し、道具を使って複数段階の仕事を進めるAI。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "推論、生成、予測を担う基盤モデル。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "AIを実務へ接続する製品、API、運用手段。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "新しい方法、評価、観測結果を示す研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "脆弱性、安全性、攻撃耐性、制御に関する動向。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "再利用可能なコード、モデル、データの公開。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "画像、音声、映像、デザインの制作を支えるAI。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}

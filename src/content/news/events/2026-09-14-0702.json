@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "apple-health-intelligence",
+      "artificial-id-alignment",
+      "copilot-review-rereview",
+      "dify-scoped-keys",
+      "onnxruntime-130",
+      "openobserve-ai-observability"
+    ],
+    "edition_date": "2026-09-14",
+    "edition_id": "2026-09-14-0702",
+    "edition_url": "https://aoifuture.com/news/2026-09-14-0702/",
+    "event_id": "aoi-news-2026-09-14-0702-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-09-14T07:02:21+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "権限を絞る知識基盤と、持続するエージェントの整合性を深掘り。コードレビュー、健康AI、推論基盤、AI観測の更新を追う。",
+    "title": "AOIFUTURE News：AIを動かす前に、権限と観測の境界をつくる"
+  }
+]
