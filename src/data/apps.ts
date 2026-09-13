@@ -38,6 +38,13 @@ export const apps: AppEntry[] = [
     status: 'IN DEV',
     repo: 'AOI-Future/aoi-tap',
   },
+  {
+    id: '003',
+    slug: 'afterhours',
+    name: 'AFTERHOURS',
+    desc: '誰もいない、終わらない空間へ。音と光をたどるブラウザ探索ゲーム',
+    status: 'BETA',
+  },
   // 例) 育って独自ドメインを持ったら `site` を足すだけ（紹介ページは残す）:
   // { id:'003', slug:'studiee', name:'STUDIEE', desc:'…', status:'LIVE', repo:'studiee-ios', site:'https://studiee.app' },
 ];
