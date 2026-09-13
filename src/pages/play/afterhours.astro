@@ -1,0 +1,87 @@
+---
+import '../../styles/global.css';
+import '../../styles/afterhours.css';
+export const prerender = true;
+---
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>AFTERHOURS — 終わらない余白 | AOI Future</title>
+  <meta name="description" content="誰もいない、終わらない空間へ。光の残響を集める無料のリミナルスペース探索ゲーム。タッチとキーボードに対応。" />
+  <link rel="canonical" href="https://aoifuture.com/play/afterhours" />
+  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+  <meta name="theme-color" content="#000000" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="AFTERHOURS — どこでもない場所に、いつまでも。" />
+  <meta property="og:description" content="書架、水盤、吹き抜け。8種類の空間をめぐる、終わらないブラウザ探索ゲーム。スマホ・タブレット・PCで無料プレイ。" />
+  <meta property="og:image" content="https://aoifuture.com/og/afterhours.png" />
+  <meta property="og:image:width" content="960" />
+  <meta property="og:image:height" content="540" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://aoifuture.com/og/afterhours.png" />
+  <meta name="twitter:image:alt" content="水盤のあるリミナル空間とAFTERHOURSのタイトル" />
+  <meta property="og:url" content="https://aoifuture.com/play/afterhours" />
+</head>
+<body>
+<main id="afterhours" aria-label="AFTERHOURS 探索ゲーム">
+  <canvas id="scene" aria-label="3D探索空間。WASDで移動、矢印左右で視点を回転。タッチ操作は左で移動、右で視点。"></canvas>
+  <div class="ah-shade" aria-hidden="true"></div>
+  <header class="ah-header">
+    <a href="/apps/afterhours" class="ah-brand">AOI<span> / </span>AFTERHOURS</a>
+    <span class="ah-edition">AN ENDLESS LIMINAL EXPERIENCE</span>
+    <button id="pause" class="ah-button" hidden aria-label="一時停止">II <span>PAUSE</span></button>
+  </header>
+  <section id="menu" class="ah-menu" aria-labelledby="game-title">
+    <div class="ah-intro">
+      <p class="ah-overline">NO CLOCKS. NO CROWDS. NO END.</p>
+      <h1 id="game-title">AFTER<br /><span>HOURS</span><sup>∞</sup></h1>
+      <p class="ah-tagline">どこでもない場所に、<br />いつまでも。</p>
+      <p class="ah-description">蛍光灯の海。遠くに響く足音。<br />光の残響をたどり、終わらない余白を歩く。</p>
+    </div>
+    <div class="ah-entry">
+      <p class="ah-overline" id="menu-label">001 / ENTER THE IN-BETWEEN</p>
+      <h2 id="menu-title">出口を探さなくていい。</h2>
+      <p id="menu-copy">書架の奥、水盤の向こう、高い天井の下。<br />戻りたい場所を、見つけにいく。</p>
+      <button id="start" class="ah-start" disabled>空間を準備中 <span>↗</span></button>
+      <p id="status" role="status" aria-live="polite">3D空間を読み込んでいます</p>
+      <div class="ah-settings">
+        <label>音量 <input id="volume" type="range" min="0" max="100" value="45" aria-label="音量" /></label>
+        <label>描画 <select id="quality"><option value="auto">自動</option><option value="low">軽量</option><option value="high">高画質</option></select></label>
+        <label class="ah-check"><input id="motion" type="checkbox" /> 視点の揺れ</label>
+      </div>
+      <div class="ah-instructions"><p><b>KEYBOARD</b> WASD 移動 / ← → 視点 / Shift 加速</p><p><b>TOUCH</b> 左スティックで移動 / 右側をスワイプで視点</p><p><b>MOUSE</b> 画面クリックで視点操作 / Esc 一時停止</p></div>
+      <details class="ah-notebook">
+        <summary>探索手帳 <span id="discovery-count">0 / 8 種類の空間</span></summary>
+        <p id="place-clue">場所を覚えることも、探索の一部。</p>
+        <p id="discovered-places"></p>
+        <p id="bookmark-empty">残したい場所で「場所を記録」または B。最大8件。記録を選ぶと帰り道の方角を表示します。</p>
+        <ul id="bookmarks"></ul>
+        <button id="follow-resonance" class="ah-text-button">光の残響を追う →</button>
+      </details>
+      <button id="new-game" class="ah-text-button" hidden>新しい空間を始める</button>
+      <p class="ah-note">音は開始後に再生。進行状況はこの端末に自動保存。</p>
+    </div>
+  </section>
+  <section id="hud" class="ah-hud" hidden aria-label="探索状況">
+    <div class="ah-location"><p id="zone">ARRIVAL HALL</p><span id="place-name">帰らない待合室 / E0 · S0</span><br /><span id="coordinates">0 : 0</span></div>
+    <div class="ah-signal"><span><span id="guide-type">RESONANCE</span> <b id="count">00</b></span><div class="ah-meter"><i id="signal-meter"></i></div><span id="distance">光の残響を探す</span></div>
+    <div id="bearing" class="ah-bearing" aria-hidden="true">↑</div>
+    <div id="toast" class="ah-toast" role="status" aria-live="polite"></div>
+    <div class="ah-crosshair" aria-hidden="true">+</div>
+    <div id="joystick" class="ah-joystick" aria-label="移動スティック"><span id="stick"></span></div>
+    <span class="ah-look-hint">SWIPE TO LOOK</span>
+    <button id="bookmark" class="ah-button ah-bookmark" aria-label="今いる場所を手帳に記録">場所を記録 <span>[B]</span></button>
+    <button id="mute" class="ah-button ah-mute" aria-label="音をミュート" aria-pressed="false">SOUND ON</button>
+    <button id="sprint" class="ah-button ah-sprint" aria-pressed="false">加速</button>
+  </section>
+  <footer class="ah-footer" id="menu-footer"><span>EXPERIMENT 003 / AOI FUTURE</span><span>HEADPHONES RECOMMENDED</span></footer>
+  <noscript><p class="ah-failure">このゲームにはJavaScriptが必要です。ブラウザの設定で有効にしてください。</p></noscript>
+</main>
+<script>
+  import { initGame } from '../../lib/afterhours/game';
+  initGame();
+</script>
+</body>
+</html>

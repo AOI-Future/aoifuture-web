@@ -20,7 +20,9 @@
     "verify:news-build": "node scripts/verify-news-build.mjs",
     "verify:news-build:review": "node scripts/verify-news-build.mjs dist/client review",
     "verify:news-build:production": "node scripts/verify-news-build.mjs dist/client production",
-    "evidence:news-layout": "node scripts/generate-news-layout-evidence.mjs"
+    "evidence:news-layout": "node scripts/generate-news-layout-evidence.mjs",
+    "test:afterhours": "playwright test --config=playwright.afterhours.config.ts",
+    "check:afterhours": "tsc --project tsconfig.afterhours.json"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",
@@ -38,12 +40,15 @@
     "qrcode": "^1.5.4",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "tailwindcss": "^4.1.18"
+    "tailwindcss": "^4.1.18",
+    "three": "^0.186.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
     "@types/qrcode": "^1.5.6",
+    "@types/three": "^0.186.0",
     "svgo": "^4.0.0",
+    "typescript": "^7.0.2",
     "vitest": "^4.1.10"
   },
   "overrides": {
