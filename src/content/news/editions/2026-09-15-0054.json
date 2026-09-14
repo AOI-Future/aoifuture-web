@@ -1,0 +1,231 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-09-15T00:54:56+09:00",
+  "dek": "失敗記録と実行観測を深掘り。AIスキル、標準SDK、推論キャッシュ、機械可読な標準の更新を追う。",
+  "edition_date": "2026-09-15",
+  "edition_id": "2026-09-15-0054",
+  "edition_note": "直近72時間を中心に、7日以内の文脈記事1件を含む一次資料6件を直接確認。研究・開発元測定・初期パイロットの制約を保持し、公開操作は行っていない。",
+  "generated_at": "2026-09-15T00:54:56+09:00",
+  "items": [
+    {
+      "aoi_note": "自社のインシデント台帳でも、事象、権限、実行経路、結果、出典、欠損を分けて残す。",
+      "caveat": "arXiv v1の未査読研究。レジストリは事例検索と評価範囲監査を目的とし、失敗率や対策効果の推定には使えない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "agent-incident-registry",
+      "language": "en",
+      "observed_at": "2026-09-15T00:54:56+09:00",
+      "published_at": "2026-09-10T03:20:46Z",
+      "role": "lead",
+      "selection_reason": "成功率だけでは見落とす、失敗の機序と評価範囲の不足を比較可能にする試みだ。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、公開されたAIエージェント関連事例を出典付きで整理し、因果的役割、開示区分、機序、結果を欠損も含めて記録するAgent Incident Registryを提示した。",
+      "source_kind": "paper",
+      "source_title": "The Agent Incident Registry: Toward Preventing Repeated AI Agent Failures",
+      "source_url": "https://arxiv.org/abs/2609.11030v1",
+      "title": "失敗事例を、再発防止に使える記録へ変える",
+      "topics": [
+        "agents",
+        "research",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-09-15T00:54:56+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "本番では総タイムアウトだけでなく、初回応答、ツール実行、再試行、全体期限を別々に観測する。",
+      "caveat": "開発元のリリースノートに基づく。複数ストレージ実装の検索性能と、既存トレースへの移行負荷は環境ごとの検証が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "mastra-trace-query-timeout",
+      "language": "en",
+      "observed_at": "2026-09-15T00:54:56+09:00",
+      "published_at": "2026-09-11T09:37:43Z",
+      "role": "major",
+      "selection_reason": "長期実行するAIで必要な「何が起きたか」と「いつ諦めるか」を同じ更新で扱っている。",
+      "source_domain": "github.com",
+      "source_fact": "Mastra 1.66.0は、モデル・結果・識別子・版系統を横断する詳細なトレース検索と、ストリーミングの最初の実データ到着を制限するfirstChunkMsを追加した。",
+      "source_kind": "release",
+      "source_title": "September 10, 2026",
+      "source_url": "https://github.com/mastra-ai/mastra/releases/tag/%40mastra/core%401.66.0",
+      "title": "エージェント運用は、追跡可能性と待ち時間の上限を同時に持つ",
+      "topics": [
+        "agents",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-15T00:54:56+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "既定有効化の前に、スキル単位の権限、入力スキーマ、監査ログ、無効化経路を確認する。",
+      "caveat": "機能追加を示すリリースノートであり、既定有効化したスキルの安全性やMCP呼び出し精度を保証するものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "windmill-ai-skills-mcp-schema",
+      "language": "en",
+      "observed_at": "2026-09-15T00:54:56+09:00",
+      "published_at": "2026-09-11T17:02:43Z",
+      "role": "brief",
+      "selection_reason": "道具を増やすとき、名前だけでなく引数契約と所属をモデルへ見せる設計が重要になる。",
+      "source_domain": "github.com",
+      "source_fact": "Windmill 1.810.0は、AIセッションのスキルを既定で有効化してフォルダ別に整理し、チャットへMCPツールの完全なスキーマを渡す更新を含む。",
+      "source_kind": "release",
+      "source_title": "v1.810.0",
+      "source_url": "https://github.com/windmill-labs/windmill/releases/tag/v1.810.0",
+      "title": "AIスキルを既定化するほど、道具の契約を明示する",
+      "topics": [
+        "agents",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-15T00:54:56+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "採用時はSDK版だけでなく、APIの状態遷移、再試行、ツール権限、監査可能な識別子を固定する。",
+      "caveat": "リリースノートはAgents API追加のみを簡潔に示す。具体的な安定性、地域提供、移行互換性は別途API文書で確認が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-python-agents-api",
+      "language": "en",
+      "observed_at": "2026-09-15T00:54:56+09:00",
+      "published_at": "2026-09-10T19:37:39Z",
+      "role": "brief",
+      "selection_reason": "エージェント実装が独自ラッパーから標準SDKの契約へ近づき、更新時の互換性管理が重要になる。",
+      "source_domain": "github.com",
+      "source_fact": "OpenAI Python SDK 3.13.0は、API機能としてAgents API対応を追加した。",
+      "source_kind": "release",
+      "source_title": "v3.13.0",
+      "source_url": "https://github.com/openai/openai-python/releases/tag/v3.13.0",
+      "title": "エージェントAPIが、Python SDKの通常機能になる",
+      "topics": [
+        "agents",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-15T00:54:56+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "自社負荷で接頭辞の共有率、偏り、キャッシュ命中率、P50とP99を同時に測る。",
+      "caveat": "性能値はAWSの特定モデル・構成でのベンチマーク。「最大」値であり、入力分布や負荷分散の偏りによって効果は変わる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "sagemaker-prefix-aware-routing",
+      "language": "en",
+      "observed_at": "2026-09-15T00:54:56+09:00",
+      "published_at": "2026-09-10T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "モデルを替えずに、配置とKVキャッシュの再利用で応答性を改善する運用手段だ。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "Amazon SageMaker Inferenceは、共通するプロンプト接頭辞を同じインスタンスへ送るPREFIX_AWAREルーティングを追加し、AWSのLlama 3.1 70B測定ではP50初回トークン時間を最大77%短縮した。",
+      "source_kind": "official",
+      "source_title": "Reduce LLM latency with prefix-aware routing on Amazon SageMaker Inference",
+      "source_url": "https://aws.amazon.com/blogs/machine-learning/reduce-llm-latency-with-prefix-aware-routing-on-amazon-sagemaker-inference/",
+      "title": "同じ前置きを、同じ推論先へ寄せてキャッシュを生かす",
+      "topics": [
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-15T00:54:56+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AI向けルールも文章だけでなく、用語、必須条件、例外、試験手順を機械判定可能な形で分離する。",
+      "caveat": "7日以内の文脈記事。初期パイロットは荷重計向けOIML R60で、広範な標準の自動適合確認は長期構想の段階。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nist-digitalized-standards",
+      "language": "en",
+      "observed_at": "2026-09-15T00:54:56+09:00",
+      "published_at": "2026-09-08T00:00:00-04:00",
+      "role": "watch",
+      "selection_reason": "人が読むPDFから、機械が要件を解釈して検証できる標準への移行を示す。",
+      "source_domain": "www.nist.gov",
+      "source_fact": "NISTはOIMLと法定計量の勧告を構造化・相互参照可能にし、将来は仕様をソフトウェアパラメータへ変換して試験・評価・適合確認を自動化する取り組みを紹介した。",
+      "source_kind": "official",
+      "source_title": "Digitalized Standards – Progress Towards the Next Generation of Standards Delivery",
+      "source_url": "https://www.nist.gov/news-events/news/2026/09/digitalized-standards-progress-towards-next-generation-standards-delivery",
+      "title": "標準文書を、機械が検査に使える構造へ移す",
+      "topics": [
+        "policy",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-15T00:54:56+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-09-15T00:54:56+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：エージェントの失敗を、次の実行境界へつなぐ",
+  "topics": [
+    {
+      "description": "環境を観測し、道具を使って複数段階の仕事を進めるAI。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "推論、生成、予測を担う基盤モデル。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "AIを実務へ接続する製品、API、運用手段。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "新しい方法、評価、観測結果を示す研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "脆弱性、安全性、攻撃耐性、制御に関する動向。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "AIの開発・利用を形づくる制度、標準、公共判断。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策"
+    },
+    {
+      "description": "再利用可能なコード、モデル、データの公開。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "agent-incident-registry",
+      "mastra-trace-query-timeout",
+      "nist-digitalized-standards",
+      "openai-python-agents-api",
+      "sagemaker-prefix-aware-routing",
+      "windmill-ai-skills-mcp-schema"
+    ],
+    "edition_date": "2026-09-15",
+    "edition_id": "2026-09-15-0054",
+    "edition_url": "https://aoifuture.com/news/2026-09-15-0054/",
+    "event_id": "aoi-news-2026-09-15-0054-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-09-15T00:54:56+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "失敗記録と実行観測を深掘り。AIスキル、標準SDK、推論キャッシュ、機械可読な標準の更新を追う。",
+    "title": "AOIFUTURE News：エージェントの失敗を、次の実行境界へつなぐ"
+  }
+]
