@@ -1,0 +1,235 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-09-16T00:56:31+09:00",
+  "dek": "Siri AIとトークン保護指針を深掘り。悪用確認済み脆弱性、署名付き圧縮、動的ツール、永続ワークフローの更新を追う。",
+  "edition_date": "2026-09-16",
+  "edition_id": "2026-09-16-0056",
+  "edition_note": "直近72時間の一次資料6件を直接確認。製品発表、政府指針、セキュリティ通知、開発元リリースを分け、ベータ機能と環境依存の制約を保持した。",
+  "generated_at": "2026-09-16T00:56:31+09:00",
+  "items": [
+    {
+      "aoi_note": "導入時は、参照できる個人情報、操作可能なアプリ、実行前確認、操作履歴を機能ごとに確認する。",
+      "caveat": "Appleの製品発表に基づく。英語版はベータで、日本語対応や第三者アプリ連携は段階的な提供予定であり、実環境での精度や権限制御は未検証。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "apple-siri-ai-system-actions",
+      "language": "en",
+      "observed_at": "2026-09-16T00:56:31+09:00",
+      "published_at": "2026-09-14T00:00:00-07:00",
+      "role": "lead",
+      "selection_reason": "音声アシスタントが回答中心から、端末内の文脈を読み複数アプリで作業する実行主体へ進む転換点だ。",
+      "source_domain": "www.apple.com",
+      "source_fact": "Appleは次世代Apple IntelligenceとSiri AIの提供を開始し、個人文脈の理解、画面認識、Web知識、アプリをまたぐ操作を追加した。英語版はベータとして提供され、日本語などは翌月に拡大予定としている。",
+      "source_kind": "official",
+      "source_title": "Siri AI, a profoundly more capable and personal assistant powered by the next generation of Apple Intelligence, is here",
+      "source_url": "https://www.apple.com/newsroom/2026/09/siri-ai-a-profoundly-more-capable-and-personal-assistant-is-here/",
+      "title": "Siriが、画面と個人文脈をまたいで行動する",
+      "topics": [
+        "agents",
+        "models",
+        "tools",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-09-16T00:56:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェント権限は短命・限定スコープにし、発行、利用、失効、異常検知を別々の証拠として残す。",
+      "caveat": "主対象は米連邦機関とクラウド事業者。AIに関する記述は高水準の考慮事項で、AIエージェント向けの包括的な実装手順ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nist-token-protection-guidelines",
+      "language": "en",
+      "observed_at": "2026-09-16T00:56:31+09:00",
+      "published_at": "2026-09-15T00:00:00-04:00",
+      "role": "major",
+      "selection_reason": "エージェントへ権限を渡す設計では、認証時点だけでなくトークンの保管、失効、共有シグナルまで運用契約に含める必要がある。",
+      "source_domain": "www.nist.gov",
+      "source_fact": "NISTとCISAはNIST IR 8587を最終化し、トークンやIDアサーションの偽造、窃取、悪用を防ぐ実装上の指針を示した。改訂版は鍵保護を成果ベースにし、AIと耐量子暗号への移行に関する考慮事項も加えた。",
+      "source_kind": "regulator",
+      "source_title": "NIST Finalizes Guidelines on Protecting Online Identity and Access Tokens From Misuse",
+      "source_url": "https://www.nist.gov/news-events/news/2026/09/nist-finalizes-guidelines-protecting-online-identity-and-access-tokens",
+      "title": "アクセストークンを、発行後の運用まで守る",
+      "topics": [
+        "security",
+        "policy",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-09-16T00:56:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "該当製品の有無を棚卸しし、公開範囲、修正状況、侵害痕跡の確認を分けて追跡する。",
+      "caveat": "CISAの通知は悪用確認と優先対応を示すが、個別環境が侵害済みであることは意味しない。影響版と修正方法はCiscoの一次アドバイザリで照合が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-cisco-email-gateway-kev",
+      "language": "en",
+      "observed_at": "2026-09-16T00:56:31+09:00",
+      "published_at": "2026-09-14T00:00:00-04:00",
+      "role": "brief",
+      "selection_reason": "AI導入の入口を守っても、メールや認証など既存の境界機器が侵害されれば、エージェントが扱う情報と権限まで連鎖的に危険になる。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "CISAは、Cisco Secure Email GatewayのSQLインジェクション脆弱性CVE-2026-76461を、実際の悪用証拠に基づいてKEVカタログへ追加した。",
+      "source_kind": "advisory",
+      "source_title": "CISA Adds One Known Exploited Vulnerability to Catalog",
+      "source_url": "https://www.cisa.gov/news-events/alerts/2026/09/14/cisa-adds-one-known-exploited-vulnerability-catalog",
+      "title": "メール防御装置の脆弱性を、悪用確認済みとして扱う",
+      "topics": [
+        "security",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-09-16T00:56:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "圧縮前後で保持すべき決定、承認、未完了事項をテストし、署名検証失敗時は継続実行を止める。",
+      "caveat": "SDKの機能追加を示すリリースノートであり、ベータ機能の安全性や圧縮後の意味保存を保証する評価結果ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "anthropic-sdk-signed-compaction",
+      "language": "en",
+      "observed_at": "2026-09-16T00:56:31+09:00",
+      "published_at": "2026-09-15T15:14:42Z",
+      "role": "brief",
+      "selection_reason": "長時間エージェントでは、文脈圧縮とツール権限が実行の継続性と監査可能性を左右する。",
+      "source_domain": "github.com",
+      "source_fact": "Anthropic Python SDK 1.6.0は、Managed Agentsの自動モード向けツール権限、ベータ版のcompactionパラメータと署名付き圧縮ブロック、非同期の認証トークン供給などを追加した。",
+      "source_kind": "release",
+      "source_title": "anthropic-sdk-python v1.6.0",
+      "source_url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v1.6.0",
+      "title": "長い対話の圧縮にも、署名付きの境界を持たせる",
+      "topics": [
+        "agents",
+        "tools",
+        "security",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-16T00:56:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "保存済みワークフローの作成者、変更差分、必要権限、バックグラウンド完了シグナルを監査対象にする。",
+      "caveat": "開発元リリースノートに基づく。新しい権限ゲートや接続代理が既存設定でどう作用するかは、移行前に環境別の確認が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "mastra-workflow-builder-connect",
+      "language": "en",
+      "observed_at": "2026-09-16T00:56:31+09:00",
+      "published_at": "2026-09-15T15:49:41Z",
+      "role": "brief",
+      "selection_reason": "エージェントが生成した作業手順と外部接続を永続化するほど、作成権限、実行権限、待機状態の区別が重要になる。",
+      "source_domain": "github.com",
+      "source_fact": "Mastra 1.67.0は、保存済みワークフローを作成するStudio Workflow Builder、外部サービス接続をエージェントツール化するmastra/connect、バックグラウンド実行のforeground・deferred・awaited制御を追加した。",
+      "source_kind": "release",
+      "source_title": "Mastra September 15, 2026 release",
+      "source_url": "https://github.com/mastra-ai/mastra/releases/tag/%40mastra/core%401.67.0",
+      "title": "ワークフロー生成と外部接続を、権限付きの道具として組み込む",
+      "topics": [
+        "agents",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-16T00:56:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ツール集合の変更イベントとHTTP入口の許可元を記録し、想定外の組み合わせを実行前に拒否する。",
+      "caveat": "リリースノートは機能追加の存在を示すだけで、動的ツール選択やCORS設定が個別構成で安全になることを保証しない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "windmill-dynamic-agent-toolsets",
+      "language": "en",
+      "observed_at": "2026-09-16T00:56:31+09:00",
+      "published_at": "2026-09-15T09:40:35Z",
+      "role": "watch",
+      "selection_reason": "実行時に道具が変わる仕組みでは、呼び出し元と公開入口の制約を静的設定だけに依存せず検証する必要がある。",
+      "source_domain": "github.com",
+      "source_fact": "Windmill 1.812.0は動的なAIエージェント用ツールセットと、HTTPトリガーに対する経路別CORSオリジン許可リストを追加した。",
+      "source_kind": "release",
+      "source_title": "Windmill v1.812.0",
+      "source_url": "https://github.com/windmill-labs/windmill/releases/tag/v1.812.0",
+      "title": "エージェントの道具を動的に変えるなら、入口ごとの許可も固定する",
+      "topics": [
+        "agents",
+        "tools",
+        "security",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-16T00:56:31+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-09-16T00:56:31+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：個人文脈を扱うAIに、権限と証拠の境界を置く",
+  "topics": [
+    {
+      "description": "環境を観測し、道具を使って複数段階の仕事を進めるAI。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "推論、生成、予測を担う基盤モデル。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "AIを実務へ接続する製品、API、運用手段。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "画像、音声、映像、デザインなどの創作を支えるAI。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    },
+    {
+      "description": "脆弱性、安全性、攻撃耐性、制御に関する動向。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "AIの開発・利用を形づくる制度、標準、公共判断。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策"
+    },
+    {
+      "description": "再利用可能なコード、モデル、データの公開。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "anthropic-sdk-signed-compaction",
+      "apple-siri-ai-system-actions",
+      "cisa-cisco-email-gateway-kev",
+      "mastra-workflow-builder-connect",
+      "nist-token-protection-guidelines",
+      "windmill-dynamic-agent-toolsets"
+    ],
+    "edition_date": "2026-09-16",
+    "edition_id": "2026-09-16-0056",
+    "edition_url": "https://aoifuture.com/news/2026-09-16-0056/",
+    "event_id": "aoi-news-2026-09-16-0056-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-09-16T00:56:31+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "Siri AIとトークン保護指針を深掘り。悪用確認済み脆弱性、署名付き圧縮、動的ツール、永続ワークフローの更新を追う。",
+    "title": "AOIFUTURE News：個人文脈を扱うAIに、権限と証拠の境界を置く"
+  }
+]
