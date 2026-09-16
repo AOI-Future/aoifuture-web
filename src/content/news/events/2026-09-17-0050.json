@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "arxiv-defining-ai-agents",
+      "google-gemini-38-live",
+      "google-retrieve-for-train",
+      "nist-mep-ai-manufacturing",
+      "openai-government-access-cyber",
+      "openai-gpt-live-1-api"
+    ],
+    "edition_date": "2026-09-17",
+    "edition_id": "2026-09-17-0050",
+    "edition_url": "https://aoifuture.com/news/2026-09-17-0050/",
+    "event_id": "aoi-news-2026-09-17-0050-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-09-17T00:50:51+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "音声AIと低遅延検索を深掘り。製造支援、行政調達、エージェント評価の一次資料を追う。",
+    "title": "AOIFUTURE News：会話するAIを、実行と評価の仕組みへつなぐ"
+  }
+]

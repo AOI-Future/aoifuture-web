@@ -1,0 +1,233 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-09-17T00:50:51+09:00",
+  "dek": "音声AIと低遅延検索を深掘り。製造支援、行政調達、エージェント評価の一次資料を追う。",
+  "edition_date": "2026-09-17",
+  "edition_id": "2026-09-17-0050",
+  "edition_note": "9月10日から15日の一次資料6件を直接確認。直近72時間3件と7日以内の文脈Brief/Watch 3件を組み合わせ、各発表の適用条件を残した。",
+  "generated_at": "2026-09-17T00:50:51+09:00",
+  "items": [
+    {
+      "aoi_note": "音声の自然さとは別に、背景タスクの権限、途中経過、取消し、完了確認を設計する。",
+      "caveat": "性能値と本番利用可能性はGoogleの発表に基づく。企業向けの一部提供はプライベートプレビューで、個別業務での精度や安全性は未検証。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-gemini-38-live",
+      "language": "en",
+      "observed_at": "2026-09-17T00:50:51+09:00",
+      "published_at": "2026-09-15T00:00:00-07:00",
+      "role": "lead",
+      "selection_reason": "音声AIが応答と作業を直列にこなす段階から、会話を保ったまま複数段階の処理を進める段階へ移る更新だ。",
+      "source_domain": "blog.google",
+      "source_fact": "GoogleはGemini 3.8 LiveとExtended Thinkingを発表し、会話を継続しながら視覚入力を扱い、非同期にツールやAPIを実行する機能を提供開始した。",
+      "source_kind": "official",
+      "source_title": "Introducing Gemini 3.8 Live and 3.8 Live Extended Thinking",
+      "source_url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-gemini-3-8-live-extended-thinking/",
+      "title": "会話を止めずに、音声AIが考え続ける",
+      "topics": [
+        "agents",
+        "models",
+        "tools",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-09-17T00:50:51+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "速度だけでなく、集合全体の網羅性、重複、ドリフトを独立指標で比較する。",
+      "caveat": "Google Researchと著者らの実験結果で、ファッションと音楽の限定データを中心にした研究。異なる検索領域や実運用での一般化は未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-retrieve-for-train",
+      "language": "en",
+      "observed_at": "2026-09-17T00:50:51+09:00",
+      "published_at": "2026-09-15T00:00:00-07:00",
+      "role": "major",
+      "selection_reason": "推論時に毎回大きな思考予算を払う代わりに、望ましい探索行動を学習時へ移す設計は、低遅延AI検索の別解になる。",
+      "source_domain": "research.google",
+      "source_fact": "Google Researchは、RLで得た検索展開を53.9Mパラメータの拡散モデルへ蒸留し、集合としての多様性や整合性を保ちながら単一パスで候補群を生成するRetrieve-for-Trainを報告した。",
+      "source_kind": "paper",
+      "source_title": "Bypassing inference bottlenecks: Accelerating complex AI search with Retrieve-for-Train",
+      "source_url": "https://research.google/blog/bypassing-inference-bottlenecks-accelerating-complex-ai-search-with-retrieve-for-train/",
+      "title": "検索時の長い思考を、学習時の一回に移す",
+      "topics": [
+        "research",
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-17T00:50:51+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "補助金額ではなく、導入率、生産性、安全性、継続利用の指標を追う。",
+      "caveat": "交付決定の発表であり、導入成果は今後の年次評価に依存する。受給組織には少なくとも50%の非連邦マッチング資金が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nist-mep-ai-manufacturing",
+      "language": "en",
+      "observed_at": "2026-09-17T00:50:51+09:00",
+      "published_at": "2026-09-15T00:00:00-04:00",
+      "role": "brief",
+      "selection_reason": "AI政策がモデル開発だけでなく、地域の導入支援と共通の成果指標へ移っている。",
+      "source_domain": "www.nist.gov",
+      "source_fact": "NISTは12のManufacturing Extension Partnership拠点へ総額3000万ドル超を交付し、中小製造業によるAI、ロボット、オートメーションなどの導入支援を進める。",
+      "source_kind": "regulator",
+      "source_title": "NIST Awards More Than $30 Million for MEP Centers in 11 States and Puerto Rico",
+      "source_url": "https://www.nist.gov/news-events/news/2026/09/nist-awards-more-30-million-mep-centers-11-states-and-puerto-rico",
+      "title": "中小製造業のAI導入を、地域拠点から広げる",
+      "topics": [
+        "policy",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-17T00:50:51+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "割り込み成功率だけでなく、誤実行、本人確認、録音同意、人への引継ぎを試験する。",
+      "caveat": "公開から7日目の文脈Brief。性能値はOpenAIと協力先の評価に基づき、実環境の騒音、誤認識、通話規制、同意取得は別途検証が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-gpt-live-1-api",
+      "language": "en",
+      "observed_at": "2026-09-17T00:50:51+09:00",
+      "published_at": "2026-09-10T00:00:00-07:00",
+      "role": "brief",
+      "selection_reason": "音声フロントと推論バックエンドを分けて選べるため、対話品質、推論深度、コストを役割別に設計できる。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIはGPT‑Live‑1をAPIで提供し、同時に聞いて話す音声処理、割り込み対応、背後のテキストモデルへの推論・ツール呼び出し委譲、電話対応を追加した。",
+      "source_kind": "release",
+      "source_title": "Build more natural voice experiences with GPT‑Live‑1 in the API",
+      "source_url": "https://openai.com/index/introducing-gpt-live-1-in-the-api/",
+      "title": "全二重の音声モデルを、APIから組み込む",
+      "topics": [
+        "agents",
+        "models",
+        "tools",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-09-17T00:50:51+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "割引率ではなく、利用権限、監査、予算上限、成果測定、契約終了時のデータ移行を確認する。",
+      "caveat": "公開から7日目の文脈Watchで、OpenAIの発表に基づく。適格性、実際の契約条件、導入効果、攻撃的能力へのアクセス管理は各組織で確認が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-government-access-cyber",
+      "language": "en",
+      "observed_at": "2026-09-17T00:50:51+09:00",
+      "published_at": "2026-09-10T00:00:00-07:00",
+      "role": "watch",
+      "selection_reason": "行政AI導入ではモデル性能だけでなく、調達価格、支出管理、訓練、サイバー利用権限が一つの制度設計になる。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIと米GSAは、連邦・州・地方・部族政府向けに27カ月の契約を発表し、ライセンス料を無料、利用料を50%割引とし、認証済み政府組織へDaybreak Blueを提供するとした。",
+      "source_kind": "official",
+      "source_title": "Expanding AI access and cyber defense for federal, state, local, and tribal governments",
+      "source_url": "https://openai.com/index/expanding-ai-access-us-government/",
+      "title": "行政向けAIの価格とサイバー支援を一体化する",
+      "topics": [
+        "policy",
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-17T00:50:51+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "製品比較では名称を外し、五つの能力ごとに根拠、試験条件、失敗例を記録する。",
+      "caveat": "公開から7日目の文脈Brief。査読前プレプリントの調査論文で、提示された枠組み自体の妥当性や網羅性は今後の検証が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-defining-ai-agents",
+      "language": "en",
+      "observed_at": "2026-09-17T00:50:51+09:00",
+      "published_at": "2026-09-10T02:50:29Z",
+      "role": "brief",
+      "selection_reason": "「エージェント」という名称ではなく、どの能力をどの尺度で確認したかを比較する共通語彙になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らはAIエージェントを、環境との相互作用、学習と適応、自律性、目標指向性、時間的な一貫性の五次元で整理し、既存の指標とベンチマークをまとめた。",
+      "source_kind": "paper",
+      "source_title": "Defining AI Agents: A Compendium of Criteria, Metrics, and Benchmarks",
+      "source_url": "https://arxiv.org/abs/2609.11018v1",
+      "title": "「AIエージェント」を、五つの測定軸で整理する",
+      "topics": [
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-09-17T00:50:51+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-09-17T00:50:51+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：会話するAIを、実行と評価の仕組みへつなぐ",
+  "topics": [
+    {
+      "description": "環境を観測し、道具を使って複数段階の仕事を進めるAI。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "推論、生成、予測を担う基盤モデル。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "AIを実務へ接続する製品、API、運用手段。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "画像、音声、映像、デザインなどの創作を支えるAI。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    },
+    {
+      "description": "AIの能力、効率、評価を検証する研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "AIの開発・利用を形づくる制度、標準、公共判断。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策"
+    },
+    {
+      "description": "脆弱性、安全性、攻撃耐性、制御に関する動向。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    }
+  ]
+}
