@@ -1,12 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { hash, obstacles, roomPlan, describeRoom, PLACES, ROOM, passage, resonancePoint, nextResonance, floorSeed, shaftAt } from '../src/lib/afterhours/geography';
+import { hash, obstacles, roomPlan, describeRoom, PLACES, ROOM, passage, resonancePoint, nextResonance, floorSeed, shaftAt, collidersFromBoxes } from '../src/lib/afterhours/geography';
 describe('a memorable connected world', () => {
   it('connects every threshold, suite, source and shaft through walkable passages', () => {
     for(const level of [0,1,4])for(const seed of [42,31337])for(let x=-2;x<=2;x++)for(let z=-2;z<=2;z++) {
       const actualSeed=floorSeed(seed,level), plan=roomPlan(x,z,actualSeed);
-      const blocks=plan.boxes.filter(b=>b.solid&&b.y-b.h/2<1.9&&b.y+b.h/2>.1);
+      const blocks=collidersFromBoxes(plan.boxes);
       const blocked=(px:number,pz:number)=>blocks.some(b=>Math.abs(px-b.x)<b.w/2+.35&&Math.abs(pz-b.z)<b.d/2+.35);
-      const source=resonancePoint(x,z,actualSeed),sx=Math.round((source.x-x*32+16)*2),sz=Math.round((source.z-z*32+16)*2);
+      const source=resonancePoint(x,z,actualSeed),sx=Math.round((source.x-x*ROOM+16)*2),sz=Math.round((source.z-z*ROOM+16)*2);
       const visited=new Uint8Array(65*65),queue=[sz*65+sx];visited[queue[0]]=1;
       for(let i=0;i<queue.length;i++){
         const id=queue[i],cx=id%65,cz=Math.floor(id/65);
@@ -43,7 +43,7 @@ describe('a memorable connected world', () => {
       const seed=floorSeed(42,level),point=nextResonance(-73,47,seed,count);
       const distance=Math.hypot(point.x+73,point.z-47);
       expect(distance).toBeGreaterThan(70);expect(distance).toBeLessThan(200);
-      expect(obstacles(Math.round(point.x/32),Math.round(point.z/32),seed).some(b=>Math.abs(point.x-b.x)<b.w/2+.35&&Math.abs(point.z-b.z)<b.d/2+.35)).toBe(false);
+      expect(obstacles(Math.round(point.x/ROOM),Math.round(point.z/ROOM),seed).some(b=>Math.abs(point.x-b.x)<b.w/2+.35&&Math.abs(point.z-b.z)<b.d/2+.35)).toBe(false);
     }
     expect(shaftAt(0,0)).toBeDefined();
     expect(roomPlan(2,3,floorSeed(42,1))).not.toEqual(roomPlan(2,3,floorSeed(42,0)));
