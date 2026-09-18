@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { ROOM, PLACES, describeRoom, hash, roomPlan, passage, floorSeed, floorLabel, type MaterialKey, type Surface, type BoxSpec } from './geography';
-export { ROOM, PLACES, describeRoom, hash, obstacles, roomPlan } from './geography';
 
 type Materials = Record<MaterialKey, THREE.Material>;
 export class World {
