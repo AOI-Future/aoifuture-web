@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "arxiv-he-guardrail",
+      "arxiv-health-sociotechnical-costs",
+      "github-copilot-feature-engagement",
+      "github-copilot-review-progress",
+      "microsoft-ai-transformation",
+      "nist-cyber-workforce-ramps"
+    ],
+    "edition_date": "2026-09-21",
+    "edition_id": "2026-09-21-1850",
+    "edition_url": "https://aoifuture.com/news/2026-09-21-1850/",
+    "event_id": "aoi-news-2026-09-21-1850-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-09-21T18:50:58+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "MicrosoftとGitHubの実装知を深掘り。サイバー人材、暗号化推論、医療AI評価の一次資料を追う。",
+    "title": "AOIFUTURE News：AIを導入するなら、成果と検証履歴まで設計する"
+  }
+]

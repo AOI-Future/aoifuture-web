@@ -1,0 +1,214 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-09-21T18:50:58+09:00",
+  "dek": "MicrosoftとGitHubの実装知を深掘り。サイバー人材、暗号化推論、医療AI評価の一次資料を追う。",
+  "edition_date": "2026-09-21",
+  "edition_id": "2026-09-21-1850",
+  "edition_note": "9月17日から18日の一次資料6件を直接確認。成果指標、レビュー履歴、安全性、社会技術的な費用を横断した。",
+  "generated_at": "2026-09-21T18:50:58+09:00",
+  "items": [
+    {
+      "aoi_note": "導入席数を成果とせず、対象業務の基準値、品質、時間、例外処理を先に決める。",
+      "caveat": "20%の成約率向上、最大75%のサイクル短縮などはMicrosoftが選んだ社内事例で、他組織への再現性や比較対照は示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "microsoft-ai-transformation",
+      "language": "en",
+      "observed_at": "2026-09-21T18:50:58+09:00",
+      "published_at": "2026-09-17T00:00:00-07:00",
+      "role": "lead",
+      "selection_reason": "200,000人へのライセンス配布でも仕事の仕方は変わらない、という実装側の反省はAI導入評価の出発点になる。",
+      "source_domain": "blogs.microsoft.com",
+      "source_fact": "Microsoftは社内の数百件のAI変革事例を基に、アクセスや利用量だけでは変革にならず、業務成果から始め、ワークフローを再設計し、測定と学習を反復する五つの教訓を公開した。",
+      "source_kind": "official",
+      "source_title": "What we’ve learned from Microsoft’s own AI transformation",
+      "source_url": "https://blogs.microsoft.com/blog/2026/09/17/what-weve-learned-from-microsofts-own-ai-transformation/",
+      "title": "AI導入は、利用者数より業務結果で測る",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-21T18:50:58+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AIの指摘を消費するだけでなく、新規、解決、見落としを人間が監査できる履歴として残す。",
+      "caveat": "一般提供された表示・操作改善であり、レビュー精度、誤検知率、脆弱性発見率の向上を示す独立評価ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-review-progress",
+      "language": "en",
+      "observed_at": "2026-09-21T18:50:58+09:00",
+      "published_at": "2026-09-18T00:00:00-07:00",
+      "role": "major",
+      "selection_reason": "再レビューで過去の指摘がどう変わったかを残す設計は、AIレビューを一回の判定から継続的な検証へ変える。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはCopilot code reviewで、未解決、前回以降に解決、以前見落としていた指摘を分けて表示し、返信を考慮した自動解決理由と、提案をまとめて適用する際のコミット文生成を一般提供した。",
+      "source_kind": "release",
+      "source_title": "Copilot code review: An improved review experience",
+      "source_url": "https://github.blog/changelog/2026-09-18-copilot-code-review-an-improved-review-experience/",
+      "title": "AIレビューを、指摘の履歴として追えるようにする",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-21T18:50:58+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "導入率だけでなく、機能別の継続利用と成果指標を組み合わせる。",
+      "caveat": "集計は利用の継続性を示すが、生産性、品質、満足度、費用対効果そのものは測らない。同一人物が複数機能に重複計上される。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-feature-engagement",
+      "language": "en",
+      "observed_at": "2026-09-21T18:50:58+09:00",
+      "published_at": "2026-09-17T00:00:00-07:00",
+      "role": "brief",
+      "selection_reason": "単日のアクティブ数より、どの機能が習慣化したかを把握しやすくなる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはCopilotの企業・組織向け指標に、28日間で2日以上利用した人数を機能別に示す集計と、各導入段階の28日人口を追加した。",
+      "source_kind": "release",
+      "source_title": "Copilot impact dashboard now shows feature engagement",
+      "source_url": "https://github.blog/changelog/2026-09-17-copilot-impact-dashboard-now-shows-feature-engagement/",
+      "title": "AI利用を、機能別の継続利用で見る",
+      "topics": [
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-21T18:50:58+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "研修回数だけでなく、技能獲得、就業、地域組織への定着まで追う。",
+      "caveat": "交付決定と計画の発表であり、就業者数、技能向上、地域組織の防御力への実績は今後の評価を待つ。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nist-cyber-workforce-ramps",
+      "language": "en",
+      "observed_at": "2026-09-21T18:50:58+09:00",
+      "published_at": "2026-09-18T00:00:00-04:00",
+      "role": "brief",
+      "selection_reason": "AI導入が広がるほど、モデル開発者だけでなく地域の運用・防御人材を育てる経路が必要になる。",
+      "source_domain": "www.nist.gov",
+      "source_fact": "NISTは8州の教育・地域組織9件に各最大20万ドル、総額170万ドル超の協力協定を発表し、NICE Frameworkに沿う教育、実習、地域連携を支援する。",
+      "source_kind": "regulator",
+      "source_title": "NIST Awards More Than $1.7 Million to Support Cybersecurity Workforce Development Across 8 States",
+      "source_url": "https://www.nist.gov/news-events/news/2026/09/nist-awards-more-17-million-support-cybersecurity-workforce-development",
+      "title": "地域単位でサイバー人材の学習経路をつくる",
+      "topics": [
+        "security",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-09-21T18:50:58+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "秘匿性と安全判定を別々に評価し、遅延と見逃し率を含む脅威モデルを確認する。",
+      "caveat": "査読前プレプリントで、公開要約から確認できるのは提案の主旨まで。精度、計算負荷、脅威モデル、実運用での適用範囲は本文と追試が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-he-guardrail",
+      "language": "en",
+      "observed_at": "2026-09-21T18:50:58+09:00",
+      "published_at": "2026-09-18T08:36:37Z",
+      "role": "brief",
+      "selection_reason": "入力を平文へ戻さず推論する設計でも、安全判定をどこで実施するかという境界は残る。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、暗号化データのまま計算する準同型暗号を用いたLLM推論に、脱獄攻撃を検知するガードレールを組み合わせる方式を提案した。",
+      "source_kind": "paper",
+      "source_title": "HE-Guardrail: A Homomorphic Guardrail Against Jailbreak Attacks for Encrypted Large Language Model Inference",
+      "source_url": "https://arxiv.org/abs/2609.21484v1",
+      "title": "暗号化した推論に、暗号化した安全判定を重ねる",
+      "topics": [
+        "security",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-09-21T18:50:58+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "精度指標に加え、導入・保守・説明・責任・現場負担を同じ評価表で扱う。",
+      "caveat": "査読前のレビュー論文で、公開要約から確認できるのは問題設定と整理軸まで。個別医療現場への因果的な効果や費用推計を示すものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-health-sociotechnical-costs",
+      "language": "en",
+      "observed_at": "2026-09-21T18:50:58+09:00",
+      "published_at": "2026-09-18T17:56:41Z",
+      "role": "watch",
+      "selection_reason": "高い計算性能が、現場の意思決定、費用、役割分担へ自動的に良い結果をもたらすとは限らない。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは医療システムのアルゴリズムを、技術性能だけでなく計算資源、組織運用、人間中心の費用を含む社会技術的な観点から整理した。",
+      "source_kind": "paper",
+      "source_title": "A Sociotechnical Review of Algorithms in Health Systems: Technical, Cost, and Human-Centered Considerations",
+      "source_url": "https://arxiv.org/abs/2609.22070v1",
+      "title": "医療AIを、精度だけでなく組織と人の費用で見る",
+      "topics": [
+        "research",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-09-21T18:50:58+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-09-21T18:50:58+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：AIを導入するなら、成果と検証履歴まで設計する",
+  "topics": [
+    {
+      "description": "環境を観測し、道具を使って複数段階の仕事を進めるAI。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "AIを実務へ接続する製品、API、運用手段。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "AIの能力、効率、評価を検証する研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "脆弱性、安全性、攻撃耐性、制御に関する動向。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "AIの開発・利用を形づくる制度、標準、公共判断。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策"
+    }
+  ]
+}
