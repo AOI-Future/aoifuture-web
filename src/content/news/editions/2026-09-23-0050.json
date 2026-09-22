@@ -1,0 +1,233 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-09-23T00:50:42+09:00",
+  "dek": "エージェントを特権主体として守る設計と、開発・ローカルAI基盤の運用更新を深掘りする。",
+  "edition_date": "2026-09-23",
+  "edition_id": "2026-09-23-0050",
+  "edition_note": "9月20日から22日の一次資料6件を直接確認。安全境界、開発統制、ローカル推論、オープンソース保守を横断した。",
+  "generated_at": "2026-09-23T00:50:42+09:00",
+  "items": [
+    {
+      "aoi_note": "入力の意味をAIに判定させるだけでは境界にならない。列挙可能な操作、最小権限、全操作の仲介、証拠保存を先に置く。",
+      "caveat": "査読前の体系化論文であり、提案された研究課題が実装済みの防御や攻撃不可能性を示すものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-agent-kernel-security",
+      "language": "en",
+      "observed_at": "2026-09-23T00:50:42+09:00",
+      "published_at": "2026-09-20T15:18:00Z",
+      "role": "lead",
+      "selection_reason": "権限を持つエージェントの安全性を、モデルの善意ではなく完全仲介と決定的検査の設計問題として捉え直せる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、外部システムを操作するLLMエージェントが事実上カーネル級の権限を持つ一方、すべてのアクセスを仲介する参照モニターを欠くと整理し、出所に基づく決定的検査と意味判断に残る構造的な空白を区別した。",
+      "source_kind": "paper",
+      "source_title": "When the Agent Becomes the Kernel: A Systematization of Security on the Path to AI-Native Operating Systems",
+      "source_url": "https://arxiv.org/abs/2609.23700v1",
+      "title": "エージェントを「新しいカーネル」として守る",
+      "topics": [
+        "agents",
+        "security",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-09-23T00:50:42+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ツールを増やす前に、誰が仕事を開始し、どこで検証し、誰が承認し、費用と監査証跡をどう束ねるかを一つの運用面で設計する。",
+      "caveat": "提供中の製品と今後導入予定の構想が混在する発表であり、全機能の可用性や効果を示す独立評価ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "jetbrains-air-agentic-development",
+      "language": "en",
+      "observed_at": "2026-09-23T00:50:42+09:00",
+      "published_at": "2026-09-22T00:00:00Z",
+      "role": "major",
+      "selection_reason": "エージェント導入の競争軸が単体のコード生成精度から、実行、レビュー、統制、費用を横断する運用システムへ移っている。",
+      "source_domain": "blog.jetbrains.com",
+      "source_fact": "JetBrainsは、IDE内のエージェント体験、チーム調整、組織の方針・監査・コスト管理をつなぐマルチベンダー志向の製品群「JetBrains Air」を発表した。",
+      "source_kind": "official",
+      "source_title": "JetBrains Air: Building a System of Products for Agentic Software Development - The JetBrains Blog",
+      "source_url": "https://blog.jetbrains.com/blog/2026/09/22/introducing-jetbrains-air/",
+      "title": "コード生成から、エージェント開発全体の統制へ",
+      "topics": [
+        "agents",
+        "tools",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-09-23T00:50:42+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "Q4_K_Mを出発点にしても、実際の業務データで品質、速度、メモリ、再現性を比較し、量子化率だけで採用を決めない。",
+      "caveat": "初期対応はApple Siliconと特定アーキテクチャが中心で、量子化による品質差はモデルと用途ごとに評価が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "hf-transformers-gguf",
+      "language": "en",
+      "observed_at": "2026-09-23T00:50:42+09:00",
+      "published_at": "2026-09-22T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "モデル資産の形式を変えずに既存のTransformers APIへつなげられ、ローカルAIの検証経路が短くなる。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Hugging FaceはTransformersにGGUFモデルの効率的な実行対応を追加し、llama.cpp由来のggmlカーネルを再利用して、まずApple SiliconとQwen3.5を中心にローカル推論を扱えるようにした。",
+      "source_kind": "release",
+      "source_title": "Transformers now runs llama.cpp quants",
+      "source_url": "https://huggingface.co/blog/transformers-llama-cpp-quants",
+      "title": "TransformersからGGUF量子化モデルを直接動かす",
+      "topics": [
+        "models",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-23T00:50:42+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "採用判断ではベンチマークに加え、ライセンス、保守主体、更新頻度、上流互換性、撤退時の移行先を確認する。",
+      "caveat": "採用・資金面の発表であり、具体的なリリース時期や性能改善を保証するものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "hf-omlx-maintenance",
+      "language": "en",
+      "observed_at": "2026-09-23T00:50:42+09:00",
+      "published_at": "2026-09-22T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "ローカルAI基盤の持続性は性能だけでなく、保守者の時間、資金、上流への還元経路に左右される。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Hugging FaceはoMLX作者のJun Kimが同社へ参加し、oMLXはApache 2.0を維持したまま、MLX実装の長期保守とTransformersモデル定義からMLXへの移行を進めると発表した。",
+      "source_kind": "official",
+      "source_title": "Jun Kim, oMLX creator and maintainer, joins Hugging Face to support the MLX community",
+      "source_url": "https://huggingface.co/blog/omlx",
+      "title": "oMLXの保守を、個人の副業から継続投資へ移す",
+      "topics": [
+        "open-source",
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-23T00:50:42+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "更新前に現行設定と状態DBを退避し、代表的なcron、MCP、セッション引き継ぎを小さなカナリアで確認してから展開する。",
+      "caveat": "パッチ版の要約で、完全な整理済み変更履歴は次版へ持ち越されている。更新には環境固有の互換性確認が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "hermes-agent-0214",
+      "language": "en",
+      "observed_at": "2026-09-23T00:50:42+09:00",
+      "published_at": "2026-09-21T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "エージェント基盤では新機能と同じくらい、多重起動、状態分離、定期実行の詰まり、引き継ぎ損失を減らす運用修正が重要になる。",
+      "source_domain": "github.com",
+      "source_fact": "NousResearchはHermes Agent v0.21.4を安定タグとして公開し、ゲートウェイの単一プロセス制御、プロファイル分離、cron自己復旧、セッション引き継ぎ、MCP探索などの多数の変更をまとめた。",
+      "source_kind": "repository",
+      "source_title": "Hermes Agent v0.21.4 (v2026.9.21)",
+      "source_url": "https://github.com/NousResearch/hermes-agent/releases/tag/v2026.9.21",
+      "title": "エージェント基盤の安定版に、分離と復旧の修正が集約",
+      "topics": [
+        "agents",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-23T00:50:42+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "一時トークンの寿命と更新経路、拒否時の戻り値、再起動後のキャッシュ画面を統合テストに含める。",
+      "caveat": "複数パッケージをまとめたプロジェクト自身のリリースノートであり、各変更の本番安定性や他ホストでの互換性は個別検証が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "agentproto-20260922",
+      "language": "en",
+      "observed_at": "2026-09-23T00:50:42+09:00",
+      "published_at": "2026-09-22T09:26:37Z",
+      "role": "brief",
+      "selection_reason": "UI埋め込みとデーモン再起動の境界、失敗状態の表現、評価器の分離は、エージェント連携を壊れにくくする具体的な設計点になる。",
+      "source_domain": "github.com",
+      "source_fact": "agentprotoは、opaque origin環境のMCP Apps向けに起動単位の埋め込みトークン更新を導入し、transmit_messageの送信拒否を成功扱いしない修正と、スタイル評価用スコア群を公開した。",
+      "source_kind": "release",
+      "source_title": "agentproto — September 22, 2026 release",
+      "source_url": "https://github.com/agentproto/ts/releases/tag/release%2F2026-09-22",
+      "title": "MCPウィジェットの再起動耐性と送信失敗の正直な報告を改善",
+      "topics": [
+        "agents",
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-23T00:50:42+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-09-23T00:50:42+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：エージェントを動かす前に、境界と運用を設計する",
+  "topics": [
+    {
+      "description": "環境を観測し、道具を使って複数段階の仕事を進めるAI。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "脆弱性、安全性、攻撃耐性、制御に関する動向。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "AIの能力、効率、評価を検証する研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "AIを実務へ接続する製品、API、運用手段。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "AIの開発・利用を形づくる制度、標準、公共判断。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策"
+    },
+    {
+      "description": "基盤モデルの能力、提供条件、評価に関する動向。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "公開されたモデル、コード、共同開発基盤の動向。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    }
+  ]
+}
