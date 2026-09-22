@@ -1,0 +1,23 @@
+[
+  {
+    "changed_signal_ids": [
+      "anthropic-accenture-embedded-evaluation",
+      "anthropic-life-sciences-verification",
+      "arxiv-designer-rsi-memory",
+      "arxiv-personality-social-agents",
+      "github-copilot-grok-47",
+      "openai-global-ai-standards",
+      "openai-sponsored-agents-ads"
+    ],
+    "edition_date": "2026-09-22",
+    "edition_id": "2026-09-22-1254",
+    "edition_url": "https://aoifuture.com/news/2026-09-22-1254/",
+    "event_id": "aoi-news-2026-09-22-1254-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-09-22T12:59:07+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "国際標準と生命科学の用途別アクセスを深掘り。対話広告、埋め込み評価、モデル運用、デザイン記憶、社会エージェント研究を追う。",
+    "title": "AOIFUTURE News：AIの能力だけでなく、権限と評価方法を設計する"
+  }
+]

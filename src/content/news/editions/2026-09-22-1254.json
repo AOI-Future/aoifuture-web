@@ -1,0 +1,262 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-09-22T12:59:07+09:00",
+  "dek": "国際標準と生命科学の用途別アクセスを深掘り。対話広告、埋め込み評価、モデル運用、デザイン記憶、社会エージェント研究を追う。",
+  "edition_date": "2026-09-22",
+  "edition_id": "2026-09-22-1254",
+  "edition_note": "9月16日から21日の一次資料7件を直接確認。AIの標準化、高リスク利用、外部評価、創作支援、モデル選択を横断した。",
+  "generated_at": "2026-09-22T12:59:07+09:00",
+  "items": [
+    {
+      "aoi_note": "標準は免許や事前承認と同義ではない。測定方法、監督の発火条件、事故の重大度を共有できるかが実務上の焦点になる。",
+      "caveat": "企業自身による政策提案であり、採択済みの国際標準や法的義務ではない。再帰的自己改善も現在起きているとはしていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-global-ai-standards",
+      "language": "en",
+      "observed_at": "2026-09-22T12:59:07+09:00",
+      "published_at": "2026-09-21T00:00:00-07:00",
+      "role": "lead",
+      "selection_reason": "モデル単体の性能競争だけでなく、評価証拠と事故報告を国や企業をまたいで比較できる設計が必要になる。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは、自動化されたAI研究や再帰的自己改善を含む高度なAIについて、能力測定、リスク評価、人間の監督、事故分類を国際的な技術標準として整備するよう提案した。",
+      "source_kind": "official",
+      "source_title": "Building standards for the next phase of AI",
+      "source_url": "https://openai.com/index/building-standards-next-phase-ai/",
+      "title": "高度なAIほど、共通の評価基準が必要になる",
+      "topics": [
+        "agents",
+        "security",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-09-22T12:59:07+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "用途別の権限を付与するなら、通常権限と高リスク権限を分離し、更新期限と管理者向けの異常通知を持たせる。",
+      "caveat": "Anthropicの自社プログラムで、独立監査結果は未提示。ベータ段階で個人プランや第三者基盤には未対応であり、監視対象データを30日保持する。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "anthropic-life-sciences-verification",
+      "language": "en",
+      "observed_at": "2026-09-22T12:59:07+09:00",
+      "published_at": "2026-09-17T00:00:00-07:00",
+      "role": "major",
+      "selection_reason": "一律拒否ではなく、身元、用途、権限、監視、更新期限を組み合わせて高リスク利用を扱う具体例になる。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "Anthropicは生命科学向け検証プログラムをベータ提供し、組織・研究者の審査後にStandard Useとプロジェクト単位のHigh-risk Useを分け、申告用途から外れる利用を継続監視すると発表した。",
+      "source_kind": "official",
+      "source_title": "Introducing the Life Sciences Verification Program",
+      "source_url": "https://www.anthropic.com/news/life-sciences-verification-program",
+      "title": "危険度の高い生命科学利用を、本人確認と用途監視で分ける",
+      "topics": [
+        "models",
+        "security",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-09-22T12:59:07+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "広告主のエージェントとChatGPTの独立回答を見分けられる表示、会話データの扱い、誤認時の責任分界を確認する。",
+      "caveat": "Sponsored Agentsは米国の一部広告主での試験で、効果や誤誘導リスクの独立評価は示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-sponsored-agents-ads",
+      "language": "en",
+      "observed_at": "2026-09-22T12:59:07+09:00",
+      "published_at": "2026-09-16T00:00:00-07:00",
+      "role": "brief",
+      "selection_reason": "検索結果型広告だけでなく、対話そのものが企業の販売接点になる設計が始まった。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは米国の一部広告主とSponsored Agentsを試験し、広告から明示表示された企業提供エージェントとの会話へ進める機能、広告作成支援、HubSpotとShopifyの連携を発表した。",
+      "source_kind": "release",
+      "source_title": "Reimagining advertising with AI",
+      "source_url": "https://openai.com/index/reimagining-advertising-with-ai/",
+      "title": "広告から、企業提供エージェントとの会話へ移る",
+      "topics": [
+        "agents",
+        "tools",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-09-22T12:59:07+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "評価者の独立性は肩書きではなく、資金源、アクセス範囲、報告権限、公開範囲で確認する。",
+      "caveat": "運用標準や報告方式、独立資金の仕組みは未確立で、当面は評価対象のAnthropicが費用を負担する。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "anthropic-accenture-embedded-evaluation",
+      "language": "en",
+      "observed_at": "2026-09-22T12:59:07+09:00",
+      "published_at": "2026-09-18T00:00:00-07:00",
+      "role": "brief",
+      "selection_reason": "完成品だけを外から試す評価より、訓練中の判断や事故対応まで検証できる可能性がある。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "AnthropicとAccentureは、モデルの評価、レッドチーム、アラインメント評価、保護策の検査を、従業員に近い情報アクセスを持つ埋め込み型評価者として行う提携を発表した。",
+      "source_kind": "official",
+      "source_title": "Partnering with Accenture on embedded evaluation",
+      "source_url": "https://www.anthropic.com/news/accenture-embedded-evaluation",
+      "title": "外部評価者を、モデル開発の内側へ入れる",
+      "topics": [
+        "models",
+        "security",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-09-22T12:59:07+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "組織導入では新モデルの自動有効化を避け、対象チーム、費用、ログ、停止条件を先に決める。",
+      "caveat": "段階展開中の製品告知で、性能、安全性、コスト効率の独立比較は含まれない。利用量課金は提供元のリスト価格に従う。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-grok-47",
+      "language": "en",
+      "observed_at": "2026-09-22T12:59:07+09:00",
+      "published_at": "2026-09-21T00:00:00-07:00",
+      "role": "watch",
+      "selection_reason": "新モデルが既定で有効になる運用では、品質評価だけでなく管理者ポリシーと課金条件の確認が必要になる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはGrok 4.7をCopilotの複数プランと開発環境へ段階展開し、BusinessとEnterpriseでは管理者がモデルポリシーで利用を制御できると発表した。",
+      "source_kind": "release",
+      "source_title": "Grok 4.7 is now available in GitHub Copilot",
+      "source_url": "https://github.blog/changelog/2026-09-21-grok-4-7-is-now-available-in-github-copilot/",
+      "title": "Copilotに新モデルを追加するとき、既定有効化を確認する",
+      "topics": [
+        "models",
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-09-22T12:59:07+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "手順追加と既存手順の改善を分け、過去の成功を壊さない回帰テストを昇格条件にする。",
+      "caveat": "査読前プレプリントで、評価は特定モデル、独自ベンチマーク、自動採点を含む。報告された成功率を一般的なデザイン品質へそのまま外挿できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-designer-rsi-memory",
+      "language": "en",
+      "observed_at": "2026-09-22T12:59:07+09:00",
+      "published_at": "2026-09-18T17:59:56Z",
+      "role": "brief",
+      "selection_reason": "モデル再学習なしでも、編集可能な成果物を作る長期作業の手順を、失敗回復と回帰防止を両立しながら改善できる可能性を示す。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、凍結したモデルが230超のデザイン操作を使う際、自然言語の手順記憶を実行履歴から追加・改訂し、成功例を壊さないリプレイゲートで更新を選別する枠組みを提案した。",
+      "source_kind": "paper",
+      "source_title": "Evolving Procedural Memory from User Traffic for Agentic Graphic Design",
+      "source_url": "https://arxiv.org/abs/2609.22086v1",
+      "title": "デザインエージェントの手順記憶を、成功と失敗から更新する",
+      "topics": [
+        "agents",
+        "research",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-09-22T12:59:07+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "平均点だけでなく評価者間一致を併記し、改善が測定方法の揺れを超えているかを見る。",
+      "caveat": "査読前プレプリントで、二つの小型モデルとLLM審査員による限定評価。低い評価者間一致のため結論の確度も限定的。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-personality-social-agents",
+      "language": "en",
+      "observed_at": "2026-09-22T12:59:07+09:00",
+      "published_at": "2026-09-18T14:52:26Z",
+      "role": "watch",
+      "selection_reason": "人物らしさを追加学習だけで解決しようとせず、評価者の一致度と訓練データの適合性を先に確かめる必要がある。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは二つの小型オープンモデルを性格ラベル付きデータで追加学習したが、指示だけの基準モデルより性格ロールプレイが良くならず、評価者間一致も低かったと報告した。",
+      "source_kind": "paper",
+      "source_title": "Do Personality-Tuned LLMs Make Better Social Agents?",
+      "source_url": "https://arxiv.org/abs/2609.21857v1",
+      "title": "性格調整の追加学習が、対話エージェントを必ず良くするとは限らない",
+      "topics": [
+        "agents",
+        "models",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-09-22T12:59:07+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-09-22T12:59:07+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：AIの能力だけでなく、権限と評価方法を設計する",
+  "topics": [
+    {
+      "description": "環境を観測し、道具を使って複数段階の仕事を進めるAI。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "脆弱性、安全性、攻撃耐性、制御に関する動向。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "AIの開発・利用を形づくる制度、標準、公共判断。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策"
+    },
+    {
+      "description": "基盤モデルの能力、提供条件、評価に関する動向。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "AIの能力、効率、評価を検証する研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "AIを実務へ接続する製品、API、運用手段。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "制作、デザイン、音声、映像へAIを応用する動向。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}
