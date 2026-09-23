@@ -1,17 +1,16 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { appsForNativeLegal } from '../../data/apps';
 
 // aoifuture のネイティブアプリ共通プライバシーポリシー。
-// 全アプリ（AoiTap / AOI HARBOR / 今後のアプリ）は完全オンデバイスで
-// 動作し、ユーザーデータを収集・外部送信しない（Data Not Collected）。
+// 対象アプリ一覧は src/data/apps.ts（scope: native）から派生。
+// 掲載アプリは完全オンデバイスで動作し、ユーザーデータを収集・外部送信しない（Data Not Collected）。
 // App Store / TestFlight の「プライバシーポリシー URL」はこのページを指す。
 // 注意: ウェブサイト（aoifuture.com 本体）の解析・Cookie は別ポリシー（/privacy）。
+// scope: web（ブラウザゲーム等）は本ページの対象外。
 const lastUpdated = '2026-06-19';
 
-const apps = [
-  { name: 'AoiTap', plat: 'iOS / macOS / watchOS', note: 'オンデバイス文字起こし・日英対訳 → Markdown' },
-  { name: 'AOI HARBOR', plat: 'macOS', note: 'ローカル LLM ゲートウェイ' },
-];
+const apps = appsForNativeLegal();
 ---
 
 <Layout title="App Privacy | AOI">
@@ -48,14 +47,18 @@ const apps = [
           {apps.map(a => (
             <div class="flex items-baseline gap-3 border border-cyan-400/20 px-4 py-3 flex-wrap">
               <span class="text-sm tracking-widest text-cyan-300">{a.name}</span>
-              <span class="text-[10px] text-cyan-400/60 border border-cyan-400/20 px-2 py-1 tracking-wide">{a.plat}</span>
-              <span class="text-xs text-cyan-400/40" style="font-family:var(--font-sans)">{a.note}</span>
+              <span class="text-[10px] text-cyan-400/60 border border-cyan-400/20 px-2 py-1 tracking-wide">{a.legalPlat}</span>
+              <span class="text-xs text-cyan-400/40" style="font-family:var(--font-sans)">{a.legalNote}</span>
             </div>
           ))}
         </div>
         <p class="mt-5 text-xs text-cyan-400/40" style="font-family:var(--font-sans);line-height:1.8">
+          ※ <span class="text-cyan-400/70">/apps/</span> に掲載のブラウザ向け作品（例: AFTERHOURS）はネイティブアプリではないため、
+          本ページの Data Not Collected 声明の対象外です。各作品の LP に記載の取り扱いに従ってください。
+        </p>
+        <p class="mt-3 text-xs text-cyan-400/40" style="font-family:var(--font-sans);line-height:1.8">
           ※ ウェブサイト（aoifuture.com 本体・コンサルティング等）における Cookie・アクセス解析については、
-          <a href="/privacy" class="text-cyan-400/70 hover:text-cyan-400 hover:underline">サイトのプライバシーポリシー</a> をご覧ください。本ページはアプリ専用です。
+          <a href="/privacy" class="text-cyan-400/70 hover:text-cyan-400 hover:underline">サイトのプライバシーポリシー</a> をご覧ください。本ページはネイティブアプリ専用です。
         </p>
       </section>
 
