@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { ROOM, PLACES, describeRoom, hash, roomPlan, passage, floorSeed, floorLabel, type MaterialKey, type Surface, type BoxSpec } from './geography';
+import { ROOM, PLACES, describeRoom, hash, roomPlan, passage, floorSeed, floorLabel, collidersFromBoxes, type MaterialKey, type Surface, type BoxSpec } from './geography';
 export { ROOM, PLACES, describeRoom, hash, obstacles, roomPlan } from './geography';
 
 type Materials = Record<MaterialKey, THREE.Material>;
@@ -74,7 +74,7 @@ export class World {
   private create(x:number,z:number) {
     const plan=roomPlan(x,z,this.seed), g=new THREE.Group(), m=this.palettes[plan.index], h=plan.place.height;
     g.position.set(x*ROOM,0,z*ROOM);g.userData.disposables=[];
-    g.userData.colliders=plan.boxes.filter(b=>b.solid&&b.y-b.h/2<1.9&&b.y+b.h/2>.1);
+    g.userData.colliders=collidersFromBoxes(plan.boxes);
     const boxes:BoxSpec[]=[...plan.boxes,
 
       {x:0,y:h+.1,z:0,w:32,h:.2,d:32,material:'ceiling',solid:false},
@@ -165,7 +165,7 @@ export class World {
   }
   blocked(x:number,z:number) {
     const cx=Math.round(x/ROOM),cz=Math.round(z/ROOM);
-    const colliders:BoxSpec[]=this.chunks.get(`${cx},${cz}`)?.userData.colliders??roomPlan(cx,cz,this.seed).boxes.filter(b=>b.solid&&b.y-b.h/2<1.9&&b.y+b.h/2>.1);
+    const colliders:BoxSpec[]=this.chunks.get(`${cx},${cz}`)?.userData.colliders??collidersFromBoxes(roomPlan(cx,cz,this.seed).boxes);
     return colliders.some(b=>Math.abs(x-cx*ROOM-b.x)<b.w/2+.35&&Math.abs(z-cz*ROOM-b.z)<b.d/2+.35);
   }
   private release(g:THREE.Group){this.scene.remove(g);g.traverse(o=>{if(o instanceof THREE.InstancedMesh)o.dispose();});for(const resource of g.userData.disposables)resource.dispose();}
