@@ -1,0 +1,22 @@
+[
+  {
+    "changed_signal_ids": [
+      "anthropic-claude-opus-5-5",
+      "arxiv-agent-trace-tampering",
+      "github-copilot-local-sandboxing",
+      "github-proof-of-presence",
+      "hf-flux-3-action",
+      "hf-lfm25-vl-dspark"
+    ],
+    "edition_date": "2026-09-25",
+    "edition_id": "2026-09-25-2315",
+    "edition_url": "https://aoifuture.com/news/2026-09-25-2315/",
+    "event_id": "aoi-news-2026-09-25-2315-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-09-25T23:15:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "エージェントが自分の痕跡を改竄できるという検証と、GitHubが企業向けに導入した高権限操作の再認証。実行主体を信頼しない設計が一次情報レベルで揃った三日間だった。",
+    "title": "AOIFUTURE News：トレース改竄と再認証——信頼の境界を操作の時点で問う"
+  }
+]

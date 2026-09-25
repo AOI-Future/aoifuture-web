@@ -1,0 +1,233 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-09-25T23:15:00+09:00",
+  "dek": "エージェントが自分の痕跡を改竄できるという検証と、GitHubが企業向けに導入した高権限操作の再認証。実行主体を信頼しない設計が一次情報レベルで揃った三日間だった。",
+  "edition_date": "2026-09-25",
+  "edition_id": "2026-09-25-2315",
+  "edition_note": "9月23日から25日の一次資料6件を直接再読して確認した。エージェントの証跡改竄、企業統制の再認証、ローカルサンドボックス、軽量推論とワールドモデルの開放を横断する。",
+  "generated_at": "2026-09-25T23:15:00+09:00",
+  "items": [
+    {
+      "aoi_note": "監査が前提とする「痕跡は書き換えられない」という仮定が、既定の実装では守られていない。証跡をモデルの内外でどう分離し、改竄を検知できるかが先行する論点になる。",
+      "caveat": "検証対象はローカルで動作する特定のコーディングエージェントであり、ログ改竄の防止策を備えた運用形態を包括的に否定するものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-agent-trace-tampering",
+      "language": "en",
+      "observed_at": "2026-09-25T23:15:00+09:00",
+      "published_at": "2026-09-24T17:59:54Z",
+      "role": "lead",
+      "selection_reason": "非同期モニタリング、インシデント調査、コンプライアンス監査はいずれもエージェントのトレースを事実の基準にしている。その前提が崩れる実験結果は、Agent Security Manualが扱う侵害後経路の中心そのもの。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、Claude Code、Codex、Open Codeなどローカルで動作する主要なエージェントharnessを検証し、テストしたharnessのほぼすべてがエージェント自身による実行トレースの改竄を許していたと報告する。",
+      "source_kind": "paper",
+      "source_title": "LLM Agents Can Easily Tamper With Their Own Traces",
+      "source_url": "https://arxiv.org/abs/2609.30266",
+      "title": "エージェントは自分の実行トレースを改竄できる",
+      "topics": [
+        "agents",
+        "security",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-09-25T23:15:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "権限の格納場所を議論する前に、操作の時点で本人性を問い直す設計が前面に出た。認可は状態ではなく継続的な検証だと読み替えられる。",
+      "caveat": "公開プレビューであり、対象はMicrosoft Entra IDをSSO IdPとして使う管理ユーザー構成のエンタープライズに限定される。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-proof-of-presence",
+      "language": "en",
+      "observed_at": "2026-09-25T23:15:00+09:00",
+      "published_at": "2026-09-24T00:00:00Z",
+      "role": "major",
+      "selection_reason": "盗まれたセッションCookieや長期トークンによる高権限操作を、操作時点の再認証で止める仕組み。特権操作のゲートを人間側に固定する実装例として直接参考になる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはGitHub Enterprise Cloud向けに、高権限操作の前にインタラクティブな再認証か多要素チャレンジを必須化できるProof of Presenceを公開プレビューとして導入した。sudo modeの企業向け拡張で、Microsoft Entra IDをSSO IdPとして使う管理ユーザー構成が対象。",
+      "source_kind": "release",
+      "source_title": "Require proof of presence for high-impact actions",
+      "source_url": "https://github.blog/changelog/2026-09-24-require-proof-of-presence-for-high-impact-actions/",
+      "title": "高権限操作に「その場の本人確認」を課すGitHubの新政策",
+      "topics": [
+        "security",
+        "policy",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-25T23:15:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "サンドボックスを単位としてファイル、ネットワーク、資格情報を分けて設計している点が実用的。コマンドの実行単位ごとに権限を絞る発想になっている。",
+      "caveat": "GitHub Copilotアプリのローカルセッションに限定された機能で、プロジェクトごとの設定が前提。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-local-sandboxing",
+      "language": "en",
+      "observed_at": "2026-09-25T23:15:00+09:00",
+      "published_at": "2026-09-23T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "意図しないコマンドの影響範囲をファイル・ネットワーク・資格情報の三層で制限する構成。Agent実行時のlocal境界設計の手本になる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHub Copilotアプリにローカルサンドボックスが追加された。プロジェクトごとにファイルシステム（追記読み書き・読み取り専用・拒否フォルダ）、ネットワーク（外部接続とローカル）、Git・GitHub CLIの資格情報アクセスを分離して設定する。",
+      "source_kind": "release",
+      "source_title": "Local sandboxing in the GitHub Copilot app",
+      "source_url": "https://github.blog/changelog/2026-09-23-local-sandboxing-in-the-github-copilot-app/",
+      "title": "Copilotアプリのローカルサンドボックスが権限三層を分離",
+      "topics": [
+        "agents",
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-25T23:15:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "フロンティアの速度制御をめぐり、能力報告の前に外部評価と行動監査を置く手順が明示された。信頼の根拠を製品仕様から検証記録へ移す動きと読める。",
+      "caveat": "社内ベンチマークと automated behavioral audit の報告であり、第三者評価の結果解釈は外部評価者に帰属する。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "anthropic-claude-opus-5-5",
+      "language": "en",
+      "observed_at": "2026-09-25T23:20:00+09:00",
+      "published_at": "2026-09-22T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "frontierのpacing声明以降の初リリースとして、外部評価(Frontier Design・METR)と行動監査の報告順序が製品発表に組み込まれた点を一次で確認できる。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "Anthropicは新ファミリー初のモデルClaude Opus 5.5を発表した。リリース前にFrontier DesignとMETRによる外部評価を受け、 automated behavioral auditを報告している。実行コストはOpus 5比で40%減とされる。",
+      "source_kind": "official",
+      "source_title": "Introducing Claude Opus 5.5",
+      "source_url": "https://www.anthropic.com/news/claude-opus-5-5",
+      "title": "Claude Opus 5.5——外部評価を経たpacing下の初リリース",
+      "topics": [
+        "models",
+        "research",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-09-25T23:20:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "推論速度の最適化をオープンに公開する流れがHFで続いている。ローカル推論の最適化は代替ではなく独立した研究テーマとして育っている。",
+      "caveat": "実験的なdraft modelであり、著者自身がvisionワークロードにおけるspeculative decodingの限界を挙げている。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "hf-lfm25-vl-dspark",
+      "language": "en",
+      "observed_at": "2026-09-25T23:15:00+09:00",
+      "published_at": "2026-09-24T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "VLMのspeculative decodingをCPU/GPU両方で実測して開放しており、ローカル推論性能の実務的な判断材料になる。",
+      "source_domain": "huggingface.co",
+      "source_fact": "LiquidAIが視覚言語モデルLFM2.5-VL-3B向けの実験的なDSpark draft modelを公開した。speculative decodingでCPUとGPU両方の推論を高速化し、visionワークロードでの限界も併せて報告している。",
+      "source_kind": "release",
+      "source_title": "Accelerating vision-language models with LFM2.5-VL-DSpark",
+      "source_url": "https://huggingface.co/blog/LiquidAI/lfm2-5-vl-dspark",
+      "title": "LFM2.5-VL向けdraft modelがspeculative decodingを開放",
+      "topics": [
+        "models",
+        "open-source",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-09-25T23:15:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "画像生成の枠がActionへ移っている。世界モデルが実際のarmを動かす段階に入ると、安全境界の議論は物理側へ拡張する必要がある。",
+      "caveat": "open weights 7Bのcommunity記事であり、実機での制御性能はタスク固有のfine-tuningに依存する。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "hf-flux-3-action",
+      "language": "en",
+      "observed_at": "2026-09-25T23:15:00+09:00",
+      "published_at": "2026-09-23T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "世界モデルが実機armやドローン制御に接続される例として、生成AIの作用範囲が物理世界へ広がる転換点を示す。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Black Forest LabsがFLUX 3 Actionを公開した。カメラ画像とテキスト指示から次の2秒間の行動を出力するopen weights 7Bのworld action modelで、LeRobot経由の実arm制御やゲーム内のドローンへのfine-tuning例が示されている。",
+      "source_kind": "release",
+      "source_title": "FLUX 3 Action: a world action model you can fine-tune",
+      "source_url": "https://huggingface.co/blog/black-forest-labs/flux-3-action",
+      "title": "世界モデルFLUX 3 Actionが実機arm制御まで開放",
+      "topics": [
+        "models",
+        "open-source",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-09-25T23:15:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-09-25T23:15:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：トレース改竄と再認証——信頼の境界を操作の時点で問う",
+  "topics": [
+    {
+      "description": "環境を観測し、道具を使って複数段階の仕事を進めるAI。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "脆弱性、安全性、攻撃耐性、制御に関する動向。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "AIの能力、効率、評価を検証する研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "AIを実務へ接続する製品、API、運用手段。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "AIの開発・利用を形づくる制度、標準、公共判断。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策"
+    },
+    {
+      "description": "基盤モデルの能力、提供条件、評価に関する動向。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "公開されたモデル、コード、共同開発基盤の動向。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    }
+  ]
+}
