@@ -1,0 +1,25 @@
+[
+  {
+    "changed_signal_ids": [
+      "anthropic-enzyme-discovery",
+      "arxiv-adwm-counterfactual-mpc",
+      "arxiv-sage-reasoning-bias",
+      "github-agentic-autofix-copilot-memory",
+      "github-codeql-2-27-1",
+      "github-ssh-algorithm-removal",
+      "huggingface-relore-repository-memory",
+      "ibm-agent-consistency-eval",
+      "nvidia-nemotron-diarization"
+    ],
+    "edition_date": "2026-09-27",
+    "edition_id": "2026-09-27-0550",
+    "edition_url": "https://aoifuture.com/news/2026-09-27-0550/",
+    "event_id": "aoi-news-2026-09-27-0550-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-09-27T05:50:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "エージェントが自分の修正パターンを記憶に織り込み、証跡の担保が製品機能になる一方、IBMは「一度成功したエージェントはもう一度成功するか」を問い、AnthropicはClaudeによる酵素発見を公表した。実行の再現性を設計で担保する流れが一次情報レベルで揃った。",
+    "title": "AOIFUTURE News：記憶と再現性——実行し続けるための設計が一次情報に並んだ三日間"
+  }
+]

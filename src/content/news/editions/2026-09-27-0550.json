@@ -1,0 +1,307 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-09-27T05:50:00+09:00",
+  "dek": "エージェントが自分の修正パターンを記憶に織り込み、証跡の担保が製品機能になる一方、IBMは「一度成功したエージェントはもう一度成功するか」を問い、AnthropicはClaudeによる酵素発見を公表した。実行の再現性を設計で担保する流れが一次情報レベルで揃った。",
+  "edition_date": "2026-09-27",
+  "edition_id": "2026-09-27-0550",
+  "edition_note": "9月15日から25日の一次資料9件を直接再読して確認した。GitHubのセキュリティ自動化とSSHアルゴリズム廃止、NVIDIA・Hugging Face・IBMのエージェント運用知見、Anthropicの生命科学成果、長期推論のバイアス研究を横断する。",
+  "generated_at": "2026-09-27T05:50:00+09:00",
+  "items": [
+    {
+      "aoi_note": "リポジトリの記憶をコードの旁边に置く発想は、issueからPRまでの文脈が失われる現在のagent運用の核心を突く。Y Combinatorが記憶を搜索资料として定める動きと重なる。",
+      "caveat": "コミュニティ版の実装段階の記事で、対応範囲や安定性は現時点のRepository状态に依存する。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "huggingface-relore-repository-memory",
+      "language": "en",
+      "observed_at": "2026-09-27T05:50:00+09:00",
+      "published_at": "2026-09-21T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "コーディングエージェントがリポジトリ横断で記憶を持つという設計を、Hugging Face自社チームが一次情報として公開した。GitHubのCopilot Memoryと同じ潮流をOSS側から見た比較材料になる。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Hugging Faceがコーディングエージェント向けのリポジトリ記憶ツールreloreを公開。8月に発行されたtransformersのissue対応から端を発し、1つの実行でissueからPRまでを一気通貫で進める基盤として設計されている。",
+      "source_kind": "release",
+      "source_title": "relore - repository memory for coding agents",
+      "source_url": "https://huggingface.co/blog/huggingface/relore-repository-memory",
+      "title": "Hugging Faceがコーディングエージェント向け記憶ツールreloreを公開",
+      "topics": [
+        "agents",
+        "open-source",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-27T05:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "修正パターンを資産として再利用する設計は、属人的なセキュリティ対応を組織の記憶に変える。逆に言えば、メモリ汚染がそのまま将来の自動修正品質に直結する。メモリへの書き込み経路自体を統制対象に含めるかが分岐点になる。",
+      "caveat": "有効化している顧客向けの改善であり、Copilot Memoryの記憶品質や誤蓄積時の挙動までは本页からは確認できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-agentic-autofix-copilot-memory",
+      "language": "en",
+      "observed_at": "2026-09-27T05:50:00+09:00",
+      "published_at": "2026-09-25T00:00:00Z",
+      "role": "major",
+      "selection_reason": "セキュリティアラートの自動修正がリポジトリ固有の記憶を利用し、修正パターンを再帰的に蓄積する。Agent Security Manualが扱う自動化された修復経路が、単発の機能から記憶駆動の運用に変わったことを示す一次情報。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは、有効化済み顧客向けにAgentic autofixがCopilot Memoryを参照し、既存メモリをコンテキストとしてセキュリティアラートの解決に活用すると発表。作成した修正は修正パターンとしてメモリに保存され、Copilot code reviewやcloud agentなど他の機能にも還元される。",
+      "source_kind": "release",
+      "source_title": "Agentic autofix now uses Copilot Memory",
+      "source_url": "https://github.blog/changelog/2026-09-25-agentic-autofix-now-uses-copilot-memory/",
+      "title": "GitHubの自動修正がCopilot Memoryを利用し、修正パターンを記憶として蓄積",
+      "topics": [
+        "agents",
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-27T05:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "静的解析エンジンのクエリ拡充は地味だが、コード監査の適用範囲が実務の技術スタックに追いつくかどうかを左右する。C/C++への新規クエリ追加はレガシーコードの可視化につながる。",
+      "caveat": "新クエリの検出精度や誤検知率の比較データは本页には含まれない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-codeql-2-27-1",
+      "language": "en",
+      "observed_at": "2026-09-27T05:50:00+09:00",
+      "published_at": "2026-09-25T00:00:00Z",
+      "role": "major",
+      "selection_reason": "GitHub code scanningの基盤エンジンCodeQLのバージョンアップで、C/C++とC#向け新クエリ、Kotlin 2.4.20対応、クエリ精度改善が一度に入っている。開発ツール側の安全網が動く頻度を示す記録。",
+      "source_domain": "github.blog",
+      "source_fact": "CodeQL 2.27.1がC/C++とC#向けの新クエリ、Kotlin 2.4.20のサポート、クエリ精度の改善を含めてリリースされた。CodeQLはGitHub code scanningの背後にある静的解析エンジン。",
+      "source_kind": "release",
+      "source_title": "CodeQL 2.27.1 adds C and C++ query and Kotlin 2.4.20 support",
+      "source_url": "https://github.blog/changelog/2026-09-25-codeql-2-27-1-adds-c-and-c-query-and-kotlin-2-4-20-support/",
+      "title": "CodeQL 2.27.1がC/C++・C#新クエリとKotlin 2.4.20対応を提供",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-27T05:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "SSHはAIインフラへの侵入経路の最前線でもある。ホストキーの世代管理を放置した環境が段階的にアクセス不能になる前に、棚卸しを終わらせるかどうかの実務判断が問われる。",
+      "caveat": "該当ページはChangelog上のステータスがRetiredで、廃止スケジュールは本文のSchedule節に依存する。対象環境の特定と事前検証が前提。",
+      "change": {
+        "kind": "updated"
+      },
+      "context_ids": [],
+      "id": "github-ssh-algorithm-removal",
+      "language": "en",
+      "observed_at": "2026-09-27T05:50:00+09:00",
+      "published_at": "2026-09-22T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "SHA-1署名のRSA鍵や弱い鍵交換アルゴリズムの削除は、Git運用を含むすべてのSSH利用者に影響する破壊的変更。AIエージェントがSSHでリポジトリやVPSを操作する構成の基盤前提そのもの。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはSSHでSHA-1を使うRSA鍵（ssh-rsa署名タイプ）とdiffie-hellman-group-exchange-sha256を削除し、post-quantumアルゴリズムを追加し、より大きなRSA鍵を要求する変更を段階導入する。",
+      "source_kind": "release",
+      "source_title": "Security improvements for SSH",
+      "source_url": "https://github.blog/changelog/2026-09-22-security-improvements-for-ssh/",
+      "title": "GitHubがSSHのSHA-1 RSA鍵と弱アルゴリズムを段階的に削除",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-27T05:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "話者の分離は会議録、取材、コール分析の実用性を決める基幹部品。オープンな重みとリアルタイム性能の組合せが到達点として提示された。",
+      "caveat": "性能数値は投稿側のベンチマーク前提で、 ノイズの多いチャネル環境での挙動は本页からは確認できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-nemotron-diarization",
+      "language": "en",
+      "observed_at": "2026-09-27T05:50:00+09:00",
+      "published_at": "2026-09-23T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "リアルタイム・複数話者の話者分離という音声AIの実用レイヤーを、NVIDIAが自社モデルと手順として一次公開した。音声入力を作る製品にとって直接的に使える情報。",
+      "source_domain": "huggingface.co",
+      "source_fact": "NVIDIAがNemotron 3 Diarizationを使ったリアルタイムの複数話者音声処理の構築方法を公開。誰がいつ話したかを分離する話者分離をストリーミングで実現する手順とモデルを提示する。",
+      "source_kind": "release",
+      "source_title": "Know Who Spoke When: Build Real-Time, Multi-Speaker AI with NVIDIA Nemotron 3 Diarization",
+      "source_url": "https://huggingface.co/blog/nvidia/nemotron-diarization",
+      "title": "NVIDIAがリアルタイム話者分離モデルNemotron 3 Diarizationの活用手順を公開",
+      "topics": [
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-27T05:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "デモと本番の乖離を「再現性」という測れる指標に落とす企業側の問題提起。AI導入の受け入れ判断に再利用できる枠組み。",
+      "caveat": "Enterprise Articleとして公開されたIBM Research自社投稿で、対象事例は著者らの評価設定に依存する。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "ibm-agent-consistency-eval",
+      "language": "en",
+      "observed_at": "2026-09-27T05:50:00+09:00",
+      "published_at": "2026-09-15T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "エージェントの単発の成功ではなく一貫性を測るという観点は、自律運用を承認ゲートで運用する際に必須の評価軸。賛成票の表示は114で高く、エンタープライズでの問題意識の広さを示す。",
+      "source_domain": "huggingface.co",
+      "source_fact": "IBM Researchが、エージェントが一度タスクを成功させても再現できるとは限らないという問題を出発点に、一貫性を評価する枠組みAlt-Kの考え方を公開した。",
+      "source_kind": "release",
+      "source_title": "Your Agent Aced the Task. Will It Do It Again?",
+      "source_url": "https://huggingface.co/blog/ibm-research/altk-evolve-consistency",
+      "title": "IBM Research、エージェントの一貫性評価という論点を提示",
+      "topics": [
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-09-27T05:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AIの発見が実験で検証される段階に入ると、AI利用は「文章を書く道具」から「仮説を出す共同研究者」になる。この移行を自社実験付きで公表した点は規則标志性がある。",
+      "caveat": "CRISPRに似た性質という表現は創発の類縁性についてであり、CRISPRそのものではない。初期結果の段階。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "anthropic-enzyme-discovery",
+      "language": "en",
+      "observed_at": "2026-09-27T05:50:00+09:00",
+      "published_at": "2026-09-23T00:00:00Z",
+      "role": "major",
+      "selection_reason": "ClaudeがCRISPRに似た新規酵素系を発見し、実験室での検証まで含めて公表された。AIの科学的発見が仮説生成にとどまらず実験フェーズに入ったことを示す一次報告。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "Anthropicが生命科学の新しい研究グループと実験室を設立。Claudeを使ってDNAデータから未特性化のタンパク質群を同定し、仮説を大量生成し、実験室で検証する取り組みで、CRISPRに似た性質を持つ新規酵素系の発見という初期成果を公表した。",
+      "source_kind": "official",
+      "source_title": "Claude discovers a novel enzyme system with CRISPR-like repeats",
+      "source_url": "https://www.anthropic.com/news/claude-discovers-novel-enzyme-system",
+      "title": "Anthropic、ClaudeがCRISPRに似た新規酵素系を発見したと発表",
+      "topics": [
+        "models",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-09-27T05:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "自律エージェントが長期的な計画を立てる際の脆さの正体が、探索の偏信と過信にあるという整理は、エージェントに長期タスクを任せる際の設計チェックリストになる。",
+      "caveat": "査読前論文。手法の一般化範囲は著者らの実験設定に依存する。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-sage-reasoning-bias",
+      "language": "en",
+      "observed_at": "2026-09-27T05:50:00+09:00",
+      "published_at": "2026-09-24T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "報酬が疎な環境での長期推論の脆さを2つのバイアスに分解し、位相的な誘導で緩和する手法。長期自律運用の失敗パターンを研究側から定式化した。",
+      "source_domain": "arxiv.org",
+      "source_fact": "SAGEは、長期推論の脆さが構造的に不安定な局所案へ惹かれる探索バイアスと過信バイアスに由来すると主張し、位相的な誘導により両者を緩和する手法として提示されている。",
+      "source_kind": "paper",
+      "source_title": "SAGE: Mitigating Long-Horizon Reasoning Biases via Topological Guidance",
+      "source_url": "https://arxiv.org/abs/2609.30192",
+      "title": "長期推論の2つのバイアスを位相的誘導で緩和するSAGEを提案",
+      "topics": [
+        "research",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-09-27T05:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "予測が正確でも「別行動の比較」に失敗するモデルの話は、シミュレーションベースの判断支援を信用する際にそのまま効く警告。反事実を区別できることがMPCの本質である。",
+      "caveat": "査読前論文。制御タスクの範囲外への一般化は検証されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-adwm-counterfactual-mpc",
+      "language": "en",
+      "observed_at": "2026-09-27T05:50:00+09:00",
+      "published_at": "2026-09-24T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "実際の遷移予測の誤差が小さくても反事実比較が劣化する世界モデルの問題を指摘し、反事実的なモデル予測制御のための行動判别的な世界モデルを提案する。エージェントの計画・制御の信頼性に関わる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "AD-WMは、事実の遷移予測に最適化された潜在世界モデルが同一状態からの別行動の比較では失敗しうることを指摘し、反事実的なモデル予測制御のための行動判别的な世界モデルを提案する。",
+      "source_kind": "paper",
+      "source_title": "AD-WM: Action-Discriminative World Models for Counterfactual Model Predictive Control",
+      "source_url": "https://arxiv.org/abs/2609.30264",
+      "title": "反事実的制御のための行動判别的世界モデルAD-WMを提案",
+      "topics": [
+        "research",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-09-27T05:50:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-09-27T05:50:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：記憶と再現性——実行し続けるための設計が一次情報に並んだ三日間",
+  "topics": [
+    {
+      "description": "環境を観測し、道具を使って複数段階の仕事を進めるAI。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "脆弱性、安全性、攻撃耐性、制御に関する動向。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "AIの能力、効率、評価を検証する研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "AIを実務へ接続する製品、API、運用手段。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "基盤モデルの能力、提供条件、評価に関する動向。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "公開されたモデル、コード、共同開発基盤の動向。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    }
+  ]
+}
