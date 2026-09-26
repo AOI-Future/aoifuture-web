@@ -22,3 +22,5 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 .vercel
+# generated OG share cards (built by scripts/generate-news-og.mjs at build time)
+public/og/news/

@@ -42,6 +42,8 @@ const catalog = loadNewsCatalog(mode);
   canonical={`https://aoifuture.com/news/${edition.edition_id}/`}
   jsonLd={buildEditionMetadata(edition, latestReviewedAt)}
   mode={mode}
+  socialImage={`https://aoifuture.com/og/news/${edition.edition_id}-x.png`}
+  socialImageAlt={`${displayEditionTitle(edition.title)} — AOIFUTURE News ${edition.edition_date}版`}
 >
   <NewsEdition edition={edition} contexts={catalog.contexts} mode={mode} />
   <div data-news-history></div>

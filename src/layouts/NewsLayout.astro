@@ -10,11 +10,13 @@ interface Props {
   canonical: string;
   jsonLd: Record<string, unknown>;
   mode: NewsPublicationMode;
+  socialImage?: string;
+  socialImageAlt?: string;
 }
 
 const { title, description, canonical, jsonLd, mode } = Astro.props;
-const socialImage = 'https://aoifuture.com/og/aoifuture-social-card.png';
-const socialImageAlt = 'AOIFUTURE — Ideas into trusted action.';
+const socialImage = Astro.props.socialImage ?? 'https://aoifuture.com/og/aoifuture-social-card.png';
+const socialImageAlt = Astro.props.socialImageAlt ?? 'AOIFUTURE — Ideas into trusted action.';
 const serializedJsonLd = JSON.stringify(jsonLd).replaceAll('<', '\\u003c');
 ---
 
