@@ -25,7 +25,14 @@ export const sizes = {
 
 function truncate(value, max) {
   const s = String(value ?? '');
-  return s.length > max ? `${s.slice(0, max - 1)}…` : s;
+  if (s.length <= max) return s;
+  // stop at a natural break (space, punctuation) near the limit instead of mid-word
+  const cut = s.slice(0, max);
+  const brk = Math.max(
+    cut.lastIndexOf(' '), cut.lastIndexOf('、'), cut.lastIndexOf('・'),
+    cut.lastIndexOf('，'), cut.lastIndexOf('。'), cut.lastIndexOf('）'),
+  );
+  return (brk > max * 0.5 ? cut.slice(0, brk) : cut.slice(0, max - 1)).replace(/[\s,・.、]+$/, '') + '…';
 }
 
 function fmtDate(iso) {
@@ -44,7 +51,7 @@ export function buildDom({ edition, width, height, qrDataUrl }) {
   const lead = edition.items.find((i) => i.role === 'lead') ?? edition.items[0];
   const rest = edition.items.filter((i) => i !== lead);
   const headline = truncate(lead?.title ?? edition.title, vertical ? 40 : 30);
-  const leadPoint = truncate(lead?.selection_reason ?? lead?.source_fact ?? edition.dek ?? '', vertical ? 130 : 58);
+  const leadPoint = truncate(lead?.selection_reason ?? lead?.source_fact ?? edition.dek ?? '', vertical ? 150 : 120);
   const px = (n) => `${Math.round(n * s)}px`;
 
   // per-domain histogram: which sources fired today
@@ -77,7 +84,7 @@ export function buildDom({ edition, width, height, qrDataUrl }) {
     'div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'flex-start', marginBottom: px(12) } },
     ['div', { style: { display: 'flex', width: px(30), height: px(30), borderRadius: '8px', background: roleColor[item.role] ?? '#8ea0c8', color: '#0b1020', fontSize: px(17), fontWeight: 700, alignItems: 'center', justifyContent: 'center', marginRight: px(12), flexShrink: 0 } }, String(idx + 2)],
     ['div', { style: { display: 'flex', flexDirection: 'column', flex: 1 } },
-      ['div', { style: { color: '#f5f7ff', fontSize: px(vertical ? 22 : 19), lineHeight: 1.4 } }, truncate(item.title, vertical ? 30 : 30)],
+      ['div', { style: { color: '#f5f7ff', fontSize: px(vertical ? 22 : 17), lineHeight: 1.4 } }, item.title],
       ['div', { style: { display: 'flex', flexDirection: 'row', marginTop: px(3) } },
         ['div', { style: { color: roleColor[item.role] ?? '#8ea0c8', fontSize: px(14), fontWeight: 700, letterSpacing: '1px', marginRight: px(10) } }, item.role === 'major' ? 'MAJOR' : item.role === 'brief' ? 'BRIEF' : 'WATCH'],
         ['div', { style: { color: '#8ea0c8', fontSize: px(14), letterSpacing: '1px' } }, domainLabel(item.source_domain)],
@@ -111,8 +118,8 @@ export function buildDom({ edition, width, height, qrDataUrl }) {
             ['div', { style: { width: '0', height: '0', borderTop: `${px(9)} solid transparent`, borderBottom: `${px(9)} solid transparent`, borderLeft: `${px(14)} solid #ffc300`, marginRight: '12px' } }],
             ['div', { style: { color: '#ffc300', fontSize: px(22), fontWeight: 700, letterSpacing: '3px' } }, '今日の主役'],
           ],
-          ['div', { style: { color: '#ffffff', fontSize: px(vertical ? 40 : 32), lineHeight: 1.35, marginTop: '8px', fontWeight: 700 } }, headline],
-          ['div', { style: { color: '#c6d2ee', fontSize: px(vertical ? 20 : 18), lineHeight: 1.55, marginTop: '8px' } }, leadPoint],
+          ['div', { style: { color: '#ffffff', fontSize: px(vertical ? 40 : 30), lineHeight: 1.35, marginTop: '8px', fontWeight: 700 } }, headline],
+          ['div', { style: { color: '#c6d2ee', fontSize: px(vertical ? 20 : 15), lineHeight: 1.55, marginTop: '8px' } }, leadPoint],
         ],
       ],
       ['div', { style: { display: vertical ? 'none' : 'flex', flexDirection: 'column', width: '46%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(142,160,200,0.35)', borderRadius: '14px', padding: px(18), boxSizing: 'border-box' } },
@@ -181,15 +188,15 @@ function buildShareCopy(edition) {
   const others = edition.items.filter((i) => i !== lead).slice(0, 2);
   const ja = [
     `【AOIFUTURE News ${fmtDate(edition.edition_date)}版】`,
-    `▷ ${truncate(lead?.title ?? edition.title, 60)}`,
-    ...others.map((i, n) => `${n + 1}. ${truncate(i.title, 48)}`),
+    `▷ ${truncate(lead?.title ?? edition.title, 64)}`,
+    ...others.map((i, n) => `${n + 1}. ${truncate(i.title, 52)}`),
     '',
     `✅ 一次情報で検証済み · Verified by AOIFUTURE`,
     url + '?utm_source=buffer&utm_medium=social&utm_campaign=edition-share',
   ].join('\n');
   const en = [
     `AOIFUTURE News — Edition ${edition.edition_date}`,
-    `Lead: ${truncate(lead?.title_en ?? lead?.title ?? edition.title, 90)}`,
+    `Lead: ${truncate(lead?.title_en ?? lead?.title ?? edition.title, 96)}`,
     '',
     '✅ Verified against primary sources',
     url + '?utm_source=buffer&utm_medium=social&utm_campaign=edition-share-en',
