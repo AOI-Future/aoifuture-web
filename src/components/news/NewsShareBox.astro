@@ -9,85 +9,35 @@ interface Props {
 const { edition } = Astro.props;
 const canonical = `https://www.aoifuture.com/news/${edition.edition_id}/`;
 const ogX = `/og/news/${edition.edition_id}-x.png`;
-const ogIg = `/og/news/${edition.edition_id}-instagram.png`;
-const ogLi = `/og/news/${edition.edition_id}-linkedin.png`;
 
 const lead = edition.items.find((i) => i.role === 'lead') ?? edition.items[0];
-const others = edition.items.filter((i) => i !== lead).slice(0, 2);
 const truncate = (s: string, n: number) => (s.length > n ? `${s.slice(0, n - 1)}…` : s);
 const shareText = [
-  `【AOIFUTURE News ${edition.edition_date}版】`,
-  `▷ ${truncate(lead?.title ?? displayEditionTitle(edition.title), 60)}`,
-  ...others.map((i, n) => `${n + 1}. ${truncate(i.title, 48)}`),
-  '',
-  '✅ 一次情報で検証済み · Verified by AOIFUTURE',
-].join('\n');
-
-const linkedinText = [
-  `AOIFUTURE News — Edition ${edition.edition_date}`,
-  `Lead: ${truncate(lead?.title_en ?? lead?.title ?? displayEditionTitle(edition.title), 90)}`,
-  '',
-  '✅ Verified against primary sources',
+  `AOIFUTURE News ${edition.edition_date}のまとめ`,
+  truncate(lead?.title ?? displayEditionTitle(edition.title), 60),
 ].join('\n');
 
 const xIntent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(canonical + '?utm_source=x&utm_medium=share&utm_campaign=edition-share')}`;
-const linkedinIntent = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(canonical + '?utm_source=linkedin&utm_medium=share&utm_campaign=edition-share-en')}`;
-const altText = `${displayEditionTitle(edition.title)} — AOIFUTURE News ${edition.edition_date}版 共有カード`;
+const linkedinIntent = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(canonical + '?utm_source=linkedin&utm_medium=share&utm_campaign=edition-share')}`;
+const altText = `${displayEditionTitle(edition.title)} — 今日のニュースまとめ画像`;
 ---
 
-<aside class="news-share" aria-label="この版をシェア">
+<aside class="news-share" aria-label="今日のまとめ">
   <div class="news-share__head">
-    <p class="news-kicker">SHARE THIS EDITION</p>
-    <h2>この版をシェア</h2>
-    <p class="news-share__hint">カード画像はそのまま保存してスクショ共有にも使えます。SNSにURLを貼るとこのカードが表示されます。</p>
+    <p class="news-kicker">EXECUTIVE SUMMARY</p>
+    <h2>今日のまとめ</h2>
+    <p class="news-share__hint">今日の重要ニュースを1枚にまとめました。SNSにシェアしたり、画像として保存できます。</p>
   </div>
 
   <div class="news-share__card">
-    <img src={ogX} width="1200" height="630" loading="lazy" alt={altText} />
+    <a href={canonical}>
+      <img src={ogX} width="1200" height="630" loading="lazy" alt={altText} />
+    </a>
   </div>
 
   <div class="news-share__actions">
     <a class="news-share__btn news-share__btn--x" href={xIntent} target="_blank" rel="noopener noreferrer">Xでシェア</a>
-    <a class="news-share__btn news-share__btn--li" href={linkedinIntent} target="_blank" rel="noopener noreferrer">LinkedInでシェア（英語）</a>
-    <button type="button" class="news-share__btn news-share__btn--copy" data-news-copy-text={shareText}>文案をコピー</button>
+    <a class="news-share__btn news-share__btn--li" href={linkedinIntent} target="_blank" rel="noopener noreferrer">LinkedInでシェア</a>
+    <a class="news-share__btn" href={ogX} download>画像を保存</a>
   </div>
-
-  <details class="news-share__more">
-    <summary>他のサイズ・文案</summary>
-    <ul class="news-share__sizes">
-      <li><a href={ogX} download>横長カード（X / LinkedIn用 · 1200×630）</a></li>
-      <li><a href={ogLi} download>LinkedIn角丸用（1200×627）</a></li>
-      <li><a href={ogIg} download>Instagram縦長（1080×1350）</a></li>
-    </ul>
-    <pre class="news-share__copyblock" data-news-copy-target>{shareText}</pre>
-    <p class="news-kicker">LINKEDIN COPY (EN)</p>
-    <pre class="news-share__copyblock" data-news-copy-target>{linkedinText}</pre>
-  </details>
 </aside>
-
-<script is:inline>
-  (() => {
-    if (window.__newsShareCopyBound) return;
-    window.__newsShareCopyBound = true;
-    document.addEventListener('click', (event) => {
-      const target = event.target instanceof Element ? event.target.closest('[data-news-copy-text]') : null;
-      if (!target) return;
-      const text = target.getAttribute('data-news-copy-text') ?? '';
-      const done = () => {
-        const original = target.textContent ?? '';
-        target.textContent = 'コピーしました ✓';
-        setTimeout(() => { target.textContent = original; }, 1600);
-      };
-      if (navigator.clipboard?.writeText) {
-        navigator.clipboard.writeText(text).then(done).catch(() => {});
-      } else {
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        try { document.execCommand('copy'); done(); } catch (_) { /* noop */ }
-        ta.remove();
-      }
-    });
-  })();
-</script>
