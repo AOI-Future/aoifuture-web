@@ -1,6 +1,7 @@
 ---
 import type { NewsContext, NewsEdition, NewsPublicationMode } from '../../lib/news/types';
 import { displayEditionTitle } from '../../lib/news/display-title.mjs';
+import NewsShareBox from './NewsShareBox.astro';
 import NewsSignalCard from './NewsSignalCard.astro';
 
 interface Props {
@@ -40,6 +41,8 @@ const coverageLabel = edition.coverage_kind === 'selection-window'
       <div><dt>Signals</dt><dd>{edition.items.length} / finite</dd></div>
     </dl>
   </header>
+
+  <NewsShareBox edition={edition} />
 
   {edition.edition_note && (
     <aside class="news-edition-note" aria-labelledby={`${editionPrefix}-note-heading`}>
