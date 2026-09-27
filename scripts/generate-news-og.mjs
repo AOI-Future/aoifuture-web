@@ -20,7 +20,7 @@ const fontBold = existsSync(fontBoldPath) ? readFileSync(fontBoldPath) : font;
 export const sizes = {
   x: { width: 1200, height: 630 },
   linkedin: { width: 1200, height: 627 },
-  instagram: { width: 1080, height: 1080 },
+  instagram: { width: 1080, height: 1350 },
 };
 
 function truncate(value, max) {
@@ -48,98 +48,91 @@ const roleColor = { lead: '#ff7a59', major: '#ffc300', brief: '#30d5c8', watch: 
 export function buildDom({ edition, width, height, qrDataUrl }) {
   const vertical = height >= width;
   const s = width / 1200;
+  const px = (n) => `${Math.round(n * s)}px`;
   const lead = edition.items.find((i) => i.role === 'lead') ?? edition.items[0];
   const rest = edition.items.filter((i) => i !== lead);
   const headline = lead?.title ?? edition.title;
-  const leadPoint = truncate(lead?.selection_reason ?? lead?.source_fact ?? edition.dek ?? '', vertical ? 150 : 120);
-  const px = (n) => `${Math.round(n * s)}px`;
+  const leadPoint = truncate(lead?.selection_reason ?? lead?.source_fact ?? edition.dek ?? '', vertical ? 170 : 130);
+  const majorCount = edition.items.filter((i) => i.role === 'lead' || i.role === 'major').length;
 
-  // per-domain histogram: which sources fired today
+  // treemap data: proportional blocks per source domain (Visual Capitalist pattern)
   const domainCounts = new Map();
   for (const it of edition.items) {
     const d = domainLabel(it.source_domain);
     domainCounts.set(d, (domainCounts.get(d) ?? 0) + 1);
   }
-  const topDomains = [...domainCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 4);
+  const domains = [...domainCounts.entries()].sort((a, b) => b[1] - a[1]);
+  const palette = ['#1f9d8f', '#d9a520', '#e0684b', '#b0559d', '#4f74c9', '#6f9c4b'];
+  const total = edition.items.length || 1;
 
-  const statChip = (value, label, color) => [
-    'div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginRight: px(28) } },
-    ['div', { style: { color, fontSize: px(42), fontWeight: 700, lineHeight: 1 } }, value],
-    ['div', { style: { color: '#8ea0c8', fontSize: px(15), marginTop: px(5), letterSpacing: '2px' } }, label],
+  const treemap = [
+    'div', { style: { display: 'flex', flexDirection: 'column' } },
+    ['div', { style: { color: '#8ea0c8', fontSize: px(vertical ? 24 : 16), fontWeight: 700, letterSpacing: '3px', marginBottom: px(10) } }, '今日の発生源 · SOURCES'],
+    ['div', { style: { display: 'flex', flexDirection: 'row', width: '100%', height: px(vertical ? 240 : 190) } },
+      ...domains.map(([d, n], idx) => [
+        'div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexGrow: n, flexBasis: '0%', flexShrink: 1, height: '100%', background: palette[idx % palette.length], borderRadius: px(10), marginRight: idx === domains.length - 1 ? '0' : px(8), boxSizing: 'border-box', padding: px(6) } },
+        ['div', { style: { color: '#ffffff', fontSize: px(vertical ? 72 : 52), fontWeight: 700, lineHeight: 1 } }, String(n)],
+        ['div', { style: { color: 'rgba(255,255,255,0.92)', fontSize: px(vertical ? 26 : 19), fontWeight: 700, letterSpacing: '1px', marginTop: px(6), textAlign: 'center' } }, d],
+      ]),
+    ],
+    ['div', { style: { color: '#8ea0c8', fontSize: px(vertical ? 22 : 15), marginTop: px(8) } }, `面積 = 本日${total}本の記事数按分`],
   ];
 
-  const bars = topDomains.map(([d, n], idx) => {
-    const maxN = topDomains[0][1] || 1;
-    const wBar = `${Math.max(24, Math.round((n / maxN) * 150 * s))}px`;
-    const colors = ['#30d5c8', '#ffc300', '#ff7a59', '#ff5fa2'];
-    return [
-      'div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: px(9) } },
-      ['div', { style: { color: '#c6d2ee', fontSize: px(16), width: px(96), fontWeight: 700, letterSpacing: '1px' } }, d],
-      ['div', { style: { display: 'flex', height: px(16), width: wBar, background: colors[idx % 4], borderRadius: '4px', marginRight: px(8) } }],
-      ['div', { style: { color: '#8ea0c8', fontSize: px(15) } }, `${n}`],
-    ];
-  });
-
   const telop = (item, idx) => [
-    'div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'flex-start', marginBottom: px(12) } },
-    ['div', { style: { display: 'flex', width: px(30), height: px(30), borderRadius: '8px', background: roleColor[item.role] ?? '#8ea0c8', color: '#0b1020', fontSize: px(17), fontWeight: 700, alignItems: 'center', justifyContent: 'center', marginRight: px(12), flexShrink: 0 } }, String(idx + 2)],
+    'div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'flex-start', marginBottom: px(vertical ? 13 : 12) } },
+    ['div', { style: { display: 'flex', width: px(vertical ? 36 : 32), height: px(vertical ? 40 : 32), borderRadius: px(9), background: roleColor[item.role] ?? '#8ea0c8', color: '#0b1020', fontSize: px(vertical ? 22 : 17), fontWeight: 700, alignItems: 'center', justifyContent: 'center', marginRight: px(12), flexShrink: 0 } }, String(idx + 2)],
     ['div', { style: { display: 'flex', flexDirection: 'column', flex: 1 } },
-      ['div', { style: { color: '#f5f7ff', fontSize: px(vertical ? 22 : 17), lineHeight: 1.4 } }, item.title],
-      ['div', { style: { display: 'flex', flexDirection: 'row', marginTop: px(3) } },
-        ['div', { style: { color: roleColor[item.role] ?? '#8ea0c8', fontSize: px(14), fontWeight: 700, letterSpacing: '1px', marginRight: px(10) } }, item.role === 'major' ? 'MAJOR' : item.role === 'brief' ? 'BRIEF' : 'WATCH'],
-        ['div', { style: { color: '#8ea0c8', fontSize: px(14), letterSpacing: '1px' } }, domainLabel(item.source_domain)],
+      ['div', { style: { color: '#f5f7ff', fontSize: px(vertical ? 27 : 18), lineHeight: 1.4 } }, item.title],
+      ['div', { style: { display: 'flex', flexDirection: 'row', marginTop: px(4) } },
+        ['div', { style: { color: roleColor[item.role] ?? '#8ea0c8', fontSize: px(vertical ? 19 : 14), fontWeight: 700, letterSpacing: '1px', marginRight: px(10) } }, item.role === 'major' ? 'MAJOR' : item.role === 'brief' ? 'BRIEF' : 'WATCH'],
+        ['div', { style: { color: '#8ea0c8', fontSize: px(vertical ? 19 : 14), letterSpacing: '1px' } }, domainLabel(item.source_domain)],
       ],
     ],
   ];
 
-  const gridItems = rest.slice(0, vertical ? 6 : 4);
+  const gridItems = rest.slice(0, vertical ? 5 : 4);
   const cols = vertical ? [gridItems, []] : [gridItems.slice(0, 2), gridItems.slice(2)];
 
   return [
     'div',
-    { style: { display: 'flex', flexDirection: 'column', width: `${width}px`, height: `${height}px`, background: 'linear-gradient(135deg, #0b1020 0%, #101a3a 55%, #1b1040 100%)', padding: vertical ? '46px' : '44px', boxSizing: 'border-box', position: 'relative' } },
-    ['div', { style: { display: 'flex', position: 'absolute', top: 0, left: 0, width: `${width}px`, height: '10px', background: 'linear-gradient(90deg, #ff7a59, #ffc300, #30d5c8, #ff5fa2)' } }],
+    { style: { display: 'flex', flexDirection: 'column', width: `${width}px`, height: `${height}px`, background: 'linear-gradient(135deg, #0b1020 0%, #101a3a 55%, #1b1040 100%)', padding: vertical ? '56px' : '40px', boxSizing: 'border-box', position: 'relative' } },
+    ['div', { style: { display: 'flex', position: 'absolute', top: 0, left: 0, width: `${width}px`, height: px(10), background: 'linear-gradient(90deg, #ff7a59, #ffc300, #30d5c8, #ff5fa2)' } }],
+    // header
     ['div', { style: { display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' } },
       ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'center' } },
-        ['div', { style: { width: '14px', height: '14px', borderRadius: '50%', background: '#30d5c8', marginRight: '12px' } }],
-        ['div', { style: { color: '#ffffff', fontSize: px(30), fontWeight: 700, letterSpacing: '2px' } }, 'AOIFUTURE NEWS'],
+        ['div', { style: { width: px(14), height: px(14), borderRadius: '50%', background: '#30d5c8', marginRight: px(12) } }],
+        ['div', { style: { color: '#ffffff', fontSize: px(vertical ? 34 : 30), fontWeight: 700, letterSpacing: '2px' } }, 'AOIFUTURE NEWS'],
       ],
-      ['div', { style: { color: '#8ea0c8', fontSize: px(24) } }, `${fmtDate(edition.edition_date)} 版 · ${edition.items.length}本`],
+      ['div', { style: { color: '#8ea0c8', fontSize: px(vertical ? 26 : 22) } }, `${fmtDate(edition.edition_date)} 版`],
     ],
-    ['div', { style: { display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginTop: vertical ? '30px' : '18px' } },
-      ['div', { style: { display: 'flex', flexDirection: 'column', width: vertical ? '100%' : '54%', paddingRight: vertical ? '0' : '30px', boxSizing: 'border-box' } },
-        ['div', { style: { display: 'flex', flexDirection: 'row', marginBottom: vertical ? '22px' : '16px' } },
-          statChip(String(edition.items.length), 'SIGNALS', '#ffffff'),
-          statChip(String(edition.items.filter((i) => i.role === 'lead' || i.role === 'major').length), 'MAJOR+', '#ffc300'),
-          statChip(String(domainCounts.size), 'SOURCES', '#30d5c8'),
+    // hero row: big lead + treemap hero (visual-first)
+    ['div', { style: { display: 'flex', flexDirection: vertical ? 'column' : 'row', marginTop: vertical ? '28px' : '22px', flex: vertical ? 'none' : 1 } },
+      ['div', { style: { display: 'flex', flexDirection: 'column', width: vertical ? '100%' : '52%', paddingRight: vertical ? '0' : '32px', boxSizing: 'border-box' } },
+        ['div', { style: { display: 'flex', alignItems: 'center' } },
+          ['div', { style: { width: '0', height: '0', borderTop: `${px(9)} solid transparent`, borderBottom: `${px(9)} solid transparent`, borderLeft: `${px(14)} solid #ffc300`, marginRight: '12px' } }],
+          ['div', { style: { color: '#ffc300', fontSize: px(vertical ? 26 : 22), fontWeight: 700, letterSpacing: '3px' } }, '今日の主役'],
         ],
-        ['div', { style: { display: 'flex', flexDirection: 'column', borderLeft: '6px solid #ff7a59', paddingLeft: '20px' } },
-          ['div', { style: { display: 'flex', alignItems: 'center' } },
-            ['div', { style: { width: '0', height: '0', borderTop: `${px(9)} solid transparent`, borderBottom: `${px(9)} solid transparent`, borderLeft: `${px(14)} solid #ffc300`, marginRight: '12px' } }],
-            ['div', { style: { color: '#ffc300', fontSize: px(22), fontWeight: 700, letterSpacing: '3px' } }, '今日の主役'],
-          ],
-          ['div', { style: { color: '#ffffff', fontSize: px(vertical ? 40 : 30), lineHeight: 1.35, marginTop: '8px', fontWeight: 700 } }, headline],
-          ['div', { style: { color: '#c6d2ee', fontSize: px(vertical ? 20 : 15), lineHeight: 1.55, marginTop: '8px' } }, leadPoint],
+        ['div', { style: { color: '#ffffff', fontSize: px(vertical ? 52 : 34), lineHeight: 1.3, marginTop: px(10), fontWeight: 700 } }, headline],
+        ['div', { style: { color: '#c6d2ee', fontSize: px(vertical ? 27 : 16), lineHeight: 1.6, marginTop: px(12) } }, leadPoint],
+        ['div', { style: { display: 'flex', flexDirection: 'row', marginTop: px(vertical ? 22 : 16) } },
+          ['div', { style: { color: '#ffc300', fontSize: px(vertical ? 46 : 38), fontWeight: 700, lineHeight: 1, marginRight: px(10) } }, `${majorCount}`],
+          ['div', { style: { color: '#8ea0c8', fontSize: px(vertical ? 24 : 18), letterSpacing: '1px' } }, `本が本日の主要信号 · 全${total}本`],
         ],
       ],
-      ['div', { style: { display: vertical ? 'none' : 'flex', flexDirection: 'column', width: '46%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(142,160,200,0.35)', borderRadius: '14px', padding: px(18), boxSizing: 'border-box' } },
-        ['div', { style: { color: '#8ea0c8', fontSize: px(15), fontWeight: 700, letterSpacing: '2px', marginBottom: px(12) } }, '今日の発生源'],
-        ...bars,
-      ],
+      ['div', { style: { display: 'flex', flexDirection: 'column', width: vertical ? '100%' : '48%', marginTop: vertical ? '34px' : '0', justifyContent: vertical ? 'center' : 'flex-end' } }, treemap],
     ],
-    ['div', { style: { display: 'flex', flexDirection: vertical ? 'column' : 'row', marginTop: vertical ? '26px' : '20px', paddingTop: px(16), borderTop: '1px solid rgba(142,160,200,0.3)' } },
+    // telop grid
+    ['div', { style: { display: 'flex', flexDirection: vertical ? 'column' : 'row', marginTop: vertical ? '22px' : '18px', paddingTop: px(14), borderTop: '1px solid rgba(142,160,200,0.3)' } },
       ['div', { style: { display: 'flex', flexDirection: 'column', width: vertical ? '100%' : '50%', paddingRight: px(14), boxSizing: 'border-box' } }, ...cols[0].map((item, idx) => telop(item, idx))],
       vertical ? null : ['div', { style: { display: 'flex', flexDirection: 'column', width: '50%' } }, ...cols[1].map((item, idx) => telop(item, idx + cols[0].length))],
     ].filter((n) => n !== null),
-    ['div', { style: { display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 'auto' } },
+    // footer
+    ['div', { style: { display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 'auto', paddingTop: px(14) } },
       ['div', { style: { display: 'flex', flexDirection: 'column' } },
-        ['div', { style: { display: 'flex', alignItems: 'center', background: 'rgba(48,213,200,0.16)', border: '1.5px solid #30d5c8', borderRadius: '999px', padding: '7px 18px' } },
-          ['div', { style: { width: px(16), height: px(16), borderRadius: '999px', background: '#30d5c8', marginRight: '10px' } }],
-          ['div', { style: { color: '#30d5c8', fontSize: px(21) } }, '毎朝AIニュースをどっさり · AI News Daily'],
-        ],
-        ['div', { style: { color: '#ffffff', fontSize: px(30), fontWeight: 700, marginTop: '14px', letterSpacing: '1px' } }, 'aoifuture.com'],
+        ['div', { style: { color: '#30d5c8', fontSize: px(vertical ? 24 : 20), fontWeight: 700, letterSpacing: '1px' } }, '毎朝AIニュースをどっさり · AI News Daily'],
+        ['div', { style: { color: '#ffffff', fontSize: px(vertical ? 34 : 28), fontWeight: 700, marginTop: px(8), letterSpacing: '1px' } }, 'aoifuture.com'],
       ],
-      ['img', { src: qrDataUrl, width: Math.round(132 * s), height: Math.round(132 * s), style: { borderRadius: '12px' } }],
+      ['img', { src: qrDataUrl, width: Math.round((vertical ? 170 : 120) * s), height: Math.round((vertical ? 170 : 120) * s), style: { borderRadius: '12px' } }],
     ],
   ];
 }
