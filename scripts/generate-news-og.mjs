@@ -61,30 +61,38 @@ export function buildDom({ edition, width, height, qrDataUrl }) {
   // editorial theme extracted from the edition title "AOIFUTURE News：<要点>——<補足>"
   const rawTitle = String(edition.title ?? '').replace(/^AOIFUTURE News[:：]/, '');
   const themeMain = rawTitle.split('——')[0].trim() || (lead?.title ?? edition.title);
-  const themeSub = rawTitle.includes('——') ? rawTitle.split('——').slice(1).join('——').trim() : '';
-
-  // topic intensity: what areas fired today (reader-facing labels)
-  const topicMeta = new Map((edition.topics ?? []).map((t) => [t.id, t.label_ja ?? t.id]));
-  const topicCounts = new Map();
-  for (const it of edition.items) {
-    for (const t of it.topics ?? []) {
-      const label = topicMeta.get(t) ?? t;
-      topicCounts.set(label, (topicCounts.get(label) ?? 0) + 1);
-    }
-  }
-  const topicsSorted = [...topicCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
-  const maxT = topicsSorted[0]?.[1] ?? 1;
 
   const majorCount = edition.items.filter((i) => i.role === 'lead' || i.role === 'major').length;
 
-  const topicTile = (label, n, idx) => {
-    const sizePct = 0.55 + 0.45 * (n / maxT);
-    const font = Math.round((vertical ? 34 : 21) * sizePct);
-    return ['div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexGrow: n, flexBasis: '0%', flexShrink: 1, height: px(vertical ? 110 : 74), background: idx === 0 ? CYAN : idx === 1 ? TEAL : idx === 2 ? PARCH : 'rgba(115,255,255,0.14)', color: idx < 3 ? INK : '#ededed', borderRadius: px(12), marginRight: idx === topicsSorted.length - 1 ? '0' : px(8), boxSizing: 'border-box', padding: px(6) } },
-      ['div', { style: { fontSize: `${font}px`, fontWeight: 700, lineHeight: 1.15, letterSpacing: '1px', textAlign: 'center' } }, label],
-      ['div', { style: { fontSize: px(vertical ? 24 : 15), fontWeight: 700, marginTop: px(3), opacity: 0.85 } }, `${n}本`],
+  // lead explainer beats: split the lead's source_fact into up to 3 story beats
+  // (reader-facing walkthrough of THE story, not internal source/topic ratios)
+  const leadFact = String(lead?.source_fact ?? '');
+  const leadTitle = String(lead?.title ?? '');
+  const splitBeats = (text) => String(text ?? '')
+    .split('。')
+    .map((b) => b.trim())
+    .filter((b) => b.length > 0)
+    // drop beats that restate the lead headline (reader sees it right above)
+    .filter((b) => b.length < 20 || !leadTitle || (b.slice(0, 12) !== leadTitle.slice(0, 12) && !leadTitle.includes(b.slice(0, 10))));
+  let beats = splitBeats(leadFact);
+  if (beats.length < 2) beats = [...beats, ...splitBeats(lead?.selection_reason).filter((b) => !beats.includes(b))];
+  beats = beats.slice(0, 3);
+  const beatLabels = beats.length >= 3 ? ['今日の話の筋', '一手目', 'その結果'] : ['今日の話の筋', 'その先に'];
+
+  const beatBlock = (beat, idx) => [
+    'div', { style: { display: 'flex', flexDirection: 'column', flexGrow: 1, flexBasis: '0%', flexShrink: 1, minWidth: 0, boxSizing: 'border-box', border: `1px solid rgba(115,255,255,0.35)`, borderRadius: px(12), padding: vertical ? px(18) : px(12), background: idx === 0 ? 'rgba(115,255,255,0.10)' : 'rgba(59,184,184,0.07)' } },
+      ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: px(8) } },
+        ['div', { style: { width: px(vertical ? 14 : 12), height: px(vertical ? 14 : 12), borderRadius: '50%', background: idx === 0 ? CYAN : TEAL, marginRight: px(8), flexShrink: 0 } }],
+        ['div', { style: { color: idx === 0 ? CYAN : PARCH, fontSize: px(vertical ? 20 : 13), fontWeight: 700, letterSpacing: '2px' } }, beatLabels[idx] ?? 'ポイント'],
+      ],
+      ['div', { style: { color: '#ededed', fontSize: px(vertical ? 26 : 15), lineHeight: 1.55 } }, beat],
     ];
-  };
+
+  const beatArrow = ['div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, padding: vertical ? `${px(6)} 0` : `0 ${px(8)}` } },
+    vertical
+      ? ['div', { style: { width: 0, height: 0, borderLeft: `${px(10)} solid transparent`, borderRight: `${px(10)} solid transparent`, borderTop: `${px(14)} solid ${TEAL}` } }]
+      : ['div', { style: { width: 0, height: 0, borderTop: `${px(10)} solid transparent`, borderBottom: `${px(10)} solid transparent`, borderLeft: `${px(16)} solid ${TEAL}` } }],
+  ];
 
   const roleColor = { lead: CYAN, major: CYAN, brief: TEAL, watch: PARCH };
   const telop = (item, idx) => [
@@ -101,7 +109,6 @@ export function buildDom({ edition, width, height, qrDataUrl }) {
 
   const gridItems = rest.slice(0, vertical ? 5 : 4);
   const cols = vertical ? [gridItems, []] : [gridItems.slice(0, 2), gridItems.slice(2)];
-  const leadPoint = truncate(lead?.selection_reason ?? lead?.source_fact ?? edition.dek ?? '', vertical ? 150 : 58);
 
   return [
     'div',
@@ -115,25 +122,22 @@ export function buildDom({ edition, width, height, qrDataUrl }) {
       ],
       ['div', { style: { color: '#b6b6b6', fontSize: px(vertical ? 26 : 21) } }, `${fmtDate(edition.edition_date)} 版 · ${edition.items.length}本`],
     ],
-    // editorial theme hero — the reason to read
-    ['div', { style: { display: 'flex', flexDirection: 'column', marginTop: vertical ? '40px' : '18px' } },
+    // editorial theme kicker — the reason to read
+    ['div', { style: { display: 'flex', flexDirection: 'column', marginTop: vertical ? '34px' : '14px' } },
       ['div', { style: { color: PARCH, fontSize: px(vertical ? 24 : 16), fontWeight: 700, letterSpacing: '4px' } }, '今日のエディトリアルテーマ'],
-      ['div', { style: { color: CYAN, fontSize: px(vertical ? 68 : 36), fontWeight: 700, lineHeight: 1.25, marginTop: px(10) } }, themeMain],
-      themeSub ? ['div', { style: { color: '#ededed', fontSize: px(vertical ? 28 : 16), lineHeight: 1.5, marginTop: px(10) } }, themeSub] : null,
-    ].filter((n) => n !== null),
-    // topic intensity strip — what areas fired today
-    ['div', { style: { display: 'flex', flexDirection: 'column', marginTop: vertical ? '36px' : '16px' } },
-      ['div', { style: { color: '#b6b6b6', fontSize: px(vertical ? 22 : 14), fontWeight: 700, letterSpacing: '3px', marginBottom: px(10) } }, '今日何が動いたか · TOPICS（複数該当）'],
-      ['div', { style: { display: 'flex', flexDirection: 'row', width: '100%' } },
-        ...topicsSorted.map(([label, n], idx) => topicTile(label, n, idx)),
-      ],
+      ['div', { style: { color: CYAN, fontSize: px(vertical ? 64 : 34), fontWeight: 700, lineHeight: 1.25, marginTop: px(10) } }, themeMain],
     ],
-    // lead + one-line why
-    ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'flex-start', marginTop: vertical ? '34px' : '14px' } },
-      ['div', { style: { width: '0', height: '0', borderTop: `${px(9)} solid transparent`, borderBottom: `${px(9)} solid transparent`, borderLeft: `${px(14)} solid ${CYAN}`, marginRight: px(12), marginTop: px(8) } }],
-      ['div', { style: { display: 'flex', flexDirection: 'column', flex: 1 } },
+    // lead story explainer — THE news, told in beats (hero visual zone)
+    ['div', { style: { display: 'flex', flexDirection: 'column', marginTop: vertical ? '36px' : '16px', paddingTop: px(vertical ? 18 : 12), borderTop: '1px solid rgba(115,255,255,0.25)' } },
+      ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: px(vertical ? 14 : 8) } },
+        ['div', { style: { width: 0, height: 0, borderTop: `${px(9)} solid transparent`, borderBottom: `${px(9)} solid transparent`, borderLeft: `${px(14)} solid ${CYAN}`, marginRight: px(12), flexShrink: 0 } }],
         ['div', { style: { color: '#ededed', fontSize: px(vertical ? 30 : 15), fontWeight: 700, lineHeight: 1.4 } }, lead?.title ?? edition.title],
-        vertical ? ['div', { style: { color: '#b6b6b6', fontSize: px(24), lineHeight: 1.5, marginTop: px(8) } }, leadPoint] : null,
+      ],
+      ['div', { style: { display: 'flex', flexDirection: vertical ? 'column' : 'row', width: '100%', flexGrow: 1, flexShrink: 1, minHeight: 0 } },
+        ...beats.flatMap((beat, idx) => [
+          ...(idx > 0 ? [beatArrow] : []),
+          beatBlock(beat, idx),
+        ]),
       ],
     ],
     // telop grid

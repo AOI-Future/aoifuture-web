@@ -13,7 +13,9 @@ describe('news OG share card generator', () => {
     const flat = JSON.stringify(dom);
     expect(flat).toContain('AOIFUTURE NEWS');
     expect(flat).toContain('今日のエディトリアルテーマ');
-    expect(flat).toContain('今日何が動いたか · TOPICS（複数該当）');
+    // reader-facing lead explainer beats replace internal topic/source ratios
+    expect(flat).toContain("今日の話の筋");
+    expect(flat).not.toContain('TOPICS（複数該当）');
     expect(flat).toContain('毎朝更新 · AI News Daily');
     expect(flat).toContain('aoifuture.com');
     expect(flat).toContain('data:image/png;base64,AAA');
