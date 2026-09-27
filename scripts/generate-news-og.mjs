@@ -135,7 +135,7 @@ export function buildDom({ edition, width, height, qrDataUrl }) {
       ['div', { style: { display: 'flex', flexDirection: 'column' } },
         ['div', { style: { display: 'flex', alignItems: 'center', background: 'rgba(48,213,200,0.16)', border: '1.5px solid #30d5c8', borderRadius: '999px', padding: '7px 18px' } },
           ['div', { style: { width: px(16), height: px(16), borderRadius: '999px', background: '#30d5c8', marginRight: '10px' } }],
-          ['div', { style: { color: '#30d5c8', fontSize: px(21) } }, '一次情報で検証済み · Verified by AOIFUTURE'],
+          ['div', { style: { color: '#30d5c8', fontSize: px(21) } }, '毎朝AIニュースをどっさり · AI News Daily'],
         ],
         ['div', { style: { color: '#ffffff', fontSize: px(30), fontWeight: 700, marginTop: '14px', letterSpacing: '1px' } }, 'aoifuture.com'],
       ],
