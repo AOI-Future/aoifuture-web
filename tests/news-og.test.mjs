@@ -12,9 +12,9 @@ describe('news OG share card generator', () => {
     expect(dom.type).toBe('div');
     const flat = JSON.stringify(dom);
     expect(flat).toContain('AOIFUTURE NEWS');
-    expect(flat).toContain('今日の主役');
-    expect(flat).toContain('今日の発生源');
-    expect(flat).toContain('毎朝AIニュースをどっさり');
+    expect(flat).toContain('今日のエディトリアルテーマ');
+    expect(flat).toContain('今日何が動いたか');
+    expect(flat).toContain('毎朝更新 · AI News Daily');
     expect(flat).toContain('aoifuture.com');
     expect(flat).toContain('data:image/png;base64,AAA');
     // every multi-child div declares display flex (satori requirement)

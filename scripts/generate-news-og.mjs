@@ -51,88 +51,103 @@ export function buildDom({ edition, width, height, qrDataUrl }) {
   const px = (n) => `${Math.round(n * s)}px`;
   const lead = edition.items.find((i) => i.role === 'lead') ?? edition.items[0];
   const rest = edition.items.filter((i) => i !== lead);
-  const headline = lead?.title ?? edition.title;
-  const leadPoint = truncate(lead?.selection_reason ?? lead?.source_fact ?? edition.dek ?? '', vertical ? 170 : 88);
+
+  // site palette (src/styles/news.css): #071010 surface, #73ffff cyan, #d7cdb0 parchment
+  const CYAN = '#73ffff';
+  const TEAL = '#3bb8b8';
+  const PARCH = '#d7cdb0';
+  const INK = '#071010';
+
+  // editorial theme extracted from the edition title "AOIFUTURE News：<要点>——<補足>"
+  const rawTitle = String(edition.title ?? '').replace(/^AOIFUTURE News[:：]/, '');
+  const themeMain = rawTitle.split('——')[0].trim() || (lead?.title ?? edition.title);
+  const themeSub = rawTitle.includes('——') ? rawTitle.split('——').slice(1).join('——').trim() : '';
+
+  // topic intensity: what areas fired today (reader-facing labels)
+  const topicMeta = new Map((edition.topics ?? []).map((t) => [t.id, t.label_ja ?? t.id]));
+  const topicCounts = new Map();
+  for (const it of edition.items) {
+    for (const t of it.topics ?? []) {
+      const label = topicMeta.get(t) ?? t;
+      topicCounts.set(label, (topicCounts.get(label) ?? 0) + 1);
+    }
+  }
+  const topicsSorted = [...topicCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const maxT = topicsSorted[0]?.[1] ?? 1;
+
   const majorCount = edition.items.filter((i) => i.role === 'lead' || i.role === 'major').length;
 
-  // treemap data: proportional blocks per source domain (Visual Capitalist pattern)
-  const domainCounts = new Map();
-  for (const it of edition.items) {
-    const d = domainLabel(it.source_domain);
-    domainCounts.set(d, (domainCounts.get(d) ?? 0) + 1);
-  }
-  const domains = [...domainCounts.entries()].sort((a, b) => b[1] - a[1]);
-  const palette = ['#1f9d8f', '#d9a520', '#e0684b', '#b0559d', '#4f74c9', '#6f9c4b'];
-  const total = edition.items.length || 1;
+  const topicTile = (label, n, idx) => {
+    const sizePct = 0.55 + 0.45 * (n / maxT);
+    const font = Math.round((vertical ? 34 : 26) * sizePct);
+    return ['div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexGrow: n, flexBasis: '0%', flexShrink: 1, height: px(vertical ? 110 : 92), background: idx === 0 ? CYAN : idx === 1 ? TEAL : idx === 2 ? PARCH : 'rgba(115,255,255,0.14)', color: idx < 3 ? INK : '#ededed', borderRadius: px(12), marginRight: idx === topicsSorted.length - 1 ? '0' : px(8), boxSizing: 'border-box', padding: px(6) } },
+      ['div', { style: { fontSize: `${font}px`, fontWeight: 700, lineHeight: 1.15, letterSpacing: '1px', textAlign: 'center' } }, label],
+      ['div', { style: { fontSize: px(vertical ? 24 : 18), fontWeight: 700, marginTop: px(4), opacity: 0.85 } }, `${n}本`],
+    ];
+  };
 
-  const treemap = [
-    'div', { style: { display: 'flex', flexDirection: 'column' } },
-    ['div', { style: { color: '#8ea0c8', fontSize: px(vertical ? 24 : 16), fontWeight: 700, letterSpacing: '3px', marginBottom: px(10) } }, '今日の発生源 · SOURCES'],
-    ['div', { style: { display: 'flex', flexDirection: 'row', width: '100%', height: px(vertical ? 240 : 150) } },
-      ...domains.map(([d, n], idx) => [
-        'div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexGrow: n, flexBasis: '0%', flexShrink: 1, height: '100%', background: palette[idx % palette.length], borderRadius: px(10), marginRight: idx === domains.length - 1 ? '0' : px(8), boxSizing: 'border-box', padding: px(6) } },
-        ['div', { style: { color: '#ffffff', fontSize: px(vertical ? 72 : 44), fontWeight: 700, lineHeight: 1 } }, `${n}本`],
-        ['div', { style: { color: 'rgba(255,255,255,0.92)', fontSize: px(vertical ? 26 : 17), fontWeight: 700, letterSpacing: '1px', marginTop: px(6), textAlign: 'center' } }, d],
-      ]),
-    ],
-    ['div', { style: { color: '#8ea0c8', fontSize: px(vertical ? 22 : 15), marginTop: px(8) } }, `ブロック面積 = 出典別の記事数(本日全${total}本)`],
-  ];
-
+  const roleColor = { lead: CYAN, major: CYAN, brief: TEAL, watch: PARCH };
   const telop = (item, idx) => [
-    'div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'flex-start', marginBottom: px(vertical ? 13 : 12) } },
-    ['div', { style: { display: 'flex', width: px(vertical ? 36 : 32), height: px(vertical ? 40 : 32), borderRadius: px(9), background: roleColor[item.role] ?? '#8ea0c8', color: '#0b1020', fontSize: px(vertical ? 22 : 17), fontWeight: 700, alignItems: 'center', justifyContent: 'center', marginRight: px(12), flexShrink: 0 } }, String(idx + 2)],
+    'div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'flex-start', marginBottom: px(vertical ? 13 : 11) } },
+    ['div', { style: { display: 'flex', width: px(vertical ? 36 : 30), height: px(vertical ? 36 : 30), borderRadius: px(8), background: roleColor[item.role] ?? TEAL, color: INK, fontSize: px(vertical ? 21 : 16), fontWeight: 700, alignItems: 'center', justifyContent: 'center', marginRight: px(12), flexShrink: 0 } }, String(idx + 2)],
     ['div', { style: { display: 'flex', flexDirection: 'column', flex: 1 } },
-      ['div', { style: { color: '#f5f7ff', fontSize: px(vertical ? 27 : 16), lineHeight: 1.45 } }, item.title],
+      ['div', { style: { color: '#ededed', fontSize: px(vertical ? 27 : 16), lineHeight: 1.45 } }, item.title],
       ['div', { style: { display: 'flex', flexDirection: 'row', marginTop: px(4) } },
-        ['div', { style: { color: roleColor[item.role] ?? '#8ea0c8', fontSize: px(vertical ? 19 : 13), fontWeight: 700, letterSpacing: '1px', marginRight: px(10) } }, item.role === 'major' ? 'MAJOR' : item.role === 'brief' ? 'BRIEF' : 'WATCH'],
-        ['div', { style: { color: '#8ea0c8', fontSize: px(vertical ? 19 : 14), letterSpacing: '1px' } }, domainLabel(item.source_domain)],
+        ['div', { style: { color: roleColor[item.role] ?? TEAL, fontSize: px(vertical ? 18 : 13), fontWeight: 700, letterSpacing: '1px', marginRight: px(10) } }, item.role === 'major' ? 'MAJOR' : item.role === 'brief' ? 'BRIEF' : 'WATCH'],
+        ['div', { style: { color: '#b6b6b6', fontSize: px(vertical ? 18 : 13), letterSpacing: '1px' } }, domainLabel(item.source_domain)],
       ],
     ],
   ];
 
   const gridItems = rest.slice(0, vertical ? 5 : 4);
   const cols = vertical ? [gridItems, []] : [gridItems.slice(0, 2), gridItems.slice(2)];
+  const leadPoint = truncate(lead?.selection_reason ?? lead?.source_fact ?? edition.dek ?? '', vertical ? 150 : 80);
 
   return [
     'div',
-    { style: { display: 'flex', flexDirection: 'column', width: `${width}px`, height: `${height}px`, background: 'linear-gradient(135deg, #0b1020 0%, #101a3a 55%, #1b1040 100%)', padding: vertical ? '56px' : '40px', boxSizing: 'border-box', position: 'relative' } },
-    ['div', { style: { display: 'flex', position: 'absolute', top: 0, left: 0, width: `${width}px`, height: px(10), background: 'linear-gradient(90deg, #ff7a59, #ffc300, #30d5c8, #ff5fa2)' } }],
+    { style: { display: 'flex', flexDirection: 'column', width: `${width}px`, height: `${height}px`, background: 'linear-gradient(160deg, #071010 0%, #0a1816 60%, #0d211d 100%)', padding: vertical ? '56px' : '40px', boxSizing: 'border-box', position: 'relative' } },
+    ['div', { style: { display: 'flex', position: 'absolute', top: 0, left: 0, width: `${width}px`, height: px(8), background: `linear-gradient(90deg, ${CYAN}, ${TEAL}, ${PARCH})` } }],
     // header
     ['div', { style: { display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' } },
       ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'center' } },
-        ['div', { style: { width: px(14), height: px(14), borderRadius: '50%', background: '#30d5c8', marginRight: px(12) } }],
-        ['div', { style: { color: '#ffffff', fontSize: px(vertical ? 34 : 30), fontWeight: 700, letterSpacing: '2px' } }, 'AOIFUTURE NEWS'],
+        ['div', { style: { width: px(14), height: px(14), borderRadius: '50%', background: CYAN, marginRight: px(12) } }],
+        ['div', { style: { color: '#ededed', fontSize: px(vertical ? 34 : 28), fontWeight: 700, letterSpacing: '3px' } }, 'AOIFUTURE NEWS'],
       ],
-      ['div', { style: { color: '#8ea0c8', fontSize: px(vertical ? 26 : 22) } }, `${fmtDate(edition.edition_date)} 版`],
+      ['div', { style: { color: '#b6b6b6', fontSize: px(vertical ? 26 : 21) } }, `${fmtDate(edition.edition_date)} 版 · ${edition.items.length}本`],
     ],
-    // hero row: big lead + treemap hero (visual-first)
-    ['div', { style: { display: 'flex', flexDirection: vertical ? 'column' : 'row', marginTop: vertical ? '28px' : '22px', flex: vertical ? 'none' : 1 } },
-      ['div', { style: { display: 'flex', flexDirection: 'column', width: vertical ? '100%' : '52%', paddingRight: vertical ? '0' : '32px', boxSizing: 'border-box' } },
-        ['div', { style: { display: 'flex', alignItems: 'center' } },
-          ['div', { style: { width: '0', height: '0', borderTop: `${px(9)} solid transparent`, borderBottom: `${px(9)} solid transparent`, borderLeft: `${px(14)} solid #ffc300`, marginRight: '12px' } }],
-          ['div', { style: { color: '#ffc300', fontSize: px(vertical ? 26 : 22), fontWeight: 700, letterSpacing: '3px' } }, '今日の主役'],
-        ],
-        ['div', { style: { color: '#ffffff', fontSize: px(vertical ? 52 : 27), lineHeight: 1.35, marginTop: px(10), fontWeight: 700 } }, headline],
-        ['div', { style: { color: '#c6d2ee', fontSize: px(vertical ? 27 : 14), lineHeight: 1.6, marginTop: px(10) } }, leadPoint],
-        ['div', { style: { display: 'flex', flexDirection: 'row', marginTop: px(vertical ? 22 : 14) } },
-          ['div', { style: { color: '#ffc300', fontSize: px(vertical ? 46 : 34), fontWeight: 700, lineHeight: 1, marginRight: px(10) } }, `${majorCount}`],
-          ['div', { style: { color: '#8ea0c8', fontSize: px(vertical ? 24 : 17), letterSpacing: '1px' } }, `本が本日の主要信号 · 全${total}本`],
-        ],
+    // editorial theme hero — the reason to read
+    ['div', { style: { display: 'flex', flexDirection: 'column', marginTop: vertical ? '40px' : '26px' } },
+      ['div', { style: { color: PARCH, fontSize: px(vertical ? 24 : 18), fontWeight: 700, letterSpacing: '4px' } }, '今日のエディトリアルテーマ'],
+      ['div', { style: { color: CYAN, fontSize: px(vertical ? 68 : 46), fontWeight: 700, lineHeight: 1.25, marginTop: px(10) } }, themeMain],
+      themeSub ? ['div', { style: { color: '#ededed', fontSize: px(vertical ? 28 : 18), lineHeight: 1.5, marginTop: px(10) } }, themeSub] : null,
+    ].filter((n) => n !== null),
+    // topic intensity strip — what areas fired today
+    ['div', { style: { display: 'flex', flexDirection: 'column', marginTop: vertical ? '36px' : '24px' } },
+      ['div', { style: { color: '#b6b6b6', fontSize: px(vertical ? 22 : 15), fontWeight: 700, letterSpacing: '3px', marginBottom: px(10) } }, '今日何が動いたか · TOPICS'],
+      ['div', { style: { display: 'flex', flexDirection: 'row', width: '100%' } },
+        ...topicsSorted.map(([label, n], idx) => topicTile(label, n, idx)),
       ],
-      ['div', { style: { display: 'flex', flexDirection: 'column', width: vertical ? '100%' : '48%', marginTop: vertical ? '34px' : '0', justifyContent: vertical ? 'center' : 'flex-end' } }, treemap],
+    ],
+    // lead + one-line why
+    ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'flex-start', marginTop: vertical ? '34px' : '22px' } },
+      ['div', { style: { width: '0', height: '0', borderTop: `${px(9)} solid transparent`, borderBottom: `${px(9)} solid transparent`, borderLeft: `${px(14)} solid ${CYAN}`, marginRight: px(12), marginTop: px(8) } }],
+      ['div', { style: { display: 'flex', flexDirection: 'column', flex: 1 } },
+        ['div', { style: { color: '#ededed', fontSize: px(vertical ? 30 : 19), fontWeight: 700, lineHeight: 1.4 } }, lead?.title ?? edition.title],
+        ['div', { style: { color: '#b6b6b6', fontSize: px(vertical ? 24 : 14), lineHeight: 1.55, marginTop: px(8) } }, leadPoint],
+      ],
     ],
     // telop grid
-    ['div', { style: { display: 'flex', flexDirection: vertical ? 'column' : 'row', marginTop: vertical ? '22px' : '18px', paddingTop: px(14), borderTop: '1px solid rgba(142,160,200,0.3)' } },
+    ['div', { style: { display: 'flex', flexDirection: vertical ? 'column' : 'row', marginTop: vertical ? '26px' : '18px', paddingTop: px(14), borderTop: '1px solid rgba(115,255,255,0.25)' } },
       ['div', { style: { display: 'flex', flexDirection: 'column', width: vertical ? '100%' : '50%', paddingRight: px(14), boxSizing: 'border-box' } }, ...cols[0].map((item, idx) => telop(item, idx))],
       vertical ? null : ['div', { style: { display: 'flex', flexDirection: 'column', width: '50%' } }, ...cols[1].map((item, idx) => telop(item, idx + cols[0].length))],
     ].filter((n) => n !== null),
     // footer
-    ['div', { style: { display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 'auto', paddingTop: px(14) } },
+    ['div', { style: { display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 'auto', paddingTop: px(12) } },
       ['div', { style: { display: 'flex', flexDirection: 'column' } },
-        ['div', { style: { color: '#30d5c8', fontSize: px(vertical ? 24 : 17), fontWeight: 700, letterSpacing: '1px' } }, '毎朝AIニュースをどっさり · AI News Daily'],
-        ['div', { style: { color: '#ffffff', fontSize: px(vertical ? 34 : 24), fontWeight: 700, marginTop: px(6), letterSpacing: '1px' } }, 'aoifuture.com'],
+        ['div', { style: { color: PARCH, fontSize: px(vertical ? 24 : 16), fontWeight: 700, letterSpacing: '1px' } }, `今日の${majorCount}本は一次情報で読める · aoifuture.com`],
+        ['div', { style: { color: '#b6b6b6', fontSize: px(vertical ? 20 : 13), marginTop: px(6) } }, '毎朝更新 · AI News Daily'],
       ],
-      ['img', { src: qrDataUrl, width: Math.round((vertical ? 170 : 104) * s), height: Math.round((vertical ? 170 : 104) * s), style: { borderRadius: '12px' } }],
+      ['img', { src: qrDataUrl, width: Math.round((vertical ? 160 : 100) * s), height: Math.round((vertical ? 160 : 100) * s), style: { borderRadius: '10px' } }],
     ],
   ];
 }
