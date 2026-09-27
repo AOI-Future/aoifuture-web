@@ -32,25 +32,61 @@ function fmtDate(iso) {
   return String(iso ?? '').slice(0, 10).replaceAll('-', '.');
 }
 
+const domainLabel = (d) => {
+  const map = { 'github.blog': 'GitHub', 'huggingface.co': 'HF', 'www.anthropic.com': 'Anthropic', 'arxiv.org': 'arXiv', 'openai.com': 'OpenAI', 'research.ibm.com': 'IBM' };
+  return map[d] ?? String(d).replace(/^www\./, '').split('.')[0].toUpperCase();
+};
+const roleColor = { lead: '#ff7a59', major: '#ffc300', brief: '#30d5c8', watch: '#8ea0c8' };
+
 export function buildDom({ edition, width, height, qrDataUrl }) {
   const vertical = height >= width;
   const s = width / 1200;
   const lead = edition.items.find((i) => i.role === 'lead') ?? edition.items[0];
-  const majors = edition.items.filter((i) => i.role !== 'lead').slice(0, vertical ? 4 : 3);
-  const headline = truncate(lead?.title ?? edition.title, vertical ? 40 : 44);
-  const dek = truncate(edition.dek ?? lead?.source_fact ?? '', vertical ? 130 : 78);
-  const rowColors = ['#ff7a59', '#ffc300', '#30d5c8', '#ff5fa2'];
+  const rest = edition.items.filter((i) => i !== lead);
+  const headline = truncate(lead?.title ?? edition.title, vertical ? 40 : 30);
+  const leadPoint = truncate(lead?.selection_reason ?? lead?.source_fact ?? edition.dek ?? '', vertical ? 130 : 58);
   const px = (n) => `${Math.round(n * s)}px`;
 
-  const rows = majors.map((item, idx) => [
-    'div',
-    { style: { display: 'flex', flexDirection: 'row', alignItems: 'flex-start', marginTop: vertical ? '26px' : '14px' } },
-    ['div', { style: { display: 'flex', width: '38px', height: '38px', borderRadius: '10px', background: rowColors[idx % 4], color: '#0b1020', fontSize: '20px', fontWeight: 700, alignItems: 'center', justifyContent: 'center', marginRight: '14px', flexShrink: 0 } }, String(idx + 1)],
-    ['div', { style: { display: 'flex', flexDirection: 'column' } },
-      ['div', { style: { color: '#f5f7ff', fontSize: px(vertical ? 25 : 22), lineHeight: 1.45 } }, truncate(item.title, vertical ? 42 : 46)],
-      ['div', { style: { color: '#8ea0c8', fontSize: px(vertical ? 19 : 17), marginTop: '6px', lineHeight: 1.5 } }, truncate(item.selection_reason ?? item.source_fact ?? '', vertical ? 80 : 64)],
+  // per-domain histogram: which sources fired today
+  const domainCounts = new Map();
+  for (const it of edition.items) {
+    const d = domainLabel(it.source_domain);
+    domainCounts.set(d, (domainCounts.get(d) ?? 0) + 1);
+  }
+  const topDomains = [...domainCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 4);
+
+  const statChip = (value, label, color) => [
+    'div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginRight: px(28) } },
+    ['div', { style: { color, fontSize: px(42), fontWeight: 700, lineHeight: 1 } }, value],
+    ['div', { style: { color: '#8ea0c8', fontSize: px(15), marginTop: px(5), letterSpacing: '2px' } }, label],
+  ];
+
+  const bars = topDomains.map(([d, n], idx) => {
+    const maxN = topDomains[0][1] || 1;
+    const wBar = `${Math.max(24, Math.round((n / maxN) * 150 * s))}px`;
+    const colors = ['#30d5c8', '#ffc300', '#ff7a59', '#ff5fa2'];
+    return [
+      'div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: px(9) } },
+      ['div', { style: { color: '#c6d2ee', fontSize: px(16), width: px(96), fontWeight: 700, letterSpacing: '1px' } }, d],
+      ['div', { style: { display: 'flex', height: px(16), width: wBar, background: colors[idx % 4], borderRadius: '4px', marginRight: px(8) } }],
+      ['div', { style: { color: '#8ea0c8', fontSize: px(15) } }, `${n}`],
+    ];
+  });
+
+  const telop = (item, idx) => [
+    'div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'flex-start', marginBottom: px(12) } },
+    ['div', { style: { display: 'flex', width: px(30), height: px(30), borderRadius: '8px', background: roleColor[item.role] ?? '#8ea0c8', color: '#0b1020', fontSize: px(17), fontWeight: 700, alignItems: 'center', justifyContent: 'center', marginRight: px(12), flexShrink: 0 } }, String(idx + 2)],
+    ['div', { style: { display: 'flex', flexDirection: 'column', flex: 1 } },
+      ['div', { style: { color: '#f5f7ff', fontSize: px(vertical ? 22 : 19), lineHeight: 1.4 } }, truncate(item.title, vertical ? 30 : 30)],
+      ['div', { style: { display: 'flex', flexDirection: 'row', marginTop: px(3) } },
+        ['div', { style: { color: roleColor[item.role] ?? '#8ea0c8', fontSize: px(14), fontWeight: 700, letterSpacing: '1px', marginRight: px(10) } }, item.role === 'major' ? 'MAJOR' : item.role === 'brief' ? 'BRIEF' : 'WATCH'],
+        ['div', { style: { color: '#8ea0c8', fontSize: px(14), letterSpacing: '1px' } }, domainLabel(item.source_domain)],
+      ],
     ],
-  ]);
+  ];
+
+  const gridItems = rest.slice(0, vertical ? 6 : 4);
+  const cols = vertical ? [gridItems, []] : [gridItems.slice(0, 2), gridItems.slice(2)];
 
   return [
     'div',
@@ -63,15 +99,31 @@ export function buildDom({ edition, width, height, qrDataUrl }) {
       ],
       ['div', { style: { color: '#8ea0c8', fontSize: px(24) } }, `${fmtDate(edition.edition_date)} 版 · ${edition.items.length}本`],
     ],
-    ['div', { style: { display: 'flex', flexDirection: 'column', marginTop: vertical ? '36px' : '18px', borderLeft: '6px solid #ff7a59', paddingLeft: '22px' } },
-      ['div', { style: { display: 'flex', alignItems: 'center' } },
-        ['div', { style: { width: '0', height: '0', borderTop: `${px(9)} solid transparent`, borderBottom: `${px(9)} solid transparent`, borderLeft: `${px(14)} solid #ffc300`, marginRight: '12px' } }],
-        ['div', { style: { color: '#ffc300', fontSize: px(22), fontWeight: 700, letterSpacing: '3px' } }, '今日の主役'],
+    ['div', { style: { display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginTop: vertical ? '30px' : '18px' } },
+      ['div', { style: { display: 'flex', flexDirection: 'column', width: vertical ? '100%' : '54%', paddingRight: vertical ? '0' : '30px', boxSizing: 'border-box' } },
+        ['div', { style: { display: 'flex', flexDirection: 'row', marginBottom: vertical ? '22px' : '16px' } },
+          statChip(String(edition.items.length), 'SIGNALS', '#ffffff'),
+          statChip(String(edition.items.filter((i) => i.role === 'lead' || i.role === 'major').length), 'MAJOR+', '#ffc300'),
+          statChip(String(domainCounts.size), 'SOURCES', '#30d5c8'),
+        ],
+        ['div', { style: { display: 'flex', flexDirection: 'column', borderLeft: '6px solid #ff7a59', paddingLeft: '20px' } },
+          ['div', { style: { display: 'flex', alignItems: 'center' } },
+            ['div', { style: { width: '0', height: '0', borderTop: `${px(9)} solid transparent`, borderBottom: `${px(9)} solid transparent`, borderLeft: `${px(14)} solid #ffc300`, marginRight: '12px' } }],
+            ['div', { style: { color: '#ffc300', fontSize: px(22), fontWeight: 700, letterSpacing: '3px' } }, '今日の主役'],
+          ],
+          ['div', { style: { color: '#ffffff', fontSize: px(vertical ? 40 : 32), lineHeight: 1.35, marginTop: '8px', fontWeight: 700 } }, headline],
+          ['div', { style: { color: '#c6d2ee', fontSize: px(vertical ? 20 : 18), lineHeight: 1.55, marginTop: '8px' } }, leadPoint],
+        ],
       ],
-      ['div', { style: { color: '#ffffff', fontSize: px(vertical ? 44 : 38), lineHeight: 1.35, marginTop: '10px', fontWeight: 700 } }, headline],
-      ['div', { style: { color: '#c6d2ee', fontSize: px(vertical ? 22 : 20), lineHeight: 1.6, marginTop: '12px' } }, dek],
+      ['div', { style: { display: vertical ? 'none' : 'flex', flexDirection: 'column', width: '46%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(142,160,200,0.35)', borderRadius: '14px', padding: px(18), boxSizing: 'border-box' } },
+        ['div', { style: { color: '#8ea0c8', fontSize: px(15), fontWeight: 700, letterSpacing: '2px', marginBottom: px(12) } }, '今日の発生源'],
+        ...bars,
+      ],
     ],
-    ['div', { style: { display: 'flex', flexDirection: 'column', marginTop: vertical ? '30px' : '18px' } }, ...rows],
+    ['div', { style: { display: 'flex', flexDirection: vertical ? 'column' : 'row', marginTop: vertical ? '26px' : '20px', paddingTop: px(16), borderTop: '1px solid rgba(142,160,200,0.3)' } },
+      ['div', { style: { display: 'flex', flexDirection: 'column', width: vertical ? '100%' : '50%', paddingRight: px(14), boxSizing: 'border-box' } }, ...cols[0].map((item, idx) => telop(item, idx))],
+      vertical ? null : ['div', { style: { display: 'flex', flexDirection: 'column', width: '50%' } }, ...cols[1].map((item, idx) => telop(item, idx + cols[0].length))],
+    ].filter((n) => n !== null),
     ['div', { style: { display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 'auto' } },
       ['div', { style: { display: 'flex', flexDirection: 'column' } },
         ['div', { style: { display: 'flex', alignItems: 'center', background: 'rgba(48,213,200,0.16)', border: '1.5px solid #30d5c8', borderRadius: '999px', padding: '7px 18px' } },
