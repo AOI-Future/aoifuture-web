@@ -50,7 +50,7 @@ export function buildDom({ edition, width, height, qrDataUrl }) {
   const s = width / 1200;
   const lead = edition.items.find((i) => i.role === 'lead') ?? edition.items[0];
   const rest = edition.items.filter((i) => i !== lead);
-  const headline = truncate(lead?.title ?? edition.title, vertical ? 40 : 30);
+  const headline = lead?.title ?? edition.title;
   const leadPoint = truncate(lead?.selection_reason ?? lead?.source_fact ?? edition.dek ?? '', vertical ? 150 : 120);
   const px = (n) => `${Math.round(n * s)}px`;
 
