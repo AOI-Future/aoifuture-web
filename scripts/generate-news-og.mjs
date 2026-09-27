@@ -79,16 +79,16 @@ export function buildDom({ edition, width, height, qrDataUrl }) {
 
   const topicTile = (label, n, idx) => {
     const sizePct = 0.55 + 0.45 * (n / maxT);
-    const font = Math.round((vertical ? 34 : 26) * sizePct);
-    return ['div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexGrow: n, flexBasis: '0%', flexShrink: 1, height: px(vertical ? 110 : 92), background: idx === 0 ? CYAN : idx === 1 ? TEAL : idx === 2 ? PARCH : 'rgba(115,255,255,0.14)', color: idx < 3 ? INK : '#ededed', borderRadius: px(12), marginRight: idx === topicsSorted.length - 1 ? '0' : px(8), boxSizing: 'border-box', padding: px(6) } },
+    const font = Math.round((vertical ? 34 : 21) * sizePct);
+    return ['div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexGrow: n, flexBasis: '0%', flexShrink: 1, height: px(vertical ? 110 : 74), background: idx === 0 ? CYAN : idx === 1 ? TEAL : idx === 2 ? PARCH : 'rgba(115,255,255,0.14)', color: idx < 3 ? INK : '#ededed', borderRadius: px(12), marginRight: idx === topicsSorted.length - 1 ? '0' : px(8), boxSizing: 'border-box', padding: px(6) } },
       ['div', { style: { fontSize: `${font}px`, fontWeight: 700, lineHeight: 1.15, letterSpacing: '1px', textAlign: 'center' } }, label],
-      ['div', { style: { fontSize: px(vertical ? 24 : 18), fontWeight: 700, marginTop: px(4), opacity: 0.85 } }, `${n}本`],
+      ['div', { style: { fontSize: px(vertical ? 24 : 15), fontWeight: 700, marginTop: px(3), opacity: 0.85 } }, `${n}本`],
     ];
   };
 
   const roleColor = { lead: CYAN, major: CYAN, brief: TEAL, watch: PARCH };
   const telop = (item, idx) => [
-    'div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'flex-start', marginBottom: px(vertical ? 13 : 11) } },
+    'div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'flex-start', marginBottom: px(vertical ? 13 : 7) } },
     ['div', { style: { display: 'flex', width: px(vertical ? 36 : 30), height: px(vertical ? 36 : 30), borderRadius: px(8), background: roleColor[item.role] ?? TEAL, color: INK, fontSize: px(vertical ? 21 : 16), fontWeight: 700, alignItems: 'center', justifyContent: 'center', marginRight: px(12), flexShrink: 0 } }, String(idx + 2)],
     ['div', { style: { display: 'flex', flexDirection: 'column', flex: 1 } },
       ['div', { style: { color: '#ededed', fontSize: px(vertical ? 27 : 16), lineHeight: 1.45 } }, item.title],
@@ -101,7 +101,7 @@ export function buildDom({ edition, width, height, qrDataUrl }) {
 
   const gridItems = rest.slice(0, vertical ? 5 : 4);
   const cols = vertical ? [gridItems, []] : [gridItems.slice(0, 2), gridItems.slice(2)];
-  const leadPoint = truncate(lead?.selection_reason ?? lead?.source_fact ?? edition.dek ?? '', vertical ? 150 : 80);
+  const leadPoint = truncate(lead?.selection_reason ?? lead?.source_fact ?? edition.dek ?? '', vertical ? 150 : 58);
 
   return [
     'div',
@@ -116,33 +116,33 @@ export function buildDom({ edition, width, height, qrDataUrl }) {
       ['div', { style: { color: '#b6b6b6', fontSize: px(vertical ? 26 : 21) } }, `${fmtDate(edition.edition_date)} 版 · ${edition.items.length}本`],
     ],
     // editorial theme hero — the reason to read
-    ['div', { style: { display: 'flex', flexDirection: 'column', marginTop: vertical ? '40px' : '26px' } },
-      ['div', { style: { color: PARCH, fontSize: px(vertical ? 24 : 18), fontWeight: 700, letterSpacing: '4px' } }, '今日のエディトリアルテーマ'],
-      ['div', { style: { color: CYAN, fontSize: px(vertical ? 68 : 46), fontWeight: 700, lineHeight: 1.25, marginTop: px(10) } }, themeMain],
-      themeSub ? ['div', { style: { color: '#ededed', fontSize: px(vertical ? 28 : 18), lineHeight: 1.5, marginTop: px(10) } }, themeSub] : null,
+    ['div', { style: { display: 'flex', flexDirection: 'column', marginTop: vertical ? '40px' : '18px' } },
+      ['div', { style: { color: PARCH, fontSize: px(vertical ? 24 : 16), fontWeight: 700, letterSpacing: '4px' } }, '今日のエディトリアルテーマ'],
+      ['div', { style: { color: CYAN, fontSize: px(vertical ? 68 : 36), fontWeight: 700, lineHeight: 1.25, marginTop: px(10) } }, themeMain],
+      themeSub ? ['div', { style: { color: '#ededed', fontSize: px(vertical ? 28 : 16), lineHeight: 1.5, marginTop: px(10) } }, themeSub] : null,
     ].filter((n) => n !== null),
     // topic intensity strip — what areas fired today
-    ['div', { style: { display: 'flex', flexDirection: 'column', marginTop: vertical ? '36px' : '24px' } },
-      ['div', { style: { color: '#b6b6b6', fontSize: px(vertical ? 22 : 15), fontWeight: 700, letterSpacing: '3px', marginBottom: px(10) } }, '今日何が動いたか · TOPICS'],
+    ['div', { style: { display: 'flex', flexDirection: 'column', marginTop: vertical ? '36px' : '16px' } },
+      ['div', { style: { color: '#b6b6b6', fontSize: px(vertical ? 22 : 14), fontWeight: 700, letterSpacing: '3px', marginBottom: px(10) } }, '今日何が動いたか · TOPICS（複数該当）'],
       ['div', { style: { display: 'flex', flexDirection: 'row', width: '100%' } },
         ...topicsSorted.map(([label, n], idx) => topicTile(label, n, idx)),
       ],
     ],
     // lead + one-line why
-    ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'flex-start', marginTop: vertical ? '34px' : '22px' } },
+    ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'flex-start', marginTop: vertical ? '34px' : '14px' } },
       ['div', { style: { width: '0', height: '0', borderTop: `${px(9)} solid transparent`, borderBottom: `${px(9)} solid transparent`, borderLeft: `${px(14)} solid ${CYAN}`, marginRight: px(12), marginTop: px(8) } }],
       ['div', { style: { display: 'flex', flexDirection: 'column', flex: 1 } },
-        ['div', { style: { color: '#ededed', fontSize: px(vertical ? 30 : 19), fontWeight: 700, lineHeight: 1.4 } }, lead?.title ?? edition.title],
-        ['div', { style: { color: '#b6b6b6', fontSize: px(vertical ? 24 : 14), lineHeight: 1.55, marginTop: px(8) } }, leadPoint],
+        ['div', { style: { color: '#ededed', fontSize: px(vertical ? 30 : 15), fontWeight: 700, lineHeight: 1.4 } }, lead?.title ?? edition.title],
+        vertical ? ['div', { style: { color: '#b6b6b6', fontSize: px(24), lineHeight: 1.5, marginTop: px(8) } }, leadPoint] : null,
       ],
     ],
     // telop grid
-    ['div', { style: { display: 'flex', flexDirection: vertical ? 'column' : 'row', marginTop: vertical ? '26px' : '18px', paddingTop: px(14), borderTop: '1px solid rgba(115,255,255,0.25)' } },
+    ['div', { style: { display: 'flex', flexDirection: vertical ? 'column' : 'row', marginTop: vertical ? '26px' : '12px', paddingTop: px(vertical ? 14 : 10), borderTop: '1px solid rgba(115,255,255,0.25)' } },
       ['div', { style: { display: 'flex', flexDirection: 'column', width: vertical ? '100%' : '50%', paddingRight: px(14), boxSizing: 'border-box' } }, ...cols[0].map((item, idx) => telop(item, idx))],
-      vertical ? null : ['div', { style: { display: 'flex', flexDirection: 'column', width: '50%' } }, ...cols[1].map((item, idx) => telop(item, idx + cols[0].length))],
+      vertical ? null : ['div', { style: { display: 'flex', flexDirection: 'column', width: '50%', paddingRight: px(12), boxSizing: 'border-box' } }, ...cols[1].map((item, idx) => telop(item, idx + cols[0].length))],
     ].filter((n) => n !== null),
     // footer
-    ['div', { style: { display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 'auto', paddingTop: px(12) } },
+    ['div', { style: { display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 'auto', paddingTop: px(8), minHeight: px(vertical ? 160 : 76), flexShrink: 0 } },
       ['div', { style: { display: 'flex', flexDirection: 'column' } },
         ['div', { style: { color: PARCH, fontSize: px(vertical ? 24 : 16), fontWeight: 700, letterSpacing: '1px' } }, `今日の${majorCount}本は一次情報で読める · aoifuture.com`],
         ['div', { style: { color: '#b6b6b6', fontSize: px(vertical ? 20 : 13), marginTop: px(6) } }, '毎朝更新 · AI News Daily'],
