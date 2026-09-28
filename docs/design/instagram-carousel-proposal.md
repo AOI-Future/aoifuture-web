@@ -73,8 +73,13 @@ X・LinkedIn・OGP向けの1枚カードは残す。Instagramだけは滞在時�
 ### 保存用チートシート（旧SAVE）
 
 - 「今日の3点」＋「次に確認する1点」
-- CTA：`あとで見返すなら保存` / `同僚に共有`
+- **NoteへのQRをスライド右下に大きく配置（約200×200px）**
+  - 第一候補：該当版のnote記事URL（DailyNewsTrackAのnote_url。Obsidian最終草稿の `note_url:` / `公開URL:` から解決）
+  - 記事が未公開・不明のとき： `https://note.com/shugo`（プロフィール）へフォールバック。QR先を空にしない
+- QRの隣にCTA文案：`全文はNoteで読めます ／ あとで見返すなら保存 ／ 同僚に共有`
+- QR下部に読み上げ可能な縮約URLも1行添える（`note.com/shugo` 等）— QRが読めない環境への保険
 - スワイプ矢印は置かない
+
 
 ## ページ選択規則
 
@@ -88,7 +93,7 @@ X・LinkedIn・OGP向けの1枚カードは残す。Instagramだけは滞在時�
 - カルーセルの全主張はEdition JSONの既存フィールドからのみ導出する（版JSONは書かない — hash契約維持）
 - 各スライドのフッターはそのページの主張を支える一次情報を1行で載せる：`出典: <媒体名> <YYYY.MM.DD> <URLまたはDOI/edition ID短縮形>`
 - URLが長い場合は `aoifuture.com/news/<edition_id>/#item-n` のアイテムアンカーへ集約し、フルURLは保存用スライドと `share-copy-index.json` に保持する
-- 表紙・チートシートにはQRまたはedition IDを必ず置き、保存した1枚だけで原典へ辿れるようにする
+- 表紙・チートシートにはQRまたはedition IDを必ず置き、保存した1枚だけで原典へ辿れるようにする。**保存用チートシートのQRはNote（記事URL→未取得ならプロフィール）を標準CTA先とし、qrcodeライブラリで生成。QRは背景 #f2e9d8 / 前景 #10261f のブランド配色でコントラスト比4.5:1以上を維持する**
 
 
 ## 画面設計
