@@ -35,6 +35,10 @@ export function passage(x:number,z:number,seed:number,dx:number,dz:number) {
 }
 export type MaterialKey = 'wall' | 'floor' | 'ceiling' | 'light' | 'trim' | 'wood' | 'metal' | 'water' | 'leaf' | 'screen' | 'dark' | 'art';
 export type BoxSpec = { x: number; y: number; z: number; w: number; h: number; d: number; material: MaterialKey; solid: boolean };
+/** Solid boxes that intersect the walkable band (~0.1–1.9 m). Shared by collision, obstacles, and reachability tests. */
+export function collidersFromBoxes(boxes: BoxSpec[]) {
+  return boxes.filter(b => b.solid && b.y - b.h / 2 < 1.9 && b.y + b.h / 2 > .1);
+}
 export function roomPlan(x: number, z: number, seed: number) {
   const room = describeRoom(x,z,seed), {height, key} = room.place;
   const boxes: BoxSpec[] = [];
@@ -140,7 +144,7 @@ export function roomPlan(x: number, z: number, seed: number) {
   return { ...room, boxes, maze, shaft };
 }
 export function obstacles(x:number,z:number,seed:number) {
-  return roomPlan(x,z,seed).boxes.filter(b=>b.solid && b.y-b.h/2<1.9 && b.y+b.h/2>.1)
+  return collidersFromBoxes(roomPlan(x,z,seed).boxes)
     .map(b=>({...b,x:b.x+x*ROOM,z:b.z+z*ROOM}));
 }
 
