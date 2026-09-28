@@ -8,16 +8,28 @@
 // → 全アプリが必ず /apps/<slug> ページを持つ。`site` の有無で役割が変わるだけ:
 //     site なし … そのページ自体がフル LP（CTA は GitHub ★ 等）
 //     site あり … 紹介ページ＋「専用サイトへ →」の外部誘導
+//
+// 法務ページ（/apps/terms, /apps/privacy）の対象一覧もここから派生する。
+// `scope: 'native'` のみがネイティブ共通規約・Data Not Collected ポリシーに載る。
+// `scope: 'web'` は /apps/ 一覧には出るが、上記法務の「ネイティブ」対象外。
 
 export type AppStatus = 'IN DEV' | 'EARLY SIGNAL' | 'BETA' | 'LIVE';
+
+/** 法務ページでネイティブ共通条項の対象にするか */
+export type AppScope = 'native' | 'web';
 
 export interface AppEntry {
   id: string;        // 表示用連番 '001'
   slug: string;      // /apps/<slug> と apps/<slug>.astro のファイル名
   name: string;      // 一覧・ページ見出し
   desc: string;      // 一覧の1行説明
-  status: AppStatus; // EARLY SIGNAL → BETA → LIVE
-  repo?: string;     // 開発リポ（内部メモ。表示しない）
+  status: AppStatus; // IN DEV → EARLY SIGNAL → BETA → LIVE
+  scope: AppScope;   // native = terms/privacy 共通条項の対象
+  /** 法務ページ用プラットフォーム表記（scope が native のとき必須） */
+  legalPlat?: string;
+  /** 法務ページ用1行説明（scope が native のとき必須） */
+  legalNote?: string;
+  repo?: string;     // 開発リポ（GitHub `org/repo`。LP の ★ リンク等）
   site?: string;     // 独自ドメイン専用サイト（育ったら設定）。あれば外部誘導
 }
 
@@ -28,6 +40,9 @@ export const apps: AppEntry[] = [
     name: 'AOI HARBOR',
     desc: 'MacのApple Foundation Modelを艦隊全体のローカルLLMゲートウェイに',
     status: 'EARLY SIGNAL',
+    scope: 'native',
+    legalPlat: 'macOS',
+    legalNote: 'ローカル LLM ゲートウェイ',
     repo: 'AOI-Future/aoi-harbor',
   },
   {
@@ -36,6 +51,9 @@ export const apps: AppEntry[] = [
     name: 'AOI TAP',
     desc: 'iPhoneの声を、オンデバイスで文字起こし＋日英対訳 → そのままAIが読めるノートに',
     status: 'IN DEV',
+    scope: 'native',
+    legalPlat: 'iOS / macOS / watchOS',
+    legalNote: 'オンデバイス文字起こし・日英対訳 → Markdown',
     repo: 'AOI-Future/aoi-tap',
   },
   {
@@ -44,7 +62,28 @@ export const apps: AppEntry[] = [
     name: 'AFTERHOURS',
     desc: '誰もいない、終わらない空間へ。音と光をたどるブラウザ探索ゲーム',
     status: 'BETA',
+    scope: 'web',
   },
   // 例) 育って独自ドメインを持ったら `site` を足すだけ（紹介ページは残す）:
-  // { id:'003', slug:'studiee', name:'STUDIEE', desc:'…', status:'LIVE', repo:'studiee-ios', site:'https://studiee.app' },
+  // { id:'004', slug:'studiee', name:'STUDIEE', desc:'…', status:'LIVE', scope:'native', legalPlat:'iOS', legalNote:'…', repo:'AOI-Future/studiee-ios', site:'https://studiee.app' },
 ];
+
+/** GitHub リポ URL（`repo` が `org/name` 形式のとき） */
+export function githubRepoUrl(repo: string): string {
+  return `https://github.com/${repo}`;
+}
+
+export function getAppBySlug(slug: string): AppEntry | undefined {
+  return apps.find((a) => a.slug === slug);
+}
+
+/** /apps/terms と /apps/privacy の SCOPE 一覧（ネイティブのみ） */
+export function appsForNativeLegal(): Pick<AppEntry, 'name' | 'legalPlat' | 'legalNote'>[] {
+  return apps
+    .filter((a) => a.scope === 'native')
+    .map(({ name, legalPlat, legalNote }) => ({
+      name,
+      legalPlat: legalPlat ?? '',
+      legalNote: legalNote ?? '',
+    }));
+}
