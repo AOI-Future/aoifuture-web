@@ -33,17 +33,16 @@ geography.tsが空間の正本。待合室、書架、水盤、吹き抜け、�
 ## 検証
 
 - `npm run build`
-- `npm run check:afterhours`
-- `npx vitest run tests/afterhours-world.test.ts`
-- `npm run test:afterhours` — desktop / phone / tablet のChromium検証
+- `npm run check:afterhours` — `src/lib/afterhours` 全体の TypeScript チェック
+- `npm run test:afterhours:unit` — 到達性・seed 再現など geography のユニットテスト
+- `npm run test:afterhours` — desktop / phone / tablet の Chromium 検証
 - スクリーンショット先は `AFTERHOURS_SCREENSHOT_DIR` で上書き可能。
 
-実機iOS Safari / Android、主観的な音質、長時間プレイ時の発熱と電池消費は未確認。
+実機 iOS Safari / Android、主観的な音質、長時間プレイ時の発熱と電池消費は未確認。
 数学的な無限ではなく、必要な範囲を繰り返し生成する方式。極端な座標では浮動小数点精度に限界がある。
-2026-09-13のユーザー公開指示に基づき、mainへの反映とVercelの本番デプロイを進める。
-Xへの実投稿は対象外。GIFは添付用、OGPは public/og/afterhours.png の静止画を使う。
+OGP は `public/og/afterhours.png` の静止画を使う。
 
-## 階層・探索の拡張（確認用）
+## 階層・探索の拡張
 
 - 初回の残響は操作練習用の近距離。以後は3〜5区画先（概ね80〜190m、直線距離）の音源へ。小部屋区画の音源は室内の到達可能な位置に置く。
 - 3回収集するごとに次の音源が一つ下の階に現れる。自由に先に下ることもできる。
