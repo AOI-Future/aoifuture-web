@@ -11,7 +11,7 @@ export const PLACES = [
   { key: 'service', name: 'UNDERWORKS', ja: '地下の配管廊', height: 4.4, wall: 0x718382, floor: 0x616d70, fog: 0x697c7c, light: 0xbdf8f1, surface: 'concrete', echo: .5, clue: '太い配管が、知らない場所へ熱を運ぶ。' },
   { key: 'garden', name: 'WINTER GARDEN', ja: '夜の温室', height: 8.5, wall: 0x9caca0, floor: 0x78867a, fog: 0x879e90, light: 0xe1ffd9, surface: 'tile', echo: .7, clue: '窓の向こうも、室内かもしれない。' },
 ] as const;
-export type Place = typeof PLACES[number];
+type Place = typeof PLACES[number];
 export function hash(x: number, z: number, seed: number) {
   let n = Math.imul(x ^ seed, 374761393) ^ Math.imul(z, 668265263);
   n = Math.imul(n ^ (n >>> 13), 1274126177);
@@ -145,7 +145,7 @@ export function obstacles(x:number,z:number,seed:number) {
 }
 
 const edgeKey=(a:number,b:number)=>`${Math.min(a,b)},${Math.max(a,b)}`;
-export function suiteDoors(x:number,z:number,seed:number) {
+function suiteDoors(x:number,z:number,seed:number) {
   const doors=new Set<string>(), visited=new Set([0]), stack=[0];
   while(stack.length) {
     const a=stack[stack.length-1],col=a%4,row=Math.floor(a/4);

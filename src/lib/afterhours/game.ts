@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import { World, ROOM, PLACES, describeRoom } from './world';
-import { floorSeed, floorLabel, shaftAt, nextResonance, resonancePoint } from './geography';
+import { World } from './world';
+import { ROOM, PLACES, describeRoom, floorSeed, floorLabel, shaftAt, nextResonance, resonancePoint } from './geography';
 import { Soundscape } from './audio';
 
 type Mark = { x: number; z: number; level: number };
