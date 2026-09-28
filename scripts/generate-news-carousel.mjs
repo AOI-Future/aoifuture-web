@@ -77,7 +77,6 @@ export async function buildSlides(edition, noteUrl) {
   const lead = edition.items.find((i) => i.role === 'lead') ?? edition.items[0];
   const cite = (item) => `出典: ${domainLabel(item.source_domain)} ${fmtDate(item.published_at)} aoifuture.com/news/${edition.edition_id}`;
   const majors = edition.items.filter((i) => i !== lead && (i.role === 'major' || i.role === 'brief'));
-  const related = majors.slice(0, 2);
   const slides = [];
 
   // 1. cover — hook derived from lead source_fact (verified fact, no hype)
@@ -86,13 +85,14 @@ export async function buildSlides(edition, noteUrl) {
       ['div', { style: { color: INK, background: CYAN, fontSize: '26px', fontWeight: 700, padding: '8px 20px', borderRadius: '999px', letterSpacing: '2px' } }, domainLabel(lead.source_domain)],
       ['div', { style: { color: FAINT, fontSize: '26px', marginLeft: '20px' } }, fmtDate(lead.published_at)],
     ],
-    ['div', { style: { color: INK, fontSize: '72px', fontWeight: 700, lineHeight: 1.25 } }, 'エージェントは'],
-    ['div', { style: { color: INK, fontSize: '72px', fontWeight: 700, lineHeight: 1.25 } }, '「やり方」を'],
-    ['div', { style: { color: CYAN, fontSize: '72px', fontWeight: 700, lineHeight: 1.25, marginBottom: '26px' } }, '記憶しはじめた'],
-    ['div', { style: { display: 'flex', width: '100%', height: '430px', overflow: 'hidden', borderRadius: '24px', border: `2px solid ${LINE}`, background: PALE } },
+    ['div', { style: { color: INK, fontSize: '72px', fontWeight: 700, lineHeight: 1.22 } }, 'エージェントは'],
+    ['div', { style: { color: INK, fontSize: '72px', fontWeight: 700, lineHeight: 1.22 } }, '「やり方」を'],
+    ['div', { style: { color: CYAN, fontSize: '72px', fontWeight: 700, lineHeight: 1.22, marginBottom: '20px' } }, '記憶しはじめた'],
+    ['div', { style: { color: INK, fontSize: '34px', fontWeight: 700, lineHeight: 1.55, marginBottom: '24px', paddingLeft: '22px', borderLeft: `6px solid ${CYAN}` } }, 'AIが、過去の判断理由を次の修正へ引き継ぐ'],
+    ['div', { style: { display: 'flex', width: '100%', height: '390px', overflow: 'hidden', borderRadius: '24px', border: `2px solid ${LINE}`, background: PALE } },
       ['img', { src: HERO, width: 960, height: 540, style: { width: '100%', height: '100%', objectFit: 'cover' } }],
     ],
-    ['div', { style: { color: FAINT, fontSize: '25px', marginTop: '18px', lineHeight: 1.5 } }, `公式ビジュアル: ${domainLabel(lead.source_domain)} / ${String(lead.source_title ?? '').split(' ')[0]} — 何が起き、何が言えないのかを8枚で`],
+    ['div', { style: { color: FAINT, fontSize: '24px', marginTop: '16px', lineHeight: 1.5 } }, 'Hugging Face「relore」の発表を、何が変わるかから読み解く'],
   ] }) });
 
   // 2. what happened
@@ -120,78 +120,92 @@ export async function buildSlides(edition, noteUrl) {
       ['img', { src: DIAGRAM, width: 960, height: 610, style: { width: '100%', height: '100%', objectFit: 'contain' } }],
     ],
     ['div', { style: { display: 'flex', flexDirection: 'row', marginTop: '24px' } },
-      flowNode('履歴を検索', 'Issue・PR・レビュー・議論', false),
+      flowNode('過去の修正理由を探す', 'Issue・PR・レビューを検索', false),
       ['div', { style: { width: '18px' } }],
-      flowNode('現コードと照合', '過去の理由を現在形で確認', true),
+      flowNode('今のコードで確かめる', '昔の判断がまだ有効か照合', true),
       ['div', { style: { width: '18px' } }],
-      flowNode('次の実行へ', '判断の根拠を再利用', false),
+      flowNode('次の修正に使う', '判断の根拠を引き継ぐ', false),
     ],
     ['div', { style: { color: FAINT, fontSize: '22px', marginTop: '18px', lineHeight: 1.5 } }, '公式図を日本語の3ステップで補足。対応範囲はリポジトリの現状に依存'],
   ] }) });
 
   // 4. contrast — parallel claims (OSS vs GitHub), labeled as positioning not verified delta
   const mirror = majors.find((i) => /copilot memory/i.test(String(i.title)));
-  const contrastCell = (label, item, hot) => ['div', { style: { display: 'flex', flexDirection: 'column', flex: 1, border: `2px solid ${hot ? CYAN : LINE}`, borderRadius: '20px', padding: '36px 32px', marginRight: hot ? 0 : '24px', background: hot ? '#ddf6f2' : PALE, boxSizing: 'border-box' } },
-    ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '22px' } },
-      ['div', { style: { color: hot ? '#fff' : TEAL, background: hot ? CYAN : 'transparent', fontSize: '24px', fontWeight: 700, padding: '6px 18px', borderRadius: '999px', letterSpacing: '2px', ...(hot ? {} : { border: `2px solid ${TEAL}` }) } }, label],
-      ['div', { style: { color: FAINT, fontSize: '22px', marginLeft: '16px' } }, item ? `${domainLabel(item.source_domain)} · ${fmtDate(item.published_at)}` : ''],
+  const contrastCell = (label, item, summary, hot) => ['div', { style: { display: 'flex', flexDirection: 'column', flex: 1, border: `2px solid ${hot ? CYAN : LINE}`, borderRadius: '20px', padding: '32px', marginRight: hot ? 0 : '24px', background: hot ? '#ddf6f2' : PALE, boxSizing: 'border-box', justifyContent: 'space-between' } },
+    ['div', { style: { display: 'flex', flexDirection: 'column' } },
+      ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '22px' } },
+        ['div', { style: { color: hot ? '#fff' : TEAL, background: hot ? CYAN : 'transparent', fontSize: '24px', fontWeight: 700, padding: '6px 18px', borderRadius: '999px', letterSpacing: '2px', ...(hot ? {} : { border: `2px solid ${TEAL}` }) } }, label],
+        ['div', { style: { color: FAINT, fontSize: '22px', marginLeft: '16px' } }, item ? `${domainLabel(item.source_domain)} · ${fmtDate(item.published_at)}` : ''],
+      ],
+      ['div', { style: { color: INK, fontSize: '38px', fontWeight: 700, lineHeight: 1.45, marginBottom: '24px' } }, item ? (hot ? 'Copilot Memory' : 'relore') : '—'],
+      ['div', { style: { color: INK, fontSize: '30px', lineHeight: 1.65 } }, summary],
     ],
-    ['div', { style: { color: INK, fontSize: '31px', fontWeight: 700, lineHeight: 1.55, marginBottom: '20px' } }, item ? item.title : '—'],
-    ['div', { style: { color: FAINT, fontSize: '28px', lineHeight: 1.6, flexGrow: 1 } }, cleanDisplayText(item ? String(item.source_fact).split('。').slice(0, 2).join('。') + '。' : '')],
-    ['div', { style: { display: 'flex', flexDirection: 'row', marginTop: '24px' } },
-      ['div', { style: { width: '100%', height: '6px', borderRadius: '3px', background: hot ? CYAN : LINE } }],
-    ],
+    ['div', { style: { width: '100%', height: '7px', borderRadius: '4px', background: hot ? CYAN : TEAL, marginTop: '28px' } }],
   ];
   slides.push({ key: 'contrast', dom: frame({ idx: 4, total: 8, noteUrl: cite(lead), children: [
-    ['div', { style: { color: CYAN, fontSize: '30px', fontWeight: 700, letterSpacing: '2px', marginBottom: '32px' } }, 'これは孤立した話ではない'],
+    ['div', { style: { color: CYAN, fontSize: '30px', fontWeight: 700, letterSpacing: '2px', marginBottom: '22px' } }, 'これは孤立した話ではない'],
+    ['div', { style: { color: INK, fontSize: '40px', fontWeight: 700, lineHeight: 1.45, marginBottom: '28px' } }, '共通点は「リポジトリ固有の記憶」を次の修正に使うこと'],
     ['div', { style: { display: 'flex', flexDirection: 'row', flexGrow: 1, minHeight: 0 } },
-      contrastCell('OSS側', lead, false),
-      contrastCell('商用側', mirror, true),
+      contrastCell('OSS側', lead, '開発履歴を検索し、今のコードと照合する。', false),
+      contrastCell('商用側', mirror, '既存メモリを、自動修正の文脈として利用する。', true),
     ],
-    ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '30px' } },
+    ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '26px' } },
       ['div', { style: { width: '14px', height: '14px', borderRadius: '50%', background: CYAN, marginRight: '16px', flexShrink: 0 } }],
-      ['div', { style: { color: FAINT, fontSize: '24px', lineHeight: 1.5 } }, '同じ潮流の並置です。機能同等性は未検証 — 比較は主張のレベルで示す'],
+      ['div', { style: { color: FAINT, fontSize: '24px', lineHeight: 1.5 } }, '同じ潮流の並置。機能同等性は未検証です'],
     ],
   ] }) });
 
-  // 5. so what — aoi_note, fact vs AOI view separated
+  // 5. so what — concrete reader-facing problem/change, clearly labeled as AOI interpretation
   slides.push({ key: 'sowhat', dom: frame({ idx: 5, total: 8, noteUrl: cite(lead), children: [
-    ['div', { style: { color: CYAN, fontSize: '30px', fontWeight: 700, letterSpacing: '2px', marginBottom: '40px' } }, 'あなたの実務に効くか'],
-    ['div', { style: { display: 'flex', flexDirection: 'row', flexGrow: 1, minHeight: 0, borderRadius: '22px', overflow: 'hidden', background: PALE, border: `2px solid ${LINE}` } },
-      ['div', { style: { display: 'flex', flexDirection: 'column', width: '58%', borderLeft: `6px solid ${CYAN}`, padding: '40px 34px', justifyContent: 'center' } },
-        ['div', { style: { color: CYAN, fontSize: '26px', fontWeight: 700, marginBottom: '20px', letterSpacing: '2px' } }, 'AOIの見方'],
-        ['div', { style: { color: INK, fontSize: '34px', lineHeight: 1.75 } }, cleanDisplayText(lead.aoi_note).split('。')[0] + '。'],
+    ['div', { style: { color: CYAN, fontSize: '30px', fontWeight: 700, letterSpacing: '2px', marginBottom: '24px' } }, 'あなたの実務に置き換えると'],
+    ['div', { style: { color: INK, fontSize: '42px', fontWeight: 700, lineHeight: 1.45, marginBottom: '30px' } }, 'Issueで決めた理由が、PRを作る頃には消えている'],
+    ['div', { style: { display: 'flex', flexDirection: 'column', flexGrow: 1, minHeight: 0 } },
+      ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'center', background: PARCH, borderRadius: '22px', padding: '32px 36px', marginBottom: '22px', flexGrow: 1 } },
+        ['div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '96px', height: '96px', borderRadius: '50%', background: '#fff', color: TEAL, fontSize: '30px', fontWeight: 700, marginRight: '30px', flexShrink: 0 } }, '今'],
+        ['div', { style: { color: INK, fontSize: '34px', fontWeight: 700, lineHeight: 1.55 } }, '過去の議論を人が探し直す'],
       ],
-      ['div', { style: { display: 'flex', width: '42%', overflow: 'hidden', background: '#fff' } },
-        ['img', { src: HERO, width: 400, height: 760, style: { width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' } }],
+      ['div', { style: { display: 'flex', justifyContent: 'center', height: '46px' } },
+        ['div', { style: { width: 0, height: 0, borderLeft: '20px solid transparent', borderRight: '20px solid transparent', borderTop: `28px solid ${CYAN}` } }],
+      ],
+      ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'center', background: '#ddf6f2', border: `2px solid ${CYAN}`, borderRadius: '22px', padding: '32px 36px', flexGrow: 1 } },
+        ['div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '96px', height: '96px', borderRadius: '50%', background: CYAN, color: '#fff', fontSize: '30px', fontWeight: 700, marginRight: '30px', flexShrink: 0 } }, '次'],
+        ['div', { style: { color: INK, fontSize: '34px', fontWeight: 700, lineHeight: 1.55 } }, 'エージェントが履歴を探し、今のコードと照合する'],
       ],
     ],
-    ['div', { style: { color: FAINT, fontSize: '24px', marginTop: '28px' } }, '上の枠内は編集部の解釈です。事実は2枚目の一次情報に紐づいています'],
+    ['div', { style: { color: FAINT, fontSize: '24px', marginTop: '24px', paddingLeft: '18px', borderLeft: `5px solid ${TEAL}` } }, 'AOIの見方：自動化の価値は「記憶すること」より、判断理由を次へ渡せること'],
   ] }) });
 
-  // 6. boundary
+  // 6. boundary — specific unknowns instead of repeating the product overview
+  const unknowns = [
+    ['対応範囲', 'どのリポジトリ・作業まで安定して扱えるか'],
+    ['安定性', '長期運用や複雑な履歴での再現性'],
+    ['現在地', 'コミュニティ版の実装段階'],
+  ];
   slides.push({ key: 'boundary', dom: frame({ idx: 6, total: 8, noteUrl: cite(lead), children: [
-    ['div', { style: { color: TEAL, fontSize: '30px', fontWeight: 700, letterSpacing: '2px', marginBottom: '28px' } }, 'まだ言えないこと'],
-    ['div', { style: { display: 'flex', width: '100%', height: '410px', overflow: 'hidden', borderRadius: '22px 22px 0 0', border: `2px solid ${LINE}`, background: '#0d1512', alignItems: 'center', justifyContent: 'center' } },
-      ['img', { src: TERMINAL_UI, width: 960, height: 410, style: { width: '100%', height: '100%', objectFit: 'contain' } }],
+    ['div', { style: { color: TEAL, fontSize: '30px', fontWeight: 700, letterSpacing: '2px', marginBottom: '22px' } }, 'まだ言えないこと'],
+    ['div', { style: { color: INK, fontSize: '46px', fontWeight: 700, lineHeight: 1.4, marginBottom: '34px' } }, '「使える」範囲と安定性は、まだ確定していない'],
+    ['div', { style: { display: 'flex', flexDirection: 'column', flexGrow: 1 } },
+      ...unknowns.map(([label, text], n) => ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'center', background: n === 2 ? PARCH : PALE, border: `2px solid ${n === 2 ? '#dfc99e' : LINE}`, borderRadius: '20px', padding: '30px 34px', marginBottom: n < 2 ? '22px' : 0, flexGrow: 1 } },
+        ['div', { style: { color: n === 2 ? INK : '#fff', background: n === 2 ? '#f3d998' : TEAL, fontSize: '25px', fontWeight: 700, padding: '10px 18px', borderRadius: '12px', marginRight: '28px', minWidth: '132px', textAlign: 'center' } }, label],
+        ['div', { style: { color: INK, fontSize: '31px', fontWeight: 700, lineHeight: 1.55 } }, text],
+      ]),
     ],
-    ['div', { style: { display: 'flex', flexDirection: 'column', background: PALE, borderRadius: '0 0 22px 22px', padding: '38px', flexGrow: 1, border: `2px solid ${LINE}`, borderTop: '0' } },
-      ['div', { style: { color: INK, fontSize: '32px', lineHeight: 1.75 } }, cleanDisplayText(lead.caveat) || '（この版にcaveat記載なし）'],
-    ],
-    ['div', { style: { color: FAINT, fontSize: '24px', marginTop: '28px' } }, `verification: ${lead.verification?.status ?? 'unknown'} / ${fmtDate(lead.verification?.checked_at)}`],
+    ['div', { style: { color: FAINT, fontSize: '24px', marginTop: '26px', lineHeight: 1.5 } }, '一次情報のcaveatを3つの確認項目に分解。性能を実証した発表ではありません'],
   ] }) });
 
-  // 7. radar — related observations
+  // 7. radar — turn the trend into two concrete governance questions
+  const watchQuestions = [
+    ['誰が書く？', '人・エージェント・自動修正のうち、誰が記憶を登録できるか'],
+    ['誰が使う？', '保存された修正理由を、どの機能が次の判断に使うか'],
+  ];
   slides.push({ key: 'radar', dom: frame({ idx: 7, total: 8, noteUrl: `出典: aoifuture.com/news/${edition.edition_id}`, children: [
-    ['div', { style: { color: CYAN, fontSize: '30px', fontWeight: 700, letterSpacing: '2px', marginBottom: '32px' } }, '次に追う2つの観測点'],
-    ...related.map((i, n) => ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '22px', padding: '30px', borderRadius: '20px', background: n === 0 ? '#ddf6f2' : PALE, border: `2px solid ${n === 0 ? CYAN : LINE}`, flexGrow: 1 } },
-      ['div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '72px', height: '72px', borderRadius: '50%', background: n === 0 ? CYAN : TEAL, color: '#fff', fontSize: '32px', fontWeight: 700, marginRight: '26px', flexShrink: 0 } }, `${n + 1}`],
-      ['div', { style: { display: 'flex', flexDirection: 'column' } },
-        ['div', { style: { color: INK, fontSize: '34px', fontWeight: 700, lineHeight: 1.5 } }, i.title],
-        ['div', { style: { color: FAINT, fontSize: '24px', marginTop: '10px' } }, `${domainLabel(i.source_domain)} · ${fmtDate(i.published_at)}`],
-      ],
+    ['div', { style: { color: CYAN, fontSize: '30px', fontWeight: 700, letterSpacing: '2px', marginBottom: '22px' } }, '次に見るべきは「記憶の中身」だけではない'],
+    ['div', { style: { color: INK, fontSize: '48px', fontWeight: 700, lineHeight: 1.4, marginBottom: '34px' } }, '書き込み経路そのものが、統制対象になる'],
+    ...watchQuestions.map(([q, detail], n) => ['div', { style: { display: 'flex', flexDirection: 'column', marginBottom: '24px', padding: '34px 38px', borderRadius: '22px', background: n === 0 ? '#ddf6f2' : PALE, border: `2px solid ${n === 0 ? CYAN : LINE}`, flexGrow: 1 } },
+      ['div', { style: { color: n === 0 ? CYAN : TEAL, fontSize: '36px', fontWeight: 700, marginBottom: '14px' } }, q],
+      ['div', { style: { color: INK, fontSize: '30px', lineHeight: 1.65 } }, detail],
     ]),
-    ['div', { style: { color: FAINT, fontSize: '24px', marginTop: 'auto', lineHeight: 1.6 } }, 'エージェントが記憶を持ち始めたら、記憶への書き込み経路そのものが統制対象になる'],
+    ['div', { style: { color: FAINT, fontSize: '24px', marginTop: 'auto', lineHeight: 1.6 } }, 'AOIが次に確認する問い。GitHubは既存メモリを複数機能で使う方向を示している'],
   ] }) });
 
   // 8. save cheat sheet + note QR CTA
@@ -201,19 +215,23 @@ export async function buildSlides(edition, noteUrl) {
     ['div', { style: { display: 'flex', position: 'absolute', top: 0, left: 0, width: `${W}px`, height: '10px', background: `linear-gradient(90deg,${CYAN},${TEAL},#ffcf4a)` } }],
     ['div', { style: { color: CYAN, fontSize: '30px', fontWeight: '700', letterSpacing: '2px', marginBottom: '36px' } }, 'この1枚で戻れる'],
     ['div', { style: { display: 'flex', flexDirection: 'column', flexGrow: 1 } },
-      ...[lead.title, related[0]?.title, related[1]?.title].filter(Boolean).map((t, n) => ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'flex-start', marginBottom: '28px' } },
-        ['div', { style: { color: CYAN, fontSize: '30px', fontWeight: 700, marginRight: '20px', minWidth: '44px' } }, `${n + 1}`],
-        ['div', { style: { color: INK, fontSize: '30px', lineHeight: 1.55, flex: 1 } }, t],
+      ...[
+        'reloreは、開発履歴を探して今のコードと照合する',
+        'GitHubも、既存メモリを自動修正の文脈に使い始めた',
+        '次の焦点は「誰が記憶を書き、どの機能が使うか」',
+      ].map((t, n) => ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'flex-start', marginBottom: '28px', padding: '22px 24px', borderRadius: '16px', background: n === 2 ? '#ddf6f2' : PALE } },
+        ['div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', background: n === 2 ? CYAN : TEAL, fontSize: '26px', fontWeight: 700, marginRight: '20px', width: '48px', height: '48px', borderRadius: '50%', flexShrink: 0 } }, `${n + 1}`],
+        ['div', { style: { color: INK, fontSize: '29px', fontWeight: n === 2 ? 700 : 400, lineHeight: 1.55, flex: 1 } }, t],
       ]),
-      ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '20px', border: `2px solid ${PARCH}`, borderRadius: '16px', padding: '20px 28px' } },
-        ['div', { style: { color: PARCH, fontSize: '26px', fontWeight: 700, marginRight: '20px' } }, '次に確認'],
-        ['div', { style: { color: INK, fontSize: '26px', lineHeight: 1.5 } }, '記憶への書き込み経路の統制が各社でどう設計されるか'],
+      ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '10px', border: `2px solid #dfc99e`, background: PARCH, borderRadius: '16px', padding: '20px 28px' } },
+        ['div', { style: { color: INK, fontSize: '25px', fontWeight: 700, marginRight: '20px' } }, '未確認'],
+        ['div', { style: { color: INK, fontSize: '26px', lineHeight: 1.5 } }, '対応範囲と長期的な安定性は、まだ確定していない'],
       ],
     ],
     ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'flex-end', marginTop: '40px' } },
       ['div', { style: { display: 'flex', flexDirection: 'column', marginRight: '36px' } },
-        ['div', { style: { color: INK, fontSize: '34px', fontWeight: 700, lineHeight: 1.6 } }, '全文はNoteで読めます'],
-        ['div', { style: { color: CYAN, fontSize: '28px', fontWeight: 700, marginTop: '10px' } }, 'あとで見返すなら保存・同僚に共有'],
+        ['div', { style: { color: INK, fontSize: '34px', fontWeight: 700, lineHeight: 1.6 } }, '一次情報と「まだ言えないこと」はNoteで'],
+        ['div', { style: { color: CYAN, fontSize: '28px', fontWeight: 700, marginTop: '10px' } }, '実務で判断するときの確認用に保存'],
         ['div', { style: { color: FAINT, fontSize: '24px', marginTop: '14px' } }, noteHost],
         ['div', { style: { color: FAINT, fontSize: '22px', marginTop: '8px' } }, `出典: aoifuture.com/news/${edition.edition_id}`],
       ],
