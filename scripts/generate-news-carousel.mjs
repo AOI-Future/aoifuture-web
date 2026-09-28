@@ -103,8 +103,8 @@ export async function buildSlides(edition, noteUrl) {
       ['div', { style: { display: 'flex', flexDirection: 'column', width: '43%', padding: '32px', justifyContent: 'center' } },
         ['div', { style: { color: INK, fontSize: '29px', lineHeight: 1.65 } }, lead.source_fact],
       ],
-      ['div', { style: { display: 'flex', width: '57%', overflow: 'hidden', background: '#111' } },
-        ['img', { src: TERMINAL_UI, width: 520, height: 720, style: { width: '100%', height: '100%', objectFit: 'cover' } }],
+      ['div', { style: { display: 'flex', width: '57%', overflow: 'hidden', background: '#0d1512', alignItems: 'center', justifyContent: 'center', padding: '20px' } },
+        ['img', { src: TERMINAL_UI, width: 520, height: 720, style: { width: '100%', height: '100%', objectFit: 'contain' } }],
       ],
     ],
     ['div', { style: { display: 'flex', flexDirection: 'row', marginTop: '36px' } },
@@ -131,19 +131,27 @@ export async function buildSlides(edition, noteUrl) {
 
   // 4. contrast — parallel claims (OSS vs GitHub), labeled as positioning not verified delta
   const mirror = majors.find((i) => /copilot memory/i.test(String(i.title)));
-  slides.push({ key: 'contrast', dom: frame({ idx: 4, total: 8, noteUrl: cite(lead), children: [
-    ['div', { style: { color: CYAN, fontSize: '30px', fontWeight: 700, letterSpacing: '2px', marginBottom: '40px' } }, 'これは孤立した話ではない'],
-    ['div', { style: { display: 'flex', flexDirection: 'row', flexGrow: 1 } },
-      ['div', { style: { display: 'flex', flexDirection: 'column', flex: 1, border: `2px solid ${LINE}`, borderRadius: '20px', padding: '32px', marginRight: '24px', background: PALE } },
-        ['div', { style: { color: TEAL, fontSize: '26px', fontWeight: 700, marginBottom: '18px' } }, 'OSS側'],
-        ['div', { style: { color: INK, fontSize: '30px', lineHeight: 1.6 } }, 'Hugging Face relore — 記憶ツールを公開'],
-      ],
-      ['div', { style: { display: 'flex', flexDirection: 'column', flex: 1, border: `2px solid ${CYAN}`, borderRadius: '20px', padding: '32px', background: '#ddf6f2' } },
-        ['div', { style: { color: CYAN, fontSize: '26px', fontWeight: 700, marginBottom: '18px' } }, '商用側'],
-        ['div', { style: { color: INK, fontSize: '30px', lineHeight: 1.6 } }, mirror ? mirror.title : 'GitHub Copilot Memory'],
-      ],
+  const contrastCell = (label, item, hot) => ['div', { style: { display: 'flex', flexDirection: 'column', flex: 1, border: `2px solid ${hot ? CYAN : LINE}`, borderRadius: '20px', padding: '36px 32px', marginRight: hot ? 0 : '24px', background: hot ? '#ddf6f2' : PALE, boxSizing: 'border-box' } },
+    ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '22px' } },
+      ['div', { style: { color: hot ? '#fff' : TEAL, background: hot ? CYAN : 'transparent', fontSize: '24px', fontWeight: 700, padding: '6px 18px', borderRadius: '999px', letterSpacing: '2px', ...(hot ? {} : { border: `2px solid ${TEAL}` }) } }, label],
+      ['div', { style: { color: FAINT, fontSize: '22px', marginLeft: '16px' } }, item ? `${domainLabel(item.source_domain)} · ${fmtDate(item.published_at)}` : ''],
     ],
-    ['div', { style: { color: FAINT, fontSize: '24px', marginTop: '32px', lineHeight: 1.5 } }, '同じ潮流の並置です。機能同等性は未検証 — 比較は主張のレベルで示す'],
+    ['div', { style: { color: INK, fontSize: '31px', fontWeight: 700, lineHeight: 1.55, marginBottom: '20px' } }, item ? item.title : '—'],
+    ['div', { style: { color: FAINT, fontSize: '28px', lineHeight: 1.6, flexGrow: 1 } }, cleanDisplayText(item ? String(item.source_fact).split('。').slice(0, 2).join('。') + '。' : '')],
+    ['div', { style: { display: 'flex', flexDirection: 'row', marginTop: '24px' } },
+      ['div', { style: { width: '100%', height: '6px', borderRadius: '3px', background: hot ? CYAN : LINE } }],
+    ],
+  ];
+  slides.push({ key: 'contrast', dom: frame({ idx: 4, total: 8, noteUrl: cite(lead), children: [
+    ['div', { style: { color: CYAN, fontSize: '30px', fontWeight: 700, letterSpacing: '2px', marginBottom: '32px' } }, 'これは孤立した話ではない'],
+    ['div', { style: { display: 'flex', flexDirection: 'row', flexGrow: 1, minHeight: 0 } },
+      contrastCell('OSS側', lead, false),
+      contrastCell('商用側', mirror, true),
+    ],
+    ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '30px' } },
+      ['div', { style: { width: '14px', height: '14px', borderRadius: '50%', background: CYAN, marginRight: '16px', flexShrink: 0 } }],
+      ['div', { style: { color: FAINT, fontSize: '24px', lineHeight: 1.5 } }, '同じ潮流の並置です。機能同等性は未検証 — 比較は主張のレベルで示す'],
+    ],
   ] }) });
 
   // 5. so what — aoi_note, fact vs AOI view separated
@@ -164,8 +172,8 @@ export async function buildSlides(edition, noteUrl) {
   // 6. boundary
   slides.push({ key: 'boundary', dom: frame({ idx: 6, total: 8, noteUrl: cite(lead), children: [
     ['div', { style: { color: TEAL, fontSize: '30px', fontWeight: 700, letterSpacing: '2px', marginBottom: '28px' } }, 'まだ言えないこと'],
-    ['div', { style: { display: 'flex', width: '100%', height: '410px', overflow: 'hidden', borderRadius: '22px 22px 0 0', border: `2px solid ${LINE}`, background: '#111' } },
-      ['img', { src: TERMINAL_UI, width: 960, height: 410, style: { width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' } }],
+    ['div', { style: { display: 'flex', width: '100%', height: '410px', overflow: 'hidden', borderRadius: '22px 22px 0 0', border: `2px solid ${LINE}`, background: '#0d1512', alignItems: 'center', justifyContent: 'center' } },
+      ['img', { src: TERMINAL_UI, width: 960, height: 410, style: { width: '100%', height: '100%', objectFit: 'contain' } }],
     ],
     ['div', { style: { display: 'flex', flexDirection: 'column', background: PALE, borderRadius: '0 0 22px 22px', padding: '38px', flexGrow: 1, border: `2px solid ${LINE}`, borderTop: '0' } },
       ['div', { style: { color: INK, fontSize: '32px', lineHeight: 1.75 } }, cleanDisplayText(lead.caveat) || '（この版にcaveat記載なし）'],
