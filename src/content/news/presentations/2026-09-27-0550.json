@@ -1,0 +1,58 @@
+{
+  "schema_version": "news-poster-presentation.v1",
+  "edition_id": "2026-09-27-0550",
+  "kicker": "記憶と再現性",
+  "headline_lines": [
+    "AIエージェントに",
+    "「記憶」を持たせる"
+  ],
+  "dek": "reloreとCopilot Memory。同じ週に一次情報が並んだ",
+  "hero": {
+    "mode": "flow",
+    "nodes": [
+      "Issue",
+      "Memory",
+      "次の実行"
+    ],
+    "caption": "修正理由や手順を、次の仕事へ引き継ぐ"
+  },
+  "groups": [
+    {
+      "label": "主役",
+      "item_ids": [
+        "huggingface-relore-repository-memory",
+        "github-agentic-autofix-copilot-memory",
+        "ibm-agent-consistency-eval"
+      ]
+    },
+    {
+      "label": "同じ波",
+      "item_ids": [
+        "github-codeql-2-27-1",
+        "anthropic-enzyme-discovery",
+        "arxiv-sage-reasoning-bias"
+      ]
+    },
+    {
+      "label": "ほかの更新",
+      "item_ids": [
+        "github-ssh-algorithm-removal",
+        "nvidia-nemotron-diarization",
+        "arxiv-adwm-counterfactual-mpc"
+      ]
+    }
+  ],
+  "short_titles": {
+    "huggingface-relore-repository-memory": "HF、記憶ツールreloreを公開",
+    "github-agentic-autofix-copilot-memory": "GitHub自動修正、Copilot Memoryを利用",
+    "ibm-agent-consistency-eval": "IBM、エージェントの一貫性評価を提起",
+    "github-codeql-2-27-1": "CodeQL更新、C/C++・C#・Kotlinに対応",
+    "anthropic-enzyme-discovery": "Claude、新規酵素系の発見に貢献",
+    "arxiv-sage-reasoning-bias": "SAGE、長期推論のバイアスを緩和",
+    "github-ssh-algorithm-removal": "GitHub、SHA-1 RSA鍵を段階的に廃止",
+    "nvidia-nemotron-diarization": "NVIDIA、リアルタイム話者分離を公開",
+    "arxiv-adwm-counterfactual-mpc": "AD-WM、反事実的制御モデルを提案"
+  },
+  "conclusion": "実行の再現性を、記憶の設計で支える流れが揃った",
+  "accent_item_id": "huggingface-relore-repository-memory"
+}
