@@ -1,0 +1,24 @@
+[
+  {
+    "changed_signal_ids": [
+      "arxiv-reclaim-agent-reproduction",
+      "arxiv-xyeval-agent-advice",
+      "github-copilot-sonnet-55",
+      "github-external-custom-properties",
+      "google-gemini-38-tts",
+      "holo4-computer-use",
+      "nvidia-agent-safety-platform",
+      "nvidia-openshell-runtime"
+    ],
+    "edition_date": "2026-09-30",
+    "edition_id": "2026-09-30-0826",
+    "edition_url": "https://aoifuture.com/news/2026-09-30-0826/",
+    "event_id": "aoi-news-2026-09-30-0826-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-09-30T08:26:36+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "NVIDIAはOpenShellと安全監視の設計を示し、Holo4は複数の操作面を一つに束ねた。GitHubの運用更新と再現性・同調の研究から、実行をどう統制し測るかを読む。",
+    "title": "AOIFUTURE News：エージェントの実行境界と評価を再設計する"
+  }
+]

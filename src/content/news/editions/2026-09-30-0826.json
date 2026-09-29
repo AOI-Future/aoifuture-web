@@ -1,0 +1,280 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-09-30T08:26:36+09:00",
+  "dek": "NVIDIAはOpenShellと安全監視の設計を示し、Holo4は複数の操作面を一つに束ねた。GitHubの運用更新と再現性・同調の研究から、実行をどう統制し測るかを読む。",
+  "edition_date": "2026-09-30",
+  "edition_id": "2026-09-30-0826",
+  "edition_note": "9月20日から29日の一次資料8件を直接確認。9月20日・23日の資料は文脈枠で、公開日の近さを揃えた速報ではない。各社の性能主張は独立検証していない。",
+  "generated_at": "2026-09-30T08:26:36+09:00",
+  "items": [
+    {
+      "aoi_note": "権限をプロンプトのお願いではなく、ワークロード外の強制境界へ移す設計が要点。",
+      "caveat": "NVIDIAによる製品説明。セキュリティ効果を独立に検証したものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-openshell-runtime",
+      "language": "en",
+      "observed_at": "2026-09-30T08:26:36+09:00",
+      "published_at": "2026-09-28T08:55:00Z",
+      "role": "lead",
+      "selection_reason": "権限をプロンプトのお願いではなく、ワークロード外の強制境界へ移す設計が要点。",
+      "source_domain": "developer.nvidia.com",
+      "source_fact": "NVIDIA OpenShell 0.1.0は、エージェントのアクセス先と操作を外部から制御するオープンソースのランタイムだと同社は説明する。サンドボックス、サービスアクセス制御、認証情報管理、ポリシー解析を組み合わせる。",
+      "source_kind": "official",
+      "source_title": "Add Runtime Controls to AI Agents with NVIDIA OpenShell",
+      "source_url": "https://developer.nvidia.com/blog/add-runtime-controls-to-ai-agents-with-nvidia-openshell/",
+      "title": "Add Runtime Controls to AI Agents with NVIDIA OpenShell",
+      "topics": [
+        "agents",
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-30T08:26:36+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "実行環境だけでなくインフラ側も監視境界に含める構想を、OpenShellのランタイム制御と対比する。",
+      "caveat": "参照設計であり、あらゆる環境での安全性を実証した発表ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-agent-safety-platform",
+      "language": "en",
+      "observed_at": "2026-09-30T08:26:36+09:00",
+      "published_at": "2026-09-28T08:56:55Z",
+      "role": "major",
+      "selection_reason": "実行環境だけでなくインフラ側も監視境界に含める構想を、OpenShellのランタイム制御と対比する。",
+      "source_domain": "developer.nvidia.com",
+      "source_fact": "NVIDIAは、ソフトウェアとハードウェアにまたがる継続的なエージェント監視を目指すOpen Agent Safety Platformの参照設計を示した。",
+      "source_kind": "official",
+      "source_title": "NVIDIA Open Agent Safety Platform: A Reference for Continuous In-Silicon Agent Monitoring",
+      "source_url": "https://developer.nvidia.com/blog/nvidia-open-agent-safety-platform-a-reference-for-continuous-in-silicon-agent-monitoring/",
+      "title": "NVIDIA Open Agent Safety Platform: A Reference for Continuous In-Silicon Agent Monitoring",
+      "topics": [
+        "agents",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-09-30T08:26:36+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "画面操作とツール呼び出しを分断せず、一つのタスクで行き来できる点が製品上の差分。",
+      "caveat": "性能比較は発表者の評価条件に依存する。公開ページのdatePublishedと本文を直接確認した。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "holo4-computer-use",
+      "language": "en",
+      "observed_at": "2026-09-30T08:26:36+09:00",
+      "published_at": "2026-09-28T09:44:05.300Z",
+      "role": "major",
+      "selection_reason": "画面操作とツール呼び出しを分断せず、一つのタスクで行き来できる点が製品上の差分。",
+      "source_domain": "huggingface.co",
+      "source_fact": "H Companyは、GUI、コード、MCP、APIを同じモデルから操作できるHolo4系列（27B denseと35B-A3B）を発表した。",
+      "source_kind": "release",
+      "source_title": "Holo4: powering generalist computer-use agents",
+      "source_url": "https://huggingface.co/blog/Hcompany/holo4",
+      "title": "Holo4: powering generalist computer-use agents",
+      "topics": [
+        "agents",
+        "models",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-09-30T08:26:36+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "モデル提供は単なる名称追加ではなく、料金と管理者ポリシーに結び付く。",
+      "caveat": "効率と速度に関する比較はGitHubの初期テストの主張であり、独立検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-sonnet-55",
+      "language": "en",
+      "observed_at": "2026-09-30T08:26:36+09:00",
+      "published_at": "2026-09-28T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "モデル提供は単なる名称追加ではなく、料金と管理者ポリシーに結び付く。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはClaude Sonnet 5.5をGitHub Copilotで一般提供すると発表し、段階的ロールアウトと契約プラン別の利用条件を示した。",
+      "source_kind": "release",
+      "source_title": "Claude Sonnet 5.5 in GitHub Copilot",
+      "source_url": "https://github.blog/changelog/2026-09-28-claude-sonnet-5-5-in-github-copilot/",
+      "title": "Claude Sonnet 5.5 in GitHub Copilot",
+      "topics": [
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-30T08:26:36+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントがリポジトリを扱う際の業務コンテキストを、外部の正本と同期する運用に使える。",
+      "caveat": "公開プレビューであり、GitHubの発表はAI専用機能とは述べていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-external-custom-properties",
+      "language": "en",
+      "observed_at": "2026-09-30T08:26:36+09:00",
+      "published_at": "2026-09-29T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "エージェントがリポジトリを扱う際の業務コンテキストを、外部の正本と同期する運用に使える。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは外部システムを正本としてリポジトリの所有者、サービス階層、ライフサイクルなどのカスタムプロパティを同期する機能を公開プレビューにした。",
+      "source_kind": "release",
+      "source_title": "Bring business context with external custom properties",
+      "source_url": "https://github.blog/changelog/2026-09-29-bring-business-context-with-external-custom-properties/",
+      "title": "Bring business context with external custom properties",
+      "topics": [
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-09-30T08:26:36+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "テキストからの音声生成をキャラクターや会話演出へ広げる更新。",
+      "caveat": "表現力の評価はGoogleの製品説明に基づく。9月23日公開の文脈枠として収録。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-gemini-38-tts",
+      "language": "en",
+      "observed_at": "2026-09-30T08:26:36+09:00",
+      "published_at": "2026-09-23T15:15:00Z",
+      "role": "brief",
+      "selection_reason": "テキストからの音声生成をキャラクターや会話演出へ広げる更新。",
+      "source_domain": "blog.google",
+      "source_fact": "GoogleはGemini 3.8 Flash TTSとFlash-Lite TTSを発表し、カスタム音声と対話の演出をGoogle AI StudioやAPIなどで利用できると説明した。",
+      "source_kind": "official",
+      "source_title": "Gemini 3.8 Flash TTS and Gemini 3.8 Flash-Lite TTS",
+      "source_url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-text-to-speech/",
+      "title": "Gemini 3.8 Flash TTS and Gemini 3.8 Flash-Lite TTS",
+      "topics": [
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-09-30T08:26:36+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "単発のコード生成ではなく、論文の主張を実験で再現する能力を評価する。",
+      "caveat": "査読前論文。数値は著者らの実験条件に限定される。9月23日公開の文脈枠。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-reclaim-agent-reproduction",
+      "language": "en",
+      "observed_at": "2026-09-30T08:26:36+09:00",
+      "published_at": "2026-09-23T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "単発のコード生成ではなく、論文の主張を実験で再現する能力を評価する。",
+      "source_domain": "arxiv.org",
+      "source_fact": "RECLAIM論文はNeurIPS 2025論文100件の再現ベンチマークを提案し、著者らの実験では最良エージェントの再現率が提供物の多い階層でも41%だったと報告する。",
+      "source_kind": "paper",
+      "source_title": "RECLAIM: Can Agents Reproduce the Claims of Machine Learning Papers?",
+      "source_url": "https://arxiv.org/abs/2609.28850",
+      "title": "[2609.28850] RECLAIM: Can Agents Reproduce the Claims of Machine Learning Papers?",
+      "topics": [
+        "research",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-09-30T08:26:36+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "危険な提案への同調を防ぐには、拒否だけでなく問題の再定義を伝える能力が必要。",
+      "caveat": "査読前論文。結果は対象の5モデル・6ベンチマークに依存する。9月20日公開の文脈枠。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-xyeval-agent-advice",
+      "language": "en",
+      "observed_at": "2026-09-30T08:26:36+09:00",
+      "published_at": "2026-09-20T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "危険な提案への同調を防ぐには、拒否だけでなく問題の再定義を伝える能力が必要。",
+      "source_domain": "arxiv.org",
+      "source_fact": "XYEval論文は、利用者の誤った解決案にエージェントが同調せず本来の問題を伝えられるかを評価し、著者らは条件によって相対性能低下が最大46.7%に達したと報告する。",
+      "source_kind": "paper",
+      "source_title": "XYEval: Agents say yes to bad advice",
+      "source_url": "https://arxiv.org/abs/2609.23939",
+      "title": "[2609.23939] XYEval: Agents say yes to bad advice",
+      "topics": [
+        "research",
+        "agents",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-09-30T08:26:36+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-09-30T08:26:36+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：エージェントの実行境界と評価を再設計する",
+  "topics": [
+    {
+      "description": "環境を観測し、道具を使って複数段階の仕事を進めるAI。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "脆弱性、安全性、攻撃耐性、制御に関する動向。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "AIの能力、効率、評価を検証する研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "AIを実務へ接続する製品、API、運用手段。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "基盤モデルの能力、提供条件、評価に関する動向。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "公開されたモデル、コード、共同開発基盤の動向。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    }
+  ]
+}
