@@ -31,7 +31,7 @@ presentation sidecarには次を明示する。
 - Teal: `#087E78`
 - Pale teal: `#E7F2EE`
 - Warm accent: amber `#D78A32`（1箇所を主役にする）
-- Headline: 72/76px
+- Headline: 58/64px（各行 `nowrap`、実画像で2行固定を確認）
 - Dek: 30/42px
 - Hero node: 30px
 - Group heading: 30px

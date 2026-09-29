@@ -24,7 +24,7 @@ const T = {
   amber: '#d78a32', muted: '#526762', line: '#bfd6d0', white: '#ffffff', dark: '#102522',
 };
 const TYPE = {
-  headline: 72, headlineLine: 76,
+  headline: 58, headlineLine: 64,
   dek: 30, dekLine: 42,
   heroNode: 30, heroCaption: 25,
   group: 30, item: 24, itemLine: 32,
@@ -163,12 +163,12 @@ export async function buildPoster(edition, presentation) {
 
     // Focal zone: 32% of canvas (headline + visual).
     ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'stretch', marginBottom: '20px' } },
-      ['div', { style: { display: 'flex', flexDirection: 'column', width: '58%', paddingRight: '28px', boxSizing: 'border-box' } },
+      ['div', { style: { display: 'flex', flexDirection: 'column', width: '62%', paddingRight: '24px', boxSizing: 'border-box' } },
         ['div', { style: { color: T.amber, fontSize: '23px', fontWeight: 700, letterSpacing: '2px', marginBottom: '8px' } }, presentation.kicker],
-        ...presentation.headline_lines.map((line) => ['div', { style: { color: T.dark, fontSize: `${TYPE.headline}px`, lineHeight: `${TYPE.headlineLine}px`, fontWeight: 700, letterSpacing: '-2px' } }, line]),
+        ...presentation.headline_lines.map((line) => ['div', { style: { color: T.dark, fontSize: `${TYPE.headline}px`, lineHeight: `${TYPE.headlineLine}px`, fontWeight: 700, letterSpacing: '-2px', whiteSpace: 'nowrap' } }, line]),
         ['div', { style: { color: T.teal, fontSize: `${TYPE.dek}px`, lineHeight: `${TYPE.dekLine}px`, fontWeight: 700, marginTop: '12px' } }, presentation.dek],
       ],
-      ['div', { style: { display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '42%', background: T.pale, borderRadius: '24px', padding: '24px 20px', boxSizing: 'border-box', border: `2px solid ${T.line}` } },
+      ['div', { style: { display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '38%', background: T.pale, borderRadius: '24px', padding: '24px 20px', boxSizing: 'border-box', border: `2px solid ${T.line}` } },
         ['div', { style: { display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' } },
           ...presentation.hero.nodes.flatMap((node, index) => [
             ['div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100px', minHeight: '82px', background: index === 1 ? T.teal : T.white, color: index === 1 ? T.white : T.ink, borderRadius: '16px', border: `2px solid ${T.teal}`, padding: '8px', boxSizing: 'border-box', fontSize: `${TYPE.heroNode}px`, lineHeight: '36px', fontWeight: 700, textAlign: 'center' } }, node],
