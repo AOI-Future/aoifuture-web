@@ -1,0 +1,24 @@
+[
+  {
+    "changed_signal_ids": [
+      "arxiv-agent-meta-reasoning",
+      "github-copilot-new-model",
+      "github-dependabot-runner",
+      "github-runner-minimum",
+      "hf-kumo-tabular",
+      "hf-open-tts-evaluation",
+      "hf-source-aware-mcp",
+      "microsoft-quine-biology"
+    ],
+    "edition_date": "2026-10-01",
+    "edition_id": "2026-10-01-0102",
+    "edition_url": "https://aoifuture.com/news/2026-10-01-0102/",
+    "event_id": "aoi-news-2026-10-01-0102-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-01T01:02:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "GitHubの運用更新、音声モデルの評価基盤、エージェントの情報源検証、生命科学の研究。一次資料を手掛かりに実務と研究の接点を確認する。",
+    "title": "AOIFUTURE News：開発の実行条件から音声評価・科学研究まで"
+  }
+]

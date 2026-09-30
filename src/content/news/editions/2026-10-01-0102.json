@@ -1,0 +1,285 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-10-01T01:02:00+09:00",
+  "dek": "GitHubの運用更新、音声モデルの評価基盤、エージェントの情報源検証、生命科学の研究。一次資料を手掛かりに実務と研究の接点を確認する。",
+  "edition_date": "2026-10-01",
+  "edition_id": "2026-10-01-0102",
+  "edition_note": "9月28日から30日の一次資料を直接確認。各社の性能主張は独立に再現していない。公開可否は別のpublisherが判断する。",
+  "generated_at": "2026-10-01T01:02:00+09:00",
+  "items": [
+    {
+      "aoi_note": "音声モデル選択で、単一のデモではなく評価条件を並べて確認する手掛かりになる。",
+      "caveat": "評価指標と人間の聴感は一致するとは限らない。音声クローンには権利・同意の確認が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "hf-open-tts-evaluation",
+      "language": "en",
+      "observed_at": "2026-10-01T01:02:00+09:00",
+      "published_at": "2026-09-30T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "音声モデル選択で、単一のデモではなく評価条件を並べて確認する手掛かりになる。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Hugging Faceの著者らは多言語TTSと音声クローンの比較を目的とするOpen TTS Leaderboardを公開した。",
+      "source_kind": "official",
+      "source_title": "Open TTS Leaderboard: Scalable Evaluation for Multilingual Text-to-Speech and Voice Cloning",
+      "source_url": "https://huggingface.co/blog/open-tts-leaderboard",
+      "title": "Open TTS Leaderboard: Scalable Evaluation for Multilingual Text-to-Speech and Voice Cloning",
+      "topics": [
+        "creative-ai",
+        "research",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-01T01:02:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "更新ジョブの実行場所を管理し、プライベートレジストリなどへのアクセス要件に合わせられる。",
+      "caveat": "github.comのprivate/internalリポジトリ向け。公開リポジトリおよびGitHub Enterprise Serverでは表示されない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-dependabot-runner",
+      "language": "en",
+      "observed_at": "2026-10-01T01:02:00+09:00",
+      "published_at": "2026-09-29T19:10:00Z",
+      "role": "major",
+      "selection_reason": "更新ジョブの実行場所を管理し、プライベートレジストリなどへのアクセス要件に合わせられる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはDependabotのバージョン更新とセキュリティ更新に使うランナーを、リポジトリ単位で設定できるようにした。",
+      "source_kind": "release",
+      "source_title": "Repository custom runner settings for Dependabot",
+      "source_url": "https://github.blog/changelog/2026-09-29-repository-custom-runner-settings-for-dependabot",
+      "title": "Repository custom runner settings for Dependabot",
+      "topics": [
+        "tools",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-01T01:02:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "開発者は利用プラン・料金・モデル選択の条件を確認できる。",
+      "caveat": "GitHubが述べる効率比較は初期テストであり、独立測定ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-new-model",
+      "language": "en",
+      "observed_at": "2026-10-01T01:02:00+09:00",
+      "published_at": "2026-09-29T17:02:27Z",
+      "role": "brief",
+      "selection_reason": "開発者は利用プラン・料金・モデル選択の条件を確認できる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubはGPT-6.1 SolをCopilotに一般提供し、対象プランと段階的な展開を示した。",
+      "source_kind": "release",
+      "source_title": "GPT-6.1 Sol in GitHub Copilot",
+      "source_url": "https://github.blog/changelog/2026-09-29-gpt-6-1-sol-in-github-copilot",
+      "title": "GPT-6.1 Sol in GitHub Copilot",
+      "topics": [
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-01T01:02:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ジョブ停止を避けるため、現行ランナーのバージョンと更新日程を点検する材料となる。",
+      "caveat": "登録・再登録の最低版とジョブ実行の最低版は異なる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-runner-minimum",
+      "language": "en",
+      "observed_at": "2026-10-01T01:02:00+09:00",
+      "published_at": "2026-09-28T19:22:46Z",
+      "role": "brief",
+      "selection_reason": "ジョブ停止を避けるため、現行ランナーのバージョンと更新日程を点検する材料となる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHub Enterprise Cloudのセルフホストランナー最低バージョン要件の全面適用日が9月29日に移った。",
+      "source_kind": "release",
+      "source_title": "Self-hosted runner version enforcement date has moved",
+      "source_url": "https://github.blog/changelog/2026-09-28-self-hosted-runner-version-enforcement-date-has-moved",
+      "title": "Self-hosted runner version enforcement date has moved",
+      "topics": [
+        "tools",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-01T01:02:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "表形式データでも基盤モデルの適用・評価が進む例として参照できる。",
+      "caveat": "精度・効率の優位は公開者の評価条件に依存し、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "hf-kumo-tabular",
+      "language": "en",
+      "observed_at": "2026-10-01T01:02:00+09:00",
+      "published_at": "2026-09-29T15:30:38Z",
+      "role": "brief",
+      "selection_reason": "表形式データでも基盤モデルの適用・評価が進む例として参照できる。",
+      "source_domain": "huggingface.co",
+      "source_fact": "NVIDIA Kumo Tabularの著者らは、表形式データの予測向け公開基盤モデルをHugging Face上で紹介した。",
+      "source_kind": "official",
+      "source_title": "NVIDIA Kumo Tabular Sets a New Accuracy-Efficiency Frontier for Tabular Prediction",
+      "source_url": "https://huggingface.co/blog/nvidia/kumo-tabular",
+      "title": "NVIDIA Kumo Tabular Sets a New Accuracy-Efficiency Frontier for Tabular Prediction",
+      "topics": [
+        "models",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-01T01:02:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ツール横断の回答を監査する際に、どの主張がどの取得情報に依拠したかを問い直せる。",
+      "caveat": "著者らによる手法紹介であり、すべてのMCPエージェントに対する安全性保証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "hf-source-aware-mcp",
+      "language": "en",
+      "observed_at": "2026-10-01T01:02:00+09:00",
+      "published_at": "2026-09-29T13:07:00Z",
+      "role": "major",
+      "selection_reason": "ツール横断の回答を監査する際に、どの主張がどの取得情報に依拠したかを問い直せる。",
+      "source_domain": "huggingface.co",
+      "source_fact": "著者らはMCP経由で複数の情報源を使うエージェントに対し、答えの事実性だけでなく情報源との対応を検証する手法を紹介した。",
+      "source_kind": "official",
+      "source_title": "Getting the Source Right, Not Just the Fact: Source-Aware Verification for MCP Agents",
+      "source_url": "https://huggingface.co/blog/MultiverseComputingCAI/getting-the-source-right-not-just-the-fact-source",
+      "title": "Getting the Source Right, Not Just the Fact: Source-Aware Verification for MCP Agents",
+      "topics": [
+        "agents",
+        "research",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-01T01:02:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AIによる科学支援を、実験に代わる答えではなく仮説の優先付けとして捉えられる。",
+      "caveat": "初期研究段階であり、実験結果のフィードバックが不可欠と説明される。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "microsoft-quine-biology",
+      "language": "en",
+      "observed_at": "2026-10-01T01:02:00+09:00",
+      "published_at": "2026-09-29T14:00:02Z",
+      "role": "brief",
+      "selection_reason": "AIによる科学支援を、実験に代わる答えではなく仮説の優先付けとして捉えられる。",
+      "source_domain": "www.microsoft.com",
+      "source_fact": "Microsoft Researchは生物学の複数のスケールとモダリティを結び、実験前の仮説探索を助ける初期研究Quineを紹介した。",
+      "source_kind": "official",
+      "source_title": "Introducing Quine: An AI research system designed for the complexity of biology",
+      "source_url": "https://www.microsoft.com/en-us/research/blog/introducing-quine-an-ai-research-system-designed-for-the-complexity-of-biology/",
+      "title": "Introducing Quine: An AI research system designed for the complexity of biology",
+      "topics": [
+        "research",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-10-01T01:02:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントの性能を、個別の回答だけでなく途中の作業選択から考える視点を与える。",
+      "caveat": "9月29日投稿のプレプリントであり、結果の一般化や製品での有効性は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-agent-meta-reasoning",
+      "language": "en",
+      "observed_at": "2026-10-01T01:02:00+09:00",
+      "published_at": "2026-09-29T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "エージェントの性能を、個別の回答だけでなく途中の作業選択から考える視点を与える。",
+      "source_domain": "arxiv.org",
+      "source_fact": "Thinking Before Thinking論文は、長期タスクの途中で継続・再着手などの選択を制御するメタ推論を検討する。",
+      "source_kind": "paper",
+      "source_title": "Thinking Before Thinking: Scaling Agentic Inference Through Meta-Reasoning",
+      "source_url": "https://arxiv.org/abs/2609.38147v1",
+      "title": "Thinking Before Thinking: Scaling Agentic Inference Through Meta-Reasoning",
+      "topics": [
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-01T01:02:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-10-01T01:02:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：開発の実行条件から音声評価・科学研究まで",
+  "topics": [
+    {
+      "description": "AIを実務へ接続する製品と開発基盤。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "脆弱性と権限・証拠の管理。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "基盤モデルの能力と提供条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "音声・映像・制作に関わるAI。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "創作AI"
+    },
+    {
+      "description": "能力・評価・科学応用に関する研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "公開されたモデル・コード・評価基盤。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "道具を用い複数段階の作業を進めるAI。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    }
+  ]
+}
