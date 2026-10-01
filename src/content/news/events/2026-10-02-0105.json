@@ -1,0 +1,26 @@
+[
+  {
+    "changed_signal_ids": [
+      "arxiv-agent-meta-skills",
+      "arxiv-plan-execution-gap",
+      "cisco-sdwan-auth-bypass",
+      "github-ghas-team-trials",
+      "github-hydrafusion-vscode",
+      "google-gemini-4-argon",
+      "google-gemini-skills",
+      "llamacpp-glm53-flash",
+      "nvidia-cuobject-scada",
+      "openai-dots-devday"
+    ],
+    "edition_date": "2026-10-02",
+    "edition_id": "2026-10-02-0105",
+    "edition_url": "https://aoifuture.com/news/2026-10-02-0105/",
+    "event_id": "aoi-news-2026-10-02-0105-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-02T01:03:46+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "Googleのフロンティアモデル、OpenAIの常時稼働エージェント、NVIDIAのストレージ標準化、Ciscoの重要脆弱性。一次資料から、能力拡大と提供条件・安全対応の接点を確認する。",
+    "title": "AOIFUTURE News：フロンティアモデル、常時稼働エージェント、基盤ストレージの標準化"
+  }
+]

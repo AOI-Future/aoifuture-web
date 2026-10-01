@@ -1,0 +1,332 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-10-02T01:03:46+09:00",
+  "dek": "Googleのフロンティアモデル、OpenAIの常時稼働エージェント、NVIDIAのストレージ標準化、Ciscoの重要脆弱性。一次資料から、能力拡大と提供条件・安全対応の接点を確認する。",
+  "edition_date": "2026-10-02",
+  "edition_id": "2026-10-02-0105",
+  "edition_note": "9月29日から30日の一次資料を直接確認。各社の性能主張は独立に再現していない。公開可否は別のpublisherが判断する。",
+  "generated_at": "2026-10-02T01:03:46+09:00",
+  "items": [
+    {
+      "aoi_note": "モデル選定では、ベンチマーク値だけでなく出力上限・提供範囲・価格と安全対策の条件を並べて見る材料になる。",
+      "caveat": "ベンチマークはGoogleの公表値であり独立再現ではない。当面は限定提供で、一般提供の時期は明示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-gemini-4-argon",
+      "language": "en",
+      "observed_at": "2026-10-02T01:03:46+09:00",
+      "published_at": "2026-09-30T20:00:00Z",
+      "role": "lead",
+      "selection_reason": "フロンティアモデルの能力拡大と、段階的提供・安全対策という提供条件を一次資料から確認できる。",
+      "source_domain": "blog.google",
+      "source_fact": "Google DeepMindは、実務のソフトウェア開発・企業の知識業務・サイバー防御を対象とする新たなフロンティアモデルGemini 4 Argonを発表した。出力トークン上限を従来の6万4千から100万に拡大し、まずFairwind Programの信頼されたサイバー防御担当者へ段階的に提供を始める。",
+      "source_kind": "official",
+      "source_title": "Gemini 4 Argon: our next era of frontier intelligence",
+      "source_url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/",
+      "title": "Gemini 4 Argon: our next era of frontier intelligence",
+      "topics": [
+        "models",
+        "research",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-02T01:03:46+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェント導入では、できることの広さと、承認が必要な操作・データ保持の条件を分けて確認する材料になる。",
+      "caveat": "自社発表であり、実運用での信頼性は第三者評価ではない。提供は対象プラン・対象市場に限られ、デモでは失敗も報じられた。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-dots-devday",
+      "language": "en",
+      "observed_at": "2026-10-02T01:03:46+09:00",
+      "published_at": "2026-09-29T00:00:00Z",
+      "role": "major",
+      "selection_reason": "常時稼働エージェントの提供条件と接続範囲を、提供元の一次情報で確認できる。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIはDevDay 2026で、GPT-6 Astraを基盤とし自前のクラウドコンピュータとブラウザを持つ常時稼働エージェント「dots」を発表した。4,000以上のアプリに接続でき、ProとBusiness Premiumの対象市場で順次提供を始める。",
+      "source_kind": "official",
+      "source_title": "DevDay 2026 Recap",
+      "source_url": "https://openai.com/index/devday-2026-recap/",
+      "title": "DevDay 2026 Recap",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-02T01:03:46+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "大規模推論基盤の性能は計算だけでなくデータ供給経路にも左右される。ベンダ横断の標準化動向として参照できる。",
+      "caveat": "ベンダの技術ブログであり、実ワークロードでの優位は独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-cuobject-scada",
+      "language": "en",
+      "observed_at": "2026-10-02T01:03:46+09:00",
+      "published_at": "2026-09-30T00:00:00Z",
+      "role": "major",
+      "selection_reason": "AI基盤のストレージ相互運用が標準化へ進む動きを、一次資料から把握できる。",
+      "source_domain": "developer.nvidia.com",
+      "source_fact": "NVIDIAはcuObjectクライアント・サーバライブラリの一般提供と、GPU起点のストレージ要求に応答するサーバを構築するSCADA Server SDKを発表した。xio-sigにはcuObjectが加わり、Google Cloudが参加を検討し、Microsoftはボード参加を予定する。",
+      "source_kind": "official",
+      "source_title": "Expanding AI Storage Access with NVIDIA cuObject and the NVIDIA SCADA Server SDK",
+      "source_url": "https://developer.nvidia.com/blog/expanding-ai-storage-access-with-nvidia-cuobject-and-the-nvidia-scada-server-sdk/",
+      "title": "Expanding AI Storage Access with NVIDIA cuObject and the NVIDIA SCADA Server SDK",
+      "topics": [
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-02T01:03:46+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "管理系アプリは公開範囲の点検と迅速な修正適用が要る。アドバイザリには侵害指標（IOC）の確認手順も示されている。",
+      "caveat": "Ciscoのアドバイザリに基づく。影響を受ける構成と修正版は同アドバイザリのFixed Software節を確認する必要がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisco-sdwan-auth-bypass",
+      "language": "en",
+      "observed_at": "2026-10-02T01:03:46+09:00",
+      "published_at": "2026-09-30T13:00:00Z",
+      "role": "major",
+      "selection_reason": "実際に悪用が報告された重要脆弱性の影響範囲と対応条件を、ベンダ一次情報で確認できる。",
+      "source_domain": "sec.cloudapps.cisco.com",
+      "source_fact": "CiscoはCatalyst SD-WAN ManagerのAPIセッション認証に、URIエンコードの不適切な処理による認証バイパス（CVE-2026-76504、CVSS 9.8）を公表した。未認証の遠隔攻撃者が管理者権限でAPIへ到達し得る。修正版が提供され、回避策はない。",
+      "source_kind": "advisory",
+      "source_title": "Cisco Catalyst SD-WAN Manager API Authentication Bypass Vulnerability",
+      "source_url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-sdwan-webauth-xr8beuuU",
+      "title": "Cisco Catalyst SD-WAN Manager API Authentication Bypass Vulnerability",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-02T01:03:46+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "プロンプト運用を個人の再利用資産として管理する流れとして参照できる。",
+      "caveat": "提供は18歳以上の個人アカウント向けで段階的。Workspace向けは別日程とされている。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-gemini-skills",
+      "language": "en",
+      "observed_at": "2026-10-02T01:03:46+09:00",
+      "published_at": "2026-09-30T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "定型業務を再利用可能な指示にまとめる機能の提供条件を確認できる。",
+      "source_domain": "blog.google",
+      "source_fact": "GoogleはGeminiチャットで、保存した指示をスラッシュ入力で呼び出せる「skills」の全世界提供を始めた。参照ファイルを含むskillを作成でき、Gemsを置き換えていく。",
+      "source_kind": "official",
+      "source_title": "Let skills in Gemini tackle your most repetitive tasks",
+      "source_url": "https://blog.google/products-and-platforms/products/gemini/automate-tasks-with-skills/",
+      "title": "Let skills in Gemini tackle your most repetitive tasks",
+      "topics": [
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-02T01:03:46+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "モデル選択を人手の設定から自動化する方向性の一例として参照できる。",
+      "caveat": "研究プレビューであり、対象環境や挙動は変更され得る。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-hydrafusion-vscode",
+      "language": "en",
+      "observed_at": "2026-10-02T01:03:46+09:00",
+      "published_at": "2026-09-30T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "複数モデルを使い分ける自動ルーティングが開発ツールへ広がる動きを確認できる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは、タスクごとにモデルを自動選択する研究プレビューHydraFusionを、Copilot CLIに加えてVS CodeとGitHub Copilotアプリへ拡大した。",
+      "source_kind": "release",
+      "source_title": "HydraFusion in VS Code and the GitHub Copilot app",
+      "source_url": "https://github.blog/changelog/2026-09-30-hydrafusion-in-vs-code-and-the-github-copilot-app/",
+      "title": "HydraFusion in VS Code and the GitHub Copilot app",
+      "topics": [
+        "tools",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-10-02T01:03:46+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "セキュリティ機能の導入判断では、試用の開始条件と対象範囲を先に確認する材料になる。",
+      "caveat": "対象はGitHub Team。試用後の有料化条件は別途確認が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-ghas-team-trials",
+      "language": "en",
+      "observed_at": "2026-10-02T01:03:46+09:00",
+      "published_at": "2026-09-30T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "小規模組織がコード・シークレット保護を評価する入口が広がった点を確認できる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHub Teamの顧客は、GitHub Code SecurityとGitHub Secret Protectionをセルフサービスで試せるようになった。組織のOverviewやBillingの画面から試用を開始できる。",
+      "source_kind": "release",
+      "source_title": "GitHub Advanced Security trials for GitHub Team",
+      "source_url": "https://github.blog/changelog/2026-09-30-github-advanced-security-trials-for-github-team/",
+      "title": "GitHub Advanced Security trials for GitHub Team",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-02T01:03:46+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェント運用では、モデル更新だけでなく足場（harness）の設計を改善対象として捉える視点を与える。",
+      "caveat": "9月29日投稿のプレプリントであり、結果の一般化は未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-agent-meta-skills",
+      "language": "en",
+      "observed_at": "2026-10-02T01:03:46+09:00",
+      "published_at": "2026-09-29T17:55:56Z",
+      "role": "brief",
+      "selection_reason": "エージェント性能を、モデル本体ではなく実行環境の設計から高める研究動向を確認できる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、重みを固定したままTargetの実行フィードバックからBuilderが実行環境（harness）を設計する方策を検討し、Meta-Skillを導入した。Harness-BenchとNewtonBenchで、スキル無し構築より8.95ポイント高いmacro-average性能を報告した。",
+      "source_kind": "paper",
+      "source_title": "Learning Meta-Skills for Agent Harness Design in Test-Time AI4AI",
+      "source_url": "https://arxiv.org/abs/2609.38143",
+      "title": "Learning Meta-Skills for Agent Harness Design in Test-Time AI4AI",
+      "topics": [
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-02T01:03:46+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントの評価では、最終成功率だけでなく途中の計画が宣言どおり実行されたかを見る材料になる。",
+      "caveat": "9月29日投稿のプレプリントであり、製品での有効性は未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-plan-execution-gap",
+      "language": "en",
+      "observed_at": "2026-10-02T01:03:46+09:00",
+      "published_at": "2026-09-29T17:47:18Z",
+      "role": "brief",
+      "selection_reason": "エージェントの失敗を、計画選択と実行のどちらに起因するか切り分ける視点を確認できる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、計画の宣言と実行の乖離を検討し、宣言した計画モードを決定的なルータで専用実行者へ振り分ける手法を提案した。4ベンチマーク・3モデルで、汎用Plan+ReActは長い計画の構造を保持しにくく、専用実行者が成功率を改善したと報告する。",
+      "source_kind": "paper",
+      "source_title": "Do LLM Agents Execute the Plans They Declare? From Planning-Mode Declaration to Pattern-Specific Execution",
+      "source_url": "https://arxiv.org/abs/2609.38108",
+      "title": "Do LLM Agents Execute the Plans They Declare? From Planning-Mode Declaration to Pattern-Specific Execution",
+      "topics": [
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-02T01:03:46+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ローカル推論の選択肢は、対応モデルの追加と最適化の進行に左右される。導入検討の材料になる。",
+      "caveat": "日次の自動ビルド（pre-release）であり、モデル品質や安定性の評価ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "llamacpp-glm53-flash",
+      "language": "en",
+      "observed_at": "2026-10-02T01:03:46+09:00",
+      "published_at": "2026-09-30T10:58:00Z",
+      "role": "brief",
+      "selection_reason": "新しいモデルがローカル推論エンジンへ取り込まれる速度を確認できる。",
+      "source_domain": "github.com",
+      "source_fact": "llama.cppはビルドb11279で、ZhipuのGLM-5.3-Flash（GLM5-Next）対応を追加した。長文脈デコードの高速化やMTPの初期対応を含む変更が取り込まれた。",
+      "source_kind": "repository",
+      "source_title": "Release b11279",
+      "source_url": "https://github.com/ggml-org/llama.cpp/releases/tag/b11279",
+      "title": "llama.cpp b11279: add GLM-5.3-Flash (GLM5-Next) support",
+      "topics": [
+        "open-source",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-10-02T01:03:46+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-10-02T01:03:46+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：フロンティアモデル、常時稼働エージェント、基盤ストレージの標準化",
+  "topics": [
+    {
+      "description": "基盤モデルの能力と提供条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "能力・評価・科学応用に関する研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "脆弱性と権限・証拠の管理。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "道具を用い複数段階の作業を進めるAI。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "AIを実務へ接続する製品と開発基盤。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "公開されたモデル・コード・評価基盤。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    }
+  ]
+}
