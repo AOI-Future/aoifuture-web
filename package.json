@@ -25,6 +25,7 @@
     "verify:news-build:production": "node scripts/verify-news-build.mjs dist/client production",
     "evidence:news-layout": "node scripts/generate-news-layout-evidence.mjs",
     "test:afterhours": "playwright test --config=playwright.afterhours.config.ts",
+    "test:localquest": "playwright test --config=playwright.localquest.config.ts",
     "check:afterhours": "tsc --project tsconfig.afterhours.json"
   },
   "dependencies": {

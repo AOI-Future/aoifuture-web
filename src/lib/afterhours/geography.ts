@@ -33,15 +33,24 @@ export function passage(x:number,z:number,seed:number,dx:number,dz:number) {
   const offset=merged||tutorial?0:([-9,0,9][Math.floor(edge*3)]);
   return {offset,width:merged?(edge<.5?24:18):6,height:merged?a.place.height:Math.min(4.6,a.place.height-.35,b.place.height-.35)};
 }
+export type Room = { x:number; z:number; index:number; place:Place; variant:number; id:string; label?:string; ja?:string };
+export type Passage = { offset:number; width:number; height:number };
+/** Where room identity comes from. Afterhours hashes coordinates; compiled worlds read an IR. */
+export type Layout = {
+  describe(x:number,z:number,seed:number):Room;
+  passage(x:number,z:number,seed:number,dx:number,dz:number):Passage;
+  shaft(x:number,z:number):ReturnType<typeof shaftAt>;
+};
+export const hashLayout: Layout = { describe: describeRoom, passage, shaft: shaftAt };
 export type MaterialKey = 'wall' | 'floor' | 'ceiling' | 'light' | 'trim' | 'wood' | 'metal' | 'water' | 'leaf' | 'screen' | 'dark' | 'art';
 export type BoxSpec = { x: number; y: number; z: number; w: number; h: number; d: number; material: MaterialKey; solid: boolean };
-export function roomPlan(x: number, z: number, seed: number) {
-  const room = describeRoom(x,z,seed), {height, key} = room.place;
+export function roomPlan(x: number, z: number, seed: number, layout: Layout = hashLayout) {
+  const room = layout.describe(x,z,seed), {height, key} = room.place;
   const boxes: BoxSpec[] = [];
   const box = (material: MaterialKey, px: number, y: number, pz: number, w: number, h: number, d: number, solid = true) => boxes.push({material,x:px,y,z:pz,w,h,d,solid});
   // Matching large spaces merge into wider halls. Both sides derive the same opening.
   for (const axis of ['x','z'] as const) for (const side of [-1,1]) {
-    const connection=passage(x,z,seed,axis==='x'?side:0,axis==='z'?side:0);
+    const connection=layout.passage(x,z,seed,axis==='x'?side:0,axis==='z'?side:0);
     const opening=connection.width, centre=connection.offset;
     for(const [lo,hi] of [[-16,centre-opening/2],[centre+opening/2,16]]) {
       const length=hi-lo, offset=(hi+lo)/2;
@@ -49,6 +58,7 @@ export function roomPlan(x: number, z: number, seed: number) {
       box('trim',axis==='x'?side*15.55:offset,.16,axis==='x'?offset:side*15.55,axis==='x'?.12:length,.32,axis==='x'?length:.12);
     }
     const doorway=connection.height;
+    if(opening<=0) continue; // Sealed wall: no lintel or threshold light.
     if(height>doorway) box('wall',axis==='x'?side*15.8:centre,(height+doorway)/2,axis==='x'?centre:side*15.8,axis==='x'?.4:opening,height-doorway,axis==='x'?opening:.4,false);
     box('light',axis==='x'?side*15.5:centre,doorway-.12,axis==='x'?centre:side*15.5,axis==='x'?.1:opening-.2,.07,axis==='x'?opening-.2:.1,false);
   }
@@ -129,7 +139,7 @@ export function roomPlan(x: number, z: number, seed: number) {
     const b=boxes[i];
     if(b.solid && (Math.abs(b.x)+b.w/2>13.5 || Math.abs(b.z)+b.d/2>13.5)) boxes.splice(i,1);
   }
-  const shaft=shaftAt(x,z);
+  const shaft=layout.shaft(x,z);
   if(shaft) {
     // Keep the shaft, lift, and their approach free of decorative furniture.
     for(let i=boxes.length-1;i>=interiorStart;i--) {
@@ -164,8 +174,8 @@ export function shaftAt(x:number,z:number) {
 }
 export function floorSeed(seed:number,level:number) {return level===0?seed:(seed^Math.imul(level,104729))>>>0;}
 export function floorLabel(level:number) {return level===0?'L0':`B${level}`;}
-export function resonancePoint(x:number,z:number,seed:number) {
-  const plan=roomPlan(x,z,seed);
+export function resonancePoint(x:number,z:number,seed:number,layout:Layout=hashLayout) {
+  const plan=roomPlan(x,z,seed,layout);
   if(plan.maze) {
     const cell=Math.floor(hash(x,z,seed^1907)*15); // Last suite belongs to the shaft.
     return {x:x*ROOM-10.5+(cell%4)*7,z:z*ROOM-10.5+Math.floor(cell/4)*7};
