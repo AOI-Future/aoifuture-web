@@ -1,6 +1,6 @@
 # Local Quest Phase 0 — 作業メモ（再開用）
 
-- **status**: Phase 0 local commit `0203c70`（未push。push/PR/deploy はユーザー承認待ち）
+- **status**: Phase 0 pushed（branch `feat/localquest-phase0`、`0203c70` + `9937dbc`）。PR/deploy はユーザー承認待ち
 - **updated**: 2026-10-02
 - **Notion**: Company OS / Local Quest（page `3ed51456-e70c-8111-8cbb-f95fe114f889`, Status Spec, P1）
 - **方針（ユーザー承認済み）**: aoifuture-web の中に作る / Phase 0–1 は Astro + localStorage（Next.js/Postgres は Phase 2）/ afterhours を土台にする
@@ -29,6 +29,6 @@
 
 ## 制約
 
-- push / PR / deploy はユーザー承認まで禁止
+- PR / deploy はユーザー承認まで禁止（push は承認済み）
 - `.worktrees/`（別タスク所有）と `test-results/` は触らない・commit しない
 - UI は AGENTS.md 準拠（絵文字禁止、#000 背景、コントラスト4.5:1、タップ44px、`npm run build` 通過）
