@@ -1,0 +1,26 @@
+[
+  {
+    "changed_signal_ids": [
+      "allenai-astabrief-open-source-report-model",
+      "arxiv-kalibench-cybersecurity-tool-use",
+      "cisa-kev-fortinet-fortimail-2026-10-01",
+      "cloudflare-clef-decision-models",
+      "deepmind-synthid-bio",
+      "github-copilot-computer-use",
+      "microsoft-research-space-weather-grid-forecast",
+      "mozilla-firefox-shake-to-summarize-recipe-prompt-tuning",
+      "nvidia-doca-agent-skills",
+      "openai-adversarial-distillation-campaign"
+    ],
+    "edition_date": "2026-10-03",
+    "edition_id": "2026-10-03-0116",
+    "edition_url": "https://aoifuture.com/news/2026-10-03-0116/",
+    "event_id": "aoi-news-2026-10-03-0116-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-03T01:16:31+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "推論抽出への防御、合成生物学の来歴検証、軽量な判断モデル、APIのない業務ソフトの自動化。一次資料から、能力拡大と安全・運用設計の接点を確認する。",
+    "title": "AOIFUTURE News：モデル推論の保護、合成生物学の透かし、判断モデルとGUI自動化"
+  }
+]

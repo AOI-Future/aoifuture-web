@@ -1,0 +1,330 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-10-03T01:16:31+09:00",
+  "dek": "推論抽出への防御、合成生物学の来歴検証、軽量な判断モデル、APIのない業務ソフトの自動化。一次資料から、能力拡大と安全・運用設計の接点を確認する。",
+  "edition_date": "2026-10-03",
+  "edition_id": "2026-10-03-0116",
+  "edition_note": "9月30日から10月2日の一次資料を直接確認。各社の性能主張は独立に再現していない。公開可否は別のpublisherが判断する。",
+  "generated_at": "2026-10-03T01:16:31+09:00",
+  "items": [
+    {
+      "aoi_note": "モデル提供では、出力だけでなく推論過程の保護と異常利用の検知が契約・運用の論点になる。",
+      "caveat": "攻撃者の帰属は単一アクターと断定されておらず、提供元の発表時点の調査に基づく。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-adversarial-distillation-campaign",
+      "language": "en",
+      "observed_at": "2026-10-03T01:16:31+09:00",
+      "published_at": "2026-09-30T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "フロンティアモデルの知財保護と、抽出攻撃という新しいリスク類型を一次資料で示す。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは、モデルの保護された推論を組織的に抽出しようとした協調的キャンペーンを検知・阻止したと公表した。暗号破りやデータベース侵害ではなく、モデルとの対話を操作して推論を再現させる手口で、7月1日に始まり、7月24〜25日には4,000人以上・16,000リクエストの集中が発生。関連パターンは15,000人超のクラスタに及び、7月28日までに阻止した。",
+      "source_kind": "official",
+      "source_title": "Disrupting a coordinated model-distillation campaign",
+      "source_url": "https://openai.com/index/disrupting-a-coordinated-model-distillation-campaign/",
+      "title": "OpenAI、モデル推論の抽出キャンペーンを摘発",
+      "topics": [
+        "security",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-10-03T01:16:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "生成物の真正性や来歴を技術的に担保する仕組みは、画像・音声以外の領域にも広がる。",
+      "caveat": "概念実証の段階で、実運用でのスクリーニング回避耐性は今後の検証が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "deepmind-synthid-bio",
+      "language": "en",
+      "observed_at": "2026-10-03T01:16:31+09:00",
+      "published_at": "2026-09-30T15:03:07Z",
+      "role": "major",
+      "selection_reason": "生成AIの生物分野応用に、来歴検証という安全側の設計を組み込む動きとして注目できる。",
+      "source_domain": "deepmind.google",
+      "source_fact": "Google DeepMindは、AIが生成したタンパク質や立体構造に検証可能な電子透かしを埋め込むSynthID Bioを発表した。デジタルモデル上だけでなく合成された実タンパク質でも検証でき、VEGF-A、SARS-CoV-2スパイクRBD、PD-L1の3標的について、非透かし版と同等のヒット率・結合親和性・配列多様性を維持したと報告している。",
+      "source_kind": "official",
+      "source_title": "Introducing SynthID Bio",
+      "source_url": "https://deepmind.google/blog/introducing-synthid-bio/",
+      "title": "DeepMind、合成生物学向け電子透かしSynthID Bio",
+      "topics": [
+        "research",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-03T01:16:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "全判断をLLMに任せず、決定的な判断を安価なモデルに分離する設計は実務で有効。",
+      "caveat": "首位という評価は提供元が示すベンチマーク結果で、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-clef-decision-models",
+      "language": "en",
+      "observed_at": "2026-10-03T01:16:31+09:00",
+      "published_at": "2026-10-01T15:34:02Z",
+      "role": "major",
+      "selection_reason": "決定論的で軽量な判断モデルという選択肢が、LLMとは別のエージェント設計を可能にする。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは、エージェントの判断を型付き・確率的な出力で返す判断モデルClefとClef-flashをWorkers AIで公開し、Hugging Face上でApache 2.0としてオープンソース化した。Jev決定インデックスで首位とされ、Jev API互換。あわせてClefを用途別に微調整できる強化学習製品も発表した。",
+      "source_kind": "release",
+      "source_title": "Introducing Clef: our open-source decision models, and new RL fine-tuning platform",
+      "source_url": "https://blog.cloudflare.com/clef-decision-models/",
+      "title": "Cloudflare、判断モデルClefをオープンソース化",
+      "topics": [
+        "open-source",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-10-03T01:16:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "GUI自動化は、アプリ単位の許可と監査が前提。どの操作を許すかの設計が導入コストを左右する。",
+      "caveat": "パブリックプレビューで、macOSではアクセシビリティと画面収録の権限が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-computer-use",
+      "language": "en",
+      "observed_at": "2026-10-03T01:16:31+09:00",
+      "published_at": "2026-10-01T19:11:26Z",
+      "role": "major",
+      "selection_reason": "APIのない業務ソフトまで自動化対象が広がり、権限と承認の設計が導入判断の焦点になる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは、Copilot CLIとmacOS・Windows向けCopilotアプリでコンピュータ操作をパブリックプレビューとして提供開始した。APIやCLI、MCPを持たないレガシーやGUI専用ソフトでも、画面内容の読み取り・クリック・文字入力・スクロール等を、アプリ単位の承認付きで行える。組織設定で無効化も可能。",
+      "source_kind": "release",
+      "source_title": "GitHub Copilot can now interact with desktop apps with computer use",
+      "source_url": "https://github.blog/changelog/2026-10-01-github-copilot-can-now-interact-with-desktop-apps",
+      "title": "GitHub Copilot、デスクトップ操作に対応",
+      "topics": [
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-03T01:16:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "セキュリティ自動化の評価は、正解手順だけでなく危険な操作の回避も測る必要がある。",
+      "caveat": "ベンチマーク性能が実運用の安全性を直接保証するものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-kalibench-cybersecurity-tool-use",
+      "language": "en",
+      "observed_at": "2026-10-03T01:16:31+09:00",
+      "published_at": "2026-10-01T17:59:55Z",
+      "role": "brief",
+      "selection_reason": "エージェントのセキュリティ業務適用を、実行環境込みで評価する指標として使える。",
+      "source_domain": "arxiv.org",
+      "source_fact": "研究者らは、LLMがKali Linux上で分析者の意図をツール呼び出しへ変換する能力を細粒度で測るベンチマークKaliBenchを公開した。実行時不要の検証可能な報酬を特徴とし、NeurIPS 2026 Evaluations and Datasets Trackに採択された。",
+      "source_kind": "paper",
+      "source_title": "KaliBench: A Fine-Grained Benchmark for Cybersecurity Tool Use on Kali Linux with Runtime-Free Verifiable Rewards",
+      "source_url": "https://arxiv.org/abs/2610.02206v1",
+      "title": "Kali Linuxでのサイバーセキュリティ道具利用を測るベンチマーク",
+      "topics": [
+        "research",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-03T01:16:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "公開済みサービスでは、悪用確認リストへの追加は対応優先度を上げる判断材料になる。",
+      "caveat": "影響範囲は利用構成により異なり、個別環境での確認が必要。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-kev-fortinet-fortimail-2026-10-01",
+      "language": "en",
+      "observed_at": "2026-10-03T01:16:31+09:00",
+      "published_at": "2026-10-01T12:00:00Z",
+      "role": "brief",
+      "selection_reason": "メール基盤の悪用確認済み脆弱性で、境界防御の点検対象として実務的。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "CISAは、実際の悪用が確認されたとして、Fortinet FortiMailのパストラバーサル脆弱性CVE-2026-104286をKnown Exploited Vulnerabilitiesカタログに追加した。",
+      "source_kind": "advisory",
+      "source_title": "CISA Adds One Known Exploited Vulnerability to Catalog",
+      "source_url": "https://www.cisa.gov/news-events/alerts/2026/10/01/cisa-adds-one-known-exploited-vulnerability-catalog",
+      "title": "CISA、Fortinet FortiMailの脆弱性を悪用確認リストに追加",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-03T01:16:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "出典の正確さはモデル規模より、データ選別と工程設計で改善できるという実例。",
+      "caveat": "公開元は、今日のフロンティアモデルに対する完全な再評価は未実施としている。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "allenai-astabrief-open-source-report-model",
+      "language": "en",
+      "observed_at": "2026-10-03T01:16:31+09:00",
+      "published_at": "2026-10-02T15:19:50Z",
+      "role": "brief",
+      "selection_reason": "引用精度を重視したレポート生成の設計知見が、調査支援ツールの実装に役立つ。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Allen Institute for AIは、研究レポート生成システムAstaの中核となる高速レポート生成モデルAstaBriefをオープンソース化した。数万件の実研究クエリで訓練し、レポートをセクション単位ではなく一括生成する設計を採用。8BモデルとしてHugging Faceで公開されている。",
+      "source_kind": "release",
+      "source_title": "Open-sourcing AstaBrief, the fast report-generation model in Asta",
+      "source_url": "https://huggingface.co/blog/allenai/astabrief",
+      "title": "Allen AI、レポート生成モデルAstaBriefを公開",
+      "topics": [
+        "research",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-03T01:16:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "大きなモデルより、曖昧さを減らす工程的な工夫が効く場面を示す。",
+      "caveat": "効果はMozillaの社内テストに基づく指標で、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "mozilla-firefox-shake-to-summarize-recipe-prompt-tuning",
+      "language": "en",
+      "observed_at": "2026-10-03T01:16:31+09:00",
+      "published_at": "2026-10-01T16:00:00Z",
+      "role": "brief",
+      "selection_reason": "小規模モデルでも、タスク分割とルーティングで品質を改善できる実例。",
+      "source_domain": "blog.mozilla.org",
+      "source_fact": "Mozillaは、FirefoxのShake to Summarize機能でレシピの要約が不十分だった問題に対し、記事種別ごとに専用プロンプトへ振り分ける設計を導入した。Webページの構造化データで種別を決定論的に判定し、レシピ用プロンプトに限定した結果、完全で正確な要約を返す割合が従来の2倍超になったという。",
+      "source_kind": "official",
+      "source_title": "Under the Hood: Prompt tuning Shake to Summarize for recipes",
+      "source_url": "https://blog.mozilla.org/en/firefox/firefox-ai/prompt-tuning-firefox-shake-to-summarize-recipes/",
+      "title": "FirefoxのAI要約、レシピ向けにプロンプトを分割",
+      "topics": [
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-03T01:16:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ドメイン知識をスキル化して誤操作を防ぐ設計は、インフラ自動化一般に応用できる。",
+      "caveat": "提供元の説明であり、実際の安全性は利用条件と実装に依存する。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-doca-agent-skills",
+      "language": "en",
+      "observed_at": "2026-10-03T01:16:31+09:00",
+      "published_at": "2026-10-01T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "ハードウェア寄りの開発でも、検証済みAPI知識をスキル化してエージェントを安全に使う動き。",
+      "source_domain": "developer.nvidia.com",
+      "source_fact": "NVIDIAは、BlueField DPU向けソフトウェア基盤DOCAの開発を支援するAIエージェントスキルを公開した。Flow、GPUNetIO、PCC、RDMAなどDOCAライブラリ全体を対象に、デバイス対応の確認やファームウェア級変更の事前チェックをエージェントに与える。",
+      "source_kind": "official",
+      "source_title": "Build Applications on NVIDIA BlueField Faster with NVIDIA DOCA Agent Skills",
+      "source_url": "https://developer.nvidia.com/blog/build-applications-on-nvidia-bluefield-faster-with-nvidia-doca-agent-skills/",
+      "title": "NVIDIA、BlueField開発向けのAIエージェントスキルを公開",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-03T01:16:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "科学やインフラ領域では、AI単体より物理モデルとの併用が実用性を高める。",
+      "caveat": "評価は公開データに基づき、運用利用には電力事業者との追加検証が必要とされる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "microsoft-research-space-weather-grid-forecast",
+      "language": "en",
+      "observed_at": "2026-10-03T01:16:31+09:00",
+      "published_at": "2026-09-30T16:00:00Z",
+      "role": "brief",
+      "selection_reason": "物理制約とAIを組み合わせ、社会インフラの事前警報に使う応用例。",
+      "source_domain": "www.microsoft.com",
+      "source_fact": "Microsoft Researchは、太陽風観測とAE・Dst指数の予測、各地の地質と電導度、送電網データを組み合わせ、米国本土66,935基の変電所について30〜60分先のリスクを推定する機械学習パイプラインを発表した。主要イベントの約80%を検知し、全変電所の推論は約333ミリ秒だったという。",
+      "source_kind": "original-reporting",
+      "source_title": "Forecasting space weather risks on power grids",
+      "source_url": "https://www.microsoft.com/en-us/research/blog/forecasting-space-weather-risks-on-power-grids/",
+      "title": "Microsoft Research、宇宙天気による電力網リスクを予測",
+      "topics": [
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-03T01:16:31+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-10-03T01:16:31+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：モデル推論の保護、合成生物学の透かし、判断モデルとGUI自動化",
+  "topics": [
+    {
+      "description": "基盤モデルの能力と提供条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "能力・評価・科学応用に関する研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "開発・業務を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計と統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "公開されたモデル・基盤と利用条件。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    }
+  ]
+}
