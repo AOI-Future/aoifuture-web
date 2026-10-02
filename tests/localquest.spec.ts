@@ -60,11 +60,32 @@ test('corrupt or mismatched saves reset safely', async ({ page }) => {
   await expect(page.locator('#start')).not.toContainText('続き');
   await page.locator('#start').click(); await expect(page.locator('#count')).toHaveText('1/2');
 
-  const other = await page.context().newPage();
-  await other.addInitScript(([k, v]) => localStorage.setItem(k, v), [KEY, JSON.stringify(save(sampleQuest(), 0, 0, { compilerVersion:'backside-compiler/0.0.0' }))] as const);
-  await other.goto('/play/localquest');
-  await expect(other.locator('#start')).toBeEnabled();
-  await expect(other.locator('#start')).not.toContainText('続き');
+});
+
+test('saves from another world, compiler or with a malformed quest reset safely', async ({ browser }) => {
+  const active = questReducer(questReducer(sampleQuest(), { type:'accept' }), { type:'start' });
+  const cases: [string, unknown][] = [
+    ['control', save(active, 0, 0)],
+    ['version', save(active, 0, 0, { version:2 })],
+    ['sourceId', save(active, 0, 0, { sourceId:'other-town' })],
+    ['seed', save(active, 0, 0, { seed:world.seed + 1 })],
+    ['compilerVersion', save(active, 0, 0, { compilerVersion:'backside-compiler/0.0.0' })],
+    ['status', save({ ...active, status:'PAUSED' }, 0, 0)],
+    ['anchor', save({ ...active, steps:[{ anchor:'nowhere', title:'x', ja:'x' }] }, 0, 0)],
+    ['step', save({ ...active, step:active.steps.length }, 0, 0)],
+    ['steps', save({ ...active, steps:[] }, 0, 0)],
+  ];
+  for (const [name, value] of cases) {
+    const context = await browser.newContext(), page = await context.newPage();
+    const errors: string[] = []; page.on('pageerror', e => errors.push(e.message));
+    await seedSave(page, value);
+    await page.goto('/play/localquest');
+    await expect(page.locator('#start'), name).toBeEnabled();
+    if (name === 'control') await expect(page.locator('#start'), name).toContainText('続き');
+    else await expect(page.locator('#start'), name).not.toContainText('続き');
+    expect(errors, name).toEqual([]);
+    await context.close();
+  }
 });
 
 // AGENTS.md: tap targets >= 44px, text contrast >= 4.5:1. Transparent backgrounds resolve to the #000 page.

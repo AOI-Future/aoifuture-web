@@ -3,7 +3,7 @@ import { World, ROOM } from '../afterhours/world';
 import { Soundscape } from '../afterhours/audio';
 import { compileTopology, compiledLayout } from '../backside/compiler';
 import { COMPILER_VERSION } from '../backside/ir';
-import { questReducer, currentStep, type Quest } from '../backside/quest';
+import { questReducer, currentStep, isQuest, type Quest } from '../backside/quest';
 import { sampleTown, sampleQuest } from '../backside/fixtures/sample-town';
 
 export const SAVE_KEY = 'aoi.localquest.v1';
@@ -14,6 +14,7 @@ export function initLocalQuest() {
   const root = el('afterhours'), canvas = el('scene') as HTMLCanvasElement;
   const backside = compileTopology(sampleTown), layout = compiledLayout(backside);
   const anchorOf = (id:string) => backside.questAnchors.find(a => a.id === id);
+  const anchorIds = new Set(backside.questAnchors.map(a => a.id));
 
   let renderer: THREE.WebGLRenderer;
   try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true }); }
@@ -33,7 +34,7 @@ export function initLocalQuest() {
       const raw = localStorage.getItem(SAVE_KEY); if (!raw) return { state:fresh(), saved:false };
       const s = JSON.parse(raw) as Save;
       const ok = s && s.version === 1 && s.sourceId === backside.sourceArea.id && s.compilerVersion === COMPILER_VERSION && s.seed === backside.seed
-        && s.quest && Array.isArray(s.quest.steps) && typeof s.quest.step === 'number' && [s.pos?.x, s.pos?.z, s.pos?.yaw].every(Number.isFinite);
+        && isQuest(s.quest, anchorIds) && [s.pos?.x, s.pos?.z, s.pos?.yaw].every(Number.isFinite);
       return ok ? { state:s, saved:true } : { state:fresh(), saved:false };
     } catch { return { state:fresh(), saved:false }; }
   };
