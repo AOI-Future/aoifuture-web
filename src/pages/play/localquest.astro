@@ -1,0 +1,68 @@
+---
+import '../../styles/global.css';
+import '../../styles/afterhours.css';
+export const prerender = true;
+---
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>LOCAL QUEST — 街の裏側を歩く | AOI Future</title>
+  <meta name="description" content="現実の街の構造から生まれた裏側の空間を歩き、小さなクエストを達成する実験的なブラウザ探索ゲーム。" />
+  <meta name="robots" content="noindex" />
+  <link rel="canonical" href="https://aoifuture.com/play/localquest" />
+  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+  <meta name="theme-color" content="#000000" />
+</head>
+<body>
+<main id="afterhours" aria-label="LOCAL QUEST 探索ゲーム">
+  <canvas id="scene" aria-label="3D探索空間。WASDで移動、矢印左右で視点を回転。タッチ操作は左で移動、右で視点。"></canvas>
+  <div class="ah-shade" aria-hidden="true"></div>
+  <header class="ah-header">
+    <a href="/" class="ah-brand">AOI<span> / </span>LOCAL QUEST</a>
+    <span class="ah-edition">PHASE 0 PROTOTYPE</span>
+    <button id="pause" class="ah-button" hidden aria-label="一時停止">II <span>PAUSE</span></button>
+  </header>
+  <section id="menu" class="ah-menu" aria-labelledby="game-title">
+    <div class="ah-intro">
+      <p class="ah-overline">THE BACKSIDE OF YOUR TOWN</p>
+      <h1 id="game-title">LOCAL<br /><span>QUEST</span></h1>
+      <p class="ah-tagline">いつもの街の、<br />裏側を歩く。</p>
+      <p class="ah-description">駅、コンビニ、路地。<br />街の構造から組み上がった余白で、小さな依頼をこなす。</p>
+    </div>
+    <div class="ah-entry">
+      <p class="ah-overline">QUEST 001 / FIRST SIGNAL</p>
+      <h2 id="menu-title">最初の信号を拾う。</h2>
+      <p id="menu-copy">光る輪をたどって目的地へ。<br />すべての地点に着くとクエスト達成。</p>
+      <button id="start" class="ah-start" disabled>空間を準備中 <span>↗</span></button>
+      <p id="status" role="status" aria-live="polite">3D空間を読み込んでいます</p>
+      <div class="ah-settings">
+        <label>音量 <input id="volume" type="range" min="0" max="100" value="45" aria-label="音量" /></label>
+        <label>描画 <select id="quality"><option value="auto">自動</option><option value="low">軽量</option><option value="high">高画質</option></select></label>
+      </div>
+      <div class="ah-instructions"><p><b>KEYBOARD</b> WASD 移動 / ← → 視点 / Shift 加速</p><p><b>TOUCH</b> 左スティックで移動 / 右側をスワイプで視点</p><p><b>MOUSE</b> 画面クリックで視点操作 / Esc 一時停止</p></div>
+      <button id="new-game" class="ah-text-button" hidden>クエストを最初から始める</button>
+      <p class="ah-note">音は開始後に再生。進行状況はこの端末に自動保存。</p>
+    </div>
+  </section>
+  <section id="hud" class="ah-hud" hidden aria-label="クエスト状況">
+    <div class="ah-location"><p id="zone">BACKSIDE</p><span id="place-name">—</span><br /><span id="coordinates">0 : 0</span></div>
+    <div class="ah-signal"><span>QUEST <b id="count">0/0</b></span><div class="ah-meter"><i id="signal-meter"></i></div><span id="distance">目的地を探す</span></div>
+    <div id="bearing" class="ah-bearing" aria-hidden="true">↑</div>
+    <div id="toast" class="ah-toast" role="status" aria-live="polite"></div>
+    <div class="ah-crosshair" aria-hidden="true">+</div>
+    <div id="joystick" class="ah-joystick" aria-label="移動スティック"><span id="stick"></span></div>
+    <span class="ah-look-hint">SWIPE TO LOOK</span>
+    <button id="mute" class="ah-button ah-mute" aria-label="音をミュート" aria-pressed="false">SOUND ON</button>
+    <button id="sprint" class="ah-button ah-sprint" aria-pressed="false">加速</button>
+  </section>
+  <footer class="ah-footer" id="menu-footer"><span>EXPERIMENT 004 / AOI FUTURE</span><span>HEADPHONES RECOMMENDED</span></footer>
+  <noscript><p class="ah-failure">このゲームにはJavaScriptが必要です。ブラウザの設定で有効にしてください。</p></noscript>
+</main>
+<script>
+  import { initLocalQuest } from '../../lib/localquest/game';
+  initLocalQuest();
+</script>
+</body>
+</html>

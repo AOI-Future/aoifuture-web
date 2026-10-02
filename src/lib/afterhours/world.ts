@@ -1,8 +1,10 @@
 import * as THREE from 'three';
-import { ROOM, PLACES, describeRoom, hash, roomPlan, passage, floorSeed, floorLabel, type MaterialKey, type Surface, type BoxSpec } from './geography';
+import { ROOM, PLACES, hash, roomPlan, floorSeed, floorLabel, hashLayout, type Layout, type MaterialKey, type Surface, type BoxSpec } from './geography';
 export { ROOM, PLACES, describeRoom, hash, obstacles, roomPlan } from './geography';
 
 type Materials = Record<MaterialKey, THREE.Material>;
+/** A layout plus an optional boundary; cells outside it are never built and always blocked. */
+export type RoomSource = Layout & { exists?(x:number,z:number):boolean };
 export class World {
   chunks = new Map<string, THREE.Group>();
   private palettes: Materials[];
@@ -15,7 +17,7 @@ export class World {
   private lastArea = '';
   private water: THREE.CanvasTexture;
   seed:number;
-  constructor(public scene: THREE.Scene, private baseSeed: number, public level=0) {
+  constructor(public scene: THREE.Scene, private baseSeed: number, public level=0, private source: RoomSource=hashLayout) {
     this.seed=floorSeed(baseSeed,level);
     const surfaces = Object.fromEntries(['carpet','tile','stone','concrete'].map(s=>[s,this.texture(s as Surface)]));
     this.water = this.texture('water');
@@ -72,7 +74,7 @@ export class World {
     (group.userData.disposables as (THREE.Texture|THREE.Material)[]).push(texture,material);
   }
   private create(x:number,z:number) {
-    const plan=roomPlan(x,z,this.seed), g=new THREE.Group(), m=this.palettes[plan.index], h=plan.place.height;
+    const plan=roomPlan(x,z,this.seed,this.source), g=new THREE.Group(), m=this.palettes[plan.index], h=plan.place.height;
     g.position.set(x*ROOM,0,z*ROOM);g.userData.disposables=[];
     g.userData.colliders=plan.boxes.filter(b=>b.solid&&b.y-b.h/2<1.9&&b.y+b.h/2>.1);
     const boxes:BoxSpec[]=[...plan.boxes,
@@ -102,10 +104,11 @@ export class World {
       this.sign(g,`DOWN / ${floorLabel(this.level+1)}`,this.level>0?`LIFT TO ${floorLabel(this.level-1)} / E`:'OPEN SHAFT',liftX,2.4,sz+1.7,2.2);
     } else boxes.push({x:0,y:-.15,z:0,w:32,h:.3,d:32,material:'floor',solid:false});
     // A fixed address and a directional destination at each threshold make revisiting legible.
-    this.sign(g,plan.place.name,`${floorLabel(this.level)} / ${plan.id}`,7,2.3,-15.56,5.2);
-    const north=describeRoom(x,z-1,this.seed), east=describeRoom(x+1,z,this.seed);
-    this.sign(g,north.place.name,'NORTH / NEXT SPACE',passage(x,z,this.seed,0,-1).offset,Math.min(h-.6,3.5),-15.52,3.8);
-    this.sign(g,east.place.name,'EAST / NEXT SPACE',15.52,Math.min(h-.6,3.5),passage(x,z,this.seed,1,0).offset,3.8,-Math.PI/2);
+    this.sign(g,plan.label??plan.place.name,`${floorLabel(this.level)} / ${plan.id}`,7,2.3,-15.56,5.2);
+    const north=this.source.describe(x,z-1,this.seed), east=this.source.describe(x+1,z,this.seed);
+    const northGate=this.source.passage(x,z,this.seed,0,-1), eastGate=this.source.passage(x,z,this.seed,1,0);
+    if(northGate.width>0) this.sign(g,north.label??north.place.name,'NORTH / NEXT SPACE',northGate.offset,Math.min(h-.6,3.5),-15.52,3.8);
+    if(eastGate.width>0) this.sign(g,east.label??east.place.name,'EAST / NEXT SPACE',15.52,Math.min(h-.6,3.5),eastGate.offset,3.8,-Math.PI/2);
     if(plan.place.key==='concourse') {
       const clock=this.shape(g,this.ring,m.light,-7,3.4,-15.5,.9,.9,.9);
       this.shape(g,this.box,m.dark,-7,3.7,-15.46,.06,.6,.06);
@@ -154,10 +157,10 @@ export class World {
     const cx=Math.round(px/ROOM),cz=Math.round(pz/ROOM),area=`${cx},${cz},${radius}`;
     if(area===this.lastArea)return;this.lastArea=area;
     for(const[key,g]of this.chunks){const[x,z]=key.split(',').map(Number);if(Math.abs(x-cx)>radius||Math.abs(z-cz)>radius){this.release(g);this.chunks.delete(key);}}
-    for(let x=cx-radius;x<=cx+radius;x++)for(let z=cz-radius;z<=cz+radius;z++){const key=`${x},${z}`;if(this.chunks.has(key))continue;const g=this.create(x,z);this.chunks.set(key,g);this.scene.add(g);}
+    for(let x=cx-radius;x<=cx+radius;x++)for(let z=cz-radius;z<=cz+radius;z++){const key=`${x},${z}`;if(this.chunks.has(key)||this.source.exists?.(x,z)===false)continue;const g=this.create(x,z);this.chunks.set(key,g);this.scene.add(g);}
   }
   ambience(px:number,pz:number,dt:number,motion:boolean) {
-    const p=describeRoom(Math.round(px/ROOM),Math.round(pz/ROOM),this.seed).place;
+    const p=this.source.describe(Math.round(px/ROOM),Math.round(pz/ROOM),this.seed).place;
     const color=new THREE.Color(p.fog),blend=1-Math.exp(-dt*1.5);
     (this.scene.background as THREE.Color).lerp(color,blend);(this.scene.fog as THREE.FogExp2).color.lerp(color,blend);
     (this.scene.fog as THREE.FogExp2).density=THREE.MathUtils.lerp((this.scene.fog as THREE.FogExp2).density,p.height>7?.016:.026,blend);
@@ -165,7 +168,8 @@ export class World {
   }
   blocked(x:number,z:number) {
     const cx=Math.round(x/ROOM),cz=Math.round(z/ROOM);
-    const colliders:BoxSpec[]=this.chunks.get(`${cx},${cz}`)?.userData.colliders??roomPlan(cx,cz,this.seed).boxes.filter(b=>b.solid&&b.y-b.h/2<1.9&&b.y+b.h/2>.1);
+    if(this.source.exists?.(cx,cz)===false)return true;
+    const colliders:BoxSpec[]=this.chunks.get(`${cx},${cz}`)?.userData.colliders??roomPlan(cx,cz,this.seed,this.source).boxes.filter(b=>b.solid&&b.y-b.h/2<1.9&&b.y+b.h/2>.1);
     return colliders.some(b=>Math.abs(x-cx*ROOM-b.x)<b.w/2+.35&&Math.abs(z-cz*ROOM-b.z)<b.d/2+.35);
   }
   private release(g:THREE.Group){this.scene.remove(g);g.traverse(o=>{if(o instanceof THREE.InstancedMesh)o.dispose();});for(const resource of g.userData.disposables)resource.dispose();}
