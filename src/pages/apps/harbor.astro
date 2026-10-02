@@ -116,7 +116,7 @@ const who = [
         <p class="eyebrow mb-6 text-cyan-400/50 text-xs tracking-widest">POINT YOUR EXISTING TOOLS AT IT</p>
         <pre class="border border-cyan-400/20 bg-cyan-400/[0.03] p-4 overflow-auto text-xs leading-relaxed text-cyan-400/80"><span class="text-cyan-400/40"># 書き換え不要 — base URL を変えるだけ</span>
 <span class="text-cyan-300">export</span> OPENAI_BASE_URL=http://your-mac.tailnet:9999/v1
-<span class="text-cyan-300">export</span> OPENAI_API_KEY=harbor   <span class="text-cyan-400/40"># ローカルでは無視される</span>
+<span class="text-cyan-300">export</span> OPENAI_API_KEY&#61;harbor   <span class="text-cyan-400/40"># ローカルでは無視される</span>
 
 <span class="text-cyan-400/40"># 既存のエージェント / スクリプト / アプリがそのまま動く。今度は無料 & 私有で</span>
 curl $OPENAI_BASE_URL/chat/completions -d '&lbrace;
