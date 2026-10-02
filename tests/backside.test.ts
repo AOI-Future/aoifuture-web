@@ -1,8 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { roomPlan, resonancePoint } from '../src/lib/afterhours/geography';
+import { createHash } from 'node:crypto';
+import { roomPlan, resonancePoint, hashLayout } from '../src/lib/afterhours/geography';
 import { compileTopology, compiledLayout, seedFrom } from '../src/lib/backside/compiler';
 import { COMPILER_VERSION, validateWorld, type Topology } from '../src/lib/backside/ir';
-import { questReducer, currentStep } from '../src/lib/backside/quest';
+import { questReducer, currentStep, isQuest } from '../src/lib/backside/quest';
 import { sampleTown, sampleQuest } from '../src/lib/backside/fixtures/sample-town';
 
 function walkable(x:number,z:number,seed:number,layout=compiledLayout(compileTopology(sampleTown))) {
@@ -85,5 +86,52 @@ describe('quest lifecycle', () => {
     const timed={...q,expiresAt:100};
     expect(questReducer(timed,{type:'expire',now:99})).toBe(timed);
     expect(questReducer(timed,{type:'expire',now:100}).status).toBe('EXPIRED');
+  });
+
+  it('allows abandon from every unfinished status and ignores it once finished', () => {
+    const draft=sampleQuest(),accepted=questReducer(draft,{type:'accept'}),active=questReducer(accepted,{type:'start'});
+    for(const q of [draft,accepted,active]) expect(questReducer(q,{type:'abandon'}).status).toBe('ABANDONED');
+    const done=questReducer(questReducer(active,{type:'reach',anchor:'konbini'}),{type:'reach',anchor:'station'});
+    const abandoned=questReducer(active,{type:'abandon'}),expired=questReducer({...active,expiresAt:1},{type:'expire',now:1});
+    expect(done.status).toBe('COMPLETED');
+    for(const q of [done,abandoned,expired]) expect(questReducer(q,{type:'abandon'})).toBe(q);
+  });
+});
+
+describe('isQuest', () => {
+  const anchors=new Set(compileTopology(sampleTown).questAnchors.map(a=>a.id));
+  const active=questReducer(questReducer(sampleQuest(),{type:'accept'}),{type:'start'});
+  const done=questReducer(questReducer(active,{type:'reach',anchor:'konbini'}),{type:'reach',anchor:'station'});
+
+  it('accepts every reachable quest state, including a JSON round trip', () => {
+    for(const q of [sampleQuest(),active,done,{...active,expiresAt:100}]) {
+      expect(isQuest(q,anchors)).toBe(true);
+      expect(isQuest(JSON.parse(JSON.stringify(q)),anchors)).toBe(true);
+    }
+  });
+
+  it('rejects malformed quests', () => {
+    const bad:unknown[]=[
+      null,'quest',[],{...active,id:1},{...active,ja:undefined},{...active,status:'PAUSED'},
+      {...active,steps:[]},{...active,steps:'konbini'},{...active,steps:[{anchor:'konbini',title:'x'}]},
+      {...active,steps:[...active.steps,{anchor:'nowhere',title:'x',ja:'x'}]},
+      {...active,step:-1},{...active,step:.5},{...active,step:'0'},{...active,step:3},{...active,step:2},
+      {...done,step:1},{...active,expiresAt:'soon'},{...active,expiresAt:null},
+    ];
+    for(const q of bad) expect(isQuest(q,anchors),JSON.stringify(q)).toBe(false);
+    expect(isQuest({...active,steps:[{anchor:'nowhere',title:'x',ja:'x'}]})).toBe(true);
+  });
+});
+
+describe('hashLayout', () => {
+  it('is the default layout and still produces the pre-Local-Quest geography', () => {
+    const out:unknown[]=[];
+    for(const seed of [1,20261002,0xdeadbeef]) for(let x=-3;x<=3;x++) for(let z=-3;z<=3;z++) {
+      expect(roomPlan(x,z,seed)).toEqual(roomPlan(x,z,seed,hashLayout));
+      expect(resonancePoint(x,z,seed)).toEqual(resonancePoint(x,z,seed,hashLayout));
+      out.push(roomPlan(x,z,seed),resonancePoint(x,z,seed));
+    }
+    // Golden value computed at 2b84490^1 (before the external-layout refactor) and unchanged since.
+    expect(createHash('sha256').update(JSON.stringify(out)).digest('hex')).toBe('da67819c892cdd6c34049ac474cb2f23053cc5c1b822ee50fe2dc5699adbc505');
   });
 });
