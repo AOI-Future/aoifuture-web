@@ -1,7 +1,7 @@
 # Local Quest Phase 0 — 作業メモ（再開用）
 
-- **status**: Phase 0 merge 済み（#33 `71b32bd` / #34 `2b84490`）。Phase 1 hardening を branch `feat/localquest-phase1-hardening` で PR 化。merge/deploy はユーザー承認待ち
-- **updated**: 2026-10-03
+- **status**: Phase 0 merge 済み（#33 `71b32bd` / #34 `2b84490`）。Phase 1 hardening merge 済み（#35 `f841736`）、本番 deploy success（両 Vercel context）。公開URL https://aoifuture.com/play/localquest （noindex・サイト内導線なし）
+- **updated**: 2026-10-03（Phase 2a 実在エリア対応 進行中）
 - **Notion**: Company OS / Local Quest（page `3ed51456-e70c-8111-8cbb-f95fe114f889`, Status Spec, P1）
 - **方針（ユーザー承認済み）**: aoifuture-web の中に作る / Phase 0–1 は Astro + localStorage（Next.js/Postgres は Phase 2）/ afterhours を土台にする
 
@@ -28,12 +28,28 @@
 6. [done] a11y 実測: `tests/localquest.spec.ts` にタップ44px・コントラスト4.5:1 の自動監査を追加（menu/HUD × 3 viewport、12 passed、故意の不良要素で検出を確認）
 7. [done] harness-reviewer PASS（tree 8c017da）→ ローカル commit `0203c70`。low 指摘4件（save の quest 形状検証、version/sourceId/seed 不一致E2E、DRAFT/ACCEPTED からの abandon 仕様、hashLayout 等価の単体テスト）は Phase 1 で対応
 
-## Phase 1 hardening（2026-10-03, branch `feat/localquest-phase1-hardening`）
+## Phase 1 hardening（2026-10-03, #35 merge `f841736`）
 
 - [done] save の quest 形状検証: `quest.ts` に `isQuest(v, anchors?)`（status enum・steps/anchor 実在・step 範囲・ACTIVE/COMPLETED の step 整合）。`game.ts` の `load()` が使用
 - [done] E2E: version / sourceId / seed / compilerVersion 不一致と不正 quest（status・未知 anchor・step 範囲外・空 steps）でリセット。旧検証へ戻すと落ちることを mutation で確認
 - [done] abandon は DRAFT/ACCEPTED/ACTIVE から許可、終了後は無視（コメント + 単体テスト）
 - [done] hashLayout 等価: 既定 layout と明示 `hashLayout` の deep-equal + golden sha256（#34 以前の出力と一致）
+
+- 未対応 low 指摘（harness-reviewer, tree `1bc69b5`）: `isQuest` は quest id / steps が fixture と一致するかを見ない。DRAFT/ACCEPTED で step≠0 を受理する
+
+## Phase 2a 実在エリア対応（Real Geography Compiler, 2026-10-03, branch `feat/localquest-real-geography`）
+
+ユーザー選択「実在エリア対応を先に」。実在エリア → Topology → 固有ワールド。
+
+- [done] `src/lib/backside/reality.ts` — provider 中立の `GeoSnapshot` → `extractTopology`。2本以上の街路が共有するノード＝交差点、80m セルでクラスタ、街路を交差点間 edge に縮約、POI は最寄り交差点へ接続、spawn（駅優先）から BFS で到達不能な島を除去
+- Topology over replica: 出力に実名・provider id を含めない（id は `${kind}-${rank}`、座標は m 丸め）。seed は `provider:areaId:topology` から決定的。要素順に依存しない
+- [done] `src/lib/backside/providers/overpass.ts` — Overpass QL 生成と応答パースのみ（**fetch しない**）。OSM は ODbL、表示時は「© OpenStreetMap contributors」必須（snapshot に license/attribution を保持）
+- [done] `fixtures/overpass-grid.ts`（架空 4x4 グリッド）+ `tests/reality.test.ts` 9 tests。`check:afterhours` / build 通過
+- **未承認・未実施**: 実データ取得。着手前にユーザー確認が必要な点
+  1. provider と利用規約（Overpass 公開インスタンスの負荷ポリシー / 自前・商用 provider）
+  2. 取得方式: 実行時 fetch か、事前取得 snapshot をビルドに同梱か
+  3. 保存範囲（snapshot をリポジトリに置くか、Topology のみ保存か）と ODbL 帰属表示の場所
+  4. ゲーム統合（エリア選択 UI、save の sourceId に `real:<area>`）は後続ステップ
 
 ## 制約
 
