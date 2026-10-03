@@ -1,7 +1,7 @@
 # Local Quest Phase 0 — 作業メモ（再開用）
 
 - **status**: Phase 0 merge 済み（#33 `71b32bd` / #34 `2b84490`）。Phase 1 hardening merge 済み（#35 `f841736`）、本番 deploy success（両 Vercel context）。公開URL https://aoifuture.com/play/localquest （noindex・サイト内導線なし）
-- **updated**: 2026-10-03（Phase 2a 実在エリア対応 進行中）
+- **updated**: 2026-10-03（Phase 2a extractor PASS・PR、縦切り次）
 - **Notion**: Company OS / Local Quest（page `3ed51456-e70c-8111-8cbb-f95fe114f889`, Status Spec, P1）
 - **方針（ユーザー承認済み）**: aoifuture-web の中に作る / Phase 0–1 は Astro + localStorage（Next.js/Postgres は Phase 2）/ afterhours を土台にする
 
@@ -46,6 +46,8 @@
 - [done] `src/lib/backside/providers/overpass.ts` — Overpass QL 生成と応答パースのみ（**fetch しない**）。OSM は ODbL、表示時は「© OpenStreetMap contributors」必須（snapshot に license/attribution を保持）
 - [done] `fixtures/overpass-grid.ts`（架空 4x4 グリッド）+ `tests/reality.test.ts` 11 tests（reality+backside 計21）。`check:afterhours` / build 通過
 - harness-reviewer FAIL（`2049125`）の指摘6件を修正: 島の駅による spawn 孤立、id 衝突、名称漏洩、relation 非対応の明示、クラスタの成分跨ぎ、shape node 処理
+- [done] 修正 commit `86c1122` → harness-reviewer PASS（candidate sha256 `2ba7632b…`）。vitest reality+backside 21/21、tsc、`check:afterhours`、`npm run build` 通過
+- 非ブロッキング指摘（縦切りで対応）: 同一セル・約15m の別ネットワークが格子交差点と融合しない回帰テスト、名称漏洩テストの正規表現が seed を誤検出しないよう除外、`area.id` 中立性の注記維持
 - **確定方針（2026-10-03 ユーザー確定、追加調査不要）**
   1. MVP provider は OSM/Overpass。公開インスタンスは開発者による小規模1回取得のみ（本番 backend にしない）。provider 境界は維持
   2. world 生成に LLM を使わない。同一 source + compiler version + seed → 同一 BacksideWorld。AI API 無しで動く
