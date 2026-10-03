@@ -1,4 +1,5 @@
-/** OpenStreetMap via Overpass: query text and response parsing only. Fetching is the caller's job and needs approval of provider terms. */
+/** OpenStreetMap via Overpass: query text and response parsing only. Fetching is the caller's job and needs approval of provider terms.
+ * Places are asked for as nodes and ways only; relations (multipolygon parks etc.) are not queried, so the parser never has to drop them. */
 import { STREET_TYPES, type GeoSnapshot } from '../reality';
 
 export const OSM_LICENSE = 'ODbL-1.0';
@@ -7,8 +8,7 @@ export const OSM_ATTRIBUTION = '© OpenStreetMap contributors';
 type Area = GeoSnapshot['area'];
 type Element =
   | { type:'node'; id:number; lat:number; lon:number; tags?:Record<string,string> }
-  | { type:'way'; id:number; nodes:number[]; tags?:Record<string,string>; center?:{lat:number;lon:number} }
-  | { type:'relation'; id:number; tags?:Record<string,string> };
+  | { type:'way'; id:number; nodes:number[]; tags?:Record<string,string>; center?:{lat:number;lon:number} };
 export type OverpassResponse = { osm3s?:{timestamp_osm_base?:string}; elements:Element[] };
 
 export function overpassQuery(area:Area):string {
@@ -17,14 +17,14 @@ export function overpassQuery(area:Area):string {
     '[out:json][timeout:25];',
     '(',
     `  way["highway"~"^(${STREET_TYPES.join('|')})$"]${around};`,
-    `  nwr["railway"~"^(station|halt)$"]${around};`,
-    `  nwr["public_transport"="station"]${around};`,
-    `  nwr["shop"="convenience"]${around};`,
-    `  nwr["amenity"="library"]${around};`,
-    `  nwr["amenity"="place_of_worship"]["religion"="shinto"]${around};`,
-    `  nwr["leisure"~"^(park|garden)$"]${around};`,
-    `  nwr["tourism"~"^(attraction|museum)$"]${around};`,
-    `  nwr["historic"]${around};`,
+    `  nw["railway"~"^(station|halt)$"]${around};`,
+    `  nw["public_transport"="station"]${around};`,
+    `  nw["shop"="convenience"]${around};`,
+    `  nw["amenity"="library"]${around};`,
+    `  nw["amenity"="place_of_worship"]["religion"="shinto"]${around};`,
+    `  nw["leisure"~"^(park|garden)$"]${around};`,
+    `  nw["tourism"~"^(attraction|museum)$"]${around};`,
+    `  nw["historic"]${around};`,
     ');',
     'out tags center;',
     '>;',

@@ -41,15 +41,21 @@
 
 ユーザー選択「実在エリア対応を先に」。実在エリア → Topology → 固有ワールド。
 
-- [done] `src/lib/backside/reality.ts` — provider 中立の `GeoSnapshot` → `extractTopology`。2本以上の街路が共有するノード＝交差点、80m セルでクラスタ、街路を交差点間 edge に縮約、POI は最寄り交差点へ接続、spawn（駅優先）から BFS で到達不能な島を除去
+- [done] `src/lib/backside/reality.ts` — provider 中立の `GeoSnapshot` → `extractTopology`。2本以上の街路が共有するノード＝交差点、80m セルでクラスタ、街路を交差点間 edge に縮約、POI は最寄り交差点へ接続、街路連結成分ごとにクラスタ（近接する別ネットワークを融合しない）、最大連結成分のみ残す（同数なら中心に近い方）。内部キーは `j:`/`n:`/`w:` 接頭辞で provider id 衝突を防ぐ。spawn は駅、無ければ中心最寄り交差点。area 名は出力せず `REAL AREA` 固定
 - Topology over replica: 出力に実名・provider id を含めない（id は `${kind}-${rank}`、座標は m 丸め）。seed は `provider:areaId:topology` から決定的。要素順に依存しない
 - [done] `src/lib/backside/providers/overpass.ts` — Overpass QL 生成と応答パースのみ（**fetch しない**）。OSM は ODbL、表示時は「© OpenStreetMap contributors」必須（snapshot に license/attribution を保持）
-- [done] `fixtures/overpass-grid.ts`（架空 4x4 グリッド）+ `tests/reality.test.ts` 9 tests。`check:afterhours` / build 通過
-- **未承認・未実施**: 実データ取得。着手前にユーザー確認が必要な点
-  1. provider と利用規約（Overpass 公開インスタンスの負荷ポリシー / 自前・商用 provider）
-  2. 取得方式: 実行時 fetch か、事前取得 snapshot をビルドに同梱か
-  3. 保存範囲（snapshot をリポジトリに置くか、Topology のみ保存か）と ODbL 帰属表示の場所
-  4. ゲーム統合（エリア選択 UI、save の sourceId に `real:<area>`）は後続ステップ
+- [done] `fixtures/overpass-grid.ts`（架空 4x4 グリッド）+ `tests/reality.test.ts` 11 tests（reality+backside 計21）。`check:afterhours` / build 通過
+- harness-reviewer FAIL（`2049125`）の指摘6件を修正: 島の駅による spawn 孤立、id 衝突、名称漏洩、relation 非対応の明示、クラスタの成分跨ぎ、shape node 処理
+- **確定方針（2026-10-03 ユーザー確定、追加調査不要）**
+  1. MVP provider は OSM/Overpass。公開インスタンスは開発者による小規模1回取得のみ（本番 backend にしない）。provider 境界は維持
+  2. world 生成に LLM を使わない。同一 source + compiler version + seed → 同一 BacksideWorld。AI API 無しで動く
+  3. プレイ毎に Overpass を呼ばない: fetch → normalize → compile → cache/save → game（実行時は生成済み world を読む）
+  4. raw OSM / 生成データは git に入れない（`.cache` 等 gitignore）。git はコード・schema・最小 fixture・ライセンス文書のみ
+  5. 帰属表示: ゲーム内共通 component「© OpenStreetMap contributors」→ https://www.openstreetmap.org/copyright 、README に「Map data © OpenStreetMap contributors」「Open Database License (ODbL)」
+  6. 縦切り: 小さな固定1エリアで 取得1回 → parse → topology → compile → JSON Schema 検証 → 3D → 一人称で歩ける。既存テストを壊さない
+  7. `compileReality(source, options) -> BacksideWorld` を独立 module に。出力に OSM id・実名を含めない。compiler に Overpass 固有ロジックを入れない
+  8. 対象外: LLM world 生成、動的クエスト、東京全域、本番 Overpass、AR、マルチプレイ、大規模DB、複雑なエリアUI
+- [next] 縦切り実装（上記 6・7 と帰属表示・README）
 
 ## 制約
 

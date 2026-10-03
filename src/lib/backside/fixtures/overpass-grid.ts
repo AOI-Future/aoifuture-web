@@ -1,4 +1,4 @@
-/** Fictional Overpass-shaped response: a 4x4 street grid, a detached island and a handful of tagged places. Not real data. */
+/** Fictional Overpass-shaped response: a 4x4 street grid, a detached street triangle and a handful of tagged places. Not real data. */
 import type { OverpassResponse } from '../providers/overpass';
 
 export const gridArea = { id:'grid-fixture', name:'GRID FIXTURE', lat:35, lon:135, radius:420 };
@@ -15,9 +15,10 @@ export function gridResponse():OverpassResponse {
   for(let c=0;c<4;c++) elements.push({type:'way',id:200+c,nodes:[0,1,2,3].map(r=>nid(r,c)),tags:{highway:'tertiary',name:'Fictional Column'}});
   // Footpaths do not count as streets.
   elements.push({type:'way',id:300,nodes:[nid(0,0),nid(1,1)],tags:{highway:'footway'}});
-  // A crossing inside the radius that no street joins to the grid.
-  elements.push({type:'node',id:5000,...at(-0.9,3.2)},{type:'node',id:5001,...at(-0.9,2.9)},{type:'node',id:5002,...at(-1.2,3.2)});
-  elements.push({type:'way',id:400,nodes:[5001,5000],tags:{highway:'residential'}},{type:'way',id:401,nodes:[5002,5000],tags:{highway:'residential'}});
+  // A street triangle inside the radius, north of the grid, that no street joins to it: a smaller network that must be dropped.
+  elements.push({type:'node',id:5000,...at(-0.9,0.2)},{type:'node',id:5001,...at(-0.9,2.8)},{type:'node',id:5002,...at(-0.4,1.5)});
+  elements.push({type:'way',id:400,nodes:[5000,5001],tags:{highway:'residential'}},{type:'way',id:401,nodes:[5000,5002],tags:{highway:'residential'}},
+    {type:'way',id:402,nodes:[5001,5002],tags:{highway:'residential'}});
   const poi=(id:number,r:number,c:number,tags:Record<string,string>)=>elements.push({type:'node',id,...at(r,c),tags:{name:`Fictional ${id}`,...tags}});
   poi(9001,1.3,1.4,{railway:'station'});
   poi(9002,2.2,0.2,{shop:'convenience'});
