@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://aoifuture.com/schemas/backside-world.json",
+  "title": "BacksideWorld",
+  "description": "Compiled world IR. Carries no provider ids or real place names.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "seed", "sourceArea", "sectors", "connections", "spawn", "questAnchors"],
+  "definitions": {
+    "id": { "type": "string", "minLength": 1, "maxLength": 64 },
+    "poi": { "enum": ["station", "intersection", "park", "convenience", "shrine", "road", "landmark", "library"] },
+    "cell": { "type": "integer", "minimum": -4096, "maximum": 4096 },
+    "coord": { "type": "number", "minimum": -1000000, "maximum": 1000000 }
+  },
+  "properties": {
+    "version": { "const": "backside-compiler/0.1.0" },
+    "seed": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+    "sourceArea": {
+      "type": "object", "additionalProperties": false, "required": ["id", "name"],
+      "properties": { "id": { "$ref": "#/definitions/id" }, "name": { "type": "string", "maxLength": 64 } }
+    },
+    "sectors": {
+      "type": "array", "minItems": 1, "maxItems": 4096,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "x", "z", "place", "label", "poi", "variant"],
+        "properties": {
+          "id": { "$ref": "#/definitions/id" },
+          "x": { "$ref": "#/definitions/cell" }, "z": { "$ref": "#/definitions/cell" },
+          "place": { "enum": ["concourse", "atrium", "garden", "office", "pool", "service", "gallery", "archive"] },
+          "label": { "type": "string", "maxLength": 64 },
+          "ja": { "type": "string", "maxLength": 64 },
+          "poi": { "$ref": "#/definitions/poi" },
+          "variant": { "type": "integer", "minimum": 0, "maximum": 2 },
+          "node": { "$ref": "#/definitions/id" }
+        }
+      }
+    },
+    "connections": {
+      "type": "array", "maxItems": 16384,
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["a", "b"],
+        "properties": { "a": { "$ref": "#/definitions/id" }, "b": { "$ref": "#/definitions/id" } }
+      }
+    },
+    "spawn": {
+      "type": "object", "additionalProperties": false, "required": ["sector", "x", "z"],
+      "properties": { "sector": { "$ref": "#/definitions/id" }, "x": { "$ref": "#/definitions/coord" }, "z": { "$ref": "#/definitions/coord" } }
+    },
+    "questAnchors": {
+      "type": "array", "maxItems": 4096,
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["id", "sector", "role", "x", "z"],
+        "properties": {
+          "id": { "$ref": "#/definitions/id" }, "sector": { "$ref": "#/definitions/id" },
+          "role": { "$ref": "#/definitions/poi" },
+          "x": { "$ref": "#/definitions/coord" }, "z": { "$ref": "#/definitions/coord" }
+        }
+      }
+    }
+  }
+}

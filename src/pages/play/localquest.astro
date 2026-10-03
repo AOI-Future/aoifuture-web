@@ -1,4 +1,5 @@
 ---
+import OsmAttribution from '../../components/localquest/OsmAttribution.astro';
 import '../../styles/global.css';
 import '../../styles/afterhours.css';
 export const prerender = true;
@@ -22,6 +23,7 @@ export const prerender = true;
   <header class="ah-header">
     <a href="/" class="ah-brand">AOI<span> / </span>LOCAL QUEST</a>
     <span class="ah-edition">PHASE 0 PROTOTYPE</span>
+    <OsmAttribution />
     <button id="pause" class="ah-button" hidden aria-label="一時停止">II <span>PAUSE</span></button>
   </header>
   <section id="menu" class="ah-menu" aria-labelledby="game-title">

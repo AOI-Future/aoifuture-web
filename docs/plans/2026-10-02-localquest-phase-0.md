@@ -1,7 +1,7 @@
 # Local Quest Phase 0 — 作業メモ（再開用）
 
 - **status**: Phase 0 merge 済み（#33 `71b32bd` / #34 `2b84490`）。Phase 1 hardening merge 済み（#35 `f841736`）、本番 deploy success（両 Vercel context）。公開URL https://aoifuture.com/play/localquest （noindex・サイト内導線なし）
-- **updated**: 2026-10-03（Phase 2a extractor PASS・PR、縦切り次）
+- **updated**: 2026-10-03（Phase 2a 縦切り実装・branch `feat/localquest-vertical-slice`、PR #36 の上に積む）
 - **Notion**: Company OS / Local Quest（page `3ed51456-e70c-8111-8cbb-f95fe114f889`, Status Spec, P1）
 - **方針（ユーザー承認済み）**: aoifuture-web の中に作る / Phase 0–1 は Astro + localStorage（Next.js/Postgres は Phase 2）/ afterhours を土台にする
 
@@ -57,7 +57,13 @@
   6. 縦切り: 小さな固定1エリアで 取得1回 → parse → topology → compile → JSON Schema 検証 → 3D → 一人称で歩ける。既存テストを壊さない
   7. `compileReality(source, options) -> BacksideWorld` を独立 module に。出力に OSM id・実名を含めない。compiler に Overpass 固有ロジックを入れない
   8. 対象外: LLM world 生成、動的クエスト、東京全域、本番 Overpass、AR、マルチプレイ、大規模DB、複雑なエリアUI
-- [next] 縦切り実装（上記 6・7 と帰属表示・README）
+- [done] 縦切り実装（branch `feat/localquest-vertical-slice`、base PR #36）
+  - `compile-reality.ts`（`compileReality`）、`backside-world.schema.json`（ajv v6 検証）、`scripts/localquest-fetch-area.mjs`（`npm run localquest:fetch`、dev 専用・cache 再利用・area/query 不一致で停止）
+  - `world-source.ts` / `generated-world.ts`: 生成 world があれば使用、無効・不在なら sampleTown。`?world=sample` で強制
+  - `OsmAttribution.astro` 常時表示、README に ODbL 節
+  - Overpass query 修正: `out tags center` は way の node refs を落とし「no street junctions」になっていた → `out body center`、node refs 無しの way は parser で throw（PR #36 にも同じ欠陥あり）
+  - 実エリア slice-a: 51 sectors / 71 connections / 49 anchors、cache 再実行で sha256 一致。Overpass 取得は計2回（1回目は誤 query、再取得はユーザー承認済み）
+  - 注意: 生成 world がローカルに存在すると `npm run build` が bundle に含める（README 記載）。CI/clean checkout は sample のみ
 
 ## 制約
 

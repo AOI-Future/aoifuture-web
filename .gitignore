@@ -24,3 +24,9 @@ pnpm-debug.log*
 .vercel
 # generated OG share cards (built by scripts/generate-news-og.mjs at build time)
 public/og/news/
+
+# generated local data (raw OSM snapshots, compiled worlds); never commit
+.cache/
+
+# compiled Local Quest world built from a one-off local fetch; never commit
+src/lib/localquest/generated/
