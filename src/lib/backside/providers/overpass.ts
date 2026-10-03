@@ -26,7 +26,8 @@ export function overpassQuery(area:Area):string {
     `  nw["tourism"~"^(attraction|museum)$"]${around};`,
     `  nw["historic"]${around};`,
     ');',
-    'out tags center;',
+    // `body` keeps each way's node refs (street connectivity); `tags` alone would drop them.
+    'out body center;',
     '>;',
     'out skel qt;',
   ].join('\n');
@@ -40,7 +41,8 @@ export function fromOverpass(json:OverpassResponse,area:Area):GeoSnapshot {
     if(e.type==='node'&&Number.isFinite(e.lat)&&Number.isFinite(e.lon)) {
       const id=String(e.id), prev=nodes.get(id);
       if(!prev||(!prev.tags&&e.tags)) nodes.set(id,{id,lat:e.lat,lon:e.lon,...(e.tags?{tags:e.tags}:{})});
-    } else if(e.type==='way'&&Array.isArray(e.nodes)) {
+    } else if(e.type==='way') {
+      if(!Array.isArray(e.nodes)) throw new Error(`overpass way ${e.id} has no node refs; query with "out body"`);
       ways.push({id:String(e.id),nodes:e.nodes.map(String),tags:e.tags??{},...(e.center?{center:e.center}:{})});
     }
   }

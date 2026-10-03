@@ -39,9 +39,11 @@ describe('reality extractor', () => {
     expect(s.nodes.filter(n=>n.id==='9001')).toHaveLength(1);
     expect(s.nodes.find(n=>n.id==='9001')?.tags?.railway).toBe('station');
     expect(()=>fromOverpass({} as never,gridArea)).toThrow();
+    expect(()=>fromOverpass({elements:[{type:'way',id:1,tags:{highway:'residential'}}]} as never,gridArea)).toThrow(/node refs/);
     const q=overpassQuery(gridArea);
     expect(q).toContain('around:420,35.000000,135.000000');
-    expect(q).toContain('out tags center;');
+    expect(q).toContain('out body center;');
+    expect(q).not.toContain('out tags');
     expect(q).not.toContain('nwr[');
   });
 
@@ -89,6 +91,24 @@ describe('reality extractor', () => {
     expect(validateWorld(compileTopology(topo))).toEqual([]);
   });
 
+  it('never fuses a separate network sitting in the same cell as a grid junction', () => {
+    // Two crossing streets whose junction is 15m east of grid junction (1,1), sharing no node with the grid.
+    const DLAT=150/111195, DLON=150/(111195*Math.cos(35*Math.PI/180)), m=DLON/150, n=DLAT/150;
+    const lat=gridArea.lat+.5*DLAT, lon=gridArea.lon-.5*DLON+15*m;
+    const json=gridResponse();
+    json.elements.push({type:'node',id:7000,lat,lon:lon-8*m},{type:'node',id:7001,lat,lon},{type:'node',id:7002,lat,lon:lon+8*m},
+      {type:'node',id:7003,lat:lat+8*n,lon},{type:'node',id:7004,lat:lat-8*n,lon});
+    json.elements.push({type:'way',id:700,nodes:[7000,7001,7002],tags:{highway:'residential'}},{type:'way',id:701,nodes:[7003,7001,7004],tags:{highway:'residential'}});
+    const topo=extractTopology(fromOverpass(json,gridArea));
+    const junctions=topo.nodes.filter(n=>n.kind==='intersection');
+    expect(junctions).toHaveLength(16);
+    // The grid keeps its own junction; the nearer stray one never takes its place.
+    expect(junctions.some(j=>j.x===-75&&j.z===-75)).toBe(true);
+    expect(junctions.some(j=>j.x===-60)).toBe(false);
+    expect(topo.edges.filter(e=>e.from.startsWith('intersection')&&e.to.startsWith('intersection'))).toHaveLength(24);
+    expect(validateWorld(compileTopology(topo))).toEqual([]);
+  });
+
   it('keeps provider ids that look alike apart', () => {
     // A tagged node whose id equals a junction id must stay a separate place.
     // Node and way ids live in separate OSM namespaces: a park way may share its id with a junction node.
@@ -102,7 +122,8 @@ describe('reality extractor', () => {
   });
 
   it('never carries real names or provider ids into the topology', () => {
-    const text=JSON.stringify(extractTopology(snapshot()));
+    // The seed is a number that may happen to contain digits like a provider id; it carries no provider data.
+    const text=JSON.stringify({...extractTopology(snapshot()),seed:0});
     expect(text).not.toMatch(/Fictional|GRID FIXTURE|900\d|10\d\d|osm/);
     const named=extractTopology({...snapshot(),area:{...gridArea,name:'Real Place Name'}});
     expect(JSON.stringify(compileTopology(named))).not.toContain('Real Place Name');

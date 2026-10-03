@@ -1,5 +1,6 @@
 import { test, expect, type Page } from '@playwright/test';
 import { join } from 'node:path';
+import { existsSync } from 'node:fs';
 import { compileTopology } from '../src/lib/backside/compiler';
 import { COMPILER_VERSION } from '../src/lib/backside/ir';
 import { questReducer } from '../src/lib/backside/quest';
@@ -13,7 +14,7 @@ const save = (quest: unknown, x: number, z: number, extra = {}) => ({ version:1,
 
 test('fresh entry shows the first step, pause saves, reload resumes', async ({ page }, info) => {
   const errors: string[] = []; page.on('pageerror', e => errors.push(e.message));
-  await page.goto('/play/localquest');
+  await page.goto('/play/localquest?world=sample');
   await expect(page.locator('#start')).toBeEnabled();
   await expect(page.locator('#new-game')).toBeHidden();
   await page.screenshot({ path: join(screenshots, `localquest-${info.project.name}-title.png`) });
@@ -40,7 +41,7 @@ test('reaching the final anchor completes the quest and survives reload', async 
   quest = questReducer(quest, { type:'reach', anchor:'konbini' });
   const station = anchor('station');
   await seedSave(page, save(quest, station.x, station.z));
-  await page.goto('/play/localquest');
+  await page.goto('/play/localquest?world=sample');
   await expect(page.locator('#start')).toContainText('続き');
   await page.locator('#start').click();
   await expect(page.locator('#menu-title')).toHaveText('クエスト完了', { timeout: 8000 });
@@ -55,7 +56,7 @@ test('reaching the final anchor completes the quest and survives reload', async 
 
 test('corrupt or mismatched saves reset safely', async ({ page }) => {
   await seedSave(page, '{broken');
-  await page.goto('/play/localquest');
+  await page.goto('/play/localquest?world=sample');
   await expect(page.locator('#start')).toBeEnabled();
   await expect(page.locator('#start')).not.toContainText('続き');
   await page.locator('#start').click(); await expect(page.locator('#count')).toHaveText('1/2');
@@ -79,7 +80,7 @@ test('saves from another world, compiler or with a malformed quest reset safely'
     const context = await browser.newContext(), page = await context.newPage();
     const errors: string[] = []; page.on('pageerror', e => errors.push(e.message));
     await seedSave(page, value);
-    await page.goto('/play/localquest');
+    await page.goto('/play/localquest?world=sample');
     await expect(page.locator('#start'), name).toBeEnabled();
     if (name === 'control') await expect(page.locator('#start'), name).toContainText('続き');
     else await expect(page.locator('#start'), name).not.toContainText('続き');
@@ -109,10 +110,64 @@ const audit = (page: Page) => page.evaluate(() => {
 });
 
 test('menu and HUD meet tap target and contrast minimums', async ({ page }) => {
-  await page.goto('/play/localquest');
+  await page.goto('/play/localquest?world=sample');
   await expect(page.locator('#start')).toBeEnabled();
   expect(await audit(page)).toEqual({ small: [], low: [] });
   await page.locator('#start').click();
   await expect(page.locator('#hud')).toBeVisible();
   expect(await audit(page)).toEqual({ small: [], low: [] });
+});
+
+const overlaps = (a: { x:number; y:number; width:number; height:number }, b: typeof a) => a.x < b.x + b.width && b.x < a.x + a.width && a.y < b.y + b.height && b.y < a.y + a.height;
+
+test('shows OpenStreetMap attribution on the menu and in play without overlapping the header', async ({ page }) => {
+  await page.goto('/play/localquest?world=sample');
+  const link = page.locator('.ah-attribution');
+  await expect(link).toHaveCount(1);
+  await expect(link).toHaveText('© OpenStreetMap contributors');
+  await expect(link).toHaveAttribute('href', 'https://www.openstreetmap.org/copyright');
+  await expect(link).toHaveAttribute('rel', /noopener/);
+  await expect(page.locator('#afterhours')).toHaveAttribute('data-world', 'sample');
+  for (const phase of ['menu', 'play']) {
+    if (phase === 'play') { await page.locator('#start').click(); await expect(page.locator('#hud')).toBeVisible(); }
+    await expect(link, phase).toBeVisible();
+    const box = (await link.boundingBox())!;
+    expect(box.height, phase).toBeGreaterThanOrEqual(44);
+    expect(box.x + box.width, phase).toBeLessThanOrEqual(page.viewportSize()!.width);
+    for (const other of ['.ah-brand', '#pause', '.ah-edition', '.ah-location', '.ah-signal', '#mute']) {
+      const o = page.locator(other).first();
+      if (!(await o.isVisible())) continue;
+      expect(overlaps(box, (await o.boundingBox())!), `${phase} ${other}`).toBe(false);
+    }
+  }
+});
+
+// The generated world is a gitignored local file; without it the page must fall back to the sample town.
+const hasGenerated = existsSync('src/lib/localquest/generated/world.json');
+
+test('falls back to the sample town when no generated world is present', async ({ page }) => {
+  test.skip(hasGenerated, 'a generated world is present locally');
+  await page.goto('/play/localquest');
+  await expect(page.locator('#afterhours')).toHaveAttribute('data-world', 'sample');
+});
+
+test('the generated world loads and can be walked in first person', async ({ page }) => {
+  test.skip(!hasGenerated, 'run npm run localquest:fetch to generate a world');
+  const errors: string[] = []; page.on('pageerror', e => errors.push(e.message));
+  await page.goto('/play/localquest');
+  await expect(page.locator('#afterhours')).toHaveAttribute('data-world', 'generated');
+  await page.locator('#start').click();
+  await expect(page.locator('#hud')).toBeVisible();
+  await expect(page.locator('#count')).toHaveText('1/2');
+  await page.locator('#pause').click();
+  const before = await page.evaluate(k => JSON.parse(localStorage.getItem(k)!).pos, KEY);
+  await page.locator('#start').click();
+  await expect(page.locator('#hud')).toBeVisible();
+  await page.locator('canvas').first().focus().catch(() => {});
+  await page.keyboard.down('w'); await page.waitForTimeout(1200); await page.keyboard.up('w');
+  await page.locator('#pause').click();
+  const after = await page.evaluate(k => JSON.parse(localStorage.getItem(k)!), KEY);
+  expect(Math.hypot(after.pos.x - before.x, after.pos.z - before.z)).toBeGreaterThan(0.5);
+  expect(after.sourceId).not.toBe(world.sourceArea.id);
+  expect(errors).toEqual([]);
 });

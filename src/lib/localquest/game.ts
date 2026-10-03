@@ -1,10 +1,11 @@
 import * as THREE from 'three';
 import { World, ROOM } from '../afterhours/world';
 import { Soundscape } from '../afterhours/audio';
-import { compileTopology, compiledLayout } from '../backside/compiler';
+import { compiledLayout } from '../backside/compiler';
 import { COMPILER_VERSION } from '../backside/ir';
 import { questReducer, currentStep, isQuest, type Quest } from '../backside/quest';
-import { sampleTown, sampleQuest } from '../backside/fixtures/sample-town';
+import { pickWorld } from './world-source';
+import { generatedWorld } from './generated-world';
 
 export const SAVE_KEY = 'aoi.localquest.v1';
 type Save = { version:1; sourceId:string; compilerVersion:string; seed:number; quest:Quest; pos:{x:number;z:number;yaw:number} };
@@ -12,7 +13,10 @@ type Save = { version:1; sourceId:string; compilerVersion:string; seed:number; q
 export function initLocalQuest() {
   const el = (id: string) => document.getElementById(id)!;
   const root = el('afterhours'), canvas = el('scene') as HTMLCanvasElement;
-  const backside = compileTopology(sampleTown), layout = compiledLayout(backside);
+  // A locally generated world when one is present and valid; `?world=sample` forces the bundled sample town.
+  const source = pickWorld(generatedWorld, { forceSample: new URLSearchParams(location.search).get('world') === 'sample' });
+  const backside = source.world, layout = compiledLayout(backside);
+  root.dataset.world = source.source;
   const anchorOf = (id:string) => backside.questAnchors.find(a => a.id === id);
   const anchorIds = new Set(backside.questAnchors.map(a => a.id));
 
@@ -28,7 +32,7 @@ export function initLocalQuest() {
   const ringMaterial = new THREE.MeshBasicMaterial({ color: 0xbaffff });
   const ring = new THREE.Group(); ring.add(new THREE.Mesh(ringGeometry, ringMaterial), new THREE.Mesh(coreGeometry, ringMaterial)); scene.add(ring);
 
-  const fresh = (): Save => ({ version:1, sourceId:backside.sourceArea.id, compilerVersion:COMPILER_VERSION, seed:backside.seed, quest:sampleQuest(), pos:{ x:backside.spawn.x, z:backside.spawn.z, yaw:0 } });
+  const fresh = (): Save => ({ version:1, sourceId:backside.sourceArea.id, compilerVersion:COMPILER_VERSION, seed:backside.seed, quest:source.quest(), pos:{ x:backside.spawn.x, z:backside.spawn.z, yaw:0 } });
   const load = (): { state:Save; saved:boolean } => {
     try {
       const raw = localStorage.getItem(SAVE_KEY); if (!raw) return { state:fresh(), saved:false };
