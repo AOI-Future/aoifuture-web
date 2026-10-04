@@ -1,0 +1,21 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="LOCAL QUEST — 街から生まれる裏世界 | AOI Future" description="学芸大学駅周辺の地理snapshotから、ブラウザで有限の裏世界を生成。LLM・インストール不要の探索ゲーム。" canonical="https://aoifuture.com/apps/localquest">
+  <main class="min-h-screen bg-black text-cyan-100 px-6 py-12 font-mono">
+    <div class="max-w-4xl mx-auto">
+      <a href="/apps" class="inline-flex items-center min-h-11 text-sm text-cyan-300">&lt; APPS</a>
+      <p class="text-xs tracking-widest mt-20 text-cyan-300">AOI EXPERIMENT 004 / BROWSER GAME</p>
+      <h1 class="text-4xl md:text-7xl tracking-tighter mt-6 mb-8">LOCAL QUEST</h1>
+      <h2 class="text-2xl leading-relaxed">街の地図が、裏世界になる。</h2>
+      <p class="text-base leading-loose mt-6 max-w-xl">学芸大学駅周辺400mの地理snapshotから、ブラウザ内で小さな3D空間を生成します。道路は回廊に、交差点は吹き抜けに、駅や店は部屋に。元の地図と見比べながら、光る輪をたどる探索へ。</p>
+      <a href="/play/localquest/" class="inline-flex items-center justify-between gap-8 bg-cyan-200 text-black px-8 py-5 mt-10 text-base hover:bg-white transition-colors duration-200">ブラウザで遊ぶ <span>&gt;</span></a>
+      <div class="grid md:grid-cols-3 gap-8 border-t border-cyan-400/30 mt-16 pt-8 text-sm leading-loose">
+        <div><h3 class="text-cyan-300 mb-3">01 / REAL GEOGRAPHY</h3><p>元地図・取得時点・読み替えの説明を確認できます。外観や実距離の再現ではなく、地理の接続関係からつくる空間です。</p></div>
+        <div><h3 class="text-cyan-300 mb-3">02 / NO LLM</h3><p>生成はブラウザ内のプログラムで完結。LLM・GPS・APIキー・インストールは不要です。</p></div>
+        <div><h3 class="text-cyan-300 mb-3">03 / ONE QUEST</h3><p>有限のエリアを歩き、1クエストで試遊終了。進行はブラウザ内に保存され、再読込後も復元できます。</p></div>
+      </div>
+      <p class="mt-12 text-sm leading-loose">最初に「地図から裏世界を生成」を押してください。PCはWASDで移動、左右矢印で旋回。スマホは画面上の操作に対応します。WebGLとJavaScriptが必要です。</p>
+    </div>
+  </main>
+</Layout>
