@@ -8,6 +8,8 @@ body { margin:0; background:#000; }
 .ah-brand { color:#fff; text-decoration:none; letter-spacing:.16em; font-size:14px; min-height:44px; display:flex; align-items:center; gap:10px; }
 .ah-brand span { color:#00ffff; }.ah-edition,.ah-overline,.ah-footer { font-size:12px; letter-spacing:.16em; }
 .ah-edition { color:#e0e0d4; }
+.ah-attribution { margin-left:auto; display:inline-flex; align-items:center; min-height:44px; padding:0 10px; background:#000c; color:#c2ffff; font-size:12px; letter-spacing:.04em; text-decoration:underline; text-underline-offset:3px; }
+.ah-attribution:focus-visible { outline:2px solid #baffff; outline-offset:2px; }
 .ah-menu { position:absolute; inset:110px 6vw 75px; display:grid; grid-template-columns:1.35fr 1fr; gap:6vw; align-items:center; overflow:auto; }
 .ah-overline { color:#a8ffff; margin:0 0 25px; }
 .ah-intro h1 { position:relative; font-family:Arial,Helvetica,sans-serif; font-weight:900; font-size:clamp(64px,9.5vw,150px); letter-spacing:-.075em; line-height:.83; margin:0 0 32px -5px; }
@@ -37,10 +39,10 @@ body { margin:0; background:#000; }
 #afterhours.playing .ah-shade { background:radial-gradient(ellipse at center,transparent 50%,#0004); }
 .ah-failure { position:absolute; inset:30% 10%; background:#000; padding:32px; }
 @media (pointer:coarse) { .ah-joystick,.ah-look-hint,.ah-sprint { display:block; } }
-@media (max-width:760px) { .ah-header { top:max(12px,env(safe-area-inset-top)); left:20px; right:20px; }.ah-brand { font-size:12px; }.ah-edition { display:none; }.ah-menu { inset:83px 24px 45px; display:block; }.ah-intro h1 { font-size:clamp(66px,18vw,105px); margin-bottom:20px; }.ah-intro .ah-overline { font-size:12px; margin-bottom:18px; }.ah-intro sup { font-size:30px; }.ah-tagline { font-size:20px; }.ah-description { display:none; }.ah-entry { margin-top:24px; max-width:none; padding-top:18px; }.ah-entry .ah-overline { display:none; }.ah-entry h2 { font-size:18px; }.ah-entry>p { margin:8px 0; }.ah-start { margin-top:12px; }.ah-footer { left:24px; bottom:12px; font-size:12px; }.ah-footer span:last-child { display:none; }.ah-location { left:16px; top:80px; max-width:48%; }.ah-signal { right:16px; top:80px; width:145px; }.ah-bearing { top:172px; right:72px; }.ah-mute { right:20px; }.ah-shade { background:linear-gradient(90deg,#000b,#0006),linear-gradient(0deg,#000b,transparent); } }
+@media (max-width:760px) { .ah-header { top:max(12px,env(safe-area-inset-top)); left:20px; right:20px; }.ah-brand { font-size:12px; }.ah-edition { display:none; }.ah-attribution { font-size:12px; max-width:118px; line-height:1.25; padding:0 8px; }.ah-menu { inset:83px 24px 45px; display:block; }.ah-intro h1 { font-size:clamp(66px,18vw,105px); margin-bottom:20px; }.ah-intro .ah-overline { font-size:12px; margin-bottom:18px; }.ah-intro sup { font-size:30px; }.ah-tagline { font-size:20px; }.ah-description { display:none; }.ah-entry { margin-top:24px; max-width:none; padding-top:18px; }.ah-entry .ah-overline { display:none; }.ah-entry h2 { font-size:18px; }.ah-entry>p { margin:8px 0; }.ah-start { margin-top:12px; }.ah-footer { left:24px; bottom:12px; font-size:12px; }.ah-footer span:last-child { display:none; }.ah-location { left:16px; top:80px; max-width:48%; }.ah-signal { right:16px; top:80px; width:145px; }.ah-bearing { top:172px; right:72px; }.ah-mute { right:20px; }.ah-shade { background:linear-gradient(90deg,#000b,#0006),linear-gradient(0deg,#000b,transparent); } }
 @media (max-height:550px) and (min-width:761px) { .ah-menu { inset:80px 5vw 40px; align-items:start; }.ah-intro h1 { font-size:80px; }.ah-tagline { font-size:20px; }.ah-footer { bottom:10px; }.ah-description { display:none; } }
 @media (prefers-reduced-motion:reduce) { #afterhours * { transition:none!important; } }
-@media (prefers-reduced-transparency:reduce) { .ah-button,.ah-location,.ah-signal,.ah-toast { background:#000; } }
+@media (prefers-reduced-transparency:reduce) { .ah-button,.ah-attribution,.ah-location,.ah-signal,.ah-toast { background:#000; } }
 .ah-notebook { margin-top:14px; border-top:1px solid #b9c0a955; border-bottom:1px solid #b9c0a955; }
 .ah-notebook summary { min-height:48px; cursor:pointer; padding:12px 0; font-size:14px; color:#baffff; }
 .ah-notebook summary span { float:right; font-size:12px; color:#e0e8db; }

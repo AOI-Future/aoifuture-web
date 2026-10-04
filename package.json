@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/generate-news-og.mjs && astro build",
+    "build": "node scripts/localquest-prepare-source.mjs && node scripts/generate-news-og.mjs && astro build",
     "generate:news-og": "node scripts/generate-news-og.mjs",
     "generate:news-poster": "node scripts/generate-news-poster.mjs",
     "preview": "astro preview",
@@ -26,7 +26,9 @@
     "evidence:news-layout": "node scripts/generate-news-layout-evidence.mjs",
     "test:afterhours": "playwright test --config=playwright.afterhours.config.ts",
     "test:localquest": "playwright test --config=playwright.localquest.config.ts",
-    "check:afterhours": "tsc --project tsconfig.afterhours.json"
+    "test:localquest:generated": "node scripts/localquest-test-generated.mjs",
+    "check:afterhours": "tsc --project tsconfig.afterhours.json",
+    "localquest:fetch": "node scripts/localquest-fetch-area.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",
@@ -54,6 +56,8 @@
     "@playwright/test": "^1.60.0",
     "@types/qrcode": "^1.5.6",
     "@types/three": "^0.186.0",
+    "ajv": "^6.15.0",
+    "esbuild": "^0.25.12",
     "fontkit": "^2.0.4",
     "svgo": "^4.0.0",
     "typescript": "^7.0.2",

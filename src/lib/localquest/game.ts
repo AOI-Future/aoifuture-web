@@ -1,18 +1,23 @@
 import * as THREE from 'three';
 import { World, ROOM } from '../afterhours/world';
 import { Soundscape } from '../afterhours/audio';
-import { compileTopology, compiledLayout } from '../backside/compiler';
+import { compiledLayout } from '../backside/compiler';
 import { COMPILER_VERSION } from '../backside/ir';
 import { questReducer, currentStep, isQuest, type Quest } from '../backside/quest';
-import { sampleTown, sampleQuest } from '../backside/fixtures/sample-town';
+import { pickWorld } from './world-source';
+import { generatedWorld } from './generated-world';
+import { relativeBearing } from './navigation';
 
 export const SAVE_KEY = 'aoi.localquest.v1';
 type Save = { version:1; sourceId:string; compilerVersion:string; seed:number; quest:Quest; pos:{x:number;z:number;yaw:number} };
 
-export function initLocalQuest() {
+export function initLocalQuest(candidate:unknown=generatedWorld,{forceSample=new URLSearchParams(location.search).get('world')==='sample'}:{forceSample?:boolean}={}) {
   const el = (id: string) => document.getElementById(id)!;
   const root = el('afterhours'), canvas = el('scene') as HTMLCanvasElement;
-  const backside = compileTopology(sampleTown), layout = compiledLayout(backside);
+  // A locally generated world when one is present and valid; `?world=sample` forces the bundled sample town.
+  const source = pickWorld(candidate, { forceSample });
+  const backside = source.world, layout = compiledLayout(backside);
+  root.dataset.world = source.source;
   const anchorOf = (id:string) => backside.questAnchors.find(a => a.id === id);
   const anchorIds = new Set(backside.questAnchors.map(a => a.id));
 
@@ -28,7 +33,7 @@ export function initLocalQuest() {
   const ringMaterial = new THREE.MeshBasicMaterial({ color: 0xbaffff });
   const ring = new THREE.Group(); ring.add(new THREE.Mesh(ringGeometry, ringMaterial), new THREE.Mesh(coreGeometry, ringMaterial)); scene.add(ring);
 
-  const fresh = (): Save => ({ version:1, sourceId:backside.sourceArea.id, compilerVersion:COMPILER_VERSION, seed:backside.seed, quest:sampleQuest(), pos:{ x:backside.spawn.x, z:backside.spawn.z, yaw:0 } });
+  const fresh = (): Save => ({ version:1, sourceId:backside.sourceArea.id, compilerVersion:COMPILER_VERSION, seed:backside.seed, quest:source.quest(), pos:{ x:backside.spawn.x, z:backside.spawn.z, yaw:0 } });
   const load = (): { state:Save; saved:boolean } => {
     try {
       const raw = localStorage.getItem(SAVE_KEY); if (!raw) return { state:fresh(), saved:false };
@@ -70,16 +75,18 @@ export function initLocalQuest() {
   const complete = () => {
     ring.visible = false; save();
     active = false; sound.pause(); if (document.pointerLockElement) document.exitPointerLock();
-    showMenu('クエスト完了', `「${state.quest.ja}」を達成しました。新しいクエストで最初から歩けます。`, '街を歩き続ける ↗'); el('new-game').hidden = false;
+    showMenu('クエスト完了', `「${state.quest.ja}」を達成しました。この小エリアの試遊は終了です。元地図で読み替えを確認できます。`, '試遊終了'); (el('start') as HTMLButtonElement).disabled = true; el('new-game').hidden = false;
   };
   const begin = () => {
     if (state.quest.status === 'DRAFT') state.quest = questReducer(state.quest, { type:'accept' });
     if (state.quest.status === 'ACCEPTED') state.quest = questReducer(state.quest, { type:'start' });
+    (el('start') as HTMLButtonElement).disabled = false;
     started = true; active = true; root.classList.add('playing'); el('menu').hidden = true; el('hud').hidden = false; el('pause').hidden = false; el('menu-footer').hidden = true;
     void sound.start().catch(() => toast('音を開始できませんでした。無音で探索できます。', 5000));
     canvas.focus(); last = performance.now(); save();
   };
 
+  document.addEventListener('localquest:pause',()=>pause(),options);
   el('start').addEventListener('click', begin, options);
   el('pause').addEventListener('click', () => pause(), options);
   el('new-game').addEventListener('click', () => {
@@ -121,9 +128,11 @@ export function initLocalQuest() {
     const dt = Math.min(.05, (now - last) / 1000); last = now;
     const goal = target();
     if (active) {
+      if (keys.has('ArrowLeft')) state.pos.yaw += dt * 1.6;
+      if (keys.has('ArrowRight')) state.pos.yaw -= dt * 1.6;
       let fx = 0, fz = 0;
       if (keys.has('KeyW') || keys.has('ArrowUp')) fz += 1; if (keys.has('KeyS') || keys.has('ArrowDown')) fz -= 1;
-      if (keys.has('KeyA') || keys.has('ArrowLeft')) fx -= 1; if (keys.has('KeyD') || keys.has('ArrowRight')) fx += 1;
+      if (keys.has('KeyA')) fx -= 1; if (keys.has('KeyD')) fx += 1;
       fx += stick.x; fz -= stick.y;
       const len = Math.hypot(fx, fz);
       if (len > .05) {
@@ -140,7 +149,7 @@ export function initLocalQuest() {
       if (travel > 1.7) { sound.step(room.place.surface); travel %= 1.7; }
       if (goal) {
         const d = Math.hypot(goal.x - state.pos.x, goal.z - state.pos.z);
-        sound.tick(room.index, Math.exp(-d / 85), Math.sin(state.pos.yaw - Math.atan2(goal.x - state.pos.x, goal.z - state.pos.z)));
+        sound.tick(room.index, Math.exp(-d / 85), Math.sin(relativeBearing(state.pos.yaw, state.pos, goal)));
         if (d < 1.5) {
           const done = currentStep(state.quest)!;
           state.quest = questReducer(state.quest, { type:'reach', anchor:goal.id }); sound.collect(); toast(`${done.ja} — 達成`);
@@ -158,7 +167,7 @@ export function initLocalQuest() {
           const d = Math.hypot(g.x - state.pos.x, g.z - state.pos.z);
           el('distance').textContent = `${step.ja} · ${Math.round(d)}m`;
           el('signal-meter').style.width = `${Math.max(2, 100 * Math.exp(-d / 70))}%`;
-          el('bearing').style.transform = `rotate(${state.pos.yaw - Math.atan2(g.x - state.pos.x, g.z - state.pos.z)}rad)`;
+          el('bearing').style.transform = `rotate(${relativeBearing(state.pos.yaw, state.pos, g)}rad)`;
         }
         if (now > toastUntil) el('toast').textContent = '';
       }
@@ -174,13 +183,19 @@ export function initLocalQuest() {
   };
 
   resize(); safePosition(); world.update(state.pos.x, state.pos.z, radius()); world.ambience(state.pos.x, state.pos.z, 10, false);
-  if (state.quest.status === 'COMPLETED') { ring.visible = false; showMenu('クエスト完了', `「${state.quest.ja}」は達成済みです。`, '街を歩き続ける ↗'); }
-  else if (saved) el('start').textContent = '続きから歩く ↗';
+  if (state.quest.status === 'COMPLETED') { ring.visible = false; showMenu('クエスト完了', `「${state.quest.ja}」は達成済みです。この試遊は終了です。`, '試遊終了'); }
+  else showMenu('最初の信号を拾う。','光る輪をたどって目的地へ。すべての地点に着くとクエスト達成。',saved?'続きから歩く ↗':'この空間を探索する ↗');
   el('new-game').hidden = !saved;
-  (el('start') as HTMLButtonElement).disabled = false; el('status').textContent = `${backside.sourceArea.name} · 準備完了`;
+  (el('start') as HTMLButtonElement).disabled = state.quest.status === 'COMPLETED'; el('status').textContent = `${backside.sourceArea.name} · 準備完了`;
   frame = requestAnimationFrame(loop);
-  document.addEventListener('astro:before-swap', () => {
-    cancelAnimationFrame(frame); save(); abort.abort(); sound.dispose(); world.dispose();
+  let disposed=false;
+  const dispose=()=>{
+    if(disposed)return;disposed=true;
+    cancelAnimationFrame(frame); save(); abort.abort();
+    if(document.pointerLockElement===canvas)document.exitPointerLock();
+    sound.dispose(); world.dispose();
     ringGeometry.dispose(); coreGeometry.dispose(); ringMaterial.dispose(); renderer.dispose();
-  }, { once: true });
+  };
+  document.addEventListener('astro:before-swap',dispose,{once:true,signal:abort.signal});
+  return dispose;
 }

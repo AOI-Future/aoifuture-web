@@ -33,7 +33,12 @@ export function validateWorld(world:BacksideWorld) {
     links.set(c.a,[...(links.get(c.a)??[]),c.b]); links.set(c.b,[...(links.get(c.b)??[]),c.a]);
   }
   if(!byId.has(world.spawn.sector)) errors.push(`spawn sector ${world.spawn.sector} is missing`);
-  for(const q of world.questAnchors) if(!byId.has(q.sector)) errors.push(`anchor ${q.id} references missing sector ${q.sector}`);
+  const anchorIds=new Set<string>();
+  for(const q of world.questAnchors) {
+    if(anchorIds.has(q.id)) errors.push(`duplicate anchor ${q.id}`);
+    anchorIds.add(q.id);
+    if(!byId.has(q.sector)) errors.push(`anchor ${q.id} references missing sector ${q.sector}`);
+  }
   if(byId.has(world.spawn.sector)) {
     const seen=new Set([world.spawn.sector]), queue=[world.spawn.sector];
     for(let i=0;i<queue.length;i++) for(const n of links.get(queue[i])??[]) if(!seen.has(n)){seen.add(n);queue.push(n);}
