@@ -65,7 +65,6 @@ const SECTIONS: Section[] = [
   { id: 'camino', label: 'AOI CAMINO', sub: 'AUTHOR', accent: 'amber' },
   { id: 'sound-umwelt', label: 'SOUND UMWELT', sub: 'PROJECT', accent: 'cyan' },
   { id: 'apps', label: 'APPS', sub: 'APPS & GAMES', accent: 'cyan', href: '/apps' },
-  { id: 'localquest', label: 'LOCAL QUEST', sub: 'PLAY / NO LLM', accent: 'cyan', href: '/play/localquest/' },
   { id: 'dispatch', label: 'DISPATCH', sub: 'MEDIA', accent: 'amber' },
   { id: 'news', label: 'NEWS', sub: 'SOURCE DESK', accent: 'cyan' },
   { id: 'agent-security', label: 'AGENT.SECURITY', sub: 'FIELD MANUAL', accent: 'cyan' },
