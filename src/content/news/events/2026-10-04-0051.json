@@ -1,0 +1,25 @@
+[
+  {
+    "changed_signal_ids": [
+      "anthropic-claude-sonnet-5-5",
+      "arxiv-epact-llm-energy",
+      "arxiv-hpc-site-profiles",
+      "arxiv-versioned-execution-agents",
+      "cloudflare-sovereign-ai",
+      "cloudflare-web-search-api",
+      "cloudflare-workers-post-quantum",
+      "github-securitylab-android-taskflow",
+      "openai-dots"
+    ],
+    "edition_date": "2026-10-04",
+    "edition_id": "2026-10-04-0051",
+    "edition_url": "https://aoifuture.com/news/2026-10-04-0051/",
+    "event_id": "aoi-news-2026-10-04-0051-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-04T00:51:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "常時稼働エージェント、耐量子暗号の実行基盤対応、AIによるセキュリティ監査、電力契約と推論性能の最適化。一次資料から、エージェントの自律性と安全・運用設計の接点を確認する。",
+    "title": "AOIFUTURE News：常時稼働エージェント、耐量子暗号、検証としてのセキュリティ自動化"
+  }
+]

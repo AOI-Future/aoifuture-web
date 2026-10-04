@@ -1,0 +1,310 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-10-04T00:51:00+09:00",
+  "dek": "常時稼働エージェント、耐量子暗号の実行基盤対応、AIによるセキュリティ監査、電力契約と推論性能の最適化。一次資料から、エージェントの自律性と安全・運用設計の接点を確認する。",
+  "edition_date": "2026-10-04",
+  "edition_id": "2026-10-04-0051",
+  "edition_note": "9月28日から10月2日の一次資料を直接確認。各社の性能・成果主張は独立に再現していない。公開可否は別のpublisherが判断する。",
+  "generated_at": "2026-10-04T00:51:00+09:00",
+  "items": [
+    {
+      "aoi_note": "エージェントが使うツールの権限を読み取り専用に限定し、承認と監視を組み合わせる設計は、実業務導入の判断材料になる。",
+      "caveat": "提供元の発表時点の機能説明で、実際の安全性や信頼性は利用条件と環境に依存する。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-dots",
+      "language": "en",
+      "observed_at": "2026-10-04T00:51:00+09:00",
+      "published_at": "2026-09-29T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "常時稼働で自律作業するエージェントという新しい利用形態を、提供元の一次資料で示す。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは、GPT-6 Astraを基盤とし独自のクラウドコンピュータを持つ、常時稼働のエージェント「dots」を発表した。4,000以上のアプリと接続可能で、ChatGPT・Slack・Teamsから利用でき、ユーザーの好みを学習して先回りして作業を進める。Pro・Business Premium・Enterpriseプランから展開し、専用ブラウザとコンピュータで作業内容を閲覧・承認できる。初期設定では接続アプリのツールは読み取り専用に制限され、安全監視で有害な挙動を検知すると作業を一時停止できる。",
+      "source_kind": "official",
+      "source_title": "Introducing dots",
+      "source_url": "https://openai.com/index/introducing-dots/",
+      "title": "OpenAI、常時稼働エージェントdotsを発表",
+      "topics": [
+        "agents",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-10-04T00:51:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "同一API価格を保ちつつタスクあたりの実質コストを下げる設計は、大量利用のモデル選定で有用。",
+      "caveat": "性能・コスト改善は提供元の発表に基づく値で、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "anthropic-claude-sonnet-5-5",
+      "language": "en",
+      "observed_at": "2026-10-04T00:51:00+09:00",
+      "published_at": "2026-09-28T00:00:00Z",
+      "role": "major",
+      "selection_reason": "ミッドレンジモデルの性能・コスト改善を、提供元の一次資料で確認する。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "Anthropicは、Claude 5.5ファミリー2本目のモデルClaude Sonnet 5.5を公開した。前世代のSonnetより30%以上高速で、多くの作業で最大30%コストを削減できるとされる。文書作成・要約・表計算・バグ修正など定型の日常作業に強く、デザインへの理解も優れる。API価格はSonnet 5と同じ（入力$2/百万トークン、出力$10/百万トークン）だが、タスクあたりのトークン数を抑えることで実質コストを下げる。ClaudeプラットフォームのほかAWS・Google Cloud・Microsoft Azureでも利用可能。",
+      "source_kind": "official",
+      "source_title": "Introducing Claude Sonnet 5.5",
+      "source_url": "https://www.anthropic.com/claude-sonnet-5-5",
+      "title": "Anthropic、Claude Sonnet 5.5を公開",
+      "topics": [
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-10-04T00:51:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "監査知識を「コード」ではなく「手順化されたエージェント」として共有できる点が、再現性を生む。",
+      "caveat": "発見数はGitHub Security Labの報告時点のもので、全Androidアプリへの一般化ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-securitylab-android-taskflow",
+      "language": "en",
+      "observed_at": "2026-10-04T00:51:00+09:00",
+      "published_at": "2026-09-28T00:00:00Z",
+      "role": "major",
+      "selection_reason": "セキュリティ検証をLLMエージェントと共有可能な手順として自動化する実例を一次資料で示す。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHub Security Labは、AIのプロンプトと作業手順をタスクフローとして自動化・共有できる「GitHub Security Lab Taskflow Agent」を使い、Androidアプリの脆弱性監査タスクフローを作成して24件以上の脆弱性を報告したと公表した。タスクを段階的な検査工程に分割することで、LLM単体では見逃しやすい複雑な脆弱性を発見しやすくする。ツールはオープンソースで公開され、他社・他アプリでも同じエージェントを再実行できる。",
+      "source_kind": "official",
+      "source_title": "How we found 24 Android vulnerabilities using our open source AI security agent",
+      "source_url": "https://github.blog/security/how-we-found-24-android-vulnerabilities-using-our-open-source-ai-security-agent/",
+      "title": "GitHub、AIセキュリティエージェントでAndroid脆弱性24件を発見",
+      "topics": [
+        "security",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-04T00:51:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "実行基盤側で耐量子アルゴリズムを試せることは、今後の移行設計の事前検証に直接役立つ。",
+      "caveat": "オプトイン対応で、完全な移行パスや既存系との互換保証を含むわけではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-workers-post-quantum",
+      "language": "en",
+      "observed_at": "2026-10-04T00:51:00+09:00",
+      "published_at": "2026-10-01T00:00:00Z",
+      "role": "major",
+      "selection_reason": "エッジの汎用実行基盤が耐量子暗号APIを用意する動きを一次資料で確認する。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは、WorkersのWeb Crypto APIで耐量子アルゴリズムML-KEM-768/1024（鍵カプセル化）とML-DSA-44/65/87（署名）へのオプトイン対応を追加したと発表した。encapsulateBits・decapsulateBits・getPublicKey・JWK入出力などのAPIを提供し、追加の暗号ライブラリを同梱せずに耐量子移行への実験を可能にする。完全な移行パスではなく、統合の検証を支える部品として位置づけられている。",
+      "source_kind": "release",
+      "source_title": "Support for modern cryptographic algorithms in Workers",
+      "source_url": "https://blog.cloudflare.com/workers-ml-kem-ml-dsa-support/",
+      "title": "Cloudflare Workers、耐量子暗号ML-KEM/ML-DSAに対応",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-04T00:51:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントがWeb情報を確実に得る手段が基盤側で提供される流れは、実装コストを下げる。",
+      "caveat": "検索結果の質は連携するプロバイダと設定に依存し、Cloudflareの単独保証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-web-search-api",
+      "language": "en",
+      "observed_at": "2026-10-04T00:51:00+09:00",
+      "published_at": "2026-10-02T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "エージェントの情報取得を検索起点に整える基盤化の動きを一次資料で示す。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは、AI GatewayでネイティブなWeb検索API連携を、検索プロバイダ（Ceramic.ai・Exa・Linkup）との提携で追加した。開発者はAI Gateway、REST API、Workersバインディング経由で、モデル推論呼び出しにリアルタイムのWeb情報を注入できる。エージェントがWebページURLを推測して取得先が404になる問題を踏まえ、検索エンジン起点で情報を取得する設計を提供する。",
+      "source_kind": "release",
+      "source_title": "Introducing Web Search API via AI Gateway",
+      "source_url": "https://blog.cloudflare.com/introducing-web-search-api/",
+      "title": "Cloudflare、AI GatewayでWeb検索APIを提供",
+      "topics": [
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-04T00:51:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "単一ベンダー依存を避ける選択肢づくりが、政策としても技術としても進行している例。",
+      "caveat": "提供元の立場に基づく主張で、各国の政策判断そのものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-sovereign-ai",
+      "language": "en",
+      "observed_at": "2026-10-04T00:51:00+09:00",
+      "published_at": "2026-10-01T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "AIの包摂性と地域主権という政策論点を、実装の具体例とともに一次資料で示す。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは、AI主権（Sovereign AI）を巡る論点から1年後の見解をまとめた。各国政府がAIへのアクセスと主権をゼロサムと捉える風潮に対し、地域のオープンソースモデルとモデル非依存のセキュリティツールを提供し、国々に真の選択肢を与える方針を示した。EU全24言語をカバーするEuroLLMと、1,500言語以上で訓練したスイス拠点の完全オープンモデルApertusをWorkers AIに追加し、政府サイバー機関向けの実地ワークショップを開始する。",
+      "source_kind": "analysis",
+      "source_title": "One year later: Sovereign AI and the fight for choice",
+      "source_url": "https://blog.cloudflare.com/sovereign-ai-choice-one-year-later/",
+      "title": "Cloudflare、AI主権を巡る選択肢「Sovereign AI」の1年を振り返る",
+      "topics": [
+        "policy",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-04T00:51:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "自律実行の中断・修正を安全に行う制御プレーンの設計に直結する知見。",
+      "caveat": "arXivプレプリントで、著者らの実験に基づく結果であり査読済みではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-versioned-execution-agents",
+      "language": "en",
+      "observed_at": "2026-10-04T00:51:00+09:00",
+      "published_at": "2026-10-01T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "エージェント実行の「破棄と再開」を版管理と権限移譲で再設計する研究を一次資料で示す。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、指示変更・ツール失敗・計画変更でLLMエージェントの実行中タスクが改訂される問題を扱い、vLLMで「版管理実行（versioned execution）」を実装した。旧実行の権限（出力公開・状態インストール）を取り消し、完了済みKV状態のうち後継が引き継げる部分を証明して継承させる。改訂から後継の初トークンまでの時間を中央値17.1%短縮し、記録したエージェント割り込みを再実行しても廃れた出力を出さず、全版が進行を維持したと報告している。",
+      "source_kind": "paper",
+      "source_title": "Serving a Revisable World: Versioned Execution for Interruptible Agents",
+      "source_url": "https://arxiv.org/abs/2610.01160",
+      "title": "割り込み可能なエージェントの版管理実行を提案する論文",
+      "topics": [
+        "research",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-04T00:51:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "推論コストを「電気代そのもの」ではなく契約逸脱のリスクで捉える視点は、運用設計に有用。",
+      "caveat": "arXivプレプリントで、フルデイシミュレーションに基づく結果であり実運用での縦断評価ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-epact-llm-energy",
+      "language": "en",
+      "observed_at": "2026-10-04T00:51:00+09:00",
+      "published_at": "2026-10-01T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "電力契約と推論性能を同時に最適化する研究を一次資料で示す。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、LLM推論の電力削減だけでは契約超過の逸脱コストを下げられないとし、時間単位の電力コミットメントを前提に、超過・不足に非対称コストがかかる中で逸脱を最小化する「Energy-Performance-Aware Commitment Tracking」を定式化した。2階層コントローラePACTがリクエスト到着に応じてサービス容量とGPUクロックを調整する。H20・H200 GPUプールの24時間シミュレーションで、vLLMに対して非対称逸脱コストを73.8〜75.7%削減し、SLO達成率はほぼ維持した。",
+      "source_kind": "paper",
+      "source_title": "ePACT: Energy-Performance-Aware Commitment Tracking for LLM Serving",
+      "source_url": "https://arxiv.org/abs/2610.01784",
+      "title": "LLM推論の電力コミット追跡ePACTを提案する論文",
+      "topics": [
+        "research",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-04T00:51:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "モデルではなく規則が入力の可否を決める設計は、自動化の再現性と信頼性の指針になる。",
+      "caveat": "arXivプレプリントで、紹介された3サイトでの構築事例に基づく。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-hpc-site-profiles",
+      "language": "en",
+      "observed_at": "2026-10-04T00:51:00+09:00",
+      "published_at": "2026-10-01T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "環境の暗黙知をエージェントと証拠で構造化する研究を一次資料で示す。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、HPC間のワークフロー移植が、ワークフローが必要とするものを記述する一方で、各サイトの使い方（資源形状・ストレージ構成・ネットワーク権限・運用ポリシー）を記述しないため失敗すると指摘した。それを解決するため、ログインノードの計測、文書からの型付きフィールド抽出を言語モデルエージェントで行う、未解決フィールドにはパイロットジョブを投入する、の3段階で「HPCサイトプロファイル」を構築した。各フィールドは証拠と照合され、規則がプロファイルへの記載を決定する。Purdue Anvil・TACC Stampede3・Notre Dame CRCで構築した。",
+      "source_kind": "paper",
+      "source_title": "The Other Half of Workflow Portability: Evidence-Backed HPC Site Profiles with Agentic Discovery",
+      "source_url": "https://arxiv.org/abs/2610.00971",
+      "title": "HPCサイト情報をエージェントで構造化する提案を示す論文",
+      "topics": [
+        "research",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-04T00:51:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-10-04T00:51:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：常時稼働エージェント、耐量子暗号、検証としてのセキュリティ自動化",
+  "topics": [
+    {
+      "description": "自律的に作業するエージェントの設計と統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "基盤モデルの能力と提供条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "能力・評価・科学応用に関する研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "開発・業務を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "公開されたモデル・基盤と利用条件、標準・規制。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・標準"
+    },
+    {
+      "description": "公開されたモデル・基盤と利用条件。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    }
+  ]
+}
