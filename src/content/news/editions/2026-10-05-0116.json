@@ -1,0 +1,340 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-10-05T01:16:00+09:00",
+  "dek": "高性能モデルの価格性能比の改善、企業向け人材育成、エージェント向け観測基盤の統合、ローカル決定モデル、認証トークン形式の変更、音声と音楽の一体生成。一次資料から、エージェント運用の実装と統制の現在地を確認する。",
+  "edition_date": "2026-10-05",
+  "edition_id": "2026-10-05-0116",
+  "edition_note": "2026年9月29日から10月2日の一次資料を直接確認。各社の性能・成果主張は独立に再現していない。公開可否は別のpublisherが判断する。",
+  "generated_at": "2026-10-05T01:16:00+09:00",
+  "items": [
+    {
+      "aoi_note": "同じ知能水準を大幅に低いコストで使えることは、常時稼働エージェントや大量バッチの設計判断に直結する。",
+      "caveat": "性能・価格の数値は提供元の発表と研究環境での評価に基づき、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-gpt-6-1-sol",
+      "language": "en",
+      "observed_at": "2026-10-05T01:16:00+09:00",
+      "published_at": "2026-09-29T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "高性能モデルの価格性能比が一段と改善したことを、提供元の一次資料で確認する。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは、GPT-6 Solの改良版となるGPT-6.1 Solを公開した。エージェント型コーディング・コンピュータ操作・専門業務でGPT-6 Astraの知能にほぼ匹敵しながら、標準入出力トークン価格はAstraの5分の1。キャッシュ済み入力は100万トークンあたり0.10ドルで、GPT-6 Solのキャッシュ入力より50%安い。DeepSWE 1.1ではAstraと同等スコアを約5分の1のコストで達成し、GPT-6 Solの最高スコアを6.4ポイント上回る。OSWorld 2.0のオフラインセットではGPT-6 Solを7ポイント上回り、Astraの2.1ポイント以内に迫る。Terminal-Bench Science 0.1ではGPT-6 Solのスコアを2倍以上にし、タスクあたり平均5.47ドルでOpus 5.5やAstraより75%以上安い。",
+      "source_kind": "official",
+      "source_title": "Introducing GPT-6.1 Sol",
+      "source_url": "https://openai.com/index/introducing-gpt-6-1-sol/",
+      "title": "OpenAI、GPT-6.1 Solを公開 — Astra級の知能を5分の1の価格で",
+      "topics": [
+        "models",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-05T01:16:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "技術だけでなく導入できる人を量産する動きは、企業がAIを定着させるうえでの現実的なボトルネックを突いている。",
+      "caveat": "育成人数・スケジュールは提供元の計画値で、達成は独立検証されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "anthropic-claude-frontier-academy",
+      "language": "en",
+      "observed_at": "2026-10-05T01:16:00+09:00",
+      "published_at": "2026-10-02T00:00:00Z",
+      "role": "major",
+      "selection_reason": "AI導入を支える人材育成という企業導入の律速要因への投資を一次資料で示す。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "Anthropicは、企業のAI導入を担う人材を育てるClaude Frontier Academyを発表した。1億ドルを投じ、2027年末までに1万人のFrontier Deployed Engineerを育成する。最初のプログラムは医療の研修モデルに倣った12週間のレジデンシーで、座学ではなく実案件に近い演習と評価で資格を与える。Accenture、Bain、Capgemini、Commonwealth Bank of Australia、Deloitte、McKinsey、Morgan Stanley、Novo Nordiskなどが第1期に参加し、サンフランシスコ・ニューヨーク・ロンドンで実施する。",
+      "source_kind": "official",
+      "source_title": "Anthropic invests $100 million to train 10,000 engineers and tackle the enterprise AI talent gap",
+      "source_url": "https://www.anthropic.com/news/claude-frontier-academy",
+      "title": "Anthropic、1億ドルで1万人のAIエンジニア育成へ",
+      "topics": [
+        "policy",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-05T01:16:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "監視を製品横断で統一し、エージェントからも問い合わせ可能にする設計は、自動運用の前提整備として重要。",
+      "caveat": "記載の機能はベータを含み、提供時期・対応範囲は変わり得る。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-observability-platform",
+      "language": "en",
+      "observed_at": "2026-10-05T01:16:00+09:00",
+      "published_at": "2026-10-02T00:00:00Z",
+      "role": "major",
+      "selection_reason": "エージェントが観測データを問い合わせる統一SQL APIなど、運用基盤の統合を一次資料で示す。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは、ログ・トレース・分析・アラート・ダッシュボード・エクスポートを1つの観測性プラットフォームに統合する8つの更新を発表した。複数製品のログを横断する新しいLogsホーム、エッジからオリジンまでのエンドツーエンドトレース（オープンベータ）、エージェントが観測データを問い合わせるための統一SQL API、インジェストと保存の単一価格モデル、独自アラート（ベータ）、30日間の分析データ保持、カスタムダッシュボード、セルフサーブ全プランでのLogpush提供が含まれる。",
+      "source_kind": "release",
+      "source_title": "8 major updates to Cloudflare Observability",
+      "source_url": "https://blog.cloudflare.com/one-observability-platform/",
+      "title": "Cloudflare、観測性を単一プラットフォームへ統合",
+      "topics": [
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-05T01:16:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントの分岐を軽量モデルで決められるため、推論コストとレイテンシの設計に効く。",
+      "caveat": "数値・速度は公開元の計測で、独立再現ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "llamacpp-decision-models",
+      "language": "en",
+      "observed_at": "2026-10-05T01:16:00+09:00",
+      "published_at": "2026-10-02T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "テキスト生成ではなく選択肢を確率で返すローカル決定モデルという実装を一次資料で示す。",
+      "source_domain": "huggingface.co",
+      "source_fact": "llama.cppのサーバが決定モデルを/v1/systemoneエンドポイントでサポートした。状態（テキスト・JSON・スクリーンショット）と選択式の質問を送ると、モデルは各選択肢の確率を1回の順伝播で返す。APIはTypeSafeのJevモデルで導入されたSystem One形式に従う。ggml-orgはJulia-1（144M）、Laya（421M）、Kev-4B、lev、OpenJev（27B）をApache 2.0（一部CC BY-NC）で公開し、ルーティング、コンテンツ審査、エージェントのステップ検証、次アクション選択などの用途を想定する。",
+      "source_kind": "repository",
+      "source_title": "New in llama.cpp: Decision Models",
+      "source_url": "https://huggingface.co/blog/ggml-org/decision-models-in-llamacpp",
+      "title": "llama.cpp、決定モデル用の/v1/systemoneエンドポイントを追加",
+      "topics": [
+        "open-source",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-05T01:16:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "キャッシュ設計や委譲の境界など、運用に落ちる指針がまとまっている。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-gpt-6-model-guide",
+      "language": "en",
+      "observed_at": "2026-10-05T01:16:00+09:00",
+      "published_at": "2026-10-02T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "モデル選択と長時間エージェント運用の指針を提供元の一次資料で示す。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは、GPT-6ファミリー（Astra・6.1 Sol・Luna）を使い分けるための実務ガイドを公開した。プロンプトキャッシュと圧縮でコンテキストとコストを管理し、タスク成功とレイテンシを計測して監視とデータ管理を計画すること、モデル・推論エフォート・速度をワークロードに合わせること、プロンプト・スキル・リポジトリ指示の一貫性を保つこと、steering・非同期ツール・委譲で長時間作業を維持し境界を明示することを助言する。",
+      "source_kind": "documentation",
+      "source_title": "A model guide for the GPT-6 family",
+      "source_url": "https://openai.com/index/practical-guide-building-gpt-6/",
+      "title": "OpenAI、GPT-6ファミリーの実務ガイドを公開",
+      "topics": [
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-05T01:16:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "固定長や40文字前提の検証・ログ・秘匿処理を持つ連携は見直しが必要になる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-stateless-app-tokens",
+      "language": "en",
+      "observed_at": "2026-10-05T01:16:00+09:00",
+      "published_at": "2026-10-02T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "認証トークン形式の変更が実装に与える影響を一次資料で確認する。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは、2026年4月に始まったGitHub Appインストールトークンのステートレス形式への段階的移行が完了したと発表した。新規発行トークンは既定でghs_APPID_JWT形式となり、長さは約520文字（従来は40文字）になる。権限・リポジトリスコープ・1時間の有効期限・インストールアクセストークンREST APIは変わらない。一時的なX-GitHub-Stateless-S2S-Tokenヘッダは2026年11月30日に非推奨となり、トークンを不透明文字列として扱い、長さに依存しない検証・保存への更新を求めている。",
+      "source_kind": "release",
+      "source_title": "Stateless GitHub App installation tokens rolled out",
+      "source_url": "https://github.blog/changelog/2026-10-02-stateless-github-app-installation-tokens-rolled-out",
+      "title": "GitHub Appのインストールトークンがステートレス形式に",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-05T01:16:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "規制業種でも、統制を前提に知識検索や業務振り分けへ実装が進んでいる例。",
+      "caveat": "導入規模・効果は提供元の発表に基づく。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "anthropic-barclays-claude",
+      "language": "en",
+      "observed_at": "2026-10-05T01:16:00+09:00",
+      "published_at": "2026-10-01T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "大規模規制業種でのエージェント活用の実例を一次資料で示す。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "英大手銀行Barclaysは、Anthropicとの戦略的協業を拡大し、Claudeを全社の業務に統合すると発表した。2026年末までに開発者の50%がClaude Codeを利用し、2027年にはソフトウェアエンジニアの過半に広げる計画。既に2025年から稼働するColleague Knowledge AssistantはRAG構成でClaudeを使い、1万6千人以上が利用し100万件超の検索を処理した。グローバル市場部門ではClaudeが1日約12万件のメールを分類・振り分け処理する。",
+      "source_kind": "official",
+      "source_title": "Barclays scales Claude to upgrade operations and improve client experience",
+      "source_url": "https://www.anthropic.com/news/barclays-scales-claude",
+      "title": "Barclays、Claudeを全社展開し開発者と業務を支援",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-05T01:16:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "拒否ばかりで機能しない状態を避けつつ禁止用途を止める評価軸は、統制設計の参考になる。",
+      "caveat": "arXivプレプリントで、著者らの制御された合成実験に基づき、査読済みではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-authorization-paired-multiagent",
+      "language": "en",
+      "observed_at": "2026-10-05T01:16:00+09:00",
+      "published_at": "2026-09-30T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "エージェント間の情報合成と権限統制の設計要件を一次資料で示す。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、マルチエージェント系では単体では許容される情報の組み合わせが禁止用途を可能にする問題を扱い、禁止用途の遮断と必須の許可用途の完了を同時の成功条件とするauthorization-paired evaluationを提案した。オブジェクト解決・権限ランク付け・決定論的執行を接続するフレームワークFlowReviewを実装し、統制された合成実験で、複合成果物を審査することで拒否率を86.0%から0%に下げ、許可された供給を損なわなかったと報告している。情報と来歴の保持だけでは正しい権限帰属が保証されないと結論づける。",
+      "source_kind": "paper",
+      "source_title": "Deny Without Disabling: Authorization-Paired Evaluation and Control for Multi-Agent Systems",
+      "source_url": "https://arxiv.org/abs/2610.00371",
+      "title": "許可と実行を対にするマルチエージェント統制の研究",
+      "topics": [
+        "research",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-05T01:16:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "プロデューサとコンシューマを分離する耐久バッファは、長時間ジョブの設計に使える。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-k2-event-streams",
+      "language": "en",
+      "observed_at": "2026-10-05T01:16:00+09:00",
+      "published_at": "2026-10-01T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "エージェントやデータ処理の非同期化を支える基盤の追加を一次資料で示す。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは、R2オブジェクトストレージ上に構築したサーバーレスのイベントストリーミング基盤K2をパブリックベータで公開した。K2はイベントを順序付きログとして保存し、コンシューマは読み取りを分割したり全メッセージを受け取ったりできる。フルサーバーレスで大容量に拡張でき、長期保持に対応するため、コンシューマが長期間停止してもデータを失わない。内部的にはパーティション化された耐久ログをR2上に実装し、Pipelinesの取り込み層として自社で必要になったことが開発の起点だと説明する。",
+      "source_kind": "release",
+      "source_title": "Announcing Cloudflare K2: serverless event streams",
+      "source_url": "https://blog.cloudflare.com/cloudflare-k2-streams/",
+      "title": "Cloudflare、サーバーレスイベントストリームK2を発表",
+      "topics": [
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-05T01:16:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ナレーションとBGMを一度に作れるため、短尺コンテンツ制作の手数が減る可能性がある。",
+      "caveat": "ベータ機能で、品質・仕様・提供範囲は今後変更され得る。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "suno-speech-beta",
+      "language": "en",
+      "observed_at": "2026-10-05T01:16:00+09:00",
+      "published_at": "2026-10-01T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "クリエイティブAIが音楽から音声と音楽の一体生成へ広がる動きを一次資料で示す。",
+      "source_domain": "suno.com",
+      "source_fact": "Sunoは、声と音楽を1つのトラックとして同時に生成するオーディオモデルSpeechのベータを全ユーザーに公開した。アイデアや詩、書き下ろしの文章を入力し、声と音楽のスタイルを指定すると、背景音楽付きの朗読を生成する。約1か月の限定テストを経ての一般開放で、モバイルとWebで利用できる。ベータであり、アクセントや間の取り方にまだ粗さがあるとしている。",
+      "source_kind": "release",
+      "source_title": "Introducing Speech (beta)",
+      "source_url": "https://suno.com/blog/introducing-speech-beta",
+      "title": "Suno、声と音楽を同時生成するSpeech(ベータ)を公開",
+      "topics": [
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-10-05T01:16:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-10-05T01:16:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：モデルの低価格化、人材と統制、観測基盤の更新",
+  "topics": [
+    {
+      "description": "基盤モデルの能力と提供条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計と統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "開発・業務・運用を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "能力・評価・統制に関する研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "導入・人材・標準・規制の動向。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・標準"
+    },
+    {
+      "description": "公開されたモデル・基盤と利用条件。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "音楽・音声・映像・デザインの生成と編集。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}

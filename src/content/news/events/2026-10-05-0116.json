@@ -1,0 +1,26 @@
+[
+  {
+    "changed_signal_ids": [
+      "anthropic-barclays-claude",
+      "anthropic-claude-frontier-academy",
+      "arxiv-authorization-paired-multiagent",
+      "cloudflare-k2-event-streams",
+      "cloudflare-observability-platform",
+      "github-stateless-app-tokens",
+      "llamacpp-decision-models",
+      "openai-gpt-6-1-sol",
+      "openai-gpt-6-model-guide",
+      "suno-speech-beta"
+    ],
+    "edition_date": "2026-10-05",
+    "edition_id": "2026-10-05-0116",
+    "edition_url": "https://aoifuture.com/news/2026-10-05-0116/",
+    "event_id": "aoi-news-2026-10-05-0116-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-05T01:16:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "高性能モデルの価格性能比の改善、企業向け人材育成、エージェント向け観測基盤の統合、ローカル決定モデル、認証トークン形式の変更、音声と音楽の一体生成。一次資料から、エージェント運用の実装と統制の現在地を確認する。",
+    "title": "AOIFUTURE News：モデルの低価格化、人材と統制、観測基盤の更新"
+  }
+]
