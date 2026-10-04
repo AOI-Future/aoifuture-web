@@ -45,6 +45,13 @@ export const apps: AppEntry[] = [
     desc: '誰もいない、終わらない空間へ。音と光をたどるブラウザ探索ゲーム',
     status: 'BETA',
   },
+  {
+    id: '004',
+    slug: 'localquest',
+    name: 'LOCAL QUEST',
+    desc: '実際の街の地理から裏世界を生成する、LLM不要の軽量ブラウザ探索ゲーム',
+    status: 'BETA',
+  },
   // 例) 育って独自ドメインを持ったら `site` を足すだけ（紹介ページは残す）:
   // { id:'003', slug:'studiee', name:'STUDIEE', desc:'…', status:'LIVE', repo:'studiee-ios', site:'https://studiee.app' },
 ];

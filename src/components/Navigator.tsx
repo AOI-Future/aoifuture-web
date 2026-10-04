@@ -65,6 +65,7 @@ const SECTIONS: Section[] = [
   { id: 'camino', label: 'AOI CAMINO', sub: 'AUTHOR', accent: 'amber' },
   { id: 'sound-umwelt', label: 'SOUND UMWELT', sub: 'PROJECT', accent: 'cyan' },
   { id: 'apps', label: 'APPS', sub: 'APPS & GAMES', accent: 'cyan', href: '/apps' },
+  { id: 'localquest', label: 'LOCAL QUEST', sub: 'PLAY / NO LLM', accent: 'cyan', href: '/play/localquest/' },
   { id: 'dispatch', label: 'DISPATCH', sub: 'MEDIA', accent: 'amber' },
   { id: 'news', label: 'NEWS', sub: 'SOURCE DESK', accent: 'cyan' },
   { id: 'agent-security', label: 'AGENT.SECURITY', sub: 'FIELD MANUAL', accent: 'cyan' },
@@ -542,7 +543,7 @@ export default function Navigator() {
               const a = ACCENT[s.accent];
               const menuContent = (
                 <>
-                  <span className="text-cyan-400/50 text-[10px] tracking-widest menu-label">
+                  <span className="text-cyan-400/50 text-xs tracking-widest menu-label">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <span
@@ -552,7 +553,7 @@ export default function Navigator() {
                     {s.label}
                   </span>
                   <span
-                    className={`${a.dim} text-[10px] tracking-widest hidden md:inline menu-label
+                    className={`${a.dim} text-xs tracking-widest hidden md:inline menu-label
                                 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
                   >
                     {s.sub}
