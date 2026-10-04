@@ -48,6 +48,28 @@ describe('local quest world source', () => {
     expect(pickWorld(w,{forceSample:true}).source).toBe('sample');
   });
 
+  it('rejects invalid generated-world fields and ambiguous anchor ids', () => {
+    const w=real();
+    const broken:unknown[]=[
+      {...w,seed:4294967296},
+      {...w,osmId:'unknown'},
+      {...w,sourceArea:{...w.sourceArea,provider:'unknown'}},
+      {...w,spawn:{...w.spawn,y:1}},
+      {...w,sectors:[{...w.sectors[0],osmId:'unknown'},...w.sectors.slice(1)]},
+      {...w,connections:[{...w.connections[0],kind:'unknown'},...w.connections.slice(1)]},
+      {...w,questAnchors:[{...w.questAnchors[0],providerId:'unknown'},...w.questAnchors.slice(1)]},
+      {...w,sectors:[{...w.sectors[0],place:'unknown'},...w.sectors.slice(1)]},
+      {...w,sectors:[{...w.sectors[0],poi:'unknown'},...w.sectors.slice(1)]},
+      {...w,sectors:[{...w.sectors[0],variant:3},...w.sectors.slice(1)]},
+      {...w,sectors:[{...w.sectors[0],ja:{}},...w.sectors.slice(1)]},
+      {...w,sectors:[{...w.sectors[0],x:4097},...w.sectors.slice(1)]},
+      {...w,questAnchors:[{...w.questAnchors[0],role:'unknown'},...w.questAnchors.slice(1)]},
+      {...w,questAnchors:[{...w.questAnchors[0],x:1000001},...w.questAnchors.slice(1)]},
+      {...w,questAnchors:[w.questAnchors[0],...w.questAnchors]},
+    ];
+    for(const b of broken) expect(pickWorld(b).source).toBe('sample');
+  });
+
   it('checks shape before trusting the graph', () => {
     expect(isWorldShape(real())).toBe(true);
     expect(isWorldShape(compileTopology(sampleTown))).toBe(true);

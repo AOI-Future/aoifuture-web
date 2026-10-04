@@ -35,7 +35,7 @@ async function pipeline() {
   return import(`data:text/javascript;base64,${Buffer.from(result.outputFiles[0].text).toString('base64')}`);
 }
 
-async function raw(query) {
+async function raw(query, validateResponse) {
   if (existsSync(rawPath)) {
     const cached = JSON.parse(await readFile(rawPath, 'utf8'));
     if (JSON.stringify(cached.area) !== JSON.stringify(AREA) || cached.query !== query) throw new Error(`${rawPath} was fetched for another area or query; remove it to fetch again`);
@@ -43,16 +43,17 @@ async function raw(query) {
     return cached.response;
   }
   console.log(`fetching ${AREA.id} once from ${ENDPOINT}`);
-  const res = await fetch(ENDPOINT, { method:'POST', headers:{ 'User-Agent':USER_AGENT, 'Content-Type':'application/x-www-form-urlencoded' }, body:new URLSearchParams({ data:query }) });
+  const res = await fetch(ENDPOINT, { method:'POST', headers:{ 'User-Agent':USER_AGENT, 'Content-Type':'application/x-www-form-urlencoded' }, body:new URLSearchParams({ data:query }), signal:AbortSignal.timeout(35000) });
   if (!res.ok) throw new Error(`overpass answered ${res.status} ${res.statusText}`);
   const response = await res.json();
+  validateResponse(response, AREA); // Do not persist partial/error responses as the one-off cache.
   await mkdir(dirname(rawPath), { recursive:true });
   await writeFile(rawPath, JSON.stringify({ area:AREA, query, response }));
   return response;
 }
 
 const { fromOverpass, overpassQuery, compileReality } = await pipeline();
-const snapshot = fromOverpass(await raw(overpassQuery(AREA)), AREA);
+const snapshot = fromOverpass(await raw(overpassQuery(AREA), fromOverpass), AREA);
 const world = compileReality(snapshot);
 const schema = JSON.parse(await readFile(join(root, 'src/lib/backside/backside-world.schema.json'), 'utf8'));
 const validate = new Ajv({ allErrors:true }).compile(schema);

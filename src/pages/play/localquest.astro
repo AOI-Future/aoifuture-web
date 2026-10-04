@@ -18,7 +18,7 @@ export const prerender = true;
 </head>
 <body>
 <main id="afterhours" aria-label="LOCAL QUEST 探索ゲーム">
-  <canvas id="scene" aria-label="3D探索空間。WASDで移動、矢印左右で視点を回転。タッチ操作は左で移動、右で視点。"></canvas>
+  <canvas id="scene" tabindex="0" aria-label="3D探索空間。WASDで移動、矢印左右で視点を回転。タッチ操作は左で移動、右で視点。"></canvas>
   <div class="ah-shade" aria-hidden="true"></div>
   <header class="ah-header">
     <a href="/" class="ah-brand">AOI<span> / </span>LOCAL QUEST</a>
@@ -34,14 +34,19 @@ export const prerender = true;
       <p class="ah-description">駅、コンビニ、路地。<br />街の構造から組み上がった余白で、小さな依頼をこなす。</p>
     </div>
     <div class="ah-entry">
-      <p class="ah-overline">QUEST 001 / FIRST SIGNAL</p>
+      <p class="ah-overline">NO LLM / REALTIME COMPILER</p>
+      <div class="lq-builder">
+        <p>学芸大学駅周辺・半径400mの接続関係を、その場で有限の3D空間へ変換します。</p>
+        <button id="generate-area" class="ah-button">地図から裏世界を生成</button>
+        <p id="geography-status" role="status" aria-live="polite">未生成時は架空の街です。生成時に公開地理snapshotを読込み、ブラウザで変換します。GPS・LLM・APIキー不要。地理情報は公開ビルド時点のものです。</p>
+      </div>
       <h2 id="menu-title">最初の信号を拾う。</h2>
       <p id="menu-copy">光る輪をたどって目的地へ。<br />すべての地点に着くとクエスト達成。</p>
       <button id="start" class="ah-start" disabled>空間を準備中 <span>↗</span></button>
       <p id="status" role="status" aria-live="polite">3D空間を読み込んでいます</p>
       <div class="ah-settings">
         <label>音量 <input id="volume" type="range" min="0" max="100" value="45" aria-label="音量" /></label>
-        <label>描画 <select id="quality"><option value="auto">自動</option><option value="low">軽量</option><option value="high">高画質</option></select></label>
+        <label>描画 <select id="quality"><option value="auto">自動</option><option value="low" selected>軽量</option><option value="high">高画質</option></select></label>
       </div>
       <div class="ah-instructions"><p><b>KEYBOARD</b> WASD 移動 / ← → 視点 / Shift 加速</p><p><b>TOUCH</b> 左スティックで移動 / 右側をスワイプで視点</p><p><b>MOUSE</b> 画面クリックで視点操作 / Esc 一時停止</p></div>
       <button id="new-game" class="ah-text-button" hidden>クエストを最初から始める</button>
@@ -59,12 +64,33 @@ export const prerender = true;
     <button id="mute" class="ah-button ah-mute" aria-label="音をミュート" aria-pressed="false">SOUND ON</button>
     <button id="sprint" class="ah-button ah-sprint" aria-pressed="false">加速</button>
   </section>
+  <button id="source-map-toggle" class="ah-button lq-map-toggle" hidden>元の地図・読み替え</button>
+  <dialog id="source-map-dialog" class="lq-source-dialog" aria-labelledby="source-map-title">
+    <h2 id="source-map-title">元の地理 → 裏世界</h2>
+    <p id="source-map-caption"></p>
+    <svg id="source-map" role="img" aria-label="取得した道路とPOIの模式図。北が上。" xmlns="http://www.w3.org/2000/svg"></svg>
+    <p>駅 → 待合室 / コンビニ → 信号回収室 / 公園 → 温室 / 図書館 → 書架。採用する交差点・POI数には上限があります。</p>
+    <a class="ah-button" href="https://www.openstreetmap.org/#map=16/35.6289/139.6852" target="_blank" rel="noopener">OpenStreetMapでこの範囲を見る</a>
+    <a class="ah-button" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">Map data © OpenStreetMap contributors / ODbL</a>
+    <a class="ah-button" href="/localquest/source-area.json" download>元データを取得（ODbL・公開snapshot）</a>
+    <button id="source-map-close" class="ah-button">地図を閉じる</button>
+  </dialog>
   <footer class="ah-footer" id="menu-footer"><span>EXPERIMENT 004 / AOI FUTURE</span><span>HEADPHONES RECOMMENDED</span></footer>
   <noscript><p class="ah-failure">このゲームにはJavaScriptが必要です。ブラウザの設定で有効にしてください。</p></noscript>
 </main>
 <script>
-  import { initLocalQuest } from '../../lib/localquest/game';
-  initLocalQuest();
+  import { initLiveDemo } from '../../lib/localquest/live-demo';
+  initLiveDemo();
 </script>
+<style>
+  .lq-builder { margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid #668888; }
+  .lq-builder p { font-size:14px; line-height:1.75; color:#e0e8db; }
+  .lq-map-toggle { position:fixed; z-index:8; left:20px; bottom:180px; background:#000; }
+  .lq-source-dialog { color:#fff; background:#000; border:1px solid #baffff; width:min(640px,calc(100vw - 32px)); max-height:85vh; overflow:auto; padding:20px; }
+  .lq-source-dialog::backdrop { background:#000c; }
+  .lq-source-dialog h2 { font-size:24px; }.lq-source-dialog p { font-size:14px; line-height:1.75; }
+  .lq-source-dialog svg { display:block; width:100%; height:300px; background:#101a1a; }
+  .lq-source-dialog .ah-button { display:flex; align-items:center; min-height:44px; margin-top:12px; text-decoration:none; color:#baffff; }
+</style>
 </body>
 </html>

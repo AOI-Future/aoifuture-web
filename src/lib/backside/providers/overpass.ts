@@ -9,7 +9,7 @@ type Area = GeoSnapshot['area'];
 type Element =
   | { type:'node'; id:number; lat:number; lon:number; tags?:Record<string,string> }
   | { type:'way'; id:number; nodes:number[]; tags?:Record<string,string>; center?:{lat:number;lon:number} };
-export type OverpassResponse = { osm3s?:{timestamp_osm_base?:string}; elements:Element[] };
+export type OverpassResponse = { remark?:string; osm3s?:{timestamp_osm_base?:string}; elements:Element[] };
 
 export function overpassQuery(area:Area):string {
   const around=`(around:${Math.round(area.radius)},${area.lat.toFixed(6)},${area.lon.toFixed(6)})`;
@@ -35,6 +35,8 @@ export function overpassQuery(area:Area):string {
 
 export function fromOverpass(json:OverpassResponse,area:Area):GeoSnapshot {
   if(!json||!Array.isArray(json.elements)) throw new Error('overpass response has no elements');
+  // Overpass may return HTTP 200 with partial elements and a runtime-error remark. Never compile that as a complete snapshot.
+  if(json.remark) throw new Error(`overpass returned a remark: ${json.remark}`);
   // Overpass can return one node twice (tagged and skeleton); keep the tagged copy.
   const nodes=new Map<string,GeoSnapshot['nodes'][number]>(), ways:GeoSnapshot['ways']=[];
   for(const e of json.elements) {

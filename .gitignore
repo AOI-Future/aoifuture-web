@@ -30,3 +30,6 @@ public/og/news/
 
 # compiled Local Quest world built from a one-off local fetch; never commit
 src/lib/localquest/generated/
+
+# Published licensed source snapshot acquired at build time; never store OSM data in Git
+public/localquest/source-area.json

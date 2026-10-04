@@ -65,6 +65,17 @@
   - 実エリア slice-a: 51 sectors / 71 connections / 49 anchors、cache 再実行で sha256 一致。Overpass 取得は計2回（1回目は誤 query、再取得はユーザー承認済み）
   - 注意: 生成 world がローカルに存在すると `npm run build` が bundle に含める（README 記載）。CI/clean checkout は sample のみ
 
+## PR #36 + #37 combined hardening — 2026-10-04
+
+- Owning checkout: `~/project/aoifuture-web` (not the empty directory inside Scratch). Local branch: `review/localquest-pr36-37`, based on #37 `3cfa564cfd77505866d16e5c6ac8f60c5481b5ce`; #36 `893d6a3172fb3aa765f7f068ab2645e6f29560ad` is an ancestor.
+- Treat #36/#37 as one integration candidate: #36 alone has the `out tags center` defect; #37 supplies the node-ref fix. Do not merge #36 alone without that fix. No GitHub push/merge/deploy or Notion writes in this local verification task.
+- Harden generated-world checks: schema value ranges/enums, unknown-field rejection, optional text fields, bounded arrays, and duplicate anchor IDs. Invalid worlds fall back safely to sampleTown.
+- Reject HTTP-200 Overpass runtime-error remarks rather than compiling partial results. Validate new responses before caching, and bound transport time to 35 seconds.
+- Add network-free generated-world E2E via `npm run test:localquest:generated`. Synthetic input is not evidence of a new live Overpass acquisition. Existing developer worlds are never overwritten. Cleanup is a best-effort byte comparison, not an atomic operation; do not run other world writers/builds or edit the fixture concurrently.
+- Verify generated-world movement/save identity and controlled POI → return-to-spawn quest progression/completion/reload on desktop, phone and tablet. This does not demonstrate physical traversal of the entire route. Keep sample fallback, attribution/a11y, afterhours regression and production build checks.
+- Notion MVP remains broader: interactive area input/acquisition, reward/event persistence and real-device performance still require separate acceptance. This PR pair is the fixed-area developer vertical slice, not a claim that the full MVP is done.
+- Local execution evidence and independent candidate-bound review: `.cache/pr36-37/` (not committed; no secrets/raw OSM data).
+
 ## 制約
 
 - merge / deploy はユーザー承認まで禁止（push・PR作成は承認済み）

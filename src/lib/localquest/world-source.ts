@@ -1,23 +1,37 @@
 /** Picks the world the game plays: a locally generated one when it is present and valid, otherwise the bundled sample town. Never fetches. */
 import { compileTopology } from '../backside/compiler';
-import { COMPILER_VERSION, validateWorld, type BacksideWorld, type QuestAnchor } from '../backside/ir';
+import { COMPILER_VERSION, POI_KINDS, validateWorld, type BacksideWorld, type QuestAnchor } from '../backside/ir';
+import { PLACES } from '../afterhours/geography';
 import { draftQuest, type Quest } from '../backside/quest';
 import { sampleTown, sampleQuest } from '../backside/fixtures/sample-town';
 
 export type WorldSource = { world:BacksideWorld; source:'generated'|'sample'; quest:()=>Quest };
 
 const isObj=(v:unknown):v is Record<string,unknown>=>!!v&&typeof v==='object'&&!Array.isArray(v);
-const isNum=(v:unknown)=>Number.isFinite(v);
-const isText=(v:unknown)=>typeof v==='string';
+const hasOnly=(v:Record<string,unknown>,keys:readonly string[])=>Object.keys(v).every(k=>keys.includes(k));
+const isNum=(v:unknown):v is number=>typeof v==='number'&&Number.isFinite(v);
+const isText=(v:unknown):v is string=>typeof v==='string'&&v.length<=64;
+const isId=(v:unknown)=>isText(v)&&v.length>0;
+const isCoord=(v:unknown)=>isNum(v)&&Math.abs(v)<=1000000;
+const isCell=(v:unknown)=>isNum(v)&&Number.isInteger(v)&&Math.abs(v)<=4096;
+const isPoi=(v:unknown)=>isText(v)&&(POI_KINDS as readonly string[]).includes(v);
+const isPlace=(v:unknown)=>isText(v)&&PLACES.some(p=>p.key===v);
 
 /** Shape check for untrusted JSON; `validateWorld` then checks the graph. The fetch script also validates against the JSON Schema. */
 export function isWorldShape(v:unknown):v is BacksideWorld {
-  if(!isObj(v)||v.version!==COMPILER_VERSION||!Number.isInteger(v.seed)||(v.seed as number)<0) return false;
-  if(!isObj(v.sourceArea)||!isText(v.sourceArea.id)||!isText(v.sourceArea.name)) return false;
-  if(!isObj(v.spawn)||!isText(v.spawn.sector)||!isNum(v.spawn.x)||!isNum(v.spawn.z)) return false;
-  if(!Array.isArray(v.sectors)||!v.sectors.length||!v.sectors.every(s=>isObj(s)&&isText(s.id)&&Number.isInteger(s.x)&&Number.isInteger(s.z)&&isText(s.place)&&isText(s.label)&&isText(s.poi)&&Number.isInteger(s.variant))) return false;
-  if(!Array.isArray(v.connections)||!v.connections.every(c=>isObj(c)&&isText(c.a)&&isText(c.b))) return false;
-  return Array.isArray(v.questAnchors)&&v.questAnchors.every(a=>isObj(a)&&isText(a.id)&&isText(a.sector)&&isText(a.role)&&isNum(a.x)&&isNum(a.z));
+  if(!isObj(v)||!hasOnly(v,['version','seed','sourceArea','sectors','connections','spawn','questAnchors'])
+    ||v.version!==COMPILER_VERSION||!isNum(v.seed)||!Number.isInteger(v.seed)||v.seed<0||v.seed>4294967295) return false;
+  if(!isObj(v.sourceArea)||!hasOnly(v.sourceArea,['id','name'])||!isId(v.sourceArea.id)||!isText(v.sourceArea.name)) return false;
+  if(!isObj(v.spawn)||!hasOnly(v.spawn,['sector','x','z'])||!isId(v.spawn.sector)||!isCoord(v.spawn.x)||!isCoord(v.spawn.z)) return false;
+  if(!Array.isArray(v.sectors)||!v.sectors.length||v.sectors.length>4096||!v.sectors.every(s=>
+    isObj(s)&&hasOnly(s,['id','x','z','place','label','poi','variant','ja','node'])
+    &&isId(s.id)&&isCell(s.x)&&isCell(s.z)&&isPlace(s.place)&&isText(s.label)&&isPoi(s.poi)
+    &&isNum(s.variant)&&Number.isInteger(s.variant)&&s.variant>=0&&s.variant<=2
+    &&(s.ja===undefined||isText(s.ja))&&(s.node===undefined||isId(s.node)))) return false;
+  if(!Array.isArray(v.connections)||v.connections.length>16384||!v.connections.every(c=>
+    isObj(c)&&hasOnly(c,['a','b'])&&isId(c.a)&&isId(c.b))) return false;
+  return Array.isArray(v.questAnchors)&&v.questAnchors.length<=4096&&v.questAnchors.every(a=>
+    isObj(a)&&hasOnly(a,['id','sector','role','x','z'])&&isId(a.id)&&isId(a.sector)&&isPoi(a.role)&&isCoord(a.x)&&isCoord(a.z));
 }
 
 const dist=(a:QuestAnchor,b:{x:number;z:number})=>Math.hypot(a.x-b.x,a.z-b.z);

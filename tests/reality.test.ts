@@ -39,6 +39,7 @@ describe('reality extractor', () => {
     expect(s.nodes.filter(n=>n.id==='9001')).toHaveLength(1);
     expect(s.nodes.find(n=>n.id==='9001')?.tags?.railway).toBe('station');
     expect(()=>fromOverpass({} as never,gridArea)).toThrow();
+    expect(()=>fromOverpass({...gridResponse(),remark:'runtime error: Query timed out'},gridArea)).toThrow(/remark/);
     expect(()=>fromOverpass({elements:[{type:'way',id:1,tags:{highway:'residential'}}]} as never,gridArea)).toThrow(/node refs/);
     const q=overpassQuery(gridArea);
     expect(q).toContain('around:420,35.000000,135.000000');
