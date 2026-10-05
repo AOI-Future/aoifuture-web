@@ -1,0 +1,28 @@
+[
+  {
+    "changed_signal_ids": [
+      "allenai-olmo-core-3",
+      "arxiv-hyperbrowsecomp",
+      "autotrust-jev-27b-vl",
+      "cisa-kev-cve-2026-88779",
+      "cloudflare-birthday-week-2026",
+      "cloudflare-ohttp-gateway",
+      "cloudflare-streamline-video",
+      "github-confidential-advisory-comments",
+      "github-copilot-code-review-api",
+      "nvidia-openai-gpt6-astra-ultrafast",
+      "openai-chatgpt-ads-format",
+      "openai-eu-text-provenance"
+    ],
+    "edition_date": "2026-10-06",
+    "edition_id": "2026-10-06-0055",
+    "edition_url": "https://aoifuture.com/news/2026-10-06-0055/",
+    "event_id": "aoi-news-2026-10-06-0055-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-06T00:55:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "EU AI Actに対応するテキスト透かし、最大8倍速の推論、46件のプラットフォーム更新、公開されたMoE学習基盤と画像に対応する決定モデル。一次資料から、AIを運用するための基盤と統制の現在地を確認する。",
+    "title": "AOIFUTURE News：生成テキストの透かしと規制、推論の高速化、オープンな学習基盤"
+  }
+]

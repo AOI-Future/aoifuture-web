@@ -1,0 +1,399 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-10-06T00:55:00+09:00",
+  "dek": "EU AI Actに対応するテキスト透かし、最大8倍速の推論、46件のプラットフォーム更新、公開されたMoE学習基盤と画像に対応する決定モデル。一次資料から、AIを運用するための基盤と統制の現在地を確認する。",
+  "edition_date": "2026-10-06",
+  "edition_id": "2026-10-06-0055",
+  "edition_note": "2026年10月1日から10月5日の一次資料を直接確認した。各社の性能・成果の主張は独立に再現していない。公開可否は別のpublisherレーンが判断する。",
+  "generated_at": "2026-10-06T00:55:00+09:00",
+  "items": [
+    {
+      "aoi_note": "透かしは「AIが関与した」以上のことは示さず、人間の寄与・所有・正確性は判定できないと明示している。規制対応を過信せず、検出率の限界とセットで運用判断に使う必要がある。",
+      "caveat": "検出率やベンチマークは提供元の評価に基づき、独立検証ではない。地域・対象モデルは段階的に広がる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-eu-text-provenance",
+      "language": "en",
+      "observed_at": "2026-10-06T00:55:00+09:00",
+      "published_at": "2026-10-05T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "EUの規制要件に対する主要プロバイダの実装と、その技術的限界の説明を一次資料で確認する。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは、EU AI Actが生成テキストを機械可読に識別可能とすることを求めることを受け、独自のテキスト透かし技術textGrainへの取り組みを公開した。単語選択に不可視の統計的シグナルを加え、検出器がその有無を判定する。同日からAPI顧客が一部モデルでオプトインでき、既定はオフ。EUでは今後数週間でChatGPTとCodexの対象出力に不可視の透かしを付与する。検出器は承認された研究者・専門機関に限定公開する。評価では、偽陽性率1%のとき200トークンで約80%、400トークンで約95%を検出し、400トークンで語の10%を類語に置換すると約92%から66%へ低下した。Astraの各種ベンチマークでは透かしの有無で意味的な性能差は見られなかったという。",
+      "source_kind": "official",
+      "source_title": "Our approach to EU text provenance rules",
+      "source_url": "https://openai.com/index/eu-text-provenance/",
+      "title": "OpenAI、EU AI Act対応のテキスト透かし方式を公開",
+      "topics": [
+        "policy",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-10-06T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントを第一級の利用者として扱う設計（CLI、課金、アクセス制御）が同時に多数出ている。自前の自動化基盤が依存するインターフェースの変化点として把握しておきたい。",
+      "caveat": "本記事はCloudflare自身による週次の総括であり、各項目の詳細は個別の記事を参照する必要がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-birthday-week-2026",
+      "language": "en",
+      "observed_at": "2026-10-06T00:55:00+09:00",
+      "published_at": "2026-10-05T00:00:00Z",
+      "role": "major",
+      "selection_reason": "エージェント時代の基盤整備がオープンソース、暗号、課金、開発者ツールにまたがって進むことを一次資料で示す。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは16周年のBirthday Weekで46件の発表をまとめた。初日はオープンソースで、Cloudflare API全体を操作するエージェント向けCLI「cf」、SDKやドキュメントを生成するオープンソースのパイプラインForge、プラグインをWorkerサンドボックスで分離するCMS「EmDash」、Next.jsをVite上で動かすVinext 1.0などを公開した。2日目はアプリケーションセキュリティと耐量子移行で、公開認証局への参入表明、Merkle Tree Certificate、耐量子暗号の可視化などを示した。3日目はエージェント経済で、HTTP 402とx402で課金するMonetization Gatewayのベータ、Pay Per Useを発表した。4日目は開発者プラットフォームの拡張だった。",
+      "source_kind": "release",
+      "source_title": "Everything we launched during Birthday Week 2026",
+      "source_url": "https://blog.cloudflare.com/birthday-week-2026-wrap-up/",
+      "title": "Cloudflare、Birthday Weekで46件を一挙公開",
+      "topics": [
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-06T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "速度はレイテンシだけでなくコストにも効く。ただし「8倍」はトークン生成速度の比較であり、タスク完了時間や品質の改善幅ではない点を分けて読む。",
+      "caveat": "8倍という数値は標準モードとの比較に関する提供元の主張で、独立ベンチマークではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-openai-gpt6-astra-ultrafast",
+      "language": "en",
+      "observed_at": "2026-10-06T00:55:00+09:00",
+      "published_at": "2026-10-01T00:00:00Z",
+      "role": "major",
+      "selection_reason": "推論速度の改善がエージェントの反復速度に直結することを、ハードウェア側の一次資料で確認する。",
+      "source_domain": "blogs.nvidia.com",
+      "source_fact": "NVIDIAは、GPT-6 Astra UltrafastがBlackwell GPU上で動作し、OpenAI APIと対象のChatGPT Work・Codexユーザーに提供されていると説明した。Astra標準モードと比べて最大8倍のトークン生成速度をうたう。OpenAIは自社モデルを使ってNVIDIA GPU上の推論ソフトウェアを最適化したと述べ、コーディングエージェントの編集・テスト・デバッグの反復や、ツール呼び出し間の待ち時間の短縮に効くとしている。",
+      "source_kind": "official",
+      "source_title": "How NVIDIA GPUs Help Accelerate OpenAI's GPT-6 Astra Ultrafast",
+      "source_url": "https://blogs.nvidia.com/blog/gpus-openai-gpt-6-astra-ultrafast/",
+      "title": "NVIDIA BlackwellでGPT-6 Astra Ultrafast、最大8倍速",
+      "topics": [
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-06T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "会話の文脈が広告面になる設計は、ブランド安全とプライバシーの扱いを難しくする。独立評価を第三者に委ねる枠組みは、今後の標準化の観点で注目に値する。",
+      "caveat": "計測結果（CPAの比較やリフト）は広告パートナーの報告で、独立検証ではない。試験は段階的に始まる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-chatgpt-ads-format",
+      "language": "en",
+      "observed_at": "2026-10-06T00:55:00+09:00",
+      "published_at": "2026-10-05T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "AIネイティブな広告面の拡大と、その計測・ブランド安全の枠組みを一次資料で示す。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは、画像生成中に表示する新しいビジュアル広告フォーマットをChatGPTに導入すると発表した。今月下旬に米国で一部広告主を対象に試験を始める。Hightouch、Tealium、LiveRampとの連携や、コンバージョンAPI・クリック帰属に対応する計測パートナー網を広げ、DoubleVerifyとIntegral Ad Scienceとブランド適合性の評価パイロットを進める。ChatGPTは週間12億人が利用すると説明している。",
+      "source_kind": "official",
+      "source_title": "Building advertising for the way people use AI",
+      "source_url": "https://openai.com/index/new-chatgpt-ads-format-and-measurement/",
+      "title": "ChatGPTに画像内広告、計測パートナーも拡大",
+      "topics": [
+        "tools",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-10-06T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "制御と処理のライフサイクルを分け、切断後も継続させる設計は、動画以外の長時間パイプラインにも流用できる。",
+      "caveat": "実装例（プレイグラウンド）であり、一般提供の製品ではない。内部実装は変更され得る。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-streamline-video",
+      "language": "en",
+      "observed_at": "2026-10-06T00:55:00+09:00",
+      "published_at": "2026-10-02T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "長時間ジョブをコンテナとDurable Objectで分離して扱う実装パターンを一次資料で示す。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは、Cloudflare Stream上の動画に独自処理を加える開発者向けの実装例Streamlineを公開した。メディア処理はFFmpegを使うコンテナ内のメディアエンジンが担い、Durable Objectがセッションとコンテナのライフサイクルを調整し、Workerが制御・プレビュー・テストを提供する。RTMPSやHLSで入力し、オーバーレイや字幕の焼き込みなどの処理を経て、ライブ配信またはホスト済み動画として出力できる。制御側が切断しても処理は継続し、最大継続時間で必ず終了する。",
+      "source_kind": "release",
+      "source_title": "Streamline: custom video pipelines with Cloudflare Stream and Workers",
+      "source_url": "https://blog.cloudflare.com/streamline/",
+      "title": "Cloudflare、動画処理パイプラインの実装例Streamlineを公開",
+      "topics": [
+        "creative-ai",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-06T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "リレーとゲートウェイの分離は、単一の事業者を信頼しない設計の典型例。AI推論リクエストと利用者識別子を切り離す用途にも広がっている。",
+      "caveat": "クローズドベータで、有料アドオンとして提供予定。提供時期は「この秋」とされており確定していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-ohttp-gateway",
+      "language": "en",
+      "observed_at": "2026-10-06T00:55:00+09:00",
+      "published_at": "2026-10-02T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "AI推論を含むアプリのプライバシー設計に関わる標準実装の提供開始を一次資料で示す。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは、アプリのバックエンドが利用者のIPアドレスを見ずにHTTPリクエストを受け取れるOblivious HTTP（OHTTP、RFC 9458）の自社ゲートウェイをクローズドベータで開始した。従来のPrivacy GatewayはOHTTP Relayへ改称する。OHTTPはリレーとゲートウェイの2ホップに信頼を分離し、どちらか一方だけが利用者識別子とリクエスト内容の両方を見ることはない。自社サーバをCloudflareの背後に置く顧客はリレーを使えなかったため、ゲートウェイを選択肢として提供する。",
+      "source_kind": "release",
+      "source_title": "Announcing Cloudflare OHTTP Gateway - expanding access to Cloudflare's privacy-preserving infrastructure",
+      "source_url": "https://blog.cloudflare.com/announcing-cloudflare-ohttp-gateway/",
+      "title": "Cloudflare、OHTTPゲートウェイのクローズドベータを開始",
+      "topics": [
+        "security",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-10-06T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "CIや自前のオーケストレーションからレビューを起動できるため、レビュー工程をパイプラインに組み込みやすくなる。既定値の変更は、明示設定のない既存リポジトリの挙動に影響する。",
+      "caveat": "既定値の変更は、Liteを明示選択していないリポジトリのレビュー挙動を変え得る。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-code-review-api",
+      "language": "en",
+      "observed_at": "2026-10-06T00:55:00+09:00",
+      "published_at": "2026-10-02T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "コードレビューをエージェントに委ねる運用がAPI経由で自動化できるようになった点を一次資料で示す。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは、CopilotコードレビューをRESTとGraphQLのAPIから依頼できるようにし、リクエストごとにレビューの努力水準を指定できるようにしたと発表した。これにより独自のスクリプトやワークフロー、社内ツールからレビューを開始できる。あわせて、既定のレビュー努力水準がBalancedになり、2026年9月28日付で新規・既存のリポジトリと組織に適用された。明示的にLiteを選んでいた設定は維持される。",
+      "source_kind": "release",
+      "source_title": "Copilot code review: API support and new default effort level",
+      "source_url": "https://github.blog/changelog/2026-10-02-copilot-code-review-api-support-and-new-default-effort-level",
+      "title": "GitHub、CopilotコードレビューをAPIから依頼可能に",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-06T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "調査メモを外部に持ち出さずに済むため、インシデント対応の履歴が一箇所に残る。権限に連動する点と監査ログの記録が統制上の要点。",
+      "caveat": "非公開脆弱性報告を有効にした公開リポジトリが対象。REST APIでは非公開コメントを取得できない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-confidential-advisory-comments",
+      "language": "en",
+      "observed_at": "2026-10-06T00:55:00+09:00",
+      "published_at": "2026-10-02T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "脆弱性対応の調整をアドバイザリ内で安全に行うための統制機能を一次資料で示す。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは、リポジトリのセキュリティアドバイザリに非公開コメントを投稿できるようにした。非公開コメントは書き込み権限を持つ担当者だけが見られ、報告者や招待された協力者には表示されない。権限に追従するため、書き込み権限を失った利用者は読めなくなり、閲覧は監査ログに記録される。投稿後に公開・非公開を切り替えることはできず、GraphQL APIでは取得できるがREST APIでは返さない。",
+      "source_kind": "release",
+      "source_title": "Confidential comments on repository security advisories",
+      "source_url": "https://github.blog/changelog/2026-10-02-confidential-comments-on-repository-security-advisories",
+      "title": "GitHub、セキュリティアドバイザリに非公開コメント",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-06T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "学習基盤そのものをオープンにすることが、モデルの再現性と研究の裾野を左右する。スループットの改善は計算資源の制約を緩める方向に働く。",
+      "caveat": "スループットの計測はランダムルーティングによるシステム性能の評価で、学習済みモデルの品質を示すものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "allenai-olmo-core-3",
+      "language": "en",
+      "observed_at": "2026-10-06T00:55:00+09:00",
+      "published_at": "2026-10-01T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "大規模MoEを研究機関が扱える公開の学習基盤が整ってきたことを一次資料で示す。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Ai2は、大規模なMixture-of-Experts（MoE）の学習基盤Olmo-core 3を公開した。従来のFSDPベースから分散データ並列（DDP）ベースに切り替え、専門家をGPUに常駐させてデータを振り分ける。専門家プールを8から128へ増やしつつトークン当たりの有効パラメータを約3.2Bに固定した実験で、総パラメータ容量は4.6Bから47Bへ増え、学習スループットの低下は5%未満だった。8基のNVIDIA B300で47B MoEが毎秒毎GPU 52,000トークンを処理し、旧実装の19,400から約2.7倍になった。1.2兆パラメータ規模もベンチマークしている。",
+      "source_kind": "repository",
+      "source_title": "Introducing Olmo-core 3: Open, scalable training infrastructure for large MoEs",
+      "source_url": "https://huggingface.co/blog/allenai/olmocore3",
+      "title": "Ai2、大規模MoE向けの公開学習基盤Olmo-core 3",
+      "topics": [
+        "open-source",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-06T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "推薦のように振る舞いデータが必要とされてきた領域で、画像だけで同等の判断ができるという結果は、コールドスタート問題への示唆がある。",
+      "caveat": "推薦の結果は200人の単一データセットに基づく提供元の報告で、独立再現ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "autotrust-jev-27b-vl",
+      "language": "en",
+      "observed_at": "2026-10-06T00:55:00+09:00",
+      "published_at": "2026-09-30T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "画像を学習していない判断ヘッドが画像タスクで機能するという結果を一次資料で示す。",
+      "source_domain": "huggingface.co",
+      "source_fact": "AutoTrustは、27Bの決定モデルJEV-27Bに視覚を加えたJEV-27B-VLをApache-2.0で公開した。テキストと画像を入力すると、選択肢ごとの較正済み確率を1回の順伝播で返し、必要なら段階的に考えて画像を見ながら推論する。判断ヘッドは学習時に画像を見ていないが、公開データセットMicroLensで表紙画像だけから次に見る動画を順位付けし、59,045人の視聴履歴から学習した協調フィルタリングと同等のAUC 0.727（対0.728）、上位5件の的中率は59%（対49%）だった。表紙のみはタイトルのみ（AUC 0.649）を上回った。",
+      "source_kind": "repository",
+      "source_title": "autotrust/JEV-27B-VL: a decision model that learned to see without a single image of training",
+      "source_url": "https://huggingface.co/blog/autotrust/autotrustjev-27b-vl-a-decision-model-that-learned",
+      "title": "画像を学習せずに画像判断する決定モデルJEV-27B-VL",
+      "topics": [
+        "research",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-10-06T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "境界機器の脆弱性は、そのまま内部のエージェント基盤や認証情報への入口になり得る。公表された同日に修復優先度を判断できる。",
+      "caveat": "BOD 26-04は米国連邦機関に直接適用される。他組織は推奨の扱いとなる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-kev-cve-2026-88779",
+      "language": "en",
+      "observed_at": "2026-10-06T00:55:00+09:00",
+      "published_at": "2026-10-04T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "境界デバイスの脆弱性が実際に悪用されている事実を一次資料で示す。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "CISAは、悪用が確認されたとしてCVE-2026-88779（Citrix NetScalerのメモリバッファ境界内での操作制限の不備）を既知の悪用脆弱性（KEV）カタログに追加した。連邦民事行政機関向けのBOD 26-04は、公開資産で侵害後に完全な制御を許す高リスクの脆弱性の迅速な修復を求め、適用前に侵害の有無を確認することを期待する。CISAはFCEB以外の組織にもリスクベースの脆弱性管理を推奨している。",
+      "source_kind": "advisory",
+      "source_title": "CISA Adds One Known Exploited Vulnerability to Catalog",
+      "source_url": "https://www.cisa.gov/news-events/alerts/2026/10/04/cisa-adds-one-known-exploited-vulnerability-catalog",
+      "title": "CISA、Citrix NetScalerの脆弱性をKEVに追加",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-06T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "多段の証拠探索を要求する設計は、単発の検索では解けないエージェントの弱点を可視化する。日本語を含む多言語評価である点も実務に近い。",
+      "caveat": "arXivプレプリントであり、査読を経ていない。難易度と正解は著者らが検証したもので、広く再現されたものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-hyperbrowsecomp",
+      "language": "en",
+      "observed_at": "2026-10-06T00:55:00+09:00",
+      "published_at": "2026-10-02T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "閲覧エージェントの能力を言語と証拠種別の両面で測る評価設計を一次資料で示す。",
+      "source_domain": "arxiv.org",
+      "source_fact": "著者らは、Web閲覧エージェント向けの多言語・マルチモーダルなベンチマークHyperBrowseCompを提案した。13言語の母語話者・上級話者が手作業で作成し人検証した423問で構成し、各問いは簡潔で公開検証可能な答えを持ち、難解な証拠の探索や多段の手掛かりの連鎖、動画・スキャン文書・画像・地図といった異種ソースの確認を要する。インターネットを使わないモデルで解ける易しい問いは除外し、提供元の検索機能と共通の検索ハーネスを同じエージェントプロトコルで比較評価し、人手の評価も行った。",
+      "source_kind": "paper",
+      "source_title": "HyperBrowseComp: A Multilingual and Multimodal Stress Test for Web-Browsing Agents",
+      "source_url": "https://arxiv.org/abs/2610.03574",
+      "title": "多言語・マルチモーダルなWeb閲覧エージェントの難関ベンチ",
+      "topics": [
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-06T00:55:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-10-06T00:55:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：生成テキストの透かしと規制、推論の高速化、オープンな学習基盤",
+  "topics": [
+    {
+      "description": "基盤モデルの能力と提供条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計と統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "開発・業務・運用を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "能力・評価・統制に関する研究。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "導入・人材・標準・規制の動向。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・標準"
+    },
+    {
+      "description": "公開されたモデル・基盤と利用条件。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "音楽・音声・映像・デザインの生成と編集。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}
