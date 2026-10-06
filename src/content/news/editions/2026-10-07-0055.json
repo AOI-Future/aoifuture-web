@@ -1,0 +1,326 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-10-07T00:55:00+09:00",
+  "dek": "270Mパラメータでアラビア語OCRの最高水準に並んだモデル、リクエスト全体を追跡するトレース、時点ではなく状態で不正を見る新ダッシュボード。一次資料から、小さく速い知能と、その信頼を支える基盤の現在地を確認する。",
+  "edition_date": "2026-10-07",
+  "edition_id": "2026-10-07-0055",
+  "edition_note": "2026年10月1日から10月6日の一次資料を直接確認した。各社の性能・成果の主張は独立に再現していない。公開可否は別のpublisherレーンが判断する。",
+  "generated_at": "2026-10-07T00:55:00+09:00",
+  "items": [
+    {
+      "aoi_note": "差を生むのはパラメータ数よりもデータと適応の手順である。専門タスク特化の価値と、評価が提供元による自社ベンチマークである点を切り分けて読む。",
+      "caveat": "精度は提供元ベンチマークによる自社評価で、独立再現ではない。文字体系や帳票の分布が異なる実データでは結果が変わりうる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "falcon-ocr-arabic",
+      "language": "en",
+      "observed_at": "2026-10-07T00:55:00+09:00",
+      "published_at": "2026-10-06T06:43:41Z",
+      "role": "lead",
+      "selection_reason": "小さなモデルが実務タスクで大規模モデルに匹敵・優越しうることを、一次資料の数値で確認する。",
+      "source_domain": "huggingface.co",
+      "source_fact": "TIIは、Falcon OCRのアーキテクチャを変えずにアラビア語文書へ拡張した。実データと合成データでの教師あり微調整（SFT）に続き、高品質サンプルでの強化学習（RL）で適応する。270Mパラメータで、同社のアラビア語文書ベンチマークでは17モデル中2位（文字正解率81.9%、首位はGemini 3.5 Flashの84.3%）となり、Claude Opus 5.5やGPT Astra、Qwen 3.8 Maxを上回り、専用OCRモデルの中では20ポイント以上先行する。表のTEDSは59.95%で17モデル中最上位。公文書・行政様式・領収書・請求書の区分で1位、15カテゴリすべてで上位4位に入る。",
+      "source_kind": "repository",
+      "source_title": "Falcon OCR Arabic: 270M Parameters State-of-the-Art Arabic OCR",
+      "source_url": "https://huggingface.co/blog/tiiuae/falcon-ocr-arabic",
+      "title": "Falcon OCR Arabic、270Mパラメータでアラビア語OCRの最高水準",
+      "topics": [
+        "models",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-07T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "計装のしやすさは障害時の初動を変える。自動トレースは対象プラットフォームの操作に限られ、アプリ内部の計装は利用者が行う前提は変わらない。",
+      "caveat": "利用できる機能は契約プランにより異なる可能性がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-traces",
+      "language": "en",
+      "observed_at": "2026-10-07T00:55:00+09:00",
+      "published_at": "2026-10-02T13:00:00Z",
+      "role": "major",
+      "selection_reason": "可観測性がプラットフォームの境界を越えて標準化される動きを一次資料で確認する。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "CloudflareはオープンベータでTracesを公開した。Workersに限られていた自動トレースを、セキュリティルール、変換、キャッシュ判断、ルーティング、Worker実行、オリジン処理まで広げる。1つのトレースでリクエスト経路を追跡し、Cloudflare上・オリジン・その他で動くサービスへ文脈を伝播する。ベースラインのサンプリング率と、条件に一致したときに上書きするTrace Rulesで対象を制御する。W3Cのtraceparentヘッダの受け渡しに対応し、ダッシュボードで表示、OpenTelemetry（OTLP）で任意の送信先へエクスポートできる。",
+      "source_kind": "release",
+      "source_title": "Introducing Cloudflare Traces: follow requests through our entire platform",
+      "source_url": "https://blog.cloudflare.com/cloudflare-tracing/",
+      "title": "Cloudflare Traces、リクエストを基盤全体で追跡",
+      "topics": [
+        "tools",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-07T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "実用化は遠い。電力・冷却の制約を地理的に外へ出す発想として、誇張せずに位置づけておきたい。",
+      "caveat": "軌道上での評価はこれからで、実用性は未確立の研究段階。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "project-suncatcher-orbit",
+      "language": "en",
+      "observed_at": "2026-10-07T00:55:00+09:00",
+      "published_at": "2026-10-01T00:00:00Z",
+      "role": "major",
+      "selection_reason": "計算基盤の制約に対する長期的な研究投資の方向性を一次資料で把握する。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleは、Planetと共同で開発したProject Suncatcherの原型衛星がSpaceXのTransporter-18ライドシェアで軌道に投入されたと発表した。衛星との通信確立を確認し、想定どおり動作していると説明する。これは、将来の機械学習インフラを宇宙に置けるかを探る長期研究の第一歩と位置づけられ、今後数週間で打ち上げ時の物理的ストレスや放射線・熱環境に対してTPUがどう振る舞うかの軌道上データを収集する。研究の背景をまとめた査読済み論文はJouleに掲載された。",
+      "source_kind": "official",
+      "source_title": "Our Project Suncatcher prototype satellite is in orbit.",
+      "source_url": "https://blog.google/innovation-and-ai/models-and-research/google-research/project-suncatcher-prototype/",
+      "title": "Google、Project Suncatcherの原型衛星が軌道に投入",
+      "topics": [
+        "research",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-07T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "SDK・ゲートウェイ・認証基盤が増えるほど漏洩面も広がる。CIやテンプレートに鍵を置く運用は自動検知に載る前提で見直したい。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-secret-scanning-detectors",
+      "language": "en",
+      "observed_at": "2026-10-07T00:55:00+09:00",
+      "published_at": "2026-10-05T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "開発ツールの資格情報漏洩が自動検知の対象に加わる動きを一次資料で示す。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubのシークレットスキャンが新しい資格情報の検出を追加した。対象はLovable Labs（lovable_api_key）、Pydantic Services（logfire_token、pydantic_ai_gateway_api_key）、Supabase（supabase_oauth_access_token、supabase_scoped_personal_access_token）。Lovable Labsはパートナープログラムに参加し、公開リポジトリで見つかった場合は発行者へ自動通知される。",
+      "source_kind": "release",
+      "source_title": "Secret scanning adds detectors for Lovable, Supabase, and more",
+      "source_url": "https://github.blog/changelog/2026-10-05-secret-scanning-adds-detectors-for-lovable-supabase-and-more",
+      "title": "GitHub、シークレットスキャンにLovable・Supabase等の検出を追加",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-07T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "導入率を可視化する管理機能そのものが、AIセキュリティ機能の定着を後押しする。採用の進み具合を指標として観測できる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-code-scanning-ai-scan",
+      "language": "en",
+      "observed_at": "2026-10-07T00:55:00+09:00",
+      "published_at": "2026-10-06T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "AIによるコード検査の採用状況を管理側が把握できるようになった点を一次資料で示す。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubの組織・エンタープライズ管理者が、セキュリティ概要のカバレッジ表示でAI Scan for pull requestsの有効化状況を確認できるようになった。有効・未有効のリポジトリ数と、各行の実効状態を表示し、enabledまたはnot-enabledのフィルタで絞り込める。カバレッジのCSV出力にも列が追加された。",
+      "source_kind": "release",
+      "source_title": "Code scanning AI Scan enablement status in security overview",
+      "source_url": "https://github.blog/changelog/2026-10-06-code-scanning-ai-scan-enablement-status-in-security-overview",
+      "title": "GitHub、コードスキャンのAI Scan有効化状況を可視化",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-07T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "自由記述の乱れとAI生成の大量投稿は受け手の負担になる。入力を構造化しAI利用を申告させる設計は、他の問い合わせ窓口にも流用できる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-private-vuln-report-forms",
+      "language": "en",
+      "observed_at": "2026-10-07T00:55:00+09:00",
+      "published_at": "2026-10-01T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "報告品質の担保とAI生成報告の扱いという運用課題への一次資料での対応を確認する。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubの非公開脆弱性報告で構造化フォームを使えるようになった。既定では要約・詳細・再現手順（150文字以上）・影響の4項目が必須となる。リポジトリの既定ブランチに設定ファイルを置くか、組織の.githubリポジトリで全体に適用できる。報告者にCWEの指定を求めたり、AI利用の申告欄を設けたりすることもできる。単一の自由記述欄では低品質な報告やAI生成の報告が混入しやすい、という課題への対応。",
+      "source_kind": "release",
+      "source_title": "Structured forms for private vulnerability reports",
+      "source_url": "https://github.blog/changelog/2026-10-01-structured-forms-for-private-vulnerability-reports",
+      "title": "GitHub、非公開の脆弱性報告に構造化フォームを導入",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-07T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "「1回の通過」ではなく「継続的な整合性」で判断する設計は、エージェントへの権限付与や与信の考え方にも通じる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-account-abuse-dashboard",
+      "language": "en",
+      "observed_at": "2026-10-07T00:55:00+09:00",
+      "published_at": "2026-10-02T13:00:00Z",
+      "role": "brief",
+      "selection_reason": "本人確認の限界と、状態を持つ信頼評価への移行を一次資料で確認する。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは、アカウント悪用の調査用ダッシュボードを公開した。AIで合成メディアを作り本人確認を偽装する不正が増える中、時点ごとの本人確認ではなく、アカウントの履歴・ネットワーク・デバイスに基づく状態を持つ分析と、エッジで生成するHashed User IDで挙動の一貫性を評価する。単発のやり取りは偽装できても、一貫した正当な挙動を再現するのは難しいという考え方に基づく。",
+      "source_kind": "release",
+      "source_title": "Follow the thread: a new dashboard to investigate account abuse",
+      "source_url": "https://blog.cloudflare.com/account-abuse-protection-dashboard/",
+      "title": "Cloudflare、状態で不正を見るアカウント悪用ダッシュボード",
+      "topics": [
+        "security",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-07T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "データ接続とアクセス制御をセットで提供する形は導入の障壁を下げる。会社固有の文脈をどう与えるかが差になる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-os-managed",
+      "language": "en",
+      "observed_at": "2026-10-07T00:55:00+09:00",
+      "published_at": "2026-10-01T13:00:00Z",
+      "role": "brief",
+      "selection_reason": "エージェント作業環境の提供形態がセルフホストからマネージドへ広がる動きを一次資料で示す。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは、組織のデータとシステムに接続し、会社固有の用語や手順を踏まえて作業するエージェント作業環境「Cloudflare OS」のフルマネージド提供の待機リストを公開した。ダッシュボードからカスタムドメイン、Cloudflare Accessのポリシー、接続するAI Gatewayを指定して起動できる。前月に公開したオープンソースのリポジトリをもとに、すでに数千の組織が利用を始めていると説明する。",
+      "source_kind": "release",
+      "source_title": "Cloudflare OS: your company's agent workspace, managed for you",
+      "source_url": "https://blog.cloudflare.com/managed-cloudflare-os/",
+      "title": "Cloudflare OS、企業向けエージェント作業環境のマネージド提供へ",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-07T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "「言葉は分かるが意味が分からない」問題は方言に限らず専門領域の文脈にも通じる。ドメイン特化の適応方法として参考になる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "falcon-emirati",
+      "language": "en",
+      "observed_at": "2026-10-07T00:55:00+09:00",
+      "published_at": "2026-10-06T06:44:39Z",
+      "role": "brief",
+      "selection_reason": "言語の多様性と文化的な前提を扱うモデル設計の動きを一次資料で示す。",
+      "source_domain": "huggingface.co",
+      "source_fact": "TIIは、UAEの日常会話で使われるアラビア語方言（Emirati Arabic）を理解・生成するFalcon-Emirati-7Bを公開した。標準アラビア語向けのFalcon-H1-Arabicを土台に、方言の語彙・語調と、nabati詩・ことわざ・逸話が担う文化的前提を扱えるようにした。標準アラビア語だけを学んだモデルは逐語訳はできても意味を取り逃す、という課題に対応する。",
+      "source_kind": "repository",
+      "source_title": "Falcon-Emirati: When an LLM Learns the Dialect, the Culture, and the Nuance",
+      "source_url": "https://huggingface.co/blog/tiiuae/falcon-emirati",
+      "title": "Falcon-Emirati、UAE方言と文化的前提を扱う7Bモデル",
+      "topics": [
+        "models",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-07T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "完了報告と実状態の乖離は運用で最も厄介な失敗である。副作用の検証と反復実行を評価に組み込む考え方は、そのまま運用の完了判定にも使える。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "microsoft-thinkingbox",
+      "language": "en",
+      "observed_at": "2026-10-07T00:55:00+09:00",
+      "published_at": "2026-10-03T22:56:48Z",
+      "role": "brief",
+      "selection_reason": "エージェント評価が「それらしい応答」から「残された状態と再現性」へ移る動きを一次資料で示す。",
+      "source_domain": "huggingface.co",
+      "source_fact": "MicrosoftのThinkingBoxは、エージェントが生成した文章ではなく、残した記録（終端のバックエンド状態と副作用）で評価し、さらに同じ作業を20回連続で実行できるかを問う。隔離したMCPツールセッションでエージェントを走らせ、後状態と副作用を採点する。論文に基づく手法で、Hugging Face経由で利用できる。",
+      "source_kind": "repository",
+      "source_title": "The Agent Said It Was Done. The Database Disagreed.",
+      "source_url": "https://huggingface.co/blog/microsoft/thinkingbox",
+      "title": "ThinkingBox、完了報告ではなく残された状態でエージェントを評価",
+      "topics": [
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-07T00:55:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-10-07T00:55:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：小さいモデルの実務力、基盤の可観測性、AI時代の本人確認",
+  "topics": [
+    {
+      "description": "基盤モデルの能力と提供・適応の条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計・評価・統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "開発・業務・運用を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "能力・評価・基盤に関する研究開発。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "公開されたモデル・基盤と利用条件。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    }
+  ]
+}

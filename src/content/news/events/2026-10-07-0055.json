@@ -1,0 +1,26 @@
+[
+  {
+    "changed_signal_ids": [
+      "cloudflare-account-abuse-dashboard",
+      "cloudflare-os-managed",
+      "cloudflare-traces",
+      "falcon-emirati",
+      "falcon-ocr-arabic",
+      "github-code-scanning-ai-scan",
+      "github-private-vuln-report-forms",
+      "github-secret-scanning-detectors",
+      "microsoft-thinkingbox",
+      "project-suncatcher-orbit"
+    ],
+    "edition_date": "2026-10-07",
+    "edition_id": "2026-10-07-0055",
+    "edition_url": "https://aoifuture.com/news/2026-10-07-0055/",
+    "event_id": "aoi-news-2026-10-07-0055-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-07T00:55:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "270Mパラメータでアラビア語OCRの最高水準に並んだモデル、リクエスト全体を追跡するトレース、時点ではなく状態で不正を見る新ダッシュボード。一次資料から、小さく速い知能と、その信頼を支える基盤の現在地を確認する。",
+    "title": "AOIFUTURE News：小さいモデルの実務力、基盤の可観測性、AI時代の本人確認"
+  }
+]
