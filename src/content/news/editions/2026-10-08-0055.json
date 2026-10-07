@@ -1,0 +1,342 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-10-08T00:55:00+09:00",
+  "dek": "競技の金メダル水準に届いたオープンモデルの微調整、10月11日に切り替わるDNSの根の鍵、753Bオープンウェイトのクラウド提供。一次資料から、専門特化した知能と、その信頼を支える基盤の現在地を確認する。",
+  "edition_date": "2026-10-08",
+  "edition_id": "2026-10-08-0055",
+  "edition_note": "2026年10月5日から10月7日の一次資料を直接確認した。各社の性能・成果の主張は独立に再現していない。公開可否は別のpublisherレーンが判断する。",
+  "generated_at": "2026-10-08T00:55:00+09:00",
+  "items": [
+    {
+      "aoi_note": "要点は巨大な新モデルではなく、データ整備と推論ループを含む再利用可能な特化レシピにある。競技の成績が実務能力と同一ではない点は切り分けて読む。",
+      "caveat": "IOIの結果は公式順位に含まれない非公式・非監督の評価で、IMOの証明は公式採点者が採点したとされるが、いずれも通常の大会運用と同一条件ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nemotron-olympiad-specialists",
+      "language": "en",
+      "observed_at": "2026-10-08T00:55:00+09:00",
+      "published_at": "2026-10-07T12:45:31Z",
+      "role": "lead",
+      "selection_reason": "一つの基盤モデルが、コーディングと数学という異なる競技の両方で専門特化できることを、一次資料の数値で確認する。",
+      "source_domain": "huggingface.co",
+      "source_fact": "NVIDIAのチームは、基盤モデルNemotron 3を出発点に、教師あり微調整（SFT）と強化学習（RL）、生成・評価・改善を繰り返す推論ループを組み合わせ、2026年の国際情報オリンピック（IOI）と国際数学オリンピック（IMO）の両方で金メダル水準の結果を得たと報告した。IOI向けには2万2000問を整備し、総30B・アクティブ3BのNemotron-3-Nano-CCを作成。IOI 2025相当の評価でNanoは事後学習前130点からSFT後280点、RL後291点へ伸び、推論ループGenCorrect併用で468点に達し、金基準438.3点を超えた。総550B・アクティブ55BのUltra-CCは502点だった。伸び方は規模ごとに異なり、NanoではSFTが改善の大半を占めたという。",
+      "source_kind": "repository",
+      "source_title": "One Model Family, Two Gold-Level Results: Fine-Tuning Nemotron for IOI and IMO",
+      "source_url": "https://huggingface.co/blog/nvidia/nemotron-ioi-and-imo-2026",
+      "title": "NVIDIA、Nemotronの微調整でIOI・IMO両方の金メダル水準に到達",
+      "topics": [
+        "models",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-08T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "クラウドの可用性は、目に見えない共有の信頼基盤に依存している。運用手順に落とせる具体的な点検項目として扱う。",
+      "caveat": "対象は主に自前のDNSリゾルバを運用する組織で、一般的な利用者やマネージドDNSを使う組織の対応要否は環境により異なる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-root-ksk-rollover",
+      "language": "en",
+      "observed_at": "2026-10-08T00:55:00+09:00",
+      "published_at": "2026-10-06T17:50:11Z",
+      "role": "major",
+      "selection_reason": "基盤インフラの期限付き変更を一次資料で把握し、読者が自分の環境の準備状況を確認できるようにする。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは、DNSルートが2026年10月11日に鍵署名鍵（KSK）をKSK-2024へ切り替えると説明した。これはDNSSECの信頼の連鎖の起点となる鍵の、史上2回目の切り替えにあたる。検証を行うDNSリゾルバがあらかじめ新しい鍵を信頼していないと、正常なサイトが到達不能になりうる。同社は、2018年の初回切り替え時にソフトウェア更新やマシン移行の過程でリゾルバが新鍵への信頼を失う事例が見られたとし、RFC 8509のトラストアンカー・センティネルで自組織のリゾルバが準備できているかを試験する方法を案内している。",
+      "source_kind": "release",
+      "source_title": "The keys to the Internet change on October 11, 2026. Are you ready?",
+      "source_url": "https://blog.cloudflare.com/root-ksk-2024-rollover/",
+      "title": "インターネットの根の鍵が10月11日に切り替わる。DNS解決器の準備を",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-08T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "オープンウェイトの価値は、重みが公開されていることと、それを実際に動かす運用経路が用意されていることの両方で決まる。",
+      "caveat": "性能・対応リージョン・料金は提供元の発表に基づくもので、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "glm-5-3-bedrock",
+      "language": "en",
+      "observed_at": "2026-10-08T00:55:00+09:00",
+      "published_at": "2026-10-05T23:25:17Z",
+      "role": "major",
+      "selection_reason": "大規模オープンウェイトモデルが、自前運用なしに主要クラウドで使えるようになった供給条件の変化を確認する。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは、Z.ai（Zhipu AI）のGLM 5.3がAmazon Bedrockで利用可能になったと発表した。GLM 5.3はHugging Face Hubで公開されている753BパラメータのMixture-of-Expertsモデルで、コーディングやエージェント的ワークロード向けに最適化されている。数百ファイルにまたがるリポジトリのリファクタリングや、文脈を失わずに数時間続くエージェント処理、ツール利用を伴う複雑なシステム推論といった要求に応えることを狙う。従来、こうした能力をオープンウェイトで得るには自前で推論基盤を用意・運用する必要があったが、Bedrock上でマネージドに利用できるようになる。",
+      "source_kind": "release",
+      "source_title": "Introducing GLM 5.3 on Amazon Bedrock",
+      "source_url": "https://aws.amazon.com/blogs/machine-learning/introducing-glm-5-3-on-amazon-bedrock/",
+      "title": "753BのオープンウェイトGLM 5.3、Amazon Bedrockで利用可能に",
+      "topics": [
+        "models",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-08T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "並行作業とレビューの粒度を見直す材料になる。効果の数値はGitHubの利用集計であり、自チームでの再現は別途確認が要る。",
+      "caveat": "効果の数値はGitHubの集計に基づく。自動マージは今後数週間での順次提供。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-stacked-pull-requests-ga",
+      "language": "en",
+      "observed_at": "2026-10-08T00:55:00+09:00",
+      "published_at": "2026-10-06T20:16:41Z",
+      "role": "brief",
+      "selection_reason": "日々のレビューとマージの進め方が変わりうる開発ツールの変更を、一次資料の数値とともに把握する。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは、スタック型プルリクエストを正式提供（GA）したと発表した。大きな変更を独立にレビューできる小さなPRに分割し、まとめてマージできる。プレビュー期間中、スタックを使うリポジトリではマージされたコード量が同条件のリポジトリ比で9%増え、上位1%のリポジトリの3分の2以上が利用し、マージまでの時間も5%改善したという。GAでは、リベース時の承認保持、署名付きコミットの維持、マージキューでの単一グループ化、自動リベース、スタックの自動リターゲット、自動マージの順次展開などが加わる。",
+      "source_kind": "release",
+      "source_title": "Stacked pull requests generally available",
+      "source_url": "https://github.blog/changelog/2026-10-06-stacked-pull-requests-generally-available/",
+      "title": "GitHub、スタック型プルリクエストを正式提供",
+      "topics": [
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-08T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "遊びの制作が入口になると、創作と学習の裾野が広がる。実験的な提供であり、できることの範囲は今後変わりうる。",
+      "caveat": "実験的（experimental）な提供で、機能や提供範囲は予告なく変わりうる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-playground-games",
+      "language": "en",
+      "observed_at": "2026-10-08T00:55:00+09:00",
+      "published_at": "2026-10-07T12:00:00Z",
+      "role": "brief",
+      "selection_reason": "生成AIが、制作の専門知識がなくても小さな遊びの制作を可能にする方向を確認する。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleは、テキストの指示からコードを書かずに自作ゲームを作成・プレイ・共有できる実験的な仕組みPlaygroundを発表した。公式ブログでは、思いついたものをそのまま遊べるという趣旨で、AI研究・イノベーション部門のエンジニアが紹介している。",
+      "source_kind": "official",
+      "source_title": "Introducing Playground: Create and play custom games",
+      "source_url": "https://blog.google/innovation-and-ai/technology/ai/playground-experimental-gaming-platform/",
+      "title": "Google、コードなしでゲームを作れるPlaygroundを公開",
+      "topics": [
+        "creative-ai",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-08T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "改善案の生成と検証を自動化しても、最終的に何を出すかを決めるのは人である点が設計の要になる。",
+      "caveat": "効果や対応範囲は提供元の説明に基づくもので、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "elevenlabs-elevenagents-architect",
+      "language": "en",
+      "observed_at": "2026-10-08T00:55:00+09:00",
+      "published_at": "2026-10-06T12:00:00Z",
+      "role": "brief",
+      "selection_reason": "運用中のエージェントを、会話ログから継続的に改善する実装の方向を確認する。",
+      "source_domain": "elevenlabs.io",
+      "source_fact": "ElevenLabsは、音声エージェントの改善を支援するElevenAgents Architectを発表した。何千件もの会話を横断して改善点を探し、変更案を作成し、シミュレーション会話で検証したうえで提示する。変更はバージョン付きのドラフトとして着地し、何が変わったかを確認できる。医療・金融・政府・小売・通信などの用途が示されている。",
+      "source_kind": "release",
+      "source_title": "ElevenAgents Architect: An expert partner to improve agents",
+      "source_url": "https://elevenlabs.io/blog/elevenagents-architect",
+      "title": "ElevenLabs、会話データから改善案を自ら出すElevenAgents Architect",
+      "topics": [
+        "creative-ai",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-08T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "基盤モデルの応用は言語タスクに限らない。データの欠落を補う用途では、推定の誤差の扱いが実務上の焦点になる。",
+      "caveat": "事例はGoogleとパートナーによる報告で、独立再現ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-earth-ai-pdfm-health",
+      "language": "en",
+      "observed_at": "2026-10-08T00:55:00+09:00",
+      "published_at": "2026-10-06T15:05:11Z",
+      "role": "brief",
+      "selection_reason": "基盤モデルが、衛星・地理データと公衆衛生の意思決定を結びつける応用の広がりを確認する。",
+      "source_domain": "research.google",
+      "source_fact": "Google Researchは、Google Earth AIのPopulation Dynamics Foundation Model（PDFM）を使い、疫学ワークフローが抱えるデータの欠落や報告の時間遅れに対処する取り組みを紹介した。公衆衛生分野における惑星規模の地理空間基盤モデルという枠組みを示す、5つのパートナー主導の事例研究を提示している。",
+      "source_kind": "official",
+      "source_title": "Unlocking Earth AI's planetary geospatial foundation models for global public health",
+      "source_url": "https://research.google/blog/earth-ais-planetary-geospatial-foundation-models-for-global-public-health/",
+      "title": "Google Earth AI、公衆衛生向けの地理空間基盤モデルを公開",
+      "topics": [
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-08T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "統制の設計を、認証や権限だけでなく、文脈に照らして適切かという観点から捉え直す材料になる。",
+      "caveat": "報告であり、具体的な対策の実装や検証結果を示すものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-agentic-privacy-security",
+      "language": "en",
+      "observed_at": "2026-10-08T00:55:00+09:00",
+      "published_at": "2026-10-05T21:08:00Z",
+      "role": "brief",
+      "selection_reason": "エージェントを信頼できる形で使うための、研究段階の論点を一次資料で把握する。",
+      "source_domain": "research.google",
+      "source_fact": "Google Researchは、AIエージェントのプライバシーとセキュリティに関するワークショップ報告を公開した。有用であるためには、エージェントが文脈に応じた行動規範を理解し、それに制約される必要があるとし、Contextual Integrityの理論に着想を得て、システム・モデル・利用者という各層にまたがる未解決の研究方向を整理している。",
+      "source_kind": "official",
+      "source_title": "Open and Emergent Problems in Agentic Privacy and Security: A Contextual Angle",
+      "source_url": "https://research.google/blog/open-and-emergent-problems-in-agentic-privacy-and-security-a-contextual-angle/",
+      "title": "Google Research、エージェントのプライバシーと安全の未解決課題を整理",
+      "topics": [
+        "security",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-08T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "汎用モデルをそのまま使うのではなく、自社データで適応させる経路が実務の焦点になりつつある。",
+      "caveat": "提供元と協力企業による説明で、精度や導入効果の独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-telecom-open-models",
+      "language": "en",
+      "observed_at": "2026-10-08T00:55:00+09:00",
+      "published_at": "2026-10-06T13:00:19Z",
+      "role": "brief",
+      "selection_reason": "オープンモデルを自社データで特化させ、基幹業務に持ち込む実例を確認する。",
+      "source_domain": "blogs.nvidia.com",
+      "source_fact": "NVIDIAは、通信事業者がオープンモデルを基盤にAI戦略を構築する動きを紹介した。SoftBank Corp.はNVIDIA Nemotronモデルなどを用いて通信特化のSoftBank Large Telecom Modelを開発・継続改善しているという。NVIDIAは30BパラメータのNemotron 3 Large Telco Model（LTM）を発表し、オープンソースの通信データセットで微調整したと説明。運用データで適応させるためのエンドツーエンドの微調整レシピも公開した。",
+      "source_kind": "official",
+      "source_title": "Why Telecom Operators Are Building Their AI Strategy on Open Models",
+      "source_url": "https://blogs.nvidia.com/blog/telecom-operators-open-models/",
+      "title": "NVIDIA、通信事業者向けにオープンモデルと微調整レシピを提供",
+      "topics": [
+        "open-source",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-10-08T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "統制の要求は、抽象的な原則から監査可能な標準へ移りつつある。提供元の案内である点は差し引いて読む。",
+      "caveat": "AWSによる自社サービスの位置づけの説明で、標準の要求そのものの逐条的な解説ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-iso-42005-governance",
+      "language": "en",
+      "observed_at": "2026-10-08T00:55:00+09:00",
+      "published_at": "2026-10-06T15:53:28Z",
+      "role": "brief",
+      "selection_reason": "AIガバナンスが標準規格と結びつきつつある動きを、クラウド事業者の一次資料で把握する。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは、責任あるAIガバナンスに関する記事で、AIシステムの影響評価に関する標準ISO/IEC 42005:2025に顧客がどう整合させるかを整理した。2025年のAI関連投資額を5816億9000万ドルとする数字を引き、生成AIの普及がPCやインターネットより速いと述べたうえで、AIを使いこなしつつ責任ある運用を行う必要性を論じている。",
+      "source_kind": "official",
+      "source_title": "Responsible AI governance: How AWS positions customers to align with ISO/IEC 42005:2025",
+      "source_url": "https://aws.amazon.com/blogs/machine-learning/responsible-ai-governance-how-aws-positions-customers-to-align-with-iso-iec-420052025/",
+      "title": "AWS、AIシステムの影響評価標準ISO/IEC 42005:2025への対応を整理",
+      "topics": [
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-10-08T00:55:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-10-08T00:55:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：オープンモデルの特化、根の鍵の更新、エージェントを支える統制",
+  "topics": [
+    {
+      "description": "基盤モデルの能力と提供・適応の条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計・評価・統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "開発・業務・運用を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "能力・評価・基盤に関する研究開発。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "公開されたモデル・基盤と利用条件。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "生成・編集・音声など創作を支えるAI。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    },
+    {
+      "description": "規制・標準・ガバナンスの動向。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策"
+    }
+  ]
+}

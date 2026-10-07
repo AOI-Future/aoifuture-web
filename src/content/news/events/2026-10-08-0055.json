@@ -1,0 +1,26 @@
+[
+  {
+    "changed_signal_ids": [
+      "aws-iso-42005-governance",
+      "cloudflare-root-ksk-rollover",
+      "elevenlabs-elevenagents-architect",
+      "github-stacked-pull-requests-ga",
+      "glm-5-3-bedrock",
+      "google-agentic-privacy-security",
+      "google-earth-ai-pdfm-health",
+      "google-playground-games",
+      "nemotron-olympiad-specialists",
+      "nvidia-telecom-open-models"
+    ],
+    "edition_date": "2026-10-08",
+    "edition_id": "2026-10-08-0055",
+    "edition_url": "https://aoifuture.com/news/2026-10-08-0055/",
+    "event_id": "aoi-news-2026-10-08-0055-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-08T00:55:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "競技の金メダル水準に届いたオープンモデルの微調整、10月11日に切り替わるDNSの根の鍵、753Bオープンウェイトのクラウド提供。一次資料から、専門特化した知能と、その信頼を支える基盤の現在地を確認する。",
+    "title": "AOIFUTURE News：オープンモデルの特化、根の鍵の更新、エージェントを支える統制"
+  }
+]
