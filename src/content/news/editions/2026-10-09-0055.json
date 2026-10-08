@@ -1,0 +1,368 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-10-09T00:55:00+09:00",
+  "dek": "Windows PCで常時動くAIエージェント基盤、証拠収集と推論を分けたセキュリティ運用、端末内で完結するマルチモーダル埋め込み。一次資料から、エージェント時代の実行基盤が「手元」へ近づく現在地を確認する。",
+  "edition_date": "2026-10-09",
+  "edition_id": "2026-10-09-0055",
+  "edition_note": "2026年10月6日から10月9日の一次資料を直接確認した。各社の性能・効果の主張は独立に再現していない。公開可否は別のpublisherレーンが判断する。",
+  "generated_at": "2026-10-09T00:55:00+09:00",
+  "items": [
+    {
+      "aoi_note": "重要なのはモデルの規模競争ではなく、エージェントを安全に常駐させる実行境界と統合メモリの供給条件が整ったことにある。手元で動かせるモデルが増えるほど、データを外に出さない前提の業務設計が現実的になる。",
+      "caveat": "性能・出荷時期・対応モデルはNVIDIAとMicrosoftの発表に基づくもので、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-rtx-spark-windows-agents",
+      "language": "en",
+      "observed_at": "2026-10-09T00:55:00+09:00",
+      "published_at": "2026-10-07T18:45:28+00:00",
+      "role": "lead",
+      "selection_reason": "エージェントが「クラウドの機能」から「手元のPCで常時動く基盤」へ移る転換点を、ハードウェアとOSの同時発表として一次資料で確認できる。",
+      "source_domain": "blogs.nvidia.com",
+      "source_fact": "NVIDIAとMicrosoftは、Windows PCでAIエージェントを安全かつ常時実行させるためのハードウェアとソフトウェアを共同設計していると発表した。MicrosoftはOSレベルでエージェントを隔離・監視・統制する仕組みMicrosoft Execution Containers（MXC）を一般提供（GA）した。NVIDIAのRTX Sparkは、最大6144コアのBlackwell RTX GPUと最大20コアのGrace CPUを毎秒600GBで接続し、FP4で最大1ペタフロップス、最大128GBの統合メモリを備える。ノートPCは10月16日出荷、小型デスクトップは11月販売予定で、Qwen 3.8 Flash Next（125B）のような大規模モデルをクラウドに送らずPC上で動かせるとしている。",
+      "source_kind": "official",
+      "source_title": "NVIDIA, Microsoft Kick Off a New Beginning for Windows PCs With RTX Spark and AI Agents",
+      "source_url": "https://blogs.nvidia.com/blog/local-ai-rtx-spark-microsoft-windows-event/",
+      "title": "NVIDIAとMicrosoft、Windows PC上で動くAIエージェント基盤を発表",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-09T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "「推論の前に証拠を確定させる」という順序は、監査や承認が絡む業務エージェント全般にそのまま持ち込める考え方である。モデルに境界を守らせるのではなく、境界をコード側に置く点が要点になる。",
+      "caveat": "効果や構成はCloudflareの自社運用の説明に基づくもので、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-agentic-security-operations",
+      "language": "en",
+      "observed_at": "2026-10-09T00:55:00+09:00",
+      "published_at": "2026-10-07T16:30:36+00:00",
+      "role": "major",
+      "selection_reason": "エージェントを業務に使う際の現実的な失敗パターンと、それを証拠収集と推論の分離で抑える設計を、実運用者の一次資料で確認できる。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは、自社のManaged Defenseで使うマルチAIエージェントのセキュリティ運用ハーネスの設計を公開した。単一の汎用エージェントによる初期試作では、(1)文脈が権威になってしまう、(2)対象範囲がずれる、(3)失敗が見えなくなる、という3つの問題が再現したという。そこで推論の前に、固定した偵察ワークフローを決定論的なコードで実行し、顧客のIDや検知履歴、トラフィックの基準値、適用された制御と結果を、出所・版・時刻付きで保存する。初回のスクリーニングには同社のオープンな意思決定モデルClefを使い、深い分析には承認済みのモデル（GPT-5.6 CyberやMythos、Anthropicのモデル等）を用いる。同じスナップショットを再生できるため、結果の差異を取得ではなく解釈に帰属できるとしている。",
+      "source_kind": "official",
+      "source_title": "Building an evidence-grounded agentic security operations harness on Cloudflare",
+      "source_url": "https://blog.cloudflare.com/agentic-security-operations/",
+      "title": "Cloudflare、証拠に基づくマルチエージェントのセキュリティ運用基盤を公開",
+      "topics": [
+        "security",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-09T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "学習フレームワーク内でエージェントを作り直す従来手法は、学習対象と配備対象が別物になりやすい。配備と同じハーネスを学習にも使う設計は、評価と改善の対象を一致させる方向として注目に値する。",
+      "caveat": "改善幅や行数はMicrosoft Researchの報告に基づくもので、独立再現ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "msr-agent-lightning-v1",
+      "language": "en",
+      "observed_at": "2026-10-09T00:55:00+09:00",
+      "published_at": "2026-10-07T16:00:00+00:00",
+      "role": "major",
+      "selection_reason": "「学習するエージェント」と「配備するエージェント」の乖離という実務上の課題に対し、軽量で再現可能な実装が公開された点を一次資料で確認する。",
+      "source_domain": "www.microsoft.com",
+      "source_fact": "Microsoft Research Asiaは、配備時と同じエージェントハーネスをそのまま強化学習（RL）に参加させる「Harnessed Agentic RL」と呼ぶ学習パラダイムと、それを実装したAgent Lightning v1.0をオープンソースで公開した。全体は約3500行で、エージェントとモデルの間にLLMプロキシを置くことで、既存のハーネスのコードを変えずに学習側がモデル呼び出しを観測・記録できる。エージェントはKubernetesのジョブとして実行でき、有償の商用サンドボックスに依存しない。Qwen3.5-9Bを用いたコーディングエージェントの例では、SWE-bench VerifiedのPass@1が41.8%から56.4%へ（+14.6ポイント）改善し、学習サンプルは約6000件だったという。",
+      "source_kind": "repository",
+      "source_title": "Agent Lightning v1.0: A 3,500-Line Lightweight Agentic RL Framework for Training Agents with Real Harnesses",
+      "source_url": "https://www.microsoft.com/en-us/research/blog/agent-lightning-v1-0-a-3500-line-lightweight-agentic-rl-framework-for-training-agents-with-real-harnesses/",
+      "title": "Microsoft Research、実ハーネスで学習する軽量エージェントRL基盤 v1.0 を公開",
+      "topics": [
+        "agents",
+        "research",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-09T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "埋め込みは地味だが、端末内で完結する検索・検索拡張生成の品質を左右する基盤である。テキスト以外を同じ空間で扱えるようになると、外部に送らずに社内の音声や映像を検索する用途が現実味を帯びる。",
+      "caveat": "性能指標は提供元の評価に基づくもので、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-embeddinggemma-2",
+      "language": "en",
+      "observed_at": "2026-10-09T00:55:00+09:00",
+      "published_at": "2026-10-06T19:57:04+00:00",
+      "role": "major",
+      "selection_reason": "検索やRAGの土台となる埋め込みが、テキストを超えて端末上のマルチモーダルへ広がる動きを、ライセンスと数値の一次資料で確認する。",
+      "source_domain": "deepmind.google",
+      "source_fact": "Google DeepMindは、テキスト・画像・音声・動画を一つの埋め込み空間に統合するオンデバイス向けモデルEmbeddingGemma 2を公開した。Gemma 4アーキテクチャを基にし、商用利用可能なApache 2.0ライセンスで提供、パラメータ数は7億4000万で、テキスト専用なら270Mまで縮小できる。Matryoshka表現学習により出力ベクトルを768次元から512・256・128次元へ動的に切り詰められ、最大6倍のストレージ削減が可能。8Kトークンの文脈長を持ち、最大5.5分の音声や29枚の画像、58フレームの動画を扱える。コード性能はMTEB Codeで68.76から78.68へ9.92ポイント改善したとしている。",
+      "source_kind": "official",
+      "source_title": "EmbeddingGemma 2: an open, lightweight multimodal embedding model",
+      "source_url": "https://deepmind.google/blog/embeddinggemma-2-an-open-lightweight-multimodal-embedding-model/",
+      "title": "Google、オンデバイス向けマルチモーダル埋め込みモデル EmbeddingGemma 2 を公開",
+      "topics": [
+        "models",
+        "open-source",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-09T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "性能より「トークンと手順の少なさ」を前面に出している点が実務的である。高頻度の小さな処理を軽量モデルへ逃がす設計は、コストと速度の両面で効いてくる。",
+      "caveat": "比較の記述はGitHubの初期テストの説明に基づくもので、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-claude-haiku-5-5",
+      "language": "en",
+      "observed_at": "2026-10-09T00:55:00+09:00",
+      "published_at": "2026-10-07T20:12:18+00:00",
+      "role": "brief",
+      "selection_reason": "エージェントの下位処理に軽量モデルを割り当てる流れが、主要開発ツールの標準機能になったことを確認する。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは、Anthropicの軽量モデルClaude Haiku 5.5がGitHub Copilotで一般提供されたと発表した。サブエージェントや素早い編集、ターミナル作業のような高頻度の用途を想定する。初期テストでは、多くのコーディングタスクでClaude Sonnet 5に匹敵しつつ、使用トークン数と手順が大幅に少なかったとしている。Copilot Pro、Pro+、Max、Business、Enterpriseで利用でき、モデルピッカーから選択する。課金は提供元のリスト価格による従量制で、段階的に展開される。",
+      "source_kind": "release",
+      "source_title": "Claude Haiku 5.5 in GitHub Copilot",
+      "source_url": "https://github.blog/changelog/2026-10-07-claude-haiku-5-5-in-github-copilot",
+      "title": "GitHub Copilotに軽量モデルClaude Haiku 5.5が追加",
+      "topics": [
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-09T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントにPCを触らせる運用では、権限の広さがそのままリスクになる。サンドボックスを組織側で強制できるようになると、導入時の説明責任と監査が立てやすくなる。",
+      "caveat": "対象ツールや提供範囲はGitHubの発表に基づくもので、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-local-sandboxing-ga",
+      "language": "en",
+      "observed_at": "2026-10-09T00:55:00+09:00",
+      "published_at": "2026-10-07T15:46:17+00:00",
+      "role": "brief",
+      "selection_reason": "エージェントを手元のマシンで動かす際の実行境界が、開発ツールの標準機能として提供されたことを確認する。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは、Copilotのローカルサンドボックスが、Copilot CLI、Copilotアプリ、Agent Hostを使うVS Codeセッションで一般提供されたと発表した。エージェントが起こすコマンドやツールを、開発者や組織が定めたポリシーに従って、ファイルシステム・ネットワーク・資格情報などへのアクセスを制限した境界内で実行する。仕組みはMicrosoft eXecution Container（MXC）が担い、共通のポリシーをWindows・macOS・LinuxのネイティブなOS制御に翻訳する。読み書きできるファイルの制限、ネットワークやGit資格情報へのアクセス制御、ローカルMCPや言語サーバーへの適用、組織管理設定による強制などができる。",
+      "source_kind": "release",
+      "source_title": "Local sandboxing for GitHub Copilot now generally available",
+      "source_url": "https://github.blog/changelog/2026-10-07-local-sandboxing-for-github-copilot-now-generally-available",
+      "title": "GitHub Copilot、ローカルサンドボックスを一般提供",
+      "topics": [
+        "tools",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-09T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "参照する文書を絞るだけでは、権限剥奪の反映遅れを防げない。問い合わせ時に権威ある側へ確認を戻す発想は、機密を含む社内検索の設計で押さえておきたい。",
+      "caveat": "構成と効果はAWSの解説に基づくもので、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-rag-realtime-acl",
+      "language": "en",
+      "observed_at": "2026-10-09T00:55:00+09:00",
+      "published_at": "2026-10-07T18:34:44+00:00",
+      "role": "brief",
+      "selection_reason": "社内文書を扱うAI応答で、権限の最新性をどう担保するかという実務課題に対する具体策を一次資料で確認する。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは、企業向け検索拡張生成（RAG）で、権限の複製とフィルタに頼る従来方式の限界と、Amazon QuickとAmazon Bedrockナレッジベースでの改善を説明した。従来方式は、AI側が権限の正本ではないこと、同期の間隔で古い権限が残ること、データ源側の権限仕様の変化に追随できないこと、という3つの弱点を持つ。同社は、検索前に絞り込む方式に加えて、問い合わせ時に権限を権威あるデータ源へ直接照会して再検証する層を実装した。Google Driveを例に、意味検索による前段の絞り込みと、リアルタイムの権限検証の二段構えを示している。",
+      "source_kind": "official",
+      "source_title": "Rethinking access control for RAG with Amazon Quick and Amazon Bedrock",
+      "source_url": "https://aws.amazon.com/blogs/machine-learning/rethinking-access-control-for-rag-with-amazon-quick-and-amazon-bedrock/",
+      "title": "AWS、RAGの権限チェックを問い合わせ時に再検証する方式を公開",
+      "topics": [
+        "security",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-09T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "汎用モデルの小型化ではなく、判断という用途に絞った小型モデルが出てきている点が新しい。応答の速さが要件になる現場では、こうした特化型が選択肢になる。",
+      "caveat": "指標と速度はLiquid AIの評価・測定に基づくもので、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "liquidai-open-d1-edge",
+      "language": "en",
+      "observed_at": "2026-10-09T00:55:00+09:00",
+      "published_at": "2026-10-07T16:54:33+00:00",
+      "role": "brief",
+      "selection_reason": "エッジ端末で動く小型の「意思決定モデル」という用途特化の流れを、比較数値つきの一次資料で確認する。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Liquid AIは、意思決定に特化したオープンモデルd1-3Bとd1-omni-600M（実験的）を公開したと発表した。d1-3BはDecision Index 0.2.1で48.57を記録し、10B未満で最良とされるほか、35BクラスのDecider 35B-A3B（47.11）も上回るとしている。テキストと画像を扱い、d1-omni-600Mはテキストと画像または音声を扱う。応答速度はNVIDIA Jetson AGX Thorで16ms、AGX Orinで26ms、Orin Nanoで50msとしている。",
+      "source_kind": "repository",
+      "source_title": "Multimodal open d1 decision models for the edge",
+      "source_url": "https://huggingface.co/blog/LiquidAI/open-d1",
+      "title": "Liquid AI、エッジ向けのオープン意思決定モデル d1 を公開",
+      "topics": [
+        "models",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-09T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "音声認識の品質は言語と方言のデータ量に強く依存する。地域特化のオープンモデルは、多言語対応を自前で組む際の部品として使い道がある。",
+      "caveat": "誤り率はTIIの評価と参照スナップショットに基づくもので、条件により変動しうる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "tii-falcon-asr-arabic",
+      "language": "en",
+      "observed_at": "2026-10-09T00:55:00+09:00",
+      "published_at": "2026-10-07T13:21:03+00:00",
+      "role": "brief",
+      "selection_reason": "英語中心の音声認識に対し、特定言語と方言へ踏み込んだオープンモデルが増えている流れを一次資料で確認する。",
+      "source_domain": "huggingface.co",
+      "source_fact": "アブダビのTechnology Innovation Institute（TII）は、アラビア語に特化した音声認識モデルFalcon-ASRを公開した。パラメータ数は16億で、特にアラブ首長国連邦の方言（Emirati）に重点を置きつつ、英語・フランス語・スペイン語・ポルトガル語にも対応する。同社の評価では、6つのアラビア語テストセットで平均単語誤り率（WER）20.92%を記録し、参照したリーダーボードの最良公開結果23.17%を上回ったとした。Emirati方言のWERは同社評価で22.73%としている。",
+      "source_kind": "repository",
+      "source_title": "Introducing Falcon ASR",
+      "source_url": "https://huggingface.co/blog/tiiuae/falcon-asr",
+      "title": "TII、アラビア語特化の音声認識モデル Falcon-ASR を公開",
+      "topics": [
+        "models",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-09T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "音声合成の価値は、技術そのものより「これまで届かなかったコンテンツを届ける」用途で出やすい。権利と声の扱いをどう整えるかが、普及の鍵になる。",
+      "caveat": "提供内容と数値はElevenLabsの発表に基づくもので、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "elevenreader-brazil-launch",
+      "language": "en",
+      "observed_at": "2026-10-09T00:55:00+09:00",
+      "published_at": "2026-10-08T12:00:00+00:00",
+      "role": "brief",
+      "selection_reason": "生成音声が、学習・娯楽の入り口として実際の言語圏へ展開される事例を一次資料で確認する。",
+      "source_domain": "elevenlabs.io",
+      "source_fact": "ElevenLabsは、文章を聴く体験に変える消費者向け音声プラットフォームElevenReaderをブラジルで開始したと発表した。俳優・コメディアンのFábio Porchatの声を最初の目玉とし、カタログにはポルトガル語（ブラジル）の音声タイトル7万点が含まれる。利用者は小説を選んだり、業務用のPDFを読み込ませたり、記事のリンクを貼ったりして、Porchatの声で聴ける。同社は、多くのブラジル語の書籍がこれまで音声版を持たなかったと説明している。",
+      "source_kind": "release",
+      "source_title": "ElevenReader launches in Brazil with Fabio Porchat and 70,000 Brazilian Portuguese books in audio",
+      "source_url": "https://elevenlabs.io/blog/elevenreader-launches-in-brazil-with-fbio-porchat-and-70000-brazilian-portuguese-books-in-audio",
+      "title": "ElevenLabsの聴読アプリElevenReader、ブラジルで提供開始",
+      "topics": [
+        "creative-ai",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-09T00:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "公開データは、届く相手を狭めてしまうと社会的な価値が落ちる。専門性を保ったまま誰にでも読める形にする設計は、社内ダッシュボードにも通じる。",
+      "caveat": "内容はCloudflareの説明に基づくもので、独立評価ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-radar-redesign",
+      "language": "en",
+      "observed_at": "2026-10-09T00:55:00+09:00",
+      "published_at": "2026-10-08T13:00:00+00:00",
+      "role": "brief",
+      "selection_reason": "インターネットの状態を扱う公開データが、専門家以外にも読める形へ整えられる動きを確認する。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは、世界のトラフィックや障害のリアルタイムデータを公開するCloudflare Radarを刷新したと発表した。対話的な地図と標準化した部品を導入し、ナビゲーションを簡素化した。技術者だけでなく、記者や技術に詳しくない研究者、一般利用者にもデータを届くようにする狙いを示している。",
+      "source_kind": "official",
+      "source_title": "Bridging technical depth and usability: The story behind Radar's redesign",
+      "source_url": "https://blog.cloudflare.com/radar-redesign/",
+      "title": "Cloudflare、通信データを可視化するRadarを刷新",
+      "topics": [
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-09T00:55:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-10-09T00:55:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：PCに降りるエージェント、証拠で動く運用、端末内で広がる基盤",
+  "topics": [
+    {
+      "description": "基盤モデルの能力と提供・適応の条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計・評価・統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "開発・業務・運用を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "能力・評価・基盤に関する研究開発。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "公開されたモデル・基盤と利用条件。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "生成・編集・音声など創作を支えるAI。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}

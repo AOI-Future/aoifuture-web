@@ -1,0 +1,27 @@
+[
+  {
+    "changed_signal_ids": [
+      "aws-rag-realtime-acl",
+      "cloudflare-agentic-security-operations",
+      "cloudflare-radar-redesign",
+      "elevenreader-brazil-launch",
+      "github-copilot-claude-haiku-5-5",
+      "github-copilot-local-sandboxing-ga",
+      "google-embeddinggemma-2",
+      "liquidai-open-d1-edge",
+      "msr-agent-lightning-v1",
+      "nvidia-rtx-spark-windows-agents",
+      "tii-falcon-asr-arabic"
+    ],
+    "edition_date": "2026-10-09",
+    "edition_id": "2026-10-09-0055",
+    "edition_url": "https://aoifuture.com/news/2026-10-09-0055/",
+    "event_id": "aoi-news-2026-10-09-0055-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-09T00:55:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "Windows PCで常時動くAIエージェント基盤、証拠収集と推論を分けたセキュリティ運用、端末内で完結するマルチモーダル埋め込み。一次資料から、エージェント時代の実行基盤が「手元」へ近づく現在地を確認する。",
+    "title": "AOIFUTURE News：PCに降りるエージェント、証拠で動く運用、端末内で広がる基盤"
+  }
+]
