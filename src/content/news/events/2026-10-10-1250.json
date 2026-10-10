@@ -1,0 +1,27 @@
+[
+  {
+    "changed_signal_ids": [
+      "arxiv-clinician-use-differs-from-evaluation",
+      "aws-agentcore-payments-agents",
+      "aws-postman-agent-mode-bedrock",
+      "cisa-aa26-281a-automated-hands-on-actors",
+      "cloudflare-clef-omni-multimodal",
+      "cloudflare-deno-joins-cloudflare",
+      "elevenlabs-brand-kit-creative",
+      "elevenlabs-synthetic-voice-detection-pap",
+      "github-codeql-2-27-2",
+      "github-reviewbench-ai-code-review",
+      "nvidia-aicr-v1-gpu-cluster"
+    ],
+    "edition_date": "2026-10-10",
+    "edition_id": "2026-10-10-1250",
+    "edition_url": "https://aoifuture.com/news/2026-10-10-1250/",
+    "event_id": "aoi-news-2026-10-10-1250-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-10T12:50:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "セルフホスト実行基盤の統合、判断に特化したモデルのマルチモーダル化、政府勧告が示す自動化攻撃、臨床現場とベンチマークの乖離。一次資料から、AIを「どこで動かし、どう評価するか」の現在地を確認する。",
+    "title": "AOIFUTURE News：実行基盤の統合、判断特化モデルの広がり、現場と評価のずれ"
+  }
+]

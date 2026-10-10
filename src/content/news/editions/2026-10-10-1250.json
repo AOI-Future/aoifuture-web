@@ -1,0 +1,367 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-10-10T12:50:00+09:00",
+  "dek": "セルフホスト実行基盤の統合、判断に特化したモデルのマルチモーダル化、政府勧告が示す自動化攻撃、臨床現場とベンチマークの乖離。一次資料から、AIを「どこで動かし、どう評価するか」の現在地を確認する。",
+  "edition_date": "2026-10-10",
+  "edition_id": "2026-10-10-1250",
+  "edition_note": "2026年10月5日から10月10日の一次資料を直接確認した。各社の性能・効果の主張は独立に再現していない。公開可否は別のpublisherレーンが判断する。",
+  "generated_at": "2026-10-10T12:50:00+09:00",
+  "items": [
+    {
+      "aoi_note": "「どこでも同じ実行環境」を目指す動きは、実行場所を選ばずにコードを動かす前提を後押しする。一方で統合は選択肢の減少でもあり、セルフホスト前提の組織は移行計画を意識しておきたい。",
+      "caveat": "統合の詳細や時期は発表時点の説明に基づくもので、実装の完了やDenoランタイムの将来は独立に確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-deno-joins-cloudflare",
+      "language": "en",
+      "observed_at": "2026-10-10T12:50:00+09:00",
+      "published_at": "2026-10-09T12:50:00Z",
+      "role": "lead",
+      "selection_reason": "サーバーレス実行基盤が複数プロジェクトの統合で収斂していく動きを、当事者の一次発表で確認できる。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは、Denoの開発チームがCloudflareに合流すると発表した。両社はCloudflareのセルフホスト実行基盤であるworkerdとDenoのcelldの開発を統合し、開発者が同じプリミティブをより多くの環境で使えるようにすることを狙う。Denoの作者Ryan DahlとCloudflareのKenton Vardaが経緯を説明しており、Denoランタイム自体の今後はDeno側のブログで案内される。",
+      "source_kind": "official",
+      "source_title": "Deno is joining Cloudflare",
+      "source_url": "https://blog.cloudflare.com/deno-joins-cloudflare/",
+      "title": "Cloudflare、Denoチームの合流を発表　セルフホスト実行基盤を統合へ",
+      "topics": [
+        "open-source",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-10T12:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "攻撃側は自動化と人手を使い分ける。防御側も「自動検知で拾い、人が判断する」分担が要る。勧告が挙げる基本（サービスの最小化・MFA・パッチ）は、エージェント導入時の境界設計にもそのまま当てはまる。",
+      "caveat": "手口と帰属は政府の勧告に基づくもので、個別組織の被害状況は独立に検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-aa26-281a-automated-hands-on-actors",
+      "language": "en",
+      "observed_at": "2026-10-10T12:50:00+09:00",
+      "published_at": "2026-10-08T12:00:00Z",
+      "role": "major",
+      "selection_reason": "自動化ツールと人手の攻撃を組み合わせる現実の脅威動向と、その緩和策を政府の一次勧告で確認できる。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "CISAは、中国の政府系とされる脅威アクターが、自動スキャンツール・大規模ボットネット・手動の攻撃を組み合わせ、米国の重要インフラを含む標的から機微情報を窃取しているとする共同勧告AA26-281A（2026年10月8日）を公開した。Microsoft Exchangeサーバーへのスキャンやクロスサイトスクリプティング、パスワードスプレーを用い、VPNソフトウェアで永続化し、スクリプトでメールと資格情報を窃取する手口が示されている。8件のCVEが影響製品として挙げられ、未使用のサービス・ポートの無効化、入力のサニタイズ、多要素認証、迅速なパッチ適用が推奨されている。",
+      "source_kind": "advisory",
+      "source_title": "Chinese Government-linked Cyber Threat Actors Combine Automated and Hands-on Hacking Tools to Steal Sensitive Data",
+      "source_url": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-281a",
+      "title": "CISA、自動化と手動を組み合わせる中国系脅威アクターの共同勧告を公開",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-10T12:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "汎用モデルの性能競争とは別に、判断という機能に絞った小型モデルが音声・動画へ広がっている。用途を絞ると、コストと遅延の設計が立てやすくなる。",
+      "caveat": "性能・価格の記述はCloudflareの発表に基づくもので、独立評価ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-clef-omni-multimodal",
+      "language": "en",
+      "observed_at": "2026-10-10T12:50:00+09:00",
+      "published_at": "2026-10-09T18:27:34Z",
+      "role": "major",
+      "selection_reason": "「判断」に用途を絞ったオープンウェイトモデルが、マルチモーダル化と低価格化を同時に進める流れを一次発表で確認できる。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは、前週に公開したオープンウェイトの判断特化モデルClefとClef-flashに続き、音声と動画も入力できるClef-omniを公開した。あわせてClefを高速化し、Clef-flashの価格を引き下げたとしている。同社は決断モデル領域への参入を一週間足らずで進めたと説明している。",
+      "source_kind": "official",
+      "source_title": "Introducing Clef-omni with full multimodality, plus a faster Clef and a cheaper Clef-flash",
+      "source_url": "https://blog.cloudflare.com/clef-faster-cheaper-multimodal/",
+      "title": "Cloudflare、判断特化のオープンモデルClefに音声・動画対応版を追加",
+      "topics": [
+        "models",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-10T12:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "「試験で高得点」と「現場で役立つ」は別物である。評価を作る側は、実際に投げられる質問の分布から出発する必要がある。医療に限らず、業務エージェントの評価設計全般に通じる指摘である。",
+      "caveat": "単一の医療機関の利用ログと公開ベンチマークの比較であり、他分野・他組織への一般化は示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-clinician-use-differs-from-evaluation",
+      "language": "en",
+      "observed_at": "2026-10-10T12:50:00+09:00",
+      "published_at": "2026-10-08T01:29:04Z",
+      "role": "major",
+      "selection_reason": "現場での使われ方とベンチマークの評価軸がずれていることを、大量ログの一次分析で定量化した点を確認できる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "arXiv論文2610.11069は、8か月の導入期間に35診療科の医師・看護師ら6,342人が送った127,833件のクエリを分析した。臨床質問とLLM評価の分類に基づく枠組みRCQ-Mapで各クエリを特徴づけたところ、文書化・事務（36.2%）と知識検索（28.9%）で約3分の2を占め、診断は3.7%だった。3分の1超のクエリはそのままでは十分に答えられなかった。主要評価スイートの58の公開ベンチマークを集めたClinical AI Benchmark Atlasと比較し、中央値に大きな差があることを示した。",
+      "source_kind": "paper",
+      "source_title": "Clinician use of language models diverges from how the models are evaluated",
+      "source_url": "https://arxiv.org/abs/2610.11069",
+      "title": "臨床でのLLM利用は評価とずれる　12万件のクエリ分析",
+      "topics": [
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-10T12:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "デモを作ることと、大規模利用に耐える運用は別問題である。統合の難しさは、動くモデルを選ぶ段階より後ろにある。",
+      "caveat": "事例の記述はAWSとPostmanの説明に基づくもので、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-postman-agent-mode-bedrock",
+      "language": "en",
+      "observed_at": "2026-10-10T12:50:00+09:00",
+      "published_at": "2026-10-09T15:35:02Z",
+      "role": "brief",
+      "selection_reason": "エージェントを実製品へ組み込む際の難所が、モデル性能より既存システムとの統合にあることを実運用事例で確認できる。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは、API開発ツールのPostmanがAmazon Bedrock上でAgent Modeを運用している事例を公開した。Postmanは、APIのテスト・ドキュメント・検索・実装を横断して作業するAIネイティブな機能を、4000万人の開発者に提供している。記事によれば、モデル品質やプロンプト設計よりも、長年かけて作られたインターフェース前提の製品にエージェントを統合する難しさのほうが実務上の課題だったとしている。",
+      "source_kind": "official",
+      "source_title": "How Postman runs Agent Mode for 40 million developers on Amazon Bedrock",
+      "source_url": "https://aws.amazon.com/blogs/machine-learning/how-postman-runs-agent-mode-for-40-million-developers-on-amazon-bedrock/",
+      "title": "AWS、PostmanのAgent Mode運用事例を公開　統合の難しさを強調",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-10T12:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントにお金を払わせるなら、上限はモデルの判断ではなく基盤で縛るのが筋である。権限と同じで、境界はコード側に置くほうが監査しやすい。",
+      "caveat": "構成と効果はAWSの解説と導入事例に基づくもので、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-agentcore-payments-agents",
+      "language": "en",
+      "observed_at": "2026-10-10T12:50:00+09:00",
+      "published_at": "2026-10-08T18:33:29Z",
+      "role": "brief",
+      "selection_reason": "エージェントが自律的に外部サービスを購入する際の統制を、支出上限をインフラ側に置く設計として確認できる。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは、エージェントがタスク遂行中にモデル推論やAPI、Webコンテンツ、他エージェント呼び出しへ少額・高頻度に支払うための仕組みAmazon Bedrock AgentCore paymentsを紹介した。支払いはエージェントのループ内で人の承認なしに発生しうるため、支出上限をモデルではなくインフラ側で強制する。記事ではIncarnaがエージェントからBlockRunへモデル推論の対価を1リクエスト単位で支払う例を説明している。",
+      "source_kind": "official",
+      "source_title": "Pay-per-inference for AI agents: How BlockRun and Incarna use Amazon Bedrock AgentCore payments",
+      "source_url": "https://aws.amazon.com/blogs/machine-learning/pay-per-inference-for-ai-agents-how-blockrun-and-incarna-use-amazon-bedrock-agentcore-payments/",
+      "title": "AWS、エージェントの少額支払いを基盤側で統制するAgentCore paymentsを紹介",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-10T12:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "音声やチャットの入口では、相手が人かエージェントかの識別が前提になる。識別と名乗りの標準は、なりすまし対策と自動化の両立に効いてくる。",
+      "caveat": "検知機能の精度や標準化の進展は同社の発表に基づくもので、独立評価ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "elevenlabs-synthetic-voice-detection-pap",
+      "language": "en",
+      "observed_at": "2026-10-10T12:50:00+09:00",
+      "published_at": "2026-10-09T12:00:00Z",
+      "role": "brief",
+      "selection_reason": "エージェントが人間のふりをする問題と、その識別・名乗りの標準づくりを当事者の一次発表で確認できる。",
+      "source_domain": "elevenlabs.io",
+      "source_fact": "ElevenLabsは、企業や政府にかかってくる通話の相当割合が人ではなくAIエージェントであり、なかには顧客を装うクローン音声もあるとし、ElevenAgentsでの合成音声検知を公開した。あわせて、AIエージェントと企業が相互に名乗り・やり取りする枠組みPersonal Agent Protocolのワーキンググループに設計パートナーとして参加すると発表した。",
+      "source_kind": "release",
+      "source_title": "Defining how AI agents interact with your business",
+      "source_url": "https://elevenlabs.io/blog/synthetic-voice-detection-and-personal-agent-protocol",
+      "title": "ElevenLabs、AIエージェントの識別と合成音声検知を発表",
+      "topics": [
+        "agents",
+        "security",
+        "creative-ai"
+      ],
+      "verification": {
+        "checked_at": "2026-10-10T12:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "生成AIの品質は、モデルより「同じ前提を全員が使えるか」で決まることが多い。ブランド文脈を共有オブジェクト化する発想は、社内の制作フロー設計に流用できる。",
+      "caveat": "機能の範囲は同社の発表に基づくもので、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "elevenlabs-brand-kit-creative",
+      "language": "en",
+      "observed_at": "2026-10-10T12:50:00+09:00",
+      "published_at": "2026-10-09T12:00:00Z",
+      "role": "brief",
+      "selection_reason": "生成ツールの実務課題が、出力の質そのものからチームで一貫させる運用へ移っている流れを確認できる。",
+      "source_domain": "elevenlabs.io",
+      "source_fact": "ElevenLabsは、ElevenCreative向けにBrand Kitを発表した。色・フォント・ロゴ・参照画像・ルールといった視覚的アイデンティティをワークスペース内の単一のオブジェクトとして保持し、プロンプトから文脈を切り出してImage & Video、Flows、ElevenCreativeの各生成に一貫して反映させる。チームごとに説明がばらついて一貫性が崩れる問題への対応だとしている。",
+      "source_kind": "release",
+      "source_title": "Introducing Brand Kit",
+      "source_url": "https://elevenlabs.io/blog/introducing-brand-kit",
+      "title": "ElevenLabs、生成ワークフローで一貫性を保つBrand Kitを発表",
+      "topics": [
+        "creative-ai",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-10T12:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "基盤の再現性は、記録・宣言・生成・検証を分けて初めて担保される。この分解はAI基盤に限らず、構成管理一般の型として参考になる。",
+      "caveat": "対象範囲はNVIDIAの発表に基づくもので、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-aicr-v1-gpu-cluster",
+      "language": "en",
+      "observed_at": "2026-10-10T12:50:00+09:00",
+      "published_at": "2026-10-06T16:13:47Z",
+      "role": "brief",
+      "selection_reason": "大規模GPU基盤の構成管理が、再現可能で検証可能な形へ標準化される動きを一次発表で確認できる。",
+      "source_domain": "developer.nvidia.com",
+      "source_fact": "NVIDIAは、GPUアクセラレーション対応Kubernetesクラスタ向けに、バージョンを固定し検証済みのレシピを提供するNVIDIA AI Cluster Runtime（AICR）のv1.0を公開した。v1.0ではCLI・REST API・Go SDK・バンドル構成・アーティファクトスキーマにまたがる安定した互換契約を定める。Snapshot・Recipe・Bundle・Validationの4機能で、観測状態の記録、望ましい構成の記述、HelmやArgo CD等向けデプロイ成果物の生成、稼働中クラスタの検証を行う。",
+      "source_kind": "repository",
+      "source_title": "AICR v1.0: Open, stable, and verifiable GPU cluster configuration",
+      "source_url": "https://developer.nvidia.com/blog/aicr-v1-0-open-stable-and-verifiable-gpu-cluster-configuration/",
+      "title": "NVIDIA、GPUクラスタ構成を検証可能にするAICR v1.0を公開",
+      "topics": [
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-10T12:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AIがコードを書く速度が上がるほど、見つける側の網羅性が効いてくる。クエリ件数と対象CWEの増加は、その地味な前線が動いている証拠である。",
+      "caveat": "クエリ数や対象範囲はGitHubの発表に基づくもので、検出精度の独立評価ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-codeql-2-27-2",
+      "language": "en",
+      "observed_at": "2026-10-10T12:50:00+09:00",
+      "published_at": "2026-10-09T21:32:54Z",
+      "role": "brief",
+      "selection_reason": "コード生成が広がる中でも、脆弱性を見つける静的解析の網羅範囲が継続的に更新されていることを一次資料で確認できる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは、コードスキャンの基盤となる静的解析エンジンCodeQLの2.27.2を公開した。C++でECMAScript文法の正規表現パースに対応し、複数言語で解析を改善した。Defaultスイートは170のCWEを対象に498のセキュリティクエリを実行し、Extendedスイートはさらに32のCWEを対象に131のクエリを追加する。C++ではComdb2 C APIのSQLインジェクションのシンクモデルや、Bloomberg BDEのフロー要約などが加わった。",
+      "source_kind": "release",
+      "source_title": "CodeQL 2.27.2 improves C++, Go, Rust, and JavaScript analysis",
+      "source_url": "https://github.blog/changelog/2026-10-09-codeql-2-27-2-improves-c-go-rust-and-javascript-analysis",
+      "title": "GitHub、コード解析エンジンCodeQL 2.27.2を公開　複数言語を強化",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-10T12:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントに仕事を任せるほど、「上手いかどうか」を測る物差しが要る。量ではなく、見逃しとノイズの両面で測る設計が実務的である。",
+      "caveat": "評価設計はGitHubの説明に基づくもので、他社レビュアーでの独立検証は示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-reviewbench-ai-code-review",
+      "language": "en",
+      "observed_at": "2026-10-10T12:50:00+09:00",
+      "published_at": "2026-10-05T15:59:40Z",
+      "role": "brief",
+      "selection_reason": "エージェントが担うようになったコードレビューの評価を、比較可能にする試みを一次資料で確認できる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは、エージェントによるコードレビューの品質を比較する公開ベンチマークReviewBenchを紹介した。既存のAIレビュアーは、指摘の量・ノイズの少なさ・重大な問題の検出力などで性格が異なり、何をどれだけ見逃すかの比較が難しい。良いレビューのベンチマークは実際のワークフローを反映すべきだとし、システムごとの得意・不得意とトレードオフを測る枠組みを示している。",
+      "source_kind": "repository",
+      "source_title": "ReviewBench: An open benchmark for AI code review",
+      "source_url": "https://github.blog/ai-and-ml/github-copilot/reviewbench-an-open-benchmark-for-ai-code-review/",
+      "title": "GitHub、AIコードレビューを比較する公開ベンチマークReviewBenchを公開",
+      "topics": [
+        "agents",
+        "tools",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-10T12:50:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-10-10T12:50:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：実行基盤の統合、判断特化モデルの広がり、現場と評価のずれ",
+  "topics": [
+    {
+      "description": "基盤モデルの能力と提供・適応の条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計・評価・統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "開発・業務・運用を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "能力・評価・基盤に関する研究開発。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "公開されたモデル・基盤と利用条件。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "生成・編集・音声など創作を支えるAI。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}
