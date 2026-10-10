@@ -1,0 +1,26 @@
+[
+  {
+    "changed_signal_ids": [
+      "aws-claude-haiku-5-5-bedrock",
+      "aws-qlik-grounded-enterprise-ai-bedrock",
+      "cisa-icsa-26-281-02-grid-protection-alliance",
+      "cloudflare-workers-on-demand-profiling",
+      "github-ai-secret-detection-model",
+      "google-embeddinggemma-2-edge",
+      "google-outer-loop-ambient-quality-agent",
+      "nist-golden-age-of-science",
+      "nvidia-kdd-cup-data-analytics-agents",
+      "nvidia-robotic-assembly-gb300-trays"
+    ],
+    "edition_date": "2026-10-11",
+    "edition_id": "2026-10-11-0104",
+    "edition_url": "https://aoifuture.com/news/2026-10-11-0104/",
+    "event_id": "aoi-news-2026-10-11-0104-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-11T01:04:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "本番エージェントの品質をどう測り続けるか、小さなモデルと狭い道具立てで信頼性を上げる工夫、秘密の検出からサンドボックスまで境界を絞る動き。一次資料から、AIエージェントを「動かし続ける」現在地を確認する。",
+    "title": "AOIFUTURE News：エージェントの品質を測る、境界を絞る、現場に載せる"
+  }
+]

@@ -1,0 +1,336 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-10-11T01:04:00+09:00",
+  "dek": "本番エージェントの品質をどう測り続けるか、小さなモデルと狭い道具立てで信頼性を上げる工夫、秘密の検出からサンドボックスまで境界を絞る動き。一次資料から、AIエージェントを「動かし続ける」現在地を確認する。",
+  "edition_date": "2026-10-11",
+  "edition_id": "2026-10-11-0104",
+  "edition_note": "2026年10月5日から10月11日の一次資料を直接確認した。各社の性能・効果の主張は独立に再現していない。公開可否は別のpublisherレーンが判断する。",
+  "generated_at": "2026-10-11T01:04:00+09:00",
+  "items": [
+    {
+      "aoi_note": "テストで通っても、現場では前提が動く。品質は一度の合格ではなく、失敗の型を観測し続ける運用で守るものだと分かる。評価データを運用データへつなげる設計が要点になる。",
+      "caveat": "枠組みと課題の提示はGoogleの解説に基づくもので、特定ツールの効果を独立に評価したものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-outer-loop-ambient-quality-agent",
+      "language": "en",
+      "observed_at": "2026-10-11T01:04:00+09:00",
+      "published_at": "2026-10-08T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "エージェントの品質問題が「作る」段階から「運用し続ける」段階へ移っていることを、当事者の一次解説で確認できる。",
+      "source_domain": "developers.googleblog.com",
+      "source_fact": "Google Developers Blogは、本番運用中のAIエージェントの品質を継続的に観測・診断する「Outer Loop」の考え方を解説した。エージェントがHTTP 200を返し遅延内に収まっていても、実際には誤った結果（例：空席確認をせず座席を確定、嗜好に反する推薦）を出すことがある。既知の検証ケースで80%までは比較的早く到達できるが、本番では利用のされ方が変わり品質曲線が停滞・低下する。記事は、繰り返す失敗の型を継続的に検出し、変更が効いたかを確認して後戻りを防ぐループの必要性を説く。",
+      "source_kind": "official",
+      "source_title": "The Outer Loop, Insights First: An Ambient Quality Agent That Diagnoses Your Production Agent",
+      "source_url": "https://developers.googleblog.com/the-outer-loop-insights-first-an-ambient-quality-agent-that-diagnoses-your-production-agent/",
+      "title": "Google、本番エージェントの失敗を継続的に診断する「Outer Loop」を解説",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-11T01:04:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "道具を増やすより、入口と出口を狭く設計するほうが壊れにくい。失敗を記録し分類し続ける仕組みは、業務エージェント全般に流用できる。",
+      "caveat": "競技での結果と設計の説明に基づくもので、他業務への一般化や性能は独立に検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-kdd-cup-data-analytics-agents",
+      "language": "en",
+      "observed_at": "2026-10-11T01:04:00+09:00",
+      "published_at": "2026-10-08T18:30:02Z",
+      "role": "major",
+      "selection_reason": "エージェントの信頼性が、モデルの大きさではなくハーネス設計・ツールの絞り込み・トレースによる失敗分類で高まることを、一次の実践記録で確認できる。",
+      "source_domain": "developer.nvidia.com",
+      "source_fact": "NVIDIAのKGMONチームは、KDD Cup 2026 Data Agents競技で2位に入った設計を解説した。小さく固定したLLMの周りに制約付きのハーネスを組み、複数の構造化データ源を単一のSQLiteデータベースに統合したうえでschema()とsql()という狭いインターフェースに絞ることで、ルーティング誤りを減らし推論能力を保った。本番の推論ループの前にスキーマ探索のプリフライトを行い、テーブル・結合キー・データ品質の課題をエージェントに伝える。ツールはschema()、sql(query)、write_answer(df)、prose_helper()に限定し、不正な呼び出しを修復するミドルウェアと中間結果を保持する状態管理を備える。文書検査と構造化分析を分離し、実行トレースから専用の検査エージェントが失敗を分類して改善につなげた。",
+      "source_kind": "official",
+      "source_title": "Building Reliable Data Analytics Agents: Lessons from the KDD Cup",
+      "source_url": "https://developer.nvidia.com/blog/building-reliable-data-analytics-agents-lessons-from-the-kdd-cup/",
+      "title": "NVIDIA、KDD Cupのデータ分析エージェントで信頼性を高めた設計を公開",
+      "topics": [
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-11T01:04:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "高性能な大型モデルと、安く速く大量に捌く小型モデルの役割分担がはっきりしてきた。サブエージェントに何を任せるかは、コストと統制の設計問題になる。",
+      "caveat": "性能・価格の記述はAnthropicとAWSの発表に基づくもので、独立評価ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-claude-haiku-5-5-bedrock",
+      "language": "en",
+      "observed_at": "2026-10-11T01:04:00+09:00",
+      "published_at": "2026-10-07T18:52:10Z",
+      "role": "major",
+      "selection_reason": "サブエージェント用途に絞った小型・低コストモデルの提供開始を、クラウド事業者の一次発表で確認できる。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは、Amazon BedrockおよびClaude Platform on AWSでClaude Haiku 5.5が利用可能になったと発表した。AnthropicによればClaude 5.5ファミリーで最速・最高効率のモデルで、サブエージェントや大量・コスト重視の用途に向く。多くのタスクでClaude Haiku 4.5より約75%安いとされる。BedrockではデータをAWS内に保ったまま、IAM、CloudTrail、CloudWatch、Bedrock Guardrailsなど既存のAWS統制と組み合わせて利用でき、利用料はAWSの請求に計上される。",
+      "source_kind": "release",
+      "source_title": "Introducing Claude Haiku 5.5 on AWS",
+      "source_url": "https://aws.amazon.com/blogs/machine-learning/introducing-claude-haiku-5-5-on-aws/",
+      "title": "AWS、Claude Haiku 5.5をBedrockで提供開始　サブエージェント向けに低コスト化",
+      "topics": [
+        "models",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-11T01:04:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "生成と検出はセットで考える必要がある。機能の追加と同時に「どこから課金されるか」を先に示す姿勢は、導入判断の材料になる。",
+      "caveat": "検出性能や課金の詳細はGitHubの発表に基づくもので、検出精度の独立評価ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-ai-secret-detection-model",
+      "language": "en",
+      "observed_at": "2026-10-11T01:04:00+09:00",
+      "published_at": "2026-10-07T16:13:56Z",
+      "role": "major",
+      "selection_reason": "AIがコードを書く前提で、秘密の検出を文脈ベースへ強化しつつ課金設計を先に示す動きを、当事者の一次発表で確認できる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは、秘密情報の検出に特化したファインチューニング済みモデルを発表した。コードの周辺文脈を読み、判別可能なトークン形式を持たないパスワードなど、露出前の資格情報を検出する。既存のAI検出パスワードアラートの利用者は自動的に新モデルへ移行し、push protectionのAI検出はプライベートプレビュー、Copilot CLI／アプリの/security-reviewコマンドは近日プライベートプレビューとなる。AI検出の秘密アラートはGHSPとGHASに追加費用なしで含まれるが、push protectionのオプトイン検査とsecurity-reviewコマンドはGitHub AI Creditsを消費する予定だと説明している。",
+      "source_kind": "release",
+      "source_title": "Purpose-built model for leaked secret detection",
+      "source_url": "https://github.blog/changelog/2026-10-07-purpose-built-model-for-leaked-secret-detection",
+      "title": "GitHub、周辺コードを読む秘密検出モデルを発表　AIレビューにも展開",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-11T01:04:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "推測で最適化するより、動いているものを測るほうが速い。可観測性がログや集計から実行時のプロファイルへ広がると、性能問題の切り分けが現実的になる。",
+      "caveat": "機能の範囲はCloudflareの発表に基づくもので、計測精度の独立評価ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-workers-on-demand-profiling",
+      "language": "en",
+      "observed_at": "2026-10-11T01:04:00+09:00",
+      "published_at": "2026-10-09T13:00:00Z",
+      "role": "brief",
+      "selection_reason": "サーバーレス実行基盤でも「本番をそのまま測る」計測手段が標準化しつつあることを、一次発表で確認できる。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは、WorkersとDurable ObjectsのCPU・メモリのオンデマンドプロファイリングを発表した。Workers Observabilityページから稼働中のWorkerのプロファイルを取得し、インタラクティブなフレームグラフで確認、ファイルとしてダウンロードできる。CLIではcfパッケージでプロファイルを取得できる。本番環境で実際にどこがCPUを消費し、メモリを確保しているかを把握できる点を利点として挙げている。",
+      "source_kind": "official",
+      "source_title": "Introducing on-demand CPU and memory profiling with flamegraphs for Workers and Durable Objects",
+      "source_url": "https://blog.cloudflare.com/workers-on-demand-profiling/",
+      "title": "Cloudflare、WorkersとDurable Objectsの実行時プロファイリングを提供",
+      "topics": [
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-11T01:04:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ロボット実装では、最新モデルを丸ごと使うより、認識・計画・制御を分解して組み合わせるほうが成果に直結する。物理作業では成功率とサイクルタイムが実質的な指標になる。",
+      "caveat": "成功率・サイクルタイムはNVIDIAの説明に基づくもので、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-robotic-assembly-gb300-trays",
+      "language": "en",
+      "observed_at": "2026-10-11T01:04:00+09:00",
+      "published_at": "2026-10-07T18:21:03Z",
+      "role": "brief",
+      "selection_reason": "基盤モデルを使いつつ古典的な認識・計画・制御を組み合わせ、実タスクの成功率とサイクルタイムまで示す一次の実装記録として確認できる。",
+      "source_domain": "developer.nvidia.com",
+      "source_fact": "NVIDIAは、Seattle Robotics LabとIsaacエンジニアリングチームが、GB300の検査トレイを組み立てるロボットシステムを開発したと公開した。対象はバスバー組み立てと多数コネクタの挿入で、FoundationPoseによる認識、Lissajous曲線の操作プリミティブによるウェイポイント計画、高性能インピーダンス制御を組み合わせた古典的なモジュール型パイプラインにより、バスバー組み立ては成功率95%超・サイクルタイム160秒を達成した。多数コネクタ挿入ではケーブル把持にSAM3セグメンテーションを用いた。",
+      "source_kind": "official",
+      "source_title": "The Machines that Make the Machines",
+      "source_url": "https://developer.nvidia.com/blog/the-machines-that-make-the-machines/",
+      "title": "NVIDIA、ロボットでGB300検査トレイを組み立てる自作システムを公開",
+      "topics": [
+        "research",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-11T01:04:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "端末側で複数モダリティを一つの空間にまとめられると、検索や振り分けをネットワーク往復なしで済ませられる。小さくて軽いことが、そのまま設計の選択肢になる。",
+      "caveat": "パラメータ数・メモリ・性能の記述はGoogleの発表に基づくもので、独立ベンチマークではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-embeddinggemma-2-edge",
+      "language": "en",
+      "observed_at": "2026-10-11T01:04:00+09:00",
+      "published_at": "2026-10-06T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "ローカル・プライバシー重視の用途向けに、複数モダリティを統合した小型オープンウェイト埋め込みが登場したことを一次発表で確認できる。",
+      "source_domain": "developers.googleblog.com",
+      "source_fact": "Google AI EdgeとAndroid MLチームは、Google DeepMindが公開したオープンウェイトのマルチモーダル埋め込みモデルEmbeddingGemma 2を紹介した。テキスト・画像・動画フレーム・音声を単一のベクトル空間に写し、個別のキャプション生成・音声認識・テキスト埋め込みを連結する構成に比べ遅延とメモリを抑える。約7.4億パラメータで、テキストのみで約191MB、Pixel 11 Proで全モーダル約567MBのRAMで動作するとされる。ファインチューニングなしで入力と分類ラベル・説明を直接照合し、ミリ秒単位のゼロショット意図ルーティングに使えるとしている。",
+      "source_kind": "release",
+      "source_title": "Bring multimodal semantic search to the edge with EmbeddingGemma 2",
+      "source_url": "https://developers.googleblog.com/google-ai-edge-with-embeddinggemma-2/",
+      "title": "Google、テキスト・画像・音声を統合するオンデバイス埋め込みモデルEmbeddingGemma 2を公開",
+      "topics": [
+        "models",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-11T01:04:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "公開された部品を重要基盤に使うときは、脆弱性の追跡と更新を前提に運用する必要がある。認証欠如やSSRFのような基本欠陥が今も重大と評価される点は重い。",
+      "caveat": "影響範囲と評価はCISAの勧告に基づくもので、個別環境での影響を独立に検証したものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-icsa-26-281-02-grid-protection-alliance",
+      "language": "en",
+      "observed_at": "2026-10-11T01:04:00+09:00",
+      "published_at": "2026-10-08T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "重要インフラのオープンソース監視・制御ソフトに深刻な脆弱性があることを、政府機関の一次勧告で確認できる。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "CISAは、Grid Protection AllianceのopenPDCとopenHistorianに関するICS勧告ICSA-26-281-02（公開日2026年10月8日）を公開した。影響を受けるバージョンが示され、CVE-2026-104629など複数の脆弱性が挙げられている。脆弱性の種類には、信頼できないデータのデシリアライズ、重要機能の認証欠如、サーバーサイドリクエストフォージェリ（SSRF）、ハードコードされた資格情報の使用、外部制御入力によるクラス・コード選択（安全でないリフレクション）が含まれ、一部はCVSS v3で9.8と評価されている。",
+      "source_kind": "advisory",
+      "source_title": "Grid Protection Alliance openPDC and openHistorian",
+      "source_url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-281-02",
+      "title": "CISA、電力系オープンソースの重大脆弱性勧告を公開",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-11T01:04:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "技術の実装が速くなるほど、比較の基準や計測の共通土台を整える役割が効いてくる。標準は普及の前提であり、政策と研究の接点として押さえておきたい。",
+      "caveat": "内容はNISTの発表と政策報告に基づくもので、取り組みの成果は今後の進展に依存する。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nist-golden-age-of-science",
+      "language": "en",
+      "observed_at": "2026-10-11T01:04:00+09:00",
+      "published_at": "2026-10-08T12:00:00Z",
+      "role": "brief",
+      "selection_reason": "標準・計測を担う政府機関が、科学加速と産業基盤の政策にどう関与するかを一次発表で確認できる。",
+      "source_domain": "www.nist.gov",
+      "source_fact": "米国商務省の国立標準技術研究所（NIST）は、ホワイトハウス科学技術政策局の「Science: A New Golden Age」報告が示した原則と提言への支持を表明した。この政府全体の取り組みは、重要な新興技術で優位を確保するため、科学発見の加速、実用化、産業基盤の再構築を目的とする。NISTは、計測科学と標準の主導機関として、基礎研究と産業応用の距離を縮める立場にあると説明している。",
+      "source_kind": "regulator",
+      "source_title": "NIST Joins White House Effort to Drive 'A New Golden Age of Science'",
+      "source_url": "https://www.nist.gov/news-events/news/2026/10/nist-joins-white-house-effort-drive-new-golden-age-science",
+      "title": "NIST、連邦の科学加速イニシアチブに参画　標準と計測で産業基盤を支援",
+      "topics": [
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-11T01:04:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "「答えを速くする」より「根拠を示して信頼できる形にする」ほうが導入の壁である。利用数は、その壁を越えたかどうかの実質的な指標になる。",
+      "caveat": "導入規模や効果の記述はAWSとQlikの説明に基づくもので、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-qlik-grounded-enterprise-ai-bedrock",
+      "language": "en",
+      "observed_at": "2026-10-11T01:04:00+09:00",
+      "published_at": "2026-10-07T15:48:46Z",
+      "role": "brief",
+      "selection_reason": "根拠付きの回答と規制対応を軸にしたエンタープライズAIの実運用規模を、クラウド事業者の一次事例で確認できる。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは、データ統合・分析のQlikがAmazon Bedrock上で構築した「Qlik Answers」の事例を公開した。社内データは不足しているのではなく、素早く信頼できる答えを得る手段が不足しているという課題に対し、出典のない回答や検証手段の欠如、規制環境への配備の難しさに対処した。2026年2月の一般提供以降、Qlikの異常・外れ値検出エージェント（Discovery Agent）だけで顧客に10万件超の発見をもたらし、エージェント機能を有効にしたQlik Cloudアカウントの多くが実際に利用しているとしている。",
+      "source_kind": "official",
+      "source_title": "How Qlik built grounded, enterprise-scale AI with Amazon Bedrock",
+      "source_url": "https://aws.amazon.com/blogs/machine-learning/how-qlik-built-grounded-enterprise-scale-ai-with-amazon-bedrock/",
+      "title": "AWS、Qlikの根拠付きエンタープライズAIをBedrock上で大規模運用する事例を公開",
+      "topics": [
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-11T01:04:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-10-11T01:04:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：エージェントの品質を測る、境界を絞る、現場に載せる",
+  "topics": [
+    {
+      "description": "基盤モデルの能力と提供・適応の条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計・評価・統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "開発・業務・運用を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "能力・評価・基盤に関する研究開発。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "公開されたモデル・基盤と利用条件。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "生成・編集・音声など創作を支えるAI。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}
