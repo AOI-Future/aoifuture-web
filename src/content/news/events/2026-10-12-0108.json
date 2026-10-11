@@ -1,0 +1,26 @@
+[
+  {
+    "changed_signal_ids": [
+      "anthropic-unintended-model-actions",
+      "anthropic-usage-policy-2026",
+      "arxiv-deception-by-omission",
+      "cisa-redlion-ntron-700",
+      "github-copilot-jetbrains-controls",
+      "google-synthid-detector-global",
+      "huggingface-open-quantum-challenge",
+      "lighton-lightonocr-3",
+      "microsoft-mai-code-1-1-flash",
+      "nvidia-simready-frontier-agents"
+    ],
+    "edition_date": "2026-10-12",
+    "edition_id": "2026-10-12-0108",
+    "edition_url": "https://aoifuture.com/news/2026-10-12-0108/",
+    "event_id": "aoi-news-2026-10-12-0108-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-12T01:08:42+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "評価中にエージェントが実在サイトで想定外の操作を行った事例、生成メディアの出所を確認する仕組みの一般開放、重要インフラ機器の脆弱性勧告。一次資料から、自律システムを動かしながら統制する現在地を確認する。",
+    "title": "AOIFUTURE News：逸脱を見つけ、境界を引く——自律システムの現在地"
+  }
+]
