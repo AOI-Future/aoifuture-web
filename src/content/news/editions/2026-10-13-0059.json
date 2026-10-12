@@ -1,0 +1,390 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-10-13T00:59:15+09:00",
+  "dek": "業務エージェントの統合、フロンティア級モデルの重み公開、汎用AIへの規制執行、重要インフラ機器の脆弱性。一次資料から、AIの能力拡大と統制が同時に進む現在地を確認する。",
+  "edition_date": "2026-10-13",
+  "edition_id": "2026-10-13-0059",
+  "edition_note": "2026年10月6日から10月12日までの一次資料を直接確認した。一部は直近72時間より前の公開だが、内容の新しさを優先して採録し、前提は各項目の留保に記した。各社の性能や効果の主張は独立に再現していない。公開可否は別の publisher レーンが判断する。",
+  "generated_at": "2026-10-13T00:59:15+09:00",
+  "items": [
+    {
+      "aoi_note": "答えの形式そのものをモデルが選ぶようになると、利用者は「何を聞くか」に集中できる。ただし見た目の操作感と中身の正しさは別なので、確認の習慣は残る。",
+      "caveat": "提供範囲と安全評価はOpenAIの発表に基づくもので、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-gpt-6-intelligent-ui",
+      "language": "en",
+      "observed_at": "2026-10-13T00:59:15+09:00",
+      "published_at": "2026-10-07T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "対話型AIの出力が、文章から操作できる画面へ広がる転換を、提供元の一次発表で確認できる。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは、GPT-6をChatGPTの無料・有料を含む全プランへ順次展開すると発表した。最大の変更は「Intelligent UI」で、回答を文章だけでなく、図、押せるボタン、入力フォーム、表、対話的に操作できる要素を組み合わせて構成する。質問に応じて形式を選び、単純な文章で足りる場合は文章で答える。ChatGPTの利用者は週12億人を超えるとし、まずPlus・Pro・Business・Enterprise、翌日からFree・Goへ広げる。対象はChatの体験のみで、WorkとCodexを動かすモデルは変わらない。安全性については、自らの能力の限界を認識して伝える点が改善したとする評価を示した。",
+      "source_kind": "release",
+      "source_title": "GPT-6 and Intelligent UI for everyone",
+      "source_url": "https://openai.com/index/gpt-6-for-everyone/",
+      "title": "OpenAI、GPT-6をChatGPT全プランへ　回答が操作できる画面になる「Intelligent UI」を追加",
+      "topics": [
+        "models",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-13T00:59:15+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントが会社の文脈を継続して持ち、役割として動くなら、導入の論点は機能ではなく権限と監査に移る。",
+      "caveat": "構成と機能はGoogle Cloudの発表に基づくもので、独立評価ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-cloud-gemini-universal-agent",
+      "language": "en",
+      "observed_at": "2026-10-13T00:59:15+09:00",
+      "published_at": "2026-10-08T00:00:00Z",
+      "role": "major",
+      "selection_reason": "業務エージェントが、単機能の道具から複数アプリをまたぐ統合された担い手へ変わる動きを一次で確認できる。",
+      "source_domain": "cloud.google.com",
+      "source_fact": "Google Cloudは、業務向けの統合エージェント「Gemini」を発表した。単一の窓口から質問への回答、知識作業、画像や動画の生成、コードの作成と実行までを担う。WorkspaceのGmail・Drive・Docs・Slides・Sheets・Chat・Calendarの内部で動作し、記憶・スキル・統制をどの面でも共通に持ち運ぶ。クラウド上で実行が継続し、端末を閉じても時間や日単位の作業が進む。目的に応じて一時的なサブエージェントを動的に作り、並行・逐次で協調させる。下位のモデルは作業ごとに選び、Gemini系に加えてAnthropicのClaudeも使う。社内のツール登録・スキル登録と、セッション・意味・手続き・エピソードの4種の記憶を備える。",
+      "source_kind": "official",
+      "source_title": "Welcome to Gemini at Work 2026: Introducing the Gemini agent",
+      "source_url": "https://cloud.google.com/blog/products/ai-machine-learning/welcome-to-gemini-at-work-2026",
+      "title": "Google Cloud、業務向けの統合エージェント「Gemini」を発表",
+      "topics": [
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-13T00:59:15+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "重みが公開されれば、提供者が機能を止めても手元の複製は生き残る。統制と自律を両立させたい組織の選択肢が増える。",
+      "caveat": "性能の主張はMistralの発表に基づくもので、重みの公開時期とライセンスは変更されうる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "mistral-large-4-preview",
+      "language": "en",
+      "observed_at": "2026-10-13T00:59:15+09:00",
+      "published_at": "2026-10-06T00:00:00Z",
+      "role": "major",
+      "selection_reason": "欧州発のフロンティア級モデルが、重みの公開を前提にした競争へ踏み込む動きを一次発表で確認できる。",
+      "source_domain": "mistral.ai",
+      "source_fact": "Mistralは、1兆パラメータ（有効520億）のマルチモーダルなMixture-of-Expertsモデル「Mistral Large 4」の公開プレビューを開始した。欧州の自社データセンターにあるNVIDIA Grace Blackwell 3,800基でゼロから学習し、160以上の言語を含む多言語データを扱う。コーディング、エージェント作業、マルチモーダル理解でオープンウェイト最上位級とし、サイバーセキュリティや法務、財務などではクローズドモデルにも迫ると主張する。APIはMistral Studioで提供し、入力100万トークンあたり1.36ドル、出力4.18ドル。重みは独自ライセンスで今月中に公開予定とされる。",
+      "source_kind": "release",
+      "source_title": "Introducing Mistral Large 4",
+      "source_url": "https://mistral.ai/news/mistral-large-4",
+      "title": "Mistral、1兆パラメータのLarge 4を公開プレビューへ　重みは今月中に公開予定",
+      "topics": [
+        "models",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-13T00:59:15+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "「認証済みなら安全」は成り立たない。権限を持つ利用者が起点になる経路を、設計の時点で想定しておく必要がある。",
+      "caveat": "影響範囲と評価はCISA勧告に基づくもので、個別環境での影響を独立検証したものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-satel-netco-design",
+      "language": "en",
+      "observed_at": "2026-10-13T00:59:15+09:00",
+      "published_at": "2026-10-08T00:00:00Z",
+      "role": "major",
+      "selection_reason": "通信分野の設計ツールで、認証後の基本欠陥が任意コード実行まで連なる構図を政府の一次勧告で確認できる。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "米CISAは、Satelの設計ツールNetco Designに関するICS勧告ICSA-26-281-03を公開した。v2.1.7より前が対象で、3件のCVEが挙げられている。保存型のクロスサイトスクリプティング、正規表現の計算量に関する欠陥、データ取り込みと出力機能の相対パストラバーサルである。認証済みの利用者が細工した入力やファイルを扱うことで、他利用者のブラウザでのスクリプト実行、資源の枯渇、アプリから到達できる領域へのファイル作成や改変、条件次第で任意コード実行につながる。CVSS v3は最大8.8。ベンダーはv2.1.7以降への更新を勧めている。CISAは公開時点で実悪用を把握していないとしている。",
+      "source_kind": "advisory",
+      "source_title": "Satel Netco Design",
+      "source_url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-281-03",
+      "title": "CISA、通信向け設計ツールSatel Netco Designに3件の脆弱性を勧告",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-13T00:59:15+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "禁止一辺倒でも全面開放でもない中間の設計は、実務では現実的だ。ただし階層の判定そのものが新たな攻防の対象になる。",
+      "caveat": "評価結果はAnthropicの社内ベンチマークに基づくもので、第三者による検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "anthropic-cyber-verification-program",
+      "language": "en",
+      "observed_at": "2026-10-13T00:59:15+09:00",
+      "published_at": "2026-10-06T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "二重用途の能力を、審査と段階で管理しながら防御側へ広げる設計を一次発表で確認できる。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "Anthropicは、サイバー能力の提供プログラム（CVP）を拡張し、3段階のアクセス階層に再編した。Defense AccessはSOCやインシデント対応、マルウェア解析などの防御作業向けで、企業や大学、政府機関、重要インフラの運用者、OSS保守者、実績ある個人研究者が対象になりうる。Red Team Accessは許可された侵入試験を加え、Specialized Accessは最も遮断が少なく、飛行運用や電力網、通信網、銀行間決済などの安全システムを検証する限定組織向けで、米政府と協力して審査する。同社はOpus 5.5で、防御階層では50件中46件を遮断、レッドチーム階層では遮断0で34件を完了したと報告した。",
+      "source_kind": "official",
+      "source_title": "Expanding the Cyber Verification Program",
+      "source_url": "https://www.anthropic.com/news/cyber-verification-program",
+      "title": "Anthropic、サイバー検証プログラムを3層に拡張　防御側へ高性能モデルを開放",
+      "topics": [
+        "security",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-10-13T00:59:15+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AIは工作の質を劇的に上げるわけではないが、量と速度を変える。防御側は、生成物より運用の痕跡を見る目が要る。",
+      "caveat": "分析と到達度評価はOpenAIの報告に基づくもので、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-disrupting-false-front",
+      "language": "en",
+      "observed_at": "2026-10-13T00:59:15+09:00",
+      "published_at": "2026-10-08T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "AIが影響工作の運用そのものを効率化する現実を、開発元の一次報告で確認できる。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは、ロシアとイラン起点の影響工作に使われたChatGPTアカウント群を停止したと公表した。イラン側は7つの架空の記者名義で長文記事を世界中の中小メディアへ売り込み、ロシア側は中南米の無自覚な人々を巻き込み「シンクタンク」を運営した。ロシアの工作は架空の人物を使って自称調査組織を支配し、活動報告の作成にモデルを多用した。到達度を測るBreakout Scaleで、ロシア起点はカテゴリー5、イラン起点は4と評価され、カテゴリー5は同社の公表開始以来初めてだとした。AIは工作の規模や速度、文章力を高める一方、内部報告の大量作成にも使われ、かえって痕跡を残したと分析する。",
+      "source_kind": "official",
+      "source_title": "Disrupting AI-enabled \"false front\" operations",
+      "source_url": "https://openai.com/index/disrupting-ai-enabled-false-front-operations/",
+      "title": "OpenAI、AIを使った偽装組織による影響工作のアカウント群を停止",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-13T00:59:15+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "計算資源の供給者が政策の担い手と重なると、研究の優先順位は市場と国家の両方に引っ張られる。",
+      "caveat": "金額と対象はNVIDIAの発表に基づくもので、実行状況は独立に確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-billion-us-science",
+      "language": "en",
+      "observed_at": "2026-10-13T00:59:15+09:00",
+      "published_at": "2026-10-08T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "民間企業の投資が国の科学政策と結びつき、研究基盤を動かす構図を一次発表で確認できる。",
+      "source_domain": "nvidianews.nvidia.com",
+      "source_fact": "NVIDIAは、米国の科学分野に今後5年で総額10億ドル相当を投じると発表した。高等教育の研究機関への支援、量子計算の開発支援、政府の任務に資するクラウド事業者への支援の三本柱で、量子計算や医療、エネルギー安全保障といった分野を対象にする。発表はワシントンでのイベントで行われ、ホワイトハウス科学技術政策局が主導する「Genesis Mission」の拡大と併せて示された。同社は量子計算や核融合、加速器設計、マイクロエレクトロニクスに関する第2段階の案件にも協力し、20年以上にわたり米国の国立研究所と連携してきたとしている。",
+      "source_kind": "official",
+      "source_title": "NVIDIA Commits $1 Billion to Advance US Science Over the Next Five Years",
+      "source_url": "https://nvidianews.nvidia.com/news/nvidia-commits-1-billion-to-advance-us-science-over-the-next-five-years",
+      "title": "NVIDIA、米国の科学・量子研究に5年で10億ドルを拠出へ",
+      "topics": [
+        "policy",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-13T00:59:15+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "研究の道具が一社のモデルに寄ると、再現性や中立性の論点が生じる。使う側は代替手段も併せて確保したい。",
+      "caveat": "金額と対象はAnthropicの発表に基づくもので、成果は独立に確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "anthropic-genesis-mission",
+      "language": "en",
+      "observed_at": "2026-10-13T00:59:15+09:00",
+      "published_at": "2026-10-08T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "モデル提供企業が国の科学政策の中核的な道具として位置づけられる動きを、一次発表で確認できる。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "Anthropicは、AIで科学や技術の発見を加速する連邦構想「Genesis Mission」へ、3年間で1.5億ドルを拠出すると発表した。資金はNASA、国立衛生研究所、国立科学財団を含む15以上の機関でClaudeを利用できるようにするために使う。今後3年で、数百の研究プロジェクトにClaude、Claude Code、APIクレジットを提供し、核融合や量子計算など政権の科学優先課題で機関や国立研究所と協力し、導入支援や訓練を行う。同社は昨年12月にエネルギー省との連携を発表し、その後国立研究所へのClaude提供を進めており、今回の拠出をその延長に位置づけている。",
+      "source_kind": "official",
+      "source_title": "Building on our commitment to American scientific discovery",
+      "source_url": "https://www.anthropic.com/news/genesis-mission-commitment",
+      "title": "Anthropic、米国科学のGenesis Missionに3年で1.5億ドルを拠出へ",
+      "topics": [
+        "policy",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-13T00:59:15+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "義務の対象がモデル提供者に及ぶと、開発の設計段階から説明責任が組み込まれる。",
+      "caveat": "掲載ページの最終更新は2026年10月6日で、個別企業への措置を確認したものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "eu-ai-act-gpai-enforcement",
+      "language": "en",
+      "observed_at": "2026-10-13T00:59:15+09:00",
+      "published_at": "2026-10-06T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "基盤モデルそのものを対象にした執行が始まり、規制が理念から運用へ移る時点を一次情報で確認できる。",
+      "source_domain": "digital-strategy.ec.europa.eu",
+      "source_fact": "欧州委員会は、AI Actのうち汎用AI（GPAI）モデル提供者への義務について、AI Officeによる執行を始めた。2026年8月2日から、AI Officeと各国当局に調査と制裁の権限が及ぶ。AI Officeは情報提供要求やモデル評価へのアクセス要求ができ、必要ならモデルの公開停止を求めることがある。禁止されるAI慣行には最大3,500万ユーロまたは全世界年間売上の7%、GPAIの義務違反には最大1,500万ユーロまたは3%の制裁金が課されうる。透明性や著作権の尊重、最先端モデルの安全性に関する義務が対象で、GPAI行動規範が運用を支える。",
+      "source_kind": "regulator",
+      "source_title": "The enforcement framework of the AI Act",
+      "source_url": "https://digital-strategy.ec.europa.eu/en/policies/enforcement-ai-act",
+      "title": "EU、汎用AIモデルへのAI Act執行を開始　最大で全世界売上の3%の制裁金",
+      "topics": [
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-10-13T00:59:15+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "製品そのものより、同梱された部品の既定設定が穴になることが多い。構成管理と棚卸しが対策の前提になる。",
+      "caveat": "影響範囲と評価はCISA勧告およびベンダー公表に基づくもので、個別環境での影響を独立検証したものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-hitachi-energy-soi",
+      "language": "en",
+      "observed_at": "2026-10-13T00:59:15+09:00",
+      "published_at": "2026-10-06T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "エネルギー分野の運用ソフトで、同梱ミドルウェアの既定設定が任意コード実行の入口になる例を一次勧告で確認できる。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "米CISAは、Hitachi Energyの系統運用製品SOIに関するICS勧告ICSA-26-279-04を公開した。対象はSOI 2.0.0以上2.2.0以下で、CVE-2026-34197が挙げられている。同製品が使うApache ActiveMQ Classicは、WebコンソールのJolokia JMX-HTTPブリッジを既定で公開し、認証済みの攻撃者がMBeanの操作を通じて遠隔のSpring設定を読み込ませ、ブローカーのJVM上で任意コードを実行できる。CVSS v3は8.8。ベンダーはActiveMQを更新する累積パッチSOI EP2の適用を勧めている。同勧告はベンダーのCSAF勧告の再掲載で、当初公表は9月29日、CISAへの再掲載は10月6日。",
+      "source_kind": "advisory",
+      "source_title": "Hitachi Energy SOI",
+      "source_url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-279-04",
+      "title": "CISA、Hitachi Energyの系統運用ソフトSOIにActiveMQ経由のRCEを勧告",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-13T00:59:15+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "すべてを大きくすれば良いわけではない。用途ごとに必要な能力は違い、そこを見極めれば費用と遅延を同時に下げられる。",
+      "caveat": "結果は家庭自動化の一実装と合成ケースに基づくもので、他の用途やモデルにそのまま当てはまるとは限らない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-slm-callsite-eval",
+      "language": "en",
+      "observed_at": "2026-10-13T00:59:15+09:00",
+      "published_at": "2026-10-06T19:18:59Z",
+      "role": "brief",
+      "selection_reason": "エージェント内部の呼び出しを分解し、小型モデルの実用範囲を実測した一次研究として参考になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "論文は、エージェントが用途の異なる複数のLLM呼び出し（意図の振り分け、行動の分類、機器登録に基づく接地、パイプラインの計画、生成コードの作成）を行う点に着目し、実際に運用されているOSSの家庭自動化フレームワークで9モデルを比較した。0.8Bからフロンティアまで、280ケース、2,520呼び出しを評価した結果、能力の順序は呼び出し地点ごとに異なり、大きいほど一様に良いわけではなかった。4Bモデルが2Bより接地操作で劣る例もあった。5地点のうち4地点では最良のローカルモデルがホスト型モデルと統計的に区別できず、差が出たのはコード生成だけだった。地点ごとに最良のローカルモデルを割り当てると、追加費用なしで91.8%に達した。",
+      "source_kind": "paper",
+      "source_title": "Not Every Call Needs a Frontier Model: Per-Call-Site Evaluation of Small Language Models in a Deployed Agentic Home-Automation System",
+      "source_url": "https://arxiv.org/abs/2610.09021",
+      "title": "研究、エージェントの呼び出しごとに小型モデルを割り当てる評価を公開",
+      "topics": [
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-13T00:59:15+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "地味な更新の積み重ねが、手元で動かす選択肢を支えている。派手な発表より、こうした保守の継続が土台になる。",
+      "caveat": "変更内容と成果物はプロジェクトの公開記録に基づくもので、各環境での動作を独立検証したものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "llamacpp-b11565-release",
+      "language": "en",
+      "observed_at": "2026-10-13T00:59:15+09:00",
+      "published_at": "2026-10-12T09:15:00Z",
+      "role": "brief",
+      "selection_reason": "端末や各種アクセラレータで小型モデルを動かす基盤が、継続的に保守されている様子を一次の配布記録で確認できる。",
+      "source_domain": "github.com",
+      "source_fact": "オープンソースの推論エンジンllama.cppは、ビルドb11565を公開した。主な変更はSYCLバックエンドで、行の末端でのDMMV読み取りを保護する修正（PR #29338）。macOS（Apple Silicon / Intel）、iOS、Linux（CPU、Vulkan、CUDA、ROCm、OpenVINO、SYCL）、Windows、Android向けのビルド済みバイナリが配布されている。同プロジェクトは高頻度でビルドを更新しており、b11559以降、b11560、b11562からb11565が10月11日から12日にかけて公開された。",
+      "source_kind": "repository",
+      "source_title": "b11565",
+      "source_url": "https://github.com/ggml-org/llama.cpp/releases/tag/b11565",
+      "title": "llama.cpp、ビルドb11565を公開　SYCLバックエンドの境界処理を修正",
+      "topics": [
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-13T00:59:15+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-10-13T00:59:15+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：能力の拡大と、その境界の引き方",
+  "topics": [
+    {
+      "description": "基盤モデルの能力と提供・適応の条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計・評価・統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "開発・業務・運用を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "能力・評価・基盤に関する研究開発。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "公開されたモデル・基盤と利用条件。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "利用規則・標準・制度とその運用。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・統制"
+    }
+  ]
+}

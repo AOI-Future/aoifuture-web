@@ -1,0 +1,28 @@
+[
+  {
+    "changed_signal_ids": [
+      "anthropic-cyber-verification-program",
+      "anthropic-genesis-mission",
+      "arxiv-slm-callsite-eval",
+      "cisa-hitachi-energy-soi",
+      "cisa-satel-netco-design",
+      "eu-ai-act-gpai-enforcement",
+      "google-cloud-gemini-universal-agent",
+      "llamacpp-b11565-release",
+      "mistral-large-4-preview",
+      "nvidia-billion-us-science",
+      "openai-disrupting-false-front",
+      "openai-gpt-6-intelligent-ui"
+    ],
+    "edition_date": "2026-10-13",
+    "edition_id": "2026-10-13-0059",
+    "edition_url": "https://aoifuture.com/news/2026-10-13-0059/",
+    "event_id": "aoi-news-2026-10-13-0059-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-13T00:59:15+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "業務エージェントの統合、フロンティア級モデルの重み公開、汎用AIへの規制執行、重要インフラ機器の脆弱性。一次資料から、AIの能力拡大と統制が同時に進む現在地を確認する。",
+    "title": "AOIFUTURE News：能力の拡大と、その境界の引き方"
+  }
+]
