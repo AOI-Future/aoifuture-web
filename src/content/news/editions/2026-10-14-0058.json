@@ -1,0 +1,368 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-10-14T00:58:47+09:00",
+  "dek": "フロンティアモデルの記憶設計、推論チップの効率競争、AI投資と金融リスク、エージェントの安全性。一次資料から、能力の拡大と統制が同時に問われる現在地を確認する。",
+  "edition_date": "2026-10-14",
+  "edition_id": "2026-10-14-0058",
+  "edition_note": "2026年10月6日から10月13日までの一次資料を直接確認した。一部は直近72時間より前の公開だが、内容の新しさを優先して採録し、前提は各項目の留保に記した。各社の性能や効率の主張は独立に再現していない。公開可否は別の publisher レーンが判断する。",
+  "generated_at": "2026-10-14T00:58:47+09:00",
+  "items": [
+    {
+      "aoi_note": "ベンチマークの点数より、記憶を保ち長時間働き続ける設計の方が利用体験を左右する。導入を検討する側は、機能より権限と停止条件の設計が次の論点になる。",
+      "caveat": "性能と安全の主張はMetaの発表と社内評価に基づくもので、第三者による独立評価ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "meta-muse-wonder",
+      "language": "en",
+      "observed_at": "2026-10-14T00:58:47+09:00",
+      "published_at": "2026-10-12T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "個人・業務エージェント向けのフロンティアモデルを一次発表で確認でき、記憶と持続的な作業という設計の焦点を直接読める。",
+      "source_domain": "research.meta.ai",
+      "source_fact": "Metaは10月12日、Muse WonderとMuse Wonder FullからなるMuse Wonderシリーズを発表した。個人・業務のエージェント作業で最先端の性能を示すとし、「Active Memory」で会話をまたいで重要な文脈を保ち、「Active Focus」で目標に向けて代替案を試し障害を越えながら作業を続ける。Muse WonderはMeta Model APIとMuse Codeで利用でき、Muse Wonder FullはMuse Codeのサブスクリプション向け。ギガワット級のPrometheusデータセンターで学習した。CBRNやサイバー misuseに対して「これまでで最も強い」安全策を備えると主張している。",
+      "source_kind": "official",
+      "source_title": "Muse Wonder: A Frontier Model For Personal & Professional AI Agents",
+      "source_url": "https://research.meta.ai/blog/muse-wonder",
+      "title": "Meta、「Muse Wonder」シリーズを公開　個人・業務エージェント向けのフロンティアモデル",
+      "topics": [
+        "models",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-14T00:58:47+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "「1MWあたり何トークンか」という指標は、導入判断を生の性能から電力効率へ移す。使う側にとっては、モデル選択と実行基盤の選定が一体化していく。",
+      "caveat": "効率と性能の数値はMicrosoftの想定に基づくもので、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "microsoft-azure-maia-300",
+      "language": "en",
+      "observed_at": "2026-10-14T00:58:47+09:00",
+      "published_at": "2026-10-12T00:00:00Z",
+      "role": "major",
+      "selection_reason": "推論のコストと電力が競争軸になる移行を、自社シリコンの一次発表で確認できる。",
+      "source_domain": "blogs.microsoft.com",
+      "source_fact": "マイクロソフトは10月12日、Azure Maiaシリーズを2027年から数ギガワット規模へ拡大し、自社製品とサービスの主要な推論システムにすると発表した。第3世代のMaia 300は長文脈推論、遅延に敏感な対話、長時間のエージェント作業に向けた推論優先の設計。8基のHBM4で18.0TB/sの帯域を950WのTDPで実現し、96基構成のラックは167kWで27.6TBのHBM容量と1.7PB/sの合計帯域を提供する。競合するGPU構成に比べ1MWあたり40%多いトークンを見込む。前世代のMaia 200はCopilotなどで本番稼働している。",
+      "source_kind": "official",
+      "source_title": "Microsoft to expand Azure Maia system to multi-gigawatt deployments",
+      "source_url": "https://blogs.microsoft.com/blog/2026/10/12/microsoft-to-expand-azure-maia-system-to-multi-gigawatt-deployments/",
+      "title": "Microsoft、Azure Maiaを数ギガワット規模へ　推論特化の「Maia 300」を公開",
+      "topics": [
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-14T00:58:47+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "防御は利用者にも摩擦を生む。統合の更新や遮断時の課金など、安全と使い勝手のトレードオフを当事者が数字で示している点が参考になる。",
+      "caveat": "遮断率や誤検知率はAnthropicの社内評価に基づくもので、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "anthropic-distillation-defenses",
+      "language": "en",
+      "observed_at": "2026-10-14T00:58:47+09:00",
+      "published_at": "2026-10-12T00:00:00Z",
+      "role": "major",
+      "selection_reason": "モデル能力の複製という攻防を、開発元自身の一次記述で具体的に確認できる。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "Anthropicは10月12日、モデルの蒸留攻撃に対する新しい防御を公表した。推論過程の抽出を難しくすることを軸に、Fable 5.1とOpus 5.5で「preserved thinking」を導入し、2026年8月31日以降に作成された新規APIアカウントがClaudeの過去の文脈を編集できないようにした。二段階の分類器をSonnet 5.5、Opus 5・5.5、Fable 5・5.1に適用し、誤検知率は0.1%未満とする。9月24日以降、誤検知率の低い領域で遮断されたリクエストは課金を再開した。初期対策で推論を要約させた場合、蒸留モデルのSWE-bench Verifiedは80.4%から71.8%に下がった。同社は数万件のアカウントを停止したとしている。",
+      "source_kind": "analysis",
+      "source_title": "Strengthening our defenses against distillation attacks",
+      "source_url": "https://www.anthropic.com/research/distillation-defenses",
+      "title": "Anthropic、蒸留攻撃への防御を強化　抽出データを90〜99%削減と主張",
+      "topics": [
+        "security",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-10-14T00:58:47+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "学習用の巨大GPUとは別に、推論に絞って省電力とメモリ容量を伸ばす選択肢が増える。手元や自社環境でモデルを動かす側の選択肢が広がる。",
+      "caveat": "仕様はIntelの製品ページに基づくもので、実ワークロードでの性能を独立検証したものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "intel-gpu-d-series-d270",
+      "language": "en",
+      "observed_at": "2026-10-14T00:58:47+09:00",
+      "role": "brief",
+      "selection_reason": "推論向けの新しいデータセンターGPUを、製品の一次ページで仕様まで確認できる。",
+      "source_domain": "www.intel.com",
+      "source_fact": "Intelは推論特化のデータセンターGPU「Intel GPU D-series」を打ち出し、製品ページでD270を示している。Xe3Pアーキテクチャの32コアと256基のXMXエンジンを備え、LPDDR5Xメモリは最大480GB、帯域1.5TB/s、350Wの空冷PCIe 5.0カードとする。標準のPCIe 5.0と既存の空冷ラックで扱え、vLLMとオープンなPyTorchエコシステムで主要なオープンモデルを動かす。エージェントAIの長文脈・高並列な推論を狙う。",
+      "source_kind": "official",
+      "source_title": "Intel GPU D270 │ Inference-Optimized Data Center GPU",
+      "source_url": "https://www.intel.com/content/www/us/en/products/details/discrete-gpus/data-center-gpu/d-series.html",
+      "title": "Intel、推論特化GPU「D-series」を提示　D270はメモリ最大480GB",
+      "topics": [
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-14T00:58:47+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AIが成長要因であると同時に、価格と信用の循環に組み込まれたことを示す。導入計画は技術だけでなく資金調達の前提も合わせて見る必要がある。",
+      "caveat": "報告の見通しと試算に基づくもので、特定市場の予測ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "imf-gfsr-october-2026",
+      "language": "en",
+      "observed_at": "2026-10-14T00:58:47+09:00",
+      "published_at": "2026-10-13T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "AI投資そのものが金融システムのリスク要因として公的報告に位置づけられた転換を一次で確認できる。",
+      "source_domain": "www.imf.org",
+      "source_fact": "IMFは10月13日、世界金融安定報告（GFSR）2026年10月号を公表した。市場は底堅いが金融安定リスクは高く、AI関連資産の価格修正（レバレッジと集中したエクスポージャーで増幅）、国債利回りの急上昇、高度化するサイバー脅威を、金融環境の急激な引き締めと市場混乱を招きうる短期的な引き金として挙げた。「AIの能力はより少ない投資で実現できる」可能性や、期待した経済効果が得られない可能性を指摘し、レバレッジの抑制などの政策対応を促した。",
+      "source_kind": "regulator",
+      "source_title": "Global Financial Stability Report, October 2026: Resilience, Risk, and Transformation",
+      "source_url": "https://www.imf.org/en/publications/gfsr/issues/2026/10/13/global-financial-stability-report-october-2026",
+      "title": "IMF、世界金融安定報告を公表　AI価格の修正・国債利回り・サイバーを主要リスクに",
+      "topics": [
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-10-14T00:58:47+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "埋め込み・リランク・ガード・翻訳まで揃えてAPIで出す構成は、RAGや業務組み込みを想定した実務的な設計だ。日本語処理の選択肢が増える。",
+      "caveat": "提供内容と料金は発表時点のもので、ベータの終了時期は未定。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "sb-intuitions-sarashina",
+      "language": "ja",
+      "observed_at": "2026-10-14T00:58:47+09:00",
+      "published_at": "2026-10-13T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "日本語に強い国産モデルのAPI群が無償で試せるようになり、開発者が用途適合を検証しやすくなった。",
+      "source_domain": "www.sbintuitions.co.jp",
+      "source_fact": "ソフトバンク子会社のSB Intuitionsは10月13日、国産生成AI「Sarashina」を試せる「Sarashinaサービス」の無償ベータ提供を始めた。Sarashina3 mini、nano、embedding、rerank、guard、translateの6モデルを呼び出せるAPIと、ウェブ上のチャット・日英翻訳機能を一般利用者向けに公開する。Googleアカウントでログインすれば事前申し込みなしで無料。レート制限があり、無償ベータでは利用データを品質改善に使う場合がある。",
+      "source_kind": "release",
+      "source_title": "国産生成AI「Sarashina」を利用できる「Sarashinaサービス」の無償ベータ版を提供開始",
+      "source_url": "https://www.sbintuitions.co.jp/news/press/20261013_01/",
+      "title": "SB Intuitions、国産生成AI「Sarashina」の無償ベータを公開　6モデルのAPIとチャット",
+      "topics": [
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-10-14T00:58:47+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "攻撃の高度さより、安価で守りの薄い機器の集まりが計算基盤になり得る点が実務的な脅威になる。資産の棚卸しと隔離が対策の前提になる。",
+      "caveat": "結果は簡略化した評価環境によるもので、実ネットワークでの複製成立を実証したものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "anthropic-self-replicating-ai",
+      "language": "en",
+      "observed_at": "2026-10-14T00:58:47+09:00",
+      "published_at": "2026-10-12T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "自律複製という長年の懸念が、小型モデルと安価な機器で現実味を帯びてきたことを一次研究で確認できる。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "AnthropicのFrontier Red Teamは10月12日、小型モデルが数か月内に商用IoT機器上で自己複製できるようになる可能性を示す実験を公表した。9Bモデルは試験した9種類のハードウェアのうち8種類で推論を動かすことに成功した。30B以下のモデルは複製の個々の段階の多くを既にこなせるが、通しで組み立てると誤る。簡略化した評価では、GLM-5.2以上のモデルが端から端までの複製を達成した。15台の安価なAndroid TV端末（約55ドル）にモデルを分散させ、0.39トークン/秒で動かした。",
+      "source_kind": "official",
+      "source_title": "AI models may be capable of self-replicating without access to a datacenter",
+      "source_url": "https://www.anthropic.com/research/self-replicating-ai",
+      "title": "Anthropic、小型モデルの自己複製可能性を示す　安価なIoT機器で推論",
+      "topics": [
+        "security",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-14T00:58:47+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "モデルを配る側から手元の端末で動かす側へ、重心が移る例だ。クラウドに送れないデータを扱う用途で選択肢になる。",
+      "caveat": "速度と性能の数値はOpenBMBの内部評価に基づくもので、独立検証ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "minicpm-v-4-7",
+      "language": "en",
+      "observed_at": "2026-10-14T00:58:47+09:00",
+      "published_at": "2026-10-12T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "大型モデルの能力を端末側に持ち込むオープンモデルの進展を、一次リポジトリで確認できる。",
+      "source_domain": "github.com",
+      "source_fact": "OpenBMBは10月12日、オープンなマルチモーダルモデル「MiniCPM-V 4.7」を公開した。35B-A3B（シリーズ初のMoE）と1Bの2種で、Apache-2.0で提供する。Lookahead Expert Scheduling（LES）により、35B-A3BはiPhone 17 Pro Maxで13トークン/秒超をメモリ3GBで動かすとし、性能を落とさず端末で滑らかに動く初のオープンMoEだと主張する。iOS・Android・HarmonyOS、およびRockchip、Houmo、Intel、AMD、Armの各チップにday-0対応する。",
+      "source_kind": "repository",
+      "source_title": "GitHub - OpenBMB/MiniCPM-V: See, hear, and interact on your local devices",
+      "source_url": "https://github.com/openbmb/MiniCPM-V",
+      "title": "OpenBMB、「MiniCPM-V 4.7」を公開　スマホで動く初のオープンMoEマルチモーダル",
+      "topics": [
+        "open-source",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-10-14T00:58:47+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "派手さはないが、こうした下端の保守が「手元で動かす」選択肢を支えている。端末推論を使う側は更新の内容を追う価値がある。",
+      "caveat": "変更内容と成果物は公開記録に基づくもので、各環境での動作を独立検証したものではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "llamacpp-b11580",
+      "language": "en",
+      "observed_at": "2026-10-14T00:58:47+09:00",
+      "published_at": "2026-10-13T04:02:00Z",
+      "role": "brief",
+      "selection_reason": "端末や各種アクセラレータで小型モデルを動かす基盤が継続更新されている様子を、一次の配布記録で確認できる。",
+      "source_domain": "github.com",
+      "source_fact": "オープンソースの推論エンジンllama.cppは10月13日、ビルドb11580を公開した。主な変更は、SnapdragonのHexagon向けに二項演算でのスカラーDMAブロードキャストを拡張する修正（PR #30245）。macOS（Apple Silicon / Intel）、iOS、Linux（CPU、Vulkan、CUDA、ROCm、OpenVINO、SYCL）、Windows、Android、Snapdragon向けのビルドが配布されている。",
+      "source_kind": "repository",
+      "source_title": "Release b11580 · ggml-org/llama.cpp",
+      "source_url": "https://github.com/ggml-org/llama.cpp/releases/tag/b11580",
+      "title": "llama.cpp、ビルドb11580を公開　SnapdragonのHexagon向け処理を拡張",
+      "topics": [
+        "open-source",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-14T00:58:47+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントの安全性は、個々の操作の可否だけでなく操作の連鎖の設計まで見る必要がある。導入時の権限設計に直結する知見だ。",
+      "caveat": "結果は論文中の評価に基づくもので、実運用のすべての構成に当てはまるとは限らない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-x-agentred",
+      "language": "en",
+      "observed_at": "2026-10-14T00:58:47+09:00",
+      "published_at": "2026-10-09T17:34:44Z",
+      "role": "brief",
+      "selection_reason": "単体のツールではなく、サービスをまたぐ組み合わせで害が生じる経路を探す手法を一次研究で確認できる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "論文は、複数のサービスにつながる個人エージェントの有害な挙動を体系的に探る枠組み「X-AgentRed」を提案する。ツールの効果・害・実行の前提条件を解析して有向グラフを構築し、実行フィードバックで経路を拡張・洗練する自己進化型のレッドチーミング。4つのフロンティアなエージェントモデルで、有害経路率が既存手法STACの1.77倍、平均のツール網羅率が2.99倍になったと報告する。",
+      "source_kind": "paper",
+      "source_title": "X-AgentRed: Red-Teaming Personal Agents in Evolving Multi-Service Ecosystems",
+      "source_url": "https://arxiv.org/abs/2610.13886",
+      "title": "研究、複数サービスをまたぐエージェントの有害経路を探る手法を公開",
+      "topics": [
+        "agents",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-14T00:58:47+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "大量の作品を「描かれた内容」で検索できるようにする発想は、制作の検索や権利処理、アクセシビリティにも波及する。AIの使い道の幅を示す例だ。",
+      "caveat": "3つの研究は特定のコーパスに基づくもので、他の資料や言語にそのまま一般化できるとは限らない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-page-comics",
+      "language": "en",
+      "observed_at": "2026-10-14T00:58:47+09:00",
+      "published_at": "2026-10-09T16:49:29Z",
+      "role": "brief",
+      "selection_reason": "生成AIを含むAIを、創作の代替ではなく文化資料の研究・保存・到達の道具として使う一次研究として参考になる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "論文は、マンガやアメリカン・コミックを大規模に研究する枠組み「PAGE」を提案する。スキャンをコマ・テキスト・書誌情報に分解し、視覚言語モデルが人間のコーダーのように手引きに沿って注釈し、サンプルを人手注釈で接地し、出版社やジャンルを統制して変化を説明する。1938〜1956年の米国コミック3,929冊と日本のマンガ87巻で3つの研究を実証した。権力の描かれ方、ページの視覚形式と作家の手、発話の担い手の違いを扱う。",
+      "source_kind": "paper",
+      "source_title": "Studying Comics at Scale with Artificial Intelligence: The PAGE Framework and Three Studies of American Comics and Japanese Manga",
+      "source_url": "https://arxiv.org/abs/2610.13840",
+      "title": "研究、マンガと米国コミックを大規模に研究する枠組み「PAGE」を公開",
+      "topics": [
+        "creative-ai",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-14T00:58:47+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-10-14T00:58:47+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：推論の効率と、エージェントの統制",
+  "topics": [
+    {
+      "description": "基盤モデルの能力と提供・適応の条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計・評価・統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "開発・業務・運用を支える実装と道具、実行基盤。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "能力・評価・基盤に関する研究開発。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "公開されたモデル・基盤と利用条件。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "利用規則・標準・制度とその運用。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・統制"
+    },
+    {
+      "description": "創作・文化資料とAIの関わり。",
+      "id": "creative-ai",
+      "label_en": "Creative AI",
+      "label_ja": "クリエイティブAI"
+    }
+  ]
+}

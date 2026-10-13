@@ -1,0 +1,27 @@
+[
+  {
+    "changed_signal_ids": [
+      "anthropic-distillation-defenses",
+      "anthropic-self-replicating-ai",
+      "arxiv-page-comics",
+      "arxiv-x-agentred",
+      "imf-gfsr-october-2026",
+      "intel-gpu-d-series-d270",
+      "llamacpp-b11580",
+      "meta-muse-wonder",
+      "microsoft-azure-maia-300",
+      "minicpm-v-4-7",
+      "sb-intuitions-sarashina"
+    ],
+    "edition_date": "2026-10-14",
+    "edition_id": "2026-10-14-0058",
+    "edition_url": "https://aoifuture.com/news/2026-10-14-0058/",
+    "event_id": "aoi-news-2026-10-14-0058-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-14T00:58:47+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "フロンティアモデルの記憶設計、推論チップの効率競争、AI投資と金融リスク、エージェントの安全性。一次資料から、能力の拡大と統制が同時に問われる現在地を確認する。",
+    "title": "AOIFUTURE News：推論の効率と、エージェントの統制"
+  }
+]
