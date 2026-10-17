@@ -18,3 +18,20 @@ describe('AOIFUTURE News Vercel headers', () => {
     ]);
   });
 });
+
+const packageScripts = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')).scripts;
+
+describe('AOIFUTURE News public gate script', () => {
+  it('defines check:news-public as a self-contained review + production build verification', () => {
+    const steps = (packageScripts['check:news-public'] ?? '').split('&&').map((step) => step.trim());
+    expect(steps).toEqual([
+      'VERCEL_ENV=preview npm run build',
+      'VERCEL_ENV=preview npm run verify:news-build:review',
+      'VERCEL_ENV=production npm run build',
+      'VERCEL_ENV=production npm run verify:news-build:production',
+    ]);
+    for (const name of ['build', 'verify:news-build:review', 'verify:news-build:production']) {
+      expect(packageScripts[name]).toBeTruthy();
+    }
+  });
+});
