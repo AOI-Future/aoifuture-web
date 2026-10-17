@@ -23,7 +23,7 @@
     "verify:news-build": "node scripts/verify-news-build.mjs",
     "verify:news-build:review": "node scripts/verify-news-build.mjs dist/client review",
     "verify:news-build:production": "node scripts/verify-news-build.mjs dist/client production",
-    "check:news-public": "npm run verify:news-build:review && VERCEL_ENV=production npm run build && VERCEL_ENV=production npm run verify:news-build:production",
+    "check:news-public": "VERCEL_ENV=preview npm run build && VERCEL_ENV=preview npm run verify:news-build:review && VERCEL_ENV=production npm run build && VERCEL_ENV=production npm run verify:news-build:production",
     "evidence:news-layout": "node scripts/generate-news-layout-evidence.mjs",
     "test:afterhours": "playwright test --config=playwright.afterhours.config.ts",
     "test:localquest": "playwright test --config=playwright.localquest.config.ts",
