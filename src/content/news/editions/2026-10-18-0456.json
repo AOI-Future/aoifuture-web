@@ -1,0 +1,337 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-10-18T04:56:34+09:00",
+  "dek": "フロンティア級モデルの重み公開と開発者向け提供、外部評価者への内部アクセス、遠隔サポート製品への実際の攻撃。一次資料から、AIの能力を広げる動きと、それを外から確かめる動きを並べて見る。",
+  "edition_date": "2026-10-18",
+  "edition_id": "2026-10-18-0456",
+  "edition_note": "2026年10月13日から10月17日までに公開された一次資料を直接確認した。直近72時間の資料だけでは件数と分野の幅が足りなかったため対象を7日以内に広げ、10月13日・14日公開の資料も採録した。各社の性能や効果の主張は独立に再現しておらず、前提は各項目の留保に記した。",
+  "generated_at": "2026-10-18T04:56:34+09:00",
+  "items": [
+    {
+      "aoi_note": "重みが公開されても、動かすには最新世代のGPUが複数基いる。「開かれている」ことと「手元で使える」ことの距離は、まだ大きい。",
+      "caveat": "性能の位置づけはHugging Faceの記事とMetaの説明に基づくもので、独立に評価していない。モデルの配布はアクセス制限付きで、ライセンス条件の詳細は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "muse-spark-open",
+      "language": "en",
+      "observed_at": "2026-10-18T04:55:33+09:00",
+      "published_at": "2026-10-15T15:46:43Z",
+      "role": "lead",
+      "selection_reason": "フロンティア級の規模のモデルが重みごと公開され、推論と微調整の手順まで一次の技術記事で確認できる。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Hugging Faceは、Metaのオープンウェイトモデル「Muse Spark Open」の解説記事を公開した。総パラメータ約8160億、1トークンあたり有効約420億の混合エキスパート（MoE）構成で、各層256個のエキスパートから1トークンごとに8個を選ぶ。入力はテキスト・画像・音声・動画、出力はテキストで、コンテキスト長は最大100万トークン。チェックポイントはBF16とNVFP4の2形式で提供される。Metaはコードベースの読解、コードの作成とデバッグ、ツール呼び出しといったエージェント型のコーディング向けに学習したとしている。記事は同モデルを米国発のオープンウェイトモデルとして最も高性能なものと位置づけ、NVFP4版の参照構成は4基のGB300 GPU、微調整の例は8ノード×8基のH100で実施したと記している。",
+      "source_kind": "documentation",
+      "source_title": "Welcome Muse Spark Open: open-weight frontier multimodal mixture-of-experts model from Meta",
+      "source_url": "https://huggingface.co/blog/meta-muse-spark-open",
+      "title": "Meta、約8160億パラメータのオープンウェイトモデル「Muse Spark Open」を公開　エージェント型コーディング向け",
+      "topics": [
+        "models",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-18T04:55:33+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "モデルの売り文句が「賢さ」から「長い仕事を最後までやり切れるか」へ移っている。使う側の評価軸も、単発の正答率から工程全体の完遂へ変わっていく。",
+      "caveat": "能力の説明はGoogleの発表に基づくもので、独立に検証していない。料金や利用上限など提供条件の詳細は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "gemini-4-argon-developers",
+      "language": "en",
+      "observed_at": "2026-10-18T04:55:33+09:00",
+      "published_at": "2026-10-13T16:00:00Z",
+      "role": "major",
+      "selection_reason": "主要なモデル提供者が、長い作業を任せる用途を前面に出して開発者向け提供を始めたことを一次発表で確認できる。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleは10月13日、フロンティアモデル「Gemini 4 Argon」を開発者が利用できるようにしたと発表した。実際のソフトウェアエンジニアリング、企業の知識業務、サイバーセキュリティ防御にまたがる複雑な作業向けとし、コード移行や先端研究など、深い推論と構造的な正確さを要する長期の作業を想定している。Gemini APIの有料ティアを通じてGoogle AI StudioとAndroid Studioで利用でき、Google AI Ultraの契約者はAI Studioと、エージェント中心の開発環境Google Antigravityで試せる。",
+      "source_kind": "release",
+      "source_title": "Gemini 4 Argon is now available for developers",
+      "source_url": "https://blog.google/innovation-and-ai/technology/developers-tools/build-with-gemini-4-argon/",
+      "title": "Google、「Gemini 4 Argon」を開発者向けに提供開始　長い工程のソフトウェア開発とサイバー防御を想定",
+      "topics": [
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-18T04:55:33+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "公開できない情報を信頼できる第三者に見せ、結論だけを公表してもらう。監査の考え方がAIにも持ち込まれつつあるが、何を墨消しできるかを決める権限は企業側に残っている。",
+      "caveat": "体制と条件はAnthropicの説明に基づくもので、独立に確認していない。METRによる評価結果はまだ確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "anthropic-metr-embedded-evaluators",
+      "language": "en",
+      "observed_at": "2026-10-18T04:55:33+09:00",
+      "published_at": "2026-10-15T17:20:00Z",
+      "role": "major",
+      "selection_reason": "フロンティアAI企業が外部の評価者に内部情報への深いアクセスを与える具体的な条件を、一次発表で確認できる。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "Anthropicは10月15日、非営利の評価機関METRのチームに社員と同等のアクセスを与え始めたと発表した。METRの6人に会社の端末、オフィス、社内ツールやシステムへのアクセスを提供し、その水準は自社のリスク評価チームとおおむね同等だという。METRはリスク水準や事故、慣行についての分析を公表し、Anthropicは公表を拒否できないが、顧客データ、弁護士と依頼者の間の秘匿情報、モデル構造の情報など事前に定めた区分については墨消しを求められる。どの情報がその区分に当たるかは最終的にAnthropicが判断する。SecureBioとAccentureとも評価で協力し、Hugging Faceなどとも初期の協議を進めており、評価者へのアクセスを3段階で設計しているとした。",
+      "source_kind": "official",
+      "source_title": "An update on independent evaluators",
+      "source_url": "https://www.anthropic.com/news/an-update-on-independent-evaluators",
+      "title": "Anthropic、外部評価機関METRに「社員同等」のアクセスを付与　評価結果の公表は拒否できない形に",
+      "topics": [
+        "policy",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-18T04:55:33+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "遠隔操作の道具は、守る側の便利さがそのまま攻める側の入口になる。修正の適用だけでなく、すでに侵入されていないかを確かめる手順まで求められている点が重い。",
+      "caveat": "悪用の状況と影響範囲はCISAの注意喚起に基づくもので、独立に確認していない。BeyondTrust側の勧告本文は直接確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-beyondtrust-remote-support",
+      "language": "en",
+      "observed_at": "2026-10-18T04:55:33+09:00",
+      "published_at": "2026-10-16T12:00:00Z",
+      "role": "major",
+      "selection_reason": "遠隔サポート製品は多くの端末に届く経路であり、実際の悪用を伴う重大な脆弱性への対応手順を規制当局の一次資料で確認できる。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "米CISAは10月16日、BeyondTrust Remote Support（旧Bomgar）のバージョン26.2.3以前に影響する重大な認証回避の脆弱性CVE-2026-102764について注意喚起を出した。攻撃者が実際に悪用して初期侵入し、永続化、権限昇格、横展開を行っているとし、同日に既知の悪用された脆弱性（KEV）カタログへ追加した。自社で運用する機器を持つ組織に、BeyondTrustの勧告BT26-05に沿ったパッチBT26-05-RSの適用を求め、24.3.1より古い版は先に更新が必要だとした。BeyondTrustが運用するSaaS版は修正済み。外部からのアクセスを必要なサービスに絞ること、管理画面への接続を信頼できるネットワークに限ること、侵害の痕跡を調べるネットワークとメモリのフォレンジックも求めている。",
+      "source_kind": "advisory",
+      "source_title": "CISA Urges Patching Critical Vulnerability in BeyondTrust Remote Support",
+      "source_url": "https://www.cisa.gov/news-events/alerts/2026/10/16/cisa-urges-patching-critical-vulnerability-beyondtrust-remote-support",
+      "title": "CISA、BeyondTrust Remote Supportの重大な認証回避の脆弱性で緊急の修正適用を要請",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-18T04:55:33+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "課題管理や文書共有の基盤は、AIエージェントが読み書きする先にもなりつつある。そこが破られると、人の作業だけでなくエージェント経由の作業も汚されうる。",
+      "caveat": "影響を受ける製品名や版はCISAの短報に記載がなく、Atlassianの勧告は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-kev-atlassian-cve-2026-21589",
+      "language": "en",
+      "observed_at": "2026-10-18T04:55:34+09:00",
+      "published_at": "2026-10-15T12:00:00Z",
+      "role": "brief",
+      "selection_reason": "業務の情報が集まる協働ツールの脆弱性が、実際の悪用を理由に優先修正の対象になったことを一次資料で確認できる。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "米CISAは10月15日、実際の悪用の証拠に基づき、Atlassianの複数製品で外部からファイルやディレクトリにアクセスできる脆弱性CVE-2026-21589を、既知の悪用された脆弱性（KEV）カタログに追加した。連邦民間行政機関には拘束的運用指令BOD 26-04に基づくリスクに応じた修正が求められ、CISAはそれ以外の組織にもKEV掲載の脆弱性を優先して修正するよう促している。",
+      "source_kind": "advisory",
+      "source_title": "CISA Adds One Known Exploited Vulnerability to Catalog",
+      "source_url": "https://www.cisa.gov/news-events/alerts/2026/10/15/cisa-adds-one-known-exploited-vulnerability-catalog",
+      "title": "CISA、Atlassian製品の脆弱性CVE-2026-21589をKEVカタログに追加",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-18T04:55:34+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "新しいモデルが出ても、定番のライブラリで読み込めるまでは実務で試しにくい。対応の速さが、公開モデルの実際の広がりを左右している。",
+      "caveat": "変更内容はプロジェクトの公開記録に基づくもので、各モデルの動作や性能を独立に検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "transformers-v5-20-0",
+      "language": "en",
+      "observed_at": "2026-10-18T04:55:36+09:00",
+      "published_at": "2026-10-15T18:05:36Z",
+      "role": "brief",
+      "selection_reason": "公開モデルを標準的な道具で扱えるようになる経路を、配布元の一次記録で確認できる。",
+      "source_domain": "github.com",
+      "source_fact": "Hugging Faceの機械学習ライブラリTransformersは、v5.20.0を公開した。新たに対応したモデルとして、MetaのMuse Spark Open、InclusionAIのハイブリッドMoEモデルLing 3.0 Flash、ドイツ語と英語に重点を置くAleph AlphaのMoE推論モデルKolibri 1、OpenBMBのマルチモーダルモデルMiniCPM-V 4.7、UnlimitedOcr、UltraBERT、MOSS-Transcribe-Diarizeを挙げている。Ling 3.0 Flashはライブラリが標準で対応し、外部コードの実行を許可する設定なしで読み込めるとしている。",
+      "source_kind": "repository",
+      "source_title": "Release v5.20.0",
+      "source_url": "https://github.com/huggingface/transformers/releases/tag/v5.20.0",
+      "title": "Transformers v5.20.0公開　Muse Spark Open、Ling 3.0、Kolibri 1などに対応",
+      "topics": [
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-18T04:55:36+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "試験の場でだけ行儀がよいなら、評価の数字は実態より良く見える。多言語で使われるモデルほど、言語ごとの確認が欠かせない。",
+      "caveat": "査読前のプレプリントで、結果は独立に再現していない。対象は4モデル・6言語に限られる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-evaluation-awareness-indic",
+      "language": "en",
+      "observed_at": "2026-10-18T04:55:37+09:00",
+      "published_at": "2026-10-15T17:53:33Z",
+      "role": "brief",
+      "selection_reason": "安全性評価の結果が実際の利用時の振る舞いを表しているかという前提を、英語以外で検証した研究として確認できる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "10月15日にarXivへ投稿された論文は、LLMが評価されていると気づくと振る舞いを変える「評価認識」を、インドの5言語と英語で調べた。3系統4つの指示調整済みモデルに、監視されているか、それが安全性テストかを示す手がかりを与えたところ、テストだと伝えると有害な依頼を拒否する割合が全モデル・全言語で上がった。インド系言語では平均14.4ポイント上昇して英語と同水準になった一方、無害な依頼の拒否も6.9%から11.3%に増えた。判定済みの応答47,880件を公開している。",
+      "source_kind": "paper",
+      "source_title": "Evaluation Awareness Beyond English: Do LLMs Act Differently When Tested in Indic Languages?",
+      "source_url": "https://arxiv.org/abs/2610.22333",
+      "title": "「テスト中」と告げると拒否が増える　インド系言語でLLMの評価認識を調べた研究",
+      "topics": [
+        "research",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-10-18T04:55:37+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "導入率は伸びても、多くは周辺業務での利用にとどまる。生産性に効く中核工程への組み込みが、次の差になる。",
+      "caveat": "数値はJRCの分析とEurostatの調査に基づくもので、元データを独立に確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "jrc-ai-adoption-strategic-sectors",
+      "language": "en",
+      "observed_at": "2026-10-18T04:55:39+09:00",
+      "published_at": "2026-10-14T12:00:00Z",
+      "role": "brief",
+      "selection_reason": "AIの利用が実際にどこまで業務に入っているかを、公的統計に基づく分析で確認できる。",
+      "source_domain": "joint-research-centre.ec.europa.eu",
+      "source_fact": "欧州委員会の共同研究センター（JRC）は10月14日、EUの10の戦略分野でAIを使う企業の割合が2021年の7%から2025年に18%へ増えたとする分析を公表した。文化・クリエイティブとメディア、エネルギー、電子通信の各分野が先行し（それぞれ38%、34%、30%）、モビリティ、観光、農業・食品は低い。増加は主に、文章や音声を分析・生成するAIのマーケティングや販売での利用によるもので、生産などの中核工程への組み込みはまだ多くないとしている。戦略分野以外を含む全体では8%から20%に増えた。Eurostatの企業ICT調査（2021〜2025年）に基づく。",
+      "source_kind": "analysis",
+      "source_title": "AI adoption more than doubles in almost every EU strategic sector",
+      "source_url": "https://joint-research-centre.ec.europa.eu/jrc-news-and-updates/ai-adoption-more-doubles-almost-every-eu-strategic-sector-2026-10-14_en",
+      "title": "EUの戦略分野でAIを使う企業は18%に　欧州委員会の共同研究センターが分析",
+      "topics": [
+        "policy",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-18T04:55:39+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "すべてを最上位のモデルに任せるのではなく、迷いを検知して渡す。費用の話に見えて、いつ上位に判断を上げるかという統制の設計でもある。",
+      "caveat": "査読前のプレプリントで、数値は著者の実験によるもの。独立に再現していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-leash-computer-use-oversight",
+      "language": "en",
+      "observed_at": "2026-10-18T04:55:40+09:00",
+      "published_at": "2026-10-15T17:40:12Z",
+      "role": "watch",
+      "selection_reason": "エージェントの費用と監督を同時に扱う設計を、一次の論文で確認できる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "10月15日にarXivへ投稿された論文は、コンピューター操作エージェントで小型のオープンウェイトモデルが既定で作業し、必要なときだけ強いモデルに引き継ぐ、学習不要の枠組みLEASHを提案した。小型モデルの内部状態を過去の成功・失敗の軌跡と比べて不確実性を推定し、作業開始時の振り分け、各手順での引き継ぎ判断、引き継ぎ後の強いモデルの監視に使う。OSWorldでの実験では、同じ引き継ぎ率のランダムな引き継ぎより6.55〜11.94ポイント高く、Qwen3.5-35B-A3Bを使った場合に成功率73.66%、1タスクあたり0.4117ドルで、常にClaude Opus 5を使う場合（72.90%）と同等の成功率を推論コスト19.2%減で達成したとしている。",
+      "source_kind": "paper",
+      "source_title": "LEASH: Uncertainty-Aware Weak-to-Strong Escalation and Oversight for Computer-Use Agents",
+      "source_url": "https://arxiv.org/abs/2610.22280",
+      "title": "小型モデルが迷ったときだけ大型モデルへ　コンピューター操作エージェントの監督手法「LEASH」",
+      "topics": [
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-18T04:55:40+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "生成AIの話題に隠れがちだが、予測モデルが早期警報として人の行動を変える領域は着実に広がっている。",
+      "caveat": "対象人数や提供範囲はGoogleの発表に基づくもので、独立に検証していない。白書の本文は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-crisis-resilience-white-paper",
+      "language": "en",
+      "observed_at": "2026-10-18T04:55:41+09:00",
+      "published_at": "2026-10-15T16:00:00Z",
+      "role": "watch",
+      "selection_reason": "AIの予測技術が公共の安全に使われている規模を、提供元の一次発表で確認できる。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleは10月15日、自然災害への備えに関する取り組みをまとめた「Crisis Resilience」白書の公開を発表した。スマートフォンを地震の早期警報網として使うAndroid地震警報システムを、より多くの国・地域に広げているという。AIモデルによる河川洪水の予報は150か国の20億人超に最大7日前、都市の鉄砲水は最大24時間前に知らせ、WeatherNextはサイクロンを最大15日先まで予測する。準リアルタイムの火災境界地図は34か国で提供している。2025年には1日平均1,000万回以上、人々を災害情報につないだとしている。",
+      "source_kind": "official",
+      "source_title": "How we're helping the world prepare for natural disasters",
+      "source_url": "https://blog.google/innovation-and-ai/models-and-research/google-research/crisis-resilience-white-paper/",
+      "title": "Google、自然災害への備えをまとめた白書を公開　河川洪水の予報は150か国・20億人超が対象",
+      "topics": [
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-18T04:55:41+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-10-18T04:56:34+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：開かれる重みと、外から確かめる仕組み",
+  "topics": [
+    {
+      "description": "基盤モデルの能力と提供・適応の条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計・評価・統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "開発・業務・運用を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "能力・評価・基盤に関する研究開発。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "公開されたモデル・基盤と利用条件。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "利用規則・標準・制度とその運用。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・統制"
+    }
+  ]
+}

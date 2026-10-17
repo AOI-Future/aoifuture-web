@@ -1,0 +1,26 @@
+[
+  {
+    "changed_signal_ids": [
+      "anthropic-metr-embedded-evaluators",
+      "arxiv-evaluation-awareness-indic",
+      "arxiv-leash-computer-use-oversight",
+      "cisa-beyondtrust-remote-support",
+      "cisa-kev-atlassian-cve-2026-21589",
+      "gemini-4-argon-developers",
+      "google-crisis-resilience-white-paper",
+      "jrc-ai-adoption-strategic-sectors",
+      "muse-spark-open",
+      "transformers-v5-20-0"
+    ],
+    "edition_date": "2026-10-18",
+    "edition_id": "2026-10-18-0456",
+    "edition_url": "https://aoifuture.com/news/2026-10-18-0456/",
+    "event_id": "aoi-news-2026-10-18-0456-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-18T04:56:34+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "フロンティア級モデルの重み公開と開発者向け提供、外部評価者への内部アクセス、遠隔サポート製品への実際の攻撃。一次資料から、AIの能力を広げる動きと、それを外から確かめる動きを並べて見る。",
+    "title": "AOIFUTURE News：開かれる重みと、外から確かめる仕組み"
+  }
+]
