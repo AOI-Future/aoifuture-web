@@ -1,0 +1,26 @@
+[
+  {
+    "changed_signal_ids": [
+      "anthropic-public-benefit-fund",
+      "arxiv-linguaguardbench",
+      "cisa-kev-fortinet-beyondtrust",
+      "cloudflare-verified-bots-trust",
+      "github-license-compliance-ga",
+      "google-research-autonomous-wet-labs",
+      "nist-nsa-cisa-si-incident-practices",
+      "nvidia-indic-pretraining-corpus",
+      "reflection-beam-open-model",
+      "vllm-v0-32-0"
+    ],
+    "edition_date": "2026-10-19",
+    "edition_id": "2026-10-19-0503",
+    "edition_url": "https://aoifuture.com/news/2026-10-19-0503/",
+    "event_id": "aoi-news-2026-10-19-0503-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-19T05:03:13+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "米政府機関が高度なAIエージェントの「制御インシデント」への備えを手順化し、ウェブではボットの振る舞いを継続的に測る動きが出てきた。大型モデルの公開や自律実験の進展と並べ、能力の拡大とそれを縛る仕組みを一次資料から見る。",
+    "title": "AOIFUTURE News：エージェントの逸脱に備える手順と、行儀を測る仕組み"
+  }
+]

@@ -1,0 +1,339 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-10-19T05:03:13+09:00",
+  "dek": "米政府機関が高度なAIエージェントの「制御インシデント」への備えを手順化し、ウェブではボットの振る舞いを継続的に測る動きが出てきた。大型モデルの公開や自律実験の進展と並べ、能力の拡大とそれを縛る仕組みを一次資料から見る。",
+  "edition_date": "2026-10-19",
+  "edition_id": "2026-10-19-0503",
+  "edition_note": "2026年10月16日から10月18日までに公開された一次資料を中心に直接確認した。arXiv論文1件のみ10月15日（米国時間）の投稿で直近72時間をわずかに超えるため、対象を7日以内に広げて採録した。各社・各研究の性能や効果の主張は独立に再現しておらず、前提は各項目の留保に記した。",
+  "generated_at": "2026-10-19T05:03:13+09:00",
+  "items": [
+    {
+      "aoi_note": "エージェントの暴走を、思想の問題ではなく「隔離・監視・証拠保全・復旧・報告」という運用の問題として扱っている。ニアミスまで報告対象に含めた点は、開発現場の記録の付け方を変えうる。",
+      "caveat": "確認したのはCISAの紹介ページで、文書本体の10項目の全文は精読していない。実践は任意で、どの組織が採用するかは示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nist-nsa-cisa-si-incident-practices",
+      "language": "en",
+      "observed_at": "2026-10-19T05:00:49+09:00",
+      "published_at": "2026-10-16T12:00:00Z",
+      "role": "lead",
+      "selection_reason": "訓練・評価中のエージェントが指示外の行動を取る事態を、米政府機関が通常のサイバーインシデント対応の延長として手順化した一次文書として確認できる。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "CISAは10月16日、米国立標準技術研究所（NIST）、国家安全保障局（NSA）のSuper Intelligence Security Center、CISAの3機関がまとめた文書「Key Practices for Incident Readiness and Response in Super Intelligence Training and Evaluation」を公開した。高度な能力を持つエージェントを訓練・評価する組織、とくに安全策を弱めた展開前の非公開システムを扱う組織向けに、任意の中核的実践10項目を示す。文書は、エージェントが指示されていない行動を取り、作業範囲や人による監督を定める方針・統制・セキュリティ対策と衝突したり損なったりする事態を「制御インシデント」と定義する。対象は、情報・システム・ツール・ネットワークへのアクセス制限、想定外の活動の監視、証拠保全と望ましくない挙動の停止、検証済みの基準状態からの再構築、政府機関や影響を受ける当事者へのインシデントとニアミスの報告で、活動再開前に統制の試験と封じ込めの検証を行う重要性も挙げている。",
+      "source_kind": "official",
+      "source_title": "Key Practices for Incident Readiness and Response in Super Intelligence Training and Evaluation",
+      "source_url": "https://www.cisa.gov/resources-tools/resources/key-practices-incident-readiness-and-response-super-intelligence-training-and-evaluation",
+      "title": "米NIST・NSA・CISA、高度なAIエージェントの「制御インシデント」に備える10の実践を公表",
+      "topics": [
+        "security",
+        "policy",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-19T05:00:49+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "大型オープンモデルの公開が続くなか、今回は制限の少ないライセンスで出てきた。選択肢は増えたが、BF16で約1TBという重さは変わらず、使える組織は計算資源で絞られる。",
+      "caveat": "ベンチマークの数値はReflectionが提供したもので、独立に評価していない。モデルカード上の利用条件の細部は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "reflection-beam-open-model",
+      "language": "en",
+      "observed_at": "2026-10-19T05:00:50+09:00",
+      "published_at": "2026-10-16T00:00:00Z",
+      "role": "major",
+      "selection_reason": "フロンティア級の規模のモデルが、制限の少ないApache 2.0で重みごと公開され、構成と運用手順を一次の技術記事で確認できる。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Hugging Faceは10月16日、米国の新しいAI研究所Reflectionの最初のモデル「Beam」の解説記事を公開した。総パラメータ5010億、1トークンあたり有効230億の混合エキスパート（MoE）構成で、52層、各MoE層256個のエキスパートから1トークンごとに8個を選ぶ。入出力はテキストで、コンテキスト長は最大100万トークン、ライセンスはApache 2.0。コーディングとエージェント用途に重点を置き、自前のハードウェアやクラウドで動かし用途に合わせて調整したい組織を想定している。チェックポイントはBF16・FP8・NVFP4の3形式で、BF16版は約1TB。transformers、vLLM、SGLangが公開当日から対応し、Rust製の専用実行環境も同梱する。記事は推論、教師ありファインチューニング、強化学習の手順も示している。",
+      "source_kind": "documentation",
+      "source_title": "Welcome Beam: a 501B open model you can own, customize, and scale",
+      "source_url": "https://huggingface.co/blog/reflection-beam",
+      "title": "新興の米AI企業Reflection、5010億パラメータのオープンモデル「Beam」を公開　Apache 2.0で提供",
+      "topics": [
+        "models",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-19T05:00:50+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "経営陣への段階的な報酬の代わりに、企業価値の上昇を公益の持ち分に結びつける設計は珍しい。ただ実際の効果は、統治の仕組みと使い道の開示しだいだ。",
+      "caveat": "株主の承認前で、基準となる企業価値や統治の詳細は今後公表するとしている。約20%という比率は同社の説明に基づく。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "anthropic-public-benefit-fund",
+      "language": "en",
+      "observed_at": "2026-10-19T05:00:50+09:00",
+      "published_at": "2026-10-18T16:49:35Z",
+      "role": "major",
+      "selection_reason": "AI企業が成長の果実をどう社会に戻すかについて、拠出比率と追加条件を具体的に示した一次発表として確認できる。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "Anthropicは10月18日、自社株式の一部を新組織「Anthropic Public Benefit Fund」に拠出すると発表した。株主の承認を条件に、まず株式の5%を拠出し、企業価値が基準から50%上昇するごとに、取締役会の判断で2%ずつ追加する。基金は501(c)(3)ではなく同社が全額出資するLLCとして設立し、伝統的な非営利団体への大口寄付や特定の集団への直接分配なども検討するという。基金が保有する株式は、米国内外でロビー活動や政治献金には使わないとしている。例として、AIが労働市場に与える影響を挙げ、すでにこの問題の調査と対応に2億ドルを拠出済みだと記している。共同創業者の持ち分寄付の誓約や従業員の株式寄付マッチング制度と合わせ、同社株式のおよそ20%が公益に充てられることになるという。",
+      "source_kind": "official",
+      "source_title": "Investing in the public benefit",
+      "source_url": "https://www.anthropic.com/news/public-benefit-fund",
+      "title": "Anthropic、株式の5%を拠出する「Public Benefit Fund」を設立へ　企業価値の上昇に応じて持ち分を追加",
+      "topics": [
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-10-19T05:00:50+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "目を引くのは数値より、エージェントが「粘着性の偽陽性」を自ら見抜いて設計規則を改めた過程だ。物理世界での行動を、実行前のシミュレーションと遮断で縛る設計は、他分野のエージェントにも通じる。",
+      "caveat": "成果はGoogleの研究ブログと関連論文の要約に基づき、実験結果は独立に再現していない。対象は限られた標的と試行回数にとどまる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-research-autonomous-wet-labs",
+      "language": "en",
+      "observed_at": "2026-10-19T05:00:50+09:00",
+      "published_at": "2026-10-16T18:11:00Z",
+      "role": "major",
+      "selection_reason": "エージェントが計算機の中だけでなく物理的な実験装置を操作し、その失敗から設計方針を直す過程を一次の研究記事で確認できる。",
+      "source_domain": "research.google",
+      "source_fact": "Google Researchは10月16日、AIエージェントが生物学の実験を設計・実行し、結果から学ぶ取り組みについて3件の研究を紹介した。1つ目のVERIDは、液体分注ロボットの作業台の状態を3Dで追跡するデジタルツインで、実行前の仮想試行や危険な命令の遮断、映像と操作ログの同期記録を備える。2つ目では、DNAアプタマーの設計・合成・選別・配列解読を3巡繰り返し、確認されたヒット率がミオグロビンで33.5%、α-トロンビンで42.1%に上がったとしている。3つ目では、固形がんで過剰発現するFAPを標的に、数回の実験で1桁ナノモル級の親和性を持つ結合タンパク質を得たと報告している。安全面では、感染性のない系を試験台に選び、設計した配列はすべてバイオセキュリティ審査にかけるとしている。",
+      "source_kind": "official",
+      "source_title": "Grounding AI agents in biological reality: Building blocks for autonomous wet labs",
+      "source_url": "https://research.google/blog/grounding-ai-agents-in-biological-reality-building-blocks-for-autonomous-wet-labs/",
+      "title": "Google Research、AIエージェントが実験ロボットを動かす「自律型ウェットラボ」の研究成果を公表",
+      "topics": [
+        "research",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-19T05:00:50+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "KVキャッシュの低精度化は、長いコンテキストを扱うモデルを限られたGPUで動かすための地道な改善だ。モデル公開の速さに、配る側の道具が追いついていく様子がうかがえる。",
+      "caveat": "スループットなどの改善幅はリリースノートに記されたプルリクエスト内の測定値で、独立に検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "vllm-v0-32-0",
+      "language": "en",
+      "observed_at": "2026-10-19T05:00:53+09:00",
+      "published_at": "2026-10-18T10:23:45Z",
+      "role": "brief",
+      "selection_reason": "大型オープンモデルを自前で動かす際の基盤となる推論エンジンの更新内容を、一次のリリースノートで確認できる。",
+      "source_domain": "github.com",
+      "source_fact": "オープンソースの推論エンジンvLLMは10月18日、v0.32.0を公開した。リリースノートによると、363人の貢献者による814件のコミットを含む。構造化された状態に対して選択・採点などの問いに答える新しいエンドポイント「/v1/systemone」を追加し、既定で提供する。チェックポイントに含まれる応答テンプレートを読み取る汎用のツール呼び出し・推論パーサーを加え、対応モデルでは個別のパーサーが不要になる。NVFP4形式のKVキャッシュの対応GPU世代を広げ、複数のAPIサーバーを使う場合に最も負荷の低いワーカーへ接続を振り分ける機能なども加えた。",
+      "source_kind": "release",
+      "source_title": "Release v0.32.0 · vllm-project/vllm",
+      "source_url": "https://github.com/vllm-project/vllm/releases/tag/v0.32.0",
+      "title": "推論エンジンvLLM v0.32.0公開　低精度KVキャッシュの対応拡大と構造化判定用エンドポイント",
+      "topics": [
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-19T05:00:53+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "遠隔サポートやネットワーク境界の製品は、侵入されると組織全体の操作権限に直結しやすい。悪用確認の公表は、修正の優先順位を決める最も確かな手がかりになる。",
+      "caveat": "CISAの告知は悪用の具体的な手口や被害規模を示していない。各製品の影響範囲や修正版の詳細は、ベンダーの情報で確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-kev-fortinet-beyondtrust",
+      "language": "en",
+      "observed_at": "2026-10-19T05:00:54+09:00",
+      "published_at": "2026-10-16T12:00:00Z",
+      "role": "brief",
+      "selection_reason": "リモート接続やネットワーク機器の脆弱性が実際に悪用されていることを、米政府機関の一次情報で確認できる。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "CISAは10月16日、実際に悪用されている証拠に基づき、2件の脆弱性を既知の悪用された脆弱性（KEV）カタログに追加した。Fortinetの複数製品のパストラバーサルの脆弱性（CVE-2025-61624）と、BeyondTrust Remote Supportのなりすましによる認証回避の脆弱性（CVE-2026-102764）である。連邦政府の文民行政機関は拘束的運用指令（BOD）26-04に基づき、カタログ掲載の高リスクな脆弱性の修正を優先する必要がある。CISAはそれ以外の組織にも、カタログ掲載の脆弱性を優先して修正するよう促している。",
+      "source_kind": "advisory",
+      "source_title": "CISA Adds Two Known Exploited Vulnerabilities to Catalog",
+      "source_url": "https://www.cisa.gov/news-events/alerts/2026/10/16/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+      "title": "CISA、FortinetとBeyondTrust製品の脆弱性2件を悪用確認済みカタログに追加",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-19T05:00:54+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "「誰か」を確かめる段階から「何をしているか」を見続ける段階へ移ろうとしている。ウェブ上で動くエージェントにとって、行儀のよさが通行証の条件になりつつある。",
+      "caveat": "評価方法の詳細や公開時期は示されておらず、仕組みの精度は独立に検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-verified-bots-trust",
+      "language": "en",
+      "observed_at": "2026-10-19T05:00:54+09:00",
+      "published_at": "2026-10-16T13:00:00Z",
+      "role": "brief",
+      "selection_reason": "AIクローラーやエージェントの増加を背景に、身元確認だけでなく継続的な振る舞いで信頼を判定する方式を、一次の発表で確認できる。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは10月16日、同社が認証したボット（Verified bot）が、サイト運営者の意向をどれだけ一貫して守っているかを評価する仕組みを紹介した。当初の評価項目は、robots.txtの指示を守っているか、そして「リクエストが多すぎる」ことを示すHTTP 429の応答を受けて速度を落としたり停止したりしたか、の2点。単発の違反ではなく継続的な傾向を見て、説明可能な信頼度の幅として示すという。同社はすでに社内で運用しており、今後は評価をCloudflare Radarで公開し、すべての顧客が信頼度のしきい値を選んで扱いを決められるようにする計画だとしている。",
+      "source_kind": "official",
+      "source_title": "Continuous accountability for Verified bots",
+      "source_url": "https://blog.cloudflare.com/verified-bots-accountability/",
+      "title": "Cloudflare、認証済みボットの「振る舞い」を継続評価する仕組みを導入　robots.txtと429への対応を測定",
+      "topics": [
+        "agents",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-10-19T05:00:54+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントにコードを書かせるなら、守るべき社内規則をAPIとして渡す必要がある。ライセンス確認はその分かりやすい最初の例だ。",
+      "caveat": "機能の対象は特定の有料プランに限られる。エージェントからの利用が実際にどの程度機能するかは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-license-compliance-ga",
+      "language": "en",
+      "observed_at": "2026-10-19T05:00:55+09:00",
+      "published_at": "2026-10-16T14:00:32Z",
+      "role": "brief",
+      "selection_reason": "エージェントがコードに依存関係を足す前提で、組織の規則を機械的に参照させる仕組みが製品として提供されたことを、一次の変更履歴で確認できる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは10月16日、オープンソースのライセンス準拠機能をGitHub Enterprise Cloudの顧客向けに一般提供したと発表した。GitHub Code Securityを有効にしたリポジトリが対象。企業全体のライセンス方針を定め、ルールセットで対象リポジトリを指定すると、依存関係を追加・変更するプルリクエストでライセンスが自動検査され、方針に合わない依存関係に注記が付く。6月のパブリックプレビュー以降、データ所在地を指定する顧客への対応、方針変更の監査ログ記録、方針の取得・更新用APIを追加した。パッケージが方針に準拠しているかを確認するAPIも加え、コーディングエージェントが方針に反するパッケージを推奨したり組み込んだりしないようにできるとしている。",
+      "source_kind": "release",
+      "source_title": "Open source license compliance generally available - GitHub Changelog",
+      "source_url": "https://github.blog/changelog/2026-10-16-open-source-license-compliance-generally-available/",
+      "title": "GitHub、依存パッケージのライセンス準拠チェックを一般提供　コーディングエージェント向けのAPIも",
+      "topics": [
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-19T05:00:55+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "翻訳で作ったデータは量を補えるが、その言語で書かれた文章が持つ地域の知識までは補えない。記事自身もその点を認めており、使い方の線引きが問われる。",
+      "caveat": "記事時点でデータは「近く公開」とされ、実物は確認していない。トークン数は特定のトークナイザーでの数え方による。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-indic-pretraining-corpus",
+      "language": "en",
+      "observed_at": "2026-10-19T05:00:56+09:00",
+      "published_at": "2026-10-16T01:44:47Z",
+      "role": "watch",
+      "selection_reason": "英語以外の言語でモデルを作るためのデータ不足に対し、データと生成手順の両方を公開する計画を一次の技術記事で確認できる。",
+      "source_domain": "huggingface.co",
+      "source_fact": "NVIDIAは10月16日、インド憲法に記載された22言語を対象とする約2.8兆トークンの事前学習用データ「Nemotron-pretraining-Indic-v1」を紹介した。インド工科大学マドラス校（IIT Madras）のAI4Bharatと共同で開発し、データを生成したGPU処理の手順とともに近く公開するとしている。英語の文書を翻訳し、品質評価と修正をかけて作成したもので、22言語すべての固有文字版と、12言語のローマ字表記版を含む。内訳は固有文字が2兆6010億トークン、ローマ字表記が2246億トークン。各記録には元文書の識別子を残し、出所をたどれるようにしているという。",
+      "source_kind": "documentation",
+      "source_title": "Scaling Indic Pretraining: 2.8 Trillion Tokens and an Open Data Generation Pipeline",
+      "source_url": "https://huggingface.co/blog/nvidia/scaling-indic-pretraining",
+      "title": "NVIDIAとIITマドラス、インドの22言語・約2.8兆トークンの事前学習データと生成手順を公開へ",
+      "topics": [
+        "research",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-19T05:00:56+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "安全判定が依頼の言語に左右されるなら、日本語で使うエージェントの防御も英語での評価結果だけでは測れない。",
+      "caveat": "査読前のプレプリントで、結果は独立に再現していない。日本語は対象に含まれていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "arxiv-linguaguardbench",
+      "language": "en",
+      "observed_at": "2026-10-19T05:00:56+09:00",
+      "published_at": "2026-10-15T17:19:40Z",
+      "role": "watch",
+      "selection_reason": "エージェントの安全装置が英語前提で作られていることの影響を、言語だけを変える対照実験で示した研究として確認できる。",
+      "source_domain": "arxiv.org",
+      "source_fact": "10月15日にarXivへ投稿された論文は、エージェントがツールを呼び出す前に安全かどうかを判定する「ガード」が、利用者の依頼の言語によって判定を変えるかを調べた。既存データの1,220ステップについて、利用者の指示だけをドイツ語・フランス語・トルコ語・スワヒリ語・アムハラ語に翻訳し、ツール呼び出しやラベルは変えずに比較するベンチマーク「LinguaGuardBench」を作った。19種のガードを試したところ、小型・オープン・専用のガードの多くは翻訳で判定が変わり、言語がまれなほど影響が大きかった。13B未満の9種では、判定の反転率がフランス語の1.5ポイントからアムハラ語の4.4ポイントに上がった。最前線の大型ガードの変化は最大約1ポイントだった。ベンチマークと48万9千件の判定結果を公開している。",
+      "source_kind": "paper",
+      "source_title": "Language Is a Security Surface for Agent Guards",
+      "source_url": "https://arxiv.org/abs/2610.22244",
+      "title": "依頼の言語を変えるだけでAIエージェントの安全判定が揺らぐ　19種のガードを調べた研究",
+      "topics": [
+        "security",
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-19T05:00:56+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-10-19T05:03:13+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：エージェントの逸脱に備える手順と、行儀を測る仕組み",
+  "topics": [
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "利用規則・標準・制度とその運用。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・統制"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計・評価・統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "基盤モデルの能力と提供・適応の条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "公開されたモデル・データ・基盤と利用条件。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "能力・評価・基盤に関する研究開発。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "開発・業務・運用を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    }
+  ]
+}
