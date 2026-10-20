@@ -1,0 +1,401 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-10-21T04:56:52+09:00",
+  "dek": "デジタル庁が政府職員向けのAIエージェント環境と立場別の安全基準を同時に出し、GitHubはコーディングエージェントも対象にしたパッケージ取得の検査機能を始めた。PyTorchのTPU対応、レガシー言語での開発能力、エージェントの身元と評価の新しい測り方を並べ、AIを使う側の統制と基盤がどう整い始めたかを一次資料から見る。",
+  "edition_date": "2026-10-21",
+  "edition_id": "2026-10-21-0456",
+  "edition_note": "2026年10月19日（米国時間）から10月21日未明（日本時間）までに公開された一次資料を直接確認した。いずれも直近72時間以内の公開で、対象期間の拡張はしていない。各社・各機関の性能・効果・規模の主張は独立に再現しておらず、前提は各項目の留保に記した。",
+  "generated_at": "2026-10-21T04:56:52+09:00",
+  "items": [
+    {
+      "aoi_note": "エージェントの導入と、それを誰がどう管理するかのルールが同じ日に出たのが要点だ。利用者・管理者・開発者で責務を分ける形は、自治体や企業が自前の運用ルールを作るときの下敷きになりうる。",
+      "caveat": "確認したのは発表ページで、添付の基準本文（PDF）の個別条項は読んでいない。「世界初」は同庁の調査に基づく主張で独立に確認していない。導入時期とOSS公開時期は予定として示されたもの。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "digital-agency-gennai-agents-standard",
+      "language": "ja",
+      "observed_at": "2026-10-21T04:54:05+09:00",
+      "published_at": "2026-10-20T09:37:00Z",
+      "role": "lead",
+      "selection_reason": "政府が職員規模でAIエージェントを業務基盤に入れ、同時に立場別の安全基準を公開した一次発表として確認できる。",
+      "source_domain": "www.digital.go.jp",
+      "source_fact": "デジタル庁は、ガバメントAI「源内」で約18万人の政府職員を対象に2種類のAIエージェント利用環境の提供を始めると発表した。手軽にエージェントを作成・実行できる「エージェントチャット」を各府省庁等へ順次導入し、高度なエージェントを構築・実行できる「源内工房」は令和8年12月頃までの導入を目指す。同庁は、一般の職員も日常業務で使える政府共通基盤としてこの規模で導入するのは世界初の試みだとしている。両環境は、だれでも利用・改変・再配布できる「源内OSS Ver.2.0」として令和9年2月頃を目途に公開する予定。あわせて、利用者・管理者・開発者それぞれの責務と遵守事項を定めた「ガバメントAI 源内 ガバナンス・セキュリティ・セーフティに関する基準（源内基準）」を策定・公表した。基準はAIセーフティ・インスティテュート（AISI）の協力を得て策定したという。",
+      "source_kind": "official",
+      "source_title": "ガバメントAI 源内においてAI エージェント利用環境の提供を開始するとともに、「源内基準」を公表します",
+      "source_url": "https://www.digital.go.jp/policies/genai/agent-safety-standard",
+      "title": "デジタル庁、ガバメントAI「源内」で約18万人の政府職員向けAIエージェント環境を開始し「源内基準」を公表",
+      "topics": [
+        "policy",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-21T04:54:05+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントが自動で依存関係を入れる場面が増えるほど、取得経路そのものを関所にする発想が効いてくる。対応がnpmだけという制約は、導入判断の前に確認すべき点だ。",
+      "caveat": "検査の検出精度や遅延への影響は公表されておらず、独立に検証していない。一般提供の時期と料金水準は示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-package-firewall-preview",
+      "language": "en",
+      "observed_at": "2026-10-21T04:54:06+09:00",
+      "published_at": "2026-10-20T16:11:00Z",
+      "role": "major",
+      "selection_reason": "インストール時点で認証情報を盗む攻撃への対策として、コーディングエージェントを明示的に対象に含めた機能を一次情報で確認できる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは10月20日、package firewallをパブリックプレビューとして公開した。Actionsのランナーやコーディングエージェントなどの端末と上流のパッケージレジストリの間に入り、メタデータ要求とパッケージのダウンロードの両方を検査する。管理者は企業単位でポリシーを設定でき、現時点では公開直後のパッケージを一定期間待たせるクールダウン期間、GitHub Advisory Databaseでのマルウェア・脆弱性照合、アテステーションの格下げなどのサプライチェーン検査を選べる。誤ってブロックされた場合は例外を申請できる。対象はデータ所在地版を含むGitHub Enterprise Cloudの顧客で、プレビュー期間中は無料、一般提供後はActionsと同様の従量課金になる。現在対応するのはnpmパッケージのみ。",
+      "source_kind": "release",
+      "source_title": "GitHub package firewall in public preview",
+      "source_url": "https://github.blog/changelog/2026-10-20-github-package-firewall-in-public-preview/",
+      "title": "GitHub、パッケージ取得時の攻撃を止める「package firewall」をパブリックプレビューで提供",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-21T04:54:06+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "学習・推論の基盤選びは、ハードの性能よりも既存コードがどれだけそのまま動くかで決まりやすい。主要フレームワークがTPUを第一級の実行先として扱い始めたことは、GPU一択だった調達の前提を揺らす。",
+      "caveat": "性能比較や「そのまま動く」範囲は記事の主張で、独立に再現していない。記事自身も、最高性能にはモデル側の調整が必要としている。本番利用の顧客名や規模は示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "torchtpu-native-pytorch-backend",
+      "language": "en",
+      "observed_at": "2026-10-21T04:54:09+09:00",
+      "published_at": "2026-10-20T16:02:00Z",
+      "role": "major",
+      "selection_reason": "PyTorchの利用者がGPU以外の計算資源を選ぶ条件を変えうる発表で、対応範囲と検証状況を一次情報で確認できる。",
+      "source_domain": "pytorch.org",
+      "source_fact": "PyTorchブログは10月20日、GoogleとMetaのPyTorchチームによるオープンソースのTPU向けバックエンドTorchTPUを紹介した。2025年半ばにGoogleで始まった取り組みで、従来のPyTorch/XLAと異なり実行時にJAXへ依存せず、即時実行（eager）を優先し、torch.compileはTorch Dynamoを基盤にする。既存のコードは.to(\"cuda\")を.to(\"tpu\")に変える程度で動くことを目標にしている。記事時点で約450のATen演算に対応し、Hugging Faceで最もダウンロードされている5,000モデルでそのまま動くことを確かめたほか、vLLMとSGLangでの複数ホスト推論、TorchTitanでの学習・ファインチューニングを検証したという。開発中だが、Google Cloudの大口顧客の一部で推論・学習の本番利用に使われているとしている。",
+      "source_kind": "release",
+      "source_title": "Introducing TorchTPU",
+      "source_url": "https://pytorch.org/blog/introducing-torchtpu/",
+      "title": "GoogleとMetaの共同プロジェクトTorchTPU、PyTorchをTPUでネイティブ実行するバックエンドを公開",
+      "topics": [
+        "infrastructure",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-21T04:54:09+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "レガシー移行は「動くか」より「同じ結果を出し続けるか」が問われる仕事で、出力の完全一致を条件にした評価設計はその要求に合っている。数字が高いほど、移行案件で最後に残るのはレビューと試験の体制だという点がはっきりする。",
+      "caveat": "数値はOpenAI自身の評価によるもので、独立に再現していない。公開されるテストの内容や移行評価の対象プログラムの規模は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-low-resource-languages-eval",
+      "language": "en",
+      "observed_at": "2026-10-21T04:56:52+09:00",
+      "published_at": "2026-10-19T12:00:00Z",
+      "role": "major",
+      "selection_reason": "基幹系の保守・移行という具体的な業務に向けた能力を、評価方法とあわせて開発元が示した一次資料として確認できる。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは10月19日、COBOL、Fortran、Visual Basicなど学習用のコードや文書が少ない言語でのコーディング能力について、2つの評価を公表した。MultiLangBenchは20言語でSQLite互換のデータベースエンジンを一から作らせるもので、GPT-6 Astraは最大推論設定で平均テスト通過率87.4%となり、GPT-5.6 Solの26.8%から全言語で向上したという。COBOLは72.1%で最も難しかった。COBOLのプログラムをC++、Java、Kotlin、Python、Rustへ挙動を保ったまま移す評価では、GPT-6.1 Solが低い推論設定で86.6%（GPT-5.6 Solは5.4%）、高い設定で97.9%だったとしている。MultiLangBenchの評価環境とテストはGitHubで公開するという。同社は、本番システムへの適用には専門家のレビューと業務ルールに沿った試験が引き続き必要だと記している。",
+      "source_kind": "analysis",
+      "source_title": "Advancing coding in low‑resource programming languages",
+      "source_url": "https://openai.com/index/low-resource-programming-languages",
+      "title": "OpenAI、COBOLやFortranなど資料の少ない言語での開発・移行能力を測る評価と結果を公表",
+      "topics": [
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-21T04:56:52+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントにAPIキーを配って回す運用は、台数が増えるほど破綻しやすい。証明書と失効確認という既存の仕組みに寄せる方向は、監査の説明もしやすい。",
+      "caveat": "ベンダー共同の参照構成で、実運用での負荷や運用コストは示されていない。公開コードは読んでおらず、安全性は独立に検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-agent-identity-x509",
+      "language": "en",
+      "observed_at": "2026-10-21T04:54:12+09:00",
+      "published_at": "2026-10-20T16:03:00Z",
+      "role": "brief",
+      "selection_reason": "複数エージェントがツールを呼ぶ構成での認証の抜けを、具体的な仕組みとコードで示した一次資料として確認できる。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSの機械学習ブログは10月20日、AWSとKeyfactorの技術チームが共同で作った、AIエージェントの身元をX.509公開鍵基盤で確立する参照構成を紹介した。どのエージェントが要求したかの証明、エージェント間のなりすまし防止、認可されたユーザーの代理であることの確認を課題に挙げ、MCPには組み込みの認証標準がないと指摘している。構成は、呼び出しごとの署名付き要求、資格情報を共有しないユーザー署名の委任表明、RFC 8693に基づく宛先限定トークン、OCSPによる即時の失効確認の4つを組み合わせる。推論にはAmazon BedrockとStrands Agents SDK、証明書基盤にはKeyfactor EJBCAを使い、ソースコードはGitHubで公開している。",
+      "source_kind": "documentation",
+      "source_title": "Securing AI agent identity with X.509 PKI on AWS",
+      "source_url": "https://aws.amazon.com/blogs/machine-learning/securing-ai-agent-identity-with-x-509-pki-on-aws/",
+      "title": "AWSとKeyfactor、AIエージェントにX.509証明書で身元を持たせる参照構成を公開",
+      "topics": [
+        "agents",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-21T04:54:12+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "答えが同じでも、押されたときの崩れ方が属性で違えば実務では差別になりうる。審査や選考にAIを使う組織にとって、評価項目を一段深くする材料になる。",
+      "caveat": "各モデルの具体的な数値は本稿で扱っておらず、結果は独立に再現していない。記事自身が、平等を軸にした公平性の定義で、他の定義はすべては捉えないと断っている。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "ai2-fairstress-benchmark",
+      "language": "en",
+      "observed_at": "2026-10-21T04:54:14+09:00",
+      "published_at": "2026-10-20T16:09:00Z",
+      "role": "brief",
+      "selection_reason": "人に影響する判断へのLLM利用で、従来の評価では見えない偏りを測る方法を、データとコード付きで確認できる。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Ai2は10月20日、LLMの人口統計上の公平性を、最終的な選択だけでなく判断の安定性まで含めて測るベンチマークFairStressを公開した。採用、医療、融資、教育、住宅、刑事司法など29分野で、2人の候補から選ぶ現実的な場面を300件用意している。属性を入れ替えて同じ答えを出すかに加え、説得的な前置き（敵対的プレフィックス）を与えたときに、どちらの属性に有利な議論かによって判断の変えやすさが違うかを測る。Olmo、Llama、Qwen、Gemma、Claude、GPT系などで、そうした非対称性が見つかったとしている。データとコードを公開し、同社の評価基盤Olmo-evalにも組み込む予定。",
+      "source_kind": "paper",
+      "source_title": "FairStress: A deeper evaluation of fairness in LLM decision-making",
+      "source_url": "https://huggingface.co/blog/allenai/fairstress",
+      "title": "Ai2、判断の「揺らぎやすさ」まで含めて公平性を測るベンチマークFairStressを公開",
+      "topics": [
+        "evaluation",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-10-21T04:54:14+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントの品質は、最新モデルへの乗り換えだけでなく、失敗から作った手順書を積み上げることでも上がる。運用の記録を残すこと自体が資産になるという示唆だ。",
+      "caveat": "結果は著者らの実験で、独立に再現していない。リーダーボードとの比較は10月12日時点のスナップショットに対するもので、評価条件が他のエントリーと完全に同じかは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "ibm-altk-evolve-tau2",
+      "language": "en",
+      "observed_at": "2026-10-21T04:54:15+09:00",
+      "published_at": "2026-10-20T15:19:00Z",
+      "role": "brief",
+      "selection_reason": "モデルを替えずに運用側の工夫でエージェントの信頼性を上げた具体例で、条件と比較対象を一次情報で確認できる。",
+      "source_domain": "huggingface.co",
+      "source_fact": "IBM Researchは10月20日、エージェントの過去の試行から成功と失敗を短い行動指針にまとめ、システムプロンプトに追記する手法ALTK-Evolveの結果を公表した。顧客対応のベンチマークτ²-benchの小売分野で、推論型ではないGPT-4.1を使う標準的なReActエージェントが、4回の試行すべてで解けた課題の割合（Pass^4）67.5%に達し、10月12日時点のリーダーボードの小売分野の全エントリーを上回ったという。指針の抽出とエージェントは同じモデルで行い、モデルの重みの更新や人手の注釈は使っていない。性能の向上はターン数ではなくトークン消費の増加を伴うとしている。",
+      "source_kind": "analysis",
+      "source_title": "ALTK-Evolve: How learned memory tops the τ²-bench leaderboard on customer service tasks without a frontier model",
+      "source_url": "https://huggingface.co/blog/ibm-research/altk-evolve-bc",
+      "title": "IBM Research、学習した行動指針を足すだけで旧世代モデルの顧客対応エージェントを上位にしたと報告",
+      "topics": [
+        "agents",
+        "evaluation"
+      ],
+      "verification": {
+        "checked_at": "2026-10-21T04:54:15+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "使えるモデルが短い周期で入れ替わる中、どのモデルを誰に許すかを画面操作ではなく設定として管理できることは、監査と追従の手間を減らす。",
+      "caveat": "APIの権限要件や既存設定との優先順位は文書まで読んでおらず、未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-model-policy-api",
+      "language": "en",
+      "observed_at": "2026-10-21T04:54:14+09:00",
+      "published_at": "2026-10-19T21:32:00Z",
+      "role": "brief",
+      "selection_reason": "開発支援AIで使うモデルの統制をコードで管理できるようにする変更で、対象範囲を一次情報で確認できる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは10月19日、Copilotのモデルポリシーを取得・更新するREST APIのGETとPATCHを一般提供した。対象は企業、企業チーム、エージェントアプリ、組織の4階層で、企業のポリシーからモデルの管理を組織や、チーム・アプリへ委ねることもできる。同日には一部のCopilotモデルの提供終了も告知されている。",
+      "source_kind": "release",
+      "source_title": "Copilot model policy API for enterprise, orgs, and teams",
+      "source_url": "https://github.blog/changelog/2026-10-19-copilot-model-policy-api-for-enterprise-orgs-and-teams/",
+      "title": "GitHub、Copilotで使えるモデルを企業・組織・チーム単位でAPIから管理できるように",
+      "topics": [
+        "tools",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-10-21T04:54:14+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AIで移植が安くなると、互換性を誰が守るかが本当の論点になる。本家に決定権を残すと先に宣言した点は、その問題への一つの答え方だ。",
+      "caveat": "性能値は開発元のベンチマークで、独立に測定していない。実験版で、互換性の完成度は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-tsrs-typescript-rust",
+      "language": "en",
+      "observed_at": "2026-10-21T04:54:53+09:00",
+      "published_at": "2026-10-20T13:00:00Z",
+      "role": "brief",
+      "selection_reason": "AIによる大規模なコード移植が実際の開発基盤づくりに使われ始めたことを、当事者の発表で確認できる。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは10月20日、VoidZeroおよびOwner.comの開発者とともに、TypeScriptコンパイラのRust移植tsrsに取り組んでいると発表した。TypeScriptチームと緊密に協力し、Oxcのツールチェーンの一部として育てるとしており、言語のフォークではなく設計の決定権はTypeScriptチームに残すと明言している。初期のベンチマークでは、同じ型検査ワーカー数でTypeScript 7.0より最大8倍速く、メモリ使用量は約7割少ないという。一部の最適化はTypeScript本体に取り込まれた。移植に取り組む理由として、先端のAIモデルが大規模な移植をほぼ自律的に数日でこなせるようになったことを挙げ、Wasmで動かしやすいRustの特性を生かしてブラウザ内などでも開発環境を動かせるようにする狙いを示している。npmで実験版を試せる。",
+      "source_kind": "official",
+      "source_title": "Introducing tsrs: A port of TypeScript to Rust",
+      "source_url": "https://blog.cloudflare.com/typescript-rust-port/",
+      "title": "CloudflareとVoidZero、TypeScriptコンパイラのRust移植「tsrs」を試験公開",
+      "topics": [
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-21T04:54:53+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "規制当局が手口と対策を体系立てて示すと、次はそれが監督の物差しになりやすい。プラットフォームだけでなく、生成AIを提供する側の対策も問われていく流れの起点になりうる。",
+      "caveat": "確認したのは告知ページで、調査本文は読んでいない。生成AIの寄与の大きさは示されておらず、独立に確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "eu-dsa-financial-scams-study",
+      "language": "en",
+      "observed_at": "2026-10-21T04:54:15+09:00",
+      "published_at": "2026-10-20T06:47:00Z",
+      "role": "watch",
+      "selection_reason": "生成AIを詐欺の促進要因の一つとして位置づけた規制当局側の整理として確認できる。",
+      "source_domain": "digital-strategy.ec.europa.eu",
+      "source_fact": "欧州委員会は10月20日、デジタルサービス法（DSA）の監督・執行を支えるために2025年に調達した、オンライン金融詐欺に関する調査を公表した。投資、恋愛、電子商取引、雇用・協業、予期せぬ利益、災害支援の6類型に整理し、投資詐欺と恋愛詐欺が欧州で最も多く、最も伸びているとしている。悪用される機能として広告やレコメンド、メッセージ機能などと並んで生成AIを挙げ、組織的な犯罪ネットワークが道具やサービスを売ることで参入障壁を下げていると指摘した。対策は、事業者の本人確認などの入口対策、検出と削除、利用者向けの通報手段、プラットフォームの方針と第三者連携の4つに分けている。調査は大規模プラットフォームの法令順守を評価するものではないと明記されている。",
+      "source_kind": "regulator",
+      "source_title": "Digital Services Act study on financial scams on online platforms and ways to counter them",
+      "source_url": "https://digital-strategy.ec.europa.eu/en/library/digital-services-act-study-financial-scams-online-platforms-and-ways-counter-them",
+      "title": "欧州委員会、オンライン金融詐欺の手口とプラットフォーム対策を整理したDSA向け調査を公表",
+      "topics": [
+        "policy",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-21T04:54:15+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AIの導入が進むほど、データの所在だけでなく運用者のアクセスまで説明を求められる。アクセス記録を製品機能として出すのは、監査を前提にした競争が始まっている印だ。",
+      "caveat": "各機能の提供地域・時期の詳細は記事の記載に基づき、独立に確認していない。Sovereign Control Panelの提供開始日は示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "microsoft-sovereign-cloud-update",
+      "language": "en",
+      "observed_at": "2026-10-21T04:54:15+09:00",
+      "published_at": "2026-10-20T08:20:00Z",
+      "role": "watch",
+      "selection_reason": "AIを公共・規制分野で使う際の「誰が触れるか」の管理を、具体的な機能で示した一次発表として確認できる。",
+      "source_domain": "blogs.microsoft.com",
+      "source_fact": "Microsoftは10月20日、Microsoft Sovereign Cloudの次の段階を発表した。主権に関わる設定と状態をAzureポータルでまとめて扱うSovereign Control PanelをMicrosoft Igniteでパブリックプレビューにするとしている。EUとEFTAの顧客向けには、Microsoftの技術者による本番環境への遠隔アクセスを欧州の信頼できる提携先が監督するData Guardianを順次展開し、そのアクセスと操作を改ざん検知可能な形で記録するProduction Touch Ledgerも段階的に始めた。Azure Managed HSMでの外部鍵管理は一般提供となり、根の暗号鍵を自社または第三者が運用するハードウェアに置けるようになったという。同社は、機密性の高いデータを扱うAIワークロードでは、モデル・データ・処理を顧客の管理下に置く必要がある場合があるとしている。",
+      "source_kind": "official",
+      "source_title": "Advancing digital sovereignty with greater control and choice",
+      "source_url": "https://blogs.microsoft.com/blog/2026/10/20/advancing-digital-sovereignty-with-greater-control-and-choice/",
+      "title": "Microsoft、ソブリンクラウドの次段階として運用者アクセスの記録や外部鍵管理を拡充",
+      "topics": [
+        "infrastructure",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-10-21T04:54:15+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "国の内部で始めたAI活用を、自治体との間の事務にまで広げる動きだ。実証で何を課題として記録するかが、全国展開の条件を左右する。",
+      "caveat": "実証の評価方法や結果の公表方針は示されておらず、独立に確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "digital-agency-local-gov-ai-pilot",
+      "language": "ja",
+      "observed_at": "2026-10-21T04:54:15+09:00",
+      "published_at": "2026-10-20T19:51:00Z",
+      "role": "watch",
+      "selection_reason": "国のAI基盤を自治体へ広げる具体的な手順と日程を一次情報で確認できる。",
+      "source_domain": "www.digital.go.jp",
+      "source_fact": "デジタル庁は、自治体職員による政府機関への問い合わせ・照会事務を円滑化・省力化するため、データの検索・整理・分析ができる生成AI機能（自治体版バイバイン）を試験提供する実証事業を行うと発表した。募集対象は都道府県と市区町村の50〜100団体程度で、応募は令和8年10月26日から11月13日まで、実証期間は11月24日から令和9年2月10日まで。10月26日と28日にオンライン説明会を開く。",
+      "source_kind": "official",
+      "source_title": "「自治体からの照会事務の自動化などの国・地方AI共通サービスに関する実証事業」の参加自治体（都道府県及び市区町村）を募集します",
+      "source_url": "https://www.digital.go.jp/policies/genai/0ef07948-2f5d-4b45-8ebe-ea974c20a3ac",
+      "title": "デジタル庁、自治体の照会事務を生成AIで省力化する国・地方共通サービスの実証参加団体を募集",
+      "topics": [
+        "policy",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-21T04:54:15+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-10-21T04:56:52+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：政府職員18万人にAIエージェント、そして依存関係の取得口に関所",
+  "topics": [
+    {
+      "description": "利用規則・標準・制度とその運用。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・統制"
+    },
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計・評価・統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "基盤モデルの能力と提供・適応の条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "モデルやエージェントの性能・公平性を測る方法。",
+      "id": "evaluation",
+      "label_en": "Evaluation",
+      "label_ja": "評価"
+    },
+    {
+      "description": "開発・業務・運用を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "推論・学習を支えるハードウェアとソフトウェア基盤。",
+      "id": "infrastructure",
+      "label_en": "Infrastructure",
+      "label_ja": "計算基盤"
+    },
+    {
+      "description": "公開されたモデル・データ・基盤と利用条件。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    }
+  ]
+}

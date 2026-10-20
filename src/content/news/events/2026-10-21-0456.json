@@ -1,0 +1,28 @@
+[
+  {
+    "changed_signal_ids": [
+      "ai2-fairstress-benchmark",
+      "aws-agent-identity-x509",
+      "cloudflare-tsrs-typescript-rust",
+      "digital-agency-gennai-agents-standard",
+      "digital-agency-local-gov-ai-pilot",
+      "eu-dsa-financial-scams-study",
+      "github-copilot-model-policy-api",
+      "github-package-firewall-preview",
+      "ibm-altk-evolve-tau2",
+      "microsoft-sovereign-cloud-update",
+      "openai-low-resource-languages-eval",
+      "torchtpu-native-pytorch-backend"
+    ],
+    "edition_date": "2026-10-21",
+    "edition_id": "2026-10-21-0456",
+    "edition_url": "https://aoifuture.com/news/2026-10-21-0456/",
+    "event_id": "aoi-news-2026-10-21-0456-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-21T04:56:52+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "デジタル庁が政府職員向けのAIエージェント環境と立場別の安全基準を同時に出し、GitHubはコーディングエージェントも対象にしたパッケージ取得の検査機能を始めた。PyTorchのTPU対応、レガシー言語での開発能力、エージェントの身元と評価の新しい測り方を並べ、AIを使う側の統制と基盤がどう整い始めたかを一次資料から見る。",
+    "title": "AOIFUTURE News：政府職員18万人にAIエージェント、そして依存関係の取得口に関所"
+  }
+]
