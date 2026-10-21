@@ -1,0 +1,368 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-10-22T04:54:40+09:00",
+  "dek": "AIが関わって見つかったPHPの重大脆弱性に、米当局が即時修正を求め、OpenAIは開示と修正の調整の枠組みを示した。認証局の鍵漏えい、短命トークンへの移行、秘密計算の拡大と並べ、見つける速さに守る側の段取りが追いつけるかを一次資料から見る。",
+  "edition_date": "2026-10-22",
+  "edition_id": "2026-10-22-0454",
+  "edition_note": "2026年10月20日から10月21日（米国時間）までに公開された一次資料を直接確認した。いずれも直近72時間以内の公開で、対象期間の拡張はしていない。各社の性能・効果の主張や脆弱性の技術的詳細は独立に検証しておらず、前提は各項目の留保に記した。",
+  "generated_at": "2026-10-22T04:54:40+09:00",
+  "items": [
+    {
+      "aoi_note": "AIで脆弱性が見つかる速度が上がるほど、ボトルネックは発見ではなく修正の配布と通知の段取りに移る。誰に事前に知らせるかを含めた手順を一社が提案した点は、今後の開示慣行の議論の起点になりうる。",
+      "caveat": "確認したのはOpenAIの発表で、脆弱性の技術的詳細や発見の経緯は独立に検証していない。「攻撃者より先に見つけた」は同社の認識として書かれている。提案された枠組みは意見募集の段階で、確定した手順ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-patch-the-planet-php",
+      "language": "en",
+      "observed_at": "2026-10-22T04:51:20+09:00",
+      "published_at": "2026-10-21T07:00:00Z",
+      "role": "lead",
+      "selection_reason": "AIによる脆弱性発見が、個別の報告ではなく広く使われる基盤ソフトの協調対応の設計を求める段階に入ったことを、当事者の一次情報で確認できる。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは10月21日、過去2か月にわたり、PHPの重大な脆弱性に対処するため保守者・研究者・セキュリティ事業者の連合を主導したと公表した。同社の「Patch the Planet」の取り組みの中で、Califが同社のモデルGPT-5.6 Solを使って重大な欠陥を見つけ、Wizも2件の脆弱性を独立に発見・報告したという。修正と公開はPHPの保守者が主導し、OpenAIやWiz、Cloudflareなどが調査・技術支援・開示前の防御準備の調整に加わった。OpenAIは、PHPのバージョン確認ツールをCodexのスキルとして公開し、同社の知る限り攻撃者より先にAIが脆弱性を見つけたとしている。あわせて、上流での検証と修正、影響を受ける組織への事前通知、政府機関との連携、製品横断の更新準備、修正後の公開と適用支援という5段階の対応の枠組みを提案し、開示までの猶予期間や緊急時のパッチ適用のあり方などについて意見を募っている。資源の乏しい防御側組織向けに10億ドル分の利用補助を約束したとも記している。",
+      "source_kind": "official",
+      "source_title": "Patch the Planet: global response coordination as agents uncover critical vulnerabilities",
+      "source_url": "https://openai.com/index/coordinated-disclosure-of-critical-vulnerabilities",
+      "title": "OpenAI、AIが見つけたPHPの重大脆弱性を軸に、世界規模の修正調整の枠組みを提案",
+      "topics": [
+        "security",
+        "agents",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-10-22T04:51:20+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "PHPは自社で書いていなくても、購入したソフトや管理画面の中に入っていることが多い。今回の要請はまず「どこにPHPがあるか」を把握する在庫管理の力を試している。",
+      "caveat": "脆弱性の技術的な詳細と影響範囲は、CISAの告知とPHP側の勧告の記述に基づき、独立に検証していない。悪用が観測されていないのは公表時点の情報で、その後の状況は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-php2shell-patch-now",
+      "language": "en",
+      "observed_at": "2026-10-22T04:51:44+09:00",
+      "published_at": "2026-10-21T12:00:00Z",
+      "role": "major",
+      "selection_reason": "AIが発見に関わった脆弱性について、規制当局が具体的な修正版と運用上の指示を出した一次資料として確認できる。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "米サイバーセキュリティ・インフラ安全保障庁（CISA）は10月21日、新たに公表されたPHPの重大な脆弱性CVE-2026-109618とCVE-2026-109619（通称「php2shell」）を直ちに修正するよう組織に強く求めた。認証なしで遠隔からコードを実行でき、Webリクエストを処理するすべてのPHP環境が影響を受けるとしている。PHP 8.5.12、8.4.27、8.3.36、8.2.35への更新が必要で、公表時点で悪用は観測していないという。CISAは、組織内のPHPを使うシステムの洗い出し（PHPは他のソフトの部品として含まれ見えにくいことがある）、インターネットに面したシステムを優先した修正、すぐ更新できない場合やサポート切れの8.1以前を使う場合は修正までシステムをオフラインにすること、PHPのワーカープロセスがシェルを起動したりツールを取得したりする不審な動きの監視を挙げている。",
+      "source_kind": "advisory",
+      "source_title": "Critical Vulnerabilities in PHP Require Immediate Patching",
+      "source_url": "https://www.cisa.gov/news-events/alerts/2026/10/21/critical-vulnerabilities-php-require-immediate-patching",
+      "title": "CISA、PHPの重大脆弱性「php2shell」の即時修正を要請、更新できない場合はオフラインも",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-22T04:51:44+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "暗号そのものではなく「誰を信頼するか」の一覧が崩れた事故で、影響はSDKの奥の信頼ストアまで及ぶ。エラーを黙らせるために検証を切る、という現場の近道が最大の落とし穴になる。",
+      "caveat": "鍵が危殆化した経緯や悪用の有無は、Cloudflareの説明に基づき独立に確認していない。認証局やブラウザ各社による失効・不信任の正式な措置の状況は本稿では確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-emudhra-intermediate-keys",
+      "language": "en",
+      "observed_at": "2026-10-22T04:51:48+09:00",
+      "published_at": "2026-10-20T22:20:16Z",
+      "role": "major",
+      "selection_reason": "インターネットの認証の土台であるWeb PKIの事故について、大手事業者が具体的な更新対象と注意点を示した一次の分析として確認できる。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは10月20日（米国時間）、認証局eMudhraの中間証明書8件に関連する秘密鍵が危殆化していることを、10月19日17時（UTC）ごろに把握したと公表した。これらの証明書はブラウザやOS、Cloudflare内部でも広く信頼されており、鍵自体が弱いため、攻撃者は任意のドメインの証明書を偽造してサーバーになりすまし、通信を傍受・改ざんできるという。同社は公開前に重要なサービスの修正を優先し、自社サービスでは悪用は確認していないとしている。Cloudflare One Client（WARP）や1.1.1.1アプリ、Cloudflare Tunnel（cloudflared 2026.10.2）の更新を公開し、CDNやZero Trust製品に緩和策を適用した。利用者には、相互TLSの信頼ストアやオリジンサーバーの証明書設定の見直しを求め、開発者にはSDKの下にあるHTTPライブラリやOSの信頼設定まで確認すること、更新後に出る証明書エラーを検証の無効化で解消しないことを呼びかけている。",
+      "source_kind": "analysis",
+      "source_title": "8 eMudhra certificates are compromised. Here's what you need to know",
+      "source_url": "https://blog.cloudflare.com/emudhra-certificate-compromise/",
+      "title": "Cloudflare、eMudhraの中間証明書8件の秘密鍵漏えいで対応手順を公開、証明書の偽造が可能に",
+      "topics": [
+        "security",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-10-22T04:51:48+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "企業にとってはモデル選びとクラウド選びが切り離されつつある。既存の利用額コミットメントで買えることは、評価から本番導入までの社内手続きを短くする実務的な要素だ。",
+      "caveat": "提供開始時期は「今後数週間」とされた予定で、対応するモデルの範囲や価格、提供地域は示されていない。Google AntigravityとGemini Agentでの提供も予定段階。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-models-on-google-cloud",
+      "language": "en",
+      "observed_at": "2026-10-22T04:51:45+09:00",
+      "published_at": "2026-10-21T12:00:00Z",
+      "role": "major",
+      "selection_reason": "主要なモデル提供者が競合する大手クラウドの調達経路に乗ることを、当事者の一次情報で確認できる。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは10月21日、Google Cloudと提携し、同社の最先端モデルとCodexのエージェント型ワークフローをGoogle CloudのModel Gardenで提供すると発表した。Google Cloudの利用者はGoogle Cloud Marketplace経由でOpenAIのモデルを購入でき、Google Cloudの利用額コミットメントを充当できるという。Google Cloudのアクセス制御やデータガバナンスと組み合わせ、規制業界での利用を支えるとしている。OpenAIのモデルは近くGoogle AntigravityとGemini Agentでも使えるようになる予定。一般提供は今後数週間のうちに予定されており、OpenAIの主要なクラウドパートナーは引き続きMicrosoftだと明記している。",
+      "source_kind": "official",
+      "source_title": "OpenAI models are coming to Google Cloud",
+      "source_url": "https://openai.com/index/openai-models-google-cloud",
+      "title": "OpenAIのモデルとCodexがGoogle CloudのModel Gardenに、数週間内に一般提供予定",
+      "topics": [
+        "models",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-22T04:51:45+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "規則ではなく「問いの一覧」を出す手法は、研究資金や共同研究の方向を静かに決める。自律性の価値と人の判断が要る場面の線引きを中心に置いた点は、エージェント運用の設計にもそのまま当てはまる。",
+      "caveat": "確認したのは告知のブログ記事で、課題集の章の本文は読んでいない。7つの領域の個別の内容は本稿では確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "ncsc-ai-research-problem-book",
+      "language": "en",
+      "observed_at": "2026-10-22T04:51:45+09:00",
+      "published_at": "2026-10-20T12:00:00Z",
+      "role": "brief",
+      "selection_reason": "政府のサイバー機関が、AI時代に何が未解決かを研究課題として公式に整理した一次資料として確認できる。",
+      "source_domain": "www.ncsc.gov.uk",
+      "source_fact": "英国国家サイバーセキュリティセンター（NCSC）は10月20日、研究課題集（research problem book）を書き直し、「サイバーセキュリティにおけるAIの課題」という新しい章を加えたと公表した。章は、AIによるサイバー防御の強化、AIシステム自体のセキュリティと保証、データ駆動の手法による大規模なレジリエンス向上という3つの大きなテーマにまたがる7つの領域を挙げ、共通する軸として人とAIの協働を置いている。NCSCは、計画・推論・ツール利用・行動を自律的に行う新しい世代のAIを前に、脆弱性管理やインシデント対応、リスク管理といった既存の考え方の多くはこうしたAIの登場前に作られたもので、見直しが必要だと述べ、学術・産業・政府から課題への意見や研究事例を募っている。",
+      "source_kind": "regulator",
+      "source_title": "Introducing a new AI chapter in the NCSC research problem book",
+      "source_url": "https://www.ncsc.gov.uk/blogs/introducing-new-ai-chapter-ncsc-research-problem-book",
+      "title": "英NCSC、研究課題集に「AIとサイバーセキュリティ」の章を新設、7領域を提示",
+      "topics": [
+        "policy",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-22T04:51:45+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "音声は個人情報の塊で、どこで処理し残すかが導入可否を決める。精度競争に加えて「自社内で動かせる」を前面に出すのは、欧州の規制環境を意識した売り方だ。",
+      "caveat": "Whisperなど他社モデルを上回るとする性能比較は発表元の測定で、独立に検証していない。料金や提供条件の詳細は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "mistral-voxtral-3",
+      "language": "en",
+      "observed_at": "2026-10-22T04:51:46+09:00",
+      "published_at": "2026-10-20T12:00:22Z",
+      "role": "brief",
+      "selection_reason": "音声エージェントを構成する部品一式を、主権的な展開を前提に一社がまとめて出した一次情報として確認できる。",
+      "source_domain": "mistral.ai",
+      "source_fact": "Mistral AIは10月20日、音声の書き起こしと音声合成の新しいモデル群と、音声エージェント用SDKからなる「Voxtral 3」を発表した。書き起こしモデルVoxtral Small Transcribe 3は、EUの公用語24言語を含む50言語に対応し、話者の区別、キーフレーズによる認識精度の補正、話し終わりの検出を備えるという。音声合成モデルVoxtral Mini TTS 3は35以上の言語と50以上の方言に対応し、会話の文脈に応じて感情や速さ、強調を変える。SDKは聞く・考える・ツールを呼ぶ・話すを1つのリアルタイム処理にまとめる。書き起こしのMini版は40億パラメータで1分あたり0.0035ドルとしている。同社のEU内でホストされるAPIのほか、自社の基盤への展開も可能で、音声を保持するかどうかを利用者が管理できるとしている。",
+      "source_kind": "release",
+      "source_title": "Voxtral 3: Voice Agent SDK & Speech Models in 50+ Languages",
+      "source_url": "https://mistral.ai/news/voxtral-3/",
+      "title": "Mistral、音声認識・合成モデルと音声エージェントSDKの「Voxtral 3」を公開",
+      "topics": [
+        "models",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-22T04:51:46+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "コーディングエージェントやCIが増えるほど、長生きするトークンの漏えいが最大の弱点になる。既定化の前に、トークンを保存して使い回している自動化を洗い出しておく価値がある。",
+      "caveat": "セキュリティ上の効果はGitHubの説明で、独立に検証していない。既定に切り替える時期は示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-cli-expiring-oauth-tokens",
+      "language": "en",
+      "observed_at": "2026-10-22T04:51:48+09:00",
+      "published_at": "2026-10-21T16:43:23Z",
+      "role": "brief",
+      "selection_reason": "開発者やエージェントが日常的に使う認証の既定値が、短命トークンへ移る予定を一次情報で確認できる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは10月21日、GitHub CLI（gh）で期限付きの、自動更新されるOAuth認証情報をパブリックプレビューとして使えるようにしたと発表した。v2.103.0以降で gh auth login --expiring を指定すると、期限付きのアクセストークンと更新用トークンを保存し、必要に応じて自動で更新する。漏えいしたアクセストークンは無期限ではなく数時間で使えなくなるという。既定では従来どおりで、将来のリリースで新規サインインの既定にする計画とした。トークンを一度取り出して保存し後で使うスクリプトや拡張機能は期限切れで動かなくなる可能性があるため、毎回 gh auth token で取り直すよう注意している。github.comとghe.comで利用でき、GitHub Enterprise Serverは3.23から対応する。",
+      "source_kind": "release",
+      "source_title": "GitHub CLI: Opt in to expiring, auto-refreshing OAuth tokens",
+      "source_url": "https://github.blog/changelog/2026-10-21-github-cli-opt-in-to-expiring-auto-refreshing-oauth-tokens/",
+      "title": "GitHub CLI、期限付きで自動更新されるOAuthトークンを選択制で導入、将来は既定に",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-22T04:51:48+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "計算資源を借りる先が増えるほど、モデル開発者にとっては「貸し手を信頼しなくて済む仕組み」が調達の条件になる。秘密計算が推論だけでなく学習規模の基盤に広がる流れだ。",
+      "caveat": "保護の範囲や性能への影響は発表元の説明で、独立に検証していない。各社の提供開始時期や対象地域は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-confidential-bare-metal",
+      "language": "en",
+      "observed_at": "2026-10-22T04:51:50+09:00",
+      "published_at": "2026-10-21T10:30:02Z",
+      "role": "brief",
+      "selection_reason": "モデルの重みという知的財産を、他社の計算基盤上でどう守るかについて、ハードウェア側の一次情報で確認できる。",
+      "source_domain": "blogs.nvidia.com",
+      "source_fact": "NVIDIAは10月21日、秘密計算（Confidential Computing）の新しい展開形態「Confidential Bare Metal」を発表した。最先端モデルの開発者が、第三者のクラウドやネオクラウド、企業の基盤上で専有のベアメタル環境を使い、モデルとデータの管理権を保ったまま機密性の高い処理を動かせるようにするもので、通信中のデータ保護、基盤の完全性の測定、ハードウェアレベルのアクセス制限といった新しい制御を導入するという。秘密計算はベアメタル、Kubernetes向けのコンテナ、仮想マシンの3形態となり、Grace Blackwell NVL72やHGX Rubin NVL8、DGX Rubin NVL8にも対応を広げる。CohereはModel Vaultへの統合を計画し、Google CloudはGB300 NVL72を使うA4X Maxインスタンスで対応を広げるとしている。",
+      "source_kind": "official",
+      "source_title": "NVIDIA Confidential Computing Expands to Securely Scale Global Infrastructure",
+      "source_url": "https://blogs.nvidia.com/blog/confidential-computing-model-builders-infrastructure/",
+      "title": "NVIDIA、モデル開発者向けに秘密計算の新形態「Confidential Bare Metal」を発表",
+      "topics": [
+        "infrastructure",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-22T04:51:50+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "強化学習では学習用と推論用でモデルの実装が二重になり、ずれが原因不明の不安定さを生んできた。同じ実装で通す設計とビット一致の検査は、再現性を重んじる研究や社内開発で効いてくる。",
+      "caveat": "性能や安定性の主張は発表元の検証で、独立に再現していない。各モデル対応の完成度や対象のハードウェアは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "torchtitan-titanrl-update",
+      "language": "en",
+      "observed_at": "2026-10-22T04:51:51+09:00",
+      "published_at": "2026-10-21T19:45:44Z",
+      "role": "brief",
+      "selection_reason": "オープンソースの学習基盤が、エージェント向けの強化学習までを1つの実装で扱う方向に進んだことを一次情報で確認できる。",
+      "source_domain": "pytorch.org",
+      "source_fact": "PyTorchの公式ブログは10月21日、Metaのチームによる大規模学習基盤TorchTitanの1年間の改良をまとめて公表した。Muse Spark Open、Qwen3-VLとQwen3.5、Kimi K2.7とK3、DeepSeek-V4などのモデルを、5次元の並列化に対応する形で新たにサポートした。新機能TitanRLは、事前学習から事後学習、vLLM内での生成まで同じモデル実装を使う強化学習の仕組みで、学習と生成を非同期に動かし、長い文脈やコード実行を伴うエージェント型の課題で試したとしている。対応する設定では、学習側と生成側の対数確率がビット単位で一致する「batch-invariant」モードを備え、結果の差が雑音か変更によるものかを切り分けやすくするという。MoEモデル向けの性能改善も挙げている。",
+      "source_kind": "official",
+      "source_title": "TorchTitan Update: New SOTA Models, Performance at Scale, TitanRL",
+      "source_url": "https://pytorch.org/blog/torchtitan-update-new-sota-models-performance-at-scale-titanrl/",
+      "title": "PyTorchの学習基盤TorchTitan、強化学習機能「TitanRL」と新モデル対応を発表",
+      "topics": [
+        "open-source",
+        "infrastructure",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-22T04:51:51+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントが「見て押す」から「呼んで頼む」に移ると、店舗側はページの見た目よりツールの設計で選ばれるようになる。最後の決済を人に残す線引きは、当面の信頼の落としどころを示す。",
+      "caveat": "WebMCPは実験段階の提案標準で、対応ブラウザは限られる。有効化した店舗数や効果は発表元の説明で、独立に確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-webmcp-commerce-storefronts",
+      "language": "en",
+      "observed_at": "2026-10-22T04:51:53+09:00",
+      "published_at": "2026-10-21T13:00:00Z",
+      "role": "watch",
+      "selection_reason": "エージェントによる買い物を、画面操作の模倣から構造化された呼び出しに置き換える動きが大規模に試されていることを一次情報で確認できる。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは10月21日、Eコマース基盤のCommerce.comと組み、同社が運用する約10万のドメインの店舗で、AIエージェント向けの構造化されたツールを提供するWebMCPを有効にする取り組みを公開した。WebMCPはGoogleが提案する実験段階のブラウザ標準で、エージェントがページのボタンを推測して操作する代わりに、商品検索やカート追加といったツールを直接呼び出せる。Cloudflareは8月にエッジで自動的にWebMCPを提供する機能をベータで始めており、今回は店舗ごとに無効化できる仕組みを作ったという。ツールは買い物客のブラウザのセッション内で動き、決済は利用者自身がチェックアウトを押して完了する設計で、認証情報は第三者に渡らないとしている。",
+      "source_kind": "analysis",
+      "source_title": "How Commerce.com and Cloudflare are getting storefronts ready for AI agents",
+      "source_url": "https://blog.cloudflare.com/webmcp-commerce/",
+      "title": "Cloudflare、Commerce.comの約10万ドメインの店舗をAIエージェントが操作しやすくするWebMCP連携を公開",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-22T04:51:53+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "生成AIで詐欺文面やなりすましが安く作れる時代に、プラットフォームの「リスク評価と軽減」の義務がどこまで問われるかの試金石になる。有料表示の明示はAIの回答内広告にも通じる論点だ。",
+      "caveat": "正式手続きの開始は違反の認定を意味しない。調査の対象や根拠の詳細は告知と委員会の説明に基づき、プレスリリース本文は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "ec-dsa-booking-com-scams",
+      "language": "en",
+      "observed_at": "2026-10-22T04:51:45+09:00",
+      "published_at": "2026-10-21T10:06:00Z",
+      "role": "watch",
+      "selection_reason": "巨大プラットフォームの詐欺対策と表示の透明性について、規制当局が正式手続きに入った一次資料として確認できる。",
+      "source_domain": "digital-strategy.ec.europa.eu",
+      "source_fact": "欧州委員会は10月21日、Booking.comがデジタルサービス法（DSA）に違反した可能性について正式な手続きを開始したと発表した。不正な掲載物件やフィッシング詐欺に関するリスクを十分に評価・軽減していなかった可能性に加え、検索結果で上位表示のために料金を払った掲載を広告として明確に表示していなかった透明性の問題も対象とする。調査は、不正・不適合な掲載、予約や宿泊客のデータを悪用したフィッシング、広告と識別しにくい有料の上位表示の3点に焦点を当てるとしている。",
+      "source_kind": "regulator",
+      "source_title": "Commission to investigate how Booking.com combats scams and fraud under the Digital Services Act",
+      "source_url": "https://digital-strategy.ec.europa.eu/en/news/commission-investigate-how-bookingcom-combats-scams-and-fraud-under-digital-services-act",
+      "title": "欧州委員会、Booking.comの詐欺・フィッシング対策をデジタルサービス法に基づき正式調査",
+      "topics": [
+        "policy",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-22T04:51:45+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-10-22T04:54:40+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：AIが見つけたPHPの重大脆弱性と、修正を世界に配る段取り",
+  "topics": [
+    {
+      "description": "利用規則・標準・制度とその運用。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・統制"
+    },
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計・評価・統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "基盤モデルの能力と提供・適応の条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "公開されたモデル・データ・基盤と利用条件。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "開発・業務・運用を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "推論・学習を支えるハードウェアとソフトウェア基盤。",
+      "id": "infrastructure",
+      "label_en": "Infrastructure",
+      "label_ja": "計算基盤"
+    }
+  ]
+}

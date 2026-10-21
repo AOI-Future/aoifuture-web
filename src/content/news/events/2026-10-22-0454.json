@@ -1,0 +1,27 @@
+[
+  {
+    "changed_signal_ids": [
+      "cisa-php2shell-patch-now",
+      "cloudflare-emudhra-intermediate-keys",
+      "cloudflare-webmcp-commerce-storefronts",
+      "ec-dsa-booking-com-scams",
+      "github-cli-expiring-oauth-tokens",
+      "mistral-voxtral-3",
+      "ncsc-ai-research-problem-book",
+      "nvidia-confidential-bare-metal",
+      "openai-models-on-google-cloud",
+      "openai-patch-the-planet-php",
+      "torchtitan-titanrl-update"
+    ],
+    "edition_date": "2026-10-22",
+    "edition_id": "2026-10-22-0454",
+    "edition_url": "https://aoifuture.com/news/2026-10-22-0454/",
+    "event_id": "aoi-news-2026-10-22-0454-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-22T04:54:40+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "AIが関わって見つかったPHPの重大脆弱性に、米当局が即時修正を求め、OpenAIは開示と修正の調整の枠組みを示した。認証局の鍵漏えい、短命トークンへの移行、秘密計算の拡大と並べ、見つける速さに守る側の段取りが追いつけるかを一次資料から見る。",
+    "title": "AOIFUTURE News：AIが見つけたPHPの重大脆弱性と、修正を世界に配る段取り"
+  }
+]
