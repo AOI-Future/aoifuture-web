@@ -1,17 +1,15 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { appsForNativeLegal } from '../../data/apps';
 
 // aoifuture のネイティブアプリ共通 利用規約・免責事項。
-// 全アプリ（AoiTap / AOI HARBOR / 今後のアプリ）に適用される
+// 対象アプリ一覧は src/data/apps.ts（scope: native）から派生。
 // 現状有姿・無保証／利用者の責任／責任の制限／準拠法を定める。
 // App Store の利用許諾は Apple 標準 EULA が既定で適用され、本規約はこれを補完する。
 // プライバシー（データの取り扱い）は別ページ /apps/privacy を参照。
 const lastUpdated = '2026-06-26';
 
-const apps = [
-  { name: 'AoiTap', plat: 'iOS / macOS / watchOS', note: 'オンデバイス文字起こし・日英対訳 → Markdown' },
-  { name: 'AOI HARBOR', plat: 'macOS', note: 'ローカル LLM ゲートウェイ' },
-];
+const apps = appsForNativeLegal();
 ---
 
 <Layout title="App Terms of Use | AOI">
@@ -48,8 +46,8 @@ const apps = [
           {apps.map(a => (
             <div class="flex items-baseline gap-3 border border-cyan-400/20 px-4 py-3 flex-wrap">
               <span class="text-sm tracking-widest text-cyan-300">{a.name}</span>
-              <span class="text-[10px] text-cyan-400/60 border border-cyan-400/20 px-2 py-1 tracking-wide">{a.plat}</span>
-              <span class="text-xs text-cyan-400/40" style="font-family:var(--font-sans)">{a.note}</span>
+              <span class="text-[10px] text-cyan-400/60 border border-cyan-400/20 px-2 py-1 tracking-wide">{a.legalPlat}</span>
+              <span class="text-xs text-cyan-400/40" style="font-family:var(--font-sans)">{a.legalNote}</span>
             </div>
           ))}
         </div>
