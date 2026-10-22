@@ -1,0 +1,341 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-10-23T05:00:50+09:00",
+  "dek": "Anthropicがエージェント向けの標準を中立団体に移し、米欧の当局はランサムウェアとPHPの脆弱性に相次いで対応を求めた。応答まで見る防御、公開モデルの拡充、電力半導体への政府資金と並べ、エージェントが広がる前提の整備を一次資料から見る。",
+  "edition_date": "2026-10-23",
+  "edition_id": "2026-10-23-0500",
+  "edition_note": "2026年10月20日から10月22日（米国・欧州時間）までに公開された一次資料を直接確認した。いずれも直近72時間以内の公開で、対象期間の拡張はしていない。各社の性能・採用数の主張や脆弱性の技術的詳細は独立に検証しておらず、前提は各項目の留保に記した。",
+  "generated_at": "2026-10-23T05:00:50+09:00",
+  "items": [
+    {
+      "aoi_note": "接続の規格（MCP）に続いて、手順の規格も中立団体に移る。採用数が大きくなるほど、次の焦点は互換性より、他人が書いたスキルを入れるときの安全確認の手順になる。提案にセキュリティ指針が入っている点は注目に値する。",
+      "caveat": "採用基盤の数、公開数、インストール数はAnthropicの発表による数字で、独立に検証していない。ロードマップは提案段階で、AAIFでの採択や時期は確定していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "anthropic-agent-skills-to-aaif",
+      "language": "en",
+      "observed_at": "2026-10-23T04:59:00+09:00",
+      "published_at": "2026-10-22T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "エージェントに手順を持たせる仕組みが、一社の仕様から中立団体の管理する共通規格に移る節目を、当事者の発表で確認できる。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "Anthropicは10月22日、AIエージェントに特定の作業手順や専門知識を与える公開標準「Agent Skills」を、Linux Foundation傘下のAgentic AI Foundation（AAIF）に寄贈すると発表した。スキルはSKILL.mdファイルと必要なスクリプトや参考資料を収めたフォルダで、同社は2025年12月に標準として公開して以来、ChatGPT、Cursor、GitHub Copilot、VS Codeを含む70以上のエージェント基盤が採用し、これまでに100万件のスキルが公開され約2億8000万回インストールされたとしている。AAIFは同社がBlockやOpenAIと共同で設立し、Model Context Protocol（MCP）も寄贈済みの団体。寄贈対象は名称とロゴ、GitHubの組織、agentskills.ioのドメインで、Anthropic、Google、OpenAIなどの技術者が個人として保守にあたる。今後の計画として、バージョン管理されたリリース、正式な提案手続き、スキルの作成者と導入者向けのセキュリティ指針を提案したという。",
+      "source_kind": "official",
+      "source_title": "Donating Agent Skills to the Agentic AI Foundation",
+      "source_url": "https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation",
+      "title": "Anthropic、エージェント向けの標準「Agent Skills」をLinux Foundation傘下の財団に寄贈",
+      "topics": [
+        "agents",
+        "open-source",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-23T04:59:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "入口は新しい技術ではなく、盗まれた認証情報と未修正の公開機器という基本の穴にある。AIで脆弱性の発見が速まるなかで、修正の遅れがそのまま被害の入口になる構図を裏づける。",
+      "caveat": "被害件数や活動の評価は当局の発表に基づき、独立に検証していない。勧告本文の侵害の痕跡（IOC）や個別の脆弱性一覧は今回の確認範囲に含めていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-safepay-ransomware-advisory",
+      "language": "en",
+      "observed_at": "2026-10-23T04:59:00+09:00",
+      "published_at": "2026-10-21T00:00:00Z",
+      "role": "major",
+      "selection_reason": "攻撃の入口と手口、推奨対策を当局がまとめた一次資料で、多くの組織が自社の点検項目に直接置き換えられる。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "米国のCISA、FBI、シークレットサービスと海外の関係機関は10月21日、ランサムウェア集団SafePayに関する共同のサイバーセキュリティ勧告を出した。同集団は2026年で最も活発なグループの一つで、南北アメリカ、欧州、オーストラリアの幅広い業種で約600の被害組織があるという。侵入は窃取した認証情報や、インターネットに面した機器の既知の脆弱性を突く形で、VPN経由の接続が多い。侵入後は正規のIT管理ツールで内部を移動し、バックアップを削除・無効化したうえでデータを盗んで暗号化し、公開すると脅したり、被害者に電話をかけたりして支払いを迫るとしている。勧告は、既知の悪用済み脆弱性の優先的な修正、多要素認証の必須化、オフラインバックアップと復元テスト、ネットワーク分割などを求めている。",
+      "source_kind": "advisory",
+      "source_title": "CISA, FBI and Partners Warn Organizations of SafePay Ransomware Actors Targeting Multiple Critical Infrastructure Sectors",
+      "source_url": "https://www.cisa.gov/news-events/news/cisa-fbi-and-partners-warn-organizations-safepay-ransomware-actors-targeting-multiple-critical",
+      "title": "米CISAとFBIなど、約600の被害を出したランサムウェア集団SafePayについて共同勧告",
+      "topics": [
+        "security",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-10-23T04:59:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "同じ脆弱性への対応が、欧州では技術的な注意喚起にとどまらず、法律上の報告義務と並べて語られている。修正の配布だけでなく、製品を出す側の報告の段取りまでが問われる局面に入っている。",
+      "caveat": "脆弱性の技術的な詳細や影響範囲は独立に検証していない。影響製品の一覧は外部の資料に委ねられており、今回は内容を確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "eu-joint-statement-php-vulnerabilities",
+      "language": "en",
+      "observed_at": "2026-10-23T04:59:02+09:00",
+      "published_at": "2026-10-21T00:00:00Z",
+      "role": "major",
+      "selection_reason": "米国側に続き、EUの規制当局と対応機関が同じ脆弱性に共同で声明を出した一次資料で、CRAの報告義務との接続まで確認できる。",
+      "source_domain": "digital-strategy.ec.europa.eu",
+      "source_fact": "欧州委員会（DG CNECT）、EUサイバーセキュリティ機関ENISA、CERT-EU、欧州刑事警察機構のEC3、EU各国のCSIRTネットワークは10月21日、PHPの重大な脆弱性2件（CVE-2026-109618、CVE-2026-109619）について、直ちに対応するよう組織に求める共同声明を出した。認証なしで遠隔からコードを実行されるおそれがあり、PHPのセキュリティチームは同日13時40分（UTC）に修正版を公開した。声明は、PHPを使うアプリケーションの洗い出し、ホスティング事業者との調整、インターネットに面したシステムを優先した更新を求め、すぐに修正できない場合は公開ネットワークから切り離すことも検討するよう促している。PHPを内部で使う製品も影響を受けうるとして、オランダNCSCの影響製品一覧も案内した。あわせて、2026年9月11日からはサイバーレジリエンス法（CRA）に基づき、製造者は悪用が確認された脆弱性を単一報告窓口に報告する義務があると注意を喚起している。",
+      "source_kind": "regulator",
+      "source_title": "Joint statement on critical PHP vulnerabilities",
+      "source_url": "https://digital-strategy.ec.europa.eu/en/news/joint-statement-critical-php-vulnerabilities",
+      "title": "欧州委員会とENISAなど、PHPの重大な脆弱性2件に即時対応を求める共同声明",
+      "topics": [
+        "security",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-10-23T04:59:02+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "要求だけを見る防御は、誤検知を恐れて緩めるか、厳しくして正規の通信を壊すかの二択になりやすい。応答まで見ることで、その中間に判断の根拠を足せる。ただし、すでに起きたサーバー側の処理は取り消せない点は製品側も明記している。",
+      "caveat": "検出の精度や誤検知率は同社の説明のみで、独立に検証していない。応答フィールドの提供は順次展開中とされ、全アカウントで使えるかは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-full-transaction-waf",
+      "language": "en",
+      "observed_at": "2026-10-23T04:59:02+09:00",
+      "published_at": "2026-10-21T00:00:00Z",
+      "role": "major",
+      "selection_reason": "攻撃の判定を「怪しい要求」から「実際に何が漏れたか」へ広げる防御側の具体的な変更で、AIによる攻撃の高速化を前提にした設計の例として確認できる。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは10月21日、ウェブアプリケーションファイアウォール（WAF）に、HTTPの要求とそれに対する応答を組み合わせて悪用の痕跡を検出する「フルトランザクション検出」と、応答の段階で遮断できる「レスポンスルール」を追加し、無料プランを含む全顧客に一般提供すると発表した。同社は、最新のモデルが広く使われるソフトの深い脆弱性を見つけていることや、脆弱性を探すAIエージェントが応答を手がかりに攻撃を調整し続けうることを背景に挙げている。応答に機密情報が含まれると判断した場合、元の応答をブロック画面とHTTP 403に置き換える。最初の管理ルールは、最近公表されたPHPの脆弱性（php2shell）を対象とし、全顧客は応答に対するカスタムルールを3件まで作成できる。応答本文を条件にしたルールはまだ使えないとしている。",
+      "source_kind": "official",
+      "source_title": "Introducing full transaction detection for Cloudflare WAF",
+      "source_url": "https://blog.cloudflare.com/full-transaction-waf/",
+      "title": "Cloudflare、要求と応答を突き合わせて攻撃の成否を見るWAF機能を全プランに提供",
+      "topics": [
+        "security",
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-23T04:59:02+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "秘密情報の検出は、見つけるだけでなく即座に無効化できるかが実効性を左右する。監査ログの項目変更は地味だが、監視の自動化が黙って壊れる典型なので、期日前の確認に値する。",
+      "caveat": "改善の効果は検証していない。無効化操作は公開プレビューの機能で、仕様が変わる可能性がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-secret-scanning-updates",
+      "language": "en",
+      "observed_at": "2026-10-23T04:59:03+09:00",
+      "published_at": "2026-10-20T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "漏えいした秘密情報を見つけたあとの「無効化」の範囲が広がった点と、自動化連携に影響する予告付きの仕様変更を一次情報で確認できる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは10月20日、シークレットスキャンの改善と不具合修正をまとめて公表した。2026年11月12日から、一部の監査ログイベントのbusinessフィールドが企業の表示名から企業のスラッグに変わるため、表示名で絞り込んでいる連携は両形式を受け付けるか、business_idを使うよう求めている。また、private・internalリポジトリでは、公開プレビュー中の無効化操作がBase64でエンコードされた個人用アクセストークンやOAuthトークンなどにも対応し、GitHubが自動で復号するとした。そのほか、カスタムパターンの再スキャン時にアラートが閉じて開き直されない変更や、APIのエラーコードの整理などを挙げている。",
+      "source_kind": "release",
+      "source_title": "Updates to GitHub secret scanning",
+      "source_url": "https://github.blog/changelog/2026-10-20-updates-to-github-secret-scanning",
+      "title": "GitHubのシークレットスキャン、監査ログの項目変更とBase64化トークンの無効化に対応",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-23T04:59:03+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "モデルを配るのではなく、計算済みの結果を配ることで利用の敷居を下げる発想は、他分野の基盤モデルにも応用が利く。重み・データ・コードがそろって公開されている点も検証可能性の面で意味がある。",
+      "caveat": "評価結果はAi2の技術報告に基づく自己評価で、独立に検証していない。ライセンスは独自のもので、商用利用などの条件は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "ai2-olmoearth-v1-3-embeddings",
+      "language": "en",
+      "observed_at": "2026-10-23T04:59:03+09:00",
+      "published_at": "2026-10-22T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "計算コストの大きい地球規模の埋め込みを事前計算して配る形で、専門の計算資源がない利用者でも使える条件を示した一次資料。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Ai2は10月22日、衛星データの埋め込みモデル「OlmoEarth v1.3」と、地球全体の年次埋め込み（10メートル解像度、64次元と128次元）、ブラウザで探索できる「OlmoEarth Embeddings Explorer」を公開した。Sentinel-1、Sentinel-2、Landsatの1年分の時系列から10メートル四方ごとに128次元のベクトルを作る。同社は、AlphaEarth FoundationsとTessera v2との27の評価のうち、128次元版が20で最高だったとし、前版v1.2の53%の計算時間で学習できたと説明している。モデルの重み、事前学習データ、学習コードを公開し、OlmoEarth Artifact Licenseで提供する。2023〜2025年分は全球、2017〜2022年分は一部の国が対象としている。",
+      "source_kind": "release",
+      "source_title": "OlmoEarth v1.3: State-of-the-art embeddings for the whole planet",
+      "source_url": "https://huggingface.co/blog/allenai/olmoearth-v1-3",
+      "title": "Ai2、地球全体の衛星埋め込みを公開する「OlmoEarth v1.3」をリリース",
+      "topics": [
+        "open-source",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-10-23T04:59:03+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "固有名詞を最大2000語まで指定できる機能は、社内用語の多い会議や通話の書き起こしで実用上の差が出やすい。端末上で動く軽量版も同時に更新されており、音声データを外に出さない運用の選択肢になる。",
+      "caveat": "性能の数字はIBMの発表とリーダーボードの記載に基づき、独立に検証していない。日本語での精度は今回確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "ibm-granite-speech-5",
+      "language": "en",
+      "observed_at": "2026-10-23T04:59:03+09:00",
+      "published_at": "2026-10-21T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "日本語を含む多言語の書き起こしを、寛容なライセンスの公開モデルで扱える選択肢が増えたことを確認できる。",
+      "source_domain": "huggingface.co",
+      "source_fact": "IBMは10月21日、音声モデル群Granite Speechの更新として、新モデルgranite-speech-5.0-2bと、既存のgranite-speech-5.0-470m-turboctc、granite-speech-4.1-2b-plusの改訂版を公開した。5.0-2bは英語、フランス語、ドイツ語、スペイン語、ポルトガル語、日本語の書き起こしと英語との相互翻訳に対応し、39万時間の公開音声と合成データで学習したという。最大2000語のキーワード指定や、プロンプトでの言語指定ができる。同社は、Open ASR Leaderboardの英語平均誤り率5.06%で公開重みモデル中2位だとしている。いずれもApache 2.0ライセンスで、Transformers、vLLM、llama.cpp、mlx-audioに対応する。",
+      "source_kind": "release",
+      "source_title": "Granite Speech 5.0: Transcribe, Translate, and Attribute more Accurately and Faster",
+      "source_url": "https://huggingface.co/blog/ibm-granite/granite-speech-5",
+      "title": "IBM、日本語にも対応する音声認識モデル「Granite Speech 5.0」をApache 2.0で公開",
+      "topics": [
+        "models",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-23T04:59:03+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "計算基盤のボトルネックが半導体そのものから電力の変換・供給へ広がっていることがうかがえる。助成と引き換えに政府が株式を持つ条件は、産業政策の手法としても注目点になる。",
+      "caveat": "趣意書の段階で、最終的な助成額や条件は確定していない。各社の技術の実現性は独立に検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "commerce-chips-power-semiconductors",
+      "language": "en",
+      "observed_at": "2026-10-23T04:59:04+09:00",
+      "published_at": "2026-10-22T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "AIの計算需要を支える電力供給の側に、政府資金が向かい始めたことを示す一次資料。",
+      "source_domain": "www.nist.gov",
+      "source_fact": "米商務省は10月22日、CHIPS・科学法に基づき、電力制御・変換用の半導体と材料の研究開発に最大3億8900万ドルを助成する趣意書を4社と結んだと発表した。核融合のHelionに最大1億7500万ドル、Commonwealth Fusion Systemsに最大8500万ドル、縦型窒化ガリウム（GaN）の電力半導体を手がけるVertical Semiconductorに最大7300万ドル、半導体製造に使う超高純度石英のSibelcoに最大5600万ドル。Vertical Semiconductorは2.5メガワットのデータセンター用ラックでの実証も行うとしている。助成の条件として、商務省は各社に議決権のない少数株式を取得する。",
+      "source_kind": "official",
+      "source_title": "Department of Commerce Announces Letters of Intent With 4 Companies for $389 Million of R&D Awards to Strengthen America’s Energy Semiconductor Supply Chain",
+      "source_url": "https://www.nist.gov/news-events/news/2026/10/department-commerce-announces-letters-intent-4-companies-389-million-rd",
+      "title": "米商務省、電力用半導体の研究開発に最大3億8900万ドル、データセンター向けも対象",
+      "topics": [
+        "infrastructure",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-10-23T04:59:04+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "マージ率のような指標は測りやすい一方で、品質や手戻りまでは表さない。比較の数字が導入の目標値として独り歩きしないよう、何を測っているかを読み分ける必要がある。",
+      "caveat": "指標の妥当性や比較の精度は独立に検証していない。参加企業が少ない間は中央値のみ、または比較なしになるとGitHub自身が注記している。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-industry-comparison",
+      "language": "en",
+      "observed_at": "2026-10-23T04:59:05+09:00",
+      "published_at": "2026-10-22T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "AIエージェントの導入効果を他社と比べたいという経営側の需要に、開発基盤の提供者が直接応えた例として確認できる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは10月22日、Copilotの効果を示すダッシュボードに「業界比較」の項目を追加した。企業や組織は、エージェント中心で使う利用者の割合や、エージェントを使う利用者と使わない利用者のプルリクエストのマージ率の差などを、参加した同業他社の集計値と比べられる。比較の相手は企業規模と10業種から選べ、参加は任意で初期状態では無効。集計値に個人を特定する情報は含まれず30日後に削除され、データ所在地を指定した環境では同じ地域の参加者とだけ比べるとしている。",
+      "source_kind": "release",
+      "source_title": "Industry comparisons in the Copilot impact dashboard",
+      "source_url": "https://github.blog/changelog/2026-10-22-industry-comparisons-in-the-copilot-impact-dashboard",
+      "title": "GitHub、Copilotの利用状況を同業他社と比べる機能を追加、参加は任意",
+      "topics": [
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-23T04:59:05+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AI企業の統治は製品発表より目立たないが、取締役の選任権を持つ組織の構成は、将来の重大な判断の方向を左右しうる。公益報告書と合わせて、外部から検証できる材料が増えるかを見ていきたい。",
+      "caveat": "信託の実際の影響力や運用は独立に検証していない。公益報告書の内容は今回確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "anthropic-ltbt-stubbs",
+      "language": "en",
+      "observed_at": "2026-10-23T04:59:05+09:00",
+      "published_at": "2026-10-21T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "フロンティアAI企業の統治の仕組みに、誰がどの権限で関わるかを当事者の発表で追える。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "Anthropicは10月21日、元ハーバード大学理学部長で実験物理学者のクリストファー・スタッブズ氏が、同社の長期利益信託（Long-Term Benefit Trust）に加わったと発表した。同信託は取締役の過半数を選任する権限を持ち、AIのリスクや社会的影響に関わる重要な判断について取締役会や経営陣に助言する。同社は、同じ週に初の公益報告書（Public Benefit Report）を公表し、信託の受託者が評価基準の策定に関わったとしている。スタッブズ氏はAIを使った研究の再現性についても執筆しており、米政府に助言する科学者集団JASONの一員でもあるという。",
+      "source_kind": "official",
+      "source_title": "Physicist Christopher Stubbs joins Anthropic's Long-Term Benefit Trust",
+      "source_url": "https://www.anthropic.com/news/christopher-stubbs-joins-long-term-benefit-trust",
+      "title": "Anthropicの長期利益信託に物理学者クリストファー・スタッブズ氏が加入",
+      "topics": [
+        "policy",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-10-23T04:59:05+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-10-23T05:00:50+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：エージェントの手順書が共有財産に、脆弱性対応は当局と防御の現場へ",
+  "topics": [
+    {
+      "description": "利用規則・標準・制度とその運用。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・統制"
+    },
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計・評価・統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "基盤モデルの能力と提供・適応の条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "公開されたモデル・データ・基盤と利用条件。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "開発・業務・運用を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "推論・学習を支えるハードウェアとソフトウェア基盤。",
+      "id": "infrastructure",
+      "label_en": "Infrastructure",
+      "label_ja": "計算基盤"
+    }
+  ]
+}

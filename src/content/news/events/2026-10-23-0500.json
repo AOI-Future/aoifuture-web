@@ -1,0 +1,26 @@
+[
+  {
+    "changed_signal_ids": [
+      "ai2-olmoearth-v1-3-embeddings",
+      "anthropic-agent-skills-to-aaif",
+      "anthropic-ltbt-stubbs",
+      "cisa-safepay-ransomware-advisory",
+      "cloudflare-full-transaction-waf",
+      "commerce-chips-power-semiconductors",
+      "eu-joint-statement-php-vulnerabilities",
+      "github-copilot-industry-comparison",
+      "github-secret-scanning-updates",
+      "ibm-granite-speech-5"
+    ],
+    "edition_date": "2026-10-23",
+    "edition_id": "2026-10-23-0500",
+    "edition_url": "https://aoifuture.com/news/2026-10-23-0500/",
+    "event_id": "aoi-news-2026-10-23-0500-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-23T05:00:50+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "Anthropicがエージェント向けの標準を中立団体に移し、米欧の当局はランサムウェアとPHPの脆弱性に相次いで対応を求めた。応答まで見る防御、公開モデルの拡充、電力半導体への政府資金と並べ、エージェントが広がる前提の整備を一次資料から見る。",
+    "title": "AOIFUTURE News：エージェントの手順書が共有財産に、脆弱性対応は当局と防御の現場へ"
+  }
+]
