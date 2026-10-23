@@ -1,0 +1,27 @@
+[
+  {
+    "changed_signal_ids": [
+      "ai2-litpivot",
+      "anthropic-life-sciences-guest-investigators",
+      "cisa-kev-arista-velocloud",
+      "cloudflare-origin-range-requests",
+      "cloudflare-pq-geokey-manager",
+      "github-apps-enterprise-installations",
+      "github-copilot-metrics-custom-names",
+      "nvidia-nemotron-3-5-retrieval",
+      "openai-decisions-api-ga",
+      "openai-training-containment",
+      "sns-ju-6g-ai-native"
+    ],
+    "edition_date": "2026-10-24",
+    "edition_id": "2026-10-24-0454",
+    "edition_url": "https://aoifuture.com/news/2026-10-24-0454/",
+    "event_id": "aoi-news-2026-10-24-0454-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-24T04:54:41+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "OpenAIは訓練環境をインターネットから切り離し、自社モデルで隔離を攻撃させた結果を公表した。範囲の決まった判断に特化したAPI、検索用の公開モデル、耐量子の鍵管理、悪用が確認された脆弱性の追加と並べ、エージェントを安全に速く動かす足回りを一次資料から見る。",
+    "title": "AOIFUTURE News：最先端モデルの訓練は外部から切り離して、エージェントの小さな判断は速く安く"
+  }
+]
