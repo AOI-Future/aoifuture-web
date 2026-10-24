@@ -1,0 +1,27 @@
+[
+  {
+    "changed_signal_ids": [
+      "aws-bedrock-web-search-domain-filter",
+      "aws-continuum-code-vulnerabilities",
+      "cisa-ai-token-consumption",
+      "cisa-kev-collabora-online",
+      "github-public-monitoring-triage",
+      "hf-torch-neuronx-model-support",
+      "japan-ai-digital-reform-council",
+      "microsoft-thinkingbox-rl-dependability",
+      "nvidia-minerva-aiops",
+      "soumu-frontier-ai-telecom-data-security",
+      "vercel-agent-plan-scoped-access"
+    ],
+    "edition_date": "2026-10-25",
+    "edition_id": "2026-10-25-0500",
+    "edition_url": "https://aoifuture.com/news/2026-10-25-0500/",
+    "event_id": "aoi-news-2026-10-25-0500-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-25T05:00:11+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "米加の当局はAIのトークン消費を業務継続と攻撃対策の観点から管理するよう求めた。計画の承認ごとに権限を渡す運用エージェント、悪用可能性を確かめてから直す脆弱性対応、毎回正しく終えられるかを学習させる研究、政府の新会議の論点と並べ、エージェントを業務に組み込む際の統制を一次資料から見る。",
+    "title": "AOIFUTURE News：AIの利用量を業務継続の課題に、エージェントの権限は計画ごとに"
+  }
+]

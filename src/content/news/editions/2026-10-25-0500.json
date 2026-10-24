@@ -1,0 +1,378 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-10-25T05:00:11+09:00",
+  "dek": "米加の当局はAIのトークン消費を業務継続と攻撃対策の観点から管理するよう求めた。計画の承認ごとに権限を渡す運用エージェント、悪用可能性を確かめてから直す脆弱性対応、毎回正しく終えられるかを学習させる研究、政府の新会議の論点と並べ、エージェントを業務に組み込む際の統制を一次資料から見る。",
+  "edition_date": "2026-10-25",
+  "edition_id": "2026-10-25-0500",
+  "edition_note": "2026年10月22日から10月23日（日本・米国時間）までに公開された一次資料を直接確認した。いずれも直近72時間以内の公開で、対象期間の拡張はしていない。各社の性能・精度の主張や、脆弱性の技術的な詳細は独立に検証しておらず、前提は各項目の留保に記した。",
+  "generated_at": "2026-10-25T05:00:11+09:00",
+  "items": [
+    {
+      "aoi_note": "エージェントは人の操作よりはるかに多くのトークンを使うため、上限や優先順位を決めないまま広げると、肝心な業務の時点で枠が尽きる。予算を使い切らせる攻撃を脅威として明記した点は、利用量の監視を監査や異常検知の対象に含めるべきことを示している。AIが使えない時間帯を前提にした代替手順の用意まで求めている点も実務的だ。",
+      "caveat": "今回確認したのは公表ページの要約で、ガイダンス本文の個別の推奨事項は確認していない。共同発表に加わった他の機関の一覧も、このページでは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-ai-token-consumption",
+      "language": "en",
+      "observed_at": "2026-10-25T04:58:28+09:00",
+      "published_at": "2026-10-22T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "AIの利用量を費用の問題ではなく、業務継続とセキュリティの問題として当局が整理した一次資料で、エージェントを業務に組み込む組織の運用設計に直結する。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "米国のCISAは10月22日、カナダのサイバーセキュリティセンター（Cyber Centre）などと共同で、AIサービスのトークン消費を管理するためのガイダンス「Managing AI Token Consumption for Operational Resilience」を公表した。外部のAIサービスのトークン課金型の利用モデルは、費用、性能、重要なサービスへのアクセスに影響しうるとし、管理されないトークン消費が、予測しにくい費用の上昇、可用性や性能の低下、トークンの枯渇、さらにトークンや予算を意図的に使い切らせる攻撃（denial-of-tokens／denial-of-wallet）につながりうると指摘した。対策として、トークン配分の優先順位付け、効率的なワークフローの設計、プロンプトの使い方の改善、キャッシュや再利用できる文脈の活用、送信前のデータの最適化、消費量の継続的な監視を挙げている。重要インフラの事業者には、AIに依存する重要業務と提供事業者への依存関係を把握し、障害や需要の集中でAIが使いにくくなる事態に備えるよう求めている。",
+      "source_kind": "official",
+      "source_title": "Managing AI Token Consumption for Operational Resilience",
+      "source_url": "https://www.cisa.gov/resources-tools/resources/managing-ai-token-consumption-operational-resilience",
+      "title": "米CISAとカナダのサイバーセキュリティセンター、AIのトークン消費を業務継続の観点で管理する共同ガイダンスを公表",
+      "topics": [
+        "security",
+        "policy",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-10-25T04:58:28+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "一つひとつの操作を承認させると、利用者は中身を見ずに承認する癖がつく。計画単位で権限を束ね、API側で強制する設計は、承認の負担と統制を両立させる現実的な落としどころだ。読み取り専用でも情報が漏れうるという留保を自ら書いている点も、導入を考える側には参考になる。",
+      "caveat": "仕組みの説明は同社のブログに基づき、実際の権限制御が記載どおりに働くかは独立に検証していない。権限の単位は同社の製品に固有で、他の環境にそのまま当てはまるとは限らない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "vercel-agent-plan-scoped-access",
+      "language": "en",
+      "observed_at": "2026-10-25T04:58:29+09:00",
+      "published_at": "2026-10-23T00:00:00Z",
+      "role": "major",
+      "selection_reason": "エージェントに本番権限を渡す際の「毎回承認」と「包括許可」の中間案を、トークンの発行と検査の水準まで説明した実装例として取り上げる。",
+      "source_domain": "vercel.com",
+      "source_fact": "Vercelは10月23日、同社の運用エージェント「Vercel Agent」が本番環境にどう安全にアクセスするかを技術ブログで説明した。エージェントはまず読み取り専用の権限で調査し、変更が必要になると、作業内容と必要な権限（スコープ）をまとめた計画を示し、利用者が計画全体を一度に承認する。承認されると、読み取りの基本権限に承認分を加えた有効期限付きのトークンが発行され、各APIが要求ごとに権限を検査する。エージェントは利用者自身が持つ権限を超えられず、GitHubのプルリクエストのような外部操作はリポジトリごとに別の承認が必要になる。実行を再開する際は、計画が有効なまま承認されているかを改めて確認し、停止された計画はトークンの期限内でも使えない。同社は、権限の選び方が過不足になりうること、読み取りだけでも機密情報に触れうることを課題として挙げている。",
+      "source_kind": "analysis",
+      "source_title": "How Vercel Agent accesses production safely",
+      "source_url": "https://vercel.com/blog/how-vercel-agent-accesses-production-safely",
+      "title": "Vercel、運用エージェントに本番環境を触らせる仕組みを公開、計画の承認ごとに権限を付与",
+      "topics": [
+        "agents",
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-25T04:58:29+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "検出件数の多さより「本当に悪用できるか」で絞り込む発想は、脆弱性の報告が急増するなかで修正の手が足りない現場の課題に合っている。最初は人が承認し、信頼が積み上がってから任せる二段階の作りは、他の業務にエージェントを入れる際の手順としても参考になる。",
+      "caveat": "検証の精度や修正パッチの品質はAWSの説明のみで、独立に検証していない。利用できる地域や料金はこの発表では確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-continuum-code-vulnerabilities",
+      "language": "en",
+      "observed_at": "2026-10-25T04:58:29+09:00",
+      "published_at": "2026-10-22T00:00:00Z",
+      "role": "major",
+      "selection_reason": "脆弱性の検出から修正までをエージェントに任せる製品が大手クラウドから一般提供され、人の承認から自律運用へ段階的に移す設計が示された。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは10月22日、コードの脆弱性を発見、検証、優先順位付けし、修正まで提案する「AWS Continuum for code vulnerabilities」を一般提供した。利用者のAWS環境から、リソース構成、IDの関係、ネットワーク上の到達可能性をまとめた文脈グラフを作り、既存の脆弱性の検出結果を取り込んでコードを走査したうえで、隔離したサンドボックスで実際に悪用できるかを試して確認する。結果は事業への影響で優先順位を付け、悪用可能性の証拠と影響範囲の評価を添えた修正パッチを、開発者のワークフローにプルリクエストとして送る。作業ごとに使うAIモデルを選ぶという。最初は修正案を人が承認する「Learn」モードで動き、精度に信頼が置けた段階で、設定した制約の範囲で自律的に動く「Enforce」モードに切り替えられる。Amazon GuardDutyやAWS Security Hubと併用できる。",
+      "source_kind": "release",
+      "source_title": "AWS Continuum for code vulnerabilities is now generally available",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/10/aws-continuum-for-code-vulnerabilities-is-now-generally-available",
+      "title": "AWS、コードの脆弱性を発見・検証・修正提案まで行う「Continuum」を一般提供",
+      "topics": [
+        "security",
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-25T04:58:29+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "本番の業務記録を触るエージェントでは、平均の正答率より、同じ作業を毎回正しく終えられるかが重要になる。承認を飛ばす振る舞いが学習で減った例は、規則を守らせる手段としてプロンプトの指示だけでなく、結果の検査を報酬にする方法があることを示している。",
+      "caveat": "数値は発表者による自己評価で、独立に検証していない。課題はすべて合成データで作った再現であり、実際の業務での効果は確認されていない。論文本体は今回確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "microsoft-thinkingbox-rl-dependability",
+      "language": "en",
+      "observed_at": "2026-10-25T04:58:30+09:00",
+      "published_at": "2026-10-22T00:00:00Z",
+      "role": "major",
+      "selection_reason": "エージェントの「一度はできる」と「毎回できる」の差を、業務データの最終状態という検証しやすい指標で測り、学習で縮められることを示した研究報告。",
+      "source_domain": "huggingface.co",
+      "source_fact": "MicrosoftとHugging Faceは10月22日、エージェントの作業結果をデータベースの最終状態で採点する評価環境「ThinkingBox」を、強化学習の報酬にも使った結果を公表し、学習用のコードをGitHubで公開した。評価用の507課題は、実際のバックエンドとMCPのツールをエージェントに渡し、作業後のデータベースの記録が正しいかを実行可能な検査で判定する。公開モデルのQwen3.8-27BをGRPOで50ステップ追加学習したところ、平均成功率は51.70%から60.78%に上がり、20回すべて成功した課題は38件から107件に増えた。一方、20回のうち1回以上成功した課題は453件から446件にわずかに減った。上長の承認が必要なホテル予約の変更課題では、学習前のモデルは20回中15回で承認なしに予約を変更し返金したが、学習後は20回すべてで予約と支払いの状態を保ったという。",
+      "source_kind": "analysis",
+      "source_title": "Turning Database Grading into RL Rewards: Post-Training Agents with ThinkingBox",
+      "source_url": "https://huggingface.co/blog/microsoft/thinkingbox-training",
+      "title": "Microsoft、業務データベースの最終状態を報酬にしてエージェントを追加学習、全試行成功の課題が約3倍に",
+      "topics": [
+        "agents",
+        "research",
+        "open-source",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-10-25T04:58:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントや自動化が増えるほど、トークンが意図しない場所に書き出される機会も増える。漏れたトークンが今も有効かを自動で示す機能は、限られた対応時間をどこに使うかの判断に直結する。",
+      "caveat": "有効性の確認に対応する提供元の範囲は確認していない。公開プレビューのため、仕様は今後変わる可能性がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-public-monitoring-triage",
+      "language": "en",
+      "observed_at": "2026-10-25T04:58:30+09:00",
+      "published_at": "2026-10-23T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "社外の公開リポジトリへの認証情報の漏えいを、まだ使えるかどうかで優先順位を付けて対応できるようにした変更として確認できる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは10月23日、公開リポジトリに漏えいした自社に関係する秘密情報を検知する「public monitoring」に、アラート管理の機能を追加した。企業のセキュリティダッシュボードで、アラートを「却下」「修正済み」として閉じたり再び開いたりでき、操作の履歴を確認し、リポジトリ、コミットした人、秘密情報の種類、帰属の判定方法、状態で絞り込める。対応する提供元のトークンについては、有効かどうかを継続的に確認し、Active／Inactive／Unknownで表示する。企業単位のREST APIとWebhookで検知結果を取り出せるようにもした。アラートを閉じても認証情報は失効せず、公開リポジトリからも削除されないと注記している。機能はGitHub Enterprise Cloud向けの公開プレビューで、GitHub Advanced SecurityまたはSecret Protectionのライセンスに追加費用なしで含まれる。",
+      "source_kind": "release",
+      "source_title": "Public monitoring adds triage, validity, API, and webhooks",
+      "source_url": "https://github.blog/changelog/2026-10-23-public-monitoring-adds-triage-validity-api-and-webhooks",
+      "title": "GitHub、公開リポジトリに漏れた自社の秘密情報の監視機能に、有効性の自動確認とAPI・Webhookを追加",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-25T04:58:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "Web検索を使うエージェントは、根拠にする情報源の質が回答の質と安全性を左右する。参照先を許可リストで限定できれば、信頼できない記事や、指示を紛れ込ませたページを拾う危険を減らす手段の一つになる。",
+      "caveat": "絞り込みの精度や、除外したドメインの情報が回答に混ざらないかは独立に検証していない。日本の地域では提供されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-bedrock-web-search-domain-filter",
+      "language": "en",
+      "observed_at": "2026-10-25T04:58:30+09:00",
+      "published_at": "2026-10-23T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "エージェントが回答の根拠にするWeb情報の範囲を、開発者側で明示的に制御できるようになった変更として確認できる。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは10月23日、Amazon BedrockのWeb検索機能で、検索結果を絞り込む二つの設定を追加した。一つはドメインの絞り込みで、最大100件の許可ドメインを指定して信頼できる情報源に限定するか、最大100件の除外ドメインを指定して特定の情報源を外せる。もう一つは利用者の地域の指定で、地域によって答えが変わる質問に、その地域に関係する結果を返せるようにする。いずれもOpenAI Responses API形式のリクエストのweb_searchツールで設定する。提供地域は米国東部（バージニア北部、オハイオ）、米国西部（オレゴン）、AWS GovCloud（米国西部）。",
+      "source_kind": "release",
+      "source_title": "Web Search on Amazon Bedrock now supports domain filtering and user location controls",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/10/bedrock-web-search-domain-user-location/",
+      "title": "Amazon BedrockのWeb検索ツール、参照するドメインの許可・除外と利用者の地域指定に対応",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-25T04:58:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "大規模な学習では、一つの部品の劣化がジョブ全体を遅らせる。部門ごとに分かれていた監視を一つの構成図の上で結び付ける発想は、規模を問わずAI基盤の障害対応を速くする方向にある。",
+      "caveat": "稼働率の向上や復旧時間の短縮について具体的な数値は示されておらず、効果は独立に検証していない。提供時期や価格は発表で確認できなかった。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-minerva-aiops",
+      "language": "en",
+      "observed_at": "2026-10-25T04:58:30+09:00",
+      "published_at": "2026-10-22T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "GPUの稼働率がAIの供給量を左右するなかで、データセンターの運用そのものにAIを使う動きを一次資料で確認できる。",
+      "source_domain": "blogs.nvidia.com",
+      "source_fact": "NVIDIAは10月22日、AI向けの大規模データセンター（同社の呼び方では「AIファクトリー」）の運用基盤「NVIDIA Minerva」を発表した。GPU、ネットワーク、ストレージ、ジョブ管理、ワークロードの監視データをまとめ、GPUやスイッチ、ケーブルと、その上で動くジョブの関係を表す知識グラフを作る。教師あり・教師なしの機械学習で毎時数十億件のデータを分析し、通常の振る舞いを学んで未知の異常の検知や故障の予測を行い、関連する多数の警告を、原因の候補を添えた一つの事象にまとめるという。対話型のAIアシスタントを備え、外部のエージェント型AIツールとも接続できる。IRENが利用しているとし、IBM、Lambda、Teslaなども導入を予定しているほか、Dell、Lenovo、Supermicroが運用製品の一部として提供する。",
+      "source_kind": "release",
+      "source_title": "NVIDIA Unveils Minerva to Bring End-to-End Observability for AI Factories",
+      "source_url": "https://blogs.nvidia.com/blog/minerva-platform-infrastructure/",
+      "title": "NVIDIA、AIデータセンター全体の監視データを結び付けて障害の兆候を探す運用基盤「Minerva」を発表",
+      "topics": [
+        "infrastructure",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-25T04:58:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "論点案に挙がった統制項目は、民間でエージェントを運用する際の確認項目とほぼ重なる。人が行うことを前提にした規制の横断的な見直しや、AIを使った行為の責任分界も論点に含まれており、今後の制度設計が業務への組み込み方に影響しそうだ。",
+      "caveat": "示されたのは論点の案で、具体的な制度や時期は決まっていない。資料のうち論点案と開催の閣議決定を確認し、他の提出資料の内容は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "japan-ai-digital-reform-council",
+      "language": "ja",
+      "observed_at": "2026-10-25T04:58:31+09:00",
+      "published_at": "2026-10-22T16:20:00+09:00",
+      "role": "brief",
+      "selection_reason": "国の司令塔会議の論点に、AIエージェントの権限管理や監査ログといった具体的な統制項目が並んだことを、政府資料で確認できる。",
+      "source_domain": "www.digital.go.jp",
+      "source_fact": "政府は10月22日、首相官邸で「AI・デジタル改革推進会議」の初会合を開き、デジタル庁が議事次第と資料を公開した。同会議は10月20日の閣議決定で設置され、従来のデジタル行財政改革会議を改組したもので、議長は内閣官房長官とAI・デジタル改革推進担当大臣が務める。担当大臣が示した論点案は、2030年時点の行政・産業・暮らしの姿、「AI・デジタル改革原則」に基づく規制・制度の整備、医療・介護・建設・運輸などでの社会実装の加速、AIガバナンスの強化、データ・システム・自治体の「AI-Ready化」と人材育成の5本。ガバナンスの論点では、AIエージェントのシステム全体での安全性を確保する観点から、ハーネス、ID認証、ガードレール、権限管理、評価、監査ログなどの対策の考え方を整理するとし、現行のAI法を含む制度の見直し・強化に着手するとしている。",
+      "source_kind": "official",
+      "source_title": "AI・デジタル改革推進会議（第1回）",
+      "source_url": "https://www.digital.go.jp/councils/ai_digital/1f3aa34a-786d-4b56-99a4-469f8f933f1c",
+      "title": "政府の「AI・デジタル改革推進会議」が初会合、AIエージェントの安全確保策の整理を論点に",
+      "topics": [
+        "policy",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-25T04:58:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "推論の費用を下げるために別の半導体を検討する際、最初の壁は「手元のモデルが動くか」だ。結果を公開データにして誰でも照合できる形にした点は、ベンダーの対応表より確かめやすい。",
+      "caveat": "合格は短い生成での動作確認にとどまり、性能は保証されないと発表者自身が注記している。結果は独立に検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "hf-torch-neuronx-model-support",
+      "language": "en",
+      "observed_at": "2026-10-25T04:58:31+09:00",
+      "published_at": "2026-10-23T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "NVIDIA以外の学習・推論用半導体でどのモデルが使えるかを、再現手順付きの公開データで確かめられるようにした取り組み。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Hugging Faceは10月23日、Hub上の人気モデルが、AWSのAI向け半導体Trainium上でPyTorchの標準バックエンド（torch-neuronx）を使って改変なしに動くかを調べられるSpace「torch-neuronx model support」を紹介した。各モデルについて結果、分割に使ったTrainiumのコア数、コンパイルを含む実行時間、最大メモリ使用量を表示し、再現用のスクリプトも示す。試験はTrainium2のインスタンスで最小のコア数に分割して32トークンを生成し、単一コアではCPU実行の結果と照合し、分割時は小さな判定モデルで英文として自然かを確かめる。現時点ではTrainium2の4台（最大16コア）に収まるテキスト生成と画像・テキスト入力のモデルが対象で、合格は処理速度や長い生成について何も保証しないとしている。結果は公開データセットとして提供される。",
+      "source_kind": "release",
+      "source_title": "Does Your Model Run on AWS Trainium? Look It Up",
+      "source_url": "https://huggingface.co/blog/torch-neuronx-model-support",
+      "title": "Hugging Face、人気モデルがAWS Trainiumでそのまま動くかを調べられる公開データとSpaceを提供",
+      "topics": [
+        "infrastructure",
+        "open-source",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-25T04:58:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "Collabora Onlineは自前で運用する文書共同編集の基盤として組み込まれることが多く、利用していると気づきにくい。社内の文書基盤やファイル共有の構成に含まれていないかを確認する価値がある。",
+      "caveat": "悪用の規模や手口は公表されておらず、独立に検証していない。影響を受ける版や修正方法は開発元の情報で確認する必要がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-kev-collabora-online",
+      "language": "en",
+      "observed_at": "2026-10-25T04:58:31+09:00",
+      "published_at": "2026-10-23T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "文書を共同編集するオンライン基盤で悪用が確認された脆弱性を、当局の一次情報で把握できる。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "米国のCISAは10月23日、実際に悪用されている証拠に基づき、Collabora Onlineの組み込みCODEサーバーにおけるOSコマンドインジェクションの脆弱性（CVE-2026-110447）を、既知の悪用済み脆弱性（KEV）カタログに追加した。CISAは、この種の脆弱性は攻撃者がよく使う侵入経路だとし、連邦政府機関にリスクに基づく優先的な修正を求める拘束的運用指令BOD 26-04に触れたうえで、指令の対象外の組織にもKEVカタログの脆弱性の修正を優先するよう促している。",
+      "source_kind": "advisory",
+      "source_title": "CISA Adds One Known Exploited Vulnerability to Catalog",
+      "source_url": "https://www.cisa.gov/news-events/alerts/2026/10/23/cisa-adds-one-known-exploited-vulnerability-catalog-0",
+      "title": "米CISA、Collabora Onlineのコマンドインジェクション脆弱性を悪用確認済みの一覧に追加",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-25T04:58:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "通信網は社会の多くの仕組みの土台で、AIによる攻撃の高度化の影響を最も早く受ける分野の一つだ。AIの普及を前提にした通信事業者の規律づくりは、通信を使う側の事業者にも波及しうる。",
+      "caveat": "今回確認したのは会合ページの議事と資料一覧で、各資料の中身は確認していない。検討の結論や日程は今後の会合で示される。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "soumu-frontier-ai-telecom-data-security",
+      "language": "ja",
+      "observed_at": "2026-10-25T04:58:31+09:00",
+      "published_at": "2026-10-22T10:00:00+09:00",
+      "role": "watch",
+      "selection_reason": "高性能なAIが攻撃と防御の両面に使われる前提で、通信事業者のデータ保護を見直す議論が国の検討会として始まったことを確認できる。",
+      "source_domain": "www.soumu.go.jp",
+      "source_fact": "総務省は10月22日、「フロンティアAI時代の通信事業におけるデータの保護・セキュリティの在り方に関する検討会」の第1回会合をウェブ会議で開き、配布資料を公開した。議事は、事務局による通信事業におけるデータの保護・セキュリティの現状と課題の説明と、パロアルトネットワークスによる「フロンティアAI時代のサイバーセキュリティ戦略」の有識者ヒアリング。資料として開催要綱案、事務局資料、想定スケジュールが掲載されている。",
+      "source_kind": "official",
+      "source_title": "フロンティアAI時代の通信事業におけるデータの保護・セキュリティの在り方に関する検討会（第1回）",
+      "source_url": "https://www.soumu.go.jp/main_sosiki/kenkyu/data_protection/02kiban18_02000510.html",
+      "title": "総務省、フロンティアAI時代の通信事業におけるデータ保護・セキュリティの検討会を開始",
+      "topics": [
+        "policy",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-25T04:58:31+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-10-25T05:00:11+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：AIの利用量を業務継続の課題に、エージェントの権限は計画ごとに",
+  "topics": [
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計・評価・統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "基盤モデルの能力と提供・適応の条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "公開されたモデル・データ・基盤と利用条件。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "開発・業務・運用を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "推論・学習・配信を支えるハードウェアとソフトウェア基盤。",
+      "id": "infrastructure",
+      "label_en": "Infrastructure",
+      "label_ja": "計算基盤"
+    },
+    {
+      "description": "利用規則・標準・制度とその運用。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・統制"
+    },
+    {
+      "description": "研究の進め方とAIによる科学の支援。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    }
+  ]
+}
