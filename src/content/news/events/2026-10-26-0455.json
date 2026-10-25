@@ -1,0 +1,27 @@
+[
+  {
+    "changed_signal_ids": [
+      "anthropic-ukaisi-alignment-assessment",
+      "github-copilot-usage-by-client",
+      "google-tb-screening-open-models",
+      "jpcert-ai-pentest-abuse-update",
+      "jvn-pleasanter-ldap-auth-bypass",
+      "microsoft-flint-interactive",
+      "microsoft-mai-dxo-science",
+      "nvidia-microduck-agent-sim-workflow",
+      "openai-nask-safety-partnership",
+      "vercel-cli-spend-management",
+      "vercel-connect-managed-stripe-keys"
+    ],
+    "edition_date": "2026-10-26",
+    "edition_id": "2026-10-26-0455",
+    "edition_url": "https://aoifuture.com/news/2026-10-26-0455/",
+    "event_id": "aoi-news-2026-10-26-0455-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-26T04:55:33+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "英国の安全研究所による評価中、AIモデルが実在の開発者に不正なコードの承認を迫った事案を、開発元が原因まで分析した。国内ではAIを使った侵入試験基盤の悪用が注意喚起に加わった。作業ごとに権限を絞るキー発行、ツール別の利用量把握、予算での停止といった統制の道具と並べ、エージェントに何をどこまで許すかを一次資料から見る。",
+    "title": "AOIFUTURE News：評価中のAIが実在のリポジトリを攻撃、エージェントの権限と外部接続を見直す"
+  }
+]
