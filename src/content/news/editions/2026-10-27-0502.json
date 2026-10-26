@@ -1,0 +1,372 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-10-27T05:02:31+09:00",
+  "dek": "OpenAIは、パソコン操作と事実性を改善し、API価格を従来の半額にしたGPT-6.1 Terraを公開し、同日にGitHub Copilotでも使えるようになった。HTTP通信で広く使われる圧縮ライブラリBrotliの脆弱性では、JPCERT/CCが注意喚起を出した。米CISAの新戦略、欧州委員会によるTemuの是正計画の受け入れ、エージェントの評価や接続、利用者の身元の引き継ぎを支える機能の更新とあわせて、一次資料から見る。",
+  "edition_date": "2026-10-27",
+  "edition_id": "2026-10-27-0502",
+  "edition_note": "直近72時間に公開された一次資料を対象とし、2026年10月26日（日本・米国・欧州時間）に公開された資料を直接確認した。各社の性能や効果の主張、脆弱性の影響範囲は独立に検証しておらず、前提は各項目の留保に記した。",
+  "generated_at": "2026-10-27T05:02:31+09:00",
+  "items": [
+    {
+      "aoi_note": "請求書の読み取りと会計ソフトへの入力のような大量の画面操作を、上位モデルより安く速く回せるなら、業務自動化の採算は大きく変わる。一方で、安いモデルほど多くの作業に一斉に配られやすい。サイバー能力が「Critical」とされたモデルに広い操作権限を与える前に、権限の範囲と監視の方法を決めておく必要がある。",
+      "caveat": "性能と費用の数値はすべて同社の評価に基づき、社内の評価を含む。独立した検証は確認していない。システムカードの内容は今回確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-gpt-6-1-terra",
+      "language": "en",
+      "observed_at": "2026-10-27T04:59:30+09:00",
+      "published_at": "2026-10-26T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "安価で速いモデルにパソコン操作の能力を持たせた発表で、大量の定型業務をエージェントに任せる際の費用の前提を変えうる。同日にGitHub Copilotでも提供が始まった。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは10月26日（米国時間）、速度と効率を重視したモデル「GPT-6.1 Terra」を発表した。画像の細かな読み取り、パソコン操作、文章の自然さを改善したとし、API標準価格はGPT-5.6 TerraやGPT-6.1 Solより50%低い、入力100万トークンあたり1ドル、キャッシュされた入力0.05ドル、出力5ドルとしている。専門的な作業を集めたベンチマーク「Agents' Last Exam」では、中程度の推論設定でGPT-5.6 Terraを15ポイント上回り、費用は約3分の1だったという。誤りを誘う質問を集めた社内の評価では、低い推論設定での誤り率が53.6%から16.7%に下がった。コマンドライン上の課題を解くTerminal-Bench 4.0では、最大の推論設定で50.3%を解き、GPT-5.6 Terraの21.5%の2倍を超えた。最も複雑なコーディングにはGPT-6.1 SolやGPT-6 Astraが適しているとしている。同社の安全枠組み（Preparedness Framework）ではサイバーセキュリティで「Critical」の水準に該当するとし、GPT-6 Astra向けに作った保護策を引き継ぐ。ChatGPT WorkとCodexのPlus、Pro、Enterprise、Eduの利用者に提供し、APIでは「gpt-6.1-terra」として使える。",
+      "source_kind": "release",
+      "source_title": "Introducing GPT-6.1 Terra",
+      "source_url": "https://openai.com/index/introducing-gpt-6-1-terra",
+      "title": "OpenAI、パソコン操作と事実性を改善した「GPT-6.1 Terra」を公開、API価格は従来の半額",
+      "topics": [
+        "models",
+        "agents",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-27T04:59:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "Brotliは単体で導入するより、ランタイムや言語のパッケージ、サーバーの中に組み込まれて使われることが多い。自社のコードが直接呼んでいなくても影響を受けうるため、依存関係の一覧や各製品の告知から、どこに含まれているかを洗い出す作業が先になる。",
+      "caveat": "影響を受ける製品の範囲は各開発元の情報に依存し、この注意喚起では網羅されていない。攻撃での悪用の状況は今回確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "jpcert-brotli-oob-write",
+      "language": "ja",
+      "observed_at": "2026-10-27T04:59:30+09:00",
+      "published_at": "2026-10-26T07:25:00Z",
+      "role": "major",
+      "selection_reason": "HTTP通信で広く使われる圧縮ライブラリの脆弱性で、多くのランタイムやパッケージに組み込まれているため、影響範囲の把握そのものが課題になる。",
+      "source_domain": "www.jpcert.or.jp",
+      "source_fact": "JPCERT/CCは10月26日、BrotliのC言語実装にある境界外書き込みの脆弱性（CVE-2026-111497）について注意喚起を出した。Googleは10月21日に修正版を公開している。影響を受けるアプリケーションなどが、攻撃者が細工したBrotli形式の圧縮データを展開すると、メモリの破損によって異常終了、メモリ上の情報の漏えい、任意のコード実行につながる可能性がある。対象はv1.2.0からv1.2.1より前、v1.1.0からv1.1.1より前、v1.0.3からv1.0.10より前のバージョン。影響を受ける製品にはNode.js、Bun、Python向けBrotliパッケージなどが含まれる。Node.jsが10月21日に公表した脆弱性に関連して「Node2Shell」と呼ばれていたが、原因はBrotliにあり、BrotliがHTTP通信で使われるデータ圧縮ライブラリであることから「HTTP2Shell」とも呼ばれているという。Googleは緩和策を提供しておらず、JPCERT/CCは修正版の適用と侵害有無の調査を求めている。",
+      "source_kind": "advisory",
+      "source_title": "BrotliのC言語実装における境界外書き込みの脆弱性（CVE-2026-111497）に関する注意喚起",
+      "source_url": "https://www.jpcert.or.jp/at/2026/at260034.html",
+      "title": "JPCERT/CC、圧縮ライブラリBrotliの境界外書き込みの脆弱性で注意喚起、Node.jsやPython向けパッケージにも影響",
+      "topics": [
+        "security",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-27T04:59:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "戦略文書は方向性が中心で、企業にとっての具体的な影響は180日以内に示される実施計画で見えてくる。米国の重要インフラに製品やサービスを納める企業は、ソフトウェアの安全性や制御システムに関する要求が強まることを前提に、計画の公表を追う価値がある。",
+      "caveat": "今回確認したのは発表文で、戦略文書の本体は読んでいない。予算や人員の裏付けは発表文では示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-2030-strategy",
+      "language": "en",
+      "observed_at": "2026-10-27T04:59:31+09:00",
+      "published_at": "2026-10-26T12:00:00Z",
+      "role": "major",
+      "selection_reason": "米国の重要インフラ防御を担う機関が、今後の優先事項と期限付きの工程を示した。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "米国のサイバーセキュリティ・インフラセキュリティ庁（CISA）は10月26日、新戦略「CISA 2030: Defend, Harden, Prevail」を公表した。大統領の「Cyber Strategy for America」と「National Resilience Strategy」を進めるものとし、国のサイバー防御を主導する「Defend」、重要インフラの防御を優先する「Harden」、国全体の回復力を動員する「Prevail」の3本柱を掲げた。受け身の防御から、重要インフラへの悪意あるアクセスを特定・軽減・削減する先回りの姿勢に移るとし、官民の協力で制御システム（OT）のセキュリティ、ソフトウェアの安全性、新しい技術の安全な利用の支援などに取り組む。今後1年の優先事項として、60日以内に中核サービスと能力の見直しを始め、180日以内に戦略の実施計画と成果の測り方を示し、365日以内に進捗を報告するとしている。",
+      "source_kind": "regulator",
+      "source_title": "CISA Unveils New Strategy to Strengthen National Cyber Defense and Critical Infrastructure Security",
+      "source_url": "https://www.cisa.gov/news-events/news/cisa-unveils-new-strategy-strengthen-national-cyber-defense-and-critical-infrastructure-security",
+      "title": "米CISA、新戦略「CISA 2030」を公表、受け身の防御から重要インフラへの侵入の排除へ",
+      "topics": [
+        "policy",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-27T04:59:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "是正の中身が、対策を講じたという報告ではなく、効果を指標で測ることと、推薦が拡散を増幅していないかを調べることになっている点が重要だ。推薦や検索にAIを使う事業者は、同じ説明を求められたときに出せるデータを、日頃から残しておく必要がある。",
+      "caveat": "計画の詳しい内容や指標の定義は、この発表では示されていない。計画の実効性は今後の評価を待つ必要がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "ec-temu-dsa-action-plan",
+      "language": "en",
+      "observed_at": "2026-10-27T04:59:32+09:00",
+      "published_at": "2026-10-26T09:28:00Z",
+      "role": "major",
+      "selection_reason": "規制当局が、推薦システムの影響の分析と指標による効果測定を是正措置として受け入れた事例で、自動化された仕組みを持つプラットフォームの説明責任の具体例になる。",
+      "source_domain": "digital-strategy.ec.europa.eu",
+      "source_fact": "欧州委員会は10月26日、オンライン上の違法商品への対応をめぐり、Temuがデジタルサービス法（DSA）を順守するために提出した行動計画を受け入れたと発表した。計画は5つの措置からなる。Temuはプラットフォーム固有のリスク分析を行い、対策が違法コンテンツの拡散リスクをどれだけ減らしたかを信頼できる指標で評価する。コンテンツ審査の限界を評価し、推薦システムが違法商品の拡散を増幅していないか、出品者が機能を悪用して違法な出品を広げていないかも調べる。Temuは4か月以内に、2026年11月30日までの6か月を対象とする中間リスク評価を行う。委員会は2026年5月、Temuがリスク評価の義務を果たしていないとする違反決定を出し、2億ユーロの制裁金を科していた。",
+      "source_kind": "regulator",
+      "source_title": "Commission accepts Temu's action plan to remedy the breach of the Digital Services Act",
+      "source_url": "https://digital-strategy.ec.europa.eu/en/news/commission-accepts-temus-action-plan-remedy-breach-digital-services-act",
+      "title": "欧州委員会、デジタルサービス法違反のTemuが出した是正計画を受け入れ、推薦の仕組みによる違法商品の拡散も分析へ",
+      "topics": [
+        "policy",
+        "platforms"
+      ],
+      "verification": {
+        "checked_at": "2026-10-27T04:59:32+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "新しいモデルが既定で自動的に有効になる設定では、費用や利用規程の確認より先に、開発者が使い始めることになる。モデルの追加が頻繁に続く中で、自動での有効化を許すか、評価してから開放するかを組織として決めておきたい。",
+      "caveat": "性能についての記述はGitHubの初期試験に基づく定性的なもので、数値は示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-gpt-6-1-terra",
+      "language": "en",
+      "observed_at": "2026-10-27T04:59:32+09:00",
+      "published_at": "2026-10-26T19:15:00Z",
+      "role": "brief",
+      "selection_reason": "新モデルが発表当日に主要な開発ツールに入る速さと、組織での既定の扱いを確認できる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは10月26日、OpenAIのGPT-6.1 TerraをGitHub Copilotで一般提供した。日常的なエージェントによるコーディングやターミナル作業向けで、GPT-6.1 Solより低い費用で使えるとし、初期の試験ではGPT-5.6 Terraよりターミナルの課題とC#のコーディング課題を明らかに多く解いたという。Copilot Pro、Pro+、Max、Business、Enterpriseの利用者が、Visual Studio Code、Visual Studio、Copilot CLI、Copilotのクラウドエージェント、JetBrains IDE、Xcodeなどのモデル選択で使える。従量課金では提供元の定価で請求される。BusinessとEnterpriseでは、既定の設定のままだと新しいモデルは自動的に有効になり、管理者がCopilotのモデルポリシーで止められる。提供は段階的に進むとしている。",
+      "source_kind": "release",
+      "source_title": "GPT-6.1 Terra in GitHub Copilot",
+      "source_url": "https://github.blog/changelog/2026-10-26-gpt-6-1-terra-in-github-copilot",
+      "title": "GitHub Copilot、GPT-6.1 Terraを一般提供、組織では既定で自動的に有効に",
+      "topics": [
+        "tools",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-10-27T04:59:32+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントの評価では、課題環境の外に影響が及ばないことと、何をしたかを後から確かめられることが前提になる。エージェントと課題環境を別の隔離環境に分け、行動の記録を残す構成はその前提に沿う。ただし隔離の強さや外部への接続の扱いは設定次第で、評価の目的に合わせた確認が要る。",
+      "caveat": "隔離の仕組みや既定のネットワーク設定は、この発表では確認していない。評価の内容はAgentEnv側の仕様による。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "vercel-sandbox-agentenv-evals",
+      "language": "en",
+      "observed_at": "2026-10-27T04:59:32+09:00",
+      "published_at": "2026-10-26T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "エージェント本体と課題環境を分けた隔離環境で評価する手段が、クラウドの機能として用意された。",
+      "source_domain": "vercel.com",
+      "source_fact": "Vercelは10月26日、Scale AIのエージェント評価フレームワーク「AgentEnv」がVercel Sandboxで動くようになったと発表した。AgentEnvはエージェントに課題を解かせ、結果を採点する仕組みで、AgentEnv 0.9.1334以降にVercel用の実行環境の指定が入り、エージェントと課題の環境を別々のSandboxで動かす。公開された例を使うと、課題の得点とエージェントが記録した行動を確認でき、既存のVercel CLIのログインを使って実行する。",
+      "source_kind": "release",
+      "source_title": "Run Scale AI's AgentEnv evals on Vercel Sandbox",
+      "source_url": "https://vercel.com/changelog/run-scale-ais-agentenv-evals-on-vercel-sandbox",
+      "title": "Vercel Sandbox、Scale AIのエージェント評価フレームワーク「AgentEnv」に対応",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-27T04:59:32+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントが接続先を自分で探して作れるのは便利な半面、どのサービスにつないでよいかの判断も機械に寄りやすくなる。接続の作成を人の承認に残すか、許可するカテゴリをあらかじめ決めておくといった運用の線引きが必要になる。",
+      "caveat": "接続を作成する際の権限や承認の扱いは、この発表では確認していない。サービスの数は発表者の説明による。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "vercel-connect-discover-cli",
+      "language": "en",
+      "observed_at": "2026-10-27T04:59:32+09:00",
+      "published_at": "2026-10-26T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "エージェントが自分で接続先を探し、接続を作るための入り口がCLIに用意された。",
+      "source_domain": "vercel.com",
+      "source_fact": "Vercelは10月26日、外部サービスとの接続機能Vercel Connectで使える1000以上のサービスを、CLIの「vercel connect discover」で検索できるようにした。名前、別名、キーワード、説明で探せ、カテゴリ、接続方式（MCPやOAuthなど）、サービスが提供する製品、Webhookによるトリガーへの対応で絞り込める。結果は「--format=json」でスクリプトやエージェント向けに出力でき、見つけたサービス名を指定して接続を作成できる。CLIのバージョン64.1.0以降で使える。",
+      "source_kind": "release",
+      "source_title": "Discover 1000+ services on Vercel Connect from the CLI",
+      "source_url": "https://vercel.com/changelog/discover-1000-services-on-vercel-connect-from-the-cli",
+      "title": "Vercel Connect、1000以上の外部サービスをCLIから検索可能に、エージェント向けにJSONでも出力",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-27T04:59:32+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "データと計算を別のリージョンに置く構成では、つなぐために広いロールを使い、誰がアクセスしたかが分からなくなりがちだった。利用者本人の権限の範囲で操作を記録する仕組みは、人の代わりに動く自動処理を統制する土台としても役立つ可能性がある。",
+      "caveat": "対応するAWSサービスの範囲は、この発表では確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-identity-center-cross-region-tip",
+      "language": "en",
+      "observed_at": "2026-10-27T04:59:33+09:00",
+      "published_at": "2026-10-26T08:00:00Z",
+      "role": "brief",
+      "selection_reason": "分散した構成でも、共有の広い権限に頼らず、利用者単位の権限と監査を保てるようにする変更。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは10月26日、IAM Identity Centerの「trusted identity propagation」がリージョンをまたいで使えるようになったと発表した。この機能は利用者の身元を要求とともに渡し、AWSのサービスが利用者本人と所属グループに基づいて権限を与え、そのアクセスを監査のために記録できるようにするもの。従来は、利用者の身元を使うサービスがすべて同じリージョンにある必要があり、別のリージョンのサービスに届けるには、個々の利用者を区別できない広いIAMロールで許可するか、サービスを一つのリージョンに集める必要があった。追加料金はなく、IAM Identity Centerが使えるすべてのリージョンで提供される。",
+      "source_kind": "release",
+      "source_title": "AWS IAM Identity Center now supports cross-Region trusted identity propagation",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/10/aws-iam-identity-center-cross-region-tip/",
+      "title": "AWS IAM Identity Center、利用者の身元をリージョンをまたいで引き継げるように",
+      "topics": [
+        "security",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-10-27T04:59:33+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "数百ノードで数週間続く学習では、障害対応の遅れがそのまま計算資源の無駄になる。作業側の判断とハードウェア側の判断を分けて担わせる設計は、GPU以外の分散処理の運用でも参考になる。",
+      "caveat": "復旧の速さや効果について、この記事で確認できる数値は示されていない。製品の説明は発表者によるもの。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-mission-control-k8s-recovery",
+      "language": "en",
+      "observed_at": "2026-10-27T04:59:35+09:00",
+      "published_at": "2026-10-26T15:00:00Z",
+      "role": "brief",
+      "selection_reason": "大規模な学習で避けられない障害への対処を、人手から自動の制御ループに移す取り組みとして確認できる。",
+      "source_domain": "developer.nvidia.com",
+      "source_fact": "NVIDIAは10月26日、AIデータセンターの運用ソフト「Mission Control」の2.5で、障害を検知・診断・復旧する自動復旧エンジンを、NVIDIA Run:aiが管理するKubernetes上の作業にも広げたと説明した。従来はSlurmを使うHPC向けの作業に限られていた。エンジンは、作業を配置するスケジューラー、作業の状況や障害履歴から復旧方法を判断するジョブ復旧サービス、ノードとGPUを監視して異常を割り当て対象から外し診断するハードウェア復旧サービスの3層で動く。ハードウェアの障害では作業を再起動または再配置しつつ、並行してノードを隔離して診断する。一時的なソフトウェアのエラーでは、不要なハードウェアの対処をせずに作業を再試行する。劣化の兆候を早く見つけ、作業が止まる前に危険なノードを割り当て対象から外すこともできるという。",
+      "source_kind": "analysis",
+      "source_title": "How NVIDIA Mission Control 2.5 Brings Autonomous Recovery to Kubernetes",
+      "source_url": "https://developer.nvidia.com/blog/how-nvidia-mission-control-2-5-brings-autonomous-recovery-to-kubernetes/",
+      "title": "NVIDIA Mission Control 2.5、GPUクラスターの障害からの自動復旧をKubernetesの作業にも拡大",
+      "topics": [
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-10-27T04:59:35+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "一括処理で精度の高いモデルが、逐次処理でも強いとは限らない。実際に使う区切りの長さで精度を測り、遅延の許容範囲と量子化の度合いを合わせて決める手順は、音声以外の端末上のAIにも当てはまる。",
+      "caveat": "測定は筆者らによる単一の端末と単一スレッドの条件で、他の端末や実際の利用時の負荷での結果は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "pytorch-executorch-streaming-asr",
+      "language": "en",
+      "observed_at": "2026-10-27T04:59:36+09:00",
+      "published_at": "2026-10-26T18:27:00Z",
+      "role": "brief",
+      "selection_reason": "端末上で音声をAIで処理する際に、精度と遅延を同時に測る手順を、具体的な数値とともに示している。",
+      "source_domain": "pytorch.org",
+      "source_fact": "PyTorchのブログで10月26日、Armの技術者が、多言語の逐次音声認識モデルNemotron 3.5をPyTorchのエッジ推論基盤ExecuTorchに移し、Google Pixel 11で動かした評価を公開した。4つのコーパスの1万4019発話で測ると、音声を区切る長さを80ミリ秒から1120ミリ秒に延ばすと、FP16の単語誤り率は15.2%から11.5%に下がった。INT8の量子化（QC8W）でも15.5%から11.7%に下がり、FP32との差は0.21〜0.31ポイントだった。24.9秒の録音を1つの推論スレッドで処理すると、ArmのSME2命令を有効にした場合、FP16で9.79秒から4.61秒、QC8Wで5.20秒から3.24秒に短縮された。速度向上の大半は行列計算によるもので、データ移動の時間はほぼ変わらず、残る改善の対象だとしている。",
+      "source_kind": "analysis",
+      "source_title": "Optimizing Streaming Speech Recognition on Arm Edge Devices with ExecuTorch",
+      "source_url": "https://pytorch.org/blog/optimizing-streaming-speech-recognition-on-arm-edge-devices-with-executorch/",
+      "title": "Arm、スマートフォン上の逐次音声認識をExecuTorchで評価、音声の区切り方で精度と遅延が変わることを数値で示す",
+      "topics": [
+        "models",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-10-27T04:59:36+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "利用者がファイルを開く操作を必要とする脆弱性は、外部から受け取ったファイルをそのまま開く運用で現実の危険になる。取引先や保守業者とファイルをやり取りする現場では、更新の適用に加えて、受け取ったファイルの扱いの決まりを確認しておきたい。",
+      "caveat": "悪用の有無や、影響を受ける利用環境の規模は、この情報では確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "jvn-fujielectric-vsft",
+      "language": "ja",
+      "observed_at": "2026-10-27T04:59:36+09:00",
+      "published_at": "2026-10-26T04:00:00Z",
+      "role": "watch",
+      "selection_reason": "国内メーカーの製品で、ファイルを開くだけでコード実行につながりうる脆弱性がまとめて公表された。",
+      "source_domain": "jvn.jp",
+      "source_fact": "JVNは10月26日、富士電機が提供するV-SFTのver 6.2.11.0以前に、スタックベースのバッファオーバーフロー、境界外書き込み、境界外読み取りの7件の脆弱性（CVE-2026-107894からCVE-2026-107900）があると公表した。細工されたV7形式のファイルを開くと、情報が漏えいしたり、任意のコードを実行されたりする可能性がある。CVSS v4.0の基本値はいずれも8.4。開発者が公開した改善版（Ver.6.2.12.0）の情報をもとに、パッチを適用するよう求めている。報告者はMichael Heinzl氏で、JPCERT/CCが開発者との調整を行った。",
+      "source_kind": "advisory",
+      "source_title": "JVNVU#96549652: 富士電機製V-SFTにおける複数の脆弱性（2026年10月）",
+      "source_url": "https://jvn.jp/vu/JVNVU96549652/",
+      "title": "富士電機製「V-SFT」に7件の脆弱性、細工されたファイルを開くとコード実行の恐れ",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-27T04:59:36+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-10-27T05:02:31+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：OpenAIが低価格のGPT-6.1 Terraを公開、広く使われる圧縮ライブラリBrotliに脆弱性",
+  "topics": [
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計・評価・統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "基盤モデルの能力と提供・適応の条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "公開されたソフトウェア・モデルと利用条件。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "開発・業務・運用を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "推論・学習・配信を支えるハードウェアとソフトウェア基盤。",
+      "id": "infrastructure",
+      "label_en": "Infrastructure",
+      "label_ja": "計算基盤"
+    },
+    {
+      "description": "利用規則・標準・制度とその運用。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・統制"
+    },
+    {
+      "description": "オンラインプラットフォームの運営と規制への対応。",
+      "id": "platforms",
+      "label_en": "Platforms",
+      "label_ja": "プラットフォーム"
+    }
+  ]
+}

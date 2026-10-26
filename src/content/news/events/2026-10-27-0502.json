@@ -1,0 +1,27 @@
+[
+  {
+    "changed_signal_ids": [
+      "aws-identity-center-cross-region-tip",
+      "cisa-2030-strategy",
+      "ec-temu-dsa-action-plan",
+      "github-copilot-gpt-6-1-terra",
+      "jpcert-brotli-oob-write",
+      "jvn-fujielectric-vsft",
+      "nvidia-mission-control-k8s-recovery",
+      "openai-gpt-6-1-terra",
+      "pytorch-executorch-streaming-asr",
+      "vercel-connect-discover-cli",
+      "vercel-sandbox-agentenv-evals"
+    ],
+    "edition_date": "2026-10-27",
+    "edition_id": "2026-10-27-0502",
+    "edition_url": "https://aoifuture.com/news/2026-10-27-0502/",
+    "event_id": "aoi-news-2026-10-27-0502-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-27T05:02:31+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "OpenAIは、パソコン操作と事実性を改善し、API価格を従来の半額にしたGPT-6.1 Terraを公開し、同日にGitHub Copilotでも使えるようになった。HTTP通信で広く使われる圧縮ライブラリBrotliの脆弱性では、JPCERT/CCが注意喚起を出した。米CISAの新戦略、欧州委員会によるTemuの是正計画の受け入れ、エージェントの評価や接続、利用者の身元の引き継ぎを支える機能の更新とあわせて、一次資料から見る。",
+    "title": "AOIFUTURE News：OpenAIが低価格のGPT-6.1 Terraを公開、広く使われる圧縮ライブラリBrotliに脆弱性"
+  }
+]
