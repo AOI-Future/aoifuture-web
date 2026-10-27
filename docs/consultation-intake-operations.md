@@ -70,6 +70,36 @@ The existing model-free watcher consumes records with Notification Status `Pendi
 
 ## Daily operation, retention, and incidents
 
+### Isolated nozaki.com production policy
+
+Requests with the nozaki.com or www.nozaki.com hostname select a dedicated policy
+before preflight, feature-flag and CORS checks, on both public API URLs. Only the
+exact `https://nozaki.com` Origin is permitted. `www`, HTTP, alternate ports and
+noncanonical Origin strings are rejected even if the shared allowlist contains
+them. The Source must still be `nozaki.com`.
+
+Set `NOZAKI_CONTACT_ENABLED=true` (or exact `1`) and
+`NOZAKI_TURNSTILE_SECRET_KEY` only in this project's Production environment.
+Never overwrite the existing shared `CONSULTATION_*`, Turnstile or Preview
+variables to enable nozaki. Nozaki requires a token and a successful provider
+response with boolean `success: true`, action `contact_intake`, and hostname
+`nozaki.com`. Missing dedicated credentials or provider outages fail closed.
+The frontend public key belongs in the nzkcom Cloudflare Production build as
+`PUBLIC_TURNSTILE_SITE_KEY`; its widget must match the dedicated secret.
+
+Other origins retain the original shared settings and validation. Notion storage,
+idempotency and rate limits remain shared; this is configuration isolation, not a
+separate storage system. Nozaki enablement does not prove the Notion credentials,
+schema or linked notification recipient are correct. Confirm those before the
+single authorized synthetic production canary.
+
+To stop nozaki intake, set `NOZAKI_CONTACT_ENABLED=false` and redeploy. Keep the
+dedicated policy deployed so requests cannot fall back to optional shared
+Turnstile. This switch does not affect other origins or delete stored records.
+Retain the prior Vercel deployment and Cloudflare nzkcom Production deployment
+as rollback references. A site rollback must preserve Writer IndexedDB drafts
+and handle service-worker caches separately.
+
 - Review `New` items each business day; update Last Contact, status, next action, Last Instruction, and Decision manually as appropriate.
 - For unaccepted/inactive inquiries, review and delete at `Retention Review At` (90 days from last contact). If contact continues, update Last Contact and the review date.
 - For accepted work, transfer only necessary facts to the client record and delete the original intake 30–90 days after contract start.
