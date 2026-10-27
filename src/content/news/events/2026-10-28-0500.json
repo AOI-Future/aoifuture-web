@@ -1,0 +1,27 @@
+[
+  {
+    "changed_signal_ids": [
+      "ai2-novelty-judges",
+      "aws-kms-ml-kem",
+      "cloudflare-workers-ai-kv-cache-exposure",
+      "cryptrec-pqc-list-public-comment",
+      "deepmind-genie-4",
+      "github-copilot-assisted-permissions",
+      "jvn-growi-authz",
+      "kubernetes-workload-conformance-wg",
+      "liquid-ai-lfm3",
+      "nist-ir-8547-pqc-transition",
+      "vercel-agent-sessions-cost"
+    ],
+    "edition_date": "2026-10-28",
+    "edition_id": "2026-10-28-0500",
+    "edition_url": "https://aoifuture.com/news/2026-10-28-0500/",
+    "event_id": "aoi-news-2026-10-28-0500-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-28T05:00:01+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "Google DeepMindは、音声も同時に生成し、Geminiが場面を監視しながら進める世界モデルGenie 4を研究プレビューとして発表した。米NISTは耐量子計算機暗号への移行の手引きを最終化し、日本ではCRYPTREC暗号リストの改定案への意見募集が始まった。CloudflareのAI推論で他の利用者のデータが混入した問題の公表、エージェントの操作の許可をAIが判定する機能、研究アイデアの新規性を判定するLLMの不安定さの検証とあわせて、一次資料から見る。",
+    "title": "AOIFUTURE News：Google DeepMindが世界モデルGenie 4を発表、日米で耐量子計算機暗号への移行の手続きが進む"
+  }
+]

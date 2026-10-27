@@ -1,0 +1,384 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-10-28T05:00:01+09:00",
+  "dek": "Google DeepMindは、音声も同時に生成し、Geminiが場面を監視しながら進める世界モデルGenie 4を研究プレビューとして発表した。米NISTは耐量子計算機暗号への移行の手引きを最終化し、日本ではCRYPTREC暗号リストの改定案への意見募集が始まった。CloudflareのAI推論で他の利用者のデータが混入した問題の公表、エージェントの操作の許可をAIが判定する機能、研究アイデアの新規性を判定するLLMの不安定さの検証とあわせて、一次資料から見る。",
+  "edition_date": "2026-10-28",
+  "edition_id": "2026-10-28-0500",
+  "edition_note": "直近72時間に公開された一次資料を対象とし、2026年10月26日から27日（日本・米国時間）に公開された資料を直接確認した。各社の性能や効果の主張、事故の影響範囲、脆弱性の影響は独立に検証しておらず、前提は各項目の留保に記した。",
+  "generated_at": "2026-10-28T05:00:01+09:00",
+  "items": [
+    {
+      "aoi_note": "ロボットやエージェントを実世界に出す前に、無数の場面を作って試せるなら、開発の進め方は大きく変わる。ただし同社自身が、長く動かすと一貫性がずれると認めている。シミュレーション上で成功したことが現実でも通用するかは別に確かめる必要があり、評価の環境として使うなら、どの程度の時間と複雑さまで信頼できるかを先に測っておきたい。",
+      "caveat": "性能や品質の説明はすべて同社によるもので、公開された比較の数値は今回確認していない。研究プレビューの段階で、一般向けの提供時期は示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "deepmind-genie-4",
+      "language": "en",
+      "observed_at": "2026-10-28T04:58:11+09:00",
+      "published_at": "2026-10-27T16:13:00Z",
+      "role": "lead",
+      "selection_reason": "生成モデルが、画像や動画を作る道具から、ロボットやエージェントを試す環境を作る道具へ広がる流れを示す発表。",
+      "source_domain": "deepmind.google",
+      "source_fact": "Google DeepMindは10月27日、利用者の操作に応じてリアルタイムに世界を生成する世界モデル「Genie 4」を発表した。音楽や環境音、登場人物の対話を映像と同時に生成でき、同社のリアルタイム世界モデルで初めて音声を直接生成するという。自然言語で天気の変更やカメラの移動、人物や物体の追加を指示でき、空気力学や衝突などの物理や、人の自然な動きを再現するとしている。Gemini 3.8 Flashが生成中の場面を観察し、目標を手順に分け、各手順が成功したかを確かめながら進める仕組みも示した。Gemini 4 Argonと組み合わせ、Apptronikの人型ロボットApolloがチェッカーをする場面を手順ごとに生成した例もある。現時点では信頼できるテスター向けの研究プレビューで、今後Google AI Ultraの契約者や、Gemini APIとGoogle AI Studioの早期アクセスの協力先に提供するとしている。生成した映像と音声にはすべて電子透かしSynthIDを入れる。長く動かしたり、複雑な指示を重ねたりすると細部や物体の一貫性がずれることがあり、複雑な物理的相互作用、音声の正確さ、文字の描画、空間の正確さ、長期の一貫性は研究途上だとしている。",
+      "source_kind": "official",
+      "source_title": "Genie 4: A new generation of world simulation",
+      "source_url": "https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/",
+      "title": "Google DeepMind、音声も同時に生成する世界モデル「Genie 4」を発表、Geminiが場面を監視し手順を進める",
+      "topics": [
+        "models",
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-28T04:58:11+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エラーにならず、正常な応答に見える形で他人のデータが混じった点が重い。同社は事前の試験で応答の状態コードと性能だけを確かめ、出力の中身を確かめていなかったと説明している。複数の利用者でGPUやキャッシュを共有する推論基盤を運用・利用する組織は、設定値の整合と、出力に他人のデータが混じらないことを直接確かめる試験を持っておく必要がある。",
+      "caveat": "影響件数や悪用の有無は同社の調査に基づくもので、独立に検証していない。SGLangの開発元が同時に出したとする公表は今回確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-workers-ai-kv-cache-exposure",
+      "language": "en",
+      "observed_at": "2026-10-28T04:58:11+09:00",
+      "published_at": "2026-10-26T22:01:23Z",
+      "role": "major",
+      "selection_reason": "AIの推論サービスで、利用者間の分離が推論エンジンの内部で破れうることを、原因と時系列まで含めて示した公表。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは10月26日、推論サービスWorkers AIで提供するGLM-5.3モデルで、2026年8月27日から9月9日まで、一部の利用者への応答に、直前に同じモデルへ送られた他の利用者の要求のデータが含まれていたと公表した。影響を受けた応答は155件で、すべて68万1280トークンを超える長い入力に対するものだった。同社は、意図的な悪用の証拠は見つからなかったとしている。9月8日にセキュリティ研究者から報告を受け、翌日に再現してモデルを非公開にし、同日中に修正して再開した。原因は二つ重なっていた。一つは設定の誤りで、文脈長を104万8576トークンとしながら、入力を処理するGPU側の作業用キャッシュ（KVキャッシュ）の領域が68万1280トークン分しかなかった。もう一つはオープンソースの推論エンジンSGLangの不具合で、入力処理と出力生成を別のGPU群に分ける構成では、領域に収まらず拒否された要求がエラーを返さずに処理され続け、出力側が前の要求のデータが残るキャッシュを読んで応答を生成していた。修正はSGLangのv0.5.20以降に入り、同社はSGLangを使う事業者にv0.5.22以降への更新を勧めている。他のモデルは影響を受けていないとしている。",
+      "source_kind": "official",
+      "source_title": "Cross-request KV cache exposure in the GLM-5.3 Workers AI model, and our remediation with SGLang",
+      "source_url": "https://blog.cloudflare.com/kv-cache-exposure-remediation/",
+      "title": "Cloudflare、Workers AIのGLM-5.3で他の利用者の要求内容が応答に混入した問題を公表、推論エンジンSGLangの不具合と設定ミスが重なる",
+      "topics": [
+        "security",
+        "infrastructure",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-28T04:58:11+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "連邦システムが対象でも、政府と取引する企業や、米国の標準に合わせる製品は影響を受ける。暗号の移行は、自社のコードだけでなく、使っている製品やライブラリ、通信先まで含めて、どこで何の暗号を使っているかを把握することから始まる。2030年は機器の更新周期を考えると遠くない。",
+      "caveat": "今回確認したのは発表文で、報告書本体の個々のアルゴリズムの扱いや期限は読んでいない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nist-ir-8547-pqc-transition",
+      "language": "en",
+      "observed_at": "2026-10-28T04:58:11+09:00",
+      "published_at": "2026-10-27T12:00:00Z",
+      "role": "major",
+      "selection_reason": "暗号の移行で、どのアルゴリズムをいつまでに置き換えるかの公式な工程を、米国の標準機関が示した。",
+      "source_domain": "www.nist.gov",
+      "source_fact": "米国立標準技術研究所（NIST）は10月27日、耐量子計算機暗号（PQC）の標準への移行の手引き「Transition to Post-Quantum Cryptography Standards（NIST IR 8547）」を最終版として公表した。NISTの既存の暗号標準のうち量子計算機に弱いアルゴリズムを特定し、2024年に公表したPQCの標準に置き換える計画と時期を示している。国家安全保障覚書10号は連邦システムの移行完了の目標を2035年としていたが、大統領令14412号はこれを早め、連邦の重要な資産とシステムについて、鍵の確立は2030年、デジタル署名は2031年までの移行を求めている。報告書はこの時期を支えるものだという。データを今集めて量子計算機の実用化後に解読する「harvest now, decrypt later」の脅威があるため、長く守る必要がある機密データでは鍵確立の標準（FIPS 203）への移行を優先しうるとした。従来の暗号とPQCを組み合わせる方法も認めている。",
+      "source_kind": "regulator",
+      "source_title": "NIST Report Provides Guidelines for Transition to Post-Quantum Cryptography Standards",
+      "source_url": "https://www.nist.gov/news-events/news/2026/10/nist-report-provides-guidelines-transition-post-quantum-cryptography",
+      "title": "米NIST、耐量子計算機暗号への移行の手引きNIST IR 8547を最終化、連邦の重要システムは2030年までに鍵確立を移行",
+      "topics": [
+        "cryptography",
+        "policy",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-28T04:58:11+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "どの署名方式のどの強さを政府調達で認めるかは、国内の製品やサービスの設計に直接響く。米国の手引きと日本のリストで扱いが分かれれば、両方に製品を出す事業者は対応を二重に持つことになる。署名の方式を選ぶ立場にある事業者は、この段階で利用状況を伝えておく意味がある。",
+      "caveat": "改定案の資料（別添）は今回読んでおらず、提案されている具体的な扱いは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cryptrec-pqc-list-public-comment",
+      "language": "ja",
+      "observed_at": "2026-10-28T04:58:12+09:00",
+      "published_at": "2026-10-27T05:00:00Z",
+      "role": "major",
+      "selection_reason": "同じ週に米NISTが移行の手引きを最終化しており、日本の政府調達の暗号の基準もPQCへの対応を詰めている段階にあることが分かる。",
+      "source_domain": "www.soumu.go.jp",
+      "source_fact": "総務省、デジタル庁、経済産業省は10月27日、電子政府の調達で参照する暗号のリスト「CRYPTREC暗号リスト」の、耐量子計算機暗号（PQC）に対応する改定について意見募集を始めた。期間は10月27日14時から11月11日24時まで。3省庁は2026年3月に、電子政府推奨暗号リストに「耐量子計算機暗号（PQC）リスト」を加える改定をしたが、一部の暗号技術の扱いを保留し、CRYPTRECに設けたタスクフォースで検討してきた。今回は特に、署名方式ML-DSAとSLH-DSAのうち安全性の区分が低いCategory 1・2（ML-DSA-44とSLH-DSA-[SHA2/SHAKE]-128[s/f]）について、利用状況や将来の利用見込みを踏まえたリストでの扱いへの意見を求めている。ML-DSAとSLH-DSAは、CRYPTRECでの安全性評価が完了しておらず、改定内容は確定していないとしている。寄せられた意見と安全性評価の結果を踏まえて改定する予定。",
+      "source_kind": "regulator",
+      "source_title": "「電子政府における調達のために参照すべき暗号のリスト（CRYPTREC暗号リスト）」の改定（PQC対応）に対する意見募集",
+      "source_url": "https://www.soumu.go.jp/menu_news/s-news/01cyber01_02000001_00308.html",
+      "title": "総務省・デジタル庁・経産省、CRYPTREC暗号リストの耐量子計算機暗号対応の改定で意見募集、11月11日まで",
+      "topics": [
+        "cryptography",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-10-28T04:58:12+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "毎回の承認は面倒で、すべて許可は危ない。その間を埋める仕組みだが、安全かどうかの判定そのものがモデルの判断になる。誤って安全と判定された操作が自動で通る可能性を前提に、本番環境の認証情報や削除を伴う操作など、判定に任せない範囲を組織で決めておきたい。",
+      "caveat": "安全と判定する基準や誤判定の率は、この発表では示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-assisted-permissions",
+      "language": "en",
+      "observed_at": "2026-10-28T04:58:12+09:00",
+      "published_at": "2026-10-26T22:31:30Z",
+      "role": "brief",
+      "selection_reason": "エージェントに何を自動で許すかの判断を、別のAIに任せる仕組みが主要な開発ツールで正式に使えるようになった。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは10月26日、GitHub Copilot CLI、GitHub Copilotアプリ、Visual Studio Codeで「assisted permissions」を一般提供した。Copilotがコマンドの実行、ファイルシステムのパスへのアクセス、URLを開くことの許可を求めると、大規模言語モデルがその要求を評価し、明らかに安全と分類した要求は自動で進め、それ以外は利用者の承認を求める。企業の管理者は、すべてを許可するモードを禁じつつassisted permissionsを使えるようにしたり、assisted permissionsだけを無効にしたりできる。新しいセッションの既定の許可モードも選べ、既定のモードが使えない場合や方針で禁じられている場合は、手動承認で始まる。",
+      "source_kind": "release",
+      "source_title": "GitHub Copilot assisted permissions generally available",
+      "source_url": "https://github.blog/changelog/2026-10-26-github-copilot-assisted-permissions-generally-available",
+      "title": "GitHub Copilot、エージェントの操作の許可をAIが判定する「assisted permissions」を一般提供",
+      "topics": [
+        "agents",
+        "tools",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-28T04:58:12+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "移行の第一歩は、新しい方式を実際の鍵管理の流れに入れて試すことだ。秘密鍵を管理されたハードウェアに置いたまま使えるため、検証の敷居は下がる。一方で、通信相手の側も対応していなければ使えないため、取引先との鍵のやり取りのどこから置き換えるかの順番を決めることになる。",
+      "caveat": "対応する他のAWSサービスとの連携の範囲や料金は、この発表では確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-kms-ml-kem",
+      "language": "en",
+      "observed_at": "2026-10-28T04:58:13+09:00",
+      "published_at": "2026-10-26T08:00:00Z",
+      "role": "brief",
+      "selection_reason": "NISTの移行の手引きが求める鍵確立の置き換えを、主要なクラウドの鍵管理サービスで試せるようになった。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは10月26日、鍵管理サービスAWS Key Management Service（KMS）で、NIST FIPS 203の耐量子計算機暗号の標準ML-KEMに対応したと発表した。ML-KEMは二者が共有の秘密を確立するための方式で、NIST IR 8547では、DH/ECDHによる鍵共有やRSAによる鍵の輸送を置き換えるものとされている。KMSはFIPS 203が定めるML-KEM-512、ML-KEM-768、ML-KEM-1024の3種類の鍵に対応し、秘密鍵はFIPS 140-3レベル3の検証を受けたハードウェアセキュリティモジュールで保護する。公開鍵を取り出して取引先やアプリケーションに配り、AWS-LC、OpenSSL、Bouncy Castleなどのライブラリで手元でカプセル化することもできる。中東（UAE、バーレーン）と中国のリージョンを除く、KMSが使えるすべてのリージョンで提供する。",
+      "source_kind": "release",
+      "source_title": "AWS Key Management Service now supports ML-KEM for post-quantum key encapsulation",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/10/kms-ml-kem-post-quantum/",
+      "title": "AWS KMS、耐量子計算機暗号の鍵カプセル化方式ML-KEMに対応",
+      "topics": [
+        "cryptography",
+        "security",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-10-28T04:58:13+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントの費用の多くは、同じ文脈を毎回読み直すことから生じる。モデルを替えずに、手順の手引きと文脈の管理を見直すだけで費用が大きく変わるなら、自社でエージェントを動かす際にも、まずトークンの使われ方を測る価値がある。",
+      "caveat": "67%は同社が示す平均値で、算出の条件や期間は示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "vercel-agent-sessions-cost",
+      "language": "en",
+      "observed_at": "2026-10-28T04:58:15+09:00",
+      "published_at": "2026-10-27T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "エージェントの費用を、モデルの単価ではなく、文脈の持ち方とキャッシュの使い方で下げた事例。",
+      "source_domain": "vercel.com",
+      "source_fact": "Vercelは10月27日、ダッシュボードとSlackで使うVercel Agentのセッションの費用が平均で67%下がったと発表した。エージェントの文脈の管理を作り直し、セッションあたりに必要なトークンを減らし、プロンプトのキャッシュの再利用を増やしたという。変更点として、よくある作業とエラーからの回復の手引きを明確にしたCLIのスキル、会話が長くなっても文脈を少しずつ管理する仕組み、ターンをまたいで再利用できる文脈を多く残すキャッシュの改善、少ないトークンで計画とコードを書くための手引きの更新を挙げている。利用者の対応は不要で、課金の単価は変わらず、モデル提供元の推論料金に100万トークンあたり0.25ドルの手数料を加えた額で請求される。",
+      "source_kind": "release",
+      "source_title": "Vercel Agent sessions now cost 67% less",
+      "source_url": "https://vercel.com/changelog/vercel-agent-sessions-now-cost-67-percent-less",
+      "title": "Vercel Agent、文脈の管理を作り直してセッションの費用を平均67%削減",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-28T04:58:15+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "研究に限らず、AIの成果物の良し悪しを別のAIに判定させる仕組みは広く使われている。プロンプトを少し変えただけで結論が逆になるなら、判定役を使う前に、設定を変えても判定が安定するかを確かめておかないと、評価そのものが当てにならない。",
+      "caveat": "研究は生成したアイデアの新規性が低いという仮定を一部に置いており、著者自身が弱いラベルだとしている。論文本体は今回読んでいない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "ai2-novelty-judges",
+      "language": "en",
+      "observed_at": "2026-10-28T04:58:15+09:00",
+      "published_at": "2026-10-27T16:12:42Z",
+      "role": "brief",
+      "selection_reason": "AIの出力をAIに評価させる仕組みが、評価の設定次第で大きく揺らぐことを、数値で示した研究。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Allen Institute for AI（Ai2）は10月27日、研究アイデアの新規性をLLMがどれだけ信頼して判定できるかを調べた研究「Old Ideas, Novel Problems」と、評価用のベンチマーク、データ、コードを公開した。ICLR 2026の査読で新規性が明確に評価された上位論文のアイデア154件と、新規性に懸念が示された下位論文のアイデア145件、さらに簡単なLLMに生成させたアイデア154件を使い、GPT-5.1、GPT-5.2、GPT-5.4、Claude Sonnet 4.5、Claude Opus 4.5、Claude Opus 4.6の6つを判定役として試した。人のアイデアと生成したアイデアの組でどちらが新規かを選ばせると、GPT-5.4は、査読者が一方だけを新規と判断したと伝えるプロンプトでは正答率93.5%だったが、単にどちらが新規かを問うと40.9%に下がり、半数以上の組で判定が変わった。検索と多めの推論を使う判定は必ずしも精度を上げず、専用の評価システム2つは、単純なプロンプトのClaude Opus 4.6より精度が低く費用が高かったという。",
+      "source_kind": "analysis",
+      "source_title": "Can we trust LLMs to judge whether a research idea is novel?",
+      "source_url": "https://huggingface.co/blog/allenai/novelty-bench",
+      "title": "Ai2、研究アイデアの新規性をLLMに判定させる手法を検証、プロンプトの数語の違いで正答率が50ポイント以上変動",
+      "topics": [
+        "research",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-10-28T04:58:15+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントを端末上で動かせれば、データを外に出さずに済み、通信の遅れや費用も抑えられる。ただし小さなモデルは得意な範囲が狭い。自社の作業で使えるかは、公開された評価の数値ではなく、自社のデータで追加学習した結果で判断することになる。",
+      "caveat": "性能の数値はすべて同社の評価によるもので、独立に検証していない。利用許諾の条件は今回確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "liquid-ai-lfm3",
+      "language": "en",
+      "observed_at": "2026-10-28T04:58:16+09:00",
+      "published_at": "2026-10-27T17:16:52Z",
+      "role": "brief",
+      "selection_reason": "小さなモデルを端末上で動かし、用途ごとに追加学習して使う流れを、具体的な構成と数値で示した公開。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Liquid AIは10月27日、新しい世代のモデル群「LFM3」を公開した。共通の土台モデルLFM3-1.7B-Baseから、テキスト、画像と動画、音声、それらをまとめたオムニ、判断用のモデルなど、20億パラメータ前後の6つのモデルを作った。短い畳み込み、窓を区切った注意、全体を見る注意の3種類の層を組み合わせた構成で、LFM3-1.7Bは35%少ないパラメータで前世代のLFM2.5-2.6Bを上回り、ブラウザなどでの作業を測るWebArena-Verifiedでは38.42と前世代の3.02を大きく上回ったという。テキストモデルは4ビットで約1GBに収まり、25万6000トークンの文脈を扱える。どのモデルも1枚のGPUで追加学習できるとしている。すべて重みを公開しており、Hugging Faceで入手できる。",
+      "source_kind": "release",
+      "source_title": "Build specialized multimodal models with LFM3",
+      "source_url": "https://huggingface.co/blog/LiquidAI/lfm3",
+      "title": "Liquid AI、端末上で動く2B級のモデル群「LFM3」を公開、テキスト・画像・音声を共通の土台から6種類",
+      "topics": [
+        "models",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-28T04:58:16+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ノードの入れ替えやバージョンの更新のたびに、アプリケーションが耐えられるかを手で確かめる作業は、多くの組織で繰り返されている。客観的に試せる基準ができれば、外部から導入するソフトウェアの受け入れの判断にも使える。仕様が固まるまでは時間がかかるため、当面は議論の方向を追う段階だ。",
+      "caveat": "具体的な要件はまだ決まっておらず、成果物の時期は目標にとどまる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "kubernetes-workload-conformance-wg",
+      "language": "en",
+      "observed_at": "2026-10-28T04:58:16+09:00",
+      "published_at": "2026-10-27T04:30:00Z",
+      "role": "brief",
+      "selection_reason": "クラスターを運用する側とアプリケーションを作る側が、同じ基準で確認できるようにする取り組みの始まり。",
+      "source_domain": "kubernetes.io",
+      "source_fact": "Kubernetesコミュニティは10月27日、Kubernetes上で動くワークロードの実行時の振る舞いについて共通の標準を作る「Workload Conformance Working Group」を発足したと発表した。クラスター側を試験する認定や、AIとMLのワークロードを動かせるかを試す「Kubernetes AI Conformance」はあるが、ワークロード自体の基準はなく、運用者はメンテナンスや更新の前に個々のアプリケーションを手で確認している。作業部会は、Kubernetesのマイナーバージョンごとのワークロードの振る舞いの仕様、各要件を動いているワークロードに対して試す方法、それを実装する試験ツールの3つを作る。対象にはセキュリティ、障害時の回復力、資源の使い方、ネットワーク、ストレージ、APIの使い方、観測性が含まれるが、具体的な要件は未定。すべての要件に試験プログラムで実行できる客観的な試験を付けることは決まっている。2〜3回のリリースの間に最初の安定した仕様と試験を作ることを目指す。",
+      "source_kind": "official",
+      "source_title": "Announcing the Workload Conformance Working Group",
+      "source_url": "https://kubernetes.io/blog/2026/10/27/announcing-workload-conformance-wg/",
+      "title": "Kubernetes、アプリケーション側の動作の標準を作る「Workload Conformance」作業部会を発足",
+      "topics": [
+        "infrastructure",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-28T04:58:16+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "社内Wikiは、閲覧権限で情報を分けて運用されることが多い。権限の境界を越えて読めたり書き換えたりできる不具合は、深刻度の数値が低くても、置いている情報によっては影響が大きい。ゲストや停止中の利用者を残したままの運用では、更新に加えてアカウントの棚卸しも確認したい。",
+      "caveat": "悪用の有無や、影響を受ける利用環境の規模は、この情報では確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "jvn-growi-authz",
+      "language": "ja",
+      "observed_at": "2026-10-28T04:58:16+09:00",
+      "published_at": "2026-10-27T06:00:00Z",
+      "role": "watch",
+      "selection_reason": "社内の情報共有に使われるWikiで、権限の境界が破られうる脆弱性が公表された。",
+      "source_domain": "jvn.jp",
+      "source_fact": "JVNは10月27日、株式会社GROWIが提供するWikiソフトウェアGROWIに3件の脆弱性（CVE-2026-105272、CVE-2026-109848、CVE-2026-115624）があると公表した。ログインできる攻撃者が、閲覧権限のないページの本文やコメントを取得したり、閲覧権限のないページの本文を自分が編集できるページに保存したりできる恐れがある。また、閲覧だけを許された利用者やゲスト、承認待ち・停止中・招待中の利用者が、同時編集の機能を通じてページの下書きを書き換えられる恐れがある。影響を受けるのはv8.0.6までの各バージョンで、v8.0.7で修正された。CVSS v4.0の基本値は2.3から6.9。開発者がJPCERT/CCに報告し、JPCERT/CCが調整を行った。",
+      "source_kind": "advisory",
+      "source_title": "JVN#51223238: GROWIにおける複数の脆弱性",
+      "source_url": "https://jvn.jp/jp/JVN51223238/",
+      "title": "GROWIに認可処理の脆弱性3件、閲覧権限のないページの取得やゲストによる下書きの書き換えの恐れ",
+      "topics": [
+        "security",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-10-28T04:58:16+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-10-28T05:00:01+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：Google DeepMindが世界モデルGenie 4を発表、日米で耐量子計算機暗号への移行の手続きが進む",
+  "topics": [
+    {
+      "description": "基盤モデルの能力と提供・適応の条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "暗号技術の標準と移行。",
+      "id": "cryptography",
+      "label_en": "Cryptography",
+      "label_ja": "暗号"
+    },
+    {
+      "description": "利用規則・標準・制度とその運用。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・統制"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計・評価・統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "開発・業務・運用を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "推論・学習・配信を支えるハードウェアとソフトウェア基盤。",
+      "id": "infrastructure",
+      "label_en": "Infrastructure",
+      "label_ja": "計算基盤"
+    },
+    {
+      "description": "公開されたソフトウェア・モデルと利用条件。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "研究の方法と評価。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    }
+  ]
+}
