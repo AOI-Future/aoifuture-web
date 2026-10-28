@@ -81,14 +81,14 @@ const roles = [
       <p class="hs-label">COMMUNITY / BUSINESS</p>
       <h2 id="support-title">診断と対処はCommunity。管理と監査をBusinessへ。</h2>
       <div class="hs-two">
-        <article><p class="hs-label">COMMUNITY / MIT</p><h3>自分の環境を点検・対処する</h3><p>AIソロプレナーにも、法人の自己運用にも。Community本体は<a href="https://opensource.org/license/mit">MITライセンス</a>です。既存の診断・対処能力を維持し、登録や購入キーを本体の実行条件にしません。</p><p class="hs-caption"><a href="https://github.com/0xshugo/hardshell" target="_blank" rel="noopener noreferrer">Communityの公開リポジトリを見る</a>。利用・改変・再配布はMIT条件に従えます。Business評価の終了や決済サービスの障害で、Communityや対象サーバーを停止する設計にはしません。</p></article>
+        <article><p class="hs-label">COMMUNITY / MIT</p><h3>自分の環境を点検・対処する</h3><p>AIソロプレナーにも、法人の自己運用にも。Community本体は<a href="https://opensource.org/license/mit">MITライセンス</a>です。診断・対処を行うCommunity本体と、管理・監査を行うBusiness層を分けて開発しています。</p><p class="hs-caption"><a href="https://github.com/0xshugo/hardshell" target="_blank" rel="noopener noreferrer">Communityの公開リポジトリを見る</a>。利用・改変・再配布はMIT条件に従えます。Business評価の終了や決済サービスの障害で、Communityや対象サーバーを停止する設計にはしません。</p></article>
         <article><p class="hs-label">BUSINESS / RELEASE CANDIDATE</p><h3>チームの対応と証跡を管理する</h3><p>対象台帳と責任者、指摘の担当・期限・進捗、期限付き例外の申請と承認、修正前後の再検証証跡、役割別の権限と判断履歴をつなぐ管理層です。Communityと別のコード・配布物・利用条件で、購入して利用するモデルを準備しています。</p><p class="hs-caption">顧客環境向けの配布候補を準備しています。販売・受付は未開始です。価格・課金単位・最終契約条件・試用日数は未決定です。</p></article>
       </div>
       <div class="hs-note" id="business">
         <p class="hs-label">MANAGEMENT / EVIDENCE</p><h3>「対応しました」と「確かめました」を分ける。</h3>
         <p>試作では、作業完了の申告と、その後の診断結果で確認できた範囲を別々に記録します。未診断・失敗・古い結果を安全扱いせず、例外には期限と独立した承認を求めます。組織・部署・役割の権限判定と購入資格判定も分離しています。</p>
         <p>Businessの評価が終了しても、認証と組織・役割の権限が有効であれば既存の証跡を閲覧・エクスポートでき、新しいBusiness処理だけを制限する設計です。購入キーの確認は、利用者の本人確認、安全性認証、診断のPASS/FAIL、証跡の完全性とは別です。</p>
-        <p>配布候補では、ログイン後の対象登録、診断の取込、担当設定、再検証、例外の自己承認拒否、監査記録の出力、ライセンス失効とログアウトまでを専用ブラウザーで確認しました。認証プロキシは実製品を使い、IdPと購入応答は模擬環境です。MacBook ProのLinux arm64 Dockerでは、Composeの起動・再起動・データ保持・バックアップ復元まで確認しました。顧客の実IdP・実購入サービスとの接続、契約・配布・サポート条件は提供前の確認事項として残っています。無料登録キーの準備を、Businessの購入権利や提供開始とは扱いません。履歴の整合性検査は、ローカル管理者に対する改ざん防止の保証ではありません。</p>
+        <p>配布候補では、ログイン後の対象登録、診断の取込、担当設定、再検証、例外の自己承認拒否、監査記録の出力、ライセンス失効とログアウトまでを専用ブラウザーで確認しました。認証プロキシは実製品を使い、IdPと購入応答は模擬環境です。MacBook ProのLinux arm64 Dockerでは、Composeの起動・再起動・データ保持・バックアップ復元まで確認しました。依存関係の安全性確認と修正、顧客の実IdP・実購入サービスとの接続、契約・配布・サポート条件は提供前の確認事項として残っています。無料登録キーの準備を、Businessの購入権利や提供開始とは扱いません。履歴の整合性検査は、ローカル管理者に対する改ざん防止の保証ではありません。</p>
       </div>
       <div class="hs-two hs-note">
         <article><h3>法人・チーム向け支援</h3><p>対象資産の整理、導入・運用設計、検証記録の活用は別途ご相談ください。相談に購入キーは不要です。支援の範囲・契約・保証も未決定です。</p><a class="hs-button" href="/consulting/intake">導入・運用の相談へ {'>'}</a></article>
