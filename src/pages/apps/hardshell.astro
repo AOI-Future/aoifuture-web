@@ -1,0 +1,145 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { gumroadUrl } from '../../data/agent-security';
+
+// Publication candidate prepared locally; pushing/deploying requires approval.
+export const prerender = true;
+
+const title = 'Hardshell — AIソロプレナーのサーバ運用を支える | AOI Future';
+const description = 'MIT Communityの診断・対処と、別層のBusiness管理・監査。HardshellとSecfeedによるセキュリティ運用の取り組みを紹介します。Businessは提供準備中です。';
+const roles = [
+  { no: '01', name: 'Hardshell', label: 'INSPECT', text: 'VPSの設定やスキャナーの結果を集め、リスクの優先順位と確認候補を整理するOSSコア。エージェント設定の確認も補助します。' },
+  { no: '02', name: 'Secfeed', label: 'CONNECT', text: '脆弱性情報と稼働資産・検査結果を照合し、根拠のある案件と確認不足を整理する関連プロジェクト。Hardshellなどの運用側へ検査根拠をつなぎます。' },
+  { no: '03', name: '運用者 / AIエージェント', label: 'REVIEW', text: '根拠と未確認の範囲を読み、次の確認や対応を決める。更新・停止などの変更操作は、監視や助言から分けて承認します。' },
+];
+---
+
+<Layout title={title} description={description} canonical="https://aoifuture.com/apps/hardshell/" pageTransition={false}>
+  <Fragment slot="head">
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://aoifuture.com/apps/hardshell/" />
+  </Fragment>
+
+  <a class="hs-skip" href="#content">本文へ</a>
+  <main class="hs-shell" id="content">
+    <nav class="hs-nav" aria-label="関連ページ">
+      <a href="/apps/">{'<'} APPS</a>
+      <a href="/agent-security/">AI Agent Security {'>'}</a>
+    </nav>
+
+    <p class="hs-status-banner"><strong>[IN DEVELOPMENT]</strong> Businessは提供準備中 · 2026-10-28</p>
+    <header class="hs-hero">
+      <p class="hs-label">HARDSHELL / SECURITY OPERATIONS</p>
+      <h1>サーバを守る判断を、<br />ひとりで抱え込まない。</h1>
+      <p class="hs-lead">AIソロプレナーが事業に集中できるように。Hardshellは、自分のVPSやコンテナの検査結果と脆弱性情報を、次に確認すべきことへつなぐセキュリティ運用の取り組みです。</p>
+      <div class="hs-actions">
+        <a class="hs-button hs-primary" href="#scope">現在の取り組みを見る</a>
+        <a class="hs-button" href="#support">法人・チームでの導入相談</a>
+      </div>
+      <p class="hs-caption">MIT Communityと、管理・監査のBusiness層。検査の完了と、脆弱性への対応完了を分けて扱います。</p>
+    </header>
+
+    <section aria-labelledby="why-title" class="hs-section">
+      <p class="hs-label">WHY HARDSHELL</p>
+      <h2 id="why-title">「情報を見つけた」の先まで。</h2>
+      <div class="hs-grid">
+        <article><h3>自分に関係があるか</h3><p>大量の脆弱性情報から、使っている資産・導入版と照合できる根拠を集めます。</p></article>
+        <article><h3>どこから確認するか</h3><p>深刻度や悪用情報を踏まえ、優先順位と追加確認が必要な候補を整理します。</p></article>
+        <article><h3>どこまで分かっているか</h3><p>未検査、古い情報、取得失敗を残し、検出ゼロだけで「安全」と判断しない運用を目指します。</p></article>
+      </div>
+    </section>
+
+    <section aria-labelledby="roles-title" class="hs-section">
+      <p class="hs-label">HOW THE PARTS FIT</p>
+      <h2 id="roles-title">検査、情報の照合、対応の判断をつなぐ。</h2>
+      <ol class="hs-flow">
+        {roles.map((role) => <li><span class="hs-label">{role.no} / {role.label}</span><div><h3>{role.name}</h3><p>{role.text}</p></div></li>)}
+      </ol>
+      <p class="hs-note">AIの助言は確認材料です。更新や停止は、対象と手順を確認したうえで運用者が承認する設計です。</p>
+    </section>
+
+    <section id="scope" aria-labelledby="scope-title" class="hs-section">
+      <p class="hs-label">CURRENT SCOPE / NEXT</p>
+      <h2 id="scope-title">現在の実装と、これから確かめること。</h2>
+      <div class="hs-two">
+        <article class="hs-status"><p class="hs-label">CODE PRESENT / SCOPE REVIEW</p><h3>コード上で確認できる範囲</h3><ul><li>システム設定・エージェント設定の検査と、外部スキャナーの結果収集。</li><li>EPSS・CISA KEVなどの情報を使ったリスクの整理。</li><li>PHP公式速報と観測した稼働版の照合。現時点で他製品までの網羅は扱いません。</li><li>関連実装での検査不足の記録、Secfeedとの根拠の受け渡し、予算条件付きのAI助言。</li></ul><p class="hs-caption">公開に向けて、統合版と実機で確認できた範囲を整理しています。コードの存在は、各利用環境での稼働や防御効果の保証ではありません。</p></article>
+        <article class="hs-status"><p class="hs-label">ROADMAP / TO VERIFY</p><h3>公開前に確認する範囲</h3><ul><li>統合する版と、その版で再現できる検査・連携範囲。</li><li>対象資産、情報の鮮度、未対応ランタイムなどの制約。</li><li>Businessの本番IdP・購入資格の接続試験、ログインと失効、運用・復旧手順。</li><li>価格、課金単位、最終利用条件、配布と支援の範囲。</li></ul><p class="hs-caption">Businessは内部レビュー用の配布候補です。全資産の保護、自動修復の完成、AIエージェントの動作遮断や侵入防止の実装、安全性認証を示すものではありません。</p></article>
+      </div>
+    </section>
+
+    <section aria-labelledby="relation-title" class="hs-section">
+      <p class="hs-label">RELATED / AI AGENT SECURITY</p>
+      <h2 id="relation-title">エージェントの検証と、サーバの日常運用。</h2>
+      <p>AI Agent Securityは、脅威・コントロール・要件・検証をつなぐリファレンスです。既存のVerification Kitは、エージェントの設定やハンドラーを評価し、検証記録を残すための別商品です。</p>
+      <p>Hardshellは、エージェントも動くサーバ側の継続的な点検を支えます。エージェント設定の確認には重なる部分がありますが、既存キットの代替や、購入者への追加権利を意味しません。</p>
+      <a class="hs-text-link" href="/agent-security/">AI Agent Securityのリファレンスと検証キットを見る {'>'}</a>
+    </section>
+
+    <section id="support" aria-labelledby="support-title" class="hs-section">
+      <p class="hs-label">COMMUNITY / BUSINESS</p>
+      <h2 id="support-title">診断と対処はCommunity。管理と監査をBusinessへ。</h2>
+      <div class="hs-two">
+        <article><p class="hs-label">COMMUNITY / MIT</p><h3>自分の環境を点検・対処する</h3><p>AIソロプレナーにも、法人の自己運用にも。Community本体は<a href="https://opensource.org/license/mit">MITライセンス</a>です。既存の診断・対処能力を維持し、登録や購入キーを本体の実行条件にしません。</p><p class="hs-caption"><a href="https://github.com/0xshugo/hardshell" target="_blank" rel="noopener noreferrer">Communityの公開リポジトリを見る</a>。利用・改変・再配布はMIT条件に従えます。Business評価の終了や決済サービスの障害で、Communityや対象サーバーを停止する設計にはしません。</p></article>
+        <article><p class="hs-label">BUSINESS / RELEASE CANDIDATE</p><h3>チームの対応と証跡を管理する</h3><p>対象台帳と責任者、指摘の担当・期限・進捗、期限付き例外の申請と承認、修正前後の再検証証跡、役割別の権限と判断履歴をつなぐ管理層です。Communityと別のコード・配布物・利用条件で、購入して利用するモデルを準備しています。</p><p class="hs-caption">顧客環境向けの配布候補を準備しています。販売・受付は未開始です。価格・課金単位・最終契約条件・試用日数は未決定です。</p></article>
+      </div>
+      <div class="hs-note" id="business">
+        <p class="hs-label">MANAGEMENT / EVIDENCE</p><h3>「対応しました」と「確かめました」を分ける。</h3>
+        <p>試作では、作業完了の申告と、その後の診断結果で確認できた範囲を別々に記録します。未診断・失敗・古い結果を安全扱いせず、例外には期限と独立した承認を求めます。組織・部署・役割の権限判定と購入資格判定も分離しています。</p>
+        <p>Businessの評価が終了しても、認証と組織・役割の権限が有効であれば既存の証跡を閲覧・エクスポートでき、新しいBusiness処理だけを制限する設計です。購入キーの確認は、利用者の本人確認、安全性認証、診断のPASS/FAIL、証跡の完全性とは別です。</p>
+        <p>配布候補では、ログイン後の対象登録、診断の取込、担当設定、再検証、例外の自己承認拒否、監査記録の出力、ライセンス失効とログアウトまでを専用ブラウザーで確認しました。認証プロキシは実製品を使い、IdPと購入応答は模擬環境です。MacBook ProのLinux arm64 Dockerでは、Composeの起動・再起動・データ保持・バックアップ復元まで確認しました。顧客の実IdP・実購入サービスとの接続、契約・配布・サポート条件は提供前の確認事項として残っています。無料登録キーの準備を、Businessの購入権利や提供開始とは扱いません。履歴の整合性検査は、ローカル管理者に対する改ざん防止の保証ではありません。</p>
+      </div>
+      <div class="hs-two hs-note">
+        <article><h3>法人・チーム向け支援</h3><p>対象資産の整理、導入・運用設計、検証記録の活用は別途ご相談ください。相談に購入キーは不要です。支援の範囲・契約・保証も未決定です。</p><a class="hs-button" href="/consulting/intake">導入・運用の相談へ {'>'}</a></article>
+        <article><h3>既存の評価・検証キット</h3><p>AI-Agent Security Verification Kitは、エージェントの検証記録を作る別の有料商品です。無料化や利用条件の変更は行っていません。Hardshell Communityの利用に購入は不要です。</p><a class="hs-button" href={gumroadUrl('hardshell_kit')} target="_blank" rel="noopener noreferrer">既存キットを確認 {'>'}</a></article>
+      </div>
+    </section>
+
+    <footer class="hs-footer"><a href="/">AOI FUTURE</a><p>Hardshell · Community / Business</p><a href="/agent-security/">AI Agent Security</a></footer>
+  </main>
+</Layout>
+
+<style>
+  .hs-shell { max-width: 1040px; margin: auto; padding: 24px 24px 64px; color: var(--aoi-brand); font-family: var(--font-sans); }
+  .hs-shell p, .hs-shell li { font-size: var(--fs-body); line-height: var(--lh-body); }
+  .hs-shell h1, .hs-shell h2, .hs-shell h3 { color: var(--aoi-brand); }
+  .hs-shell h1 { font-size: clamp(28px, 4vw, 48px); line-height: 1.45; letter-spacing: -.035em; font-weight: 700; margin: 20px 0; }
+  .hs-shell h2 { font-size: var(--fs-h2); line-height: 1.65; margin: 12px 0 28px; font-weight: 600; }
+  .hs-shell h3 { font-size: var(--fs-module); line-height: 1.6; margin-bottom: 12px; }
+  .hs-shell p + p { margin-top: 16px; }
+  .hs-shell a { text-underline-offset: 5px; }
+  .hs-shell a:hover { text-decoration: underline; }
+  .hs-shell a:focus-visible, .hs-skip:focus-visible { outline: 2px solid var(--aoi-brand); outline-offset: 5px; }
+  .hs-nav, .hs-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .hs-nav a, .hs-footer a { display: inline-flex; align-items: center; min-height: var(--tap-min); font: var(--fs-label)/1.75 var(--font-mono); }
+  .hs-status-banner { border-left: 2px solid var(--aoi-brand); background: var(--aoi-brand-05); padding: 16px 20px; margin-top: 28px; }
+  .hs-hero { padding: 72px 0; max-width: 820px; }
+  .hs-shell .hs-label { font: var(--fs-label)/1.75 var(--font-mono); letter-spacing: .14em; color: var(--aoi-brand-70); }
+  .hs-shell .hs-lead { font-size: var(--fs-lead); max-width: 44em; line-height: 1.9; color: var(--aoi-brand-90); }
+  .hs-caption { color: var(--aoi-brand-70); }
+  .hs-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 20px; }
+  .hs-button { display: inline-flex; align-items: center; justify-content: center; min-height: var(--tap-min); border: 1px solid var(--aoi-brand-50); padding: 12px 20px; font-size: var(--fs-body); transition: background var(--dur) var(--ease); }
+  .hs-button:hover { background: var(--aoi-brand-10); }
+  .hs-primary { background: var(--aoi-brand-10); border-color: var(--aoi-brand); }
+  .hs-section { padding: 44px 0; border-top: 1px solid var(--aoi-brand-20); scroll-margin-top: 20px; }
+  .hs-grid, .hs-two { display: grid; gap: 28px; }
+  .hs-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .hs-two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  article p, .hs-section > p:not(.hs-label), .hs-flow p { color: var(--aoi-brand-90); }
+  .hs-flow { list-style: none; margin: 0; padding: 0; }
+  .hs-flow li { display: grid; grid-template-columns: 160px 1fr; gap: 24px; padding: 24px 0; border-top: 1px solid var(--aoi-brand-15); }
+  .hs-status { border: 1px solid var(--aoi-brand-20); padding: 24px; }
+  .hs-status h3 { margin-top: 16px; }
+  .hs-status ul { list-style: disc; padding-left: 20px; margin: 16px 0; color: var(--aoi-brand-90); }
+  .hs-status li + li { margin-top: 12px; }
+  .hs-note { padding: 20px 0 0; margin-top: 24px; border-top: 1px dashed var(--aoi-brand-30); }
+  .hs-text-link { display: inline-flex; align-items: center; min-height: var(--tap-min); margin-top: 20px; font-size: var(--fs-body); text-decoration: underline; }
+  #support .hs-button { margin-top: 20px; }
+  .hs-footer { border-top: 1px solid var(--aoi-brand-20); padding-top: 24px; margin-top: 32px; }
+  .hs-footer p { color: var(--aoi-brand-70); }
+  .hs-skip { position: absolute; top: -100px; left: 20px; z-index: 100; background: var(--aoi-bg); color: var(--aoi-brand); padding: 14px; }
+  .hs-skip:focus { top: 16px; }
+  @media (max-width: 700px) { .hs-grid, .hs-two { grid-template-columns: 1fr; } .hs-flow li { grid-template-columns: 1fr; gap: 12px; } .hs-shell { padding: 16px 20px 40px; } .hs-hero { padding: 48px 0; } }
+  @media (prefers-reduced-motion: reduce) { .hs-button { transition: none; } }
+</style>
