@@ -1,13 +1,13 @@
 import type { APIRoute } from 'astro';
 import { randomBytes } from 'node:crypto';
-import { getConsultationConfig, type ConsultationConfig } from '../../lib/consultation-config';
+import { getConsultationConfig, getContactConfigForOrigin, type ConsultationConfig } from '../../lib/consultation-config';
 import { validateContactIntake } from '../../lib/consultation-intake';
 import { contactPayloadFingerprint } from '../../lib/consultation-fingerprint';
 import { IdempotencyConflictError, NotionConsultationStore } from '../../lib/notion-consultation';
 import { verifyTurnstile } from '../../lib/consultation-turnstile';
 
 const MAX_BODY_BYTES = 16 * 1024;
-type Dependencies = { config?: ConsultationConfig; store?: NotionConsultationStore; fetcher?: typeof fetch; now?: () => Date; receipt?: () => string };
+type Dependencies = { config?: ConsultationConfig; env?: Record<string, string | undefined>; store?: NotionConsultationStore; fetcher?: typeof fetch; now?: () => Date; receipt?: () => string };
 
 const headers = (origin: string | null, allowed: boolean) => ({
   ...(allowed && origin ? { 'Access-Control-Allow-Origin': origin } : {}),
@@ -28,8 +28,8 @@ function sourceMatchesOrigin(source: string, origin: string): boolean {
 }
 
 export async function handleContactIntake(request: Request, deps: Dependencies = {}): Promise<Response> {
-  const config = deps.config || getConsultationConfig();
   const origin = request.headers.get('origin');
+  const config = getContactConfigForOrigin(origin, deps.config || getConsultationConfig(deps.env), deps.env);
   const originAllowed = !!origin && config.allowedOrigins.includes(origin);
   if (request.method === 'OPTIONS') return originAllowed ? new Response(null, { status: 204, headers: headers(origin, true) }) : response(403, { error: 'origin_not_allowed' }, origin, false);
   if (request.method !== 'POST') {
@@ -56,6 +56,7 @@ export async function handleContactIntake(request: Request, deps: Dependencies =
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim();
   const turnstile = await verifyTurnstile(validation.value.antiSpam.turnstileToken, ip, {
     secretKey: config.turnstileSecretKey, required: config.requireTurnstile, allowedHostnames: config.allowedHostnames,
+    expectedAction: config.expectedAction, expectedHostname: config.expectedHostname,
   }, deps.fetcher);
   if (!turnstile.ok) return response(turnstile.reason === 'turnstile_unavailable' || turnstile.reason === 'turnstile_not_configured' ? 503 : 400, { error: turnstile.reason }, origin, true);
   if (!config.notionApiKey || !config.notionDataSourceId) return response(503, { error: 'storage_not_configured' }, origin, true);

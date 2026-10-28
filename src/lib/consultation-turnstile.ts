@@ -2,6 +2,8 @@ export type TurnstileConfig = {
   secretKey?: string;
   required: boolean;
   allowedHostnames: string[];
+  expectedAction?: string;
+  expectedHostname?: string;
 };
 
 export async function verifyTurnstile(
@@ -19,9 +21,12 @@ export async function verifyTurnstile(
       method: 'POST', body, signal: AbortSignal.timeout(5_000),
     });
     if (!response.ok) return { ok: false, reason: 'turnstile_unavailable' };
-    const result = await response.json() as { success?: boolean; hostname?: string };
+    const result = await response.json() as { success?: boolean; hostname?: string; action?: string };
+    if (config.expectedAction && result.success !== true) return { ok: false, reason: 'turnstile_invalid' };
     if (!result.success) return { ok: false, reason: 'turnstile_invalid' };
     if (config.allowedHostnames.length && (!result.hostname || !config.allowedHostnames.includes(result.hostname))) return { ok: false, reason: 'turnstile_hostname_invalid' };
+    if (config.expectedAction && result.action !== config.expectedAction) return { ok: false, reason: 'turnstile_action_invalid' };
+    if (config.expectedHostname && result.hostname !== config.expectedHostname) return { ok: false, reason: 'turnstile_hostname_invalid' };
     return { ok: true };
   } catch {
     return { ok: false, reason: 'turnstile_unavailable' };
