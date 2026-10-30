@@ -1,0 +1,405 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-10-31T04:53:36+09:00",
+  "dek": "OpenAIは、サイトの運営者が複数のAI事業者にまとめて学習の可否を伝える共通の信号に従うとした。Cloudflareは、誰でも署名の鍵を復元できた認証局の件で、偽造の証明書と端末側の更新の遅れを数字で示した。MicrosoftとNVIDIAのエージェントの土台、OpenAIの未成年保護、政府職員向け生成AIの答弁支援と利用調査、悪用が確認された脆弱性とあわせて、一次資料から見る。",
+  "edition_date": "2026-10-31",
+  "edition_id": "2026-10-31-0453",
+  "edition_note": "直近72時間に公開された一次資料を対象とし、2026年10月28日から30日（日本・米国時間）に公開された資料を直接確認した。各社の性能や効果の主張、調査の数値、脆弱性の影響は独立に検証しておらず、前提は各項目の留保に記した。",
+  "generated_at": "2026-10-31T04:53:36+09:00",
+  "items": [
+    {
+      "aoi_note": "これまで運営者は、新しいクローラーが現れるたびに名前を調べて規則を足す必要があった。共通の信号が広く守られれば、その手間は大きく減る。ただし任意の取り組みで、従う事業者がどこまで広がるか、学習以外の取得をどう扱うかで実効性は変わる。運営者は、既存のクローラーごとの規則を外さず、共通の信号を足す形で備えるのが無難だろう。",
+      "caveat": "対応の実装時期と詳細はまだ示されていない。ほかにどの事業者が従うかは、この発表だけでは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-ai-training-preference-signal",
+      "language": "en",
+      "observed_at": "2026-10-31T04:51:30+09:00",
+      "published_at": "2026-10-30T09:30:00Z",
+      "role": "lead",
+      "selection_reason": "AIの学習への利用を断るかどうかを、事業者ごとではなく一つの書き方で示す仕組みに、主要な開発元が加わった。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは10月30日、サイトの運営者がrobots.txtで、自分の内容を基盤となる生成AIの学習に使うことへの意向を示す共通の信号に従うと発表した。任意の取り組みで、運営者は参加する複数の事業者に同じ意向を一度に伝えられる。これまでは事業者ごとのクローラーを見分け、それぞれに規則を書き分ける必要があったという。同社は今後数か月で対応を実装し、その際に詳細を改めて示すとしている。新しい信号は、同社がrobots.txtで既に提供しているクローラーごとの制御を置き換えるものではなく、既存の制御は引き続き適用される。取り組みはIETF（インターネット技術の標準化団体）のAI Preferences作業部会の議論に基づくもので、同社は作業部会の他の参加者とともにこの共通の信号を発表したとし、他のAI事業者にも従うよう呼びかけている。",
+      "source_kind": "official",
+      "source_title": "Making it easier for websites to express AI training preferences",
+      "source_url": "https://openai.com/index/helping-websites-express-ai-training-preferences",
+      "title": "OpenAI、robots.txtでAIの学習への利用の可否を複数の事業者にまとめて伝える共通の信号に従うと表明",
+      "topics": [
+        "policy",
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-31T04:51:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "自社のサーバーや社内の通信をすぐに直せた組織でも、利用者の端末や組み込みの機器が古い信頼の一覧を持ち続ける限り、危険は残る。信頼する認証局の一覧を素早く更新できるか、更新が届かない端末をどう扱うかは、今回の件に限らない課題だ。開発者は、自分の端末や使っているライブラリーが更新済みかを確かめたい。",
+      "caveat": "数値はCloudflareの観測によるもので、同社自身がボットの多い偏った通信に基づくと断っている。独立に検証していない。鍵が弱くなった原因は明らかにされていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-emudhra-weak-keys-followup",
+      "language": "en",
+      "observed_at": "2026-10-31T04:50:42+09:00",
+      "published_at": "2026-10-30T17:38:00Z",
+      "role": "major",
+      "selection_reason": "公開の証明書から誰でも署名の鍵を復元できるという前例のない事態で、守る側の対応と、利用者側の更新の遅れが数字で示された。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは10月30日、認証局eMudhraの中間証明書の秘密鍵が極端に弱く、公開されている証明書から誰でもほぼ即座に復元できた件について、その後の状況を報告した。同社は10月19日にこの件を知り、外部への接続を担う仕組みを数時間で更新して問題の鍵を拒むようにし、AIの支援で自社のソースコードを調べて、この鍵を信頼する他の仕組みを4時間で洗い出したという。記録を始めた10月21日からの約1週間で、この弱い鍵による接続の試みは約2万2000件あり、うち約160件は接続先と無関係の他組織のドメイン名を含む偽造の証明書だった。同社は、傍受に使われた証拠は今のところないとしつつ、偽造の証明書の一つは弱点が公になってから1時間足らずで作られていたとしている。閲覧者側については、約5000万回の試験的な接続から、最新のブラウザーは概ね更新済みだが、ボットや古いブラウザーは未更新で、Android WebViewなどの組み込みのブラウザーは30〜40%がまだ受け入れていたとしている。eMudhraは公開の認証局の事業から撤退すると表明している。",
+      "source_kind": "analysis",
+      "source_title": "4 real? Tracking exploitation and patching of eMudhra’s weak keys",
+      "source_url": "https://blog.cloudflare.com/emudhra-patching/",
+      "title": "Cloudflare、弱い鍵が漏れた認証局eMudhraの件で悪用と更新の状況を報告、端末側の対応は進まず",
+      "topics": [
+        "security",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-10-31T04:50:42+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントの出来は、モデルだけでなくその周りの仕組みで大きく変わる。自前で作って新しいモデルに合わせ続けるのは負担が大きいため、管理された土台に任せる選択は現実的だ。一方で、実行の繰り返しと隔離環境を事業者に預けることになるため、記録や権限をどこまで自社で確かめられるかは事前に確認したい。",
+      "caveat": "性能の改善の程度は示されておらず、独立に検証していない。料金や提供地域はこの記事では確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "microsoft-copilot-harness-foundry",
+      "language": "en",
+      "observed_at": "2026-10-31T04:51:30+09:00",
+      "published_at": "2026-10-28T16:51:00Z",
+      "role": "major",
+      "selection_reason": "大手が自社製品の共通の土台として使っているエージェントの実行の仕組みを、そのまま外部の開発者に開いた。",
+      "source_domain": "blogs.microsoft.com",
+      "source_fact": "Microsoftは10月28日、GitHubの技術者が作ったエージェントの土台（ハーネス）「Microsoft Copilot harness」を、Microsoft Foundryを通じて提供すると発表した。ハーネスは、モデルの周りで指示や文脈、実行環境、統制を与える仕組みを指す。同社はこのハーネスを全社で採用しており、Copilot Code、Copilot Studio、GitHub Copilotのアプリ、コマンドラインツール、VS Codeなどで使われているという。20以上の最先端のモデルと、利用者が持ち込むAPIキーに対応し、作業に応じて適切なモデルに振り分けられるとしている。MCPやエージェントのスキル、プラグインに対応し、実行部分は最近Rustに移して、処理の負担と最初の出力までの時間を減らしたという。開発キットを入手して使うことも、Foundryが管理するクラウドで動かすこともでき、エージェントの実行の繰り返しと隔離環境はMicrosoftが受け持ち、指示やスキル、道具、モデルの選択は利用者が持ち込む形になる。他のハーネスや枠組みも引き続き使えるとしている。",
+      "source_kind": "official",
+      "source_title": "Introducing the Microsoft Copilot harness: Unlocking the potential of truly multi-model agentic work",
+      "source_url": "https://blogs.microsoft.com/blog/2026/10/28/introducing-the-microsoft-copilot-harness-unlocking-the-potential-of-truly-multi-model-agentic-work/",
+      "title": "Microsoft、GitHubが作ったエージェントの土台「Copilot harness」をMicrosoft Foundryで提供",
+      "topics": [
+        "agents",
+        "tools",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-10-31T04:51:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "会話の経緯から慎重さを変える、未成年と推定すれば制限を強める、という設計は、一つ一つの質問だけで判断する方式からの転換と読める。その分、誤って制限される利用者が出やすく、解除の手続きや判断の根拠の示し方が問われる。半年ごとの報告で、誤判定の扱いまで数字が出るかに注目したい。",
+      "caveat": "通報件数や安全策の効果は同社の説明によるもので、独立に検証していない。報告の具体的な中身はまだ公表されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-community-safety-teens",
+      "language": "en",
+      "observed_at": "2026-10-31T04:51:30+09:00",
+      "published_at": "2026-10-30T09:00:00Z",
+      "role": "major",
+      "selection_reason": "生成AIの安全策を、年齢の推定や会話の経緯に応じて段階的に強める設計と、その効果を定期的に公表する約束を、大手が併せて示した。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは10月30日、暴力の防止など地域社会の安全についての取り組みと、その安全策の効果をまとめた報告を始めると発表した。最初の報告は2026年後半を対象に2027年初めに出し、その後は6か月ごとに更新する。2026年7〜9月には、差し迫った暴力の恐れについて200件を超える法執行機関への通報をしたという。全利用者を対象に、過去の大量殺傷事件の再構成、使われた武器や装備とその入手方法、被害の規模の詳しい比較について回答を制限する。最近の会話に暴力の兆候がある場合は悪用されうる情報の提供をより慎重にし、暴力への執着が見られる会話をChatGPTが自動で終了できるようにし、繰り返されればアカウントを一時停止することがあるとしている。18歳未満と推定した利用者には、暴力の意図が見られなくても、悪用されうる武器や防犯の仕組みについての実用的な情報を制限する。年齢の推定は利用中も新しい手がかりで見直し、誤って未成年と扱われた利用者は年齢確認で解除できる。これらの安全策は今後数週間で順次導入するという。",
+      "source_kind": "official",
+      "source_title": "Community safety report and new protections for teens",
+      "source_url": "https://openai.com/index/community-safety-report-and-new-protections-for-teens",
+      "title": "OpenAI、暴力の防止の取り組みを半年ごとに報告へ、未成年への武器の情報をさらに制限",
+      "topics": [
+        "policy",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-10-31T04:51:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "過去の答弁や資料を探して整える作業は、AIが得意とする部分で、負担を減らす効果は見込める。一方で、もっともらしい誤りが答弁に紛れ込めば影響は大きい。職員による照合を原則とする運用が、締め切りに追われる現場でどこまで守られるか、試行の結果の公表を待ちたい。",
+      "caveat": "効果や出力の質は今後の試行で確かめるとされており、現時点の評価は示されていない。独立に検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "digital-agency-diet-answer-ai",
+      "language": "ja",
+      "observed_at": "2026-10-31T04:50:44+09:00",
+      "published_at": "2026-10-29T23:48:00Z",
+      "role": "brief",
+      "selection_reason": "行政の中でも正確さと一貫性が強く求められる国会答弁の作成に、生成AIを組み込む試みが政府全体の規模で始まった。",
+      "source_domain": "www.digital.go.jp",
+      "source_fact": "デジタル庁は、政府職員向けの生成AIの利用環境「ガバメントAI 源内」で、国会答弁の案の作成を支援する「国会答弁作成支援AIアプリ」の試作版を、約18万人の政府職員に提供すると発表した。過去の答弁や根拠となる資料の検索と整理、答弁案の生成、内容の確認の支援を行う。開発には16省庁から公募した実務経験のある職員102名が評価者として加わっている。第222回臨時国会で試験的に使って有効性や操作性、出力の質を確かめ、来年1月からの通常国会で本格的に提供する計画だという。同庁は、AIの出力の正確さは保証されないため、職員が根拠資料と照合して事実関係や過去の答弁との整合を確かめることを原則とし、政策判断や答弁内容の確定をAIに委ねることはないとしている。",
+      "source_kind": "official",
+      "source_title": "ガバメントAI 源内で「国会答弁作成支援AIアプリ」のプロトタイプ版を提供開始します",
+      "source_url": "https://www.digital.go.jp/policies/genai/b736d2d7-b03b-43f0-9932-eba7da7f8142",
+      "title": "デジタル庁、国会答弁の案づくりを支援するAIの試作版を約18万人の政府職員に提供",
+      "topics": [
+        "policy",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-31T04:50:44+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "満足度と時間短縮の数字に目が行くが、約3割がほとんど使っていないこと、AIを使える職員に仕事が寄るという懸念が記されていることも重要だ。組織でAIを広げる際には、使う人と使わない人の差や、出力を確かめる負担をどう扱うかが、導入そのものと同じくらいの課題になる。",
+      "caveat": "結果は利用者への自己申告の調査に基づくもので、時間短縮は回答の幅の中央値などから推計した値。独立に検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "digital-agency-gennai-survey",
+      "language": "ja",
+      "observed_at": "2026-10-31T04:50:45+09:00",
+      "published_at": "2026-10-29T23:51:00Z",
+      "role": "brief",
+      "selection_reason": "政府の大規模な生成AIの導入について、効果と使われていない実態の両方が数字で示された。",
+      "source_domain": "www.digital.go.jp",
+      "source_fact": "デジタル庁は、政府職員向けの生成AIの利用環境「ガバメントAI 源内」の初めての利用状況の調査結果を公表した。各府省庁の職員6439人が回答し、利用者の71.7%が満足と答え、54.4%が導入した業務で1週間あたり1時間以上の時間短縮を感じていた。業務時間の短縮効果は利用者1人あたり週平均約1.83時間（約110分）と推計している。一方で、回答者の31.2%はほとんど、または全く使っておらず、AIの回答の精度や信頼性が不十分、具体的な使い方が分からないといった声もあった。同庁は、10月20日に始めたAIエージェントの利用環境の改善、職員が作ったスキルやデータを共有する「源内ライブラリ」の年度内の提供、回答の根拠を確かめやすくする仕組みの整備を進め、2027年1月ごろに2回目の調査をするとしている。",
+      "source_kind": "official",
+      "source_title": "ガバメントAI 源内 利用状況アンケート調査（第1回）の結果を公表しました",
+      "source_url": "https://www.digital.go.jp/policies/genai/f9ed1b1c-b22f-4466-8e50-c1c9adf9f8eb",
+      "title": "政府職員向け生成AI「源内」の初の利用調査、利用者の71.7%が満足、時間短縮は1人週平均約1.83時間と推計",
+      "topics": [
+        "policy",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-10-31T04:50:45+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "承認や返金のように順番や条件を外せない業務では、エージェントに一つ一つの操作を任せるより、決まった手順を呼び出させるほうが統制しやすい。既にワークフローを持つ組織にとっては、作り直さずにエージェントとつなげられる点が大きい。どの手順をエージェントに開くかは、権限の設計として慎重に選びたい。",
+      "caveat": "実運用での信頼性や効果は示されておらず、独立に検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-step-functions-agent-tools",
+      "language": "en",
+      "observed_at": "2026-10-31T04:50:44+09:00",
+      "published_at": "2026-10-29T08:00:00Z",
+      "role": "brief",
+      "selection_reason": "エージェントに判断を任せつつ、実際の処理は決められた手順どおりに進める、という分担を既存のサービスで組めるようになった。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは10月29日、AWS Step Functionsで定義した業務手順（ワークフロー）を、Amazon Bedrock AgentCore Gatewayを通じてAIエージェントの道具として使えるようにした。いつ手順を実行し何を入力するかはエージェントが決め、各段階の処理は定義どおりにStep Functionsが実行する。既存のStandardとExpressのワークフローをそのまま道具にでき、AgentCore GatewayはModel Context Protocol（MCP）でエージェントと道具をつなぐ。例として、顧客対応のエージェントが返金の手順を始めると、条件の確認、管理者の承認、返金の各段階が定義どおりに進むことを挙げている。エージェントは実行の履歴も調べられる。AgentCore Gatewayが使える全地域で利用でき、料金は両サービスの通常の料金がかかる。",
+      "source_kind": "release",
+      "source_title": "AWS Step Functions workflows now available as AI agent tools",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/10/step-functions-workflows-ai-agent-tools/",
+      "title": "AWS Step Functionsの業務手順を、AIエージェントが道具として呼び出せるように",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-31T04:50:44+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "MCPサーバーなど、外部のエージェントから呼ばれる社内の仕組みは増えている。公開のIPアドレスを持たせずに防御の機能をかけられるのは、さらす面を減らす点で意味がある。ただし設定の誤りがあれば、非公開のつもりの仕組みが外から届く状態になるため、どの記録を外に向けたかの管理が欠かせない。",
+      "caveat": "安全性や性能の効果は示されておらず、独立に検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-private-origins-ga",
+      "language": "en",
+      "observed_at": "2026-10-31T04:50:42+09:00",
+      "published_at": "2026-10-30T14:23:00Z",
+      "role": "brief",
+      "selection_reason": "社内向けに作った仕組みを、インターネットにさらさずに外部の利用者やエージェントへ開く選択肢が、正式な機能になった。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは10月30日、非公開のIPアドレスを指す配信元（オリジン）に対して、公開の配信元と同じようにWAF、キャッシュ、ボット対策、流量制限、Workersなどを適用できる機能を一般提供した。プロキシを有効にしたDNSの記録を非公開のIPアドレスに向けると、既存のCloudflare Oneの接続を通じて配信元に届く。配信元は非公開のIPアドレスのままで、外からの接続のためにファイアウォールに穴を開ける必要はないという。6月に限定的な試験提供を始めており、社内のAPI、AIエージェントの裏側の仕組み、MCPサーバーなど、インターネットに直接さらす前提で作られていない仕組みを外部から使えるようにしたいという要望に応えたとしている。Argo Smart Routingなど一部の機能は使えない。利用には担当者を通じた有効化が必要。非公開の網どうしの通信への対応は2027年初めの限定試験を目指している。",
+      "source_kind": "release",
+      "source_title": "Cloudflare services for private origins is now generally available",
+      "source_url": "https://blog.cloudflare.com/private-origins-public-to-private/",
+      "title": "Cloudflare、非公開のIPアドレスの配信元にもWAFやキャッシュを適用できる機能を一般提供",
+      "topics": [
+        "security",
+        "infrastructure",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-10-31T04:50:42+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントにファイルや認証情報を触らせるなら、モデルの外で何を許すかを決める実行環境が要になる。同じ週に管理型の土台を外部に開く動きも出ており、預けるか自前で組むかの比較の材料になる。費用の比較の数字は条件次第で大きく変わるため、自分の作業で試して確かめたい。",
+      "caveat": "性能と費用の比較はNVIDIAとLangChainの説明によるもので、独立に検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-nemoclaw-blueprints",
+      "language": "en",
+      "observed_at": "2026-10-31T04:50:46+09:00",
+      "published_at": "2026-10-30T16:00:00Z",
+      "role": "brief",
+      "selection_reason": "エージェントを外部のサービスに預けず、統制の仕組みごと自前で組む選択肢を、半導体の大手が具体的な構成で示した。",
+      "source_domain": "developer.nvidia.com",
+      "source_fact": "NVIDIAは10月30日、エージェントを自分で管理する環境で動かすための公開の設計図「NemoClaw」の構成を開発者向けに説明した。NemoClawは、調整済みのエージェントの土台（ハーネス）、Nemotronのモデル、NeMoの最適化の道具、ファイルやネットワーク、認証情報、道具への接近を方針で統制する実行環境OpenShellを組み合わせたものだという。土台としては現在、OpenClaw、Nous ResearchのHermes Agent、LangChainのDeep Agentsに対応する。LangChainはDeep AgentsをNemotron 3 Ultra向けに、モデルを再学習せずに指示や道具などを調整し、主要な非公開モデルと比べて1回あたり約10分の1の費用で最先端に近い性能を得たとしている。クラウド、データセンター、DGX Spark、RTXのPCなどで動かせるという。",
+      "source_kind": "documentation",
+      "source_title": "Build Specialized Agents on a Stack You Control with NVIDIA NemoClaw",
+      "source_url": "https://developer.nvidia.com/blog/build-specialized-agents-on-a-stack-you-control-with-nvidia-nemoclaw/",
+      "title": "NVIDIA、エージェントを自前の環境で動かすための公開の設計図「NemoClaw」の構成を解説",
+      "topics": [
+        "agents",
+        "open-source",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-10-31T04:50:46+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "公開されていても形式や説明が不十分なデータは、人にもAIにも使いにくい。説明の整ったデータが多く使われているという指摘は、研究機関に限らず、データを外に出す組織全般に当てはまる。日本の公的研究のデータの出し方を考えるうえでも参考になる。",
+      "caveat": "データセットの数や伸びはHugging Faceの集計によるもので、独立に検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "hf-project-protostar",
+      "language": "en",
+      "observed_at": "2026-10-31T04:50:45+09:00",
+      "published_at": "2026-10-29T00:00:00Z",
+      "role": "brief",
+      "selection_reason": "研究成果を公開するだけでなく、AIで再利用できる形で出すことを、大学と基盤の事業者が組んで進める枠組みができた。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Hugging Faceなどは10月29日、公的資金による研究のデータセット、モデル、コードを、AIで扱いやすく機械が読み取れる形で公開することを後押しする取り組み「Project ProtoStar」を発表した。創設の参加者は、カーネギーメロン大学、パデュー大学、ジョージア工科大学、アリゾナ州立大学、ジョージ・ワシントン大学、Astera Institute、基盤を担うHugging Face、ORCAなど。参加組織は、適した研究成果をAIで扱える形で公開することを覚書で約束する。研究成果の再利用を示す公開の課題を順に開き、最初の課題はカーネギーメロン大学の主催で11月2日に始まる。Hugging Faceには主要な科学分野の公開データセットが1万7000件以上あり、2026年1〜9月に共有された新しい科学のデータセットは前年同期の3倍を超えたという。",
+      "source_kind": "official",
+      "source_title": "Announcing Project ProtoStar: Making Publicly Funded Science AI-Ready",
+      "source_url": "https://huggingface.co/blog/announcing-project-protostar",
+      "title": "公的資金による研究のデータやモデルをAIで使いやすい形で公開する「Project ProtoStar」が発足",
+      "topics": [
+        "open-source",
+        "research",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-10-31T04:50:45+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "警告を見つけるだけでなく、直すところまでAIに手伝わせる流れは、溜まった警告を減らすのに役立ちうる。修正を手元に留め、コミットは人が判断する設計になっている点は評価できる。AIの修正をそのまま受け入れず、差分を確かめる手順は残したい。",
+      "caveat": "公開試験の段階で、修正の質は示されておらず、独立に検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-security-extension",
+      "language": "en",
+      "observed_at": "2026-10-31T04:50:47+09:00",
+      "published_at": "2026-10-28T15:45:00Z",
+      "role": "watch",
+      "selection_reason": "脆弱性の警告の確認から修正までを、AIの支援付きで一つの画面で進める流れが、開発の道具に組み込まれ始めた。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは10月28日、GitHub Copilotのアプリで、リポジトリのコードスキャンの警告を扱える「GitHub security extension」を公開試験として提供した。未対応の警告を深刻度の順に一覧し、選んだ警告についてCopilotに説明や修正を頼める。Copilotは手元の作業コピーだけを変更し、コミットやプッシュはしない。警告にひもづくプルリクエストの表示や、対応しない警告の却下もでき、組織が却下の承認を求める設定にしていれば承認に回る。/security-review で手元の変更を調べることもできる。説明や修正などの操作は、他の依頼と同じくAIの利用枠を消費する。github.comとデータ所在地付きのGitHub Enterprise Cloudが対象で、GitHub Enterprise Serverには対応しない。非公開のリポジトリで既存の警告を扱うにはGitHub Code Securityが必要。",
+      "source_kind": "release",
+      "source_title": "Security extension for the GitHub Copilot app",
+      "source_url": "https://github.blog/changelog/2026-10-28-security-extension-for-the-github-copilot-app",
+      "title": "GitHub Copilotのアプリに、コードスキャンの警告を一覧して説明や修正を頼める拡張機能",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-10-31T04:50:47+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "VPNなど外部からの接続を受ける機器は、侵入の最初の足がかりになりやすい。Ivanti Connect Secureを使う組織は、更新の適用に加えて、更新の前に侵入されていないかの確認も必要になる。",
+      "caveat": "悪用の具体的な状況や影響の範囲は、この告知だけでは確認していない。修正の有無と手順はベンダーの情報で確かめる必要がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-kev-ivanti-connect-secure",
+      "language": "en",
+      "observed_at": "2026-10-31T04:50:43+09:00",
+      "published_at": "2026-10-30T12:00:00Z",
+      "role": "watch",
+      "selection_reason": "外部からの接続の入口として広く使われる製品で、悪用が確認された脆弱性が二つ同時に一覧に載った。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "米国のサイバーセキュリティ・社会基盤安全保障庁（CISA）は10月30日、実際の悪用の証拠に基づき、悪用が確認された脆弱性の一覧（KEV）に2件を追加した。対象はいずれもIvanti Connect Secureで、重要な機能に対する認証の欠如（CVE-2026-111357）と、予測可能な数値や識別子の生成（CVE-2026-118527）。CISAは、この種の脆弱性は攻撃者がよく使う侵入の経路だとしている。連邦の文民の行政機関は拘束力のある運用指令に基づいて一覧の脆弱性への対処を優先する必要があり、CISAはそれ以外の組織にも優先して対処するよう促している。",
+      "source_kind": "advisory",
+      "source_title": "CISA Adds Two Known Exploited Vulnerabilities to Catalog",
+      "source_url": "https://www.cisa.gov/news-events/alerts/2026/10/30/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+      "title": "米CISA、Ivanti Connect Secureの脆弱性2件を悪用が確認された脆弱性の一覧に追加",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-10-31T04:50:43+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-10-31T04:53:36+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：OpenAIがAIの学習を断る共通の信号に従うと表明、Cloudflareは弱い鍵の認証局の件で悪用と更新の遅れを報告",
+  "topics": [
+    {
+      "description": "基盤モデルの能力と提供・適応の条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計・評価・統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "開発・業務・運用を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "推論・学習・配信を支えるハードウェアとソフトウェア基盤。",
+      "id": "infrastructure",
+      "label_en": "Infrastructure",
+      "label_ja": "計算基盤"
+    },
+    {
+      "description": "公開されたソフトウェア・モデルと利用条件。",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "研究の方法と評価。",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "利用規則・標準・制度とその運用。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・統制"
+    }
+  ]
+}

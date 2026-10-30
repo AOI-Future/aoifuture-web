@@ -1,0 +1,28 @@
+[
+  {
+    "changed_signal_ids": [
+      "aws-step-functions-agent-tools",
+      "cisa-kev-ivanti-connect-secure",
+      "cloudflare-emudhra-weak-keys-followup",
+      "cloudflare-private-origins-ga",
+      "digital-agency-diet-answer-ai",
+      "digital-agency-gennai-survey",
+      "github-copilot-security-extension",
+      "hf-project-protostar",
+      "microsoft-copilot-harness-foundry",
+      "nvidia-nemoclaw-blueprints",
+      "openai-ai-training-preference-signal",
+      "openai-community-safety-teens"
+    ],
+    "edition_date": "2026-10-31",
+    "edition_id": "2026-10-31-0453",
+    "edition_url": "https://aoifuture.com/news/2026-10-31-0453/",
+    "event_id": "aoi-news-2026-10-31-0453-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-31T04:53:36+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "OpenAIは、サイトの運営者が複数のAI事業者にまとめて学習の可否を伝える共通の信号に従うとした。Cloudflareは、誰でも署名の鍵を復元できた認証局の件で、偽造の証明書と端末側の更新の遅れを数字で示した。MicrosoftとNVIDIAのエージェントの土台、OpenAIの未成年保護、政府職員向け生成AIの答弁支援と利用調査、悪用が確認された脆弱性とあわせて、一次資料から見る。",
+    "title": "AOIFUTURE News：OpenAIがAIの学習を断る共通の信号に従うと表明、Cloudflareは弱い鍵の認証局の件で悪用と更新の遅れを報告"
+  }
+]
