@@ -1,0 +1,358 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-11-01T04:58:04+09:00",
+  "dek": "OpenAIは、ニューヨーク・タイムズとの訴訟で学習のフェアユースを支持する意見書の抜粋を示した。GitLabは、コードからパイプラインまでをつないだグラフを正式な製品にした。存在しないCVEを根拠にしたAIレビューの事例、分散推論の検証済みの構成、耐量子暗号の利用状況の計測、悪用が確認された脆弱性とあわせて、一次資料から見る。",
+  "edition_date": "2026-11-01",
+  "edition_id": "2026-11-01-0458",
+  "edition_note": "直近72時間に公開された一次資料を対象とし、2026年10月29日から30日（日本・米国時間）に公開された資料を直接確認した。各社の性能や効果の主張、試験の数値、脆弱性の影響は独立に検証しておらず、前提は各項目の留保に記した。",
+  "generated_at": "2026-11-01T04:58:04+09:00",
+  "items": [
+    {
+      "aoi_note": "学習がフェアユースと認められるかどうかは、モデルを作る側だけでなく、その上で道具を作る側や使う側の条件も決める。ただしこれは一方の当事者が自分に有利な意見書だけを選んで並べた資料で、原告側や反対の意見書は含まれていない。判断するのは裁判所であり、今回の公開で結論が動くわけではない。",
+      "caveat": "抜粋は全文の一部で、選び方はOpenAIによる。原告側の主張や反対の立場の意見書は確認しておらず、訴訟の進み具合や判断の時期もこの資料からはわからない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-fair-use-amicus-excerpts",
+      "language": "en",
+      "observed_at": "2026-11-01T04:55:00+09:00",
+      "published_at": "2026-10-30T00:00:00Z",
+      "role": "lead",
+      "selection_reason": "生成AIの学習に著作物を使えるかという、業界全体の前提を左右する訴訟で、当事者の一方が支持する側の論点をまとめて示した。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは10月30日、ニューヨーク・タイムズが同社を訴えている訴訟で、AIの学習への著作物の利用はフェアユース（米著作権法の公正な利用）に当たるとする立場を支持して裁判所に提出された意見書の抜粋を公開した。抜粋は、米国政府、図書館や視覚障害者の団体、著作者の団体、スタートアップの団体、法学者、経済学者、ジャーナリスト、独立した創作者などのもの。著作者の団体は、競合する新しい作品が既存の作品の売上を下げる「市場の希釈」は著作権法上の損害に当たらないと主張している。米国政府の意見書は、学習をフェアユースから外すことは著作権法の基本原則に反すると述べている。同社は、ニューヨーク・タイムズの訴えはフェアユースの長い歴史を無視するものだと書いている。全文は公開の裁判記録で読めるとしている。",
+      "source_kind": "official",
+      "source_title": "Fair use benefits everyone",
+      "source_url": "https://openai.com/index/fair-use-benefits-everyone",
+      "title": "OpenAI、ニューヨーク・タイムズとの訴訟で、AIの学習はフェアユースだとする意見書の抜粋を公開",
+      "topics": [
+        "policy",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-11-01T04:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントの失敗の多くは、モデルの能力ではなく、見えている情報が足りないことから来る。パイプラインや担当者まで含めた文脈を一度の照会で返せるなら、レビューや影響範囲の調査の質は上がりうる。一方で照会ごとの課金になるため、エージェントを多く動かす組織ほど費用の見積もりが必要になる。",
+      "caveat": "やり直しやトークンの削減幅、利用企業の一致率などの数値はGitLab自身または顧客の試験の結果で、独立に検証していない。試験の条件は資料に詳しく示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "gitlab-orbit-context-graph-ga",
+      "language": "en",
+      "observed_at": "2026-11-01T04:56:19+09:00",
+      "published_at": "2026-10-29T00:00:00Z",
+      "role": "major",
+      "selection_reason": "エージェントが差分だけを見て判断する問題に対し、開発の履歴と関係をまとめて渡す仕組みを、大手の開発基盤が正式な製品にした。",
+      "source_domain": "about.gitlab.com",
+      "source_fact": "GitLabは10月29日、ソフトウェア開発の全体を一つのグラフとして照会できる「GitLab Orbit」の一般提供を始めたと発表した。コード、マージリクエスト、作業項目、パイプライン、脆弱性、担当者の関係を、権限を保ったまま継続的に更新するという。MCP（エージェントと外部の道具をつなぐ仕組み）経由でClaude Codeなどのエージェントからも照会できる。同社の試験では、同じモデルと同じ作業で、Orbitにつないだエージェントのやり直しが最大45分の1、使ったトークンが最大4.5分の1になったとしている。料金は組織で共有する照会の枠として販売し、1パックは利用者1人あたり月30ドル相当のGitLab Creditsで1,000回分。PremiumとUltimateの顧客向けで、GitLab.comから始め、Self-ManagedとGitLab Dedicatedには数週間かけて広げるとしている。",
+      "source_kind": "release",
+      "source_title": "GitLab Orbit is GA: Higher agent accuracy, lower token cost",
+      "source_url": "https://about.gitlab.com/blog/gitlab-orbit-ga/",
+      "title": "GitLab、コード・マージリクエスト・パイプライン・脆弱性をつないだ照会用のグラフ「Orbit」を一般提供",
+      "topics": [
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-11-01T04:56:19+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "読むだけの権限にしたエージェントでも、もっともらしい警告を書けば、読んだ人を通じて現実の操作を引き起こしうる。CVE番号のように確かめやすい事実ほど、確かめる手順を仕組みに入れておく必要がある。サンドボックスは実行を閉じ込めるが、出力の正しさは保証しない点を記事自身も認めている。",
+      "caveat": "事例はコンテストへの投稿として寄せられたもので、使われたモデルや設定の詳細、出来事の経過はDockerの記述によるもので独立に確認していない。記事には自社製品の紹介も含まれる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "docker-agent-fabricated-cve-review",
+      "language": "en",
+      "observed_at": "2026-11-01T04:56:19+09:00",
+      "published_at": "2026-10-29T13:00:00Z",
+      "role": "major",
+      "selection_reason": "エージェントの権限を絞るだけでは防げない、出力をそのまま信じる危険を、具体的な経過とともに示した。",
+      "source_domain": "www.docker.com",
+      "source_fact": "Dockerは10月29日、AIのコーディングエージェントによる事例を扱う連載の6回目として、コードレビュー用のボットが事実でない指摘を書いた事例を紹介した。ボットはローカルのモデルでCIの中で動き、コードを読んでコメントを書くことしかできず、インフラの変更やコミットはできない設定だった。開発者がPostgreSQLを16.11から16.13に上げる変更を出したところ、ボットは約1,500語でこれを拒否し、実在しない企業へのデータ送信を指摘し、存在しないKubernetesの資源に言及し、組織の全てのIAM（アクセス権限）の取り消しを勧めた。その根拠には、発行されたことのないCVE番号が使われていた。開発者は約2分で誤りに気づいたという。記事は、エージェントの出力も入力と同じく信頼できないものとして扱うべきだとし、ボットをDocker Sandboxで動かす手順を示している。",
+      "source_kind": "analysis",
+      "source_title": "Coding Agent Horror Stories: The CVE That Did Not Exist",
+      "source_url": "https://www.docker.com/blog/coding-agent-horror-stories-the-cve-that-did-not-exist/",
+      "title": "Docker、読むだけのAIレビューが存在しないCVEを根拠に変更を拒否した事例を報告",
+      "topics": [
+        "agents",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-11-01T04:56:19+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "推論の環境づくりは、ドライバーやスケジューラーなど多くの部品の版が合っているかで止まりやすい。版を固定して導入後に検証する手順が標準になれば、作業の再現性は上がる。ただし特定の会社の製品群を前提にした構成で、他の部品と組み合わせる場合の扱いは別に確かめる必要がある。",
+      "caveat": "示された構成や手順で実際に動くかは試していない。対応する環境の範囲や性能への影響は資料からは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-dynamo-validated-kubernetes-runtime",
+      "language": "en",
+      "observed_at": "2026-11-01T04:56:01+09:00",
+      "published_at": "2026-10-30T22:52:36Z",
+      "role": "major",
+      "selection_reason": "大規模な推論で手間がかかるのは、モデルより下の層の組み合わせであることを、部品ごとに示した。",
+      "source_domain": "developer.nvidia.com",
+      "source_fact": "NVIDIAは10月30日、分散推論の仕組みDynamoをKubernetes上で動かすための土台を、NVIDIA AI Cluster Runtime（AICR）で用意する手順を公開した。AICRは、GPUドライバー、GPUの割り当て（Dynamic Resource Allocation）、まとめて配置するスケジューリング、ノードの健全性の信号、Prometheusによる計測などの前提を、部品の版を固定した再現可能な構成として扱う。構成にはdynamo-platformの1.4.2が含まれ、DynamoGraphDeploymentの定義はv1beta1に移った。推論の振り分けは、Dynamo自身の振り分けとGateway APIの拡張を使う方法の二つを比べている。手順は、クラスターの記録、構成の生成、配布物の作成、導入、導入後の検証の5段階に分けている。",
+      "source_kind": "documentation",
+      "source_title": "Build a Validated Kubernetes Runtime for NVIDIA Dynamo",
+      "source_url": "https://developer.nvidia.com/blog/build-a-validated-kubernetes-runtime-for-nvidia-dynamo/",
+      "title": "NVIDIA、分散推論のDynamoをKubernetesで動かすための検証済みの構成を公開",
+      "topics": [
+        "infrastructure",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-01T04:56:01+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "移行の進み具合は、サーバー側の設定より、端末やブラウザーが対応しているかで決まる。接続ごとに方式が見えれば、未対応の端末を特定して優先順位を付けやすくなる。",
+      "caveat": "項目の正確さや、通信事業者の名前の判定方法は確認していない。料金や対応地域についてはこの告知からは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-cloudfront-viewer-pqc-tls-header",
+      "language": "en",
+      "observed_at": "2026-11-01T04:56:19+09:00",
+      "published_at": "2026-10-30T18:15:00Z",
+      "role": "brief",
+      "selection_reason": "耐量子暗号への移行で、実際にどれだけの接続が切り替わったかを測る手段が、大手の配信網で用意された。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは10月30日、Amazon CloudFrontが配信元に二つの任意の項目を渡せるようになったと発表した。一つは閲覧者が使うインターネット接続事業者の名前、もう一つは閲覧者との暗号化通信の方式で、鍵の交換や署名の方式を含み、耐量子暗号（量子計算機でも破られにくい暗号）が使われたかがわかる。AWSは、耐量子暗号で接続する閲覧者の割合を測り、まだ対応していない端末を見つけるのに使えるとしている。使うには、配信元への要求の設定にこれらの項目を加える。",
+      "source_kind": "release",
+      "source_title": "Amazon CloudFront now provides viewer ISP and post-quantum TLS details",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/10/cloudfront-viewer-isp-post-quantum-visbility/",
+      "title": "Amazon CloudFront、閲覧者の接続が耐量子暗号を使ったかを配信元に伝える項目を追加",
+      "topics": [
+        "security",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-01T04:56:19+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "小さなモデルを何本も本番で動かすと、GPUの空き容量に料金を払う状態になりやすい。区画に分けて詰められれば、同じ台数でより多くのモデルを扱える。",
+      "caveat": "実際の費用の削減幅や、区画に分けた場合の性能への影響は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-sagemaker-gpu-partitioning",
+      "language": "en",
+      "observed_at": "2026-11-01T04:56:20+09:00",
+      "published_at": "2026-10-30T08:00:00Z",
+      "role": "brief",
+      "selection_reason": "微調整したモデルや埋め込み、並べ替え用のモデルなど、小さなモデルを多く動かす場合の費用に直接関わる変更。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは10月30日、Amazon SageMaker AIの推論で、NVIDIAのMulti-Instance GPU（MIG）を使い、1枚のGPUを最大7つの独立した区画に分けられるようにしたと発表した。各区画はそれぞれのメモリーと計算資源を持ち、混んでいるモデルが隣のモデルの資源を奪わないという。これまでは小さなモデルにもGPUを1枚ずつ割り当てる必要があった。アプリケーションからは引き続きモデル名で呼び出せる。対象はP4d、P5、G7、G7eのインスタンスで、東京を含む7つの地域で使える。",
+      "source_kind": "release",
+      "source_title": "Amazon SageMaker AI inference now supports GPU partitioning for real-time endpoints",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/10/sagemaker-gpu-partitioning/",
+      "title": "Amazon SageMaker AI、1枚のGPUを最大7つに分けて複数のモデルを載せられるように",
+      "topics": [
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-01T04:56:20+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "公的機関や規制の厳しい業種では、モデルの性能より、記録・費用・データの所在を既存の手順で管理できるかが採用の条件になりやすい。",
+      "caveat": "利用できる顧客の条件や、地域をまたぐ振り分けでの遅延などは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-bedrock-openai-govcloud-cross-region",
+      "language": "en",
+      "observed_at": "2026-11-01T04:56:20+09:00",
+      "published_at": "2026-10-30T20:43:00Z",
+      "role": "watch",
+      "selection_reason": "データの置き場所に厳しい条件がある組織でも、外部の開発元のモデルを既存の管理の仕組みの中で使える範囲が広がった。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは10月30日、米政府機関向けのAWS GovCloud (US)で、Amazon BedrockがOpenAIのGPT-5.6（TerraとLuna）をbedrock-runtimeの窓口で扱い、Responses、Converse、Chat Completionsの各APIに対応したと発表した。GovCloudの二つの地域の間で推論の要求を自動で振り分ける機能も加え、米国内にデータを置いたまま処理量を増やせるとしている。利用状況は、他のモデルと同じく呼び出しの記録、CloudWatchの計測、費用の内訳に表れる。",
+      "source_kind": "release",
+      "source_title": "Amazon Bedrock expands API support and introduces Cross-Region Inferencing for OpenAI models in AWS GovCloud (US)",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/10/bedrock-openai-runtime-govcloud/",
+      "title": "Amazon Bedrock、米政府向けの地域でOpenAIのモデルを複数の地域にまたがって使えるように",
+      "topics": [
+        "models",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-11-01T04:56:20+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "GitLabは自社で運用している組織も多く、更新が遅れやすい。境界のファイアウォールとあわせて、更新の適用と、更新の前に侵入されていないかの確認が必要になる。",
+      "caveat": "悪用の具体的な状況や影響を受ける版は、この告知だけでは確認していない。修正の有無と手順はベンダーの情報で確かめる必要がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-kev-gitlab-cisco-firewall",
+      "language": "en",
+      "observed_at": "2026-11-01T04:56:21+09:00",
+      "published_at": "2026-10-29T12:00:00Z",
+      "role": "brief",
+      "selection_reason": "開発基盤と境界の防御機器という、組織の中心にある二つの製品で、悪用が確認された。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "米国のCISA（サイバーセキュリティ・インフラストラクチャー安全保障庁）は10月29日、実際に悪用されている証拠に基づき、二つの脆弱性を悪用が確認された脆弱性の一覧（KEV）に加えた。GitLab Community EditionとEnterprise Editionの整数のあふれの脆弱性（CVE-2026-97229）と、Cisco Secure Firewall ASAとSecure FTDのソフトウェアの、戻り値を確かめないことによる脆弱性（CVE-2026-76418）である。連邦の文民機関は指令に基づき一覧の脆弱性への対処を優先する必要があり、CISAはそれ以外の組織にも優先して対処するよう促している。",
+      "source_kind": "advisory",
+      "source_title": "CISA Adds Two Known Exploited Vulnerabilities to Catalog",
+      "source_url": "https://www.cisa.gov/news-events/alerts/2026/10/29/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+      "title": "CISA、GitLabとCiscoのファイアウォールの脆弱性を悪用が確認されたものの一覧に追加",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-11-01T04:56:21+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "社内向けの業務アプリはSAMLによる一括ログインに頼ることが多く、認証の部品の弱点は多くのアプリに同時に影響しうる。",
+      "caveat": "悪用の有無や、実際に使われている環境の規模は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-siemens-mendix-saml-replay",
+      "language": "en",
+      "observed_at": "2026-11-01T04:56:21+09:00",
+      "published_at": "2026-10-29T12:00:00Z",
+      "role": "watch",
+      "selection_reason": "業務アプリを手早く作る基盤で、単一のログインの仕組みに関わる弱点が見つかった。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "CISAは10月29日、SiemensのMendix SAMLモジュールに認証を回避される脆弱性（CVE-2026-89209）があるとする勧告を出した。IdP（認証を担う側）から始まるログインの流れで、正当なSAMLの応答を使い回す攻撃を防げず、認証されていない遠隔の攻撃者がアプリケーションに入れる可能性がある。CVSS v3.1の基本値は6.8。影響を受けるのはMendix 10と11に対応する4.2.4より前の版と、Mendix 9に対応する3.6.29より前の版で、Siemensは更新版を出しており、当面の対策としてIdPから始まるログインを無効にすることを挙げている。",
+      "source_kind": "advisory",
+      "source_title": "Siemens Mendix SAML Module (ICSA-26-302-01)",
+      "source_url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-302-01",
+      "title": "Siemens Mendix の SAML モジュールに、認証の応答を使い回して入られる脆弱性",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-11-01T04:56:21+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "許可リストを手で管理していると、送信元が増えたときに一部の送信だけが落ちる状態になりやすい。Meta APIから自動で取り込む形にしておくのが確実。",
+      "caveat": "追加の範囲がいつから実際の送信に使われるかは、この告知からは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-webhook-ip-ranges-meta-api",
+      "language": "en",
+      "observed_at": "2026-11-01T04:56:22+09:00",
+      "published_at": "2026-10-29T17:14:38Z",
+      "role": "watch",
+      "selection_reason": "Webhookを受けてCIや自動化を動かしている環境で、気づかないうちに通知が届かなくなる原因になりうる変更。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは10月29日、github.comからのWebhookの送信に使うIPアドレスの範囲を追加し、Meta APIのhooksの項目に含めたと発表した。追加は9.234.98.160/28、9.234.98.176/28、9.234.106.48/28の三つ。受信側で固定の許可リストを使っている場合は、これらを加えないと送信を拒否してしまうとしている。Meta APIで許可リストを自動で更新している場合は対応は要らない。GitHub Enterprise Cloudを含む全てのプランが対象。",
+      "source_kind": "release",
+      "source_title": "Webhook IP ranges added to the Meta API",
+      "source_url": "https://github.blog/changelog/2026-10-29-webhook-ip-ranges-added-to-the-meta-api",
+      "title": "GitHub、Webhookの送信元IPの範囲を追加。固定の許可リストを使う場合は更新が必要",
+      "topics": [
+        "tools",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-11-01T04:56:22+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "端末側で動くエージェントは、メモリーや電力の制約の中で作る必要がある。開発機と配備先で同じ実行環境を使えれば、移す際の手戻りは減る。",
+      "caveat": "速さの数値はNVIDIAの例での結果で、独立に検証していない。他のモデルや機器で同じ効果が出るかは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-tensorrt-edge-llm-dgx-spark",
+      "language": "en",
+      "observed_at": "2026-11-01T04:56:23+09:00",
+      "published_at": "2026-10-30T20:33:21Z",
+      "role": "brief",
+      "selection_reason": "車載やロボットなど、データセンターの外で動かすモデルの開発と運用を、同じ実行環境でつなぐ手順。",
+      "source_domain": "developer.nvidia.com",
+      "source_fact": "NVIDIAは10月30日、組み込み機器向けのC++の推論実行環境TensorRT Edge-LLMを使い、開発用の小型機DGX Sparkでモデルを動かす手順を公開した。trtedgeというコマンドでモデルを取得して推論用に最適化し、Nemotron-3.5 Lightningとの対話やOpenAI互換のAPIでの提供を数個のコマンドで行える。同じ実行環境はJetson Thor、DRIVE AGX Thor、IGX Thorでの運用にも使えるとしている。HumanEvalの問題を使った同社の例では、投機的なデコードを有効にすると生成の速さが毎秒73.4トークンから126.9トークンに上がり、最大のメモリー使用量は27.9GBのままだったという。",
+      "source_kind": "documentation",
+      "source_title": "Run AI Models for Edge Application Development with Just a Few Commands",
+      "source_url": "https://developer.nvidia.com/blog/run-ai-models-for-edge-application-development-with-just-a-few-commands/",
+      "title": "NVIDIA、組み込み向けの推論実行環境で、手元の機器にモデルを数個のコマンドで載せる手順を公開",
+      "topics": [
+        "infrastructure",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-11-01T04:56:23+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-11-01T04:58:04+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：OpenAIがAIの学習はフェアユースとする意見書を公開、GitLabは開発の履歴をエージェントに渡すグラフを一般提供",
+  "topics": [
+    {
+      "description": "利用規則・標準・制度とその運用。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・統制"
+    },
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計・評価・統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "開発・業務・運用を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "推論・学習・配信を支えるハードウェアとソフトウェア基盤。",
+      "id": "infrastructure",
+      "label_en": "Infrastructure",
+      "label_ja": "計算基盤"
+    },
+    {
+      "description": "基盤モデルの能力と提供・適応の条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    }
+  ]
+}
