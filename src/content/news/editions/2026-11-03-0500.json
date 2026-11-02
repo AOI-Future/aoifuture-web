@@ -1,0 +1,331 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-11-03T05:00:14+09:00",
+  "dek": "Googleは、企業のモデルの利用権限を乗っ取り、1日で10万ドルを超える請求を生んだ攻撃の実態を報告した。GitHubは、フォークのコードを高い権限で動かしうる設定を公開リポジトリで止める日程を示した。生活の用事を測るOpenAIの評価、エージェント統制の業界基準、計算拠点の電力調整とあわせて、一次資料から見る。",
+  "edition_date": "2026-11-03",
+  "edition_id": "2026-11-03-0500",
+  "edition_note": "直近72時間に公開された一次資料を対象とし、2026年11月2日（日本・米国時間）に公開された資料を直接確認した。各社の被害額や性能、効果の主張、評価の得点は独立に検証しておらず、前提は各項目の留保に記した。",
+  "generated_at": "2026-11-03T05:00:14+09:00",
+  "items": [
+    {
+      "aoi_note": "暗号資産の採掘のように少しずつ資源を使う攻撃と違い、高価なモデルの呼び出しは数時間で大きな請求になる。AIサービスを使っていない部署でも、権限があれば攻撃者が有効にできる点は見落としやすい。モデルを呼ぶ鍵も、クラウドの管理者権限と同じ扱いで管理する必要がある。",
+      "caveat": "事案の件数や被害額、攻撃者の分類はGoogleの調査による記述で、独立に検証していない。記事には自社の検知製品の紹介も含まれる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "gtig-llmjacking-cloud-model-abuse",
+      "language": "en",
+      "observed_at": "2026-11-03T04:58:30+09:00",
+      "published_at": "2026-11-02T14:00:00Z",
+      "role": "lead",
+      "selection_reason": "AIの利用が広がるほど、モデルの利用権限そのものが盗む価値のある資産になることを、実際の事案と金額で示した。",
+      "source_domain": "cloud.google.com",
+      "source_fact": "Googleの脅威情報部門GTIGとMandiantは11月2日、攻撃者が企業の大規模言語モデルの利用権限を乗っ取る「LLMJacking」について報告した。2026年に対応した複数の事案は、北米・南米・アジア太平洋の金融、小売、技術、運輸の企業に及び、1日で10万ドルを超える不正な利用料が発生した例や、権限を取り消すまでに累計100万ドルに達した例があったという。主な侵入口は、漏えいしたクラウドの認証情報やサービスアカウントの鍵、GitHubの個人用アクセストークンなどで、公開リポジトリから拾ったAPIキーを1トークンだけの要求で有効か確かめる手口も見られた。モデルへの要求を中継するLiteLLMの脆弱性（CVE-2026-40217）を使って管理者の権限を得た例もある。盗んだ利用枠を束ねて安く転売する「LLM Mixer」と呼ぶ仕組みがあり、ある事例では8時間足らずで50万回を超える呼び出しが行われたとしている。対策として、鍵の一元管理と短い寿命、最小権限、利用量の上限や予算の警告、AIサービスが有効にされたことの監視などを挙げている。",
+      "source_kind": "analysis",
+      "source_title": "The Rise of LLMJacking: How Threat Actors Monetize Compromised Cloud and Model Resources",
+      "source_url": "https://cloud.google.com/blog/topics/threat-intelligence/llmjacking-monetizing-compromised-cloud-models/",
+      "title": "Google、企業のAI利用枠を乗っ取って転売する「LLMJacking」の実態と対策を報告",
+      "topics": [
+        "security",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-11-03T04:58:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "外部からの変更を自動で検査する仕組みは便利だが、権限の高い文脈で他人のコードを動かす構成は、サプライチェーン攻撃の入口になってきた。依存しているワークフローがあるなら、11月9日の試験停止の前に確認しておく必要がある。",
+      "caveat": "日程や対象の範囲はGitHubの告知による。個々のリポジトリへの影響は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-pull-request-target-default-block",
+      "language": "en",
+      "observed_at": "2026-11-03T04:58:30+09:00",
+      "published_at": "2026-11-02T15:14:46Z",
+      "role": "major",
+      "selection_reason": "公開リポジトリのCIでよく問題になってきた設定の危険を、既定の動作として封じる変更で、期日が決まっている。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月2日、GitHub Actionsで、全ての公開リポジトリのpull_request_targetのイベントを、明示的に許可する設定がない限り2026年12月2日から既定で止めると発表した。当初は11月2日に始める予定だった。pull_request_targetは元のリポジトリの権限で動き、その秘密情報にも触れられるため、フォークからの信頼できないコードを実行すると、パイプラインが乗っ取られたり秘密情報が盗まれたりするおそれがあるという。本格的な適用の前に、11月9日と11月16日のいずれも協定世界時16時から18時に一時的に止める期間を設け、その間に止められた実行は失敗として記録される。利用者はInsightsで止められる実行を確かめ、必要な場合は特定のワークフローだけを許可できる。非公開と社内向けのリポジトリ、GitHub Enterprise Serverは対象外。",
+      "source_kind": "release",
+      "source_title": "pull_request_target blocked by default December 2",
+      "source_url": "https://github.blog/changelog/2026-11-02-pull_request_target-blocked-by-default-december-2",
+      "title": "GitHub、公開リポジトリでpull_request_targetを12月2日から既定で止める。11月に2回の試験停止",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-03T04:58:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "企業がエージェントを導入するとき、何を確かめればよいかが決まっていないことが、承認を遅らせる大きな理由になっている。引用できる番号付きの管理項目は、調達や監査の場で使いやすい。ただし草案の段階で、項目の中身や採用の広がりはこれから決まる。",
+      "caveat": "取り組みの内容や参加企業はDockerの記事による説明で、Blueprint AllianceとAgent Baselineの本体の文書は確認していない。記事には自社製品の紹介も含まれる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "docker-blueprint-alliance-agent-baseline",
+      "language": "en",
+      "observed_at": "2026-11-03T04:58:30+09:00",
+      "published_at": "2026-11-02T14:00:00Z",
+      "role": "major",
+      "selection_reason": "エージェントの統制が各社ばらばらの段階から、共通の基準と参照構成に向かう動きを、参加企業の名前とともに示した。",
+      "source_domain": "www.docker.com",
+      "source_fact": "Dockerは11月2日、AIエージェントの統制に向けた二つの業界の取り組みに、創設時から参加していると説明した。Blueprint Allianceは、エージェントがどこにあり、何ができ、何をしていて、どう対応するかに答える、複数企業による公開の参照構成で、Okta、AWS、CrowdStrike、Databricks、Docker、Google Cloud、Lovable、Proofpoint、Salesforce、ServiceNow、Wiz、Zscalerが創設メンバーとなっている。メンバーはMCP、OCSF、SSF、CAEPでの相互運用の試験と、連携例の公開を約束したという。Agent Baselineは、発見・制約・認可・観察・検証・対応の六つの目標と、監査の指摘や調達の要件で引用できる固定の識別子を持つ35の管理項目を定め、Docker、Snyk、Keycardが起草し、現在の版はv1.0-draft。記事は、エージェントが利用者の権限をそのまま借りることや、平易な言葉で振る舞いを変えられることを新しい危険として挙げている。",
+      "source_kind": "official",
+      "source_title": "The Ecosystem is the Answer: Docker, the Blueprint Alliance, and the Importance of Collaboration in the Agentic Era",
+      "source_url": "https://www.docker.com/blog/docker-blueprint-alliance-agent-baseline/",
+      "title": "Docker、エージェントの統制に向けた業界の参照構成「Blueprint Alliance」と35項目の「Agent Baseline」への参加を説明",
+      "topics": [
+        "policy",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-11-03T04:58:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "安価な接続機器は、出荷後に何が読み込まれるかを利用者が確かめにくい。家庭や職場の回線が知らないうちに他人の通信の中継に使われる危険は、端末の選び方と回線の監視の両方に関わる。",
+      "caveat": "台数や製造元の関与についての判断はGoogleの分析によるもので、独立に検証していない。製造元側の主張は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "gtig-xcpe-set-top-box-botnet",
+      "language": "en",
+      "observed_at": "2026-11-03T04:58:31+09:00",
+      "published_at": "2026-11-02T14:00:00Z",
+      "role": "brief",
+      "selection_reason": "機器の製造元自身が裏口を仕込んでいた事例で、買った時点で端末が信頼できないという供給網の問題を示した。",
+      "source_domain": "cloud.google.com",
+      "source_fact": "GoogleのGTIGは11月2日、130万台を超えるテレビ用の受信機を不正なネットワーク（ボットネット）に組み込んでいた裏口「XCPE」を、業界の協力先とともに停止したと発表した。Googleは、Android機器を製造するVideostrong Technologyが金銭目的でこれを意図的に開発・運用していたと高い確度で判断したとしている。裏口は工場出荷時のファームウェアに入っており、ほかの犯罪者の不正なプログラムを読み込ませ、広告の不正、利用者に知らせない中継拠点（住宅用プロキシ）への組み込み、追加の不正なプログラムの導入に使われていた。関連する指令用のドメインの停止で、少なくとも1,000万台の別の感染機器への接続も断てると見ている。Googleは同社との関係を断ち、Googleのアプリを載せた機器を作ることを禁じ、審査の手順を改めたという。分析には日本の警察庁なども協力した。",
+      "source_kind": "analysis",
+      "source_title": "Shutting the Door on the XCPE Botnet",
+      "source_url": "https://cloud.google.com/blog/topics/threat-intelligence/shutting-the-door-on-the-xcpe-botnet/",
+      "title": "Google、テレビ用の受信機130万台超に組み込まれた裏口と、その上の不正な仕組みを停止",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-11-03T04:58:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "データセンターの建設は、電力網に余裕がある地域を探す競争になりつつある。需要を下げる約束は地域の合意を得る材料になるが、どの程度の頻度と規模で実際に下げるかは個別の契約次第になる。",
+      "caveat": "1,000メガワットの調整や料金への効果はOpenAIと電力会社の説明によるもので、契約の条件は確認していない。拠点はまだ開発中。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-grid-protectors-program",
+      "language": "en",
+      "observed_at": "2026-11-03T04:58:31+09:00",
+      "published_at": "2026-11-02T15:00:00Z",
+      "role": "brief",
+      "selection_reason": "AIの計算拠点の電力需要が地域の電気料金や供給の問題として扱われるなかで、開発企業が需要を調整する側に回る方針を示した。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは11月2日、今後の計算拠点が電力網の逼迫時に電力の使用を減らせるようにする全国的な取り組み「Grid Protectors Program」を始めると発表した。電力会社や規制当局と、どれだけの量を、どれだけ早く、どれだけの時間減らすかの取り決めを地域ごとに結ぶとしている。米ジョージア州エフィンガム郡に計画する拠点では、送電などの設備と電気の供給に必要な費用を全額負担することを約束し、Georgia Powerとの合意には最大1,000メガワットの需要の調整が含まれるという。同社はこれを平均的な家庭約70万世帯分の電力需要に当たると説明している。この拠点を取り組みの試行の場にするとしている。",
+      "source_kind": "official",
+      "source_title": "Introducing the Grid Protectors Program",
+      "source_url": "https://openai.com/index/grid-protectors-program",
+      "title": "OpenAI、計算拠点が電力の逼迫時に使用量を減らす取り組み「Grid Protectors」を開始",
+      "topics": [
+        "infrastructure",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-11-03T04:58:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "差分だけを処理する最適化は、何が変わったかを取り違えると古いデータを配る危険がある。わからないときは全体を作り直すという原則と、本番の入力を使った比較の仕組みは、他の配信系の設計にも参考になる。",
+      "caveat": "数値はCloudflare自身の計測で、独立に検証していない。個々のゾーンでの遅延を保証するものではないと記事自身も書いている。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-dns-targeted-zone-builds",
+      "language": "en",
+      "observed_at": "2026-11-03T04:58:31+09:00",
+      "published_at": "2026-11-02T14:00:00Z",
+      "role": "brief",
+      "selection_reason": "多くのサイトが頼る基盤で、正しさを保ったまま処理を小さくする手順を、数値と検証方法とともに示した。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは11月2日、DNSの記録や設定の変更を、世界の配信網で使えるデータに変える処理の見直しを報告した。変更の受け付けは2022年の毎秒約250件から約700件に増え、2,000万件を超える記録を持つゾーンもあるという。変わった部分だけを作り直せると証明できるときに最小の作業を選ぶ仕組みと、同じゾーンへの作業をまとめる新しい順番待ちの仕組みを入れ、確信が持てない場合は全体を作り直す。24時間の計測では作業の92.95%が全体の作り直しを避け、メモリーの使用量のピークは79GiBから12GiBに85%減った。変更から書き込みまでの中央値は約7.7秒から約3.3秒に縮んだとしている。本番と同じ入力を処理する別の環境で、出力が一致するかを比べてから展開したという。",
+      "source_kind": "analysis",
+      "source_title": "How we halved DNS build delay and cut memory use by 85%",
+      "source_url": "https://blog.cloudflare.com/dns-targeted-zone-builds/",
+      "title": "Cloudflare、DNSの変更を配信網に反映する処理を見直し、待ち時間を半分、メモリーを85%削減",
+      "topics": [
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-03T04:58:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "隔離環境は安全のために使われるが、コードの置き場所の設計を誤ると、依存関係の衝突や成果の受け渡しで手間が増える。作業の任せ方に応じて構成を選ぶ必要がある。",
+      "caveat": "記事は自社の道具の使い方の解説で、示された構成を実際に試してはいない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "docker-sandbox-checkout-workflows",
+      "language": "en",
+      "observed_at": "2026-11-03T04:58:31+09:00",
+      "published_at": "2026-11-02T14:00:00Z",
+      "role": "brief",
+      "selection_reason": "エージェントを隔離して動かすとき、何を共有し何を分けるかで、人の関わり方が変わることを具体的に示した。",
+      "source_domain": "www.docker.com",
+      "source_fact": "Dockerは11月2日、コーディングエージェントをDocker Sandboxで動かす際に、作業するコードをどこに置くかの選び方を解説した。手元の作業ディレクトリをそのまま共有する方法、作業ごとに別のディレクトリと枝（ブランチ）を用意する方法、リポジトリを隔離環境の中だけに置く方法を比べている。共有すれば編集を手元で即座に見られるが、枝の切り替えが相手にも影響する。Gitのworktreeを一つだけ渡すとGitの管理情報に届かず、状態の確認やコミットは手元で行う必要があるため、sbxは手元のコードを読み取り専用で渡して独立した複製を作る方式を用意しているという。中に置く方法は遠隔の開発機に近く、成果は枝を送って受け取る。",
+      "source_kind": "documentation",
+      "source_title": "Where should your code live in a Docker Sandbox?",
+      "source_url": "https://www.docker.com/blog/docker-sandbox-code-checkout-workflows/",
+      "title": "Docker、エージェントを隔離環境で動かすときのコードの置き場所を3通りに整理",
+      "topics": [
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-11-03T04:58:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "漏えいした鍵が攻撃の入口になる事例が続くなかで、どのリポジトリが検査の外にあるかを把握することは、対策の優先順位を決める出発点になる。",
+      "caveat": "表示の正確さや、評価に必要な権限の詳細は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-risk-assessment-protection-status",
+      "language": "en",
+      "observed_at": "2026-11-03T04:58:31+09:00",
+      "published_at": "2026-11-02T15:47:21Z",
+      "role": "watch",
+      "selection_reason": "検査の仕組みが行き届いていないリポジトリを見つける作業を、評価の結果から直接たどれるようにする変更。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月2日、コードのセキュリティと秘密情報の危険度の評価で、見つかった問題が保護の対象のリポジトリにあるか、対象外のリポジトリにあるかを表示するようにしたと発表した。保護の範囲をどこに広げるべきかを見つけやすくするためとしている。組織の管理者とセキュリティの担当者が、組織のSecurityタブのAssessmentsから評価を始められる。GitHub Enterprise CloudとGitHub Teamで使え、秘密情報の評価はGitHub Enterprise Server 3.24でも使えるようになるという。",
+      "source_kind": "release",
+      "source_title": "Security risk assessments include repository protection status",
+      "source_url": "https://github.blog/changelog/2026-11-02-security-risk-assessments-include-repository-protection-status",
+      "title": "GitHub、セキュリティの危険度評価に、各リポジトリが保護の対象かどうかを表示",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-03T04:58:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "保存したまま忘れられたスナップショットは、気づきにくい固定費になりやすい。個別に費用が見えれば、保存の方針を見直す根拠になる。",
+      "caveat": "請求への反映の時期や、過去の分の扱いは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-rds-per-snapshot-billing",
+      "language": "en",
+      "observed_at": "2026-11-03T04:58:32+09:00",
+      "published_at": "2026-11-02T18:43:00Z",
+      "role": "watch",
+      "selection_reason": "バックアップの費用を、どのスナップショットが生んでいるかまで分けて見られるようにする変更。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは11月2日、Amazon RDSでスナップショットごとに費用を確認できるようにしたと発表した。これまでは、スナップショットの費用は費用と使用状況の報告やCost Explorerでデータベースのインスタンス単位にまとめて表示されていた。スナップショットに費用配分のタグを付けると、それぞれの費用がわかるという。全てのRDSのスナップショットで追加料金なしに既定で有効になり、全てのRDSのエンジン、全ての商用の地域とAWS GovCloud (US)で使える。",
+      "source_kind": "release",
+      "source_title": "Amazon RDS now supports per snapshot billing",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/amazon-rds-per-snapshot-billing/",
+      "title": "Amazon RDS、スナップショットごとの費用がわかるように",
+      "topics": [
+        "infrastructure",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-03T04:58:32+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AIの道具を使って一人で事業を回す人は増えているが、アカウントや鍵の管理は一人の注意に頼りがちになる。公的な手引きは、何から始めるかを決める足場になる。",
+      "caveat": "手引きの本文は確認しておらず、発表の記事の内容によっている。日本の事業者にそのまま当てはまるかは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nist-solopreneur-cybersecurity-guide",
+      "language": "en",
+      "observed_at": "2026-11-03T04:58:32+09:00",
+      "published_at": "2026-11-02T12:00:00Z",
+      "role": "watch",
+      "selection_reason": "専門の担当者を置けない最小単位の事業者に向けて、公的な基準を具体的な行動に落とした。",
+      "source_domain": "www.nist.gov",
+      "source_fact": "米国立標準技術研究所（NIST）は11月2日、自分だけが唯一の有給の働き手である個人事業主向けに、サイバーセキュリティの基本をまとめた手引き「Small Business Cybersecurity: Non-Employer Firms（NIST Cybersecurity White Paper 50）」を公開したと発表した。NISTのサイバーセキュリティ・フレームワークから、個人事業主に役立つ対策を選んで優先順位を付け、実行できるようにする内容で、専門知識を前提とせず平易な言葉で書かれているという。米国では2,800万を超える小規模事業者がこの区分に当たるとしている。以前の「Small Business Information Security: The Fundamentals（NISTIR 7621）」を改訂し、対象を絞ったものとしている。",
+      "source_kind": "official",
+      "source_title": "Self-Employed? Solopreneur? NIST Has a Cybersecurity Guide Just for You",
+      "source_url": "https://www.nist.gov/news-events/news/2026/11/self-employed-solopreneur-nist-has-cybersecurity-guide-just-you",
+      "title": "NIST、従業員のいない個人事業主向けのサイバーセキュリティの手引きを公開",
+      "topics": [
+        "policy",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-11-03T04:58:32+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-11-03T05:00:14+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AOIFUTURE News：盗まれたAIの利用枠が転売される「LLMJacking」、GitHubは危険なCIの設定を12月から既定で停止",
+  "topics": [
+    {
+      "description": "利用規則・標準・制度とその運用。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・統制"
+    },
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計・評価・統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "開発・業務・運用を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "推論・学習・配信を支えるハードウェアとソフトウェア基盤。",
+      "id": "infrastructure",
+      "label_en": "Infrastructure",
+      "label_ja": "計算基盤"
+    },
+    {
+      "description": "基盤モデルの能力と提供・適応の条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    }
+  ]
+}
