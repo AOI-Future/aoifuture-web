@@ -289,7 +289,7 @@ function CommissionPanel() {
         AIを含む仕事の流れを、役割・判断・引き継ぎ・観測まで含めて設計します。
         導入前の整理から、小さな実装と運用の立ち上げ、クリエイティブ制作まで。
       </p>
-      <LaunchLink accent="cyan" href="/consulting">DISCUSS A WORKFLOW</LaunchLink>
+      <LaunchLink accent="cyan" href="/contact">DISCUSS A WORKFLOW</LaunchLink>
     </div>
   );
 }
@@ -368,7 +368,7 @@ function AboutPanel() {
           <ExternalLink accent="amber" href="https://dispatch.aoifuture.com/">
             READ DISPATCH
           </ExternalLink>
-          <LaunchLink accent="cyan" href="/consulting">
+          <LaunchLink accent="cyan" href="/contact">
             DISCUSS A WORKFLOW
           </LaunchLink>
         </div>
