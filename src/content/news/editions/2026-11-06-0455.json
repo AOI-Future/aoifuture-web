@@ -1,0 +1,335 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-11-06T04:55:00+09:00",
+  "dek": "OpenAIが範囲内での脆弱性検証に特化したモデルを出し、GoogleとTencentは生成とオープン基盤を更新。端末推論と計算拠点の選択肢も同日に並んだ。",
+  "edition_date": "2026-11-06",
+  "edition_id": "2026-11-06-0455",
+  "edition_note": "2026年11月3日から5日（各発表元の日付）に公開された公式発表とリリース情報から選んだ。直近72時間の範囲で、期間の延長はしていない。",
+  "generated_at": "2026-11-06T04:55:00+09:00",
+  "items": [
+    {
+      "aoi_note": "能力の引き上げと範囲遵守をセットで出す構図は、エージェントを実システムに近づけるときの論点そのものだ。利用は承認制で始まるため、誰がどの権限で使えるかが次の実務になる。",
+      "caveat": "ベンチマークの数値と実案件の件数はOpenAIの発表に基づき、独立には検証していない。Daybreakの審査基準や提供範囲の詳細も確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "gpt6-cyber-daybreak",
+      "language": "ja",
+      "observed_at": "2026-11-06T04:52:10+09:00",
+      "published_at": "2026-11-05T00:00:00+09:00",
+      "role": "lead",
+      "selection_reason": "防御側に寄せた専用モデルと、範囲内に留まるための評価を同時に示した一次発表。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは11月5日、認可された範囲で脆弱性の発見と検証を行うサイバーセキュリティ向けモデルGPT-6 Cyberを発表した。ExploitGymでは成功率48.5%で、前世代のGPT-5.6 Cyberの32.1%から相対で約51%の改善とした。範囲外のサービスを攻めることを避ける評価では、配備用の指示なしで99.93%、指示ありで100%の事例で範囲内に留まったと説明している。Firefoxでは未公表の高深刻度の脆弱性を81件特定し、Linuxでは948件の権限昇格のエクスプロイトを作成したという。Preparedness FrameworkではサイバーセキュリティをHighからCriticalに引き上げた。当初はAPIとCodexで、承認されたDaybreak Redの顧客の一部に提供する。",
+      "source_kind": "official",
+      "source_title": "GPT‑6 Cyber: Advancing the frontier of aligned cybersecurity agents",
+      "source_url": "https://openai.com/index/introducing-gpt-6-cyber",
+      "title": "OpenAI、認可範囲内での脆弱性検証に特化したGPT-6 Cyberを発表。PreparednessはCriticalへ",
+      "topics": [
+        "security",
+        "models",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-11-06T04:52:10+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "作り直しではなく会話で直す設計は、量産する側のコスト感覚に直結する。一般提供に合わせた透かしと企業向けの枠は、配信面での扱いを意識した動きだ。",
+      "caveat": "品質の改善幅や実際の課金額は試していない。スポーツ動作や複雑な物理など、本人も改善途上と記している領域がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "gemini-omni-1-2-flash",
+      "language": "ja",
+      "observed_at": "2026-11-06T04:52:40+09:00",
+      "published_at": "2026-11-05T00:00:00+09:00",
+      "role": "major",
+      "selection_reason": "動画生成の長さと編集の回し方、価格を同時に変える公式の一般提供告知。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleは11月5日、Gemini Omni 1.2 FlashをGemini APIとGoogle Cloud向けに一般提供すると発表した。ネイティブで最大15秒の動画生成に対応し、1秒刻みで3〜15秒を指定できる。複数ターンの対話で同じクリップを編集でき、参照画像や短い動き、音声の指示への追随も強化したという。料金はOmni 1.1から30%下げ、720pで1秒あたり0.07ドルとした。出力にはSynthIDの透かしが入り、Provisioned Throughputも利用できるとしている。",
+      "source_kind": "official",
+      "source_title": "Gemini Omni 1.2 Flash: 15-second video and lower pricing",
+      "source_url": "https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemini-omni-1-2-flash/",
+      "title": "Google、Gemini Omni 1.2 Flashを一般提供。15秒動画と対話編集、料金は3割下げ",
+      "topics": [
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-06T04:52:40+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "重み公開の予告と、攻撃材料を学習から外す方針を同時に書く点は、オープン化の実務的な線引きを示している。製品側との共同設計を前面に出しているのも特徴だ。",
+      "caveat": "ベンチマークや社内評価の数値はTencentの発表に基づく。重みとシステムカードは本稿時点では未公開で、独立評価はできない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "tencent-hy4",
+      "language": "ja",
+      "observed_at": "2026-11-06T04:53:05+09:00",
+      "published_at": "2026-11-04T00:00:00+09:00",
+      "role": "major",
+      "selection_reason": "オープン寄りの基盤に、画面操作と安全面の説明をセットで出した公式発表。",
+      "source_domain": "www.tencent.com",
+      "source_fact": "Tencentは11月4日、最新の大規模言語モデルTencent Hy4を発表した。視覚理解を初めて加え、指示追従、長い文脈の理解、長い見通しのエージェント作業を強化したとしている。コマンドラインとGUIの両方を使うコンピュータ操作にも対応し、BlenderやCADなどの専門ソフト向けの訓練も行ったと説明している。モデルの重みとシステムカードは近日中に公開する予定で、サイバーセキュリティと生物安全に重点を置くと記した。攻撃的な悪用向けの素材は学習データから外し、Xuanwu LabとKeen Security Labの評価では大きな懸念はなかったとしている。Tencent Cloud TokenHubやWorkBuddy、CodeBuddy、Yuanbaoなどで利用でき、入力100万トークンあたり約0.90米ドルなどの料金を維持する。",
+      "source_kind": "official",
+      "source_title": "Tencent Launches Hy4, Joining the Ranks of the World's Leading Open-Source AI Models",
+      "source_url": "https://www.tencent.com/tencent-launches-hy4-joining-the-ranks-of-the-worlds-leading-open-source-ai-models/",
+      "title": "Tencent、Hy4を発表。視覚理解とコンピュータ操作を追加し、重み公開を予告",
+      "topics": [
+        "models",
+        "agents",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-11-06T04:53:05+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "モデル発表と同日に拠点の電源設計を出す構図は、生成AIの制約がソフトではなく地域のインフラにあることを改めて示す。需要応答ではないが、誰が設備費を負担するかの約束が前面にある。",
+      "caveat": "投資額や702MW、CCSの規模はGoogleの説明に基づく。稼働時期や実際の排出削減量は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-wyoming-datacenter",
+      "language": "ja",
+      "observed_at": "2026-11-06T04:53:30+09:00",
+      "published_at": "2026-11-05T00:00:00+09:00",
+      "role": "major",
+      "selection_reason": "計算需要の立地と電源・水の条件を、金額と技術構成付きで示した一次発表。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleは11月5日、Wyoming州で初のデータセンターを建設すると発表し、長期で170億ドルを投資するとした。Tallgrass Energy、Black Hills Energy、American Electric Power（AEP）、Related Digitalと提携する。AEPとの契約には、Bloom Energy製の燃料電池による商用規模の702MWの開発と、二酸化炭素の回収・貯留（CCS）が含まれるという。施設は空冷とし、地域の水資源への負担を抑えるとしている。コミュニティとの協議を踏まえ、教育や人材育成への投資と、成長局面を議論するCommunity Councilの設置も示した。",
+      "source_kind": "official",
+      "source_title": "Investing in Wyoming’s infrastructure, energy and workforce",
+      "source_url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/global-network/wyoming-data-center/",
+      "title": "Google、Wyomingに初のデータセンター。170億ドル投資と702MW級の燃料電池＋CCS",
+      "topics": [
+        "infrastructure",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-11-06T04:53:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "静止画から短い動きへ踏み出す一方で、編集の指示をピンポイントにする道具も増えている。ブランド要素を保ったまま回す用途が主戦場になりそうだ。",
+      "caveat": "速度比較や品質差はOpenAIの説明に基づく。料金の実額は試算していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-images-2-6",
+      "language": "ja",
+      "observed_at": "2026-11-06T04:53:50+09:00",
+      "published_at": "2026-11-04T00:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "画像の速度と編集の制御点を公式に更新したリリース。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは11月4日、Images 2.6をChatGPT、Codex、APIで提供すると発表した。画像生成は従来より約50%速くなり、APIではGPT-Image-2.6 FlareとSunburstを選べる。品質をlowにしたFlareは最短約6秒で生成できるという。GIFによるアニメーション、APIへの画像マークアップ、SVG出力、複雑さ（complexity）パラメータを追加した。ChatGPTとCodexでは全プランで世界向けに利用できるとしている。",
+      "source_kind": "official",
+      "source_title": "Introducing Images 2.6",
+      "source_url": "https://openai.com/index/introducing-images-2-6/",
+      "title": "OpenAI、Images 2.6を公開。生成は約50%高速化し、GIFとAPIの編集制御を追加",
+      "topics": [
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-06T04:53:50+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "LLMJackingのような利用権の窃取が話題になるなか、リポジトリ上の鍵を発行元へ返す経路が増えるのは実務的だ。誤検知の抑制は運用負荷そのものへの対策でもある。",
+      "caveat": "検知の再現率や、転送後の失効までの時間は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-secret-scanning-spacex",
+      "language": "ja",
+      "observed_at": "2026-11-06T04:54:10+09:00",
+      "published_at": "2026-11-05T00:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "秘密情報の自動検知網に、新たな発行元と誤検知対策を足した公式の変更点。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月5日、Secret scanningの更新を告知した。SpaceXがパートナーに加わり、公開リポジトリで見つかった秘密情報を発行元へ転送して失効やローテーションにつなげる。新しい検知対象としてstarlink_public_api_v2_secretを追加した。あわせてAlibaba、AWS、Google、OpenVSX、Pydantic Services、Tencentなどの検知器で、対になる秘密が辞書フィルタで落ちた場合の単独一致を抑えるなど、誤検知を減らす変更を入れた。",
+      "source_kind": "release",
+      "source_title": "Secret scanning upgrades detectors, adds SpaceX as partner",
+      "source_url": "https://github.blog/changelog/2026-11-05-secret-scanning-upgrades-detectors-adds-spacex-as-partner/",
+      "title": "GitHub、Secret scanningにSpaceXをパートナー追加。Starlink API秘密の検知を開始",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-06T04:54:10+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "コストと機密、オフラインを理由にローカルへ寄せる動きが、Copilotの接続口として具体化した。ハード要件がはっきりしている点は導入判断に役立つ。",
+      "caveat": "ベンチマーク数値はMicrosoftの測定に基づく。MacやAMD GPUへの対応は今後の予定とされ、本稿では未検証。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "foundry-local-qwen38",
+      "language": "ja",
+      "observed_at": "2026-11-06T04:54:30+09:00",
+      "published_at": "2026-11-05T00:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "エージェント型コーディングを端末に閉じる公式の導入経路を示した。",
+      "source_domain": "devblogs.microsoft.com",
+      "source_fact": "Microsoftは11月5日、Foundry LocalでQwen3.8-27Bを開発者の端末上で動かし、GitHub CopilotのBring Your Own Key（BYOK）経由で接続する手順を公開した。4ビット量子化でおよそ18GBになり、VRAM 24GB以上のNVIDIA GPUを目安とする。Foundry Local CLI 0.13.0以降と、別途のCUDA／cuDNNが必要。ONNX Runtime上でDFlash2の投機的デコードやKVキャッシュ量子化などを使い、llama.cppとの比較ではRTX 5090とDGX Sparkで生成速度が上回ったとしている。ローカルモデルは高度な推論ではクラウドに劣り得るため、日常作業との併用を想定すると記した。",
+      "source_kind": "official",
+      "source_title": "Bring Agentic Coding On-Device with Foundry Local",
+      "source_url": "https://devblogs.microsoft.com/foundry/foundry-local-agentic-coding-qwen3-8-27b/",
+      "title": "Microsoft、Foundry LocalでQwen3.8-27Bを端末実行しGitHub Copilotへ接続する手順を公開",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-06T04:54:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "モデルそのものではなく、誰がどこで作業するかの境界を整える変更だ。グローバル展開とデータ主権の両立を、SSOを壊さずに進めるための地味な一手。",
+      "caveat": "設定手順の実機確認はしていない。料金への影響も未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "sagemaker-idc-multiregion",
+      "language": "ja",
+      "observed_at": "2026-11-06T04:54:45+09:00",
+      "published_at": "2026-11-05T00:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "学習・開発環境の配置と身元管理のリージョン制約を外す公式の機能追加。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは11月5日、Amazon SageMaker AIがIAM Identity Center（IdC）のマルチリージョン複製に対応したと発表した。これまでIdCのプライマリとSageMaker AI Studioのドメインは同一リージョンである必要があったが、プライマリを使いたいリージョンへ複製できるようになった。中央の身元管理を保ったまま、データ所在やコンプライアンスに合わせたリージョンでStudioを使えるとしている。東京を含むSageMaker AI Studio対応の標準リージョンで利用できる。",
+      "source_kind": "official",
+      "source_title": "Amazon SageMaker AI Studio Now Supports IAM Identity Center Multi-Region Replication",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/amazon-sagemaker-ai-studio-iam/",
+      "title": "AWS、SageMaker AI StudioでIAM Identity Centerの他リージョン複製に対応",
+      "topics": [
+        "tools",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-11-06T04:54:45+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "閉域APIと自前運用のあいだで、監査可能性と二次利用の権利を売りにする立場だ。数値は自社指標のため、採用判断には別の検証が要る。",
+      "caveat": "ベンチマークはFlowerの選定と測定に基づく。EU推論の契約条件や可用性は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "flower-endeavor-1-1",
+      "language": "ja",
+      "observed_at": "2026-11-06T04:55:00+09:00",
+      "published_at": "2026-11-03T00:00:00+09:00",
+      "role": "watch",
+      "selection_reason": "能力主張に加え、推論の場所と成果物の権利を契約の中心に据えた公式発表。",
+      "source_domain": "flower.ai",
+      "source_fact": "Flower Labsは11月3日、Endeavor 1.1を発表した。GPQAは92.0から94.4、HumanEvalは98.2から99.9など、自社の複合指標でOpenAIやAnthropicの先行提供を上回ると主張している。画像入力に対応し、EU域内のGPUでの推論をグローバル提供と並んで選べるとした。思考過程を読み取れる形で残し、推論の出力と痕跡を利用者が保持・学習に使える権利を強調している。Flower管理、プライベートクラウド、オンプレミスでの配備を選べる。",
+      "source_kind": "official",
+      "source_title": "Introducing Endeavor 1.1",
+      "source_url": "https://flower.ai/blog/2026-11-03-introducing-endeavor-1.1",
+      "title": "Flower Labs、Endeavor 1.1を発表。EU推論と思考過程の監査、出力の学習利用を前面に",
+      "topics": [
+        "models",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-11-06T04:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "コード生成だけでなく、物理制約のある作業を会話で回す実験が並んでいる。成果の再現性は各事例の条件に依存するため、手法のカタログとして読むのが近い。",
+      "caveat": "各事例の成功率や所要時間は記事の記述に依拠し、独立再現はしていない。紹介ツールの利用条件も未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-omniverse-frontier-agents",
+      "language": "ja",
+      "observed_at": "2026-11-06T04:55:20+09:00",
+      "published_at": "2026-11-05T00:00:00+09:00",
+      "role": "watch",
+      "selection_reason": "エージェントを設計ツールと物理シミュレータの間に置く実務例を、提供者自身が整理した記事。",
+      "source_domain": "blogs.nvidia.com",
+      "source_fact": "NVIDIAは11月5日、GPT-6 AstraなどのフロンティアモデルとOmniverseのライブラリを組み合わせ、シミュレーションアプリを組み立てる開発者の事例をまとめて公開した。自然言語でエージェントに指示し、物理・描画・センサーのシミュレーションを接続して結果を確認・修正する流れを示している。Houdiniでの資産作成、CADからの分解作業の検証、倉庫のスケール試験、ケーブル配線のロボット制御、デジタルツインの改善など、社内外の具体例を列挙した。",
+      "source_kind": "analysis",
+      "source_title": "How Developers Turn Ideas Into Simulations With Frontier AI Agents",
+      "source_url": "https://blogs.nvidia.com/blog/developers-simulation-frontier-ai-agents/",
+      "title": "NVIDIA、Omniverse上でフロンティアモデルを使いシミュレーションを組み立てる事例を公開",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-06T04:55:20+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-11-06T04:55:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "認可範囲のサイバー検証と、動画・端末・拠点が同時に広がる動き",
+  "topics": [
+    {
+      "description": "脆弱性対応、秘密情報の検知、防御用モデルと検証の枠組み",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "エージェントの実行環境、端末推論、シミュレーション連携",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "開発ツール、IDE連携、クラウドの運用機能",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "データセンター、電力、地域の計算拠点",
+      "id": "infrastructure",
+      "label_en": "Infrastructure",
+      "label_ja": "計算基盤"
+    },
+    {
+      "description": "身元管理、コンプライアンス、利用の境界",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・統制"
+    },
+    {
+      "description": "基盤モデル、マルチモーダル、オープンな公開",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    }
+  ]
+}
