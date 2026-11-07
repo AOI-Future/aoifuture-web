@@ -52,6 +52,14 @@ export const apps: AppEntry[] = [
     desc: '実際の街の地理から裏世界を生成する、LLM不要の軽量ブラウザ探索ゲーム',
     status: 'BETA',
   },
+  {
+    id: '005',
+    slug: 'hardshell',
+    name: 'HARDSHELL',
+    desc: 'サーバーの診断結果と対応記録をつなぐ。MIT Communityと、提供準備中のBusiness管理・監査層',
+    status: 'IN DEV',
+    repo: '0xshugo/hardshell',
+  },
   // 例) 育って独自ドメインを持ったら `site` を足すだけ（紹介ページは残す）:
   // { id:'003', slug:'studiee', name:'STUDIEE', desc:'…', status:'LIVE', repo:'studiee-ios', site:'https://studiee.app' },
 ];
