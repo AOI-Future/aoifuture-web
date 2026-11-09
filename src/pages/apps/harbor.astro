@@ -1,7 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { getAppBySlug, githubRepoUrl } from '../../data/apps';
 
-const GH = 'https://github.com/AOI-Future/aoi-harbor';
+const harbor = getAppBySlug('harbor');
+const GH = harbor?.repo ? githubRepoUrl(harbor.repo) : 'https://github.com/AOI-Future/aoi-harbor';
 
 const tiers = [
   {
