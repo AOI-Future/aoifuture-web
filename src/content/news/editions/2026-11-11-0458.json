@@ -1,0 +1,380 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-11-11T04:58:00+09:00",
+  "dek": "OpenAIは研究用の推論を35秒以内に止めるControl Roomを公開し、NVIDIAはエージェント統制のOpenShellをCNCFに寄贈した。Gitの6件の脆弱性修正、Claude Fable 5.2のBedrock提供、AWSのNitro Sandboxesも並んだ。",
+  "edition_date": "2026-11-11",
+  "edition_id": "2026-11-11-0458",
+  "edition_note": "2026年11月9日から11月10日（各発表元の日付）に公開された公式発表、リリース情報、セキュリティ勧告、技術解説から選んだ。直近72時間の範囲で、期間の延長はしていない。",
+  "generated_at": "2026-11-11T04:58:00+09:00",
+  "items": [
+    {
+      "aoi_note": "止める権限を推論の入口に集め、障害時は止まる側に倒すという考え方は、エージェントを社内で動かす企業にもそのまま当てはまる。",
+      "caveat": "35秒という数値や適用範囲はOpenAIの説明で、運用実績や第三者による検証は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-control-room",
+      "language": "ja",
+      "observed_at": "2026-11-11T04:54:25+09:00",
+      "published_at": "2026-11-09T22:00:00+09:00",
+      "role": "lead",
+      "selection_reason": "停止の仕組みを研究者のコードではなく推論層に置くという、具体的な設計判断まで公開した安全対策の一次資料。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは、研究インフラ上のモデル実行を追跡し、安全上・セキュリティ上の懸念が生じたときに止める中央システムControl Roomを説明した。エージェント的な推論を行う研究ジョブは承認済みの安全性評価と結びつけてジョブIDを取得し、推論エンジンは要求ごとにControl Roomへ許可を確認する。停止されたジョブの要求は拒否され、停止の指示から出力が止まるまでの最大時間は35秒で、これは認可のキャッシュ層に由来するとしている。Control Roomが落ちた場合はすべての推論要求を拒否する設計で、最先端モデルの研究ジョブには適用済み、残りの研究ジョブにも数日以内に広げるという。",
+      "source_kind": "official",
+      "source_title": "Control Room: A central system to track and stop model workloads across our research infrastructure",
+      "source_url": "https://openai.com/index/control-room",
+      "title": "OpenAI、研究用の推論を一元的に止める仕組みControl Roomを公開。停止判断から最大35秒で出力を止める",
+      "topics": [
+        "safety",
+        "agents",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-11T04:54:25+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントの権限管理がKubernetesと同じく共通の基盤として扱われ始めた。各社が独自に作っていた統制の層が標準化に向かう兆しだ。",
+      "caveat": "利用組織数や貢献数、Snapshotの短縮時間はNVIDIAと協力企業の発表値で、独立した検証はしていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-openshell-cncf",
+      "language": "ja",
+      "observed_at": "2026-11-11T04:54:05+09:00",
+      "published_at": "2026-11-11T01:00:03+09:00",
+      "role": "major",
+      "selection_reason": "エージェントの統制と実行基盤を、特定企業の製品ではなく業界団体の共有物に移す動きとして重要。",
+      "source_domain": "blogs.nvidia.com",
+      "source_fact": "NVIDIAは11月10日、KubeConで、自律エージェントを保護・統制するオープンソースの実行環境OpenShellをCNCFに寄贈し、Sandboxプロジェクトになると発表した。OpenShellはエージェントがツールや推論サービスを使う際に決定的な制御でポリシーを適用する。あわせて、Google発で長時間動くエージェントをKubernetes上で運用するAgent Substrateへの貢献、NVIDIA Kubernetes EngineとKubernetes Recipesの公開プレビュー、推論の複製を数秒で復元するNVIDIA Snapshotも示した。CrusoeはSnapshotで準備完了までの時間を約8分から31秒に縮めたとしている。",
+      "source_kind": "official",
+      "source_title": "NVIDIA Expands Open Source Commitment With OpenShell Donation and New AI Infrastructure",
+      "source_url": "https://blogs.nvidia.com/blog/open-source-openshell-infrastructure/",
+      "title": "NVIDIA、エージェント統制の実行環境OpenShellをCNCFに寄贈。GoogleのAgent Substrateにも参加",
+      "topics": [
+        "agents",
+        "open-source",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-11T04:54:05+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントが外部リポジトリを自動でクローン・マージする場面が増えるほど、こうした脆弱性の影響範囲は広がる。実行環境に同梱されたGitの更新漏れに注意したい。",
+      "caveat": "各脆弱性の深刻度や悪用の有無は記事から確認できる範囲にとどまり、個別の勧告の内容は独立に検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "git-six-vulnerabilities",
+      "language": "ja",
+      "observed_at": "2026-11-11T04:54:06+09:00",
+      "published_at": "2026-11-11T03:00:00+09:00",
+      "role": "major",
+      "selection_reason": "開発者の手元とCI、エージェントが使うGitのすべてに関わる、更新が必要な勧告。",
+      "source_domain": "github.blog",
+      "source_fact": "Gitプロジェクトは11月10日、6件の脆弱性を修正した新版を公開した。悪意あるリポジトリを再帰的にクローンした際の任意コード実行、プロトコルv2でサーバーが示すHEADを通じた意図しないファイルへの書き込み、マージやバイナリパッチ処理時のメモリ破壊などが含まれる。修正はGit 2.56.1に入り、2.55.1から2.50.2までの各系列にも提供される。GitHubはgithub.comなどに修正を展開済みで、GitHub Enterprise Server向けにも更新版を出した。すぐ更新できない場合は、信頼できないリポジトリの再帰クローンや信頼できない内容のマージを避けるよう勧めている。",
+      "source_kind": "advisory",
+      "source_title": "Git security vulnerabilities announced",
+      "source_url": "https://github.blog/open-source/git/git-security-vulnerabilities-announced-7/",
+      "title": "Gitが6件の脆弱性を修正。悪意あるリポジトリの再帰クローンでコード実行の恐れ",
+      "topics": [
+        "security",
+        "open-source",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-11T04:54:06+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "性能だけでなく、データ保持と審査の扱いがモデル選定の条件になってきた。導入時は契約と設定の両方を見直す必要がある。",
+      "caveat": "性能や安全性の評価はAnthropicとAWSの説明によるもので、第三者による比較は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "claude-fable-5-2-aws",
+      "language": "ja",
+      "observed_at": "2026-11-11T04:54:10+09:00",
+      "published_at": "2026-11-10T05:04:37+09:00",
+      "role": "major",
+      "selection_reason": "最上位の汎用モデルに、利用条件として保持と人の確認が組み込まれた点が、企業導入の前提を変える。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは11月9日（米国時間）、AnthropicのClaude Fable 5.2とClaude Mythos 5.2をAmazon Bedrockなどで提供すると発表した。Fable 5.2はコーディングや科学の技術的な作業向けで、複数段階の作業を自ら検証しながら数時間から数日にわたり無人で進められるとしている。Mythos 5.2はサイバーセキュリティとライフサイエンス向けで、Anthropicの検証プログラムを通じてのみ提供される。Fable 5.2は既定で最大30日のデータ保持と人による安全確認が必要で、Bedrockでは確認をAWSの担当者がAWSの境界内で行う。",
+      "source_kind": "release",
+      "source_title": "Introducing Claude Fable 5.2 on AWS",
+      "source_url": "https://aws.amazon.com/blogs/machine-learning/introducing-claude-fable-5-2-on-aws/",
+      "title": "AnthropicのClaude Fable 5.2がAmazon Bedrockで利用可能に。既定で最大30日の保持と人による安全確認",
+      "topics": [
+        "models",
+        "enterprise",
+        "safety"
+      ],
+      "verification": {
+        "checked_at": "2026-11-11T04:54:10+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントがCIを回す機会が増えるほど、ログに出る値の管理は人の目だけでは追いつかない。",
+      "caveat": "検出精度や誤検知の傾向は公表されておらず、確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-secret-scanning-actions-logs",
+      "language": "ja",
+      "observed_at": "2026-11-11T04:54:10+09:00",
+      "published_at": "2026-11-09T18:01:37+09:00",
+      "role": "brief",
+      "selection_reason": "CIのログは秘密情報が漏れやすい場所で、検査範囲の拡大は実務への影響が大きい。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月9日、シークレットスキャンがGitHub Actionsのワークフローログも検査するようになったと発表した。公開プレビューで、GitHub Enterprise CloudのSecret ProtectionまたはAdvanced Securityを持つ企業が対象。ワークフローの実行完了後にログを検査し、結果はリポジトリのアラート一覧に表示される。有効化後に完了した実行だけが対象で、既存ログの遡及検査や、汎用パターン・カスタムパターンの検出は行わない。",
+      "source_kind": "release",
+      "source_title": "Secret scanning detects secrets in GitHub Actions workflow logs",
+      "source_url": "https://github.blog/changelog/2026-11-09-secret-scanning-detects-secrets-in-github-actions-workflow-logs",
+      "title": "GitHubのシークレットスキャンがActionsのワークフローログも対象に。公開プレビュー",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-11T04:54:10+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "生成されたコードを実行する環境の分離は、エージェント運用の基本装備になりつつある。",
+      "caveat": "性能が通常のEC2とほぼ同等という点はAWSの説明で、実測は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-nitro-sandboxes",
+      "language": "ja",
+      "observed_at": "2026-11-11T04:54:17+09:00",
+      "published_at": "2026-11-09T17:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "LLMが生成したコードを安全に動かす場所として、クラウド大手が分離の単位を細かくした。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは11月9日、Nitroハイパーバイザーが管理する軽量な仮想マシンNitro Sandboxesを発表した。Amazon EKSのポッド、Amazon ECSのタスク、軽量な仮想マシンを、中で動くAIエージェントを含めてそれぞれハードウェアで分離された環境で実行できる。暗号学的な証明で完全性を確かめた環境にだけ秘密情報を渡すこともできる。多くのNitro系EC2インスタンスで、全商用リージョンにおいて追加料金なしで使えるとしている。",
+      "source_kind": "release",
+      "source_title": "Introducing AWS Nitro Sandboxes on Amazon EKS, ECS and EC2 for hardware isolated pods, tasks and VMs",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/nitro-sandboxes-eks-ecs-ec2/",
+      "title": "AWS、ポッドやタスクごとにハードウェア分離するNitro Sandboxesを追加料金なしで提供",
+      "topics": [
+        "security",
+        "agents",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-11T04:54:17+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ハードの世代交代が速いほど、手書きのCUDAと高水準言語の間を埋める道具の価値が上がる。",
+      "caveat": "高速化の数値はMeta社内のワークロードでの結果で、外部での再現は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "meta-tlx-gpu-compiler",
+      "language": "ja",
+      "observed_at": "2026-11-11T04:54:10+09:00",
+      "published_at": "2026-11-11T01:59:31+09:00",
+      "role": "brief",
+      "selection_reason": "GPUの新機能にソフトウェアが追いつかない問題に、抽象化の層を一段足して答えた実務の記録。",
+      "source_domain": "engineering.fb.com",
+      "source_fact": "Metaは11月10日、GPUカーネル言語Tritonの拡張であるTLX（Triton Low-Level Extensions）の設計を解説した。ワープグループやクラスタ単位の実行の調整を明示的に書けるようにし、NVIDIAのHopperやBlackwellの新機能を使いやすくする。Meta社内では推薦モデルの学習と推論、大規模なLLMの事前学習で使われており、ある線形圧縮カーネルではNVIDIA H100で4倍の高速化、注意機構系のカーネルでは最大2倍の順方向の高速化を示したとしている。",
+      "source_kind": "analysis",
+      "source_title": "How We Built TLX: A Hardware-Native GPU Compiler for Production ML at Scale",
+      "source_url": "https://engineering.fb.com/2026/11/10/open-source/tlx-a-hardware-native-gpu-compiler-for-production-ml/",
+      "title": "Meta、Tritonを拡張するGPUコンパイラTLXの設計を解説。本番の学習と推論で利用",
+      "topics": [
+        "infrastructure",
+        "open-source",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-11T04:54:10+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントの中の小さな判断を生成モデルに任せず、確率つきの決定として切り出せると、検査や監査がしやすくなる。",
+      "caveat": "記事内の例は特定のモデルによるもので、精度や速度の比較は独立に確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "hf-decision-models",
+      "language": "ja",
+      "observed_at": "2026-11-11T04:54:17+09:00",
+      "published_at": "2026-11-10T09:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "分類や振り分けのような決まった形の判断を、生成とは別の部品として扱う流れを示した。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Hugging Faceは11月10日、入力に対して決められた選択肢ごとの確率を返すdecision modelの解説を公開した。テキストを一語ずつ生成する代わりに、アプリケーションが理解できる回答の候補に確率を割り当てる。TransformersがDecisionPipeline、AutoModelForDecision、DecisionConfigに対応したとし、TRLでの学習対応は執筆時点で未統合のプルリクエストだと記している。",
+      "source_kind": "release",
+      "source_title": "Decision Models in Hugging Face",
+      "source_url": "https://huggingface.co/blog/decision",
+      "title": "Hugging Face、文章を生成せず選択肢に確率を返すdecision modelをTransformersで扱えるように",
+      "topics": [
+        "models",
+        "open-source",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-11T04:54:17+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "医療は人の監督を前提にした自動化が試される場で、ここでの運用の作り方は他業界の参考になる。",
+      "caveat": "効果や安全性に関する具体的な数値は示されておらず、提携先での成果も確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-cloud-gemini-healthcare",
+      "language": "ja",
+      "observed_at": "2026-11-11T04:54:17+09:00",
+      "published_at": "2026-11-10T22:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "規制の厳しい医療で、エージェント的な業務処理を製品として出した事例。",
+      "source_domain": "blog.google",
+      "source_fact": "Google Cloudは11月10日、分断された臨床・運用・事務のシステムをまとめるAIの仕組みGemini for healthcareを発表した。電子カルテや請求のシステム、診療ガイドライン、Medicareのデータなどを組み合わせ、診療記録の要約や事前承認の審査のような複数段階の業務を、定めた制約と人の監督のもとで実行するとしている。HCA Healthcare、Highmark Health、Northwell Healthなどとともにプレビューで提供される。",
+      "source_kind": "official",
+      "source_title": "Google Cloud launches Gemini for healthcare.",
+      "source_url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/gemini-for-healthcare/",
+      "title": "Google Cloud、医療の業務をまたいで処理するGemini for healthcareをプレビュー提供",
+      "topics": [
+        "enterprise",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-11-11T04:54:17+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "放置されたリポジトリでも依存先の脆弱性は残る。社内で参照し続けているものは設定で明示的に守る必要がある。",
+      "caveat": "対象となるリポジトリの規模や理由とされるアラート量の増加の程度は公表されておらず、確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "dependabot-alerts-pause-inactive",
+      "language": "ja",
+      "observed_at": "2026-11-11T04:54:10+09:00",
+      "published_at": "2026-11-10T23:20:05+09:00",
+      "role": "watch",
+      "selection_reason": "脆弱性の発見とアラートの量が急増していることを、提供側が仕様変更で示した。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月10日、2026年12月8日から、過去1年間に活動のない多くのリポジトリでDependabotアラートを停止すると発表した。既存のアラートは削除ではなく保管され、いつでも戻せる。プッシュやリポジトリ作成、アラートの有効化が活動として数えられ、プッシュがあれば自動で再開する。セキュリティ設定でアラートを強制している場合などは対象外で、GitHub Enterprise Serverには適用されない。",
+      "source_kind": "release",
+      "source_title": "Dependabot alerts will pause on inactive repositories",
+      "source_url": "https://github.blog/changelog/2026-11-10-dependabot-alerts-will-pause-on-inactive-repositories",
+      "title": "GitHub、1年間動きのないリポジトリでDependabotアラートを12月8日から停止",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-11T04:54:10+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "推論サーバーの管理画面も攻撃対象として扱われる段階に入った。社内のGPU管理ツールの露出を点検したい。",
+      "caveat": "個々の脆弱性の悪用状況や影響範囲は、この告知だけでは確認できず、独立に検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-kev-four-additions",
+      "language": "ja",
+      "observed_at": "2026-11-11T04:54:17+09:00",
+      "published_at": "2026-11-09T21:00:00+09:00",
+      "role": "watch",
+      "selection_reason": "AIの推論基盤を管理するGPUStackが、実際に悪用された脆弱性として名指しされた。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "米国のサイバーセキュリティ・インフラセキュリティ庁（CISA）は11月9日、実際の悪用の証拠に基づき、4件の脆弱性を既知の悪用された脆弱性（KEV）カタログに追加した。GPUStackの認証不備、SignalWire FreeSwitchのコードインジェクション、OpenBSD OpenSSHの想定外の戻り値、IBM Aspera Faspexの認可不備である。CISAは連邦機関以外の組織にもKEV掲載の脆弱性の修正を優先するよう勧めている。",
+      "source_kind": "advisory",
+      "source_title": "CISA Adds Four Known Exploited Vulnerabilities to Catalog",
+      "source_url": "https://www.cisa.gov/news-events/alerts/2026/11/09/cisa-adds-four-known-exploited-vulnerabilities-catalog",
+      "title": "米CISA、悪用が確認された4件をKEVカタログに追加。GPUStackやOpenSSHを含む",
+      "topics": [
+        "security",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-11T04:54:17+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-11-11T04:58:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "エージェントを止める仕組みと閉じ込める仕組みが、研究所とクラウドの両方で出そろった一日",
+  "topics": [
+    {
+      "description": "モデルの監視、停止、運用上の安全策",
+      "id": "safety",
+      "label_en": "Safety",
+      "label_ja": "安全性"
+    },
+    {
+      "description": "エージェントの実行基盤、統制、業務への組み込み",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "脆弱性、秘密情報の検出、実行の隔離",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "基盤モデルの提供と新しいモデルの使い方",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "GPU、Kubernetes、クラウド基盤",
+      "id": "infrastructure",
+      "label_en": "Infrastructure",
+      "label_ja": "インフラ"
+    },
+    {
+      "description": "オープンソースの寄贈、共通基盤、ライブラリ",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "開発者向けの道具とプラットフォームの変更",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "業界向けの提供と企業での運用",
+      "id": "enterprise",
+      "label_en": "Enterprise",
+      "label_ja": "企業導入"
+    }
+  ]
+}
