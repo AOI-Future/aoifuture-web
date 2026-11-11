@@ -1,0 +1,351 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-11-12T04:58:00+09:00",
+  "dek": "Gemini 4 Carbonの一般提供と、選択肢に確率を返すDecisions API、機密推論向けのTPU 8txが続いた。CISAはOutlookやChromiumを含む6件をKEVに追加し、Microsoftはエージェントがバージョン番号で確認を省く実験結果を示した。",
+  "edition_date": "2026-11-12",
+  "edition_id": "2026-11-12-0458",
+  "edition_note": "2026年11月9日から11月11日（各発表元の日付）に公開された公式発表、リリース情報、ドキュメント、セキュリティ勧告、技術解説から選んだ。直近72時間の範囲で、期間の延長はしていない。",
+  "generated_at": "2026-11-12T04:58:00+09:00",
+  "items": [
+    {
+      "aoi_note": "高性能モデルを主役に据え、軽いモデルと検証役を並べて動かす構成が、提供元の標準的な使い方として打ち出された。価格が導入期間後に倍になる点は試算に入れておきたい。",
+      "caveat": "ベンチマークの順位や安全性の数値はGoogleと協力先の発表によるもので、独立した検証はしていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "gemini-4-carbon-general-availability",
+      "language": "ja",
+      "observed_at": "2026-11-12T04:55:30+09:00",
+      "published_at": "2026-11-11T01:00:00+09:00",
+      "role": "lead",
+      "selection_reason": "最上位モデルの一般提供に、複数エージェントの協調機能と攻撃悪用への対策値が同時に示された。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleは11月10日、最上位モデルGemini 4 Carbonを開発者、企業、研究者、一般利用者向けに提供開始した。長時間のエージェント的な作業とサイバーセキュリティ能力を強みとし、Google AI StudioのAPIとGemini for businessで有料の開発者・企業が使える。導入価格は入力100万トークンあたり2ドル、出力10ドルで、11月30日以降は4ドルと20ドルになる。あわせて、1つの指示から複数のエージェントを協調させるGoogle Antigravityの/swarmをプレビューで公開した。安全面では、適応型のレッドチーミングで攻撃の試行の99%を阻止し、1回あたりの侵入率は0.8%（Argonは3.1%）だったとしている。",
+      "source_kind": "release",
+      "source_title": "Gemini 4 Carbon is now available",
+      "source_url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/",
+      "title": "Google、最上位モデルGemini 4 Carbonを一般提供。Antigravityで複数エージェントを束ねる/swarmもプレビュー",
+      "topics": [
+        "models",
+        "agents",
+        "safety"
+      ],
+      "verification": {
+        "checked_at": "2026-11-12T04:55:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "規制業種が自社データのそばでモデルを動かす選択肢が、クラウドの専用アクセラレーターにも広がった。処理中のデータ保護が売りになる段階に入っている。",
+      "caveat": "遅延の改善幅などの性能値はGoogleの説明で、提供時期や実測値は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-tpu-8tx-8i-max",
+      "language": "ja",
+      "observed_at": "2026-11-12T04:55:30+09:00",
+      "published_at": "2026-11-09T22:00:00+09:00",
+      "role": "major",
+      "selection_reason": "エージェントの長い文脈と機密データの扱いを、ハードウェアの構成で解く方針が具体的な製品として示された。",
+      "source_domain": "cloud.google.com",
+      "source_fact": "Googleは11月9日、第8世代TPUに2つのシステムを追加した。TPU 8txは機密性の高い推論向けで、TPU 8tと同じシリコンに第5世代AMD EPYCのホストを組み合わせ、処理中もデータとモデルの重みを保護・分離する。TPU 8i Maxは2つのTPU 8iを1つのパッケージにまとめ、演算、SRAM、HBM帯域をTPU 8iの2倍にした。あわせて、モデル状態の層となるTPU Syncのオープンソース化、Cloud PathwaysとGKEのダイナミックスライシングの一般提供を発表した。",
+      "source_kind": "official",
+      "source_title": "Our newest TPUs: 8tx and 8i Max, built for the agentic era",
+      "source_url": "https://cloud.google.com/blog/topics/ai-infrastructure/tpu-8tx-and-tpu-8i-max/",
+      "title": "Google、第8世代TPUに機密推論向けの8txと大規模文脈向けの8i Maxを追加",
+      "topics": [
+        "infrastructure",
+        "security",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-11-12T04:55:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントがメールやブラウザを操作する場面が増えるほど、その土台となる製品の更新遅れは自動化の側にも響く。",
+      "caveat": "個々の脆弱性の悪用状況や影響範囲は、この告知だけでは確認できず、独立に検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-kev-six-additions-outlook-chromium",
+      "language": "ja",
+      "observed_at": "2026-11-12T04:55:30+09:00",
+      "published_at": "2026-11-10T21:00:00+09:00",
+      "role": "major",
+      "selection_reason": "メールとブラウザという、ほぼすべての組織が使う製品が悪用確認済みとして並んだ。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "米国のサイバーセキュリティ・インフラセキュリティ庁（CISA）は11月10日、実際の悪用の証拠に基づき、6件の脆弱性を既知の悪用された脆弱性（KEV）カタログに追加した。Cisco BroadWorksのXML外部実体参照、Barracuda Networks製品のOSコマンドインジェクションとEmail Security Gatewayの認証回避、Openwave Messaging WebtopのMedia Transcoderの問題、Microsoft Office Outlookの利用者操作を伴わない危険な動作、Google ChromiumのUse-After-Freeである。CISAは連邦機関以外の組織にもKEV掲載の脆弱性の修正を優先するよう勧めている。",
+      "source_kind": "advisory",
+      "source_title": "CISA Adds Six Known Exploited Vulnerabilities to Catalog",
+      "source_url": "https://www.cisa.gov/news-events/alerts/2026/11/10/cisa-adds-six-known-exploited-vulnerabilities-catalog",
+      "title": "米CISA、悪用が確認された6件をKEVに追加。Outlook、Chromium、Barracudaの脆弱性を含む",
+      "topics": [
+        "security",
+        "enterprise"
+      ],
+      "verification": {
+        "checked_at": "2026-11-12T04:55:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "判断を確率つきで返す部品は、エージェントの分岐を記録・監査しやすくする。確信度が低い場合だけ人に回す設計が組みやすくなる。",
+      "caveat": "精度や較正誤差、価格比較はGoogleの説明によるもので、独立した比較はしていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "gemini-decisions-api-launch",
+      "language": "ja",
+      "observed_at": "2026-11-12T04:55:30+09:00",
+      "published_at": "2026-11-12T03:00:00+09:00",
+      "role": "major",
+      "selection_reason": "ツール選択や方針確認のような小さな判断を、生成とは別の部品として大手が商用APIにした。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleは11月11日、決められた選択肢を判定する新しいエンドポイントGemini Decisions APIと、それを支えるモデルGemini Decision 1をGoogle AI Studioで公開した。文章を1語ずつ生成せず、テキスト、画像、音声、動画、PDFの入力（最大256Kトークン）に対し、はい・いいえ、多肢選択、段階評価の質問を最大1,000問まとめて1回で採点し、確率と確信度を返す。エンドツーエンドの遅延は150〜250ミリ秒、価格は入力100万トークンあたり0.10ドルで、出力トークンは課金しない。Google社内ではモデルの振り分けや、検索のMCPツールの安全層に使っているとしている。",
+      "source_kind": "release",
+      "source_title": "Gemini Decisions API: Fast, calibrated multimodal decisions",
+      "source_url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/",
+      "title": "Google、選択肢に確率を返すGemini Decisions APIを公開。1回で最大1,000問を判定",
+      "topics": [
+        "models",
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-11-12T04:55:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "検索結果の管理と同じように、AIの回答で自社がどう扱われるかを管理する業務が生まれつつある。",
+      "caveat": "利用者数や効果に関する数値はOpenAIの説明で、独立に確認していない。対象業種や提供地域の詳細も未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-businesses-in-chatgpt",
+      "language": "ja",
+      "observed_at": "2026-11-12T04:55:30+09:00",
+      "published_at": "2026-11-10T19:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "対話AIの中で企業が自社情報と応答役を持つ仕組みが、具体的な製品として始まった。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは11月10日、Businesses in ChatGPTをベータで公開した。企業はBusiness Hubで自社を登録し、確認後に情報や価格・在庫を含む商品フィードを更新でき、言及数やサイトへのクリック数などの集計値を見られる。利用者の会話内容は企業に共有しないとしている。登録した企業のうち、米国の対象となるEC・オンラインサービス事業者は、利用者の質問に答えるBusiness Agentを作って公開でき、広告の遷移先にもできる。",
+      "source_kind": "official",
+      "source_title": "Introducing Businesses in ChatGPT",
+      "source_url": "https://openai.com/index/introducing-businesses-chatgpt",
+      "title": "OpenAI、企業がChatGPT上の情報を管理できるBusinesses in ChatGPTをベータ公開。米国でBusiness Agentsも",
+      "topics": [
+        "enterprise",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-11-12T04:55:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "検索をどのドメインに限ったかを記録できると、エージェントの根拠の追跡がしやすくなる。",
+      "caveat": "検索結果の網羅性や鮮度はAWSの説明以上には確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-agentcore-invoke-web-search-api",
+      "language": "ja",
+      "observed_at": "2026-11-12T04:56:10+09:00",
+      "published_at": "2026-11-10T09:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "エージェントの外部情報の取得が、クラウドの通常のAPIと同じ認可・記録の枠に入った。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは11月10日、Amazon Bedrock AgentCoreのWeb Search APIを一般提供した。これまでAgentCore GatewayのMCPツールとして提供していたWeb検索を、InvokeWebSearch APIとして1回の呼び出しで使える。Amazonが運用するWebインデックスから順位付きの結果と本文の抜粋を返し、ドメインと公開時刻で絞り込める。IAMで認可し、PrivateLink経由の呼び出しやCloudTrailでの記録に対応する。料金は1,000クエリあたり7ドルで、東京を含む6リージョンで使える。",
+      "source_kind": "release",
+      "source_title": "Amazon Bedrock AgentCore now offers a Web Search API",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/amazon-bedrock-agentcore-web-search-api/",
+      "title": "AWS、Bedrock AgentCoreのWeb検索を単体APIとして一般提供。1,000件7ドル",
+      "topics": [
+        "agents",
+        "tools",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-12T04:56:10+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "試験が失敗しただけのものを安全と誤判定しないよう、結果を不確定として扱えという指摘は、検証を自動化するすべての仕組みに通じる。",
+      "caveat": "CodeMenderの検出・修正の精度は記事では示されておらず、確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-codemender-pull-request-architecture",
+      "language": "ja",
+      "observed_at": "2026-11-12T04:56:10+09:00",
+      "published_at": "2026-11-11T02:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "エージェントに書き込み権限と攻撃コードの実行を任せる際の、権限と隔離の具体的な設計が示された。",
+      "source_domain": "cloud.google.com",
+      "source_fact": "Google Cloudは11月10日、コードの脆弱性を見つけて修正する自律エージェントCodeMenderを、GitのプルリクエストとCloud Runで動かす参照構成を公開した。スキャン結果は一覧のコメントで返り、/verifyで隔離環境での攻撃の再現結果、/fixで修正案の差分が届き、/approveで修正をブランチにコミットする。GitHub ActionsとGoogle Cloudの間は短命のOIDCトークンで信頼させ、リポジトリIDで条件を付ける。攻撃の再現は発見ごとに1つのCloud Runジョブで実行し、権限の少ないサービスアカウントと外部へ出られないネットワークで動かすよう勧めている。",
+      "source_kind": "documentation",
+      "source_title": "Don't just flag it, fix it: How to run CodeMender in your pull requests",
+      "source_url": "https://cloud.google.com/blog/products/identity-security/how-to-run-codemender-in-your-pull-requests/",
+      "title": "Google Cloud、脆弱性を見つけて直すCodeMenderをプルリクエストに組み込む参照構成を公開",
+      "topics": [
+        "security",
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-12T04:56:10+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "確認の深さをエージェントの判断に任せず、すべての依存更新でCIの通過を必須にする方が確実だ。評価時にもバージョン表示を隠れた変数として扱う必要がある。",
+      "caveat": "実験は小さなアプリと架空のライブラリによるもので、実際の更新で同じ結果になるかは確認していない。一部の差は記事自身が判断保留としている。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "microsoft-coding-agents-semver-study",
+      "language": "ja",
+      "observed_at": "2026-11-12T04:56:10+09:00",
+      "published_at": "2026-11-10T01:01:00+09:00",
+      "role": "brief",
+      "selection_reason": "エージェントの慎重さがモデルと入力の些細な表示で変わることを、手順と数値つきで示した。",
+      "source_domain": "devblogs.microsoft.com",
+      "source_fact": "Microsoftは11月9日、AIコーディングエージェントが依存ライブラリの更新時にセマンティックバージョニングの表示で行動を変えるかを調べた結果を公開した。中身が同じで互換性を壊す更新に、パッチまたはメジャーの番号を付けて比べた。Claude Sonnet 5.5がテストやコードを確認したのはパッチ表示で10回中2回、メジャー表示で10回中10回だった。Claude Opus 5.5、GPT-6.1 Sol、GPT-6.1 Terraは表示にかかわらず毎回確認した。更新ブランチのレビューでは、未確認のまま統合した割合が全6モデルでパッチ13%、マイナー9%、メジャー4%だった。",
+      "source_kind": "analysis",
+      "source_title": "Do AI coding agents care about SemVer?",
+      "source_url": "https://devblogs.microsoft.com/blog/do-ai-coding-agents-care-about-semver/",
+      "title": "Microsoft、AIコーディングエージェントがバージョン番号で確認の手間を変えるかを約1,000回の実験で検証",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-12T04:56:10+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AIの学習・推論コードの不具合はCPUとGPUの境目で起きやすい。共通のデバッガーが整えば、特定ベンダーに縛られない開発環境に近づく。",
+      "caveat": "対応するGPUや提供時期の詳細は記事の範囲にとどまり、各ベンダーの対応状況は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "meta-lldb-cpu-gpu-debugging",
+      "language": "ja",
+      "observed_at": "2026-11-12T04:56:10+09:00",
+      "published_at": "2026-11-10T02:00:00+09:00",
+      "role": "watch",
+      "selection_reason": "GPUごとに別々だったデバッガーを、共通の基盤とベンダー別の部品に分ける動きとして意味がある。",
+      "source_domain": "engineering.fb.com",
+      "source_fact": "Metaは11月9日、CPUとGPUにまたがるアプリをデバッグするため、lldb-serverにベンダー中立のアクセラレーター用プラグインの仕組みを作ったと説明した。CPUとGPUを別々のデバッグ対象として扱いながら、1つのLLDBやIDEのセッションで操作できる。共通の枠組みの大半はLLVMに取り込み済みで、残りも近く取り込む予定だとしている。専用ハードウェアなしで流れを試せる模擬プラグインも作り、LLVMのテストで使っている。",
+      "source_kind": "analysis",
+      "source_title": "Extending LLDB to Debug Applications That Span CPUs and GPUs",
+      "source_url": "https://engineering.fb.com/2026/11/09/developer-tools/extending-lldb-to-debug-applications-that-span-cpus-and-gpus/",
+      "title": "Meta、CPUとGPUにまたがるアプリをLLDBで一緒にデバッグする仕組みを開発。大半をLLVMに統合済み",
+      "topics": [
+        "open-source",
+        "tools",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-12T04:56:10+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "利用者の入れ替わりに合わせた席の付け外しを、人の手を介さず権限を絞った形で回せる。",
+      "caveat": "提供範囲や料金への影響は告知に書かれておらず、確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-app-enterprise-copilot-seat-api",
+      "language": "ja",
+      "observed_at": "2026-11-12T04:56:10+09:00",
+      "published_at": "2026-11-11T09:10:00+09:00",
+      "role": "watch",
+      "selection_reason": "AIコーディング支援の利用権の管理を、個人の認証情報ではなくアプリの権限で自動化できるようになった。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月10日、企業向けのGitHub Appが、企業単位のCopilotの席管理APIを呼び出せるようになったと発表した。どの利用者や企業チームにCopilotの席を割り当てるかを制御できる。利用には、Apps向けの新しい企業単位の細かな権限「Enterprise Copilot license management」を使う。",
+      "source_kind": "release",
+      "source_title": "GitHub App support for Enterprise Copilot seat management",
+      "source_url": "https://github.blog/changelog/2026-11-10-github-app-support-for-enterprise-copilot-seat-management",
+      "title": "GitHub、企業向けCopilotの席の割り当てをGitHub Appから操作できるように",
+      "topics": [
+        "enterprise",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-12T04:56:10+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-11-12T04:58:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "Googleが最上位モデルと判断専用API、専用TPUを一度に並べ、エージェントの部品が出そろってきた",
+  "topics": [
+    {
+      "description": "基盤モデルの提供と新しいモデルの使い方",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "エージェントの実行基盤、統制、業務への組み込み",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "脆弱性、悪用、権限と実行の隔離",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "モデルの悪用防止と運用上の安全策",
+      "id": "safety",
+      "label_en": "Safety",
+      "label_ja": "安全性"
+    },
+    {
+      "description": "アクセラレーター、クラウド基盤、実行環境",
+      "id": "infrastructure",
+      "label_en": "Infrastructure",
+      "label_ja": "インフラ"
+    },
+    {
+      "description": "開発者向けの道具とプラットフォームの変更",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "企業での運用、管理、顧客接点",
+      "id": "enterprise",
+      "label_en": "Enterprise",
+      "label_ja": "企業導入"
+    },
+    {
+      "description": "オープンソースへの寄与と共通基盤",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    }
+  ]
+}
