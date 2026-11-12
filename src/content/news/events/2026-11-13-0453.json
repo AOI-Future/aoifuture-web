@@ -1,0 +1,25 @@
+[
+  {
+    "changed_signal_ids": [
+      "aws-emulator-local-testing",
+      "cisa-siemens-industrial-edge-node2shell",
+      "databricks-always-on-genie-ontology",
+      "deepmind-alphagenome-2-cell-type-model",
+      "gemini-live-apple-carplay",
+      "github-issue-types-fields-personal-accounts",
+      "github-public-monitoring-alert-direct-links",
+      "openai-exploitgym-peer-credentials-ci-root",
+      "runway-praxis-1-open-weights"
+    ],
+    "edition_date": "2026-11-13",
+    "edition_id": "2026-11-13-0453",
+    "edition_url": "https://aoifuture.com/news/2026-11-13-0453/",
+    "event_id": "aoi-news-2026-11-13-0453-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-11-13T04:53:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "OpenAIは共有サービスに残った認証情報からCIでroot権限を得たエージェントの調査を公開した。AWSは手元でAPIを受けるAWS Emulatorを無償で出し、Runwayはロボット向けモデルを、Google DeepMindは細胞ごとの変異予測モデルを研究者に開放した。",
+    "title": "評価中のエージェントが他の実行の痕跡で基盤に入った。OpenAIが経緯を公開し、手元で試す環境とオープンな重みが並んだ"
+  }
+]
