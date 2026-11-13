@@ -1,0 +1,27 @@
+[
+  {
+    "changed_signal_ids": [
+      "allenai-xybench-misconception-benchmark",
+      "aws-agentcore-runtime-next-gen-default",
+      "aws-cognito-oauth-token-exchange",
+      "ggml-llama-cpp-v1-semver",
+      "github-ai-scan-repository-scan-rest-api",
+      "github-secret-scanning-cloudflare-access-service-token",
+      "google-cloud-bigquery-looker-agent-observability",
+      "google-gemini-4-hydrogen-launch",
+      "google-gemini-wallet-personal-finance",
+      "meta-cuttlefish-on-mac-apple-silicon",
+      "openai-chatgpt-wallet-agent-payments"
+    ],
+    "edition_date": "2026-11-14",
+    "edition_id": "2026-11-14-0455",
+    "edition_url": "https://aoifuture.com/news/2026-11-14-0455/",
+    "event_id": "aoi-news-2026-11-14-0455-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-11-14T04:55:18+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "GoogleはHydrogenを検索・アプリ・APIへ同時に出し、モデルを作業ごとに切り替える仕組みも入れた。OpenAIはカード情報を渡さずに払うChatGPT Walletを始め、AWSはエージェント実行基盤の既定を替え、代理呼び出し用のトークン交換にも対応した。",
+    "title": "Googleが実行役のGemini 4 Hydrogenを全面投入。OpenAIはエージェントの支払いを始め、実行と認可の土台がそろって動いた"
+  }
+]
