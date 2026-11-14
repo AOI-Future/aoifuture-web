@@ -1,0 +1,40 @@
+.osmos-product {color-scheme:dark; --bg:#000000; --paper:#171e1b; --ink:#f4f2e9; --muted:#bdc9c0; --line:#37473e; --accent:#a4f7ef; --warm:#ffc395; font-family:"Instrument Sans",system-ui,sans-serif; background:var(--bg); color:var(--ink);}
+.osmos-product * {box-sizing:border-box;}
+.osmos-product {min-height:100vh;}
+.osmos-product a {color:var(--accent); text-underline-offset:.24em;}
+.osmos-product a:hover {color:white;}
+.osmos-product :focus-visible {outline:2px solid var(--warm); outline-offset:5px;}
+.osmos-product .wrap {width:min(1100px, calc(100% - 2.5rem)); margin-inline:auto;}
+.osmos-product header {border-bottom:1px solid var(--line);}
+.osmos-product header .wrap, .osmos-product footer .wrap {display:flex; align-items:center; justify-content:space-between; gap:1rem; padding-block:1rem; flex-wrap:wrap;}
+.osmos-product .brand {font-weight:800; letter-spacing:.19em; color:var(--ink); text-decoration:none;}
+.osmos-product nav {display:flex; flex-wrap:wrap; gap:.5rem 1.5rem;}
+.osmos-product nav a {display:inline-flex; align-items:center; min-height:44px;}
+.osmos-product section, .osmos-product .doc {padding-block:clamp(2rem, 6vw, 4.5rem);}
+.osmos-product section + section {border-top:1px solid var(--line);}
+.osmos-product h1,.osmos-product h2,.osmos-product h3,.osmos-product p {margin:0;}
+.osmos-product h1 {font-size:clamp(2.75rem, 8vw, 6.5rem); letter-spacing:-.055em; line-height:.96; margin-block:.4rem 1rem;}
+.osmos-product h2 {font-size:clamp(1.75rem,4vw,2.6rem); line-height:1.2;}
+.osmos-product h3 {font-size:1.2rem;}
+.osmos-product p,.osmos-product li,.osmos-product dd {line-height:1.8;}
+.osmos-product .lead {font-size:clamp(1.1rem,2vw,1.5rem); max-width:36em;}
+.osmos-product .muted, .osmos-product small, .osmos-product figcaption {color:var(--muted);}
+.osmos-product .meta {display:block; color:var(--warm); font: .86rem ui-monospace,monospace; letter-spacing:.09em; text-transform:uppercase;}
+.osmos-product .flow > * + * {margin-top:1rem;}
+.osmos-product .hero {padding-block:clamp(2.75rem,8vw,6.5rem) 3rem;}
+.osmos-product figure {margin:2.2rem 0 0;}
+.osmos-product figure img {display:block; width:100%; height:auto; border:1px solid var(--line); border-radius:.75rem;}
+.osmos-product figcaption {margin-top:.65rem;}
+.osmos-product .grid {display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%, 245px),1fr)); gap:1rem; margin-top:1.5rem;}
+.osmos-product article {border:1px solid var(--line); padding:1.25rem; border-radius:.65rem; background:var(--paper);}
+.osmos-product audio {display:block; width:100%;}
+.osmos-product .price {font-size:2.3rem; font-weight:750;}
+.osmos-product .doc {max-width:48rem;}
+.osmos-product .doc h1 {font-size:clamp(2rem,6vw,3.7rem); line-height:1.15;}
+.osmos-product .doc h2 {font-size:1.55rem; margin-top:2rem;}
+.osmos-product .doc li + li {margin-top:.35rem;}
+.osmos-product dl {margin:0;}
+.osmos-product dt {font-weight:750; margin-top:1.1rem; color:var(--accent);}
+.osmos-product dd {margin-left:0;}
+.osmos-product code {overflow-wrap:anywhere; color:var(--warm);}
+.osmos-product footer {border-top:1px solid var(--line);}

@@ -1,0 +1,83 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+---
+<Layout title="OSMOS Circuit Instrument — AOI Future" canonical="https://aoifuture.com/apps/osmos/en" description="A macOS software synthesizer with playable supply voltage and capacitance controls. Available in VST3 and Audio Units formats." pageTransition={false} lang="en">
+  <Fragment slot="head">
+    <link rel="stylesheet" href="/osmos/style.css" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="alternate" hreflang="ja" href="https://aoifuture.com/apps/osmos" />
+    <link rel="alternate" hreflang="en" href="https://aoifuture.com/apps/osmos/en" />
+  </Fragment>
+  <div class="osmos-product">
+<header>
+  <div class="wrap">
+    <a class="brand" href="/apps/osmos/en">OSMOS</a>
+    <nav aria-label="Product navigation">
+      <a href="#listen">Listen</a>
+      <a href="#editions">Pricing and compatibility</a>
+      <a href="/apps/osmos/en/manual">Manual</a>
+      <a href="/apps/osmos" lang="ja" hreflang="ja">日本語</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <section class="hero" aria-labelledby="product">
+    <span class="meta">macOS · VST3 / AU</span>
+    <h1 id="product">OSMOS<br>Circuit Instrument</h1>
+    <p class="lead">Hold a bass note and turn the voltage dial. Change the capacitance and hear the attack take on a different shape. OSMOS puts the circuit controls under your fingers.</p>
+    <figure>
+      <img src="/osmos/circuit-instrument.png" width="1648" height="976" alt="The OSMOS interface in Voltage Bass mode, showing a charge and discharge curve and dials for Voltage, Capacitance, Charge, and Drive.">
+      <figcaption>Voltage Bass shows supply voltage in volts and capacitance in nanofarads.</figcaption>
+    </figure>
+  </section>
+  <section class="flow" aria-labelledby="circuit">
+    <h2 id="circuit">Shape the sound at the circuit</h2>
+    <div class="grid">
+      <article class="flow"><h3>Voltage</h3><p>Move the supply rail from 4.5 to 13.5 V to change how hard the note hits.</p></article>
+      <article class="flow"><h3>Capacitance</h3><p>Set the capacitor between 18.8 and 103.4 nF to reshape the charge and discharge curve and change the attack.</p></article>
+      <article class="flow"><h3>Charge / Drive</h3><p>Change the balance between charging and discharging, then dial in diode saturation to hear the same phrase with a different edge.</p></article>
+    </div>
+  </section>
+  <section id="listen" aria-labelledby="listen-title">
+    <h2 id="listen-title">Hear OSMOS in a track</h2>
+    <div class="grid">
+      <article class="flow">
+        <h3>Contact Bounce</h3>
+        <p>Charge and Drive shape the arrangement. Listen for the bass comparison from 0:28 to 0:35.</p>
+        <audio controls preload="none" src="/osmos/audio/contact-bounce.mp3" aria-label="Contact Bounce"></audio>
+        <a href="/osmos/audio/voltage-bass-ab.mp3">Listen to the isolated bass comparison</a>
+      </article>
+      <article class="flow">
+        <h3>First Draft — In Pocket</h3>
+        <p>A morning settling into its groove, with a bass line locked to the rhythm and harmonics that shift as the filter moves.</p>
+        <audio controls preload="none" src="/osmos/audio/in-pocket.mp3" aria-label="First Draft — In Pocket"></audio>
+      </article>
+      <article class="flow">
+        <h3>Drift to Sleep</h3>
+        <p>A quiet piece for the edge of sleep, with low tones that gradually give way to silence.</p>
+        <audio controls preload="none" src="/osmos/audio/drift-to-sleep.mp3" aria-label="Drift to Sleep"></audio>
+      </article>
+    </div>
+  </section>
+  <section id="editions" class="flow" aria-labelledby="edition-title">
+    <h2 id="edition-title">Free trial and full version</h2>
+    <div class="grid">
+      <article class="flow"><h3>14-day free trial</h3><p class="price">US$0</p><p>Try the circuit controls, record automation, and save and reopen projects in your DAW.</p></article>
+      <article class="flow"><h3>Full version</h3><p class="price">US$249</p><p>One-time purchase. Activate the same plug-in with your Gumroad license key.</p></article>
+    </div>
+    <p class="muted">In development. Sales and public downloads are pending.</p>
+    <dl>
+      <dt>Target system</dt><dd>Apple silicon Mac with macOS 14 or later. Requires a DAW that supports VST3 or Audio Units and sends MIDI, enough memory for that DAW, and 10 MB of free disk space.</dd>
+      <dt>Compatibility testing</dt><dd>Playback, voltage and capacitance automation, and reopening saved projects were tested on macOS 27.3 in Ableton Live 12.4.2 (VST3) and Logic Pro (AU). macOS 14 is the build’s minimum OS target.</dd>
+      <dt>Internet connection</dt><dd>The free trial works offline. The full version connects to Gumroad for initial key verification.</dd>
+    </dl>
+  </section>
+</main>
+<footer>
+  <div class="wrap">
+    <small>AOI Future · OSMOS</small>
+    <nav aria-label="Before you buy"><a href="/apps/osmos/en/manual">Online manual</a><a href="/apps/osmos/en/terms">License terms and privacy notice</a></nav>
+  </div>
+</footer>
+  </div>
+</Layout>
