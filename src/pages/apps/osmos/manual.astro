@@ -1,0 +1,19 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+---
+<Layout title="OSMOS オンラインマニュアル" canonical="https://aoifuture.com/apps/osmos/manual" description="電源電圧とコンデンサー容量を演奏できるmacOS用ソフトウェアシンセ。" pageTransition={false}>
+  <Fragment slot="head">
+    <link rel="stylesheet" href="/osmos/style.css" />
+    <link rel="alternate" hreflang="ja" href="https://aoifuture.com/apps/osmos/manual" />
+    <link rel="alternate" hreflang="en" href="https://aoifuture.com/apps/osmos/en/manual" />
+  </Fragment>
+  <div class="osmos-product"><header><div class="wrap"><a class="brand" href="/apps/osmos">OSMOS</a><nav aria-label="関連情報"><a href="/apps/osmos#editions">動作環境</a><a href="/apps/osmos/terms">利用条件</a><a href="/apps/osmos/en/manual" lang="en" hreflang="en">English</a></nav></div></header>
+<main class="wrap doc flow"><h1>オンラインマニュアル</h1><p class="muted">OSMOS 1.0の操作ガイド</p>
+<h2>インストールして音を出す</h2><ol><li>DAWを終了し、配布されたインストーラを開きます。既存の開発版を使っている場合は、先にバックアップしてください。</li><li>Ableton Liveでは、ブラウザのプラグイン一覧からVST3のOSMOSをMIDIトラックに追加します。Logic Proでは、ソフトウェア音源トラックの音源スロットから Audio Units → AOI Future → OSMOS を選びます。</li><li>OSMOSの画面を開き、右下の <b>License…</b> から <b>Start Free Trial</b> を押すか、購入キーを入力します。</li><li>MIDIキーボードで弾くか、MIDIクリップを再生します。最初に <b>Voltage Bass</b> を選び、同じ低い音を伸ばしながら電圧と容量を片方ずつ動かします。</li></ol>
+<h2>ノブを触る</h2><p>上下にドラッグして調整し、Optionを押しながらドラッグすると微調整できます。ダブルクリックで既定値に戻します。</p>
+<dl><dt>Voltage / Capacitance</dt><dd>基準は9 V、47 nF。Voltageは電源、Capacitanceはコンデンサーの容量です。上部の波形はモデルのプレビューです。</dd><dt>Charge / Drive</dt><dd>Chargeは充放電のバランス、Driveはダイオード歪みの強さを変えます。4つの回路ノブはVoltage Bass選択時に使えます。</dd><dt>Cutoff / Level / Envelope</dt><dd>フィルター、出力レベル、Attack・Decay・Sustain・Release。Sine・Saw・Square・Noiseでも使えます。</dd></dl>
+<h2>動きをDAWに記録する</h2><p><b>Logic Pro</b> はトラックのオートメーションをTouchまたはLatchにし、再生中にノブを動かします。録り終えたらReadに戻し、Supply VoltageとCapacitanceのレーンを確認してプロジェクトを保存します。</p><p><b>Ableton Live</b> はAutomation Armを有効にしてArrangement Recordを開始します。必要に応じてOSMOSデバイスのConfigureで対象のパラメータを表示し、録音後にレーンを確認してセットを保存します。</p>
+<h2>ライセンスと復元</h2><p>無料体験は開始から14日です。期限後もDAWプロジェクトとパラメータは保持され、製品版を有効化すると再生できます。キーはGumroadの購入レシートまたは製品のコンテンツページで確認します。購入後は <b>License… → Enter License Key</b> を選びます。MacやmacOSアカウントを変更した場合は再認証します。別のDAWがすでに起動していた場合は、OSMOSの画面を開き直すかDAWを再起動します。</p>
+<h2>プラグインが表示されない場合</h2><p>VST3は <code>/Library/Audio/Plug-Ins/VST3</code>、AUは <code>/Library/Audio/Plug-Ins/Components</code> にインストールされます。開発版を <code>~/Library/Audio/Plug-Ins</code> に入れていた場合、同じプラグインが二重に見つかることがあります。DAWを閉じ、旧版をプラグインの検索対象外に退避してから再スキャンします。</p>
+</main>  </div>
+</Layout>
