@@ -38,3 +38,5 @@
 .osmos-product dd {margin-left:0;}
 .osmos-product code {overflow-wrap:anywhere; color:var(--warm);}
 .osmos-product footer {border-top:1px solid var(--line);}
+
+.osmos-product .purchase-link {display:inline-flex;align-items:center;min-height:44px;}

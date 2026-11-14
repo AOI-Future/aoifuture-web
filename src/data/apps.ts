@@ -57,7 +57,7 @@ export const apps: AppEntry[] = [
     slug: 'osmos',
     name: 'OSMOS CIRCUIT INSTRUMENT',
     desc: '電源電圧とコンデンサー容量を演奏できるMac用ソフトウェアシンセ',
-    status: 'IN DEV',
+    status: 'LIVE',
     repo: 'AOI-Future/osmos',
   },
   // 例) 育って独自ドメインを持ったら `site` を足すだけ（紹介ページは残す）:

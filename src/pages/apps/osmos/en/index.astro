@@ -4,7 +4,6 @@ import Layout from '../../../../layouts/Layout.astro';
 <Layout title="OSMOS Circuit Instrument — AOI Future" canonical="https://aoifuture.com/apps/osmos/en" description="A macOS software synthesizer with playable supply voltage and capacitance controls. Available in VST3 and Audio Units formats." pageTransition={false} lang="en">
   <Fragment slot="head">
     <link rel="stylesheet" href="/osmos/style.css" />
-    <meta name="robots" content="noindex, nofollow" />
     <link rel="alternate" hreflang="ja" href="https://aoifuture.com/apps/osmos" />
     <link rel="alternate" hreflang="en" href="https://aoifuture.com/apps/osmos/en" />
   </Fragment>
@@ -62,10 +61,10 @@ import Layout from '../../../../layouts/Layout.astro';
   <section id="editions" class="flow" aria-labelledby="edition-title">
     <h2 id="edition-title">Free trial and full version</h2>
     <div class="grid">
-      <article class="flow"><h3>14-day free trial</h3><p class="price">US$0</p><p>Try the circuit controls, record automation, and save and reopen projects in your DAW.</p></article>
-      <article class="flow"><h3>Full version</h3><p class="price">US$249</p><p>One-time purchase. Activate the same plug-in with your Gumroad license key.</p></article>
+      <article class="flow"><h3>14-day free trial</h3><p class="price">US$0</p><p>Try the circuit controls, record automation, and save and reopen projects in your DAW.</p><a class="purchase-link" href="/osmos/download/OSMOS-Circuit-Instrument-1.0.0.pkg" download>Download the Mac trial</a></article>
+      <article class="flow"><h3>Full version</h3><p class="price">US$249</p><p>One-time purchase. Activate the same plug-in with your Gumroad license key.</p><a class="purchase-link" href="https://0xshugo.gumroad.com/l/pcryj">Buy on Gumroad</a></article>
     </div>
-    <p class="muted">In development. Sales and public downloads are pending.</p>
+    <p class="muted">Apple-notarized installer. Refund requests are accepted within 14 days of purchase. <a href="/apps/osmos/en/terms">License terms and seller information</a></p>
     <dl>
       <dt>Target system</dt><dd>Apple silicon Mac with macOS 14 or later. Requires a DAW that supports VST3 or Audio Units and sends MIDI, enough memory for that DAW, and 10 MB of free disk space.</dd>
       <dt>Compatibility testing</dt><dd>Playback, voltage and capacitance automation, and reopening saved projects were tested on macOS 27.3 in Ableton Live 12.4.2 (VST3) and Logic Pro (AU). macOS 14 is the build’s minimum OS target.</dd>
