@@ -1,0 +1,28 @@
+[
+  {
+    "changed_signal_ids": [
+      "anthropic-safety-evaluations-guidance",
+      "aws-agentcore-identity-oauth2-discovery",
+      "aws-secrets-manager-cross-account-replication",
+      "cisa-kev-two-added-2026-11-13",
+      "github-copilot-app-ghes-ga",
+      "github-copilot-model-deprecation-december-2026",
+      "google-ai-studio-cloud-credits",
+      "google-cloud-agentic-hpc-sc26",
+      "google-intelligent-eyewear-privacy",
+      "ibm-granite-llmon-prompt-injection",
+      "openai-children-ai-safety-research-pledge",
+      "salesforce-sov-transcribe-1-open-weight"
+    ],
+    "edition_date": "2026-11-15",
+    "edition_id": "2026-11-15-0454",
+    "edition_url": "https://aoifuture.com/news/2026-11-15-0454/",
+    "event_id": "aoi-news-2026-11-15-0454-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-11-15T04:54:02+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "Anthropicは事前登録や統計の全面報告を含む評価の推奨をまとめ、IBMはプロンプトインジェクションを抑えるマークアップと対応モデルを公開した。Google CloudはHPCの構築をエージェントに任せる手順を配り、GitHubはCopilotの6モデルを12月に終了する。",
+    "title": "Anthropicが安全性評価の作り方を公開。IBMは指示とデータを分ける書式を出し、測り方と入力の構造から安全を固める動きが並んだ"
+  }
+]
