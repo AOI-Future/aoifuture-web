@@ -1,0 +1,410 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-11-17T04:54:00+09:00",
+  "dek": "GoogleとMandiantは攻撃の自動化が実際の侵入に及んでいると報告し、GitHubはAIによる脆弱性スキャンを一括で始められるようにした。OpenAIは研究者向けの無償提供を最大20万人に広げ、Hugging Faceは推論の振り分けをOpenRouterに切り替えた。",
+  "edition_date": "2026-11-17",
+  "edition_id": "2026-11-17-0454",
+  "edition_note": "2026年11月16日（各発表元の日付）に公開された公式発表、リリース情報、技術解説、脅威分析から選んだ。直近72時間の範囲で、期間の延長はしていない。",
+  "generated_at": "2026-11-17T04:54:00+09:00",
+  "items": [
+    {
+      "aoi_note": "攻撃の中身が変わったのではなく、既知の弱点が見つかってから突かれるまでの時間が縮んでいる。パッチ適用の速さと、認証情報やコーディングエージェントの設定の管理が、守りの優先順位の上に来る。",
+      "caveat": "報告はGoogleとMandiantの観測に基づき、件数や個別事例を独立に確かめていない。名前の挙がったフレームワークの性能や利用規模も確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "gtig-ai-threat-tracker-agentic-threshold",
+      "language": "ja",
+      "observed_at": "2026-11-17T04:51:30+09:00",
+      "published_at": "2026-11-16T23:00:00+09:00",
+      "role": "lead",
+      "selection_reason": "前日のCloudflareの観測に続き、別の大手がインシデント対応の現場データから同じ傾向を報告した。",
+      "source_domain": "cloud.google.com",
+      "source_fact": "Google Threat Intelligence Group（GTIG）とMandiantは11月16日、生成AIの悪用に関する四半期報告を公開した。複数の攻撃者が、オープンソースのエージェント型侵入テスト基盤（ARTEX、CAIRN、CyberStrikeAI、PentAGIなど）を実際の侵入で使い、作業の一部を自動化しているのを観測したとしている。ほかに、パッチの差分をLLMで解析してn-day脆弱性を素早く悪用する動き、企業環境からLLMの認証情報やクラウド資源を盗んで転売するLLMJacking、影響工作での合成メディアやペルソナの大量生成、コーディング支援エージェントの設定を改ざんして実行時にバックドアを仕込むサプライチェーン攻撃の手口を挙げている。侵入の仕組み自体は、盗んだ認証情報や未修正のシステムを狙う点で従来と同じだが、速度と規模が新しい課題になると書いている。",
+      "source_kind": "analysis",
+      "source_title": "GTIG AI Threat Tracker: Agentic Threat Activity Crosses a Significant Threshold",
+      "source_url": "https://cloud.google.com/blog/topics/threat-intelligence/agentic-threat-activity-crosses-a-significant-threshold/",
+      "title": "Google脅威インテリジェンス、攻撃者がエージェント型の侵入テスト基盤を実際の侵入で使っていると報告",
+      "topics": [
+        "security",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-11-17T04:51:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "Proの利用実態からPlusで足りると判断した点は、研究者の多くが上位プランの上限まで使っていないことを示す。研究への効果は、利用者の自己申告ではなく成果で測られる段階に入る。",
+      "caveat": "参加者数や利用実態は同社の発表で、調査報告の方法と結論は確認していない。応募資格の詳細はこの記事では確かめていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-chatgpt-academic-researchers-expansion",
+      "language": "ja",
+      "observed_at": "2026-11-17T04:51:42+09:00",
+      "published_at": "2026-11-17T02:00:00+09:00",
+      "role": "major",
+      "selection_reason": "研究用途での利用の広がりと、提供の条件（先着、Plus、訓練不使用の既定）が具体的に示された。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは11月16日、7月に試行として始めたChatGPT for Academic Researchersを拡大し、世界で最大20万人の研究者にChatGPTを無償で提供すると発表した。次の募集は11月23日に始まり、条件を満たす申請から先着で5万件を付与する。1件につき本人と共同研究者2人までがChatGPT Plusを使え、この回で最大15万人が対象になる。試行ではChatGPT Proを提供したが、利用状況を見るとほとんどの参加者がPlusの利用上限に収まっていたため、Plusにしてより多くの研究チームに広げるとしている。抽選による選考はやめる。試行開始以来、33か国の2万人が参加したという。同社の経済調査チームは、試行中に1800人以上の研究者がどう使ったかを調べた報告も公開した。既定では、この制度で共有されたデータはモデルの訓練に使わないとしている。",
+      "source_kind": "official",
+      "source_title": "Broadening access to AI for scientists",
+      "source_url": "https://openai.com/index/expanding-chatgpt-for-academic-researchers",
+      "title": "OpenAI、研究者向けChatGPT無償提供を最大20万人に拡大。11月23日から次の5万件を先着で受付",
+      "topics": [
+        "research",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-11-17T04:51:42+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "強化学習による事後学習のベンチマークが加わったのは、計算資源の使い道が事前学習から事後学習へ広がっていることの表れとして読める。比較の基準が自社の前世代である点は割り引いて見たい。",
+      "caveat": "数値はNVIDIAの発表で、MLPerfの公式結果表と突き合わせていない。記事中には未検証の再実行による改善値も含まれている。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-vera-rubin-mlperf-training-v61",
+      "language": "ja",
+      "observed_at": "2026-11-17T04:51:31+09:00",
+      "published_at": "2026-11-17T01:00:00+09:00",
+      "role": "major",
+      "selection_reason": "次世代GPUの学習性能が、業界共通のベンチマークで初めて公開された。",
+      "source_domain": "developer.nvidia.com",
+      "source_fact": "NVIDIAは11月16日（米国時間）、MLPerf Training v6.1で初めて提出したVera Rubin NVL72が7つのベンチマークのうち6つで最短の学習時間を記録し、GPUあたりの性能は最適化したGB300 NVL72の最大2倍だったと発表した。DeepSeek-V3 671BのMoEベンチマークでは1024 GPUで4.14分と、同じ規模のGB300 NVL72の8.03分のほぼ半分だった。新設のQwen 3.5 397BのGRPOによる強化学習の事後学習ベンチマークでは1024 GPUで10.44分だった。DeepSeek-V3で256から1024 GPUに広げたときのスケーリング効率は97%以上としている。7つ目のDeepSeek-V3の最速記録は、10,240 GPUのGB300 NVL72クラスタで出した。closed部門の提出の80%がNVIDIAの基盤上で、20の提携組織が参加したとしている。",
+      "source_kind": "analysis",
+      "source_title": "NVIDIA Vera Rubin NVL72 Achieves up to 2x Blackwell Ultra Performance in MLPerf Training v6.1",
+      "source_url": "https://developer.nvidia.com/blog/nvidia-vera-rubin-nvl72-achieves-up-to-2x-blackwell-ultra-performance-in-mlperf-training-v6-1/",
+      "title": "NVIDIA、Vera Rubin NVL72がMLPerf Training v6.1に初登場し7項目中6項目で最速と発表",
+      "topics": [
+        "infrastructure",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-11-17T04:51:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "モデルを選ぶ場所と動かす場所がつながり、オープンウェイトモデルを試す手間は減る。一方で、どのプロバイダで処理されたかが利用者から見えにくくなるため、データの扱いの確認は残る。",
+      "caveat": "シェアや価格の数値はOpenRouterの集計の引用で、独立に確かめていない。切り替え後の品質や遅延の変化も確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "huggingface-openrouter-inference-providers",
+      "language": "ja",
+      "observed_at": "2026-11-17T04:51:31+09:00",
+      "published_at": "2026-11-16T09:00:00+09:00",
+      "role": "major",
+      "selection_reason": "モデル配布の中心とルーティング事業者が組み、オープンウェイトモデルの呼び出し口が一本化された。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Hugging Faceは11月16日、OpenRouterとの提携を発表し、Inference Providersで使っていた自社のルーターをOpenRouterのものに切り替えた。言語モデルへのリクエストはOpenRouterを通り、価格・速度・信頼性の実測値をもとに80以上のプロバイダから呼び出し先を選び、失敗すれば別のプロバイダで再試行する。利用者のコードは変わらないとしている。ルーターはOpenAIのChat Completions APIとResponses API、AnthropicのMessages APIに対応する。OpenRouterの集計として、オープンウェイトモデルが処理トークンに占める割合は2025年10月の26.8%から2026年9月末に71.7%になり、平均価格は100万トークンあたり入力0.28ドル・出力1.62ドルで、クローズドモデルの1.27ドル・6.36ドルより約4分の1だったと書いている。",
+      "source_kind": "official",
+      "source_title": "Hugging Face and OpenRouter join forces to make open-weight models easy to run",
+      "source_url": "https://huggingface.co/blog/openrouter",
+      "title": "Hugging Face、推論の振り分けを自社ルーターからOpenRouterに切り替え。同じトークンで多数のプロバイダを利用可能に",
+      "topics": [
+        "open-source",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-17T04:51:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "攻撃側の自動化が進むなか、守る側も検査を一つずつ手で始める形から外れつつある。結果の量が増えるので、優先順位付けの仕組みが要る。",
+      "caveat": "検出の精度や誤検知率は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-ai-scan-bulk-start",
+      "language": "ja",
+      "observed_at": "2026-11-17T04:51:31+09:00",
+      "published_at": "2026-11-17T00:50:22+09:00",
+      "role": "brief",
+      "selection_reason": "AIによる脆弱性探索が、組織単位でまとめて回せる運用に近づいた。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月16日、AI Scan for repositoriesを最大20リポジトリまで一度に開始できるようにした。AI Scanは既定ブランチの脆弱性を探す機能で、CodeQLが対応しない言語もカバーし、対応言語でも追加の問題を見つけるという。結果はCodeQLのアラートと同じコードスキャンの一覧に出る。一括開始はパブリックプレビューで、組織レベルの設定を有効にするときか、組織のアラートページから使える。github.comとデータ所在地付きのGitHub Enterprise Cloudで使え、Copilotのライセンスは不要としている。",
+      "source_kind": "release",
+      "source_title": "Bulk start AI Scan for repositories",
+      "source_url": "https://github.blog/changelog/2026-11-16-bulk-start-ai-scan-for-repositories",
+      "title": "GitHub、AIによるリポジトリの脆弱性スキャンを最大20リポジトリまで一括開始可能に",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-17T04:51:31+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "東京は今回の追加には含まれていない。日本の利用者にとっては、データの置き場所の要件と遅延のどちらを優先するかの判断が続く。",
+      "caveat": "各リージョンでの料金や機能差は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-agentcore-runtime-instances-six-regions",
+      "language": "ja",
+      "observed_at": "2026-11-17T04:51:32+09:00",
+      "published_at": "2026-11-16T16:30:00+09:00",
+      "role": "brief",
+      "selection_reason": "長時間動くエージェントの実行環境が、提供地域の面で広がった。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは11月16日、Amazon Bedrock AgentCoreのランタイムインスタンスを、米国西部（北カリフォルニア）、カナダ（中部）、欧州（ロンドン、パリ、ストックホルム）、アジアパシフィック（ソウル）の6リージョンで提供開始した。ランタイムインスタンスはエージェントをEC2インスタンス上で動かし、準備、パッチ適用、スケーリング、ライフサイクル管理はAgentCoreが担う。GPU、メモリ最適化、コンピュート最適化のインスタンスタイプや、最長14日の長時間セッションが使える。利用者の近くで動かして呼び出しの遅延を減らし、データ所在地の要件に合わせてデータを置けるとしている。",
+      "source_kind": "release",
+      "source_title": "AgentCore runtime instances are now available in six more AWS Regions",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/agentcore-aws-regions/",
+      "title": "AWS、Bedrock AgentCoreのランタイムインスタンスを6リージョンに追加。ソウルなどで最長14日のセッション",
+      "topics": [
+        "agents",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-17T04:51:32+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "毎回ゼロから調べ直す無駄は、日々同じコードベースで使う現場ほど大きい。費用の議論がモデル単価から運用の工夫へ広がっている。",
+      "caveat": "論文の評価条件と数値は確認していない。対象エージェントや言語が変わったときの効果は不明。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "msr-tokeneconomizer-coding-agents",
+      "language": "ja",
+      "observed_at": "2026-11-17T04:51:33+09:00",
+      "published_at": "2026-11-17T02:01:35+09:00",
+      "role": "brief",
+      "selection_reason": "エージェントの費用を、モデルではなく使い方の側で下げる具体的な手法と数値が出た。",
+      "source_domain": "www.microsoft.com",
+      "source_fact": "Microsoft Researchは11月16日、UC Berkeley、Microsoft Research、Microsoft Securityによるオープンソースのプラグイン「TokenEconomizer」を紹介した。同じリポジトリでの過去のセッションから学び、エージェントやモデルを変えずに次のセッションの無駄を減らす。277件の実際のバグ修正タスクで、複数のコーディングエージェントの費用を18.4〜30.9%減らし、テストしたすべてのリポジトリで費用が下がり、成功率はおおむね変わらなかったとしている。SWE-Benchの60タスクでClaude Codeを調べたところ、完了タスクが5件以上たまったリポジトリでは、ツール呼び出しの30%が以前のタスクと同じ操作の繰り返しだったという。",
+      "source_kind": "analysis",
+      "source_title": "TokenEconomizer: Learning from Experience to Make AI Coding Agents More Efficient",
+      "source_url": "https://www.microsoft.com/en-us/research/blog/tokeneconomizer-learning-from-experience-to-make-ai-coding-agents-more-efficient/",
+      "title": "Microsoft Researchなど、過去の作業から学んでコーディングエージェントの費用を18〜31%減らすプラグインを公開",
+      "topics": [
+        "agents",
+        "research",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-11-17T04:51:33+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "許可リストを広げていく運用は隔離の意味を薄める。外部への出口を1つの仲介先に寄せる設計は、エージェントの権限管理の型として参考になる。",
+      "caveat": "キットの安全性や、取得したページ経由の指示混入への耐性は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "docker-sandboxes-firecrawl-kit",
+      "language": "ja",
+      "observed_at": "2026-11-17T04:51:33+09:00",
+      "published_at": "2026-11-16T23:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "エージェントの隔離とウェブ参照の両立を、許可先を絞る形で示した。",
+      "source_domain": "www.docker.com",
+      "source_fact": "Dockerは11月16日、Docker Sandboxes向けのFirecrawlキットの使い方を公開した。Docker Sandboxesのコーディングエージェントは隔離されたVMの中で動き、接続先は制限され、認証情報はプロキシの裏でホストに残る。そのためドキュメントや変更履歴を開けない。Firecrawlキットは接続先をapi.firecrawl.devの1つだけ追加して、ウェブ検索、ページ取得、サイトのクロールを使えるようにし、結果はMarkdownで返す。キットは既存の環境を拡張する形で、SDKのインストール、プロキシ管理のAPIキー、段階ごとのネットワーク許可、エージェント向けの説明を宣言する。APIキーは中身がプレースホルダーで、実際の鍵はプロキシが差し込むため、イメージにもサンドボックスにも入らないとしている。",
+      "source_kind": "documentation",
+      "source_title": "Give sandboxed agents live web access with the Firecrawl kit for Docker Sandboxes",
+      "source_url": "https://www.docker.com/blog/docker-sandboxes-firecrawl-web-access/",
+      "title": "Docker、隔離環境のエージェントに許可先1つでウェブ検索と取得を与えるFirecrawlキットを解説",
+      "topics": [
+        "agents",
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-17T04:51:33+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AIによるコード生成でビルドの回数が増えるほど、コンパイルの速さは開発の待ち時間に直結する。",
+      "caveat": "速度向上の程度はプロジェクトにより異なるとされ、手元で測っていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "rust-parallel-frontend-nightly",
+      "language": "ja",
+      "observed_at": "2026-11-17T04:51:33+09:00",
+      "published_at": "2026-11-16T09:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "広く使われる言語のコンパイル時間に関わる変更が、安定化の手前まで来た。",
+      "source_domain": "blog.rust-lang.org",
+      "source_fact": "Rustプロジェクトは11月16日、型検査や借用検査を含むコンパイラの「フロントエンド」を複数スレッドで動かす機能を、nightlyチャネルで既定で有効にしたと発表した。nightly-2026-11-14から有効になっている。LLVMを使うバックエンドは以前から並列だったが、フロントエンドは単一スレッドで動いていた。3年前にnightlyでの任意利用を可能にし2024年の安定化を目指したが達成できず、昨年からの取り組みで長年の問題を直したという。実際の利用で問題が出ないかを確かめたうえで安定化したいとしている。ベンチマークの結果はばらつき、ほとんど速くならない例もあったと書いている。",
+      "source_kind": "official",
+      "source_title": "Enabling the parallel frontend on nightly",
+      "source_url": "https://blog.rust-lang.org/2026/11/16/enabling-parallel-frontend-on-nightly/",
+      "title": "Rust、コンパイラのフロントエンドの並列化をnightlyで既定に。安定化に向けて問題を洗い出す",
+      "topics": [
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-11-17T04:51:33+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "システムプロンプトやツール定義を毎回送るエージェントでは、キャッシュの有無が費用を大きく左右する。オープンウェイトモデルを選ぶ理由の一つの価格差がさらに開く方向。",
+      "caveat": "対応モデルの範囲と具体的な料金は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "bedrock-open-weight-prompt-caching",
+      "language": "ja",
+      "observed_at": "2026-11-17T04:51:35+09:00",
+      "published_at": "2026-11-17T00:42:41+09:00",
+      "role": "brief",
+      "selection_reason": "長い文脈を繰り返し送るエージェントの費用を下げる手段が、オープンウェイトモデルにも広がった。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは11月16日（米国時間）、Amazon Bedrockのオープンウェイトモデルが明示的なプロンプトキャッシュに対応したとし、その使い方を解説した。プロンプトキャッシュは、前のリクエストと同じ先頭部分の計算結果を再利用し、残りだけを処理する。モデルによって、自動で働く暗黙的なキャッシュ、再利用する部分を指定する明示的なキャッシュ、またはその両方が使える。キャッシュからの読み込みは通常の入力より安く課金され、モデルによっては書き込みが通常より高くなる場合がある。記事ではChat Completions APIで両方の方式を使い、OpenCodeのコーディングエージェントのセッションに暗黙的なキャッシュを当てる例を示している。",
+      "source_kind": "documentation",
+      "source_title": "Use prompt caching with open-weight models on Amazon Bedrock",
+      "source_url": "https://aws.amazon.com/blogs/machine-learning/use-prompt-caching-with-open-weight-models-on-amazon-bedrock/",
+      "title": "Amazon Bedrock、オープンウェイトモデルで明示的なプロンプトキャッシュに対応",
+      "topics": [
+        "infrastructure",
+        "enterprise"
+      ],
+      "verification": {
+        "checked_at": "2026-11-17T04:51:35+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "生成画像の検出は一社では完結しない。審査付きで道具を共有する形が、業界での対策の標準になるかを見たい。",
+      "caveat": "分類器の精度や誤検出の率は記事からは確認できず、独立に評価していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-csam-classifier-child-safety",
+      "language": "ja",
+      "observed_at": "2026-11-17T04:51:42+09:00",
+      "published_at": "2026-11-17T02:00:00+09:00",
+      "role": "watch",
+      "selection_reason": "生成AIによる被害への対策として、検出の道具そのものを外部に開いた。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは11月16日、児童性的虐待コンテンツ（CSAM）を検出する画像分類器の提供など、子どもの安全に関する取り組みを発表した。分類器は虐待の視覚的な兆候を探し、まだ知られていない画像も見つけられるようにするもので、確認の優先順位付けに使うスコアを返す。AI生成の可能性を示す信号を持つCSAM分類器を広く提供するのは初めてだとしている。全米行方不明・被搾取児童センター（NCMEC）の協力で訓練と評価をした。審査を経た組織にOpenAI APIを通じて無償で提供し、Tech CoalitionとROOSTを通じて共有を進める。有害な行動を中断して支援先を示す仕組み、開発者向けの資料、捜査機関の支援も含む。",
+      "source_kind": "official",
+      "source_title": "Strengthening the fight against online child sexual abuse with new tools and support",
+      "source_url": "https://openai.com/index/strengthening-online-child-safety",
+      "title": "OpenAI、AI生成の可能性も示す児童性的虐待画像の分類器を、審査済みの組織に無償で提供",
+      "topics": [
+        "policy",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-11-17T04:51:42+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "画面やアプリを操作するAIエージェントはこうした権限に頼ることが多い。許可を細かくする流れは、エージェントの導入手順にも影響する。",
+      "caveat": "ベータでの変更で、正式版での内容や時期は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "apple-macos-full-disk-access-permissions",
+      "language": "ja",
+      "observed_at": "2026-11-17T04:51:34+09:00",
+      "published_at": "2026-11-17T01:00:00+09:00",
+      "role": "watch",
+      "selection_reason": "Macを操作するエージェントやバックアップ、補助技術のアプリが使う強い権限の扱いが変わる。",
+      "source_domain": "developer.apple.com",
+      "source_fact": "Appleは11月16日、macOS 27.3 beta 2で、Device Control and Data AccessとFull Disk Accessの2つの権限について、透明性を高め選択肢を細かくすると発表した。Device Control and Data Accessは「System & App Protection Override」と「Accessibility」の2つの設定に分かれる。必要なアプリやフォルダだけに許可を絞るよう案内し、許可した場合に渡るデータの範囲を見やすくし、アクセスのたびに確認する設定も選べるようにする。System & App Protection Overrideで他のアプリを操作しているときは表示が出る。開発者には、限られたフォルダやアプリへのアクセスしかない状態でも動くよう準備を求めている。既に与えた許可はそのまま有効だという。",
+      "source_kind": "official",
+      "source_title": "Updates to Device Control and Data Access, and Full Disk Access in macOS",
+      "source_url": "https://developer.apple.com/news/?id=oqng0zjk",
+      "title": "Apple、macOS 27.3 beta 2でフルディスクアクセスなどの権限付与を細分化。開発者に対応を促す",
+      "topics": [
+        "security",
+        "enterprise",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-17T04:51:34+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-11-17T04:54:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "攻撃者がエージェント型の侵入基盤を実戦で使うとGoogleが報告。守る側は検査の一括化と権限の細分化を進める",
+  "topics": [
+    {
+      "description": "攻撃の動向、脆弱性の検査、権限の扱い",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "エージェントの実行環境、費用、攻撃側での利用",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "研究での利用と研究成果",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "モデルの提供と学習",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "計算資源、推論の基盤、クラウド",
+      "id": "infrastructure",
+      "label_en": "Infrastructure",
+      "label_ja": "インフラ"
+    },
+    {
+      "description": "開発者向けの道具とOSの変更",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "オープンなモデル、コード、言語",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "企業での運用、費用、管理",
+      "id": "enterprise",
+      "label_en": "Enterprise",
+      "label_ja": "企業導入"
+    },
+    {
+      "description": "安全対策と業界での取り組み",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "方針"
+    }
+  ]
+}
