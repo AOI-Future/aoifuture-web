@@ -1,0 +1,27 @@
+[
+  {
+    "changed_signal_ids": [
+      "aws-batch-eks-seccomp-capabilities",
+      "aws-bedrock-ai-tool-cost-attribution-guide",
+      "aws-security-hub-cspm-declarative-policies",
+      "cloudflare-ai-pentest-orchestrators-modern-security-model",
+      "cloudflare-kitesurf-agent-browser-open-source",
+      "cloudflare-spend-management-workers-beta",
+      "github-copilot-gemini-4-hydrogen-ga",
+      "hf-transformers-v5-23-inkling2-lfm3",
+      "nvidia-cublas-ozaki-ii-fp64-emulation",
+      "openai-gpt6-astra-standard-model-lattice",
+      "openai-science-blog-launch"
+    ],
+    "edition_date": "2026-11-16",
+    "edition_id": "2026-11-16-1500",
+    "edition_url": "https://aoifuture.com/news/2026-11-16-1500/",
+    "event_id": "aoi-news-2026-11-16-1500-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-11-16T15:00:31+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "Cloudflareは3日間で50以上の自動侵入テスト基盤の系統を観測し、利用額の上限で処理を止める機能も出した。OpenAIは物理学者とGPT-6 Astraによる標準模型の格子上の定義の候補を紹介し、TransformersはInkling 2などに対応した。",
+    "title": "AIで攻撃を自動化する道具が急増とCloudflareが報告。費用を止める上限や最小権限の設定など、守りと統制の更新が並んだ"
+  }
+]
