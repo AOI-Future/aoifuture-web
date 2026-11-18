@@ -41,7 +41,7 @@ aoifuture.com 配下に自社開発アプリを載せる仕組み。`/tools/` �
 `src/data/apps.ts` が `/apps/` 一覧の唯一の真実。一覧に載せる = ここに1エントリ追加。
 
 ```ts
-{ id:'002', slug:'aoi-tap', name:'AOI TAP', desc:'…', status:'BETA', repo:'AOI-Future/aoi-tap' }
+{ id:'002', slug:'aoi-tap', name:'AOI TAP', desc:'…', status:'IN DEV', scope:'native', legalPlat:'iOS / macOS / watchOS', legalNote:'…', repo:'AOI-Future/aoi-tap' }
 ```
 
 | フィールド | 用途 |
@@ -49,8 +49,10 @@ aoifuture.com 配下に自社開発アプリを載せる仕組み。`/tools/` �
 | `id` | 表示用連番 `'002'` |
 | `slug` | `/apps/<slug>` と `apps/<slug>.astro` のファイル名 |
 | `name` / `desc` | 一覧・見出し |
-| `status` | `EARLY SIGNAL` → `BETA` → `LIVE` |
-| `repo?` | 開発リポ（内部メモ。非表示） |
+| `status` | `IN DEV` → `EARLY SIGNAL` → `BETA` → `LIVE` |
+| `scope` | `native` … `/apps/terms`・`/apps/privacy` の共通条項対象 / `web` … 一覧のみ（法務のネイティブ声明対象外） |
+| `legalPlat?` / `legalNote?` | 法務ページの SCOPE 行（`scope: native` のとき設定） |
+| `repo?` | 開発リポ `org/name`（LP の GitHub ★ 等。`githubRepoUrl()`） |
 | `site?` | **独自ドメイン専用サイト。育ったら設定** → 一覧に `SITE ↗`、紹介ページに外部誘導 |
 
 `site` の有無が①〜③の役割を切り替える唯一のスイッチ。
@@ -85,7 +87,7 @@ aoifuture.com 配下に自社開発アプリを載せる仕組み。`/tools/` �
 | 情報 | 正本の場所 | 補足 |
 |---|---|---|
 | アプリ本体のコード | **GitHub `AOI-Future/<repo>`**（製品） / `0xshugo/<repo>`（実験・移管前） | Org にあるか＝製品かの判定軸 |
-| `/apps/` 一覧の真実 | **`aoifuture-web/src/data/apps.ts`** | エントリ1つ＝1アプリ |
+| `/apps/` 一覧の真実 | **`aoifuture-web/src/data/apps.ts`** | エントリ1つ＝1アプリ。法務 SCOPE も同ファイルから派生 |
 | 各アプリの LP/紹介ページ | **`aoifuture-web/src/pages/apps/<slug>.astro`** | サイト資産はサイトリポ |
 | **この運用ルールの正本** | **`aoifuture-web/docs/apps.md`**（この文書） | 迷ったらここに戻る |
 | ルールの発見性（横展開） | **グローバル Skill `aoifuture-apps`**（`~/.claude/skills/`） | 他リポで作業中でも想起される入口。中身はこの文書を指す |
