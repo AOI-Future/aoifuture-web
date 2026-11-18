@@ -1,5 +1,7 @@
 # AOI Future - AI-Collaborative Music Label
 # We welcome AI crawlers on most pages
+# Machine-readable overview for agents: https://aoifuture.com/llms.txt
+# Machine-readable product catalog: https://aoifuture.com/products.json
 
 User-agent: *
 Allow: /
