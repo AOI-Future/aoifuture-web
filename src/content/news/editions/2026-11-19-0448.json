@@ -1,0 +1,410 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-11-19T04:48:54+09:00",
+  "dek": "CISAとJPCERT/CCがOpenJDKの重大脆弱性に即時パッチを呼びかけ、Cloudflareは補助的なWAFルールを出した。一方でGoogleはGenie 4を提供開始し、GitHubは端末をまたぐAgent Host Protocolを、DockerとOpenAIはエージェントの実行境界を説明した。",
+  "edition_date": "2026-11-19",
+  "edition_id": "2026-11-19-0448",
+  "edition_note": "2026年11月17日〜19日（各発表元の日付）に公開された規制注意喚起、脅威分析、製品発表、技術解説から選んだ。直近72時間の範囲で、期間の延長はしていない。",
+  "generated_at": "2026-11-19T04:48:54+09:00",
+  "items": [
+    {
+      "aoi_note": "WAFや一時的な入力制限だけでは済まないクラスだ。JDKのバージョンだけでなく、KeycloakやJenkinsなどJava製アプリの資産棚卸しを先に回すべき局面だ。",
+      "caveat": "攻撃の実況や被害規模はCISAの注意喚起と参照先の勧告に基づき、自社環境での影響は独立に確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-java4shell-critical-patch-alert",
+      "language": "ja",
+      "observed_at": "2026-11-19T04:48:03+09:00",
+      "published_at": "2026-11-17T21:00:00+09:00",
+      "role": "lead",
+      "selection_reason": "広く使われるJavaランタイムに及ぶ重大脆弱性で、公的機関が緊急の手順を示した。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "米国CISAは11月17日、Oracle Javaの脆弱性CVE-2026-114938（Java4Shell）について速やかなパッチ適用を強く要請する注意喚起を出した。問題はx86-64 HotSpot JVMのBase64デコーダにおけるメモリ破損で、細工したBase64入力によりJVMがクラッシュし、認証なしのリモートコード実行につながる可能性があるとしている。CISAはJDKとJavaランタイムをソフトウェア資産から洗い出し、コンテナやアプライアンス同梱分を含めて特定するよう求め、パッチが当てられない場合はBase64入力の制限や未認証アクセスの制限といった暫定対策を挙げている。",
+      "source_kind": "regulator",
+      "source_title": "Critical Java Vulnerability Requires Immediate Patching",
+      "source_url": "https://www.cisa.gov/news-events/alerts/2026/11/17/critical-java-vulnerability-requires-immediate-patching",
+      "title": "CISA、OpenJDKのJava4Shell（CVE-2026-114938）に即時パッチを強く要請",
+      "topics": [
+        "security",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-11-19T04:48:03+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "「ルールを入れたから安全」ではなく、まずJavaランタイムを更新し、WAFはログで誤検知を確認してからBlockに上げるという順序がそのまま運用手順になる。",
+      "caveat": "Califの実証内容とCVSSはCloudflareの記事に基づく。自社のWAFログで検知状況は未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-java4shell-waf-rules",
+      "language": "ja",
+      "observed_at": "2026-11-19T04:48:03+09:00",
+      "published_at": "2026-11-18T23:52:10+09:00",
+      "role": "major",
+      "selection_reason": "攻撃が始まる前に、境界で何ができるかをCDN事業者が明示した。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは11月18日、Califが公表したJava4Shell（CVE-2026-114938、CVSS 4.0で9.2）向けに、マルチフォームのBase64入力パターンを検知するWAFルールをマネージドルールセットへ追加したと伝えた。研究組織の報告ではKeycloak、Jira、Confluence、Jenkinsなど認証前のリモートコード実行が示されている。CloudflareはルールをPro以上で既定有効かつLog動作とし、正当なトークン形式との衝突を避けるため即時Blockにはしていない。WAFはパッチの代替ではなく、見えない経路も残ると書いている。",
+      "source_kind": "analysis",
+      "source_title": "How Cloudflare WAF helps protect against Java4Shell (CVE-2026-114938)",
+      "source_url": "https://blog.cloudflare.com/java4shell-waf-protection/",
+      "title": "Cloudflare、Java4Shell向けWAFルールを既定でログ。パッチが本丸でWAFは補助と明言",
+      "topics": [
+        "security",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-19T04:48:03+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "デモ用の実験から、Ultra契約者が触れるサービスに移った点が重要。生成物を外部公開するギャラリーがある以上、不適切コンテンツの扱いは運用側の責任になる。",
+      "caveat": "提供条件はGoogle AI Ultraの対象範囲に依存し、日本での提供や料金は未確認。性能比較は独立に検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-genie-4-project-genie-ga",
+      "language": "ja",
+      "observed_at": "2026-11-19T04:48:04+09:00",
+      "published_at": "2026-11-19T03:00:00+09:00",
+      "role": "major",
+      "selection_reason": "世界モデルが製品画面に降り、編集と共有まで一つの体験になった。",
+      "source_domain": "blog.google",
+      "source_fact": "Google DeepMindは11月18日、対話型世界生成モデルGenie 4を対象のGoogle AI Ultra契約者向けに提供開始したと発表した。Project Genieのサイト上で、自然言語によるリアルタイムの環境編集、ネイティブ音声、コミュニティギャラリーへの作品公開ができる。Genie 3モデルは長いセッション、パノラマグラウンディング、連結した世界列のサポートを更新し、Project Genieエージェントが会話からカスタム世界を組み立てるとしている。",
+      "source_kind": "official",
+      "source_title": "Genie 4 is now available",
+      "source_url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/genie-4-now-available-project-genie/",
+      "title": "Google、Genie 4をProject Genie経由で提供開始。テキストで世界を編集しコミュニティギャラリーへ公開",
+      "topics": [
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-19T04:48:04+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "IgniteでAgent 365の管理が出た直後に、開発者側の会話継続の標準が示された。自社ツールからエージェントを呼ぶ場合、AHP対応が将来の接続コストを下げる選択肢になる。",
+      "caveat": "AHPの実装状況とバージョン互換は記事ベースで、各クライアントでの利用可能時期は未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-agent-host-protocol-sessions",
+      "language": "ja",
+      "observed_at": "2026-11-19T04:48:05+09:00",
+      "published_at": "2026-11-18T03:20:40+09:00",
+      "role": "major",
+      "selection_reason": "エージェントの「どこで動くか」をアプリごとの専用実装から共通言語へ移す動き。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月17日、VS Code上で先に作ったオープン標準Agent Host Protocol（AHP）の設計を公開した。モデルが長時間自律動作する前提で、エディタ、ターミナル、モバイル、クラウドなど複数クライアントから同じエージェント会話と履歴を共有し、ネットワーク断や同時編集を許容する。プロトコルはURIで識別するチャンネルを中心に据え、エージェントの内部動作はエンコードしない方針だとしている。GitHub Copilotではスマホで開始したセッションをノートPCで再開できる。",
+      "source_kind": "official",
+      "source_title": "Building the Agent Host Protocol for sessions that continue across devices",
+      "source_url": "https://github.blog/engineering/engineering-principles/building-the-agent-host-protocol-for-sessions-that-continue-across-devices/",
+      "title": "GitHub、エージェントセッションを端末をまたいで続けるオープン標準「Agent Host Protocol」を公開",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-19T04:48:05+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "CVE一覧だけでは分からない「どのCPU条件で危ないか」がここで補われる。パッチ待ちの間もJVM起動オプションでリスクを下げられるが、性能への影響は自環境で確認が必要だ。",
+      "caveat": "悪用未確認という判断はJPCERT/CCの発表日時点のもの。以降の状況は未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "jpcert-openjdk-java4shell-newsflash",
+      "language": "ja",
+      "observed_at": "2026-11-19T04:48:03+09:00",
+      "published_at": "2026-11-18T14:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "国内の調整窓口が、技術条件と暫定回避を平易にまとめた。",
+      "source_domain": "www.jpcert.or.jp",
+      "source_fact": "JPCERT/CCは11月18日、CVE-2026-114938（Java4Shell）について国内向けの注意喚起を出した。OpenJDKのBase64デコード高速化の不備で、条件が揃うとメモリ窃取や任意コード実行につながる可能性があると整理している。CalifがKeycloakやJiraなど複数製品で認証前RCEを示したこと、AVX-512 VBMIを持つx86-64環境が条件になること、ARM64は影響外とされることを記載。11月18日時点で実攻撃の情報は確認していないが、修正版へ速やかに更新するよう求め、暫定回避として-XX:-UseBASE64Intrinsicsや-XX:UseAVX=2を紹介している。",
+      "source_kind": "regulator",
+      "source_title": "OpenJDKにおけるリモートコード実行につながる脆弱性（CVE-2026-114938）について",
+      "source_url": "https://www.jpcert.or.jp/newsflash/2026111801.html",
+      "title": "JPCERT/CC、Java4Shellの影響範囲と回避策を整理。11月18日時点で悪用は未確認",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-11-19T04:48:03+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントにシェルを渡す前に、どのMCPツールまで許すかを宣言的に持てる構図は、自社でエージェント基盤を組む側にも参考になる。",
+      "caveat": "製品の提供形態と料金、既存環境との統合手順は記事からは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "docker-agentic-ai-governance-trust-layer",
+      "language": "ja",
+      "observed_at": "2026-11-19T04:48:05+09:00",
+      "published_at": "2026-11-18T23:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "コンテナ会社が、エージェントの権限を製品機能として語り始めた。",
+      "source_domain": "www.docker.com",
+      "source_fact": "Dockerは11月18日、エージェントが要求する操作と組織が許す操作の間に置く「信頼層」としてDocker AI Governanceを説明した。マイクロVMベースのDocker Sandboxesに、サンドボックス方針、MCPツール統治、監査と可視性の3層を載せ、パッケージ導入やファイル編集、外部接続を実行前に決めるとしている。Hardened Imagesでソフトウェア供給の側面も扱うと書いている。",
+      "source_kind": "official",
+      "source_title": "The Trust Layer: Securing Agentic AI with Docker AI Governance",
+      "source_url": "https://www.docker.com/blog/agentic-ai-security-docker-governance/",
+      "title": "Docker、エージェント向けにサンドボックス方針・MCPツール管理・監査の3層を提示",
+      "topics": [
+        "agents",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-11-19T04:48:05+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ネットワーク遮断だけでは不足し、依存パッケージへの書込が別経路のリスクになる点が実務的だ。企業はpermission profileを標準化して配布する段階に入る。",
+      "caveat": "openai.comはcurlで403のためWeb取得で確認。各OSでの強制の詳細は記事に基づき、自環境では未検証。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-codex-sandbox-design",
+      "language": "ja",
+      "observed_at": "2026-11-19T04:49:00+09:00",
+      "published_at": "2026-11-18T17:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "コーディングエージェントの「ローカル実行」をどう縛るかの設計が公開された。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは11月18日、ローカルでコマンドを実行するCodex向けサンドボックスの仕組みを解説した。permission profileでファイルシステムとネットワークの制限を設定し、既定の:workspaceプロファイルはリポジトリ内への書込を許しつつ.gitや.codexは読み取り専用、ネットワークは遮断するとしている。Dockerではなく各OSのサンドボックス機能でホスト環境をそのまま使う設計で、node_modulesへの悪意ある改ざんがサンドボックス外で実行されうる例も挙げ、多層防御を強調している。",
+      "source_kind": "official",
+      "source_title": "Inside the Codex sandbox",
+      "source_url": "https://openai.com/index/inside-the-codex-sandbox",
+      "title": "OpenAI、Codexのサンドボックス設計を公開。既定はワークスペース書込可・ネットワーク遮断",
+      "topics": [
+        "agents",
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-19T04:49:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "コード生成よりレビューがボトルネックという指摘は、社内の大型リポジトリにも当てはまる。Sashikoは「提案を増やす」ではなく「人の前に置く負荷を減らす」側の設計だ。",
+      "caveat": "Sashikoの導入効果の数値は記事に部分的にのみあり、独立検証はしていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-sashiko-linux-kernel-agentic-review",
+      "language": "ja",
+      "observed_at": "2026-11-19T04:48:05+09:00",
+      "published_at": "2026-11-19T02:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "最重要インフラのレビューにエージェントを入れた実例が出た。",
+      "source_domain": "cloud.google.com",
+      "source_fact": "Googleは11月19日、Linuxカーネルの変更レビュー負荷を下げるエージェント型コードレビューシステムSashikoの構築経験を公開した。年間8万5千件超のパッチが届く環境で、ビルドボットやファザーでは拾えない論理バグをGeminiで補う狙いで、Linux Foundationへ寄贈済みとしている。誤検知やAI slopの増加がメンテナの負荷を増やす問題意識から、エージェントが提案する変更の正しさを検証する仕組みが必要だと述べている。",
+      "source_kind": "official",
+      "source_title": "Sashiko: Lessons from building an agentic code review system for Linux",
+      "source_url": "https://cloud.google.com/blog/products/application-development/lessons-from-building-sashiko-an-agentic-code-review-system/",
+      "title": "Google、Linuxカーネル向けエージェント型レビュー「Sashiko」をオープンソースで公開",
+      "topics": [
+        "open-source",
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-11-19T04:48:05+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "記憶を長く残すほど、個人情報や秘密が混ざったまま保存されるリスクも上がる。保持期間と削除ポリシーを先に決めてから有効化すべきだ。",
+      "caveat": "料金は標準の短期記憶ストレージに準じるとあるが、10年保持時のコスト試算はしていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-bedrock-agentcore-memory-10y-retention",
+      "language": "ja",
+      "observed_at": "2026-11-19T04:48:06+09:00",
+      "published_at": "2026-11-18T04:22:00+09:00",
+      "role": "brief",
+      "selection_reason": "エージェントの記憶を「セッション単位」から「年単位の記録」へ伸ばす機能追加。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは、Amazon Bedrock AgentCore Memoryで短期記憶イベントの保持期間を最長1年から10年へ広げたと発表した。長期の会話記録をコンプライアンスや監査、長期間離脱した利用者の復帰、過去セッションの参照に使えるとしている。保持期間はメモリリソースに設定し、イベント作成時に適用されるため既存イベントの期限は変わらない。",
+      "source_kind": "release",
+      "source_title": "Amazon Bedrock AgentCore Memory now supports short-term memory retention of up to 10 years",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/amazon-bedrock-agentcore-memory-10-year-retention",
+      "title": "AWS、Bedrock AgentCore Memoryの短期記憶保持を最長10年に拡大",
+      "topics": [
+        "agents",
+        "enterprise",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-11-19T04:48:06+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "評価が自動化しても修正は人とプロセスの仕事だ。エージェントがコードを増やす組織ほど、定期のリスク評価をCIの一部に組み込む価値がある。",
+      "caveat": "パブリックプレビュー相当の提供範囲と検出精度はchangelogのみで、実組織での結果は未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-team-automatic-security-risk-assessments",
+      "language": "ja",
+      "observed_at": "2026-11-19T04:48:06+09:00",
+      "published_at": "2026-11-19T01:54:26+09:00",
+      "role": "brief",
+      "selection_reason": "中小規模チームでも、リスク棚卸しの入口が下がった。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月18日、GitHub Teamの組織向けにセキュリティリスク評価を自動実行できるようにしたとchangelogで知らせた。組織管理者とセキュリティマネージャが、無料評価の結果から露出した資格情報やコード脆弱性を確認し、優先順位を付けられるとしている。",
+      "source_kind": "release",
+      "source_title": "Security risk assessments run automatically on GitHub Team",
+      "source_url": "https://github.blog/changelog/2026-11-18-security-risk-assessments-run-automatically-on-github-team",
+      "title": "GitHub Teamでセキュリティリスク評価が自動実行に。露出資格情報とコード脆弱性を無料枠で確認",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-19T04:48:06+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントが複数クラウドのAPIを触るほど、リスクの見える化も横断が要る。単一ベンダーのコンソールに集約する設計は運用簡素化とベンダー依存の両面がある。",
+      "caveat": "対応リージョンの除外や試用終了後の料金は発表文に基づき、自環境での試用はしていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-security-hub-gcp-monitoring",
+      "language": "ja",
+      "observed_at": "2026-11-19T04:48:07+09:00",
+      "published_at": "2026-11-17T17:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "セキュリティ基盤がクラウド越えに一本化される動きの具体例。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは11月17日、AWS Security HubがGoogle Cloud Platformのリソース監視に対応したと発表した。GCPのVM、Artifact Registryのコンテナイメージ、Cloud Run、身分を自動検出し、CIS Benchmarks for GCPに沿った構成ミス、露出、ソフトウェア脆弱性を評価する。Azure監視に加え、AWSとGCPの所見を同じ形式で優先表示し、EventBridge連携の自動応答も使える。GCP連携には30日間の無料試用がある。",
+      "source_kind": "release",
+      "source_title": "AWS Security Hub extends unified security management to Google Cloud Platform",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/security-hub-gcp/",
+      "title": "AWS Security HubがGCPのVMやArtifact Registryなどを監視。マルチクラウドを単一コンソールで",
+      "topics": [
+        "security",
+        "enterprise",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-19T04:48:07+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "CopilotがEdgeでリンクを開く設計は、エージェント時代の「誰がナビゲーションを握るか」に直結する。企業のブラウザ標準を決める人は、OS側の既定とAIクライアントの結び付きをセットで見る必要がある。",
+      "caveat": "Mozillaの主張と研究の正当性は同社の公開資料に基づき、Microsoft側の反論や公式見解は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "mozilla-firefox-microsoft-ignite-browser-choice",
+      "language": "ja",
+      "observed_at": "2026-11-19T04:48:08+09:00",
+      "published_at": "2026-11-17T22:59:00+09:00",
+      "role": "watch",
+      "selection_reason": "AIとエージェントの話が並ぶ会場で、端末の既定アプリという古いが実務的な論点が戻った。",
+      "source_domain": "blog.mozilla.org",
+      "source_fact": "Mozillaは11月17日、サンフランシスコで開催されたMicrosoft Ignite最中に、周辺街路でFirefoxの広告キャンペーンを展開したと報じた。Windowsが検索やウィジェット、PDF既定、バックアップ、Copilot経由のリンクでEdgeを優先する設計を、EUでは改善済みだが米国・英国・インドなど広い地域では変わっていないと主張する。7月に公開したOver The Edge 2.0の研究をMicrosoftと共有したが有意な対応がなかったため、1-855-25-FIREFOXのホットラインで意見を集めるとしている。",
+      "source_kind": "official",
+      "source_title": "Has Microsoft wronged you? Firefox opens a complaints line at Microsoft Ignite",
+      "source_url": "https://blog.mozilla.org/en/mozilla/has-microsoft-wronged-you/",
+      "title": "Mozilla、Ignite会場外で「Microsoftへの苦情窓口」キャンペーン。ブラウザ選択の問題を再提起",
+      "topics": [
+        "policy",
+        "enterprise"
+      ],
+      "verification": {
+        "checked_at": "2026-11-19T04:48:08+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-11-19T04:48:54+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "Java4ShellがJDK全体に迫る中、エージェントの信頼層とセッション継続の標準が出揃う",
+  "topics": [
+    {
+      "description": "モデルの提供、料金、技術報告",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "攻撃の手口、脆弱性の報告、検査の仕組み",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "エージェントの評価、管理、クラウドとの接続",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "開発者向けの道具",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "クラウド、権限、推論の基盤",
+      "id": "infrastructure",
+      "label_en": "Infrastructure",
+      "label_ja": "インフラ"
+    },
+    {
+      "description": "企業での運用、管理、経営層の判断",
+      "id": "enterprise",
+      "label_en": "Enterprise",
+      "label_ja": "企業導入"
+    },
+    {
+      "description": "オープンなモデルとプロジェクト",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "技術的な設計と研究成果",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "安全面の判定と透明性の取り組み",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "方針"
+    }
+  ]
+}
