@@ -1,0 +1,421 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { gumroadUrl } from '../../../data/agent-security';
+
+export const prerender = true;
+
+const title = 'Hardshell — AIソロプレナーのVPSとエージェントを守り、証明する | AOI Future';
+const description =
+  'AIソロプレナーの自前VPSとAIエージェントをローカル完結で守り、検証済みとして証明するセキュリティ運用ツール。MIT Community（無料）と Solo Guardian（14日間無料試用 / Founding $19・Standard $29）。';
+
+const relayCheckoutBase = 'https://hardshell.aoifuture.com/checkout';
+const checkoutUrls = {
+  foundingMonthly: `${relayCheckoutBase}?plan=solo_monthly_founding`,
+  foundingYearly: `${relayCheckoutBase}?plan=solo_yearly_founding`,
+  standardMonthly: `${relayCheckoutBase}?plan=solo_monthly`,
+  standardYearly: `${relayCheckoutBase}?plan=solo_yearly`,
+};
+
+const roles = [
+  {
+    no: '01',
+    name: 'Hardshell Community（OSS / MIT）',
+    label: 'INSPECT & GUARD',
+    text: 'VPS のシステム設定・Docker-UFW・外部スキャナー（Trivy / Grype / Lynis / Nuclei）を集約し、EPSS・CISA KEV・OSV/GHSA・PHP/nginx 早期警戒で優先順位付け。hardshell guard でローカル AI の暴走・コスト異常も遮断します。',
+  },
+  {
+    no: '02',
+    name: 'Solo Guardian Relay（Out-of-Band）',
+    label: 'WITNESS & PROVE',
+    text: '顧客 VPS の外（東京リージョン Relay）で署名付きポスチャを独立保管（Out-of-Band Witness）し、外部へ共有できる Public Verified Trust Page を生成します。ライセンス検証は Ed25519 公開鍵によりオフライン完結です。',
+  },
+  {
+    no: '03',
+    name: '1-Tap HCAP v0.2 & Rollback',
+    label: 'APPROVE & RECOVER',
+    text: '権限昇格やパッケージ更新など影響のある操作は、監視や AI 助言から分離された HCAP v0.2 二重署名と変更前スナップショット付きロールバックで、運用者の明示承認のもと安全に実行します。',
+  },
+];
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SoftwareApplication',
+      name: 'Hardshell',
+      applicationCategory: 'SecurityApplication',
+      operatingSystem: 'Linux, macOS',
+      url: 'https://aoifuture.com/apps/hardshell/',
+      codeRepository: 'https://github.com/0xshugo/hardshell',
+      license: 'https://opensource.org/licenses/MIT',
+      termsOfService: 'https://aoifuture.com/apps/hardshell/terms',
+      description,
+      author: {
+        '@type': 'Person',
+        name: 'Shugo Nozaki',
+        url: 'https://nozaki.com',
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'AOI Future',
+        url: 'https://aoifuture.com',
+      },
+      featureList: [
+        'Linux VPS security hardening and Docker-UFW bypass audit',
+        'Trivy, Grype, Lynis, Nuclei aggregation enriched with EPSS, CISA KEV, OSV/GHSA, and PHP/nginx early-warning advisories',
+        'hardshell guard local AI agent runaway and API cost circuit breaker',
+        'Signed posture summary export (hardshell.posture_summary.v1) and HCAP v0.2 execution boundaries',
+        'Solo Guardian: Ed25519 offline-verifiable license (up to 3 VPS nodes), Out-of-Band Witness, Public Verified Trust Page, and 1-Tap HCAP approval',
+      ],
+      offers: [
+        {
+          '@type': 'Offer',
+          name: 'Hardshell Community (MIT)',
+          price: '0',
+          priceCurrency: 'USD',
+          url: 'https://github.com/0xshugo/hardshell',
+          availability: 'https://schema.org/InStock',
+        },
+        {
+          '@type': 'Offer',
+          name: 'Hardshell Solo Guardian — Founding Monthly (14-day free trial)',
+          price: '19',
+          priceCurrency: 'USD',
+          url: checkoutUrls.foundingMonthly,
+          eligibleQuantity: { '@type': 'QuantitativeValue', value: 3, unitText: 'VPS nodes' },
+        },
+        {
+          '@type': 'Offer',
+          name: 'Hardshell Solo Guardian — Standard Monthly (14-day free trial)',
+          price: '29',
+          priceCurrency: 'USD',
+          url: checkoutUrls.standardMonthly,
+          eligibleQuantity: { '@type': 'QuantitativeValue', value: 3, unitText: 'VPS nodes' },
+        },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'Hardshell Community（無料）と Solo Guardian（有料）の違いは何ですか？',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Community（MIT・$0）は VPS 診断、Docker-UFW 検査、OSV/GHSA・PHP/nginx 早期警戒、hardshell guard（AI暴走・コスト遮断）、署名付きポスチャ出力、HCAP v0.2 ローカル境界を含み、アカウント不要で永続無料です。Solo Guardian（14日間無料試用 / Founding $19・Standard $29）は最大 3 台の VPS に対し、VPS 外の独立証跡保管（Out-of-Band Witness）、Public Verified Trust Page、1-Tap HCAP 承認、Ed25519 オフラインライセンス検証を追加します。',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Solo Guardian を解約した場合や Relay が停止した場合、VPS や Community 機能も止まりますか？',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'いいえ。Fail-open 設計のため、解約・未払い失効時や Relay 到達不能時も、Community スキャン、監視対象 VPS の稼働、既存の証跡閲覧・エクスポートは一切停止しません。新規の Witness 更新や 1-Tap HCAP 承認など Solo Guardian 付加機能のみが停止します。',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: '14日間の無料試用と返金ポリシーはどうなっていますか？',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: '初回登録から 14 日間は無料で試用でき、試用期間中に Stripe Customer Portal から解約すれば課金は発生しません。14 日間の試用期間を設けているため、課金開始後の返金および日割り返金は原則不可としています（詳細は /apps/hardshell/terms をご確認ください）。',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'AI-Agent Security Verification Kit（$129）とはどう使い分けますか？',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Verification Kit（$129 買い切り）は AI エージェント設計・要件の検証証跡（JSON/PDF/RFC 3161）を作成するツールで、Hardshell は本番 VPS とローカル AI エージェントの継続防御・監視・外部証跡（Trust Page）を担う補完関係にあります。',
+          },
+        },
+      ],
+    },
+  ],
+};
+---
+
+<Layout title={title} description={description} canonical="https://aoifuture.com/apps/hardshell/" pageTransition={false}>
+  <Fragment slot="head">
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://aoifuture.com/apps/hardshell/" />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  </Fragment>
+
+  <a class="hs-skip" href="#content">本文へ</a>
+  <main class="hs-shell" id="content">
+    <nav class="hs-nav" aria-label="関連ページ">
+      <a href="/apps/">{'<'} APPS</a>
+      <div class="hs-nav-links">
+        <a href="/apps/hardshell/terms">利用規約・特商法</a>
+        <a href="/agent-security/">AI Agent Security {'>'}</a>
+      </div>
+    </nav>
+
+    <p class="hs-status-banner" id="hs-status-banner">
+      <strong>[SOLO GUARDIAN / EARLY ACCESS]</strong> Community（MIT）公開中 · Solo Guardian（14日間無料試用）利用規約/特商法公開済・Staging 疎通完了 / Stripe Live 切替準備中 · 2026-11-21
+    </p>
+    <div class="hs-checkout-notice" id="hs-checkout-notice" hidden></div>
+
+    <header class="hs-hero">
+      <p class="hs-label">HARDSHELL / COMMUNITY & SOLO GUARDIAN</p>
+      <h1>自前VPSとAIエージェントを、<br />ローカル完結で守り、証明する。</h1>
+      <p class="hs-lead">
+        AI ソロプレナーが事業に集中できるように。Hardshell は、自分の VPS・コンテナ・AI エージェントの点検と暴走防止をローカルで完結させ、Solo Guardian によって外部証跡（Witness）と Public Verified Trust Page までつなぐセキュリティ運用基盤です。
+      </p>
+      <div class="hs-actions">
+        <a class="hs-button hs-primary" href={checkoutUrls.foundingMonthly} rel="noopener noreferrer">
+          14日間無料で Solo Guardian を試す（Founding $19/月）
+        </a>
+        <a class="hs-button" href="https://github.com/0xshugo/hardshell" target="_blank" rel="noopener noreferrer">
+          Community（MIT / $0）を GitHub で見る
+        </a>
+        <a class="hs-button" href="#pricing">料金・機能比較を見る</a>
+      </div>
+      <p class="hs-caption">
+        決済は Stripe Checkout（14日間無料試用・いつでも Customer Portal から解約可能）。ライセンス失効や Relay 障害時も、Community 機能・VPS 稼働・既存証跡の閲覧は絶対に止めません。
+      </p>
+    </header>
+
+    <section aria-labelledby="why-title" class="hs-section">
+      <p class="hs-label">WHY HARDSHELL</p>
+      <h2 id="why-title">「見つけた」で終わらせず、守り、証明する。</h2>
+      <div class="hs-grid">
+        <article>
+          <h3>ローカル完結の点検と遮断</h3>
+          <p>Trivy・Grype・Lynis・Nuclei・Docker-UFW 検査に加え、OSV/GHSA や PHP/nginx 早期警戒を統合。<code>hardshell guard</code> で AI エージェントの暴走・コスト超過もローカルで止めます。</p>
+        </article>
+        <article>
+          <h3>VPS 外の独立証跡と公開証明</h3>
+          <p>Solo Guardian は、監視対象 VPS の外にある Relay へ署名付きポスチャを記録（Out-of-Band Witness）。顧客や取引先へ共有できる Public Verified Trust Page を維持します。</p>
+        </article>
+        <article>
+          <h3>未検査を隠さない誠実な設計</h3>
+          <p>未検査・古い情報・取得失敗をそのまま記録し、検出ゼロだけで「安全」と誤認しない設計。破壊的操作は HCAP v0.2 署名と明示承認なしに実行しません。</p>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="roles-title" class="hs-section">
+      <p class="hs-label">ARCHITECTURE / OPEN-CORE</p>
+      <h2 id="roles-title">OSS コアの防御と、Solo Guardian の外部証跡を分離。</h2>
+      <ol class="hs-flow">
+        {roles.map((role) => (
+          <li>
+            <span class="hs-label">{role.no} / {role.label}</span>
+            <div>
+              <h3>{role.name}</h3>
+              <p>{role.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p class="hs-note">
+        <strong>Fail-Open for Community / Fail-Closed for Privileged Actions:</strong> 課金状態や外部 Relay の到達性によって Community スキャンや本番 VPS が停止することはありません。一方、権限を伴う変更（HCAP）は明示承認と署名検証を必須とします。
+      </p>
+    </section>
+
+    <section id="pricing" aria-labelledby="pricing-title" class="hs-section">
+      <p class="hs-label">PLANS & PRICING</p>
+      <h2 id="pricing-title">Community（$0）から始めて、必要なら Solo Guardian へ。</h2>
+      <div class="hs-two">
+        <article class="hs-status">
+          <p class="hs-label">COMMUNITY / MIT LICENSE</p>
+          <h3>$0 — ずっと無料・登録不要</h3>
+          <p>個人・法人を問わず MIT ライセンスで利用・改変・再配布できます。</p>
+          <ul>
+            <li>VPS 統合診断（System / Docker-UFW / Trivy / Grype / Lynis / Nuclei）</li>
+            <li>EPSS / CISA KEV / OSV / GHSA / PHP・nginx 早期警戒</li>
+            <li><code>hardshell guard</code>（AI 暴走・コスト遮断サーキットブレーカー）</li>
+            <li>署名付きポスチャ出力・HCAP v0.2 ローカル実行境界</li>
+          </ul>
+          <pre class="hs-code"><code>git clone https://github.com/0xshugo/hardshell
+cd hardshell &amp;&amp; uv sync
+uv run hardshell status</code></pre>
+          <div class="hs-actions">
+            <a class="hs-button" href="https://github.com/0xshugo/hardshell" target="_blank" rel="noopener noreferrer">
+              GitHub で Community を使う {'>'}
+            </a>
+          </div>
+        </article>
+
+        <article class="hs-status hs-featured">
+          <p class="hs-label">SOLO GUARDIAN / 14-DAY FREE TRIAL</p>
+          <h3>Founding $19/月 · Standard $29/月</h3>
+          <p>自前 VPS（最大 3 台）を運用する AI ソロプレナー向け商用アドオン。年額は 2 ヶ月分お得です（Founding $190/年 · Standard $290/年）。</p>
+          <ul>
+            <li>VPS 最大 3 台の Ed25519 オフライン検証ライセンス</li>
+            <li>Out-of-Band Witness（VPS 外での独立証跡保管・検証）</li>
+            <li>Public Verified Trust Page（検証済みセキュリティ状態の公開ページ）</li>
+            <li>1-Tap HCAP v0.2 承認 ＋ 変更前ロールバックブローカー</li>
+            <li>Stripe Customer Portal によるセルフプラン変更・請求書取得・解約</li>
+          </ul>
+          <div class="hs-plan-links">
+            <a class="hs-button hs-primary" href={checkoutUrls.foundingMonthly} rel="noopener noreferrer">
+              Founding 月額 $19（14日試用）
+            </a>
+            <a class="hs-button" href={checkoutUrls.foundingYearly} rel="noopener noreferrer">
+              Founding 年額 $190（14日試用）
+            </a>
+            <a class="hs-button" href={checkoutUrls.standardMonthly} rel="noopener noreferrer">
+              Standard 月額 $29（14日試用）
+            </a>
+            <a class="hs-button" href={checkoutUrls.standardYearly} rel="noopener noreferrer">
+              Standard 年額 $290（14日試用）
+            </a>
+          </div>
+          <p class="hs-caption">
+            登録完了後、<code>noreply@hs-mail.aoifuture.com</code> よりライセンス鍵を初回 1 回限りで送付します（Relay DB には平文鍵を保存しません）。試用・解約・返金条件は <a href="/apps/hardshell/terms">利用規約・特定商取引法に基づく表記</a> をご確認ください。
+          </p>
+        </article>
+      </div>
+
+      <div class="hs-note" id="team">
+        <p class="hs-label">PHASE 2 / TEAM & BUSINESS</p>
+        <h3>法人・複数人チームでの運用（準備中）</h3>
+        <p>
+          複数メンバーでの資産台帳管理、IdP（OIDC/OAuth2 Proxy）連携、期限付き例外の独立承認（自己承認拒否）、長期監査ログを必要とする法人向け層（Team / Business）は Phase 2 として準備中です。個別導入や検証スプリントは別途ご相談ください。
+        </p>
+        <div class="hs-actions">
+          <a class="hs-button" href="/consulting/intake">法人導入・Verification Sprint の相談へ {'>'}</a>
+          <a class="hs-button" href="/contact">技術質問・サポート窓口へ {'>'}</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="scope" aria-labelledby="scope-title" class="hs-section">
+      <p class="hs-label">TRANSPARENCY / SCOPE & BOUNDARIES</p>
+      <h2 id="scope-title">検証済みの範囲と、誠実に明記する制約。</h2>
+      <div class="hs-two">
+        <article class="hs-status">
+          <p class="hs-label">VERIFIED / CURRENT</p>
+          <h3>実装・検証済みの範囲</h3>
+          <ul>
+            <li>OSS Core: VPS スキャン、Docker-UFW、OSV/GHSA、PHP/nginx 早期警戒、<code>hardshell guard</code>、署名付きポスチャ、HCAP v0.2。</li>
+            <li>Solo Guardian Relay: <code>hardshell.aoifuture.com</code>（東京リージョン）稼働、Stripe Webhook 署名検証・冪等処理・順序逆転ガード、Ed25519 オフライン検証、Witness / Public Trust Page、Resend 配信（<code>hs-mail.aoifuture.com</code>）。</li>
+            <li>失効時グレースフルデグラデーション: 解約・未払い失効時は新規 Witness 更新・1-Tap HCAP のみ停止し、Community 機能と既存証跡閲覧は継続します。</li>
+          </ul>
+        </article>
+        <article class="hs-status">
+          <p class="hs-label">BOUNDARIES / NON-GUARANTEES</p>
+          <h3>非保証事項と公開ステータス</h3>
+          <ul>
+            <li>Hardshell の導入や Trust Page の表示は、第三者認証機関による安全性認証や侵害の完全防止を保証するものではありません。</li>
+            <li>履歴整合性チェックは、対象サーバーのローカル特権管理者による改ざんを物理的に不可能にするものではありません（独立保管には Witness を併用します）。</li>
+            <li>利用規約・特商法表記は <a href="/apps/hardshell/terms">/apps/hardshell/terms</a> にて公開済みです。Stripe Live Mode 切替完了までは、Checkout 導線はステージング（テスト課金）として動作します。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="relation-title" class="hs-section">
+      <p class="hs-label">RELATED / AI AGENT SECURITY</p>
+      <h2 id="relation-title">設計・要件の検証と、本番VPSの継続防御。</h2>
+      <div class="hs-two">
+        <article>
+          <h3>AI Agent Security Reference & Verification Kit ($129)</h3>
+          <p>
+            AI エージェントの脅威モデル（TH-01..TH-10）、セルフチェックリスト、検証証跡（JSON/PDF/RFC 3161）を作るリファレンスおよび買い切りキットです。設計・要件検証（Kit）と本番 VPS 継続防御（Hardshell）は補完関係にあります。
+          </p>
+          <div class="hs-actions">
+            <a class="hs-button" href="/agent-security/">AI Agent Security Hub を見る {'>'}</a>
+            <a class="hs-button" href={gumroadUrl('hardshell_kit')} target="_blank" rel="noopener noreferrer">Verification Kit ($129) {'>'}</a>
+          </div>
+        </article>
+        <article>
+          <h3>利用規約・特定商取引法・サポート</h3>
+          <p>
+            Solo Guardian の試用・自動更新・解約・返金条件・データ取扱および特定商取引法に基づく表記は <a href="/apps/hardshell/terms">/apps/hardshell/terms</a> に記載しています。技術サポートや鍵再発行のご相談は <a href="/contact">/contact</a> から受け付けています。
+          </p>
+          <div class="hs-actions">
+            <a class="hs-button hs-primary" href="/apps/hardshell/terms">Hardshell 利用規約・特商法 {'>'}</a>
+            <a class="hs-button" href="/contact">サポート窓口 (/contact) {'>'}</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer class="hs-footer">
+      <a href="/">AOI FUTURE</a>
+      <p>Hardshell · Community (MIT) / Solo Guardian</p>
+      <div class="hs-nav-links">
+        <a href="/apps/hardshell/terms">利用規約・特商法</a>
+        <a href="/agent-security/">AI Agent Security</a>
+      </div>
+    </footer>
+  </main>
+
+  <script is:inline>
+    (() => {
+      const params = new URLSearchParams(window.location.search);
+      const state = params.get('checkout');
+      const notice = document.getElementById('hs-checkout-notice');
+      if (!notice || !state) return;
+      if (state === 'success') {
+        notice.hidden = false;
+        notice.innerHTML =
+          '<strong>Checkout が完了しました。</strong> ご登録のメールアドレス宛に <code>noreply@hs-mail.aoifuture.com</code> からライセンス鍵と初期セットアップ手順を 1 回限りで送信しています。届かない場合は迷惑メールフォルダをご確認のうえ <a href="/contact">/contact</a> までご連絡ください。';
+      } else if (state === 'canceled') {
+        notice.hidden = false;
+        notice.innerHTML =
+          '<strong>Checkout はキャンセルされました。</strong> 課金は発生していません。準備ができたら下の料金セクションからいつでも 14 日間無料試用を開始できます。';
+      }
+    })();
+  </script>
+</Layout>
+
+<style>
+  .hs-shell { max-width: 1040px; margin: auto; padding: 24px 24px 64px; color: var(--aoi-brand); font-family: var(--font-sans); }
+  .hs-shell p, .hs-shell li { font-size: var(--fs-body); line-height: var(--lh-body); }
+  .hs-shell h1, .hs-shell h2, .hs-shell h3 { color: var(--aoi-brand); }
+  .hs-shell h1 { font-size: clamp(28px, 4vw, 48px); line-height: 1.45; letter-spacing: -.035em; font-weight: 700; margin: 20px 0; }
+  .hs-shell h2 { font-size: var(--fs-h2); line-height: 1.65; margin: 12px 0 28px; font-weight: 600; }
+  .hs-shell h3 { font-size: var(--fs-module); line-height: 1.6; margin-bottom: 12px; }
+  .hs-shell p + p { margin-top: 16px; }
+  .hs-shell a { text-underline-offset: 5px; }
+  .hs-shell a:hover { text-decoration: underline; }
+  .hs-shell a:focus-visible, .hs-skip:focus-visible { outline: 2px solid var(--aoi-brand); outline-offset: 5px; }
+  .hs-shell code { font-family: var(--font-mono); font-size: 0.92em; background: var(--aoi-brand-05); padding: 2px 6px; }
+  .hs-code { margin-top: 16px; padding: 14px 16px; background: var(--aoi-brand-05); border: 1px solid var(--aoi-brand-20); overflow-x: auto; font-family: var(--font-mono); font-size: 13px; line-height: 1.6; }
+  .hs-code code { background: none; padding: 0; }
+  .hs-nav, .hs-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .hs-nav-links { display: flex; align-items: center; flex-wrap: wrap; gap: 20px; }
+  .hs-nav a, .hs-footer a { display: inline-flex; align-items: center; min-height: var(--tap-min); font: var(--fs-label)/1.75 var(--font-mono); }
+  .hs-status-banner { border-left: 2px solid var(--aoi-brand); background: var(--aoi-brand-05); padding: 16px 20px; margin-top: 28px; }
+  .hs-checkout-notice { border: 1px solid var(--aoi-brand); background: var(--aoi-brand-10); padding: 16px 20px; margin-top: 16px; font-size: var(--fs-body); line-height: var(--lh-body); }
+  .hs-hero { padding: 64px 0 48px; max-width: 840px; }
+  .hs-shell .hs-label { font: var(--fs-label)/1.75 var(--font-mono); letter-spacing: .14em; color: var(--aoi-brand-70); }
+  .hs-shell .hs-lead { font-size: var(--fs-lead); max-width: 44em; line-height: 1.9; color: var(--aoi-brand-90); }
+  .hs-caption { color: var(--aoi-brand-70); font-size: 0.94em; }
+  .hs-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0 16px; }
+  .hs-plan-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 20px 0 14px; }
+  .hs-button { display: inline-flex; align-items: center; justify-content: center; text-align: center; min-height: var(--tap-min); border: 1px solid var(--aoi-brand-50); padding: 12px 18px; font-size: var(--fs-body); transition: background var(--dur) var(--ease); }
+  .hs-button:hover { background: var(--aoi-brand-10); }
+  .hs-primary { background: var(--aoi-brand-10); border-color: var(--aoi-brand); font-weight: 600; }
+  .hs-section { padding: 44px 0; border-top: 1px solid var(--aoi-brand-20); scroll-margin-top: 20px; }
+  .hs-grid, .hs-two { display: grid; gap: 28px; }
+  .hs-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .hs-two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  article p, .hs-section > p:not(.hs-label), .hs-flow p { color: var(--aoi-brand-90); }
+  .hs-flow { list-style: none; margin: 0; padding: 0; }
+  .hs-flow li { display: grid; grid-template-columns: 180px 1fr; gap: 24px; padding: 24px 0; border-top: 1px solid var(--aoi-brand-15); }
+  .hs-status { border: 1px solid var(--aoi-brand-20); padding: 24px; }
+  .hs-featured { border-color: var(--aoi-brand); }
+  .hs-status h3 { margin-top: 12px; }
+  .hs-status ul { list-style: disc; padding-left: 20px; margin: 16px 0; color: var(--aoi-brand-90); }
+  .hs-status li + li { margin-top: 10px; }
+  .hs-note { padding: 20px 0 0; margin-top: 24px; border-top: 1px dashed var(--aoi-brand-30); }
+  .hs-footer { border-top: 1px solid var(--aoi-brand-20); padding-top: 24px; margin-top: 32px; }
+  .hs-footer p { color: var(--aoi-brand-70); }
+  .hs-skip { position: absolute; top: -100px; left: 20px; z-index: 100; background: var(--aoi-bg); color: var(--aoi-brand); padding: 14px; }
+  .hs-skip:focus { top: 16px; }
+  @media (max-width: 760px) {
+    .hs-grid, .hs-two, .hs-plan-links { grid-template-columns: 1fr; }
+    .hs-flow li { grid-template-columns: 1fr; gap: 12px; }
+    .hs-shell { padding: 16px 20px 40px; }
+    .hs-hero { padding: 48px 0 36px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .hs-button { transition: none; } }
+</style>
