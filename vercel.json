@@ -10,10 +10,5 @@
         }
       ]
     }
-  ],
-  "git": {
-    "deploymentEnabled": {
-      "fix/hardshell-review-mbp-20261028": false
-    }
-  }
+  ]
 }

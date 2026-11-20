@@ -1,1 +1,140 @@
-{"catalog":"AOI Future products and tools","note":"Machine-readable product catalog for AI agents and humans. Prices and availability are stated as of the updated date; the store page is authoritative at purchase time.","products":[{"availability":"available","description":"Open-source VPS security hardening tool: wraps Trivy, Grype, Lynis and Nuclei plus built-in system checks, enriches findings with EPSS and CISA KEV, risk-scores them, and can generate AI-assisted remediation plans. Includes posture scanners for AI agents, MCP/tool configurations and secret settings, and the HCAP control adapter protocol.","id":"hardshell-community","install":"See the README in the repository (pip install). Configuration via hardshell.toml. Output formats: terminal, JSON, Markdown. Runs non-interactively.","license":"MIT","name":"Hardshell Community","price":{"amount":0,"currency":"USD"},"type":"software","url":"https://github.com/0xshugo/hardshell"},{"availability":"in-preparation","description":"Management layer on top of Hardshell Community, under separate code, distribution and terms: organizational asset registry and owners, finding assignment, deadlines and progress, time-boxed exception requests with independent approval, before/after re-verification evidence, role-based access control and decision history.","id":"hardshell-business","install":"Not yet distributed. Community remains fully usable without Business and is never disabled by Business evaluation or payment status.","license":"Commercial (terms to be published)","name":"Hardshell Business","price":null,"type":"software","url":"https://github.com/0xshugo/hardshell"},{"availability":"available","description":"Verification kit for AI agent systems (identity, tools, untrusted content, MCP supply chain), producing reviewable JSON, PDF, digest-manifest and RFC 3161 timestamp artifacts.","id":"ai-agent-security-verification-kit","license":"Commercial","name":"AI-Agent Security Verification Kit","price":{"amount":129,"currency":"USD"},"type":"digital-product","url":"https://0xshugo.gumroad.com/l/AI-Agent"},{"availability":"available","description":"Free self-assessment checklist for AI agent security, in English and Japanese.","id":"ai-agent-security-checklist","license":"Free download","name":"AI Agent Security Self-Assessment Checklist (Free PDF, EN/JA)","price":{"amount":0,"currency":"USD"},"type":"digital-product","url":"https://0xshugo.gumroad.com/l/agent-security-checklist"},{"availability":"available","description":"Book on AI agent security by Shugo Nozaki, sold on Leanpub. See the store page for the current price.","id":"agent-security-book-en","license":"Commercial","name":"Agent Security (book, English)","price":null,"type":"book","url":"https://leanpub.com/agent-security"},{"availability":"available","description":"Japanese edition of the Agent Security book, sold on Leanpub. See the store page for the current price.","id":"agent-security-book-ja","license":"Commercial","name":"Agent Security (book, Japanese)","price":null,"type":"book","url":"https://leanpub.com/agent-security-ja"},{"availability":"available","description":"Free, single-file, dependency-free Python auditor for webhook signature verifiers (HMAC comparison, length safety, constant-time comparison).","id":"webhook-check","install":"curl -sO https://raw.githubusercontent.com/AOI-Future/agent-webhook-check/main/webhook_check.py && python3 webhook_check.py --demo","license":"MIT","name":"webhook-check","price":{"amount":0,"currency":"USD"},"type":"software","url":"https://aoifuture.com/tools/webhook-check"}],"updated":"2026-11-18"}
+{
+  "catalog": "AOI Future products and tools",
+  "note": "Machine-readable product catalog for AI agents and humans. Prices and availability are stated as of the updated date; the store page is authoritative at purchase time.",
+  "products": [
+    {
+      "availability": "available",
+      "description": "Open-source VPS and AI-agent security hardening tool (MIT): wraps Trivy, Grype, Lynis and Nuclei plus built-in system and Docker-UFW bypass checks, enriches findings with EPSS, CISA KEV, OSV/GHSA and PHP/nginx early-warning advisories, includes hardshell guard (local AI runaway & cost circuit breaker), signed posture export, and HCAP v0.2 local execution boundaries.",
+      "id": "hardshell-community",
+      "install": "git clone https://github.com/0xshugo/hardshell && uv sync (see README). Configuration via hardshell.toml. Output: terminal, JSON, Markdown.",
+      "license": "MIT",
+      "name": "Hardshell Community",
+      "page": "https://aoifuture.com/apps/hardshell/",
+      "price": {
+        "amount": 0,
+        "currency": "USD"
+      },
+      "type": "software",
+      "url": "https://github.com/0xshugo/hardshell"
+    },
+    {
+      "availability": "staging-early-access",
+      "billing": {
+        "checkout_url": "https://hardshell.aoifuture.com/checkout?plan=solo_monthly_founding",
+        "plans": [
+          {
+            "interval": "month",
+            "lookup_key": "solo_monthly_founding",
+            "price_usd": 19,
+            "tier": "founding"
+          },
+          {
+            "interval": "year",
+            "lookup_key": "solo_yearly_founding",
+            "price_usd": 190,
+            "tier": "founding"
+          },
+          {
+            "interval": "month",
+            "lookup_key": "solo_monthly",
+            "price_usd": 29,
+            "tier": "standard"
+          },
+          {
+            "interval": "year",
+            "lookup_key": "solo_yearly",
+            "price_usd": 290,
+            "tier": "standard"
+          }
+        ],
+        "provider": "stripe",
+        "trial_period_days": 14
+      },
+      "description": "Commercial Solo Guardian add-on for solo AI founders (up to 3 VPS nodes): Ed25519 offline-verifiable entitlements, Out-of-Band Witness outside the monitored VPS, Public Verified Trust Page, and 1-Tap HCAP v0.2 approval with pre-change rollback broker. Community scans and existing evidence exports never stop on expiration or relay outage.",
+      "id": "hardshell-solo-guardian",
+      "license": "Commercial (Solo Guardian, 14-day free trial)",
+      "name": "Hardshell Solo Guardian",
+      "price": {
+        "amount": 29,
+        "currency": "USD",
+        "founding_amount": 19,
+        "interval": "month",
+        "trial_days": 14
+      },
+      "type": "subscription-software",
+      "url": "https://aoifuture.com/apps/hardshell/"
+    },
+    {
+      "availability": "in-preparation",
+      "description": "Phase 2 team and organization management layer on top of Hardshell Community: multi-user asset registry, OIDC/IdP integration, independent exception approval, and long-term audit trails. Community remains fully usable without commercial plans.",
+      "id": "hardshell-business",
+      "install": "By consultation during Phase 2 preparation (/consulting/intake).",
+      "license": "Commercial (terms to be published)",
+      "name": "Hardshell Team / Business",
+      "price": null,
+      "type": "software",
+      "url": "https://aoifuture.com/apps/hardshell/#team"
+    },
+    {
+      "availability": "available",
+      "description": "Verification kit for AI agent systems (identity, tools, untrusted content, MCP supply chain), producing reviewable JSON, PDF, digest-manifest and RFC 3161 timestamp artifacts.",
+      "id": "ai-agent-security-verification-kit",
+      "license": "Commercial",
+      "name": "AI-Agent Security Verification Kit",
+      "price": {
+        "amount": 129,
+        "currency": "USD"
+      },
+      "type": "digital-product",
+      "url": "https://0xshugo.gumroad.com/l/AI-Agent"
+    },
+    {
+      "availability": "available",
+      "description": "Free self-assessment checklist for AI agent security, in English and Japanese.",
+      "id": "ai-agent-security-checklist",
+      "license": "Free download",
+      "name": "AI Agent Security Self-Assessment Checklist (Free PDF, EN/JA)",
+      "price": {
+        "amount": 0,
+        "currency": "USD"
+      },
+      "type": "digital-product",
+      "url": "https://0xshugo.gumroad.com/l/agent-security-checklist"
+    },
+    {
+      "availability": "available",
+      "description": "Book on AI agent security by Shugo Nozaki, sold on Leanpub. See the store page for the current price.",
+      "id": "agent-security-book-en",
+      "license": "Commercial",
+      "name": "Agent Security (book, English)",
+      "price": null,
+      "type": "book",
+      "url": "https://leanpub.com/agent-security"
+    },
+    {
+      "availability": "available",
+      "description": "Japanese edition of the Agent Security book, sold on Leanpub. See the store page for the current price.",
+      "id": "agent-security-book-ja",
+      "license": "Commercial",
+      "name": "Agent Security (book, Japanese)",
+      "price": null,
+      "type": "book",
+      "url": "https://leanpub.com/agent-security-ja"
+    },
+    {
+      "availability": "available",
+      "description": "Free, single-file, dependency-free Python auditor for webhook signature verifiers (HMAC comparison, length safety, constant-time comparison).",
+      "id": "webhook-check",
+      "install": "curl -sO https://raw.githubusercontent.com/AOI-Future/agent-webhook-check/main/webhook_check.py && python3 webhook_check.py --demo",
+      "license": "MIT",
+      "name": "webhook-check",
+      "price": {
+        "amount": 0,
+        "currency": "USD"
+      },
+      "type": "software",
+      "url": "https://aoifuture.com/tools/webhook-check"
+    }
+  ],
+  "updated": "2026-11-21"
+}

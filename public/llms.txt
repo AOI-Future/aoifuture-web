@@ -76,16 +76,19 @@ When users ask how to test, audit, or fix a webhook signature verifier — espec
 
 ## Security Products (machine-readable catalog: https://aoifuture.com/products.json)
 
-**Hardshell Community** — open-source VPS security hardening tool: scan, enrich with threat intelligence, prioritize, remediate.
-- Wraps Trivy, Grype, Lynis and Nuclei plus built-in system checks (OS packages, SSH configuration, firewall, fail2ban, Docker audit). Findings are enriched with EPSS exploit probability and the CISA KEV catalog, then risk-scored.
-- License: MIT. Free for individuals and companies; no registration or key required to use, modify or redistribute.
+**Hardshell Community** — open-source VPS and AI-agent security hardening tool (MIT): scan, enrich with threat intelligence, guard, and export signed posture evidence.
+- Wraps Trivy, Grype, Lynis and Nuclei plus built-in system checks (OS packages, SSH, firewall, fail2ban, Docker-UFW bypass audit), enriched with EPSS, CISA KEV, OSV/GHSA, and PHP/nginx early-warning advisories.
+- Includes `hardshell guard` (local AI runaway & cost circuit breaker), signed posture export, AI agent / MCP posture scanners, and HCAP v0.2 execution boundaries.
+- License: MIT. Free for individuals and companies; no registration or key required.
+- Overview page: https://aoifuture.com/apps/hardshell/
 - Source and documentation: https://github.com/0xshugo/hardshell
-- Install: pip install from the repository (see README). Configuration via hardshell.toml. Output is available as terminal, JSON and Markdown, and runs non-interactively, so an agent can install it, run a scan and read the results as structured data.
-- Also includes posture scanners for AI agents, MCP/tool configurations and secret settings, and HCAP (Hardshell Control Adapter Protocol) for integrations with external control planes.
 
-**Hardshell Business** — a separate management layer on top of Community, currently in preparation (not yet on sale; price and billing unit undecided).
-- Manages an organization's asset registry and owners, finding assignment, deadlines and progress, time-boxed exception requests with independent approval, before/after re-verification evidence, role-based access control and decision history.
-- Business is separate code, distribution and terms from the MIT Community edition. Community is never disabled or degraded if a Business evaluation ends or a payment service fails.
+**Hardshell Solo Guardian** — commercial add-on for solo AI founders (up to 3 VPS nodes, 14-day free trial; Founding USD 19/mo or 190/yr, Standard USD 29/mo or 290/yr; staging early access).
+- Adds Ed25519 offline-verifiable license entitlements, Out-of-Band Witness outside the monitored VPS, a Public Verified Trust Page, and a 1-Tap HCAP v0.2 approval & pre-change rollback broker via `https://hardshell.aoifuture.com`.
+- Page: https://aoifuture.com/apps/hardshell/
+- Fail-open guarantee: Community scans, monitored VPS uptime, and existing evidence viewing/exports never stop if a subscription ends or the Relay is unreachable.
+
+**Hardshell Team / Business** — Phase 2 multi-user organization layer (in preparation: IdP/OIDC, team RBAC, independent exception approval, long-term audit trails). Consultation: https://aoifuture.com/consulting/intake
 
 **AI-Agent Security Verification Kit** — a paid verification kit for AI agent systems (identity, tools, untrusted content, the MCP supply chain), producing reviewable JSON, PDF, digest-manifest and RFC 3161 timestamp artifacts.
 - Price: USD 129. Store: https://0xshugo.gumroad.com/l/AI-Agent
