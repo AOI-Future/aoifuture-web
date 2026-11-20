@@ -1,0 +1,161 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+
+export const prerender = true;
+
+const title = 'Hardshell 利用規約・特定商取引法に基づく表記 | AOI Future';
+const description =
+  'Hardshell（Community / Solo Guardian）の利用条件、14日間無料試用・課金・解約・返金方針、ライセンス認証とデータ取扱い、および特定商取引法に基づく表記。';
+---
+
+<Layout title={title} description={description} canonical="https://aoifuture.com/apps/hardshell/terms" pageTransition={false}>
+  <Fragment slot="head">
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://aoifuture.com/apps/hardshell/terms" />
+  </Fragment>
+
+  <main class="hst-shell">
+    <nav class="hst-nav" aria-label="関連ページ">
+      <a href="/apps/hardshell/">{'<'} HARDSHELL</a>
+      <div class="hst-nav-links">
+        <a href="/contact">サポート窓口</a>
+        <a href="/legal">AOI Future 法令表記</a>
+      </div>
+    </nav>
+
+    <header class="hst-hero">
+      <p class="hst-label">HARDSHELL / TERMS &amp; SPECIFIED COMMERCIAL TRANSACTIONS ACT</p>
+      <h1>利用規約・プライバシー・特定商取引法に基づく表記</h1>
+      <p class="hst-meta">最終改定日: 2026年11月21日</p>
+      <p class="hst-lead">
+        本ページは、AOI Future（以下「当社」）が提供する Hardshell Community（オープンソース版）および Hardshell Solo Guardian（商用サブスクリプション）の利用条件、データ取扱い、および特定商取引法に基づく表記を定めるものです。
+      </p>
+    </header>
+
+    <section class="hst-section">
+      <h2>1. ソフトウェア利用権</h2>
+      <p>
+        <strong>Hardshell Community</strong>（<code>github.com/0xshugo/hardshell</code>）は MIT ライセンスのもと、個人・法人を問わず無償で利用・改変・再配布できます。
+      </p>
+      <p>
+        <strong>Hardshell Solo Guardian</strong> の契約者は、有効な契約期間中、自身が管理する最大 3 台の VPS ノードに対して商用付加機能（Ed25519 オフライン検証ライセンス、Out-of-Band Witness、Public Verified Trust Page、1-Tap HCAP v0.2 承認ブローカー等）を利用する非独占的な権利を有します。ライセンス鍵の第三者への共有・転売・再配布は禁止します。
+      </p>
+    </section>
+
+    <section class="hst-section">
+      <h2>2. 14日間無料試用・料金・自動更新・解約・返金</h2>
+      <ul>
+        <li><strong>無料試用期間</strong>: 初回登録日から 14 日間は無料で試用できます。試用期間中に Stripe Customer Portal から解約した場合、課金は発生しません。</li>
+        <li><strong>販売価格（Option A）</strong>: Founding プラン 月額 US$19 / 年額 US$190、Standard プラン 月額 US$29 / 年額 US$290。適用される税・決済通貨・総額は Stripe Checkout の確認画面に表示されます。</li>
+        <li><strong>支払方法・自動更新</strong>: クレジットカード（Stripe 決済）。14 日間の無料試用終了時に初回課金が行われ、以後は選択した契約期間（月次または年次）ごとに自動更新されます。</li>
+        <li><strong>解約</strong>: Stripe Customer Portal からいつでも次回更新前までに解約できます。解約後も支払い済みの現行契約期間の満了まで Solo Guardian 機能を利用できます。</li>
+        <li><strong>返金ポリシー</strong>: 14 日間の無料試用期間を設けているため、<strong>課金開始後の返金および日割り返金は原則として行いません</strong>。ただし、当社の重大な瑕疵、二重課金等のシステム不具合、または適用法令上返金が認められる場合は、<code>legal@aoifuture.com</code> までご連絡ください。</li>
+        <li><strong>解約・失効時の動作（Fail-Open 保証）</strong>: 契約終了・未払い失効時または Relay 障害時に停止するのは、新規の Witness 更新や 1-Tap HCAP 承認等の Solo Guardian 付加機能のみです。Hardshell Community（MIT）機能、監視対象 VPS の稼働、およびローカルに保存された既存証跡の閲覧・エクスポートは一切停止しません。</li>
+      </ul>
+    </section>
+
+    <section class="hst-section">
+      <h2>3. ライセンス配信・認証とデータの取扱い</h2>
+      <p>
+        決済完了後、<code>noreply@hs-mail.aoifuture.com</code> よりライセンス鍵と初期セットアップ案内を初回 1 回限りでメール送付します。Relay データベースには平文のライセンス鍵を保存せず、HMAC ハッシュのみを保持します。鍵を紛失された場合は <a href="/contact">/contact</a> より再発行をご相談ください。
+      </p>
+      <p>
+        ライセンス有効化・更新時には Ed25519 署名済みエンタイトルメントトークンを発行し、クライアント側でオフライン検証できます。Out-of-Band Witness 送信では、署名済みポスチャ要約（<code>hardshell.posture_summary.v1</code>）およびノード識別メタデータのみを受信し、VPS 上の秘密鍵、ソースコード、アプリケーションデータ本文は送信しません。Public Verified Trust Page を有効化した場合、指定されたスラグ配下にポスチャ要約・検証ステータスが公開されます。
+      </p>
+      <p>
+        クレジットカード情報および決済処理は Stripe が管理し、当社サーバーではカード番号を保持しません。詳細は <a href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer">Stripe プライバシーポリシー</a> をご確認ください。
+      </p>
+    </section>
+
+    <section class="hst-section">
+      <h2>4. 免責事項（非保証）</h2>
+      <p>
+        Hardshell および Public Verified Trust Page は、VPS や AI エージェント環境の構成点検・監視・証跡保管を支援するツールであり、第三者認証機関による安全性認証、法令・監査基準への適合、または不正アクセス・脆弱性・障害の完全な防止を保証するものではありません。本ソフトウェアの利用または利用不能により生じた損害について、当社に故意または重過失がある場合を除き、当社の賠償責任は直近 12 ヶ月間に契約者が当社へ支払った利用料金の総額を上限とします。
+      </p>
+    </section>
+
+    <section class="hst-section" id="seller">
+      <h2>5. 特定商取引法に基づく表記</h2>
+      <dl class="hst-table">
+        <div>
+          <dt>販売事業者</dt>
+          <dd>AOI Future</dd>
+        </div>
+        <div>
+          <dt>運営責任者</dt>
+          <dd>野崎 秀吾</dd>
+        </div>
+        <div>
+          <dt>所在地・電話番号</dt>
+          <dd>ご請求があった場合、遅滞なく開示いたします（<a href="mailto:legal@aoifuture.com">legal@aoifuture.com</a> 宛にご連絡ください）。</dd>
+        </div>
+        <div>
+          <dt>お問い合わせ窓口</dt>
+          <dd>法務・特定商取引法に関する窓口: <a href="mailto:legal@aoifuture.com">legal@aoifuture.com</a><br />技術サポート・ライセンス再発行: <a href="/contact">https://aoifuture.com/contact</a></dd>
+        </div>
+        <div>
+          <dt>販売価格</dt>
+          <dd>Hardshell Solo Guardian: Founding US$19/月・US$190/年、Standard US$29/月・US$290/年（決済通貨・税・総額は Stripe Checkout 画面に表示）</dd>
+        </div>
+        <div>
+          <dt>商品代金以外の必要料金</dt>
+          <dd>インターネット接続料金・通信料・監視対象 VPS の利用料等はお客様負担となります。</dd>
+        </div>
+        <div>
+          <dt>支払方法・支払時期</dt>
+          <dd>クレジットカード（Stripe）。14 日間の無料試用終了時に初回決済、以降月次または年次で自動更新決済。</dd>
+        </div>
+        <div>
+          <dt>役務の提供時期（引渡時期）</dt>
+          <dd>Stripe Checkout 完了後、直ちに <code>noreply@hs-mail.aoifuture.com</code> よりライセンス鍵を送付し、利用可能となります。</dd>
+        </div>
+        <div>
+          <dt>解約・キャンセル・返金</dt>
+          <dd>試用期間中および契約期間中いつでも Stripe Customer Portal から次回更新前解約が可能です。14 日間無料試用を設けているため、課金開始後の返金・日割り返金は原則不可とします（二重課金や当社起因の重大な瑕疵を除く）。</dd>
+        </div>
+        <div>
+          <dt>動作環境</dt>
+          <dd>Linux（Ubuntu / Debian 等）または macOS、Python 3.11+ / <code>uv</code>、HTTPS 通信環境（ライセンス有効化・Witness 利用時）。</dd>
+        </div>
+      </dl>
+    </section>
+
+    <footer class="hst-footer">
+      <a href="/apps/hardshell/">{'<'} Hardshell 製品ページへ戻る</a>
+      <a href="/">AOI FUTURE</a>
+    </footer>
+  </main>
+</Layout>
+
+<style>
+  .hst-shell { max-width: 860px; margin: auto; padding: 24px 24px 72px; color: var(--aoi-brand); font-family: var(--font-sans); }
+  .hst-shell p, .hst-shell li, .hst-shell dt, .hst-shell dd { font-size: var(--fs-body); line-height: var(--lh-body); }
+  .hst-shell h1 { font-size: clamp(24px, 3.6vw, 38px); line-height: 1.4; font-weight: 700; margin: 16px 0 12px; }
+  .hst-shell h2 { font-size: var(--fs-h2); line-height: 1.5; margin: 0 0 16px; font-weight: 600; }
+  .hst-shell p + p { margin-top: 14px; }
+  .hst-shell a { text-underline-offset: 4px; }
+  .hst-shell a:hover { text-decoration: underline; }
+  .hst-shell code { font-family: var(--font-mono); font-size: 0.92em; background: var(--aoi-brand-05); padding: 2px 6px; }
+  .hst-nav, .hst-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .hst-nav-links { display: flex; flex-wrap: wrap; gap: 20px; }
+  .hst-nav a, .hst-footer a { display: inline-flex; align-items: center; min-height: var(--tap-min); font: var(--fs-label)/1.75 var(--font-mono); }
+  .hst-hero { padding: 48px 0 36px; }
+  .hst-label { font: var(--fs-label)/1.75 var(--font-mono); letter-spacing: .14em; color: var(--aoi-brand-70); }
+  .hst-meta { font-family: var(--font-mono); font-size: 0.88em; color: var(--aoi-brand-70); margin-bottom: 18px; }
+  .hst-lead { font-size: var(--fs-lead); line-height: 1.85; color: var(--aoi-brand-90); }
+  .hst-section { padding: 32px 0; border-top: 1px solid var(--aoi-brand-20); }
+  .hst-section p, .hst-section li, .hst-section dd { color: var(--aoi-brand-90); }
+  .hst-section ul { list-style: disc; padding-left: 20px; }
+  .hst-section li + li { margin-top: 10px; }
+  .hst-table { margin: 0; border-top: 1px solid var(--aoi-brand-20); }
+  .hst-table > div { display: grid; grid-template-columns: 220px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--aoi-brand-15); }
+  .hst-table dt { font-weight: 600; color: var(--aoi-brand); }
+  .hst-table dd { margin: 0; }
+  .hst-footer { border-top: 1px solid var(--aoi-brand-20); padding-top: 24px; margin-top: 32px; }
+  @media (max-width: 680px) {
+    .hst-table > div { grid-template-columns: 1fr; gap: 6px; }
+    .hst-shell { padding: 16px 20px 48px; }
+  }
+</style>

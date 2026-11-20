@@ -15,7 +15,18 @@
         "currency": "USD"
       },
       "type": "software",
-      "url": "https://github.com/0xshugo/hardshell"
+      "url": "https://github.com/0xshugo/hardshell",
+      "quickstart": "git clone https://github.com/0xshugo/hardshell && cd hardshell && uv sync && uv run hardshell status",
+      "terms_url": "https://aoifuture.com/apps/hardshell/terms",
+      "related_hub": "https://aoifuture.com/agent-security/",
+      "fail_open": true,
+      "use_cases": [
+        "Linux VPS security hardening",
+        "Docker-UFW bypass audit",
+        "EPSS / CISA KEV / OSV / GHSA / PHP & nginx early-warning triage",
+        "Local AI agent runaway and API cost circuit breaker (hardshell guard)",
+        "Signed posture summary export and HCAP v0.2 execution boundaries"
+      ]
     },
     {
       "availability": "staging-early-access",
@@ -62,7 +73,20 @@
         "trial_days": 14
       },
       "type": "subscription-software",
-      "url": "https://aoifuture.com/apps/hardshell/"
+      "url": "https://aoifuture.com/apps/hardshell/",
+      "terms_url": "https://aoifuture.com/apps/hardshell/terms",
+      "support_url": "https://aoifuture.com/contact",
+      "legal_contact": "legal@aoifuture.com",
+      "related_hub": "https://aoifuture.com/agent-security/",
+      "fail_open": true,
+      "max_nodes": 3,
+      "refund_policy": "14-day free trial via Stripe; no refunds or prorated refunds after billing starts except statutory/system-error cases (see terms_url).",
+      "use_cases": [
+        "Out-of-Band Witness outside monitored VPS",
+        "Public Verified Trust Page for solo AI founders",
+        "Ed25519 offline-verifiable license entitlements (up to 3 VPS nodes)",
+        "1-Tap HCAP v0.2 approval with pre-change rollback broker"
+      ]
     },
     {
       "availability": "in-preparation",

@@ -107,19 +107,27 @@ const collectionLd = {
   </section>
 
   <section class="as-section">
-    <p class="as-label">FROM ONE CHECK TO THE WHOLE SURFACE</p>
-    <h2>無料の確認と、有料の検証実行を分ける</h2>
-    <div class="as-card-grid">
+    <p class="as-label">FROM ONE CHECK TO CONTINUOUS DEFENSE</p>
+    <h2>単点チェック、本番VPS継続防御、要件検証キットを分ける</h2>
+    <div class="as-path">
       <article class="as-card">
+        <span class="as-index">FREE / SINGLE BOUNDARY</span>
         <h3>Webhook Check</h3>
         <p>Webhook署名検証の4ケースだけを、Python標準ライブラリで実行する無料ツール。まず一つの境界でPASS／FAILを体験できます。</p>
         <div class="as-actions"><a class="as-button as-button--quiet" href={agentSecurityLinks.webhookTool} data-as-track="free_tool_click" data-as-location="hub_webhook">無料ツールを実行</a></div>
       </article>
       <article class="as-card">
+        <span class="as-index">OSS (MIT) + SOLO GUARDIAN</span>
+        <h3>Hardshell</h3>
+        <p>本番VPSとAIエージェントをローカル完結で点検・暴走遮断（<code>hardshell guard</code>）し、Solo Guardianで外部証跡（Witness）とPublic Verified Trust Pageまで維持する継続防御基盤です。</p>
+        <div class="as-actions"><a class="as-button as-button--primary" href="/apps/hardshell/" data-as-track="agent_security_path_click" data-as-location="hub_hardshell">Hardshellを見る</a></div>
+      </article>
+      <article class="as-card">
+        <span class="as-index">ONE-TIME / EVIDENCE KIT</span>
         <h3>Verification Kit</h3>
-        <p>より広い検証を実行し、機械可読JSON、人が読めるPDF、digest manifest、timestamp responseを保持するための実践パッケージです。</p>
-        <div class="as-actions"><a class="as-button as-button--primary" href={gumroadUrl('hub_verification_kit')} target="_blank" rel="noopener noreferrer" data-as-track="gumroad_click" data-as-location="hub_verification_kit">GumroadでKitを確認 ↗</a></div>
-        <p class="as-note" style="margin-top:14px">Kitの実行から是正計画まで、人間の検証者と進める → <a href="/agent-security/verification-support/" data-as-track="agent_security_path_click" data-as-location="hub_verification_kit_sprint">Agent Verification Sprint</a></p>
+        <p>AIエージェントの設計・要件検証を実行し、機械可読JSON、人が読めるPDF、digest manifest、RFC 3161 timestampを保持するための買い切りパッケージです。</p>
+        <div class="as-actions"><a class="as-button" href={gumroadUrl('hub_verification_kit')} target="_blank" rel="noopener noreferrer" data-as-track="gumroad_click" data-as-location="hub_verification_kit">GumroadでKitを確認 ↗</a></div>
+        <p class="as-note" style="margin-top:14px">伴走検証 → <a href="/agent-security/verification-support/" data-as-track="agent_security_path_click" data-as-location="hub_verification_kit_sprint">Agent Verification Sprint</a></p>
       </article>
     </div>
     <div class="as-note">Kitが示すのは、何を・いつ・どの結果で検証したかという記録です。システム全体の安全性や、監査担当者による受容を保証する証明書ではありません。</div>

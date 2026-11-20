@@ -1,6 +1,6 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { gumroadUrl } from '../../data/agent-security';
+import Layout from '../../../layouts/Layout.astro';
+import { gumroadUrl } from '../../../data/agent-security';
 
 export const prerender = true;
 
@@ -36,6 +36,103 @@ const roles = [
     text: '権限昇格やパッケージ更新など影響のある操作は、監視や AI 助言から分離された HCAP v0.2 二重署名と変更前スナップショット付きロールバックで、運用者の明示承認のもと安全に実行します。',
   },
 ];
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SoftwareApplication',
+      name: 'Hardshell',
+      applicationCategory: 'SecurityApplication',
+      operatingSystem: 'Linux, macOS',
+      url: 'https://aoifuture.com/apps/hardshell/',
+      codeRepository: 'https://github.com/0xshugo/hardshell',
+      license: 'https://opensource.org/licenses/MIT',
+      termsOfService: 'https://aoifuture.com/apps/hardshell/terms',
+      description,
+      author: {
+        '@type': 'Person',
+        name: 'Shugo Nozaki',
+        url: 'https://nozaki.com',
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'AOI Future',
+        url: 'https://aoifuture.com',
+      },
+      featureList: [
+        'Linux VPS security hardening and Docker-UFW bypass audit',
+        'Trivy, Grype, Lynis, Nuclei aggregation enriched with EPSS, CISA KEV, OSV/GHSA, and PHP/nginx early-warning advisories',
+        'hardshell guard local AI agent runaway and API cost circuit breaker',
+        'Signed posture summary export (hardshell.posture_summary.v1) and HCAP v0.2 execution boundaries',
+        'Solo Guardian: Ed25519 offline-verifiable license (up to 3 VPS nodes), Out-of-Band Witness, Public Verified Trust Page, and 1-Tap HCAP approval',
+      ],
+      offers: [
+        {
+          '@type': 'Offer',
+          name: 'Hardshell Community (MIT)',
+          price: '0',
+          priceCurrency: 'USD',
+          url: 'https://github.com/0xshugo/hardshell',
+          availability: 'https://schema.org/InStock',
+        },
+        {
+          '@type': 'Offer',
+          name: 'Hardshell Solo Guardian — Founding Monthly (14-day free trial)',
+          price: '19',
+          priceCurrency: 'USD',
+          url: checkoutUrls.foundingMonthly,
+          eligibleQuantity: { '@type': 'QuantitativeValue', value: 3, unitText: 'VPS nodes' },
+        },
+        {
+          '@type': 'Offer',
+          name: 'Hardshell Solo Guardian — Standard Monthly (14-day free trial)',
+          price: '29',
+          priceCurrency: 'USD',
+          url: checkoutUrls.standardMonthly,
+          eligibleQuantity: { '@type': 'QuantitativeValue', value: 3, unitText: 'VPS nodes' },
+        },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'Hardshell Community（無料）と Solo Guardian（有料）の違いは何ですか？',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Community（MIT・$0）は VPS 診断、Docker-UFW 検査、OSV/GHSA・PHP/nginx 早期警戒、hardshell guard（AI暴走・コスト遮断）、署名付きポスチャ出力、HCAP v0.2 ローカル境界を含み、アカウント不要で永続無料です。Solo Guardian（14日間無料試用 / Founding $19・Standard $29）は最大 3 台の VPS に対し、VPS 外の独立証跡保管（Out-of-Band Witness）、Public Verified Trust Page、1-Tap HCAP 承認、Ed25519 オフラインライセンス検証を追加します。',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Solo Guardian を解約した場合や Relay が停止した場合、VPS や Community 機能も止まりますか？',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'いいえ。Fail-open 設計のため、解約・未払い失効時や Relay 到達不能時も、Community スキャン、監視対象 VPS の稼働、既存の証跡閲覧・エクスポートは一切停止しません。新規の Witness 更新や 1-Tap HCAP 承認など Solo Guardian 付加機能のみが停止します。',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: '14日間の無料試用と返金ポリシーはどうなっていますか？',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: '初回登録から 14 日間は無料で試用でき、試用期間中に Stripe Customer Portal から解約すれば課金は発生しません。14 日間の試用期間を設けているため、課金開始後の返金および日割り返金は原則不可としています（詳細は /apps/hardshell/terms をご確認ください）。',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'AI-Agent Security Verification Kit（$129）とはどう使い分けますか？',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Verification Kit（$129 買い切り）は AI エージェント設計・要件の検証証跡（JSON/PDF/RFC 3161）を作成するツールで、Hardshell は本番 VPS とローカル AI エージェントの継続防御・監視・外部証跡（Trust Page）を担う補完関係にあります。',
+          },
+        },
+      ],
+    },
+  ],
+};
 ---
 
 <Layout title={title} description={description} canonical="https://aoifuture.com/apps/hardshell/" pageTransition={false}>
@@ -44,17 +141,21 @@ const roles = [
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://aoifuture.com/apps/hardshell/" />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </Fragment>
 
   <a class="hs-skip" href="#content">本文へ</a>
   <main class="hs-shell" id="content">
     <nav class="hs-nav" aria-label="関連ページ">
       <a href="/apps/">{'<'} APPS</a>
-      <a href="/agent-security/">AI Agent Security {'>'}</a>
+      <div class="hs-nav-links">
+        <a href="/apps/hardshell/terms">利用規約・特商法</a>
+        <a href="/agent-security/">AI Agent Security {'>'}</a>
+      </div>
     </nav>
 
     <p class="hs-status-banner" id="hs-status-banner">
-      <strong>[SOLO GUARDIAN / EARLY ACCESS]</strong> Community（MIT）公開中 · Solo Guardian（14日間無料試用）ステージング疎通済 / Live 公開準備中 · 2026-11-21
+      <strong>[SOLO GUARDIAN / EARLY ACCESS]</strong> Community（MIT）公開中 · Solo Guardian（14日間無料試用）利用規約/特商法公開済・Staging 疎通完了 / Stripe Live 切替準備中 · 2026-11-21
     </p>
     <div class="hs-checkout-notice" id="hs-checkout-notice" hidden></div>
 
@@ -166,7 +267,7 @@ uv run hardshell status</code></pre>
             </a>
           </div>
           <p class="hs-caption">
-            登録完了後、<code>noreply@hs-mail.aoifuture.com</code> よりライセンス鍵を初回 1 回限りで送付します（Relay DB には平文鍵を保存しません）。
+            登録完了後、<code>noreply@hs-mail.aoifuture.com</code> よりライセンス鍵を初回 1 回限りで送付します（Relay DB には平文鍵を保存しません）。試用・解約・返金条件は <a href="/apps/hardshell/terms">利用規約・特定商取引法に基づく表記</a> をご確認ください。
           </p>
         </article>
       </div>
@@ -193,17 +294,17 @@ uv run hardshell status</code></pre>
           <h3>実装・検証済みの範囲</h3>
           <ul>
             <li>OSS Core: VPS スキャン、Docker-UFW、OSV/GHSA、PHP/nginx 早期警戒、<code>hardshell guard</code>、署名付きポスチャ、HCAP v0.2。</li>
-            <li>Solo Guardian Relay: <code>hardshell.aoifuture.com</code>（東京リージョン）稼働、Stripe Webhook 署名検証・冪等処理・順序逆転ガード、Ed25519 オフライン検証、Resend 配信（<code>hs-mail.aoifuture.com</code>）。</li>
+            <li>Solo Guardian Relay: <code>hardshell.aoifuture.com</code>（東京リージョン）稼働、Stripe Webhook 署名検証・冪等処理・順序逆転ガード、Ed25519 オフライン検証、Witness / Public Trust Page、Resend 配信（<code>hs-mail.aoifuture.com</code>）。</li>
             <li>失効時グレースフルデグラデーション: 解約・未払い失効時は新規 Witness 更新・1-Tap HCAP のみ停止し、Community 機能と既存証跡閲覧は継続します。</li>
           </ul>
         </article>
         <article class="hs-status">
           <p class="hs-label">BOUNDARIES / NON-GUARANTEES</p>
-          <h3>非保証事項と公開前ゲート</h3>
+          <h3>非保証事項と公開ステータス</h3>
           <ul>
             <li>Hardshell の導入や Trust Page の表示は、第三者認証機関による安全性認証や侵害の完全防止を保証するものではありません。</li>
             <li>履歴整合性チェックは、対象サーバーのローカル特権管理者による改ざんを物理的に不可能にするものではありません（独立保管には Witness を併用します）。</li>
-            <li>Stripe Live Mode 切替・特商法/規約の最終公開確認が完了するまで、Checkout 導線はステージング（テスト課金）または Early Access として運用されます。</li>
+            <li>利用規約・特商法表記は <a href="/apps/hardshell/terms">/apps/hardshell/terms</a> にて公開済みです。Stripe Live Mode 切替完了までは、Checkout 導線はステージング（テスト課金）として動作します。</li>
           </ul>
         </article>
       </div>
@@ -226,11 +327,11 @@ uv run hardshell status</code></pre>
         <article>
           <h3>利用規約・特定商取引法・サポート</h3>
           <p>
-            ライセンス鍵の再発行相談や導入に関するお問い合わせは <a href="/contact">/contact</a> から受け付けています。法令表記・アプリ共通規約は下記ページをご確認ください。
+            Solo Guardian の試用・自動更新・解約・返金条件・データ取扱および特定商取引法に基づく表記は <a href="/apps/hardshell/terms">/apps/hardshell/terms</a> に記載しています。技術サポートや鍵再発行のご相談は <a href="/contact">/contact</a> から受け付けています。
           </p>
           <div class="hs-actions">
-            <a class="hs-button" href="/legal">法令表記・Legal {'>'}</a>
-            <a class="hs-button" href="/apps/terms">利用規約・免責 {'>'}</a>
+            <a class="hs-button hs-primary" href="/apps/hardshell/terms">Hardshell 利用規約・特商法 {'>'}</a>
+            <a class="hs-button" href="/contact">サポート窓口 (/contact) {'>'}</a>
           </div>
         </article>
       </div>
@@ -239,7 +340,10 @@ uv run hardshell status</code></pre>
     <footer class="hs-footer">
       <a href="/">AOI FUTURE</a>
       <p>Hardshell · Community (MIT) / Solo Guardian</p>
-      <a href="/agent-security/">AI Agent Security</a>
+      <div class="hs-nav-links">
+        <a href="/apps/hardshell/terms">利用規約・特商法</a>
+        <a href="/agent-security/">AI Agent Security</a>
+      </div>
     </footer>
   </main>
 
@@ -277,6 +381,7 @@ uv run hardshell status</code></pre>
   .hs-code { margin-top: 16px; padding: 14px 16px; background: var(--aoi-brand-05); border: 1px solid var(--aoi-brand-20); overflow-x: auto; font-family: var(--font-mono); font-size: 13px; line-height: 1.6; }
   .hs-code code { background: none; padding: 0; }
   .hs-nav, .hs-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .hs-nav-links { display: flex; align-items: center; flex-wrap: wrap; gap: 20px; }
   .hs-nav a, .hs-footer a { display: inline-flex; align-items: center; min-height: var(--tap-min); font: var(--fs-label)/1.75 var(--font-mono); }
   .hs-status-banner { border-left: 2px solid var(--aoi-brand); background: var(--aoi-brand-05); padding: 16px 20px; margin-top: 28px; }
   .hs-checkout-notice { border: 1px solid var(--aoi-brand); background: var(--aoi-brand-10); padding: 16px 20px; margin-top: 16px; font-size: var(--fs-body); line-height: var(--lh-body); }
