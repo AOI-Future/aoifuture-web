@@ -1,0 +1,28 @@
+[
+  {
+    "changed_signal_ids": [
+      "apple-macos-full-disk-access-permissions",
+      "aws-agentcore-runtime-instances-six-regions",
+      "bedrock-open-weight-prompt-caching",
+      "docker-sandboxes-firecrawl-kit",
+      "github-ai-scan-bulk-start",
+      "gtig-ai-threat-tracker-agentic-threshold",
+      "huggingface-openrouter-inference-providers",
+      "msr-tokeneconomizer-coding-agents",
+      "nvidia-vera-rubin-mlperf-training-v61",
+      "openai-chatgpt-academic-researchers-expansion",
+      "openai-csam-classifier-child-safety",
+      "rust-parallel-frontend-nightly"
+    ],
+    "edition_date": "2026-11-17",
+    "edition_id": "2026-11-17-0454",
+    "edition_url": "https://aoifuture.com/news/2026-11-17-0454/",
+    "event_id": "aoi-news-2026-11-17-0454-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-11-17T04:54:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "GoogleとMandiantは攻撃の自動化が実際の侵入に及んでいると報告し、GitHubはAIによる脆弱性スキャンを一括で始められるようにした。OpenAIは研究者向けの無償提供を最大20万人に広げ、Hugging Faceは推論の振り分けをOpenRouterに切り替えた。",
+    "title": "攻撃者がエージェント型の侵入基盤を実戦で使うとGoogleが報告。守る側は検査の一括化と権限の細分化を進める"
+  }
+]

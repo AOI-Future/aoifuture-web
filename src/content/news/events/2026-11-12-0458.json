@@ -1,0 +1,26 @@
+[
+  {
+    "changed_signal_ids": [
+      "aws-agentcore-invoke-web-search-api",
+      "cisa-kev-six-additions-outlook-chromium",
+      "gemini-4-carbon-general-availability",
+      "gemini-decisions-api-launch",
+      "github-app-enterprise-copilot-seat-api",
+      "google-codemender-pull-request-architecture",
+      "google-tpu-8tx-8i-max",
+      "meta-lldb-cpu-gpu-debugging",
+      "microsoft-coding-agents-semver-study",
+      "openai-businesses-in-chatgpt"
+    ],
+    "edition_date": "2026-11-12",
+    "edition_id": "2026-11-12-0458",
+    "edition_url": "https://aoifuture.com/news/2026-11-12-0458/",
+    "event_id": "aoi-news-2026-11-12-0458-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-11-12T04:58:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "Gemini 4 Carbonの一般提供と、選択肢に確率を返すDecisions API、機密推論向けのTPU 8txが続いた。CISAはOutlookやChromiumを含む6件をKEVに追加し、Microsoftはエージェントがバージョン番号で確認を省く実験結果を示した。",
+    "title": "Googleが最上位モデルと判断専用API、専用TPUを一度に並べ、エージェントの部品が出そろってきた"
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "changed_signal_ids": [
+      "aws-bedrock-openai-govcloud-cross-region",
+      "aws-cloudfront-viewer-pqc-tls-header",
+      "aws-sagemaker-gpu-partitioning",
+      "cisa-kev-gitlab-cisco-firewall",
+      "cisa-siemens-mendix-saml-replay",
+      "docker-agent-fabricated-cve-review",
+      "github-webhook-ip-ranges-meta-api",
+      "gitlab-orbit-context-graph-ga",
+      "nvidia-dynamo-validated-kubernetes-runtime",
+      "nvidia-tensorrt-edge-llm-dgx-spark",
+      "openai-fair-use-amicus-excerpts"
+    ],
+    "edition_date": "2026-11-01",
+    "edition_id": "2026-11-01-0458",
+    "edition_url": "https://aoifuture.com/news/2026-11-01-0458/",
+    "event_id": "aoi-news-2026-11-01-0458-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-11-01T04:58:04+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "OpenAIは、ニューヨーク・タイムズとの訴訟で学習のフェアユースを支持する意見書の抜粋を示した。GitLabは、コードからパイプラインまでをつないだグラフを正式な製品にした。存在しないCVEを根拠にしたAIレビューの事例、分散推論の検証済みの構成、耐量子暗号の利用状況の計測、悪用が確認された脆弱性とあわせて、一次資料から見る。",
+    "title": "AOIFUTURE News：OpenAIがAIの学習はフェアユースとする意見書を公開、GitLabは開発の履歴をエージェントに渡すグラフを一般提供"
+  }
+]

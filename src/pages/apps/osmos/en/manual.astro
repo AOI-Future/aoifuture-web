@@ -1,0 +1,48 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+---
+<Layout title="OSMOS Online Manual" canonical="https://aoifuture.com/apps/osmos/en/manual" description="How to install, play, automate, and activate OSMOS Circuit Instrument." pageTransition={false} lang="en">
+  <Fragment slot="head">
+    <link rel="stylesheet" href="/osmos/style.css" />
+    <link rel="alternate" hreflang="ja" href="https://aoifuture.com/apps/osmos/manual" />
+    <link rel="alternate" hreflang="en" href="https://aoifuture.com/apps/osmos/en/manual" />
+  </Fragment>
+  <div class="osmos-product">
+<header>
+  <div class="wrap">
+    <a class="brand" href="/apps/osmos/en">OSMOS</a>
+    <nav aria-label="Related pages">
+      <a href="/apps/osmos/en#editions">Compatibility</a>
+      <a href="/apps/osmos/en/terms">License terms</a>
+      <a href="/apps/osmos/manual" lang="ja" hreflang="ja">日本語</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap doc flow">
+  <h1>Online manual</h1>
+  <p class="muted">Guide for OSMOS 1.0</p>
+  <h2>Install OSMOS and play your first note</h2>
+  <ol>
+    <li>Quit your DAW and open the installer. Back up any existing development build before installing.</li>
+    <li>In Ableton Live, add the VST3 version of OSMOS from the Plug-ins browser to a MIDI track. In Logic Pro, open the instrument slot on a software instrument track and choose <b>Audio Units → AOI Future → OSMOS</b>.</li>
+    <li>Open OSMOS and choose <b>License…</b> at the bottom right. Select <b>Start Free Trial</b> or enter your purchase key.</li>
+    <li>Play a MIDI keyboard or start a MIDI clip. Select <b>Voltage Bass</b>, hold a low note, and turn Voltage and Capacitance one at a time.</li>
+  </ol>
+  <h2>Use the dials</h2>
+  <p>Drag up or down to adjust a dial. Hold Option while dragging for finer control. Double-click to restore the default.</p>
+  <dl>
+    <dt>Voltage / Capacitance</dt><dd>The defaults are 9 V and 47 nF. Voltage changes the supply rail. Capacitance changes the capacitor size. The trace above the controls previews the circuit model.</dd>
+    <dt>Charge / Drive</dt><dd>Charge changes the balance between charging and discharging. Drive adjusts diode saturation. All four circuit dials are available in Voltage Bass mode.</dd>
+    <dt>Cutoff / Level / Envelope</dt><dd>Adjust the filter, output level, and attack, decay, sustain, and release. These controls also work with Sine, Saw, Square, and Noise.</dd>
+  </dl>
+  <h2>Record automation in your DAW</h2>
+  <p><b>Logic Pro.</b> Set the track to <b>Touch</b> or <b>Latch</b> and turn the dials during playback. Switch back to <b>Read</b>, check the Supply Voltage and Capacitance automation lanes, and save the project.</p>
+  <p><b>Ableton Live.</b> Enable <b>Automation Arm</b> and start <b>Arrangement Record</b>. Use <b>Configure</b> on the OSMOS device to expose parameters as needed. Check the automation lanes after recording and save the set.</p>
+  <h2>Activate and reopen projects</h2>
+  <p>The free trial lasts 14 days from the day you start it. After it ends, your DAW projects and settings are preserved. Activate the full version to hear OSMOS again.</p>
+  <p>Find your key in your Gumroad receipt or on the product content page. In OSMOS, choose <b>License… → Enter License Key</b>. Activate again if you switch Macs or macOS user accounts. If another DAW was already running during activation, reopen its OSMOS editor or restart that DAW.</p>
+  <h2>If OSMOS does not appear</h2>
+  <p>The installer puts VST3 in <code>/Library/Audio/Plug-Ins/VST3</code> and AU in <code>/Library/Audio/Plug-Ins/Components</code>. If you previously installed a development build under <code>~/Library/Audio/Plug-Ins</code>, your DAW may find two copies. Quit the DAW, move the older copy out of its scan paths, then rescan.</p>
+</main>
+  </div>
+</Layout>

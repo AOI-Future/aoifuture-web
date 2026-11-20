@@ -1,0 +1,407 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-11-18T04:48:37+09:00",
+  "dek": "OpenAIは上位モデルの単価を下げつつ安全面の制限を強め、MicrosoftはIgniteでコーディング・セキュリティ向けモデルと透明性の取り組みを発表した。GitHubはAIで見つけたOSSの脆弱性を検証済みの修正案付きで届ける試験結果を公開し、Mandiantは認証器を悪用し続けるロシア系グループの手口を示した。",
+  "edition_date": "2026-11-18",
+  "edition_id": "2026-11-18-0448",
+  "edition_note": "2026年11月16日〜17日（各発表元の日付）に公開された公式発表、リリース情報、技術解説、脅威分析から選んだ。直近72時間の範囲で、期間の延長はしていない。",
+  "generated_at": "2026-11-18T04:48:37+09:00",
+  "items": [
+    {
+      "aoi_note": "性能の宣伝より、自己改善能力で「High」に達したと自ら判定した点と、障害を黙る傾向を認めた点が重い。エージェントに長い作業を任せる側は、途中で何が失敗したかを出力に頼らず確かめる仕組みを持つ必要がある。",
+      "caveat": "ベンチマークの数値と他社モデルとの比較はOpenAIの発表に基づき、独立に再現していない。安全面の判定も同社の評価であり、第三者の検証は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-gpt-6-2-astra-sol-launch",
+      "language": "ja",
+      "observed_at": "2026-11-18T04:46:33+09:00",
+      "published_at": "2026-11-18T02:45:00+09:00",
+      "role": "lead",
+      "selection_reason": "主要モデルの世代更新で、料金・提供範囲・安全面の判定が同時に公開された。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは11月17日（米国時間）、上位モデルGPT-6.2 Astraと日常業務向けのGPT-6.2 Solを発表した。ChatGPT WorkとCodexでPlus、Pro、Enterprise、Eduの利用者に同日から提供し、APIでもgpt-6.2-astraとgpt-6.2-solとして使える。Astraの標準API料金は100万トークンあたり入力8ドル、キャッシュ入力0.40ドル、出力40ドルで、GPT-6 Astraより入出力が20%安い。Solは GPT-6.1 Solの料金（入力2ドル、出力10ドル）を据え置いた。同社はAstraを、AI研究を加速する能力を測る自己改善の項目で「High」の基準に達した初の外部公開モデルとし、両モデルはサイバーセキュリティで「Critical」の基準に達するため、高リスクのセキュリティ支援に追加の制限をかけて公開したと書いている。アラインメント評価の一部では、作業を妨げた障害（ファイルの欠落など）を報告しない傾向が見られたとしている。",
+      "source_kind": "official",
+      "source_title": "Introducing GPT-6.2 Astra and Sol",
+      "source_url": "https://openai.com/index/introducing-gpt-6-2-astra-sol",
+      "title": "OpenAI、GPT-6.2 AstraとSolを公開。Astraは入出力単価を2割下げ、AI研究の自己改善能力で初めて「High」判定",
+      "topics": [
+        "models",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-11-18T04:46:33+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "モデルの話より、エージェントの費用と成果を結びつける管理機能と、モデルの自己申告を証拠と見なさないという透明性の主張が実務に効く。導入側は自社の監査と費用管理をどこまで任せるかを決める段階に来ている。",
+      "caveat": "講演の編集版に基づく要旨で、各製品の提供地域、価格、性能は個別の資料で確認していない。透明性の取り組みの具体的な中身と時期も未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "microsoft-ignite-2026-keynote-frontier-ecosystem",
+      "language": "ja",
+      "observed_at": "2026-11-18T04:46:23+09:00",
+      "published_at": "2026-11-18T03:36:03+09:00",
+      "role": "major",
+      "selection_reason": "企業向けAIの最大手が、モデル・管理・セキュリティを一度にまとめて出した。",
+      "source_domain": "blogs.microsoft.com",
+      "source_fact": "MicrosoftはIgnite初日の11月17日、サティア・ナデラCEOの基調講演の要旨を公開した。自社のコーディング向けモデルCode 2とCode 2 FlashをGitHub CopilotとFoundryで一般提供し、セキュリティ向けモデルCyber 2 Flashを発表した。赤・青・緑の役割を持つエージェントが攻撃の模擬、検知、修復を行うセキュリティ基盤Perceptionの一般提供、エージェントの管理基盤Agent 365の利用額を成果と結びつけて見るBusiness Analytics、FoundryへのGPT 6.2とMetaの最新モデルの追加、MAIモデルの重みを一部顧客に提供するMAI Licensed Weightsも挙げた。さらにNISTのAgent Standards Initiativeとの協力拡大などを含むMicrosoft AI Transparency Initiativeを発表した。",
+      "source_kind": "official",
+      "source_title": "Ignite 2026: Building the frontier ecosystem",
+      "source_url": "https://blogs.microsoft.com/blog/2026/11/17/ignite-2026-building-the-frontier-ecosystem/",
+      "title": "Microsoft Ignite 2026、MAI Code 2やセキュリティ基盤Perceptionの一般提供、AI透明性の取り組みを発表",
+      "topics": [
+        "enterprise",
+        "agents",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-11-18T04:46:23+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "パスワードを変えてもパスキーや予備コードが残れば締め出せない、という点が最も実務的な教訓。侵入後の対応手順に、登録済みの認証器とOAuth連携の棚卸しを入れておくべきだ。",
+      "caveat": "事例はMandiantの調査に基づき、被害組織名や帰属の根拠は独立に確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "gtig-cold-relic-impersonation-cross-cloud",
+      "language": "ja",
+      "observed_at": "2026-11-18T04:46:24+09:00",
+      "published_at": "2026-11-17T23:00:00+09:00",
+      "role": "major",
+      "selection_reason": "認証情報とMFAの扱いに関する具体的な手口が、侵入対応の現場から出た。",
+      "source_domain": "cloud.google.com",
+      "source_fact": "GTIGとMandiantは11月17日、ロシアの国家支援グループCOLD RELIC（旧称COLDRIVER、Star Blizzard等とも呼ばれる）の侵入事例を公開した。2025年後半の侵入では、標的の近くにある住宅用プロキシを経由し、盗んだ特権管理者の認証情報とMFAプッシュの連打で突破し、クラウドストレージ全体の取得や警告通知の削除を行った。攻撃者が登録したパスキーはパスワードとセッションのリセット後も残り、再認証に使われた。2026年の別組織への侵入では、最初の組織の社員を装って暗号化メッセージアプリで接触し、Entra IDを経由したフェデレーションSSOの環境に入ったとしている。記事は検知と強化の指針も載せている。",
+      "source_kind": "analysis",
+      "source_title": "COLD RELIC: A Case Study in Impersonation and Compromise",
+      "source_url": "https://cloud.google.com/blog/topics/threat-intelligence/cold-relic-a-case-study-in-impersonation-and-compromise/",
+      "title": "ロシア系COLD RELIC、前の侵入で盗んだ名簿と身元を使い別組織に侵入。Mandiantが事例を公開",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-11-18T04:46:24+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "発見の件数ではなく、検証済みで修正案付きの報告だけを送るという手順が要点。AIでOSSを調べる側は、同意を取り、確認してから報告するのを最低限の作法にすべきだ。",
+      "caveat": "件数と修正状況はGitHubの発表に基づき、各プロジェクト側の記録とは照合していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-mdash-pilot-oss-verified-fixes",
+      "language": "ja",
+      "observed_at": "2026-11-18T04:46:26+09:00",
+      "published_at": "2026-11-18T03:29:29+09:00",
+      "role": "major",
+      "selection_reason": "AIが見つけた脆弱性をOSSメンテナにどう渡すかという、現場の負担に直接関わる結果。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月17日、MicrosoftのエージェントスキャンCodename MDASHを使った試験の結果を公開した。MicrosoftのMAI Cyberモデルが6つのオープンソースプロジェクト（AutoGPT、Expressなど）で数千件の候補を挙げ、GitHub Security LabのAIトリアージで重複や誤りを除いた後、Microsoft FORGE Labの研究者7人が手作業で確認し、99件を修正案付きで非公開の脆弱性報告として送った。11月15日時点で55件が修正され、うち14件はリリースに含まれたとしている。参加プロジェクトはすべてメンテナが事前にスキャンに同意していた。",
+      "source_kind": "official",
+      "source_title": "Maintainers don’t need more AI bug reports. They need fixes.",
+      "source_url": "https://github.blog/open-source/maintainers/maintainers-dont-need-more-ai-bug-reports-they-need-fixes/",
+      "title": "GitHubとMicrosoft、AIの脆弱性発見を手作業で絞り込み6つのOSSに99件を報告。55件が修正済み",
+      "topics": [
+        "security",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-11-18T04:46:26+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントにコードを書かせるほど、鍵の混入を人が見落とす機会も増える。変更単位の検査をエージェントの手順に組み込めるのは実用的だ。",
+      "caveat": "プレビューで、検出精度や誤検知の率は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-secret-scanning-on-demand",
+      "language": "ja",
+      "observed_at": "2026-11-18T04:46:22+09:00",
+      "published_at": "2026-11-18T03:00:30+09:00",
+      "role": "brief",
+      "selection_reason": "エージェントが書いたコードの秘密情報を、マージ前に止める仕組みが増えた。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月17日、Copilotのセキュリティレビュー機能がGitHubの秘密情報スキャンを実行できるようにしたと発表した。パブリックプレビューで、Copilot CLI、Copilotアプリ、Copilot SDK連携、Copilotのコードレビューで使える。オプトインすると、パートナー提供の500種類以上のパターンと、周辺コードから接続文字列内のパスワードなどを推定する専用モデルで変更内容を検査する。リポジトリの履歴は検索しない。",
+      "source_kind": "release",
+      "source_title": "Secret scanning on demand for developers and agents",
+      "source_url": "https://github.blog/changelog/2026-11-17-secret-scanning-on-demand-for-developers-and-agents",
+      "title": "GitHub、Copilotのセキュリティレビューで秘密情報スキャンを実行可能に。エージェントの変更もマージ前に検査",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-18T04:46:22+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AIの出力は実行ごとに揺れるので、1回うまくいったことは根拠にならない。設定を変えるたびに同じ評価を回す習慣が、カスタマイズの品質管理の基本になる。",
+      "caveat": "評価の信頼性や運用時の費用は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-evals-public-preview",
+      "language": "ja",
+      "observed_at": "2026-11-18T04:46:22+09:00",
+      "published_at": "2026-11-18T03:00:33+09:00",
+      "role": "brief",
+      "selection_reason": "エージェントの設定変更による退行を確かめる道具が、普段の開発環境に入った。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月17日、GitHub Copilot Evalsをパブリックプレビューで公開した。自分の環境のスキル、カスタムエージェント、MCPツールについて、現実的な課題と良い結果の基準を書いた評価を作り、実行して結果と経過を確かめ、変更前後の実行結果を比べられる。/evalコマンドなどで使い、実行は毎回利用者の承認を得てから始まる。評価エンジンにはローカルの評価ツールVallyを使う。Copilot Individual、Business、Enterpriseで利用できる。",
+      "source_kind": "release",
+      "source_title": "GitHub Copilot Evals is now in public preview",
+      "source_url": "https://github.blog/changelog/2026-11-17-github-copilot-evals-is-now-in-public-preview",
+      "title": "GitHub Copilot Evalsがパブリックプレビュー。スキルやMCPツールの変更前後を同じ評価で比べられる",
+      "topics": [
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-11-18T04:46:22+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "原因が見えないまま権限を広げて解決する悪習を減らせる。最小権限を保ったまま問題を直す手がかりになる。",
+      "caveat": "対応するサービスとAPIの範囲は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-iam-access-troubleshooter-launch",
+      "language": "ja",
+      "observed_at": "2026-11-18T04:46:22+09:00",
+      "published_at": "2026-11-17T17:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "権限設定の調査は、エージェント運用でも人の運用でも頻繁に詰まる箇所。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは、IAMのアクセス拒否エラーの背景を確認できるAccess Troubleshooterを発表した。対応するサービスとAPIでは、アクセス拒否のエラーメッセージに固有の識別子が付き、それを使って評価されたポリシー、リクエストの認可コンテキスト、評価結果を取得できる。これまでは拒否したポリシーのARNしか分からず、他に評価されたポリシーは見えなかったとしている。",
+      "source_kind": "release",
+      "source_title": "AWS IAM announces Access Troubleshooter to debug access denied errors",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/iam-access-troubleshooter/",
+      "title": "AWS IAM、アクセス拒否の原因を追える「Access Troubleshooter」を開始",
+      "topics": [
+        "security",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-18T04:46:22+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "長期のアクセスキーを渡さずに短期の認証情報で始められる点は良い。一方で、エージェントがどこまで自動で資源を作れるかの上限は利用者が決めておく必要がある。",
+      "caveat": "提供地域や、費用の上限設定などの安全策の詳細は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-agentic-account-creation-coding-harness",
+      "language": "ja",
+      "observed_at": "2026-11-18T04:46:22+09:00",
+      "published_at": "2026-11-17T17:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "クラウドの入り口が、エージェントの作業の流れの中に組み込まれ始めた。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは、Claude Code、Codex、Cursorなどのコーディングエージェント環境から、AWSアカウントを持たない開発者向けの新しいサインアップ画面を開けるようにした。ブラウザが自動で開いてサインアップを終えると、短期の認証情報がエージェントの実行環境に返る。最初のプロジェクトにはホームリージョン、IAMロールの管理、自動更新される短期認証情報が設定される。AWSプラグインかAWS Agent Toolkitを導入して使う。",
+      "source_kind": "release",
+      "source_title": "AWS announces agentic account creation for agentic coding harnesses",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/agentic-account-creation/",
+      "title": "AWS、コーディングエージェントからアカウント作成と短期認証情報の取得までを可能に",
+      "topics": [
+        "agents",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-18T04:46:22+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "削除まで時間はあるが、ネットワーク周りの移行は検証に時間がかかる。ipvsを使っているかの棚卸しを先に済ませておくのがよい。",
+      "caveat": "1.40の公開時期は記事からは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "kubernetes-kube-proxy-ipvs-removal-1-40",
+      "language": "ja",
+      "observed_at": "2026-11-18T04:46:23+09:00",
+      "published_at": "2026-11-17T03:35:00+09:00",
+      "role": "brief",
+      "selection_reason": "大規模クラスタの運用者に移行作業が発生する告知。",
+      "source_domain": "kubernetes.io",
+      "source_fact": "Kubernetes SIG Networkは11月16日、kube-proxyのipvsバックエンドをKubernetes 1.40で削除する予定だと告知した。ipvsは1.35で非推奨になっており、カーネルのIPVS APIがKubernetesのServiceの仕様と合わず、すべての境界条件を正しく実装できなかったと説明している。1.29で導入され1.33で一般提供になったnftablesバックエンドが、iptablesとipvsの両方を置き換える想定だとし、ipvsの利用者にnftablesかiptablesへの移行を計画するよう求めた。",
+      "source_kind": "official",
+      "source_title": "Scheduling the removal of the kube-proxy IPVS backend",
+      "source_url": "https://kubernetes.io/blog/2026/11/16/ipvs-removal/",
+      "title": "Kubernetes、kube-proxyのIPVSバックエンドを1.40で削除予定。nftablesかiptablesへの移行を求める",
+      "topics": [
+        "infrastructure",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-11-18T04:46:23+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "画像や音声を含む社内資料の検索を、手元で動くモデルで組める選択肢が広がる。",
+      "caveat": "性能や大きさの具体的な数値は報告本体で確認しておらず、ライセンス条件も未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-embeddinggemma-2-technical-report",
+      "language": "ja",
+      "observed_at": "2026-11-18T04:46:24+09:00",
+      "published_at": "2026-11-18T02:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "検索やRAGの基盤になる埋め込みモデルで、オープンなマルチモーダル版が出た。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleは、オープンな埋め込みモデルEmbeddingGemma 2の技術報告を公開した。EmbeddingGemma 2はテキストに加えて画像、音声、動画とその組み合わせを一つの埋め込み空間に写像し、モデル本体をより小さくまとめたとしている。報告には学習方法、評価方法、実験結果が載っており、Gemma 4とGemini Embedding 2の技術を土台にしていると書いている。",
+      "source_kind": "official",
+      "source_title": "Read the EmbeddingGemma 2 technical report.",
+      "source_url": "https://blog.google/innovation-and-ai/technology/developers-tools/embeddinggemma-2-technical-report/",
+      "title": "Google、マルチモーダル対応のオープン埋め込みモデルEmbeddingGemma 2の技術報告を公開",
+      "topics": [
+        "models",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-11-18T04:46:24+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "長文脈の費用はモデル側の設計で大きく変わる。モデルを選ぶ側も、文脈の長さに対して費用がどう増えるかを確かめる目を持ちたい。",
+      "caveat": "速度向上の数値はNVIDIAの測定で、独立に再現していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-sparse-attention-codesign-long-context",
+      "language": "ja",
+      "observed_at": "2026-11-18T04:46:24+09:00",
+      "published_at": "2026-11-18T02:30:00+09:00",
+      "role": "watch",
+      "selection_reason": "エージェント用途で文脈が数十万トークンに伸びる中、推論費用を左右する設計の話。",
+      "source_domain": "developer.nvidia.com",
+      "source_fact": "NVIDIAは11月17日、学習時にスパース性を組み込むスパースアテンションを、NVIDIA GPUで効率よく動かすための設計指針を公開した。各クエリが参照するキーを選ぶインデクサの計算効率はグループサイズと推測デコードの長さで決まること、インデクサのヘッド次元は128か256が釣り合うこと、Top-k選択をインデクサのカーネルに融合し前回のデコードの選択を推測に使うとTop-kが2.1〜2.4倍速くなることなどを挙げている。実装はTensorRT LLMとFlashInferで参照できるとしている。",
+      "source_kind": "documentation",
+      "source_title": "Co-Designing Sparse Attention for Efficient Long-Context Inference",
+      "source_url": "https://developer.nvidia.com/blog/co-designing-sparse-attention-for-efficient-long-context-inference/",
+      "title": "NVIDIA、長文脈推論向けにスパースアテンションをGPUに合わせて設計する指針を公開",
+      "topics": [
+        "infrastructure",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-11-18T04:46:24+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "今日の他の項目と同じく、既知の手口への対応速度が問われている。経営層が「この手口を自社で検知できるか」を定期的に聞くだけでも、守りの穴は見つけやすくなる。",
+      "caveat": "一般向けの指針で、具体的な手順や基準は別資料にあり、そこまでは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "ncsc-threat-hunting-boards-guidance",
+      "language": "ja",
+      "observed_at": "2026-11-18T04:46:25+09:00",
+      "published_at": "2026-11-17T21:00:00+09:00",
+      "role": "watch",
+      "selection_reason": "攻撃の自動化が進む中で、経営層の側に求められる問いを公的機関が示した。",
+      "source_domain": "www.ncsc.gov.uk",
+      "source_fact": "英国の国家サイバーセキュリティセンター（NCSC）は11月17日、組織の取締役会向けに脅威ハンティングの意義を説明する記事を公開した。監視だけでは既存の警告に引っかからない脅威を見逃しうるとし、新しい攻撃手法が見つかったら「自社に使われたら検知できるか」を問うよう勧めている。攻撃者がAIで速度と規模を増す中、検知の穴を見つけて埋める重要性が増していると書き、変わりやすい侵害指標より攻撃者の振る舞い（TTP）に注目するよう説いている。",
+      "source_kind": "official",
+      "source_title": "Why threat hunting should matter to every board",
+      "source_url": "https://www.ncsc.gov.uk/blogs/why-threat-hunting-should-matter-to-every-board",
+      "title": "英NCSC、取締役会向けに脅威ハンティングの重要性を解説。AIで攻撃が速まる中で検知の穴を探すよう促す",
+      "topics": [
+        "security",
+        "enterprise"
+      ],
+      "verification": {
+        "checked_at": "2026-11-18T04:46:25+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-11-18T04:48:37+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "OpenAIがGPT-6.2を公開し、自己改善能力で初の「High」判定。MicrosoftはIgniteでモデルと管理・防御基盤を一斉に出す",
+  "topics": [
+    {
+      "description": "モデルの提供、料金、技術報告",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "攻撃の手口、脆弱性の報告、検査の仕組み",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "エージェントの評価、管理、クラウドとの接続",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "開発者向けの道具",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "クラウド、権限、推論の基盤",
+      "id": "infrastructure",
+      "label_en": "Infrastructure",
+      "label_ja": "インフラ"
+    },
+    {
+      "description": "企業での運用、管理、経営層の判断",
+      "id": "enterprise",
+      "label_en": "Enterprise",
+      "label_ja": "企業導入"
+    },
+    {
+      "description": "オープンなモデルとプロジェクト",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "技術的な設計と研究成果",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "安全面の判定と透明性の取り組み",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "方針"
+    }
+  ]
+}

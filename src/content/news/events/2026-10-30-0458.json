@@ -1,0 +1,28 @@
+[
+  {
+    "changed_signal_ids": [
+      "aws-agentcore-cli-1-0",
+      "cisa-kev-vmware-esx-linux",
+      "cloudflare-ddos-2026-q3",
+      "github-enterprise-includes-copilot",
+      "google-cloud-vrp-root-in-cloud",
+      "ibm-granite-switch-4-1-1",
+      "jvn-apache-struts-rest-anysetter",
+      "kubernetes-ai-conformance-sig-arch",
+      "mistral-large-4-open-weights",
+      "openai-misalignment-monitoring",
+      "openai-model-spec-values",
+      "vercel-ai-bots-crawlers-assistants"
+    ],
+    "edition_date": "2026-10-30",
+    "edition_id": "2026-10-30-0458",
+    "edition_url": "https://aoifuture.com/news/2026-10-30-0458/",
+    "event_id": "aoi-news-2026-10-30-0458-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-10-30T04:58:20+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "OpenAIは、モデルの振る舞いの指針を五つの価値で組み直し、エージェントの不正な行動を見つける多層の監視の仕組みを数字とともに示した。Mistral Large 4は防御側のセキュリティ作業を重視した重み公開モデルとして出た。GitHub EnterpriseへのCopilotの同梱、エージェントの運用ツール、AIボットの選び分け、報奨金の新区分、DDoSの傾向、悪用が確認された脆弱性とあわせて、一次資料から見る。",
+    "title": "AOIFUTURE News：OpenAIがModel Specを価値の軸で改訂しエージェントの監視の仕組みを公開、Mistral Large 4は重みを公開"
+  }
+]

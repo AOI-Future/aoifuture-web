@@ -1,0 +1,337 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-11-07T04:55:00+09:00",
+  "dek": "OpenAIがHacktronと組んで接続境界を掘り、湿式実験の生データ評価も出した。Claudeの家計接続、Foundryの動画モデル、耐量子の調達質問も同週に並んだ。",
+  "edition_date": "2026-11-07",
+  "edition_id": "2026-11-07-0455",
+  "edition_note": "2026年11月4日から6日（各発表元の日付）に公開された公式発表、ドキュメント、リリース情報、規制当局資料から選んだ。直近72時間の範囲で、期間の延長はしていない。",
+  "generated_at": "2026-11-07T04:55:00+09:00",
+  "items": [
+    {
+      "aoi_note": "エージェントがサービス同士をつなぐほど、境界の穴が製品の穴になる。モデルを外に渡す側が、同じモデルで自分の結合部を検査する構図は実務的だ。",
+      "caveat": "提携の範囲、見つかった脆弱性の件数、Daybreakの審査条件は発表文以上の情報がなく、独立には確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-hacktron-partnership",
+      "language": "ja",
+      "observed_at": "2026-11-07T04:52:10+09:00",
+      "published_at": "2026-11-06T00:00:00+09:00",
+      "role": "lead",
+      "selection_reason": "防御用モデルの提供と並行して、自社システムの接続境界を外部の攻撃側専門チームと掘る公式の提携発表。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは11月6日、自社システムの脆弱性を見つけるためHacktronと提携すると発表した。エンジニアとHacktronの研究者が優先領域を共同で選び、第三者サービスとの接続部分に重点を置く。提携の一環として、Daybreak Red経由でHacktronのフロンティアモデルへのアクセスを拡大する。同社はBug Bounty経由でHacktronを知り、コードレビューやペネトレーションテスト向けのAIエージェントを構築する同チームの開示成果を評価したとしている。同週にはCathedralの研究者との次のセキュリティスプリントや、バグ報奨金の引き上げにも触れている。",
+      "source_kind": "official",
+      "source_title": "Partnering with Hacktron to find vulnerabilities in OpenAI’s systems",
+      "source_url": "https://openai.com/index/partnering-with-hacktron/",
+      "title": "OpenAI、自社システムの脆弱性探索でHacktronと提携。Daybreak Red経由でフロンティアモデルへのアクセスを拡大",
+      "topics": [
+        "security",
+        "agents",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-11-07T04:52:10+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ラボ向けエージェントは正しさより、証拠が足りないと判断できるかが先になる。スコア向上と同時に失敗例を並べた点は、導入判断の材料になる。",
+      "caveat": "数値と失敗例はOpenAIの評価に基づく。Ligo以外のラボでの再現性や、実際の実験作業への投入は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-biobasicsbench",
+      "language": "ja",
+      "observed_at": "2026-11-07T04:52:40+09:00",
+      "published_at": "2026-11-06T00:00:00+09:00",
+      "role": "major",
+      "selection_reason": "論文用に選ばれた図ではなく、日常の実験証拠でエージェントを測る一次の評価発表。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは11月6日、酵素設計のバイオ企業Ligoと共同で、日常的な湿式実験100件について生の実験データを解釈できるかを測るBioBasicsBenchを発表した。ゲル画像、コロニープレート、顕微鏡、機器の読み取りなど、失敗や曖昧さを含む証拠を使い、誤りや結論不能の認識も含めて採点する。xhigh設定でGPT-6 Astraの平均報酬は66.7%、GPT-5.6 Solは43.8%だった。7モデル・37設定で各タスク5回、計1万8500件の結果を報告し、画像の読み取りや対照実験の確認になお改善の余地があるとしている。",
+      "source_kind": "official",
+      "source_title": "Measuring how AI agents handle everyday wet-lab science",
+      "source_url": "https://openai.com/index/measuring-how-ai-agents-handle-wet-lab-science",
+      "title": "OpenAI、湿式実験の生データを読むBioBasicsBenchを公開。GPT-6 Astraは平均66.7%",
+      "topics": [
+        "agents",
+        "science",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-11-07T04:52:40+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "金融の接続は「便利さ」より権限の切り方が先に来る。読めない操作を製品側で封じる設計は、他領域のコネクタにも転用しやすい。",
+      "caveat": "ヘルプ文書とPlaid側の告知に基づく。実際の同期遅延や銀行ごとの挙動、訓練への利用の細部は端末では検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "claude-personal-finance-plaid",
+      "language": "ja",
+      "observed_at": "2026-11-07T04:53:05+09:00",
+      "published_at": "2026-11-05T00:00:00+09:00",
+      "role": "major",
+      "selection_reason": "家計データをエージェントに渡す境界を、読み取り専用と対象プラン付きで公式に定義した文書。",
+      "source_domain": "support.claude.com",
+      "source_fact": "Anthropicのヘルプセンターによると、Personal Financeは米国のPro・Max・Ultra向けベータで、Plaid経由で銀行・カード・ローン・投資口座を接続できる。残高と与信枠、最大24か月分の取引を読み取り、支出や請求の質問に答えられるが、送金・運用・投資の実行はできない。銀行のパスワードはClaudeには渡らず、Free・Team・Enterpriseでは利用できない。接続は最大16行、チャットでの利用はConnector設定で制御できるとしている。",
+      "source_kind": "documentation",
+      "source_title": "Use Personal Finance in Claude",
+      "source_url": "https://support.claude.com/en/articles/18185620-use-personal-finance-in-claude",
+      "title": "ClaudeのPersonal Financeがベータ開始。Plaid経由で口座は読み取り専用、送金は不可",
+      "topics": [
+        "agents",
+        "policy",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-07T04:53:05+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "動画は単一モデルでは用途が割れやすい。ホスト地域と単価を並べて選ばせる形は、生成を業務アプリに組み込むときの現実的な入口だ。",
+      "caveat": "プレビューの利用条件、実際の待ち時間、各モデルの品質差は試していない。料金表は記事時点の掲載値。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "foundry-fal-video-models",
+      "language": "ja",
+      "observed_at": "2026-11-07T04:53:30+09:00",
+      "published_at": "2026-11-05T00:00:00+09:00",
+      "role": "major",
+      "selection_reason": "企業向け配信基盤に、複数系統の動画生成を同時に載せる公式のプレビュー告知。",
+      "source_domain": "techcommunity.microsoft.com",
+      "source_fact": "Microsoftは11月5日、falとの提携によりKling v3 Pro、LTX-2.5 Fast/Pro、MiniMax H3 MaxおよびTurboをMicrosoft Foundryで公開プレビューすると発表した。テキスト・画像から動画を生成でき、Klingは米国ホストのエンドポイントをFoundryが初めて提供するとしている。秒単価の表を掲載し、データ所在やモデルごとの品質・速度・コストの選択を開発者に委ねる構成を説明している。",
+      "source_kind": "official",
+      "source_title": "Building the next generation of multimodal AI experiences with fal in Microsoft Foundry",
+      "source_url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/building-the-next-generation-of-multimodal-ai-experiences-with-fal-in-microsoft-/4570032",
+      "title": "Microsoft Foundry、fal経由でKling・LTX・MiniMaxの動画モデルを公開プレビュー",
+      "topics": [
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-07T04:53:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "モデルより先に、差分と履歴の見え方がボトルネックになる場面が増えている。買収対象が「見る道具」である点が示唆的だ。",
+      "caveat": "クロージング時期や規制審査の詳細、既存顧客への料金変更の有無は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-acquire-pierre",
+      "language": "ja",
+      "observed_at": "2026-11-07T04:53:50+09:00",
+      "published_at": "2026-11-04T00:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "コーディングエージェントの周辺として、レビューUIとコード保管を自前化する一次の買収発表。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは11月4日、Code Storageとオープンソースの開発者向けツール群を手がけるPierre Computer Companyの買収を発表した。Codexアプリのファイル閲覧と差分表示に使われているTreesとDiffsのライブラリがPierre製だと説明し、エージェントと並行するGitワークフロー向けに製品を拡充する意向を示した。オープンソースは維持し、Code Storageの顧客はクロージング後も利用を続けられるとしている。完了は規制当局の承認など慣習的な条件付き。",
+      "source_kind": "official",
+      "source_title": "OpenAI to acquire Pierre Computer Company, Inc.",
+      "source_url": "https://openai.com/index/openai-to-acquire-pierre",
+      "title": "OpenAI、Pierre Computer Companyの買収を発表。Codexのコード閲覧・差分基盤を強化",
+      "topics": [
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-11-07T04:53:50+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "文脈の長さより、長い入力を最後まで使い切れるかが製品差になる。料金付きで併記した点は比較しやすい。",
+      "caveat": "ベンチマーク数値の詳細はMoonshot側の主張に依拠し、Foundry上での実測はしていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "foundry-kimi-k31-pro",
+      "language": "ja",
+      "observed_at": "2026-11-07T04:54:10+09:00",
+      "published_at": "2026-11-05T00:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "長文脈のオープンウェイトを、企業向けカタログの選択肢として公式に載せた告知。",
+      "source_domain": "techcommunity.microsoft.com",
+      "source_fact": "Microsoftは11月5日、Moonshot AIのオープンウェイトモデルKimi K3.1 ProをMicrosoft Foundryのカタログに追加したと発表した。テキストと画像を扱い、文脈窓は最大100万トークン。コーディングや調査、文書中心のエージェント向けとし、入力100万トークンあたり2.30ドル、出力11.50ドル、キャッシュ0.23ドルの料金を示した。ベンチマークは出発点に過ぎず、自前の代表タスクで比較するよう促している。",
+      "source_kind": "official",
+      "source_title": "Moonshot AI’s Kimi K3.1 Pro comes to Microsoft Foundry",
+      "source_url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/moonshot-ai%E2%80%99s-kimi-k3-1-pro-comes-to-microsoft-foundry/4570292",
+      "title": "MoonshotのKimi K3.1 ProがMicrosoft Foundryに追加。最大100万トークンの文脈",
+      "topics": [
+        "models",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-11-07T04:54:10+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "健康領域は有用性と安全性が同時に問われる。枠組みを外に出すこと自体が、監査可能な設計への圧力になる。",
+      "caveat": "ホワイトペーパー本文の全項目やデータセットは未読。枠組みの第三者による追試も確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-health-ai-eval-framework",
+      "language": "ja",
+      "observed_at": "2026-11-07T04:54:30+09:00",
+      "published_at": "2026-11-04T00:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "医療文脈の生成AIを、単一スコアではなく三層で測る方法を公式に開示した発表。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleは11月4日、健康ニーズ向けのAI利用を評価するエンドツーエンドの枠組みをまとめたホワイトペーパーを、Elizabeth McGlynn氏とDana Gelb Safran氏との協力で公開したと発表した。正確さ、安全性、有用性の三領域で、閉じた設問のベンチマーク、自動採点、専門家の人手レビューを組み合わせ、よくある場面と高リスク場面を評価するとしている。自社モデルの評価に使っている方法を共有し、開発者や臨床家の信頼醸成に役立てたいと記した。",
+      "source_kind": "official",
+      "source_title": "We're sharing our framework for building safer and more helpful AI for health.",
+      "source_url": "https://blog.google/innovation-and-ai/technology/health/evaluating-health-ai-at-scale/",
+      "title": "Google、医療向けAIの安全性・正確さ・有用性を測る評価枠組みのホワイトペーパーを公開",
+      "topics": [
+        "science",
+        "policy",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-11-07T04:54:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントが開くPRが増えるほど、人が見る画面の最初の一段がボトルネックになる。サマリーを上に置くのはその対策だ。",
+      "caveat": "プレビューの対象リポジトリ条件や、既存の必須チェック表示との差分は実機で確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-pr-overview-preview",
+      "language": "ja",
+      "observed_at": "2026-11-07T04:54:45+09:00",
+      "published_at": "2026-11-05T00:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "レビュー量が増える前提で、阻害要因の発見コストを下げる公式のUI変更。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月5日、プルリクエストのOverviewページをオプトインの公開プレビューとして導入すると告知した。マージ可否と次に取れる操作をページ上部の短い準備状況サマリーにまとめ、チェック・コメント・承認の信号もコンパクトに見せる。未解決の会話や自分のコメントでの絞り込み、新しいコメントからの並べ替え、ドラフトのレビュー準備やクローズもヘッダーから行える。クラシック表示への戻しも同メニューから可能としている。",
+      "source_kind": "release",
+      "source_title": "New pull request overview page in public preview",
+      "source_url": "https://github.blog/changelog/2026-11-05-new-pull-request-overview-page-in-public-preview/",
+      "title": "GitHub、プルリクエストのOverviewページを公開プレビュー。マージ可否と次の操作を上部に集約",
+      "topics": [
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-11-07T04:54:45+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "音声を端末に閉じる選択は、遅延だけでなくデータの所在の話でもある。小さいモデルでリーダーボード上位を取る設計は再利用しやすい。",
+      "caveat": "リーダーボードの数値とダウンロード数は記事の記述に基づく。実機での遅延や音質は試していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "phonon-tts-on-device",
+      "language": "ja",
+      "observed_at": "2026-11-07T04:55:00+09:00",
+      "published_at": "2026-11-05T00:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "クラウド往復なしの音声を、ライセンスと公開ベンチ付きで示した一次の技術報告。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Gradiumは11月5日、端末上で動く小型TTS「Phonon」の公開後の状況をHugging Faceブログで詳述した。約65MBと75MBの二サイズで英仏独西葡に対応し、Phonon 31mはApache 2.0、40mは非商用ライセンス。初の2週間で20万回超のダウンロードがあり、Open TTS Leaderboardではドイツ語とスペイン語の明瞭性で首位、評価した全言語で上位3位以内、CPUストリーミングの初音までの時間でも首位級だとしている。Transformers v5.21以降にも統合した。",
+      "source_kind": "official",
+      "source_title": "A Closer Look at Phonon TTS. Launching High-Quality On-Device Speech That Tops the Benchmarks.",
+      "source_url": "https://huggingface.co/blog/phonon-tts",
+      "title": "Phonon、端末完結の小型TTSを公開から2週間で20万超ダウンロード。Open TTS Leaderboardでも上位",
+      "topics": [
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-07T04:55:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "PQCはアルゴリズム選定より、更新できない機器と契約条項の問題になる。質問リストは監査の出発点として使いやすい。",
+      "caveat": "質問リストの全文項目や、各ベンダーの回答例は未確認。移行期限の義務付けの有無も本文以上は見ていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-pqc-vendor-questions",
+      "language": "ja",
+      "observed_at": "2026-11-07T04:55:20+09:00",
+      "published_at": "2026-11-05T00:00:00+09:00",
+      "role": "watch",
+      "selection_reason": "暗号移行を調達の質問票に落とした、規制当局の実務向け一次資料。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "CISAは11月5日、オーストラリアのASD ACSCおよび米NSAと共同で、耐量子暗号（PQC）への移行に向けたベンダー準備状況を確認するための指針と簡易質問リストを公開した。量子関連のリスク理解、暗号実装の透明性、安全で費用対効果のある移行支援の有無を、ベンダー中立の質問で確かめる内容だとしている。産業制御やIoTなど更新が難しい資産ではベンダー依存が大きいと指摘し、早期の構造化された対話を求めている。",
+      "source_kind": "regulator",
+      "source_title": "Post-Quantum Questions to Ask Your Vendors",
+      "source_url": "https://www.cisa.gov/resources-tools/resources/post-quantum-questions-ask-your-vendors",
+      "title": "米CISAなど、耐量子暗号移行に向けたベンダーへの質問リストを共同公開",
+      "topics": [
+        "security",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-11-07T04:55:20+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-11-07T04:55:00+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "自社結合部の共同検査と、実験・家計・動画がエージェントの現場に降りる一日",
+  "topics": [
+    {
+      "description": "脆弱性対応、防御のための検証、暗号移行",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "エージェントの評価、実験データ解釈、業務ツール連携",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "基盤モデル、マルチモーダル、音声、動画生成",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "開発者向けの配信基盤、レビューUI、ソース管理",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "利用の境界、規制当局の指針、読み取り専用の接続",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・統制"
+    },
+    {
+      "description": "実験室・医療・創薬での評価と枠組み",
+      "id": "science",
+      "label_en": "Science",
+      "label_ja": "科学"
+    }
+  ]
+}

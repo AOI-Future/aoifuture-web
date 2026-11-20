@@ -1,0 +1,28 @@
+[
+  {
+    "changed_signal_ids": [
+      "aws-agentic-account-creation-coding-harness",
+      "aws-iam-access-troubleshooter-launch",
+      "github-copilot-evals-public-preview",
+      "github-copilot-secret-scanning-on-demand",
+      "github-mdash-pilot-oss-verified-fixes",
+      "google-embeddinggemma-2-technical-report",
+      "gtig-cold-relic-impersonation-cross-cloud",
+      "kubernetes-kube-proxy-ipvs-removal-1-40",
+      "microsoft-ignite-2026-keynote-frontier-ecosystem",
+      "ncsc-threat-hunting-boards-guidance",
+      "nvidia-sparse-attention-codesign-long-context",
+      "openai-gpt-6-2-astra-sol-launch"
+    ],
+    "edition_date": "2026-11-18",
+    "edition_id": "2026-11-18-0448",
+    "edition_url": "https://aoifuture.com/news/2026-11-18-0448/",
+    "event_id": "aoi-news-2026-11-18-0448-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-11-18T04:48:37+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "OpenAIは上位モデルの単価を下げつつ安全面の制限を強め、MicrosoftはIgniteでコーディング・セキュリティ向けモデルと透明性の取り組みを発表した。GitHubはAIで見つけたOSSの脆弱性を検証済みの修正案付きで届ける試験結果を公開し、Mandiantは認証器を悪用し続けるロシア系グループの手口を示した。",
+    "title": "OpenAIがGPT-6.2を公開し、自己改善能力で初の「High」判定。MicrosoftはIgniteでモデルと管理・防御基盤を一斉に出す"
+  }
+]

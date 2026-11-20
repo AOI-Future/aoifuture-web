@@ -1,0 +1,27 @@
+[
+  {
+    "changed_signal_ids": [
+      "allenai-statebench-state-tracking",
+      "aws-inspector-ami-scanning",
+      "cisa-subnet-powersystem-center",
+      "cloudflare-zero-wire-vulnerability-briefings",
+      "collinear-cwe-bench-v2",
+      "github-desktop-short-lived-tokens",
+      "google-apac-scam-defense",
+      "ncsc-ai-cyber-intrusion-2028",
+      "ncsc-state-of-the-cyber-nation",
+      "openai-bigger-bug-bounties",
+      "vercel-block-malicious-npm-packages"
+    ],
+    "edition_date": "2026-11-04",
+    "edition_id": "2026-11-04-0455",
+    "edition_url": "https://aoifuture.com/news/2026-11-04-0455/",
+    "event_id": "aoi-news-2026-11-04-0455-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-11-04T04:55:42+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "AIが脆弱性の発見と悪用を速めるという見立てのもと、脅威の評価、情報の提供、開発と運用の基盤での防御の各面で動きが続いた。",
+    "title": "AIで速まる脆弱性の発見に、守る側の備えが並ぶ"
+  }
+]

@@ -1,0 +1,337 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-11-05T04:52:18+09:00",
+  "dek": "AIの利用料を狙う攻撃が広がるなか、CIの既定値、コードの自動点検、エージェントの受け入れ方と動かす場所で、運用の側が統制を足す発表が続いた。",
+  "edition_date": "2026-11-05",
+  "edition_id": "2026-11-05-0452",
+  "edition_note": "2026年11月2日から4日（各発表元の現地日付）に公開された公式発表、リリース情報、技術分析から選んだ。直近72時間の範囲で、期間の延長はしていない。",
+  "generated_at": "2026-11-05T04:52:18+09:00",
+  "items": [
+    {
+      "aoi_note": "利便のために残されてきた既定値を、安全側へ倒す変更だ。このイベントに頼るワークフローを持つ公開プロジェクトは、先行適用の日までに許可の範囲を絞っておく必要がある。ボットやエージェントがフォークから変更を提案する運用が増えるほど、この境界の意味は大きくなる。",
+      "caveat": "影響を受けるワークフローの数や、先行適用中の実際の挙動は確認していない。日程はGitHubの告知に基づくもので、再び変わる可能性がある。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-pull-request-target-default-block",
+      "language": "en",
+      "observed_at": "2026-11-05T04:49:51+09:00",
+      "published_at": "2026-11-02T15:14:46Z",
+      "role": "lead",
+      "selection_reason": "危険性が長く指摘されてきたCIの起動条件を、利用者の設定任せから既定の遮断に切り替える。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月2日、GitHub Actionsで公開リポジトリのpull_request_targetイベントを、該当するActionsのイベントポリシーで明示的に許可しない限り、2026年12月2日から既定で遮断すると告知した。当初は11月2日に適用する予定だった。この既定ルールは当面は評価モードで動き、遮断の対象になる実行を事前に確かめられる。本格適用の前に、11月9日と16日のUTC16時から18時に一時的に遮断を適用し、その間に遮断された実行はエラーの注記付きで失敗になる。理由として、このイベントはベースリポジトリの文脈で動いてシークレットにアクセスできるため、フォークからの信頼できないコードを実行するとパイプラインの侵害やシークレットの窃取につながり得ると説明している。プライベートと内部のリポジトリ、GitHub Enterprise Serverは対象外。",
+      "source_kind": "release",
+      "source_title": "pull_request_target blocked by default December 2",
+      "source_url": "https://github.blog/changelog/2026-11-02-pull_request_target-blocked-by-default-december-2",
+      "title": "GitHub、公開リポジトリでpull_request_targetを12月2日から既定で遮断。11月9日と16日に一時的な先行適用",
+      "topics": [
+        "security",
+        "tools",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-11-05T04:49:51+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "暗号資産の不正採掘と比べて、被害額が数時間で膨らむ点が従来のクラウド乗っ取りとの違いだ。APIキーやトークンを手元やリポジトリに置きがちな個人開発やエージェントの運用にも、同じ経路が開いている。使っていないLLMサービスを有効化できない権限設計と、利用額の上限が最初の防波堤になる。",
+      "caveat": "事案の件数、被害額、攻撃者の分類はGTIGの調査に基づくもので、独立に検証していない。名指しされた転売サービスの実態も確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-gtig-llmjacking",
+      "language": "en",
+      "observed_at": "2026-11-05T04:49:51+09:00",
+      "published_at": "2026-11-02T14:00:00Z",
+      "role": "major",
+      "selection_reason": "AIの利用料そのものが攻撃者の収益源になっている実態を、侵入から転売までの流れとして具体的に示した。",
+      "source_domain": "cloud.google.com",
+      "source_fact": "Google Threat Intelligence Group（GTIG）は11月2日、企業のLLMへのアクセスを乗っ取る「LLMJacking」の分析を公表した。Mandiantが2026年に対応した複数の事案では、北米、南米、アジア太平洋の金融、小売、技術、運輸の各業種が被害を受け、1日で10万ドルを超える不正な利用料が生じた例や、アクセスが取り消されるまでに累計100万ドルに達した組織があったという。主な侵入経路は、IAMの認証情報、サービスアカウントキー、GitHubの個人用アクセストークン、セッショントークンの流出や窃取で、公開リポジトリから集めたLLMのAPIキーをmax_tokens=1の最小限のリクエストで有効か確かめる手口も記している。盗んだ利用枠を束ねて転売する「LLM Mixer」と呼ぶ中継の仕組みや、LiteLLMのゲートウェイの脆弱性（CVE-2026-40217）を突いて管理者権限を得た事例も挙げた。対策として、秘密情報の集中管理と自動の更新、最小権限、予算の上限とAPIの利用枠、LLMサービスの無断の有効化を重大な事象として扱う監視などを示している。",
+      "source_kind": "analysis",
+      "source_title": "The Rise of LLMJacking: How Threat Actors Monetize Compromised Cloud and Model Resources",
+      "source_url": "https://cloud.google.com/blog/topics/threat-intelligence/llmjacking-monetizing-compromised-cloud-models/",
+      "title": "Googleの脅威情報チーム、企業のLLM利用権を乗っ取る「LLMJacking」を報告。1日で10万ドル超の不正請求も",
+      "topics": [
+        "security",
+        "infrastructure",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-11-05T04:49:51+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "サイトから見たエージェントは、これまで自動化された通信の一部でしかなかった。誰の代理で何をしているかが見えれば、遮断ではなく条件付きの受け入れを選びやすくなる。一方で、エージェントの種類が分かっても利用者がどこまで任せたかは伝わらないという課題を、発表自身が認めている。",
+      "caveat": "識別できるエージェントの範囲や判定の精度は確認していない。Account Abuse Protectionは早期提供の段階で、誰でも使える機能ではない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-personal-agents-visibility",
+      "language": "en",
+      "observed_at": "2026-11-05T04:49:52+09:00",
+      "published_at": "2026-11-04T14:00:00Z",
+      "role": "major",
+      "selection_reason": "エージェント経由のアクセスを一律に遮断するか許すかではなく、相手ごとに扱いを決める道具が大手の配信基盤に入った。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは11月4日、人の指示でWebサイトを操作するパーソナルエージェントについて、サイト運営者向けの分析とアクセス方針の設定を追加したと発表した。Security Analyticsのボット分析に「Personal Assistants」の区分を加え、どのエージェントがどれだけのリクエストを送り、どのパスやステータスコードに当たっているかを見られるようにした。早期提供中のAccount Abuse Protectionでは、ログインや登録がどのエージェントによるものか、各ユーザーのアカウントでどのエージェントが動いているかも表示する。アクセス方針の設定は「AI Crawler and Agent access policies」に改称し、エージェント全体の方針に加えて、対応するエージェントごとに「許可」「広告のあるページで遮断」「遮断」を選べるようにした。今後は、エージェントを介しても利用者の文脈や権限、責任の所在を伝える仕組みに取り組むとしている。",
+      "source_kind": "official",
+      "source_title": "See the agents, set the terms: new visibility and control for personal agents",
+      "source_url": "https://blog.cloudflare.com/personal-agents-visibility-control/",
+      "title": "Cloudflare、利用者の代わりにサイトを訪れる「パーソナルエージェント」の可視化と、エージェントごとのアクセス設定を追加",
+      "topics": [
+        "agents",
+        "security",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-11-05T04:49:52+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AIで書かれるコードが増えるほど、人のレビューだけでは追いつかない。プッシュ単位で走らせる設計は、プルリクエストを通らない変更も拾える点が実務的だ。ただし監査ではないと本人が断っており、指摘がないことは安全の証明にならない。",
+      "caveat": "検出の精度や誤検知の割合は確認していない。費用はプッシュの頻度と変更量で変わるとされ、実際の額は試算していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "vercel-security-review-public-beta",
+      "language": "en",
+      "observed_at": "2026-11-05T04:49:52+09:00",
+      "published_at": "2026-11-03T20:00:00Z",
+      "role": "major",
+      "selection_reason": "コードを書く速さに合わせて、脆弱性の確認をプッシュのたびに自動で回す仕組みが配信基盤に組み込まれた。",
+      "source_domain": "vercel.com",
+      "source_fact": "Vercelは11月3日、Security ReviewをProとEnterpriseのチーム向けに公開ベータとした。接続したGitHubリポジトリへのプッシュのたびにコードを自動で調べ、結果を脆弱性のダッシュボードに記録する。プルリクエストではなくプッシュを起点にするため、本番ブランチへの直接のプッシュや強制プッシュも対象になる。各指摘には要約、修正案、AIによる深刻度の評価が付き、Vercel Agentに渡すと修正のプルリクエストが作られるが、承認するまでマージはされない。チームやプロジェクトごとに自然文でセキュリティ方針を書き、文脈として与えられる。ソースコードの解析であり、監査や実行時の検査、侵入テストではないと明記している。料金はVercel Agentの料率で、11月10日までは無料としている。",
+      "source_kind": "release",
+      "source_title": "Vercel Security Review now in public beta",
+      "source_url": "https://vercel.com/changelog/vercel-security-review-public-beta",
+      "title": "Vercel、プッシュのたびにコードの脆弱性をAIで調べる「Security Review」を公開ベータに",
+      "topics": [
+        "security",
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-11-05T04:49:52+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "スキルは書いて終わりにしがちだが、読み込まれなければ効果はなく、読み込まれても文脈を圧迫する。モデルの更新で効果がなくなったスキルを消すという運用は、スキルを資産ではなく保守の対象として扱う考え方だ。",
+      "caveat": "示された数値や事例はGoogleの社内評価に基づくもので、独立に再現していない。紹介された外部の道具は試していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-cloud-agent-skill-evaluation-rules",
+      "language": "en",
+      "observed_at": "2026-11-05T04:49:58+09:00",
+      "published_at": "2026-11-03T08:00:00Z",
+      "role": "brief",
+      "selection_reason": "エージェントのスキルは足すほど良くなるという前提を、測り方の側から問い直した。",
+      "source_domain": "cloud.google.com",
+      "source_fact": "Google Cloudの開発者向けブログは11月3日、SKILL.md形式のエージェント用スキルを評価する5つの原則を公開した。スキルが読み込まれるかは前置きの名前と説明で決まるため、まず呼び出しの衝突や安全上の危険を確かめること、認証情報や環境変数が残る開発者の端末では比較が汚染されるため隔離した環境で測ること、スキルありとなしの対比を複数回繰り返して比べること、正しさと効率や安全性の評価を混ぜないこと、API一覧の貼り付けではなく操作の習慣を書くことを挙げた。自動最適化の実験では、候補が答えのファイルを直接読むなどして採点を不正に通過した例があったという。呼び出しの衝突を調べる道具skill-reachを公開したとも書いている。",
+      "source_kind": "analysis",
+      "source_title": "Five rules for evaluating agent skills before they bloat your context window",
+      "source_url": "https://cloud.google.com/blog/topics/developers-practitioners/evaluate-agent-skills-before-they-bloat-your-context-window/",
+      "title": "Google Cloud、エージェント用スキルを評価する5つの原則を公開。効果のないスキルは削除を勧める",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-05T04:49:58+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "スキルや指示を外部から取り込む運用が増えるほど、どの版を使っているかの管理が問題になる。依存として宣言し、更新を差分で確かめる流れはその一つの答えだ。ただし更新を自動で受け入れれば、取り込む中身の確認が後回しになるおそれもある。",
+      "caveat": "APMで扱える依存の範囲や、更新時の細かな挙動は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-dependabot-agent-package-manager",
+      "language": "en",
+      "observed_at": "2026-11-05T04:49:59+09:00",
+      "published_at": "2026-11-03T20:24:07Z",
+      "role": "brief",
+      "selection_reason": "エージェントのスキルやプロンプトを、ソフトウェアの依存関係と同じ仕組みで更新できるようになった。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月3日、Dependabotのバージョン更新がAgent Package Manager（APM）に対応したと告知した。apm.ymlに宣言された対応するgitの依存関係について更新のプルリクエストを開き、apm.lock.yamlがあれば作り直す。対象はバージョン更新で、セキュリティ更新は含まない。設定は.github/dependabot.ymlにapmの項目を加えて行う。github.comのすべてのプランで一般提供され、GitHub Enterprise Server 3.24でも提供する予定という。",
+      "source_kind": "release",
+      "source_title": "Dependabot version updates support Agent Package Manager",
+      "source_url": "https://github.blog/changelog/2026-11-03-dependabot-version-updates-support-agent-package-manager",
+      "title": "Dependabot、エージェントのスキルや指示を管理する「Agent Package Manager」の更新に対応",
+      "topics": [
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-05T04:49:59+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "root権限まで渡す構成は、エージェントの能力を引き出す一方で、隔離と権限の設計に重みを移す。人の端末ではなく専用のデスクトップで動かすこと自体が、境界を作る一つの方法になっている。",
+      "caveat": "提供地域、料金、統制の具体的な設定項目は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-workspaces-ai-agents-linux-windows11",
+      "language": "en",
+      "observed_at": "2026-11-05T04:49:59+09:00",
+      "published_at": "2026-11-03T18:00:00Z",
+      "role": "brief",
+      "selection_reason": "エージェントに人と同じ作業環境を与える前提で、クラウドの仮想デスクトップの選択肢が広がった。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは11月3日、WorkSpaces for AI agentsが、Windows Serverに加えてLinuxとWindows 11のクラウドデスクトップに対応したと発表した。Linuxではエージェントにオペレーティングシステムの完全なroot権限を与え、ビルドやテスト、スクリプトの実行といった開発作業を任せられるとしている。Windows 11では、業務で使われているアプリケーション上でエージェントが作業できる。いずれもWindows Serverのデスクトップと同じく、ネットワークの分離やIAMによるアクセス制御などの統制を備えるという。",
+      "source_kind": "release",
+      "source_title": "Amazon WorkSpaces for AI agents now supports Linux and Windows 11 cloud desktops",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/workspaces-ai-agents-linux-windows-11",
+      "title": "AWS、AIエージェント向けのWorkSpacesでLinuxとWindows 11のクラウドデスクトップに対応",
+      "topics": [
+        "agents",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-05T04:49:59+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AIの道具で一人でも多くの仕事を回せるようになるほど、守りも一人で抱えることになる。高度な対策より、初期設定の変更や更新といった基本を順を追って示した点が実用的だ。",
+      "caveat": "手引きの本体は開いておらず、内容はNISTの発表文に基づく。日本の制度や環境にそのまま当てはまるかは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nist-solopreneur-cybersecurity-guide",
+      "language": "en",
+      "observed_at": "2026-11-05T04:50:00+09:00",
+      "published_at": "2026-11-02T12:00:00Z",
+      "role": "brief",
+      "selection_reason": "専任の担当者がいない最小単位の事業者に向けて、標準の枠組みを実行できる形に落とした。",
+      "source_domain": "www.nist.gov",
+      "source_fact": "米国立標準技術研究所（NIST）は11月2日、従業員が本人だけの事業者向けの手引き「Small Business Cybersecurity: Non-Employer Firms（NIST Cybersecurity White Paper 50）」を公開したと発表した。サイバーセキュリティの予備知識がない読者を想定して平易な言葉で書かれ、NISTのサイバーセキュリティフレームワーク（CSF 2.0）から一人の事業でも実行できる対策を選び、理由、始め方、事業が育ったときの次の手を示している。例として機器の初期パスワードの変更、定期的なバックアップ、ソフトウェアの更新を挙げ、資産の棚卸しなどのワークシートと、弁護士や職人などの想定事例も収めた。従来の「Small Business Information Security: The Fundamentals（NISTIR 7621）」の改訂にあたる。米国では2,800万を超える小規模事業がこの区分に入るとしている。",
+      "source_kind": "official",
+      "source_title": "Self-Employed? Solopreneur? NIST Has a Cybersecurity Guide Just for You",
+      "source_url": "https://www.nist.gov/news-events/news/2026/11/self-employed-solopreneur-nist-has-cybersecurity-guide-just-you",
+      "title": "米NIST、ひとりで事業を営む人向けのサイバーセキュリティの手引きを公開",
+      "topics": [
+        "security",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-11-05T04:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "手順の下書きはLLMに任せても、基準値の変更は人が承認するという分担が明示されている。エージェントに検査を作らせるときに、何を人の判断に残すかの具体例として参考になる。",
+      "caveat": "検出の実績はHugging Face自身の再生実験の結果で、独立に再現していない。誤検知の頻度などは本人も未計測としている。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "huggingface-transformers-model-integration-contracts",
+      "language": "en",
+      "observed_at": "2026-11-05T04:50:00+09:00",
+      "published_at": "2026-11-03T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "巨大なモデルを毎回動かさずに、実際の使い方に沿った検査を安く回す方法を示した。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Hugging Faceは11月3日、Transformersライブラリーの回帰を早く見つけるための「Model Integration Contracts（MIC）」を提案した。実際のチェックポイントの構成から層を減らし幅を狭めた小型の検査用モデル、利用例を書いた実行できる手順、人が確認した出力の基準値の三つを組にし、手順を小型モデルで動かして基準値と一致するかを確かめる。7月30日の変更でUMT5のデコーダーが未来のトークンを参照できる不具合が生じ、9月28日の修正まで約2か月mainに残っていたが、過去の変更を再生するとUMT5の小型モデルはその全期間で検出したという。Llama 4 Scoutの例では、1,086億のパラメーターを4,470万に縮めた。11月1日時点で、CIでの判定はプルリクエストを止めず報告するだけの扱いとしている。",
+      "source_kind": "official",
+      "source_title": "Transformers Model Integration Contracts",
+      "source_url": "https://huggingface.co/blog/transformers-mic",
+      "title": "Hugging Face、小型の検査用モデルで回帰を捕まえる「Model Integration Contracts」を提案",
+      "topics": [
+        "models",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-05T04:50:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AI向けの計算施設の電力費用を誰が負担するかは、電力会社と地域にとって避けられない論点だ。需要を下げられること自体を電力網への貢献として差し出す設計は、建設への地元の理解を得る条件にもなっている。",
+      "caveat": "需要応答の規模や家庭への効果はOpenAIとジョージア・パワーの説明に基づき、独立に検証していない。施設はまだ開発中で、運用の実績はない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-grid-protectors-program",
+      "language": "en",
+      "observed_at": "2026-11-05T04:50:00+09:00",
+      "published_at": "2026-11-02T15:00:00Z",
+      "role": "watch",
+      "selection_reason": "AIの計算需要が地域の電力の供給と料金に与える影響に、事業者の側から具体的な枠組みを示した。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは11月2日、今後建設する計算施設で、電力網が逼迫したときに電力需要を減らす取り決めを電力会社や規制当局などと結ぶ「Grid Protectors Program」を発表した。計画中のジョージア州エフィンガム郡の施設では、供給に必要な設備と電力サービスの費用を全額負担するとし、ジョージア・パワーとの合意には最大1,000メガワットの柔軟な需要応答が含まれるという。OpenAIはこれを平均的な家庭約70万世帯分の需要に相当すると説明している。地域の事情に応じて敷地内の発電や蓄電池による供給も検討し、取り決めは場所ごとに異なるため、追加の約束は確定し次第公表するとしている。",
+      "source_kind": "official",
+      "source_title": "Introducing the Grid Protectors Program",
+      "source_url": "https://openai.com/index/grid-protectors-program",
+      "title": "OpenAI、電力網が逼迫したときに計算施設の需要を下げる「Grid Protectors」計画を発表",
+      "topics": [
+        "infrastructure",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-11-05T04:50:00+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-11-05T04:52:18+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "盗まれるAIの利用権と、開発と配信の入口を締め直す動き",
+  "topics": [
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計・評価・統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "開発・業務・運用を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "推論・学習・配信を支えるハードウェアとソフトウェア基盤。",
+      "id": "infrastructure",
+      "label_en": "Infrastructure",
+      "label_ja": "計算基盤"
+    },
+    {
+      "description": "利用規則・標準・制度とその運用。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・統制"
+    },
+    {
+      "description": "基盤モデルの能力と提供・適応の条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    }
+  ]
+}

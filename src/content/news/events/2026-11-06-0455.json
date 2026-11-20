@@ -1,0 +1,26 @@
+[
+  {
+    "changed_signal_ids": [
+      "flower-endeavor-1-1",
+      "foundry-local-qwen38",
+      "gemini-omni-1-2-flash",
+      "github-secret-scanning-spacex",
+      "google-wyoming-datacenter",
+      "gpt6-cyber-daybreak",
+      "nvidia-omniverse-frontier-agents",
+      "openai-images-2-6",
+      "sagemaker-idc-multiregion",
+      "tencent-hy4"
+    ],
+    "edition_date": "2026-11-06",
+    "edition_id": "2026-11-06-0455",
+    "edition_url": "https://aoifuture.com/news/2026-11-06-0455/",
+    "event_id": "aoi-news-2026-11-06-0455-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-11-06T04:55:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "OpenAIが範囲内での脆弱性検証に特化したモデルを出し、GoogleとTencentは生成とオープン基盤を更新。端末推論と計算拠点の選択肢も同日に並んだ。",
+    "title": "認可範囲のサイバー検証と、動画・端末・拠点が同時に広がる動き"
+  }
+]

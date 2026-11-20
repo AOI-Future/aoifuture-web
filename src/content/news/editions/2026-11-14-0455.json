@@ -1,0 +1,389 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-11-14T04:55:18+09:00",
+  "dek": "GoogleはHydrogenを検索・アプリ・APIへ同時に出し、モデルを作業ごとに切り替える仕組みも入れた。OpenAIはカード情報を渡さずに払うChatGPT Walletを始め、AWSはエージェント実行基盤の既定を替え、代理呼び出し用のトークン交換にも対応した。",
+  "edition_date": "2026-11-14",
+  "edition_id": "2026-11-14-0455",
+  "edition_note": "2026年11月12日から11月13日（各発表元の日付）に公開された公式発表、リリース情報、技術解説から選んだ。直近72時間の範囲で、期間の延長はしていない。",
+  "generated_at": "2026-11-14T04:55:18+09:00",
+  "items": [
+    {
+      "aoi_note": "設計はCarbon、実装と検証はHydrogenという役割分担を製品側のOrchestratorで自動化する方向が示された。上位モデルを常用するより、作業の段ごとにモデルを替える前提で費用を見積もる場面が増える。",
+      "caveat": "ベンチマークの数値と速度・トークン削減の比較はGoogleと協力企業の発表によるもので、独立に再現していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-gemini-4-hydrogen-launch",
+      "language": "ja",
+      "observed_at": "2026-11-14T04:52:40+09:00",
+      "published_at": "2026-11-13T03:00:00+09:00",
+      "role": "lead",
+      "selection_reason": "フロンティアモデルの下に置く実行役のモデルが、価格と提供範囲を明示して一斉に出た。検索とアプリにも同時に入る。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleは11月12日、Gemini 4 Hydrogenを発表した。上位のGemini 4 CarbonとArgonが長い推論を担うのに対し、Hydrogenはエージェント作業の素早い実行向けと位置づけ、Google AI Studioの全ティア、Gemini API、Gemini for business、Geminiアプリ、Google検索で提供し、有料のGoogle AI Pro／Ultra利用者にはGoogle Antigravityでも提供する。料金は100万トークンの文脈全体で一律、入力100万トークンあたり1.50ドル、出力7.50ドル。Artificial Analysis Intelligence Indexでは既定のhigh設定で51とArgonの50を上回り、最上位のxhigh設定で54としている。Gemini 3.8 Flash比ではタスク完了が2.5倍速く、Terminal-Bench 4.1は57%（3.8 Flashは18.2%）、捏造した主張は5分の1未満に減ったという。あわせて、同じセッション内でCarbonとHydrogenなどを切り替えるOrchestratorをAntigravityに導入し、Terminal-Bench 4.0でCarbonに近い成功率のまま平均24%少ないクォータ、19%短い時間で完了したとしている。",
+      "source_kind": "official",
+      "source_title": "Introducing Gemini 4 Hydrogen",
+      "source_url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/",
+      "title": "Google、日常のコーディングとエージェント作業向けの高速モデルGemini 4 Hydrogenを全利用者に提供",
+      "topics": [
+        "models",
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-14T04:52:40+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "承認は1件ずつの生体確認で、支出上限などによる事前委任は将来の構想にとどまる。売り手側は、エージェントからのアクセスを誤って遮断しないことと、不正検知が正当な購入を弾かないことの2点が受け入れの条件になる。",
+      "caveat": "安全性と保護の維持はOpenAIと提携各社の説明によるもので、実際の取引での挙動は確認していない。提供は米国の一部利用者に限られる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-chatgpt-wallet-agent-payments",
+      "language": "ja",
+      "observed_at": "2026-11-14T04:53:00+09:00",
+      "published_at": "2026-11-14T00:00:00+09:00",
+      "role": "major",
+      "selection_reason": "対話AIの運営者が、カード3社と組んで代理購入の決済経路を自前で用意した。事業者側に求める設定も同時に示された。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは11月13日、ChatGPT Walletを発表した。American Express、Mastercard、Visaと組み、エージェントが利用者の実際のカード情報にアクセスせずに支払う仕組みで、購入のたびに利用者が品目・合計・カードを確認し、Face IDや指紋などのセキュリティ確認で承認する。承認後は決済ネットワークが実カード情報の代わりとなる支払いトークンを発行する。カードの特典と対象となる紛争時の保護は維持されるとしている。まずdotsを通じ、米国の18歳以上のChatGPT Pro加入者で対象の米国発行カードを持つ人に提供を始めた。事業者向けにはCommerce Partner Playbookを公開し、Web Bot Authで署名されたリクエストを識別するCDN・ファイアウォール設定、商品フィード、決済・不正対策事業者との調整などを案内している。",
+      "source_kind": "official",
+      "source_title": "Introducing ChatGPT Wallet",
+      "source_url": "https://openai.com/index/introducing-chatgpt-wallet",
+      "title": "OpenAI、エージェントがカード情報に触れずに支払うChatGPT Walletを米国のProで開始",
+      "topics": [
+        "agents",
+        "products",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-11-14T04:53:00+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "これまでは更新のたびに組み込み側が追従の手間を負っていた。メジャー番号で破壊的変更が見えるようになれば、配布パッケージや製品への組み込みで版を固定しやすくなる。",
+      "caveat": "対応アーキテクチャ数やCIの体制はプロジェクト側の記述で、個別に確認していない。今後の運用が規則どおりになるかはまだわからない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "ggml-llama-cpp-v1-semver",
+      "language": "ja",
+      "observed_at": "2026-11-14T04:53:15+09:00",
+      "published_at": "2026-11-13T23:05:22+09:00",
+      "role": "major",
+      "selection_reason": "ローカル推論の土台として多くのアプリが依存するライブラリが、互換性の約束を明文化した。",
+      "source_domain": "huggingface.co",
+      "source_fact": "ggml-orgは11月13日、llama.cpp（libllama）とggml（libggml）のライブラリv1.0.0を公開した。今後はAPIとABIの非互換をメジャーバージョンの更新で示し、./include以下の公開C APIを壊す変更はMAJOR、後方互換の機能・バックエンド・対応モデルの追加はMINOR、API変更のない修正はPATCHとする。配布経路として事前リリース成果物、Docker、Debian、Homebrew、conda-forge、MacPorts、Winget、XCFrameworkを挙げた。llama.cppは150を超えるアーキテクチャ派生と主要な投機的デコーディング手法に対応しているとし、CIの拡充にHF BucketsとHF Jobsを使い、NVIDIA、AMD、Qualcomm、Arm、IBM、Intelのハードウェア支援でセルフホストのランナーを増やしているという。",
+      "source_kind": "release",
+      "source_title": "llama.cpp v1.0.0 : A stronger foundation for the local AI ecosystem",
+      "source_url": "https://huggingface.co/blog/ggml-org/llama-cpp-v1",
+      "title": "llama.cppとggmlがv1.0.0に。公開C APIの互換性をセマンティックバージョニングで示す方針へ",
+      "topics": [
+        "open-source",
+        "tools",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-11-14T04:53:15+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "コードのビルドやブラウザ操作、ローカルモデルの読み込みのような重い処理をセッション内で回す使い方を、隔離を保ったまま安くする狙いが読める。既存環境は自動では移らないので、移行の判断は利用者側に残る。",
+      "caveat": "起動時間とメモリ削減の数値はAWSの公表値で、測定条件の詳細は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-agentcore-runtime-next-gen-default",
+      "language": "ja",
+      "observed_at": "2026-11-14T04:53:15+09:00",
+      "published_at": "2026-11-12T14:00:00+09:00",
+      "role": "major",
+      "selection_reason": "エージェント実行基盤の既定が変わり、新規作成分の起動時間と課金の前提が変わった。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは11月12日、Amazon Bedrock AgentCoreで新規に作るランタイムの既定を次世代版に切り替えた。初期化済みエージェントのスナップショットから各セッションを復元し、作業量に応じて計算資源とメモリを伸縮し、待機中のエージェントはゼロまで縮小する。各セッションは引き続きハードウェアで隔離されたFirecrackerのmicroVMで動く。セッションは最大8 vCPU・32GBメモリ、コンテナイメージは最大10GBに対応し、2GBのイメージでの起動はP75で2秒未満（前世代は29.7秒）。複数ターンのエージェントでは、セッションあたりの課金対象メモリが最大68%減るとしている。既存のランタイムは移行するまで現行版のままで、platformVersionをV2またはV1に指定して選べる。東京を含む19リージョンで既定になった。",
+      "source_kind": "release",
+      "source_title": "The next generation AgentCore runtime is now the default",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/new-agentcore-runtime-default/",
+      "title": "Amazon Bedrock AgentCore、新しいランタイムを既定に。起動は2秒未満、待機中はゼロまで縮小",
+      "topics": [
+        "agents",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-14T04:53:15+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "誰の代理で誰が呼んだかをトークン自体に残せるので、権限の絞り込みと監査の両方に効く。",
+      "caveat": "実装上の制約や既存アプリへの影響は検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-cognito-oauth-token-exchange",
+      "language": "ja",
+      "observed_at": "2026-11-14T04:53:15+09:00",
+      "published_at": "2026-11-13T07:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "エージェントに利用者のトークンをそのまま渡す運用を避ける標準的な手段が、主要な認証基盤に入った。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは11月12日、Amazon CognitoがOAuth 2.0トークン交換（RFC 8693）に対応したと発表した。利用者の代わりに動くサービスやAIエージェントが、利用者のトークンを特定の下流サービス向けの新しいトークンに交換できる。新しいトークンは元より狭い範囲で、単一のaudienceに結び付き、リフレッシュトークンは付かない。actorトークンを含めるとactクレームが加わり、下流のサービスはエージェントが代理で行ったリクエストを利用者本人のものと区別できる。例としてMCPサーバーがバックエンドAPIを呼ぶ場合を挙げている。トークンエンドポイントか新しいGetDerivedToken APIで使え、EssentialsとPlusの機能プランで提供される。",
+      "source_kind": "release",
+      "source_title": "Amazon Cognito now supports OAuth 2.0 token exchange",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/cognito-token-exchange/",
+      "title": "Amazon Cognito、OAuth 2.0トークン交換に対応。エージェントの代理呼び出しを範囲を絞ったトークンで",
+      "topics": [
+        "security",
+        "agents",
+        "enterprise"
+      ],
+      "verification": {
+        "checked_at": "2026-11-14T04:53:15+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "クレジット消費型の機能なので、有効化の範囲を組織の既定で絞っておく管理が現実的になる。",
+      "caveat": "プレビュー段階で、仕様が変わる可能性がある。スキャンの精度は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-ai-scan-repository-scan-rest-api",
+      "language": "ja",
+      "observed_at": "2026-11-14T04:53:15+09:00",
+      "published_at": "2026-11-13T21:22:41+09:00",
+      "role": "brief",
+      "selection_reason": "AIによるコード検査の展開を、画面操作ではなくスクリプトやIaCで管理できるようになった。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月13日、コードスキャンのAI Scan for repositoriesをREST APIで組織単位とリポジトリ単位にオン・オフできるようにした（パブリックプレビュー）。既存のAI Scan設定エンドポイントにrepository_scanの項目を追加し、pr_scanと同じく、組織が無効にするとリポジトリでは有効にできず、有効にすると継承されて個別にオプトアウトできる。エンタープライズのポリシーで許可されていない場合は422エラーを返す。有効にしてもスキャンは自動では始まらず、書き込み権限のある利用者がオンデマンドで実行し、1回ごとにGitHub Code SecurityのAIクレジットを消費する。GitHub Enterprise Serverは対象外。",
+      "source_kind": "release",
+      "source_title": "Manage AI Scan for repositories using the REST API",
+      "source_url": "https://github.blog/changelog/2026-11-13-manage-ai-scan-for-repositories-using-the-rest-api",
+      "title": "GitHub、コードスキャンのAI Scanをリポジトリ単位でREST APIから一括設定可能に",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-14T04:53:15+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "観測データと会話内容を分け、内容の記録を既定でオフにする設計は、監査とプライバシーの折り合いの付け方として参考になる。",
+      "caveat": "各機能の提供段階（一般提供／プレビュー）はGoogle Cloudの記述に基づく。実環境での動作は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-cloud-bigquery-looker-agent-observability",
+      "language": "ja",
+      "observed_at": "2026-11-14T04:53:30+09:00",
+      "published_at": "2026-11-14T02:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "エージェントを本番に置く企業向けに、記録・費用上限・評価を自社のデータ基盤の中で扱う構成が示された。",
+      "source_domain": "cloud.google.com",
+      "source_fact": "Google Cloudは11月13日、BigQueryとLookerの自社データエージェントと、ADKやLangGraphで作った独自エージェントの観測・評価機能の拡充を発表した。会話ログを利用者所有のBigQueryテーブル（agent_events）に書き込む機能と、BigQuery StudioおよびLookerの監視ダッシュボードを一般提供とした。運用メトリクスとトレースからはプロンプトや応答、生成したSQLなどを除き、会話ログはエージェントごとに有効化する方式で、行レベルセキュリティや動的データマスキングを使う知識ソースでは記録を飛ばす。費用面ではクエリごとのスキャン上限と、プロジェクト・利用者・エージェント単位の1日のトークン上限（プレビュー）を設定できる。評価にはオープンソースのツールPrismを使える。",
+      "source_kind": "official",
+      "source_title": "New AI agent observability and governance across BigQuery and Looker",
+      "source_url": "https://cloud.google.com/blog/products/data-analytics/enterprise-ai-agent-observability-with-bigquery-and-looker/",
+      "title": "Google Cloud、BigQueryとLookerでエージェントの記録・費用・評価をまとめて扱う機能を拡充",
+      "topics": [
+        "enterprise",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-11-14T04:53:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "Googleは読み取りに限定した分析から入り、OpenAIは承認付きの支払いから入った。権限の範囲の違いが、利用者が許す範囲を探る順序の違いとして表れている。",
+      "caveat": "提供は米国に限られる。安全性の説明はGoogleによるもので、検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-gemini-wallet-personal-finance",
+      "language": "ja",
+      "observed_at": "2026-11-14T04:53:30+09:00",
+      "published_at": "2026-11-14T02:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "同じ日にOpenAIが支払い側の機能を出しており、対話AIと家計・決済の接点が両社で動いた。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleは11月13日、GeminiアプリのPersonal IntelligenceにGoogle Walletを接続できるようにし、米国の全Geminiアプリ利用者に提供を始めた。Plaid経由でクレジットカードや銀行口座をWalletに連携すると、支出の可視化、使っていないサブスクリプションや値上げの確認、昨年の支出に基づく予算づくりなどを質問できる。接続した場合もGeminiは口座の情報を読むだけで、資金の移動・管理・投資はできないとしている。接続はいつでもオン・オフでき、Geminiが覚えている内容を一覧・編集できるMemory Summaryも追加した。",
+      "source_kind": "official",
+      "source_title": "Connect Google Wallet to Gemini for personal finance insights",
+      "source_url": "https://blog.google/innovation-and-ai/products/gemini-app/google-wallet-gemini-app/",
+      "title": "Gemini、米国でGoogle Walletと接続し支出に基づく家計の質問に回答。読み取り専用",
+      "topics": [
+        "products",
+        "assistants"
+      ],
+      "verification": {
+        "checked_at": "2026-11-14T04:53:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "生成よりも検証の環境が足りないという問題に対し、仮想デバイスを増やす方向で答えている。フォークとパッチの形なので、上流に入るかどうかが普及の分かれ目になる。",
+      "caveat": "改修の効果や性能は自社の記述によるもので、配布物を試していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "meta-cuttlefish-on-mac-apple-silicon",
+      "language": "ja",
+      "observed_at": "2026-11-14T04:53:30+09:00",
+      "published_at": "2026-11-14T02:00:39+09:00",
+      "role": "watch",
+      "selection_reason": "エージェントが書いたコードを実機に近い環境で確かめる土台を、手元のMacで動かす具体的な改修が出た。",
+      "source_domain": "engineering.fb.com",
+      "source_fact": "MetaのReality Labsは11月13日、AOSPの仮想デバイス基盤CuttlefishをApple Silicon搭載のmacOSでネイティブに動かした方法を公開した。Linux専用だったCuttlefishについて、QEMUのバックエンドを復活させ、vhost-userの仕組みをmacOSでもビルド・実行できるようにし、Hypervisor.frameworkのバックエンドで追跡できるメモリ領域の数を増やし、ネイティブのCocoa表示や署名・公証に対応させた。成果はQEMUのフォークqemu-wearablesと、AOSP向けのパッチ集cuttlefish-wearablesとして配布し、上流への取り込みも検討しているという。AIエージェントがAndroid開発で担う役割が増える中、隔離された仮想デバイスは技術者とエージェントが並行して動作確認するのに役立つとしている。",
+      "source_kind": "analysis",
+      "source_title": "Cuttlefish on Mac: Running Android’s Virtual Device Framework Natively on Apple Silicon",
+      "source_url": "https://engineering.fb.com/2026/11/13/android/cuttlefish-on-mac/",
+      "title": "Meta、Android仮想デバイスCuttlefishをApple Silicon上のmacOSで動かす改修を公開",
+      "topics": [
+        "tools",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-11-14T04:53:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "良い回答を見分けられても自分では書けないという差は、エージェントが指示の前提を疑えるかという問題にもつながる。",
+      "caveat": "判定にモデルを使っており、評価対象のモデルも一部は旧世代。数値は著者の報告で、再現していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "allenai-xybench-misconception-benchmark",
+      "language": "ja",
+      "observed_at": "2026-11-14T04:53:30+09:00",
+      "published_at": "2026-11-14T02:02:35+09:00",
+      "role": "watch",
+      "selection_reason": "言われたとおりに答えることと役に立つことのずれを、数値で示す評価が出た。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Hugging Face上のallenaiは11月13日、誤った思い込みに基づく質問にAIアシスタントがどう答えるかを測るベンチマークXYBenchを公開した。Carnegie Mellon、NVIDIA、Johns Hopkinsの研究者と開発し、Stack Overflow、Stack Exchange、手作業の例、WikiHowから作った8,115問で構成する。Claude Sonnet 4.6、GPT-5、Gemini 3.1 Pro、Qwen3.5-9B、DeepSeek-V4 Proを評価したところ、どのモデルも本来の目的より質問された方法への解決策を含める割合が高く、Stack Overflowでは本来の目的を主に扱った回答は35〜41%にとどまった。一方、2つの回答から選ばせると71〜84%で目的に沿った回答を選んだ。判定にはClaude Sonnet 4.5を使い、人手の確認との一致率も示している。EMNLP 2026のBest Resource Paper Awardを受賞したという。",
+      "source_kind": "analysis",
+      "source_title": "XYBench: Helping with the problem behind the question",
+      "source_url": "https://huggingface.co/blog/allenai/xybench",
+      "title": "allenai、誤った前提の質問に対しAIが本当の目的へ導けるかを測るXYBenchを公開",
+      "topics": [
+        "research",
+        "assistants"
+      ],
+      "verification": {
+        "checked_at": "2026-11-14T04:53:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントや自動化の設定ファイルに認証情報が紛れ込む経路が増えるほど、検出側の対応範囲が実務上の安全網になる。",
+      "caveat": "検出の精度や、どの型として扱われるかの詳細は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-secret-scanning-cloudflare-access-service-token",
+      "language": "ja",
+      "observed_at": "2026-11-14T04:53:30+09:00",
+      "published_at": "2026-11-12T23:38:25+09:00",
+      "role": "watch",
+      "selection_reason": "エッジのアクセス制御に使う認証情報が、自動検出の対象に入った。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月12日、シークレットスキャンの検出対象にCloudflareのサービストークン（cloudflare_access_service_token）を加えた。パートナー型のシークレットは公開リポジトリで見つかると発行元に自動で通知され、ユーザー型は公開・非公開のリポジトリでアラートを出す。",
+      "source_kind": "release",
+      "source_title": "Secret scanning detects Cloudflare service tokens",
+      "source_url": "https://github.blog/changelog/2026-11-12-secret-scanning-adds-a-detector-for-cloudflare",
+      "title": "GitHubのシークレットスキャン、Cloudflareのサービストークンを検出対象に追加",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-14T04:53:30+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-11-14T04:55:18+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "Googleが実行役のGemini 4 Hydrogenを全面投入。OpenAIはエージェントの支払いを始め、実行と認可の土台がそろって動いた",
+  "topics": [
+    {
+      "description": "新しいモデルの提供と公開",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "エージェントの実行基盤、統制、業務への組み込み",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "開発者向けの道具とプラットフォームの変更",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "一般利用者向けの製品と提供範囲",
+      "id": "products",
+      "label_en": "Products",
+      "label_ja": "製品"
+    },
+    {
+      "description": "認証、権限、脆弱性と秘密情報の管理",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "オープンな重み、コード、共通基盤",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "クラウド、実行環境、計算資源",
+      "id": "infrastructure",
+      "label_en": "Infrastructure",
+      "label_ja": "インフラ"
+    },
+    {
+      "description": "企業での運用、管理、統制",
+      "id": "enterprise",
+      "label_en": "Enterprise",
+      "label_ja": "企業導入"
+    },
+    {
+      "description": "日常の作業を手伝う対話型アシスタント",
+      "id": "assistants",
+      "label_en": "Assistants",
+      "label_ja": "アシスタント"
+    },
+    {
+      "description": "評価手法とベンチマーク、研究成果",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    }
+  ]
+}

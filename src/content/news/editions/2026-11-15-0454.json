@@ -1,0 +1,427 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-11-15T04:54:02+09:00",
+  "dek": "Anthropicは事前登録や統計の全面報告を含む評価の推奨をまとめ、IBMはプロンプトインジェクションを抑えるマークアップと対応モデルを公開した。Google CloudはHPCの構築をエージェントに任せる手順を配り、GitHubはCopilotの6モデルを12月に終了する。",
+  "edition_date": "2026-11-15",
+  "edition_id": "2026-11-15-0454",
+  "edition_note": "2026年11月12日から11月13日（各発表元の日付）に公開された公式発表、リリース情報、技術解説、セキュリティ勧告から選んだ。直近72時間の範囲で、期間の延長はしていない。",
+  "generated_at": "2026-11-15T04:54:02+09:00",
+  "items": [
+    {
+      "aoi_note": "「前のモデルより安全」という主張は、どの評価でどう測ったかで重みが変わる。事前登録や統計の報告を求める基準が提供元自身から出たことで、システムカードを読む側も、評価の設計と報告の質を問える材料ができた。",
+      "caveat": "記事は推奨と自社の事例をまとめたもので、言及された評価環境での事故の詳細や、推奨を自社のどの評価にどこまで適用しているかは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "anthropic-safety-evaluations-guidance",
+      "language": "ja",
+      "observed_at": "2026-11-15T04:50:07+09:00",
+      "published_at": "2026-11-13T09:00:00+09:00",
+      "role": "lead",
+      "selection_reason": "モデル提供元が、自社のシステムカードで使う評価の作り方そのものを手順として示した。評価環境での自社の事故と運用変更にも触れている。",
+      "source_domain": "www.anthropic.com",
+      "source_fact": "Anthropicは11月13日、AIの安全性評価を設計・実行・報告するための推奨をまとめた記事を公開した。安全性評価は特定の能力ではなく、モデルが害を引き起こしたり助長したりする傾向と、その深刻さを測るものと定義している。評価は攻略されやすく、測るべきものを測っていないことがあり、再現できるほど記録されていないという研究上の指摘を挙げ、心理学の再現性危機を受けた改革にならうとしている。推奨は、分野の専門家と方法論の専門家でチームを組むこと、観察的な問いと因果的な問いで設計を分けること、測りたい概念を本当に測っているか（構成概念妥当性）の確認、多ターンの模擬対話や実際の利用パターンを反映した場面設計、採点器の較正、事前登録、統計の全面報告と記録、欠陥の責任ある開示など。安全装置を外して行う評価はインターネット接続のないサンドボックスで実時間監視しながら行うべきだとし、自社の事故を受けて評価環境を強化し、インターネット接続を伴う評価の多くを一時停止し、ウェブ検索を伴う評価に実時間監視を導入したと書いている。",
+      "source_kind": "analysis",
+      "source_title": "Building strong safety evaluations",
+      "source_url": "https://www.anthropic.com/research/building-strong-safety-evaluations",
+      "title": "Anthropic、安全性評価の作り方を公開。事前登録と統計の全面報告を求め、評価環境の事故を受けた運用変更も明かす",
+      "topics": [
+        "safety",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-11-15T04:50:07+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "区切りを文字ではなく専用トークンにして、構造と内容を語彙の上で分ける発想は、エージェントが外部の文書や道具の出力を読む場面で効く可能性がある。一方で、効果はその形式で学習したモデルを使うことが前提になる。",
+      "caveat": "攻撃成功率の低下と能力の維持はIBMの発表によるもので、独立に再現していない。モデルは試験的なプレビューとされている。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "ibm-granite-llmon-prompt-injection",
+      "language": "ja",
+      "observed_at": "2026-11-15T04:50:27+09:00",
+      "published_at": "2026-11-13T04:07:35+09:00",
+      "role": "major",
+      "selection_reason": "プロンプトインジェクション対策を、入力の書式とモデルの学習の両方で扱う試みが、モデルとツール付きで公開された。",
+      "source_domain": "huggingface.co",
+      "source_fact": "IBMのGraniteチームは11月12日（米国時間）、LLM向けのマークアップ言語LLMON（LLM Object Notation）を発表した。文脈中の指示・データ・要件などの構成要素に意味のあるタグを付け、予約済みの特殊トークンを区切りに使うXMLに似た形式で、一意のIDで指示と対象データを結び付ける。あわせて、Granite 4.1のベースモデルから派生した試験的なプレビューモデルgranite-4.1-3b-LLMON-previewとgranite-4.1-8b-LLMON-previewと、変換ツールや例を含むGitHubリポジトリを公開した。IBMは、指示とデータを明示的に分けることで、ユーザーデータに隠れた間接プロンプトインジェクションがおおむね無視され、一部のベンチマークでは攻撃成功率がほぼゼロになったとし、一般的な能力はGranite 4.1 Instructと同等を保ったとしている。JSONとLLMONを損失なく相互変換するツールも用意し、チャットテンプレートを置き換えるのではなく補うものと説明している。",
+      "source_kind": "release",
+      "source_title": "LLMON: An LLM-Native Markup Language, now in Granite 4.1 3B and 8B",
+      "source_url": "https://huggingface.co/blog/ibm-granite/llmon-an-llm-native-markup-language-now-in-granite",
+      "title": "IBM、指示とデータを特殊トークンで分けるマークアップLLMONと、対応するGranite 4.1の試験版モデルを公開",
+      "topics": [
+        "security",
+        "models",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-11-15T04:50:27+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "汎用モデルに端末を渡すのではなく、検証済みの手順と権限・予算の枠を先に決めておく設計になっている。計算資源が高価な領域ほど、エージェントの自由度より手順の確かさが導入の条件になる。",
+      "caveat": "スキルの検証範囲や、AlphaEvolveによる最適化の効果は発表元の説明によるもので、確認していない。各インスタンスの提供地域や条件も確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-cloud-agentic-hpc-sc26",
+      "language": "ja",
+      "observed_at": "2026-11-15T04:50:07+09:00",
+      "published_at": "2026-11-14T02:00:00+09:00",
+      "role": "major",
+      "selection_reason": "エージェントにインフラ構築を任せる際の手順を、承認待ちや事前確認まで含めて「スキル」として配る形が、HPCで具体化した。",
+      "source_domain": "cloud.google.com",
+      "source_fact": "Google Cloudは11月13日（米国時間）、SC26（11月15〜20日、シカゴ）に合わせ、HPC向けのエージェント機能を紹介した。Cluster Toolkitの宣言的なブループリントに、エージェント向けのスキルを組み合わせ、Google SkillsとDeepMind Science Skillsのリポジトリから入手できるようにした。インフラ用のスキルは、クラスタ構築の前にクォータと地域の容量を確認し、検証済みブループリントと照合して、人の承認を待ってからデプロイを実行するよう指示する。OpenFOAMやGROMACS、AlphaFold 3などの分野別スキルや、IAM・Kueueのクォータ・予算の制約内での動作とCloud Loggingへの記録も挙げている。Google DeepMindのAlphaEvolveについては、Cloud Batchで数百の候補評価を並列に展開するAlphaEvolve on Cloud Batchを示した。基盤としては、NVIDIA Vera Rubin NVL72ベースのA5Xベアメタルインスタンスの提供開始、第8世代TPU（TPU 8t／8i）、Batchの単一ホストTPUスライス対応、最大10TB/sのManaged Lustreを挙げている。",
+      "source_kind": "official",
+      "source_title": "Where supercomputing meets agentic AI: What’s new in Google Cloud HPC and AI at SC26",
+      "source_url": "https://cloud.google.com/blog/topics/hpc/whats-new-in-hpc-and-ai-at-sc26/",
+      "title": "Google Cloud、HPCの構築と運用をエージェントに任せるスキル群をSC26で披露。AlphaEvolveをBatchで並列実行",
+      "topics": [
+        "agents",
+        "infrastructure",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-11-15T04:50:07+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "モデルを名指しで使うワークフローや連携は、1か月単位で見直しが必要になる。管理者が既定の有効化を切っている組織では、代替モデルを自分で有効にしないと選択肢が減る。",
+      "caveat": "各代替モデルで既存の作業がどこまで同じように動くかは確認していない。Kimi K3の後継は告知時点で示されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-model-deprecation-december-2026",
+      "language": "ja",
+      "observed_at": "2026-11-15T04:50:27+09:00",
+      "published_at": "2026-11-14T05:40:05+09:00",
+      "role": "major",
+      "selection_reason": "主要な開発ツールで、発表から1か月余りの間に複数社のモデルが入れ替わる。後継が未定のものも含まれる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月13日、2026年12月14日にCopilotのすべての機能（Copilot Chat、インライン編集、ask／agentモード、コード補完を含む）で6モデルの提供を終了すると告知した。対象と推奨の代替は、Claude Fable 5→Claude Fable 5.2、Claude Haiku 4.5→Claude Haiku 5.5、Gemini 3.8 Flash→Gemini 4 Hydrogen、Gemini 4 Argon→Gemini 4 Carbon、Grok 4.6→Grok 4.7、Kimi K3→未定。Claude Haiku 4.5は年額プランの個人加入者には引き続き提供する。既定のモデル有効化の下では、管理者がグローバル既定を切っているか明示的に無効にしていない限り、Copilot EnterpriseとBusinessで代替モデルが自動で有効になる。",
+      "source_kind": "release",
+      "source_title": "Upcoming deprecation of selected GitHub Copilot models in December",
+      "source_url": "https://github.blog/changelog/2026-11-13-upcoming-deprecation-of-selected-github-copilot-models-in-december",
+      "title": "GitHub Copilot、12月14日にGemini 4 ArgonやClaude Fable 5など6モデルを提供終了",
+      "topics": [
+        "models",
+        "tools",
+        "enterprise"
+      ],
+      "verification": {
+        "checked_at": "2026-11-15T04:50:27+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "書き起こしが「おおむね正しい」でも、一文字の誤りが後段の処理を壊す。音声を入口にするエージェントでは、全体の誤り率より固有要素の正確さで選ぶ場面が増える。",
+      "caveat": "順位と誤り率はSalesforceの発表と掲載時点のランキングによるもので、独立に再現していない。日本語での性能は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "salesforce-sov-transcribe-1-open-weight",
+      "language": "ja",
+      "observed_at": "2026-11-15T04:50:07+09:00",
+      "published_at": "2026-11-13T01:43:41+09:00",
+      "role": "brief",
+      "selection_reason": "音声エージェントで道具の引数になる番号やアドレスの取り違えを、評価の軸に据えたオープンモデルが出た。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Salesforceは11月12日（米国時間）、非ストリーミングの音声認識向けのオープンウェイトモデルSOV-Transcribe-1を公開した。有効パラメータ40億（総数260億）で、Apache 2.0ライセンスでHugging Faceに重みを公開した。Artificial Analysisの単語誤り率（AA-WER）は2.28%で、同サイトの非ストリーミング音声認識でオープンウェイト1位（全体7位）、VoiceCodeBenchで23システム中2位としている。電話番号やメールアドレスなどの固有要素の認識、訛りや雑音への頑健性、自然言語の指示による書式の切り替え、キーワードを与えて難しい語の認識を寄せる機能を挙げている。",
+      "source_kind": "release",
+      "source_title": "Introducing Salesforce SOV-Transcribe-1: #1 Open-Weight Model Built for Real-World Speech",
+      "source_url": "https://huggingface.co/blog/salesforce-sovereign-intelligence/sov-transcribe-1",
+      "title": "Salesforce、Apache 2.0の音声認識モデルSOV-Transcribe-1を公開。メールアドレスや番号の書き起こし精度を重視",
+      "topics": [
+        "models",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-11-15T04:50:07+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "既存の社内認可サーバーをそのままエージェントの入口と出口に使える組織が増える。接続先の制約が理由で別の認可基盤を立てる必要が減る。",
+      "caveat": "個別の認可サーバー製品との相互運用は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-agentcore-identity-oauth2-discovery",
+      "language": "ja",
+      "observed_at": "2026-11-15T04:50:07+09:00",
+      "published_at": "2026-11-13T17:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "エージェントの認可基盤が、つなげる認可サーバーの範囲を広げた。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは11月13日、Amazon Bedrock AgentCore Identityが、受信側のJWT認可と送信側のOAuth認証情報プロバイダーの両方で、OAuth 2.0認可サーバーのディスカバリーURLに対応したと発表した。これまではOIDCのディスカバリーURLだけを受け付けていたため、OIDCを使わずOAuth 2.0を実装する認可サーバーは使えなかった。AgentCoreが使える全リージョンで、追加料金なしで提供する。",
+      "source_kind": "release",
+      "source_title": "Amazon Bedrock AgentCore Identity now supports OAuth 2.0 discovery URLs",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/bedrock-agentcore-oauth2-discovery/",
+      "title": "Amazon Bedrock AgentCore Identity、OIDCを使わないOAuth 2.0認可サーバーにも対応",
+      "topics": [
+        "agents",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-11-15T04:50:07+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェントや自動化が増えて認証情報の利用先が分散するほど、中央でローテーションし、利用側には複製だけを置く構成が取りやすくなる。",
+      "caveat": "料金の詳細と、複製の反映にかかる時間は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-secrets-manager-cross-account-replication",
+      "language": "ja",
+      "observed_at": "2026-11-15T04:50:07+09:00",
+      "published_at": "2026-11-13T17:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "認証情報を中央で管理しつつ各アカウントに配る方法が、鍵やポリシーの共有なしで用意された。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは11月13日、AWS Secrets Managerがアカウント間の複製に対応したと発表した。主シークレットの同期済みの複製を別のAWSアカウントに置け、ローテーションを含め値が変わるたびに自動で更新される。複製は複製先アカウントが所有する顧客管理のKMSキーで暗号化される独立したリソースで、KMSキーやアカウント間のシークレットポリシーを共有する必要はないとしている。復旧用アカウントに複製を置き、必要に応じて単独のシークレットに昇格できる。Secrets Managerが使える全リージョンで提供する。",
+      "source_kind": "release",
+      "source_title": "AWS Secrets Manager now supports cross-account replication",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/secrets-manager-cross-account/",
+      "title": "AWS Secrets Manager、シークレットを別アカウントへ自動複製する機能を提供",
+      "topics": [
+        "security",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-15T04:50:07+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "社内設置のリポジトリを使う組織でも同じ道具を使えるようになったが、クラウド側で動かす機能は対象外で、使える範囲に差が残る。",
+      "caveat": "GHESの対応バージョンの条件は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-app-ghes-ga",
+      "language": "ja",
+      "observed_at": "2026-11-15T04:50:27+09:00",
+      "published_at": "2026-11-14T03:27:13+09:00",
+      "role": "brief",
+      "selection_reason": "自前運用のGitHubを使う組織にも、Copilotアプリでの作業が正式に開かれた。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月13日、GitHub CopilotアプリでGitHub Enterprise Server（GHES）のアカウントを追加し、リモートのリポジトリ、issue、プルリクエストを扱えるようにした。これまでのオプトインのプレビューから一般提供になった。先にGitHub.comかGHE.comのアカウントでサインインする必要があり、Copilotアプリ1.2.0以降で使える。GHESではクラウドセッションは使えない。",
+      "source_kind": "release",
+      "source_title": "GitHub Enterprise Server support in the GitHub Copilot app",
+      "source_url": "https://github.blog/changelog/2026-11-13-github-enterprise-server-support-in-the-github-copilot-app",
+      "title": "GitHub CopilotアプリがGitHub Enterprise Serverに正式対応",
+      "topics": [
+        "tools",
+        "enterprise"
+      ],
+      "verification": {
+        "checked_at": "2026-11-15T04:50:27+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "年齢に応じた安全策の議論は、何をもって安全とするかの測り方で止まりやすい。研究側が結論を管理し、否定的な結果も公表するという条件が付いた点が、拠出の意味を左右する。",
+      "caveat": "研究ネットワークの体制や、拠出金の配分と時期は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-children-ai-safety-research-pledge",
+      "language": "ja",
+      "observed_at": "2026-11-15T04:50:07+09:00",
+      "published_at": "2026-11-12T09:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "子ども向けの安全対策を、規制の議論と並行して測定研究から固める動きに、提供元が資金を出した。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは11月12日、パリ平和フォーラムで「子どものためのより安全なAIに関する関与憲章」に署名し、AI時代の子どもの権利と保護のための連合の下にある研究ネットワークに200万ドルを拠出すると発表した。拠出は、AIが子どもにもたらすリスクと機会を研究者が測るための道具づくりなど、共通の測定作業を支えるとしている。憲章は年齢に応じた安全なAIの原則と研究計画、その独立性の保障を定め、研究チームが結論を管理し、否定的・結論の出ない結果も含めて公表するとしている。OpenAIはEU Kids Actの策定に関わる政策担当者とも対話する意向を示した。",
+      "source_kind": "official",
+      "source_title": "Supporting research on AI and children’s safety",
+      "source_url": "https://openai.com/index/children-first-declaration",
+      "title": "OpenAI、子どもとAIの安全に関する国際的な研究ネットワークに200万ドルを拠出",
+      "topics": [
+        "safety",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-11-15T04:50:07+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "見たものを答える端末では、利用者の同意だけでは周囲の人を守れない。表示灯や顔のぼかしのように、周囲の人に向けた仕組みを製品側に持たせることが、受け入れの前提になる。",
+      "caveat": "顔の自動ぼかしの精度や、各保護がどの機能・地域で有効かは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-intelligent-eyewear-privacy",
+      "language": "ja",
+      "observed_at": "2026-11-15T04:50:07+09:00",
+      "published_at": "2026-11-12T23:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "常に周囲を見る端末について、装着者だけでなく周囲の人の扱いまで、提供元が具体的な仕組みで示した。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleは11月12日、Geminiを搭載したメガネ型端末のプライバシー保護について説明した。カメラの映像はGeminiの履歴に保存せず、モデルの学習にも使わないとしている。写真や動画の撮影時に周囲へ知らせる外向きのLED表示、顔の自動ぼかし、装着者の声に絞る指向性マイク、アプリの権限とチャット履歴の設定、物理的な電源オフスイッチを挙げ、映像データは暗号化され広告には使わないとしている。",
+      "source_kind": "official",
+      "source_title": "Designing for privacy on intelligent eyewear",
+      "source_url": "https://blog.google/innovation-and-ai/technology/safety-security/intelligent-eyewear-privacy-protections/",
+      "title": "Google、Gemini搭載メガネのプライバシー設計を説明。カメラ映像は履歴に保存せず学習にも使わない",
+      "topics": [
+        "products",
+        "privacy"
+      ],
+      "verification": {
+        "checked_at": "2026-11-15T04:50:07+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ネットワークの入口に置く製品の脆弱性は、侵害されると内側全体に影響が及ぶ。自社で使っているかの確認を先に済ませておきたい種類の更新だ。",
+      "caveat": "各脆弱性の影響範囲、対象バージョン、修正の有無は個別の勧告で確認していない。資料に示された公開日は日付のみで、時刻は記載がない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-kev-two-added-2026-11-13",
+      "language": "ja",
+      "observed_at": "2026-11-15T04:50:27+09:00",
+      "published_at": "2026-11-13T14:00:00+09:00",
+      "role": "watch",
+      "selection_reason": "境界防御の製品を含む2件が、悪用確認済みとして追加された。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "米CISAは11月13日（米国時間）、実際の悪用の証拠に基づき、2件の脆弱性を既知の悪用された脆弱性（KEV）カタログに追加した。対象はUnrealIRCdの区切り文字の不適切な無害化の脆弱性（CVE-2026-114713）と、Check Pointの複数製品における重要なリソースへの不適切な権限割り当ての脆弱性（CVE-2026-123039）。拘束力のある運用指令BOD 26-04は連邦文民行政機関に対し、公開された資産で侵害後に全面的な制御を許す高リスクの脆弱性の迅速な修正を優先するよう求めており、CISAはすべての組織にKEV掲載の脆弱性の優先的な修正を勧めている。",
+      "source_kind": "advisory",
+      "source_title": "CISA Adds Two Known Exploited Vulnerabilities to Catalog",
+      "source_url": "https://www.cisa.gov/news-events/alerts/2026/11/13/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+      "title": "CISA、UnrealIRCdとCheck Point製品の脆弱性2件を悪用確認済みの一覧に追加",
+      "topics": [
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-11-15T04:50:27+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "試作の途中で枠に当たったときの手間を減らす変更で、個人の有料プランから開発用途への移行を促す設計になっている。",
+      "caveat": "プランごとのクレジット額は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-ai-studio-cloud-credits",
+      "language": "ja",
+      "observed_at": "2026-11-15T04:50:27+09:00",
+      "published_at": "2026-11-14T05:30:00+09:00",
+      "role": "watch",
+      "selection_reason": "個人向けの有料プランと開発者向けAPIの課金が、同じ画面でつながった。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleは11月13日（米国時間）、Google Developer ProgramのGoogle CloudクレジットをGoogle AI Studioに組み込んだと発表した。Google AI ProとUltraの加入者は、AI Studioを離れずに請求設定、月次クレジットの受け取り、残高の確認ができる。Developer Programのプロフィールがなければ、クレジットの受け取り時に自動で作成される。月次クレジットは発行から12か月有効で月をまたいで積み上がり、サブスクリプションの枠を使い切った後のGemini APIの利用や有料ティアのモデルに充てられるとしている。",
+      "source_kind": "official",
+      "source_title": "Claim your Google Cloud Credits in Google AI Studio",
+      "source_url": "https://blog.google/innovation-and-ai/technology/developers-tools/google-cloud-credits-gdp-ai-studio/",
+      "title": "Google AI Studio、Pro／Ultra加入者の月次クラウドクレジットを画面内で受け取れるように",
+      "topics": [
+        "tools",
+        "products"
+      ],
+      "verification": {
+        "checked_at": "2026-11-15T04:50:27+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-11-15T04:54:02+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "Anthropicが安全性評価の作り方を公開。IBMは指示とデータを分ける書式を出し、測り方と入力の構造から安全を固める動きが並んだ",
+  "topics": [
+    {
+      "description": "AIの安全性評価、利用者保護、害の抑止",
+      "id": "safety",
+      "label_en": "Safety",
+      "label_ja": "安全性"
+    },
+    {
+      "description": "評価手法、研究成果、計算科学",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "新しいモデルの提供、公開、提供終了",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "オープンな重み、コード、共通基盤",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "認証、権限、脆弱性と秘密情報の管理",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "エージェントの実行基盤、統制、業務への組み込み",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "クラウド、実行環境、計算資源",
+      "id": "infrastructure",
+      "label_en": "Infrastructure",
+      "label_ja": "インフラ"
+    },
+    {
+      "description": "開発者向けの道具とプラットフォームの変更",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "企業での運用、管理、統制",
+      "id": "enterprise",
+      "label_en": "Enterprise",
+      "label_ja": "企業導入"
+    },
+    {
+      "description": "一般利用者向けの製品と提供範囲",
+      "id": "products",
+      "label_en": "Products",
+      "label_ja": "製品"
+    },
+    {
+      "description": "規制、政策、国際的な取り組み",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策"
+    },
+    {
+      "description": "個人と周囲の人のデータの扱い",
+      "id": "privacy",
+      "label_en": "Privacy",
+      "label_ja": "プライバシー"
+    }
+  ]
+}

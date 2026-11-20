@@ -1,0 +1,28 @@
+[
+  {
+    "changed_signal_ids": [
+      "aws-bedrock-agentcore-memory-10y-retention",
+      "aws-security-hub-gcp-monitoring",
+      "cisa-java4shell-critical-patch-alert",
+      "cloudflare-java4shell-waf-rules",
+      "docker-agentic-ai-governance-trust-layer",
+      "github-agent-host-protocol-sessions",
+      "github-team-automatic-security-risk-assessments",
+      "google-genie-4-project-genie-ga",
+      "google-sashiko-linux-kernel-agentic-review",
+      "jpcert-openjdk-java4shell-newsflash",
+      "mozilla-firefox-microsoft-ignite-browser-choice",
+      "openai-codex-sandbox-design"
+    ],
+    "edition_date": "2026-11-19",
+    "edition_id": "2026-11-19-0448",
+    "edition_url": "https://aoifuture.com/news/2026-11-19-0448/",
+    "event_id": "aoi-news-2026-11-19-0448-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-11-19T04:48:54+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "CISAとJPCERT/CCがOpenJDKの重大脆弱性に即時パッチを呼びかけ、Cloudflareは補助的なWAFルールを出した。一方でGoogleはGenie 4を提供開始し、GitHubは端末をまたぐAgent Host Protocolを、DockerとOpenAIはエージェントの実行境界を説明した。",
+    "title": "Java4ShellがJDK全体に迫る中、エージェントの信頼層とセッション継続の標準が出揃う"
+  }
+]

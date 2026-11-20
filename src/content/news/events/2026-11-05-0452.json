@@ -1,0 +1,26 @@
+[
+  {
+    "changed_signal_ids": [
+      "aws-workspaces-ai-agents-linux-windows11",
+      "cloudflare-personal-agents-visibility",
+      "github-dependabot-agent-package-manager",
+      "github-pull-request-target-default-block",
+      "google-cloud-agent-skill-evaluation-rules",
+      "google-gtig-llmjacking",
+      "huggingface-transformers-model-integration-contracts",
+      "nist-solopreneur-cybersecurity-guide",
+      "openai-grid-protectors-program",
+      "vercel-security-review-public-beta"
+    ],
+    "edition_date": "2026-11-05",
+    "edition_id": "2026-11-05-0452",
+    "edition_url": "https://aoifuture.com/news/2026-11-05-0452/",
+    "event_id": "aoi-news-2026-11-05-0452-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-11-05T04:52:18+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "AIの利用料を狙う攻撃が広がるなか、CIの既定値、コードの自動点検、エージェントの受け入れ方と動かす場所で、運用の側が統制を足す発表が続いた。",
+    "title": "盗まれるAIの利用権と、開発と配信の入口を締め直す動き"
+  }
+]

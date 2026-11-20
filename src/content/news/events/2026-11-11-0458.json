@@ -1,0 +1,27 @@
+[
+  {
+    "changed_signal_ids": [
+      "aws-nitro-sandboxes",
+      "cisa-kev-four-additions",
+      "claude-fable-5-2-aws",
+      "dependabot-alerts-pause-inactive",
+      "git-six-vulnerabilities",
+      "github-secret-scanning-actions-logs",
+      "google-cloud-gemini-healthcare",
+      "hf-decision-models",
+      "meta-tlx-gpu-compiler",
+      "nvidia-openshell-cncf",
+      "openai-control-room"
+    ],
+    "edition_date": "2026-11-11",
+    "edition_id": "2026-11-11-0458",
+    "edition_url": "https://aoifuture.com/news/2026-11-11-0458/",
+    "event_id": "aoi-news-2026-11-11-0458-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-11-11T04:58:00+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "OpenAIは研究用の推論を35秒以内に止めるControl Roomを公開し、NVIDIAはエージェント統制のOpenShellをCNCFに寄贈した。Gitの6件の脆弱性修正、Claude Fable 5.2のBedrock提供、AWSのNitro Sandboxesも並んだ。",
+    "title": "エージェントを止める仕組みと閉じ込める仕組みが、研究所とクラウドの両方で出そろった一日"
+  }
+]

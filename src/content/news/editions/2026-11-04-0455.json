@@ -1,0 +1,363 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-11-04T04:55:42+09:00",
+  "dek": "AIが脆弱性の発見と悪用を速めるという見立てのもと、脅威の評価、情報の提供、開発と運用の基盤での防御の各面で動きが続いた。",
+  "edition_date": "2026-11-04",
+  "edition_id": "2026-11-04-0455",
+  "edition_note": "2026年11月2日から3日（各発表元の現地日付）に公開された公式発表、勧告、技術資料から選んだ。直近72時間の範囲で、期間の延長はしていない。",
+  "generated_at": "2026-11-04T04:55:42+09:00",
+  "items": [
+    {
+      "aoi_note": "報告の要点は、AIが新しい攻め方を生むことより、放置されてきた弱点が速く大量に見つかり悪用されることにある。防御側もAIで修正を速められるが、導入と運用が追いつくかが分かれ目になる。重要インフラに限らず、古い機器や外部に出たままのシステムを抱える組織に共通する課題だ。",
+      "caveat": "シナリオは予測ではないと報告自身が断っている。確率の判断はNCSCによるもので、根拠となる情報源の詳細は公開されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "ncsc-ai-cyber-intrusion-2028",
+      "language": "en",
+      "observed_at": "2026-11-04T04:52:48+09:00",
+      "published_at": "2026-11-03T12:00:00Z",
+      "role": "lead",
+      "selection_reason": "英国の政府機関が、AIによる攻撃の拡大を確率の表現付きで具体的な年限とともに示した。",
+      "source_domain": "www.ncsc.gov.uk",
+      "source_fact": "英国の国家サイバーセキュリティセンター（NCSC）は11月3日、AIを使ったサイバー攻撃の現状と2028年までの見通しをまとめた評価報告を公表した。基準・悲観・楽観の三つのシナリオを示し、いずれも予測ではなく起こり得る筋道だとしている。主な判断として、2028年までにロシアや中国などの国家がAIを使ったサイバー能力を日常的に使う可能性が非常に高いこと、AIで弱点を見つけて悪用する道具に対して多くのシステムが脆弱なままであることはほぼ確実であること、攻撃者が重要インフラの古い技術の既知の脆弱性や、AIの導入で生じる新たな攻撃面を狙う可能性が高いことを挙げた。2028年までに英国の重要インフラへのランサムウェア攻撃でAIを使ったマルウェアが使われる可能性も非常に高いとしている。基準シナリオでは、防御側のAIが修正までの期間を縮める一方、正しく広く導入されなければ多くのシステムが攻撃を受け得ると書き、悲観シナリオでは運用者の制御を離れた自動化された攻撃主体の出現にも触れている。",
+      "source_kind": "analysis",
+      "source_title": "Artificial intelligence and cyber intrusion",
+      "source_url": "https://www.ncsc.gov.uk/report/artificial-intelligence-and-cyber-intrusion",
+      "title": "英NCSC、2028年までのAIとサイバー攻撃の見通しを公表。重要インフラへのAI型マルウェアによるランサムウェア攻撃は「可能性が非常に高い」",
+      "topics": [
+        "policy",
+        "security",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-04T04:52:48+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "勧告やデータベースは揃っていても、自分の組織が影響を受けるかを判断するまでの作業が重い。調査用のプロンプトを添える形は、エージェントを調査の補助に使う流れを前提にしている。攻撃の試みの観測と実際の侵害を分けて書くとしている点は、読み手が誤解しやすい部分への配慮だ。",
+      "caveat": "掲載する脆弱性の選び方や更新の頻度はCloudflareの説明によるもので、個々の掲載内容は確認していない。記事には自社のWAFの紹介も含まれる。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-zero-wire-vulnerability-briefings",
+      "language": "en",
+      "observed_at": "2026-11-04T04:52:49+09:00",
+      "published_at": "2026-11-03T14:00:00Z",
+      "role": "major",
+      "selection_reason": "脆弱性の公表が増え続けるなかで、技術者と経営層が同じ資料から次の行動を決められる形を目指している。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは11月3日、重大な脆弱性について要点をまとめて公開する情報の窓口「Zero Wire」を、Cloudflare Radarのセキュリティの項目に設けたと発表した。全てのCVEを網羅するのではなく、ウェブアプリケーションやその実行環境・ライブラリなど、インターネットに公開されたソフトウェアの重大な脆弱性を選び、平易な説明、調べるべき担当、今すべき対応、ベンダーの指針や証拠への参照をまとめる。各項目は対応が必要なものと参照用のものに分かれ、状態と最終確認日、更新の経緯を示す。利用者が自分のAIエージェントで、読み取りだけで影響を評価するための既成のプロンプトも載せ、Cloudflareの顧客でなくても役立つとしている。記事は、AIが脆弱性の発見の量と速さを変えていることを背景に挙げ、WAFによる緩和は脆弱なソフトウェアを直すことの代わりにはならないとも書いている。",
+      "source_kind": "official",
+      "source_title": "Introducing Zero Wire, a hub for investigating critical Internet vulnerabilities",
+      "source_url": "https://blog.cloudflare.com/zero-wire/",
+      "title": "Cloudflare、重大な脆弱性の要点と対応をまとめて公開する「Zero Wire」を開始",
+      "topics": [
+        "security",
+        "tools",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-11-04T04:52:49+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "内部でAIを使って弱点を探していても、見落としは外部の目で見つかる。報告の質に倍率を掛ける設計は、件数より修正に役立つ報告を求める姿勢を示す。チャットや開発の道具に業務の情報が集まるほど、提供企業の防御の厚さは利用者側の問題でもある。",
+      "caveat": "金額の計算例は同社が説明のための例としている。実際の支払いの条件は報奨金の規約次第で、規約の本文は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-bigger-bug-bounties",
+      "language": "en",
+      "observed_at": "2026-11-04T04:52:49+09:00",
+      "published_at": "2026-11-02T18:00:00Z",
+      "role": "major",
+      "selection_reason": "AIを使った脆弱性の発見が速まるなかで、外部の研究者の報告を集める仕組みに大きく資金を振り向けた。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは11月2日、セキュリティのバグ報奨金を引き上げると発表した。中・高・重大の各区分で報奨額の範囲の中央値を平均で4倍超に上げ、ChatGPT、Codex、API Platformなどの中核製品での重大な脆弱性は最大3万ドル、特に重大なものは最大10万ドル、加算を含めると最大17万2,000ドルになるという。再現性のある実証など質の高い報告への倍率、5段階の継続参加者向けの加算、新機能を対象とした期間限定の重点キャンペーンの加算を新たに設ける。まだ報奨金を払っていない報告には新しい範囲を適用し、発表前30日以内に払ったものは差額を払うとしている。同社は、自社のエンジニアがモデルを使って弱点を探し、再現し、修正を試す取り組みを補うものと位置づけている。",
+      "source_kind": "official",
+      "source_title": "Rewarding defenders with bigger bug bounties",
+      "source_url": "https://openai.com/index/rewarding-defenders-with-bigger-bug-bounties",
+      "title": "OpenAI、バグ報奨金を大幅に引き上げ。重大な脆弱性は加算込みで最大17万2,000ドル",
+      "topics": [
+        "security",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-11-04T04:52:49+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "脆弱性を見つける力と、機能を壊さずに直す力は別のものだ。採点を機械的にして誰でも再現できるようにした点は、各社の自己申告の数字と比べる材料になる。一方で、残りの2割近い課題が解けないことは、修正を全面的に任せられる段階ではないことも示している。",
+      "caveat": "課題と採点の仕組みは作成者自身によるもので、結果は独立に再現していない。非公開の課題での成績は公開されていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "collinear-cwe-bench-v2",
+      "language": "en",
+      "observed_at": "2026-11-04T04:52:50+09:00",
+      "published_at": "2026-11-03T00:00:00Z",
+      "role": "major",
+      "selection_reason": "防御のためのAIの能力を、実在のコードの修正という形で再現できる方法で測る評価が公開された。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Collinear AIは11月3日、AIエージェントが実在のオープンソースのリポジトリでセキュリティ上の弱点を見つけて直せるかを測る評価「CWE-bench」の第2版を公開した。誰でも実行できる100の課題を公開し、91種類の弱点の分類（CWE）を含む。採点は全て機械的に行い、既存の機能を壊さずに直せたかを確かめ、既に知られた上流の修正をそのまま当てた解答は失敗させるようにしたという。これとは別に非公開の課題も保持する。評価した11のモデルでは、Gemini 4 Argonが1回の試行での成功率67.8%、4回の試行での成功率81.0%で首位、Claude Opus 5.5が67.3%と78.0%で続いた。95の課題は少なくとも一つのモデルが解いた一方、首位のモデルも全体の19%は全ての試行で失敗したとしている。",
+      "source_kind": "release",
+      "source_title": "CWE-bench v2: More coverage, quality, and transparency",
+      "source_url": "https://huggingface.co/blog/cwe-bench",
+      "title": "AIエージェントが実在のコードの弱点を直せるかを測る「CWE-bench」第2版。首位でも19%の課題は全試行で失敗",
+      "topics": [
+        "security",
+        "agents",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-11-04T04:52:50+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AIの脅威を理由に、新しい技術より基本の対策と古いシステムへの投資を優先せよという主張になっている。英国の話だが、外部に出たままの機器や後回しの更新を抱える状況はどこでも共通する。",
+      "caveat": "講演の内容は発表時点での予定として書かれている。予算額は政府の発表によるもので、執行の詳細は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "ncsc-state-of-the-cyber-nation",
+      "language": "en",
+      "observed_at": "2026-11-04T04:52:49+09:00",
+      "published_at": "2026-11-03T12:00:00Z",
+      "role": "brief",
+      "selection_reason": "評価報告と同じ日に、組織の経営層に向けて投資と基本対策を求める政府側の発信が出た。",
+      "source_domain": "www.ncsc.gov.uk",
+      "source_fact": "NCSCは11月3日、年次報告「State of the Cyber Nation」を公表し、今後2年以内に敵対的な主体によるAIの導入が、ランサムウェア、ソーシャルエンジニアリング、脆弱性の悪用の規模と効率を高める可能性が非常に高いとした。発表によると、最高経営責任者（CEO）のリチャード・ホーン氏は公表に合わせた講演で、安価な技術で済ませてきた時代は終わったと述べ、技術への投資不足の解消、不要なインターネット接続をなくすこと、Cyber Essentialsを到達点ではなく出発点とすることを求める予定だという。発表は、財務相が先週、国の「Cyber Shield」の第1段階に6,000万ポンド、重要インフラなどの脆弱性を見つける新組織「NERV Centre」に7,000万ポンドを投じ、マンチェスターにAIサイバーセキュリティの拠点を設けると発表したことにも触れている。",
+      "source_kind": "official",
+      "source_title": "Cyber chief: UK facing AI-powered attacks on critical infrastructure within two years",
+      "source_url": "https://www.ncsc.gov.uk/news/cyber-chief-uk-facing-ai-powered-attacks-on-critical-infrastructure-in-two-years",
+      "title": "英NCSC、年次報告で「安価な技術で済ませる時代は終わった」と警告",
+      "topics": [
+        "policy",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-11-04T04:52:49+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "長いコードや会話を読むエージェントでは、最新の値を拾うだけでなく、変化の連鎖を追う場面が多い。入力が長いほど誤りやすいという結果は、長い作業の途中で状態を外部に書き出して確かめる設計の意味を裏付ける。",
+      "caveat": "結果は作成者による評価で、独立に再現していない。先端モデルの設定や問題の形式による差の詳細は、ここでは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "allenai-statebench-state-tracking",
+      "language": "en",
+      "observed_at": "2026-11-04T04:52:49+09:00",
+      "published_at": "2026-11-03T17:15:21Z",
+      "role": "brief",
+      "selection_reason": "長い文脈を扱えることと、その中の変化を正しく追えることの差を、段階を分けて測る方法を示した。",
+      "source_domain": "huggingface.co",
+      "source_fact": "allenaiの研究チームは11月3日、長い文書の中で対象の状態の変化をどれだけ追えるかを測る評価「StateBench」を公表した。変数の代入にたとえた4段階の難しさがあり、最も難しい段階では、ある変数が別の変数の現在の値を受け取るような参照による更新を追う必要がある。Gemini 3.8 Flash、Claude Opus 5.5、GPT-6 SolとLunaの四つの先端モデルは易しい2段階ではよく答えたが、難しい2段階では入力が長くなるにつれ正答率が大きく下がり、最も長い最難の問題では13%以下になった。課題で直接訓練した2億7,500万パラメーターの小型モデルでは、Gated DeltaNetや混成の構成が訓練時より長い入力にもよく一般化した一方、Transformerは最も難しい段階を学習できなかったとしている。",
+      "source_kind": "analysis",
+      "source_title": "StateBench: Testing how language models track state changes over long documents",
+      "source_url": "https://huggingface.co/blog/allenai/statebench",
+      "title": "長い文書で状態の変化を追えるかを測る「StateBench」。先端モデルも難しい段階で正答率13%以下に",
+      "topics": [
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-11-04T04:52:49+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "漏えいした鍵やトークンは、攻撃の入口として繰り返し使われている。利用者の手間を増やさずに寿命を短くできる点が大きい。既存のトークンが移行されないため、恩恵を受けるには一度サインインし直す必要がありそうだ。",
+      "caveat": "展開の時期や対象のアカウントの条件は告知以上の情報がなく、確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-desktop-short-lived-tokens",
+      "language": "en",
+      "observed_at": "2026-11-04T04:52:50+09:00",
+      "published_at": "2026-11-03T07:55:58Z",
+      "role": "brief",
+      "selection_reason": "開発者の手元の端末に残る認証情報の寿命を短くする、地味だが効く変更。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月2日付で、GitHub Desktop 3.6.10以降にサインインすると、対象のアカウントで短時間で失効し自動で更新される認証トークンを使えるようになったと発表した。漏えいしたトークンを使える時間を短くするためで、APIの要求とGitの操作の際にDesktopが自動で更新する。github.com（GitHub Enterprise Cloudを含む）で段階的に展開しており、まだ全員が使えるわけではない。GitHub Enterprise Serverは対象外。既存のセッションは更新後もサインインしたまま残り、既存のトークンは自動では移行されない。",
+      "source_kind": "release",
+      "source_title": "GitHub Desktop adds short-lived authentication tokens",
+      "source_url": "https://github.blog/changelog/2026-11-02-github-desktop-adds-short-lived-authentication-tokens",
+      "title": "GitHub Desktop、自動更新される短時間の認証トークンを段階導入",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-04T04:52:50+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "依存関係の乗っ取りは、インストールの瞬間に被害が始まる。利用者が設定しなくても効く防御は、小さなチームほど価値がある。一覧に載る前の新しい攻撃には効かない点は変わらない。",
+      "caveat": "一覧の選定基準や反映の速さはVercelの説明によるもので、確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "vercel-block-malicious-npm-packages",
+      "language": "en",
+      "observed_at": "2026-11-04T04:52:50+09:00",
+      "published_at": "2026-11-02T00:00:00Z",
+      "role": "watch",
+      "selection_reason": "パッケージを入れた時点で動く悪意あるスクリプトを、配信基盤の側で既定で止める対策。",
+      "source_domain": "vercel.com",
+      "source_fact": "Vercelは11月2日、ビルドで依存関係をインストールする前と最中に、ブロック対象のnpmパッケージを確認する仕組みを入れたと発表した。マルウェアや脆弱性を理由に選んだ特定のバージョンの一覧を使い、新しい規則は通常数分で新しいビルドに反映される。インストール前には、ビルドのキャッシュから復元した場合も含めて対応するロックファイルを確認し、インストール中は該当する公開npmのダウンロードを止める。全てのプランの新しいビルドに設定なしで適用され、検出した場合は配備を失敗させ、パッケージとバージョンを示し、影響したキャッシュの無効化を試みる。",
+      "source_kind": "release",
+      "source_title": "Blocking malicious npm packages before and during installation",
+      "source_url": "https://vercel.com/changelog/blocking-malicious-npm-packages-before-and-during-installation",
+      "title": "Vercel、ビルド時に悪意あるnpmパッケージをインストール前と最中に遮断",
+      "topics": [
+        "security",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-04T04:52:50+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "起動後に見つけて直すより、元のイメージで直すほうが手間も影響も小さい。条件を満たさないイメージを使えなくする強制まで一続きにできる点が実務では効く。",
+      "caveat": "料金や検査の範囲の詳細は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-inspector-ami-scanning",
+      "language": "en",
+      "observed_at": "2026-11-04T04:52:51+09:00",
+      "published_at": "2026-11-02T08:00:00Z",
+      "role": "watch",
+      "selection_reason": "サーバーを起動する前の段階で脆弱性を止める仕組みが、組織全体の方針と結び付けられるようになった。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは11月2日、Amazon InspectorでEC2のマシンイメージ（AMI）の脆弱性を、インスタンスを起動したり追加のソフトウェアを入れたりせずに調べられるようにしたと発表した。新たに見つかった脆弱性を継続的に評価することも、EC2コンソールから特定のAMIを一回だけ調べることもでき、アカウント単位でも組織全体でも有効にできる。結果はSecurity Hubにも届く。Allowed AMIsの設定でAMIが満たすべきセキュリティの条件を決め、Declarative Policiesで組織全体に強制できる。EC2 Image Builderの処理に組み込んで、基準を満たさないAMIの配布を制限することもできる。Inspectorが使える全ての商用リージョンで利用できる。",
+      "source_kind": "release",
+      "source_title": "EC2 Amazon Machine Images can now be scanned for vulnerabilities through Amazon Inspector",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/ec2-amis-scanned-through-inspector/",
+      "title": "Amazon Inspector、EC2のマシンイメージを起動せずに脆弱性を検査",
+      "topics": [
+        "security",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-04T04:52:51+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "遠隔から悪用できないとはいえ、内部に入った攻撃者や権限の低い利用者が管理者の範囲に届く種類の欠陥だ。古い系列にも及ぶため、更新を後回しにしがちな現場ほど確認が要る。",
+      "caveat": "影響範囲と悪用の状況はCISAと同社の情報による。各現場での影響は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-subnet-powersystem-center",
+      "language": "en",
+      "observed_at": "2026-11-04T04:52:51+09:00",
+      "published_at": "2026-11-03T12:00:00Z",
+      "role": "watch",
+      "selection_reason": "評価報告が懸念する重要インフラの古い系列の製品で、実際に重大な脆弱性が公表された例。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "米国のサイバーセキュリティ・インフラセキュリティ庁（CISA）は11月3日、カナダに本社を置くSubnet SolutionsのPowerSYSTEM Centerの二つの脆弱性について勧告を出した。対象の分野は重要製造業とエネルギー。権限の低い認証済みの利用者が管理者向けの資源に触れられる不適切な認可（CVE-2026-63017）と、レポート設計の機能でSQLの命令を実行できる入力検証の不備（CVE-2026-63774）で、いずれもCVSS v3.1で9.0、v4で9.4。2020、2024、2026の各系列が影響を受け、同社は2026 Update 1.1、または2020 Update 30への更新を勧めている。CISAによると、現時点で悪用の報告はなく、遠隔からは悪用できない。",
+      "source_kind": "advisory",
+      "source_title": "Subnet Solutions PowerSYSTEM Center",
+      "source_url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-307-01",
+      "title": "米CISA、電力・製造向けソフトPowerSYSTEM Centerの重大な脆弱性2件で勧告",
+      "topics": [
+        "security",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-04T04:52:51+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "詐欺は技術だけでは防げず、受け手の判断に頼る部分が残る。日本向けの連携や教材が明記された点は国内の読者にも関係がある。",
+      "caveat": "資金の使い道や連携の具体的な活動はGoogleの説明によるもので、確認していない。被害額は記事が引く国連の報告の数字で、元の報告は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-apac-scam-defense",
+      "language": "en",
+      "observed_at": "2026-11-04T04:52:52+09:00",
+      "published_at": "2026-11-03T14:00:00Z",
+      "role": "brief",
+      "selection_reason": "AIを使ったなりすましが広がるなかで、端末の機能、業界の連携、地域の教育を組み合わせる対策を示した。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleは11月3日、アジア太平洋地域の詐欺対策の取り組みをまとめて発表した。Google.orgはThe Asia FoundationとTech for Good Instituteに600万ドルを拠出し、小規模事業者や個人の詐欺への備えの訓練、AIを使った防御の試作の育成、政策担当者への知見の提供に充てる。Androidでは今年、AIによるなりすまし電話を見つける「Fake Call Detection」を導入し、Pixelでは多くのメッセージアプリでの詐欺の可能性を警告する。日本では官民の対策をそろえる「Japan Anti-Scam Alliance（JASA）」の設立を支援したとし、詐欺を模擬体験して学ぶゲーム「Be Scam Ready」を日本、インドネシア、マレーシア、フィリピン、ベトナムに広げる。記事は国連の報告を引き、2025年の東アジア・東南アジア・豪州・ニュージーランドでの詐欺の被害が最大1,141億ドルに達したとしている。",
+      "source_kind": "official",
+      "source_title": "Working collaboratively to fight scams in Asia Pacific",
+      "source_url": "https://blog.google/company-news/inside-google/around-the-globe/google-asia/fight-against-apac-scams/",
+      "title": "Google、アジア太平洋の詐欺対策に600万ドル。日本の官民連携の設立も支援",
+      "topics": [
+        "policy",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-11-04T04:52:52+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-11-04T04:55:42+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AIで速まる脆弱性の発見に、守る側の備えが並ぶ",
+  "topics": [
+    {
+      "description": "利用規則・標準・制度とその運用。",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "政策・統制"
+    },
+    {
+      "description": "攻撃・防御・脆弱性と安全設計。",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "自律的に作業するエージェントの設計・評価・統制。",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "開発・業務・運用を支える実装と道具。",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "推論・学習・配信を支えるハードウェアとソフトウェア基盤。",
+      "id": "infrastructure",
+      "label_en": "Infrastructure",
+      "label_ja": "計算基盤"
+    },
+    {
+      "description": "基盤モデルの能力と提供・適応の条件。",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    }
+  ]
+}

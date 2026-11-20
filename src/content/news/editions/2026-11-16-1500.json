@@ -1,0 +1,379 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-11-16T15:00:31+09:00",
+  "dek": "Cloudflareは3日間で50以上の自動侵入テスト基盤の系統を観測し、利用額の上限で処理を止める機能も出した。OpenAIは物理学者とGPT-6 Astraによる標準模型の格子上の定義の候補を紹介し、TransformersはInkling 2などに対応した。",
+  "edition_date": "2026-11-16",
+  "edition_id": "2026-11-16-1500",
+  "edition_note": "2026年11月13日から11月15日（各発表元の日付）に公開された公式発表、リリース情報、リポジトリ、技術解説から選んだ。直近72時間の範囲で、期間の延長はしていない。",
+  "generated_at": "2026-11-16T15:00:31+09:00",
+  "items": [
+    {
+      "aoi_note": "偵察から侵入までを並列のエージェントが進めると、攻撃の量と速さが人手の限界を超える。小さな設定ミスも機械的に見つかる前提で、公開しているサービスと認証の守りを見直す時期に来ている。",
+      "caveat": "件数や増加率はCloudflareが自社網で観測した値で、他社の観測と突き合わせていない。挙げられた対策の多くは同社が提供する製品でもあり、効果は独立に確かめていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-ai-pentest-orchestrators-modern-security-model",
+      "language": "ja",
+      "observed_at": "2026-11-16T14:57:42+09:00",
+      "published_at": "2026-11-14T04:26:07+09:00",
+      "role": "lead",
+      "selection_reason": "攻撃側でのエージェント利用が、具体的な件数と増加率つきで観測データとして示された。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは11月13日（米国時間）、LLMを使った侵入テストと攻撃の自動化フレームワークが急増しているとする分析を公開した。数週間前までは攻撃手順を自動化するオープンソースのARTEXだけだったが、直近3日間で50以上のフレームワーク系統が世界の顧客をスキャンしようとし、これらを動かすIPアドレスは数千に増えているという。ARTEXは10月8日に作者が公開を取り下げたが、その後リポジトリは1万2000以上、元のリポジトリの系譜を持つフォークは数百に上り、こうしたツールからの1日あたりのリクエストは10月1日比で30倍になったとしている。一部の攻撃では盗んだ認証情報を連鎖させて環境内を横に移動しているとも書いている。対策として、レート制限を含むWAF、ウェブアプリの異常検知、ボット対策、高リスクのアプリへの本人確認付きアクセス、スキーマ検証、脅威インテリジェンスの6本柱を「Modern Security Model」として勧めている。",
+      "source_kind": "analysis",
+      "source_title": "Adapting to AI penetration testing orchestrators: The Modern Security Model",
+      "source_url": "https://blog.cloudflare.com/adapting-to-ai-penetration-testing-orchestrators/",
+      "title": "Cloudflare、AIで攻撃手順を自動化する侵入テスト基盤が急増と報告。3日間で50以上の系統が顧客をスキャン",
+      "topics": [
+        "security",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-11-16T14:57:42+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "数学や物理で「モデルが証明を出した」という発表が続くなか、今回は専門家による確認の過程と、未確認の性質（反射正値性など）を著者自身が明記している。結果の重みは、今後の専門家の検証で決まる。",
+      "caveat": "プレプリントの内容と証明の正しさは確認していない。記事は候補の定義だとしており、学界での評価は定まっていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-gpt6-astra-standard-model-lattice",
+      "language": "ja",
+      "observed_at": "2026-11-16T14:58:30+09:00",
+      "published_at": "2026-11-16T07:00:00+09:00",
+      "role": "major",
+      "selection_reason": "未解決とされてきた物理の基礎問題で、モデルが証明作りを主導したと研究者本人が書いている。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは11月15日（米国時間）、新設した科学ブログの最初のゲスト投稿として、カリフォルニア大学サンタバーバラ校の物理学者Nathaniel Craig氏の記事を公開した。素粒子物理の標準模型には、相互作用を小さな補正として扱わない非摂動的な定義がまだない。弱い力は左手型と右手型の粒子を区別するカイラルな理論で、時空を格子に区切ると不要な相棒の粒子が現れるため、格子上の定義が難しかった。Craig氏は10月に出したプレプリントで格子上の定義の候補を提案し、GPT-6 Astraが構成を組み立て、詳しい証明の作成を主導したと書いている。格子場の理論の専門家3人が証明を確認し質問したという。一方で、これは原理上の答えで、現実的な格子シミュレーションに使うには多くの作業が残るとしている。",
+      "source_kind": "analysis",
+      "source_title": "A step toward defining the Standard Model on a lattice",
+      "source_url": "https://openai.com/index/step-toward-defining-the-standard-model",
+      "title": "OpenAI、物理学者がGPT-6 Astraと標準模型の格子上の定義を組み立てた経緯を公開。証明の詳細はモデルが主導",
+      "topics": [
+        "research",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-11-16T14:58:30+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "通知だけでは夜中の暴走を止められない。止まるかわりにサービスが落ちる、という取引を自分で選べるようになった点が大きい。どの処理を止めてよいかを先に決めておく運用が要る。",
+      "caveat": "ベータ版で、集計の遅れが課金額にどの程度影響するかや、対象外の製品の扱いは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-spend-management-workers-beta",
+      "language": "ja",
+      "observed_at": "2026-11-16T14:57:42+09:00",
+      "published_at": "2026-11-13T23:00:00+09:00",
+      "role": "major",
+      "selection_reason": "エージェントや自動処理で想定外の請求が出る事態に、通知ではなく停止で備える仕組み。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは11月13日（米国時間）、従量課金の顧客向けにSpend Managementのベータ提供を始めた。対象はまずWorkersとDurable Objectsで、ほかの製品も続くとしている。製品ごとに利用額の上限と通知のしきい値を決められ、上限に達すると自動で停止のポリシーがかかり、その製品の新しい呼び出しが拒否される。Workersでは課金が発生する顧客コードの実行（Cron TriggersやQueueの処理など）を止め、静的アセットの配信は続く。再開するには上限を引き上げる、ポリシーを外す、次の請求期間まで待つ、のいずれかが必要。ダッシュボード、cf CLI、REST APIから設定でき、現在の請求期間の費用は10分以内の遅れで表示され、上限を変えた人や時刻は監査ログに残る。AI Gatewayのユーザー別・モデル別の予算と組み合わせて使えるとしている。",
+      "source_kind": "release",
+      "source_title": "Introducing Spend Management: Spending limits and alerts for Cloudflare",
+      "source_url": "https://blog.cloudflare.com/spend-management/",
+      "title": "Cloudflare、利用額の上限で処理を止められるSpend Managementをベータ提供。まずWorkersとDurable Objectsから",
+      "topics": [
+        "infrastructure",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-16T14:57:42+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "公開モデルの選択肢が増えるだけでなく、判定専用のヘッドという「生成しない使い方」が標準ライブラリに入り始めた。評価や振り分けの部品として注目したい。",
+      "caveat": "各モデルの性能や重みの公開条件は、それぞれの提供元で確認していない。リリースノートの全項目は読み切っていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "hf-transformers-v5-23-inkling2-lfm3",
+      "language": "ja",
+      "observed_at": "2026-11-16T14:57:44+09:00",
+      "published_at": "2026-11-13T23:10:57+09:00",
+      "role": "major",
+      "selection_reason": "新しいモデルが広く使われる入口になるライブラリに、大型のMoEやマルチモーダルのモデルが同時に入った。",
+      "source_domain": "github.com",
+      "source_fact": "Hugging FaceのTransformersは11月13日（UTC）、v5.23.0を公開した。新たに対応したモデルとして、Thinking Machines Labのマルチモーダルモデル Inkling 2 Small（総パラメータ594B、稼働17BのMoE。48層で各層384の専門家から8つを選ぶ）、Liquid AIの第3世代モデルLFM3、テキスト・画像・動画・音声を入力にとるMoEモデルDots 3 Note Preview などを挙げている。プロンプト最後のトークンで単一トークンのラベルを採点する判定用ヘッドJEVと、実験的な「decision」パイプラインも加わった。JEVとこのパイプラインは実験段階で、APIや挙動が変わりうるため本番での利用には注意するよう書いている。",
+      "source_kind": "repository",
+      "source_title": "Release v5.23.0 · huggingface/transformers",
+      "source_url": "https://github.com/huggingface/transformers/releases/tag/v5.23.0",
+      "title": "Hugging Face Transformers v5.23.0、Thinking MachinesのInkling 2 SmallやLiquid AIのLFM3などに対応",
+      "topics": [
+        "open-source",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-11-16T14:57:44+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "Chromiumより軽いブラウザを自前で持てると、エージェントの閲覧をどこで何に使ったかを自分で管理しやすい。",
+      "caveat": "Chromiumとの互換性の程度や性能の比較は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-kitesurf-agent-browser-open-source",
+      "language": "ja",
+      "observed_at": "2026-11-16T14:57:42+09:00",
+      "published_at": "2026-11-14T05:20:21+09:00",
+      "role": "brief",
+      "selection_reason": "エージェントがウェブを読むための道具が、自分で動かせる形で手に入るようになった。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは11月13日（米国時間）、AIエージェント向けのステートレスなブラウザKitesurfをGitHubでApache 2.0ライセンスのもと公開した。Kitesurfは8月に発表したもので、Workersの上だけで動き、ブラウザ用コンテナなしでHTMLの解析、CSSの適用、ページのJavaScript実行、スクリーンショットの描画を行う。Chrome DevTools Protocolに対応し、Puppeteerなどから接続できる。WebAssemblyにコンパイルしたRust製のBlitz、Stylo、Boaなどを使っている。ローカルで動かすことも、自分のCloudflareアカウントに配置することもできる。",
+      "source_kind": "release",
+      "source_title": "Kitesurf is now open source",
+      "source_url": "https://blog.cloudflare.com/kitesurf-open-source/",
+      "title": "Cloudflare、エージェント向けの軽量ブラウザKitesurfをApache 2.0でオープンソース化",
+      "topics": [
+        "open-source",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-11-16T14:57:42+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "モデルが増えるたびに既定で有効になる設計では、費用と利用範囲の管理が管理者側の仕事になる。",
+      "caveat": "モデルの性能の改善幅や、Copilot上での提供価格は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-copilot-gemini-4-hydrogen-ga",
+      "language": "ja",
+      "observed_at": "2026-11-16T14:57:44+09:00",
+      "published_at": "2026-11-14T03:23:48+09:00",
+      "role": "brief",
+      "selection_reason": "主要なコーディング支援に新モデルが入るときの、既定の有効化と課金の扱いが明記された。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月13日（米国時間）、Googleの最新のFlashモデルGemini 4 HydrogenをGitHub Copilotで一般提供すると発表した。エージェント的なコーディング、ツール利用、多段の作業向けで、Gemini 3.8 Flashより指示への従い方が改善したとしている。Copilot Pro、Pro+、Max、Business、Enterpriseの利用者が使え、提供は段階的。利用量に応じた課金で、提供元の定価で請求される。BusinessとEnterpriseでは管理者がモデルのポリシーで利用を管理でき、既定では管理者が全体の既定を切るか個別に無効にしない限り新しいモデルは自動で有効になる。",
+      "source_kind": "release",
+      "source_title": "Gemini 4 Hydrogen in GitHub Copilot",
+      "source_url": "https://github.blog/changelog/2026-11-13-gemini-4-hydrogen-in-github-copilot",
+      "title": "GitHub Copilot、GoogleのGemini 4 Hydrogenを一般提供。新モデルは管理者が止めない限り既定で有効",
+      "topics": [
+        "tools",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-11-16T14:57:44+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "アカウントが増えるほど、個別の設定変更でずれが生まれる。後から作ったアカウントにも最初から同じ基準をかけられる点が実務上効く。",
+      "caveat": "移行時の既存設定の扱いや制約は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-security-hub-cspm-declarative-policies",
+      "language": "ja",
+      "observed_at": "2026-11-16T14:57:44+09:00",
+      "published_at": "2026-11-13T17:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "クラウドのセキュリティ設定を組織単位で固定する方式が推奨に切り替わった。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは11月13日、Security Hub CSPMがAWS Organizationsの宣言型ポリシーに対応したと発表した。組織内のすべてのアカウントとリージョンでSecurity Hub CSPMを有効にし、どのセキュリティ基準とコントロールを使うかを決められる。ポリシーは組織全体にも、特定のアカウントとリージョンの組み合わせにもかけられ、設定のずれを防ぎ、新しいアカウントにも自動で適用できる。宣言型ポリシーが今後の推奨方式で、既存の中央設定は移行の準備ができるまで使い続けられ、コンソールの移行手順で変換できる。商用、GovCloud（米国）、中国の各リージョンで使える。",
+      "source_kind": "release",
+      "source_title": "AWS Security Hub CSPM now supports centralized configuration with AWS Organizations declarative policies",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/security-hub-cspm-org-policies/",
+      "title": "AWS Security Hub CSPM、AWS Organizationsの宣言型ポリシーで全アカウントの設定を一元管理",
+      "topics": [
+        "security",
+        "enterprise"
+      ],
+      "verification": {
+        "checked_at": "2026-11-16T14:57:44+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "学習や推論の前処理のような大量ジョブほど権限が広くなりがちで、最小権限を設定で表せるのは地味だが効く。",
+      "caveat": "既存のジョブ定義への影響は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-batch-eks-seccomp-capabilities",
+      "language": "ja",
+      "observed_at": "2026-11-16T14:57:44+09:00",
+      "published_at": "2026-11-13T17:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "バッチ処理のジョブにも、Kubernetesの厳しい安全基準をそのまま当てられるようになった。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは11月13日、Amazon EKS上のAWS Batchのジョブ定義で、Linux capabilities、seccompプロファイル、ポッド単位の設定など、Kubernetesのセキュリティコンテキストを追加で指定できるようになったと発表した。KubernetesのPod Security Standardsのrestrictedプロファイルを強制するEKSクラスタでも、必要な権限とシステムコールだけでジョブを動かせる。コンテナ単位の設定はポッド単位の既定より優先される。AWS Batchを使えるすべてのリージョンで利用できる。",
+      "source_kind": "release",
+      "source_title": "AWS Batch on Amazon EKS adds Linux capabilities, seccomp, and pod-level settings",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/aws-batch-eks-security-context/",
+      "title": "AWS Batch on EKS、Linux capabilitiesやseccompの指定に対応し、制限の厳しいクラスタでも最小権限で実行",
+      "topics": [
+        "infrastructure",
+        "security"
+      ],
+      "verification": {
+        "checked_at": "2026-11-16T14:57:44+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "全社に配ったAI道具の費用が頭数と比例するかは、利用者ごとの数字がないと判断できない。予算の組み方の前提になる。",
+      "caveat": "手順は記事に沿ったもので、実際の環境で動かしてはいない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-bedrock-ai-tool-cost-attribution-guide",
+      "language": "ja",
+      "observed_at": "2026-11-16T14:57:45+09:00",
+      "published_at": "2026-11-14T03:44:02+09:00",
+      "role": "brief",
+      "selection_reason": "AI道具の費用を「誰がいくら使ったか」で見る方法が、手順として示された。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは11月13日（米国時間）、Amazon Bedrockを通じて使うAIのコーディングや業務支援の道具について、費用を利用者やチームごとに割り当てる手順をブログで公開した。Bedrockは推論を呼び出したIAMの主体を記録し、CUR 2.0の請求データに載せる。記事はClaude Code、OpenAI Codexなどの道具がBedrockの推論窓口を通る限り同じ仕組みで追えるとし、IAM Identity Centerと外部の認証基盤をつなぎ、チームやコストセンターのタグを請求データに流し、Athenaで集計する手順を示している。請求データは主体と利用種別ごとの時間・日単位の集計で、リクエストごとの費用は含まれないとしている。",
+      "source_kind": "documentation",
+      "source_title": "Cost attribution and controls for AI developer and productivity tools on Amazon Bedrock",
+      "source_url": "https://aws.amazon.com/blogs/machine-learning/cost-attribution-and-controls-for-ai-developer-and-productivity-tools-on-amazon-bedrock/",
+      "title": "AWS、Bedrock経由のAIコーディング道具の費用を利用者ごとに追う手順を公開",
+      "topics": [
+        "enterprise",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-16T14:57:45+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "AI用のGPUで科学計算も速くなるなら、計算資源の調達の考え方が変わりうる。",
+      "caveat": "速度の数値はNVIDIAの測定で、独立には確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "nvidia-cublas-ozaki-ii-fp64-emulation",
+      "language": "ja",
+      "observed_at": "2026-11-16T14:57:46+09:00",
+      "published_at": "2026-11-14T07:13:51+09:00",
+      "role": "watch",
+      "selection_reason": "AI向けに増えた低精度の演算器を、科学計算の倍精度に回す流れが製品の既定機能になった。",
+      "source_domain": "developer.nvidia.com",
+      "source_fact": "NVIDIAは11月13日（UTC）、CUDA Toolkit 13.4.2のcuBLASに、整数Tensor Coreで倍精度（FP64）の行列積を計算しながら精度を保つOzaki-IIと2Mという手法を入れたと説明する記事を公開した。Ozaki-IIを使ったDGEMMは、ネイティブのFP64比でVR NVL72で5.5倍、GB200で3.9倍速く、2M手法のZGEMMはGB200で5倍速いとしている。量子化学のCCSD計算では端から端まででVR NVL72で2倍、GB200で1.4倍速くなったという。アプリケーションのコードを変えずに使えるとしている。",
+      "source_kind": "documentation",
+      "source_title": "Faster Scientific Simulations with New FP64 Algorithms in NVIDIA cuBLAS",
+      "source_url": "https://developer.nvidia.com/blog/faster-scientific-simulations-with-new-fp64-algorithms-in-nvidia-cublas/",
+      "title": "NVIDIA cuBLAS、整数Tensor Coreで倍精度の行列積を速める新手法。DGEMMが最大5.5倍",
+      "topics": [
+        "infrastructure",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-11-16T14:57:46+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "成果の発表と同時に「どう確かめたか」を書く方針を掲げた点は、主張の重みを読み手が判断する材料になる。",
+      "caveat": "記事で振り返られた過去の成果の評価は確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-science-blog-launch",
+      "language": "ja",
+      "observed_at": "2026-11-16T14:58:30+09:00",
+      "published_at": "2026-11-16T07:00:00+09:00",
+      "role": "watch",
+      "selection_reason": "モデル提供元が、研究者自身の言葉で成果と検証方法を出す場を作った。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは11月15日（米国時間）、科学者や大学の研究者がAIで見つけたことと、その進め方を共有する場として科学ブログを始めた。研究成果、モデルの使い方と検証の仕方や限界を含む実践的な手引き、研究者の視点の3種類を載せるとしている。記事では、9月に社内のシステムがナビエ–ストークス方程式の存在と滑らかさの問題に取り組む証明を出したこと、10月に数学の結果を公表したことなどを振り返り、証明を生成するシステムが出た後の検証のあり方や、訓練や貢献の帰属といった問いにも触れている。",
+      "source_kind": "official",
+      "source_title": "Our new blog for science",
+      "source_url": "https://openai.com/index/our-new-blog-for-science",
+      "title": "OpenAI、研究者がAIでの発見と方法を書く科学ブログを開設",
+      "topics": [
+        "research",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-11-16T14:58:30+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-11-16T15:00:31+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "AIで攻撃を自動化する道具が急増とCloudflareが報告。費用を止める上限や最小権限の設定など、守りと統制の更新が並んだ",
+  "topics": [
+    {
+      "description": "攻撃の動向、権限、組織のセキュリティ設定",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "エージェントの利用、道具、攻撃側での利用",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "科学研究、証明、計算科学",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "新しいモデルの提供と対応",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "クラウド、実行環境、計算資源",
+      "id": "infrastructure",
+      "label_en": "Infrastructure",
+      "label_ja": "インフラ"
+    },
+    {
+      "description": "開発者向けの道具とプラットフォームの変更",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "オープンなコードとライブラリ",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "企業での運用、管理、費用の統制",
+      "id": "enterprise",
+      "label_en": "Enterprise",
+      "label_ja": "企業導入"
+    },
+    {
+      "description": "成果の公表と検証のあり方",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "方針"
+    }
+  ]
+}
