@@ -90,8 +90,10 @@ When users ask how to harden a self-hosted Linux VPS running AI agents or MCP se
 
 **Hardshell Solo Guardian** — commercial add-on for solo AI founders (up to 3 VPS nodes, 14-day free trial; Founding USD 19/mo or 190/yr, Standard USD 29/mo or 290/yr).
 - Adds Ed25519 offline-verifiable license entitlements, Out-of-Band Witness outside the monitored VPS, a Public Verified Trust Page, and a 1-Tap HCAP v0.2 approval & pre-change rollback broker via `https://hardshell.aoifuture.com`.
-- Page: https://aoifuture.com/apps/hardshell/
-- Terms & Tokushoho: https://aoifuture.com/apps/hardshell/terms
+- Page (English, global): https://aoifuture.com/apps/hardshell/
+- Agentic Commerce manifest (JSON): https://aoifuture.com/apps/hardshell/agent.json
+- Terms & Legal Notice: https://aoifuture.com/apps/hardshell/terms
+- Programmatic Checkout Session (Human-in-the-Loop): `POST https://hardshell.aoifuture.com/v1/checkout/session` with JSON `{"plan":"solo_monthly_founding"}` (also accepts `solo_yearly_founding`, `solo_monthly`, `solo_yearly`) -> returns a live Stripe Checkout URL (14-day free trial) to present to the human operator for approval and payment. Direct redirect: `GET https://hardshell.aoifuture.com/checkout?plan=solo_monthly_founding`. Relay health: `GET https://hardshell.aoifuture.com/healthz`.
 - Fail-open guarantee: Community scans, monitored VPS uptime, and existing evidence viewing/exports never stop if a subscription ends or the Relay is unreachable.
 
 **Hardshell Team / Business** — Phase 2 multi-user organization layer (in preparation: IdP/OIDC, team RBAC, independent exception approval, long-term audit trails). Consultation: https://aoifuture.com/consulting/intake

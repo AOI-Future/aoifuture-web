@@ -64,7 +64,7 @@ export const apps: AppEntry[] = [
     id: '006',
     slug: 'hardshell',
     name: 'HARDSHELL',
-    desc: 'AIソロプレナーの自前VPSとエージェントをローカル完結で守り、検証済みとして証明する（MIT Community / Solo Guardian）',
+    desc: 'Local-first Linux VPS & AI agent security hardening (MIT Community) + Solo Guardian off-host Witness & Trust Page (English / Global)',
     status: 'LIVE',
     repo: '0xshugo/hardshell',
   },
