@@ -13,7 +13,9 @@
     "llms_txt": "https://aoifuture.com/llms.txt",
     "repository": "https://github.com/0xshugo/hardshell",
     "support_url": "https://aoifuture.com/contact",
-    "legal_contact": "legal@aoifuture.com"
+    "legal_contact": "legal@aoifuture.com",
+    "openapi_url": "https://aoifuture.com/apps/hardshell/openapi.json",
+    "agent_card_url": "https://aoifuture.com/.well-known/agent-card.json"
   },
   "problem_fit": {
     "target_audience": [

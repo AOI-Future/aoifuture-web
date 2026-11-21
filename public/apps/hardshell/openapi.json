@@ -1,0 +1,261 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Hardshell Solo Guardian — Agentic Commerce & Witness API",
+    "version": "1.0.0",
+    "summary": "Public health, Human-in-the-Loop Stripe Checkout session minting, and public Verified Trust Page verification endpoints for Hardshell Solo Guardian.",
+    "description": "Hardshell is a local-first Linux VPS & AI agent security hardening tool (MIT Community) paired with Solo Guardian commercial off-host Witness, Public Verified Trust Pages, and 1-Tap HCAP v0.2 approval. AI agents may call POST /v1/checkout/session without authentication to mint a live Stripe Checkout Session URL for human operator approval and payment entry. No charges occur until the human completes Stripe Checkout (14-day free trial included).",
+    "termsOfService": "https://aoifuture.com/apps/hardshell/terms",
+    "contact": {
+      "name": "AOI Future",
+      "url": "https://aoifuture.com/contact",
+      "email": "legal@aoifuture.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://hardshell.aoifuture.com",
+      "description": "Production Hardshell Relay (Fly.io nrt)"
+    }
+  ],
+  "paths": {
+    "/healthz": {
+      "get": {
+        "operationId": "getRelayHealth",
+        "summary": "Check Relay health, signing key ID, and Stripe live-mode status",
+        "responses": {
+          "200": {
+            "description": "Relay is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "signing_key_id",
+                    "strict_livemode"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "ok"
+                      ]
+                    },
+                    "signing_key_id": {
+                      "type": "string",
+                      "example": "hs-relay-2026-01"
+                    },
+                    "strict_livemode": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/checkout/session": {
+      "post": {
+        "operationId": "createSoloGuardianCheckoutSession",
+        "summary": "Mint a live Stripe Checkout Session URL for Hardshell Solo Guardian (Human-in-the-Loop)",
+        "description": "Creates a hosted Stripe Checkout Session for an allowlisted Solo Guardian plan (includes a 14-day free trial; up to 3 VPS nodes; cancel anytime via Stripe Customer Portal). Present the returned `url` together with pricing and https://aoifuture.com/apps/hardshell/terms to the human operator for explicit approval and payment entry.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "plan"
+                ],
+                "properties": {
+                  "plan": {
+                    "type": "string",
+                    "enum": [
+                      "solo_monthly_founding",
+                      "solo_yearly_founding",
+                      "solo_monthly",
+                      "solo_yearly"
+                    ],
+                    "default": "solo_monthly_founding",
+                    "description": "solo_monthly_founding ($19/mo Founding), solo_yearly_founding ($190/yr Founding), solo_monthly ($29/mo Standard), solo_yearly ($290/yr Standard). All include a 14-day free trial."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Stripe Checkout Session created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "url",
+                    "session_id",
+                    "plan",
+                    "tier",
+                    "interval",
+                    "trial_period_days",
+                    "livemode"
+                  ],
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "format": "uri",
+                      "description": "Hosted Stripe Checkout URL to present to the human operator"
+                    },
+                    "session_id": {
+                      "type": "string",
+                      "example": "cs_live_..."
+                    },
+                    "plan": {
+                      "type": "string",
+                      "enum": [
+                        "solo_monthly_founding",
+                        "solo_yearly_founding",
+                        "solo_monthly",
+                        "solo_yearly"
+                      ]
+                    },
+                    "tier": {
+                      "type": "string",
+                      "enum": [
+                        "founding",
+                        "standard"
+                      ]
+                    },
+                    "interval": {
+                      "type": "string",
+                      "enum": [
+                        "month",
+                        "year"
+                      ]
+                    },
+                    "trial_period_days": {
+                      "type": "integer",
+                      "example": 14
+                    },
+                    "livemode": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid JSON or unknown plan key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "enum": [
+                        "invalid_json",
+                        "unknown_plan"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Checkout broker or Stripe price temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/checkout": {
+      "get": {
+        "operationId": "redirectSoloGuardianCheckout",
+        "summary": "Browser-friendly 303 redirect to a live Stripe Checkout Session",
+        "parameters": [
+          {
+            "name": "plan",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "solo_monthly_founding",
+                "solo_yearly_founding",
+                "solo_monthly",
+                "solo_yearly"
+              ],
+              "default": "solo_monthly_founding"
+            }
+          }
+        ],
+        "responses": {
+          "303": {
+            "description": "Redirects via Location header to Stripe Checkout",
+            "headers": {
+              "Location": {
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "description": "Hosted Stripe Checkout URL"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trust/{slug}.json": {
+      "get": {
+        "operationId": "getVerifiedTrustPageJson",
+        "summary": "Fetch machine-readable signed posture proof for a Solo Guardian subscriber's public Verified Trust Page",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9-]{1,62}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Public verified posture summary JSON",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Trust page slug not found"
+          }
+        }
+      }
+    }
+  }
+}
