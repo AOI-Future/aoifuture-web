@@ -65,7 +65,7 @@ export const apps: AppEntry[] = [
     slug: 'hardshell',
     name: 'HARDSHELL',
     desc: 'AIソロプレナーの自前VPSとエージェントをローカル完結で守り、検証済みとして証明する（MIT Community / Solo Guardian）',
-    status: 'BETA',
+    status: 'LIVE',
     repo: '0xshugo/hardshell',
   },
   // 例) 育って独自ドメインを持ったら `site` を足すだけ（紹介ページは残す）:

@@ -29,7 +29,7 @@
       ]
     },
     {
-      "availability": "staging-early-access",
+      "availability": "available",
       "billing": {
         "checkout_url": "https://hardshell.aoifuture.com/checkout?plan=solo_monthly_founding",
         "plans": [
