@@ -82,6 +82,7 @@ const structuredData = {
           price: '19',
           priceCurrency: 'USD',
           url: checkoutUrls.foundingMonthly,
+          availability: 'https://schema.org/InStock',
           eligibleQuantity: { '@type': 'QuantitativeValue', value: 3, unitText: 'VPS nodes' },
         },
         {
@@ -90,6 +91,7 @@ const structuredData = {
           price: '29',
           priceCurrency: 'USD',
           url: checkoutUrls.standardMonthly,
+          availability: 'https://schema.org/InStock',
           eligibleQuantity: { '@type': 'QuantitativeValue', value: 3, unitText: 'VPS nodes' },
         },
       ],
@@ -155,7 +157,7 @@ const structuredData = {
     </nav>
 
     <p class="hs-status-banner" id="hs-status-banner">
-      <strong>[SOLO GUARDIAN / EARLY ACCESS]</strong> Community（MIT）公開中 · Solo Guardian（14日間無料試用）利用規約/特商法公開済・Staging 疎通完了 / Stripe Live 切替準備中 · 2026-11-21
+      <strong>[LIVE / SOLO GUARDIAN]</strong> Community（MIT）公開中 · Solo Guardian（14日間無料試用・Founding $19 / Standard $29）Stripe 本番受付中 · 2026-11-21
     </p>
     <div class="hs-checkout-notice" id="hs-checkout-notice" hidden></div>
 
@@ -304,7 +306,7 @@ uv run hardshell status</code></pre>
           <ul>
             <li>Hardshell の導入や Trust Page の表示は、第三者認証機関による安全性認証や侵害の完全防止を保証するものではありません。</li>
             <li>履歴整合性チェックは、対象サーバーのローカル特権管理者による改ざんを物理的に不可能にするものではありません（独立保管には Witness を併用します）。</li>
-            <li>利用規約・特商法表記は <a href="/apps/hardshell/terms">/apps/hardshell/terms</a> にて公開済みです。Stripe Live Mode 切替完了までは、Checkout 導線はステージング（テスト課金）として動作します。</li>
+            <li>利用規約・特商法表記は <a href="/apps/hardshell/terms">/apps/hardshell/terms</a> にて公開しています。課金・解約管理は Stripe Checkout / Customer Portal で完結します。</li>
           </ul>
         </article>
       </div>
