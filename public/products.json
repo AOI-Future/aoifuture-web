@@ -113,7 +113,10 @@
       ],
       "language": "en",
       "agent_manifest": "https://aoifuture.com/apps/hardshell/agent.json",
-      "health_url": "https://hardshell.aoifuture.com/healthz"
+      "health_url": "https://hardshell.aoifuture.com/healthz",
+      "release_stage": "early_access",
+      "support_model": "best_effort_no_sla",
+      "high_risk_mission_critical_excluded": true
     },
     {
       "availability": "in-preparation",

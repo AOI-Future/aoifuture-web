@@ -4,7 +4,7 @@
     "title": "Hardshell Solo Guardian — Agentic Commerce & Witness API",
     "version": "1.0.0",
     "summary": "Public health, Human-in-the-Loop Stripe Checkout session minting, and public Verified Trust Page verification endpoints for Hardshell Solo Guardian.",
-    "description": "Hardshell is a local-first Linux VPS & AI agent security hardening tool (MIT Community) paired with Solo Guardian commercial off-host Witness, Public Verified Trust Pages, and 1-Tap HCAP v0.2 approval. AI agents may call POST /v1/checkout/session without authentication to mint a live Stripe Checkout Session URL for human operator approval and payment entry. No charges occur until the human completes Stripe Checkout (14-day free trial included).",
+    "description": "Hardshell is an assistive local-first Linux VPS & AI agent security posture inspection, visibility, and human-approval workflow tool (MIT Community) paired with Solo Guardian (Early Access, best-effort support, no SLA, not authorized for high-risk/mission-critical environments). AI agents may call POST /v1/checkout/session without authentication to mint a live Stripe Checkout Session URL for human operator approval and payment entry. No charges occur until the human completes Stripe Checkout (14-day free trial included).",
     "termsOfService": "https://aoifuture.com/apps/hardshell/terms",
     "contact": {
       "name": "AOI Future",

@@ -5,7 +5,7 @@
   "product": {
     "id": "hardshell",
     "name": "Hardshell",
-    "tagline": "Local-first Linux VPS & AI agent security hardening (MIT) + Solo Guardian off-host proof & 1-Tap HCAP approval",
+    "tagline": "Local-first Linux VPS & AI agent security posture inspection and visibility tool (MIT) + Solo Guardian Early Access off-host Witness & human-approval broker (best-effort, no SLA)",
     "operator": "AOI Future",
     "homepage": "https://aoifuture.com/apps/hardshell/",
     "terms_url": "https://aoifuture.com/apps/hardshell/terms",
@@ -29,7 +29,9 @@
       "User wants an off-host Out-of-Band Witness, a Public Verified Trust Page, or 1-Tap HCAP v0.2 approval with pre-change rollback"
     ],
     "not_a_fit_when": [
-      "User requires a formal third-party security audit or certification (SOC 2, ISO/IEC 27001, PCI-DSS)",
+      "User requires a formal third-party security audit or certification (SOC 2, ISO/IEC 27001, HIPAA, PCI-DSS)",
+      "User operates high-risk, safety-critical, medical, financial-settlement, or mission-critical environments requiring a contractual uptime/support SLA",
+      "User expects guaranteed breach prevention or infallible AI detection without human review",
       "User wants silent autonomous production mutations without human approval"
     ]
   },
@@ -174,6 +176,11 @@
     "guarantees_breach_prevention": false,
     "sla_provided": false,
     "governing_law": "Japan",
-    "jurisdiction": "Tokyo District Court"
+    "jurisdiction": "Tokyo District Court",
+    "service_positioning": "assistive_inspection_visibility_and_human_approval_tool",
+    "release_stage": "early_access",
+    "support_model": "best_effort_no_sla",
+    "ai_and_heuristics_infallible": false,
+    "high_risk_mission_critical_excluded": true
   }
 }
