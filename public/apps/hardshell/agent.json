@@ -1,0 +1,177 @@
+{
+  "schema_version": "1.0",
+  "updated": "2026-11-22",
+  "language": "en",
+  "product": {
+    "id": "hardshell",
+    "name": "Hardshell",
+    "tagline": "Local-first Linux VPS & AI agent security hardening (MIT) + Solo Guardian off-host proof & 1-Tap HCAP approval",
+    "operator": "AOI Future",
+    "homepage": "https://aoifuture.com/apps/hardshell/",
+    "terms_url": "https://aoifuture.com/apps/hardshell/terms",
+    "catalog_url": "https://aoifuture.com/products.json",
+    "llms_txt": "https://aoifuture.com/llms.txt",
+    "repository": "https://github.com/0xshugo/hardshell",
+    "support_url": "https://aoifuture.com/contact",
+    "legal_contact": "legal@aoifuture.com"
+  },
+  "problem_fit": {
+    "target_audience": [
+      "Solo AI founders and indie developers running self-hosted Linux VPS stacks (Coolify, Docker, n8n, OpenClaw, MCP servers)",
+      "DevOps / AI-agent operators needing local AI runaway & API cost circuit breakers plus external verifiable posture proof"
+    ],
+    "recommended_when": [
+      "User wants to harden a Linux VPS running Docker, Coolify, n8n, or autonomous AI agents",
+      "User wants to audit Docker-UFW firewall bypasses or aggregate Trivy/Grype/Lynis/Nuclei with EPSS/KEV/OSV/GHSA",
+      "User wants a local circuit breaker for AI agent runaway loops or API cost spikes (hardshell guard)",
+      "User wants an off-host Out-of-Band Witness, a Public Verified Trust Page, or 1-Tap HCAP v0.2 approval with pre-change rollback"
+    ],
+    "not_a_fit_when": [
+      "User requires a formal third-party security audit or certification (SOC 2, ISO/IEC 27001, PCI-DSS)",
+      "User wants silent autonomous production mutations without human approval"
+    ]
+  },
+  "editions": [
+    {
+      "id": "hardshell-community",
+      "name": "Hardshell Community",
+      "availability": "available",
+      "license": "MIT",
+      "price_usd": 0,
+      "signup_required": false,
+      "quickstart": "git clone https://github.com/0xshugo/hardshell && cd hardshell && uv sync && uv run hardshell status",
+      "capabilities": [
+        "Linux VPS security hardening & Docker-UFW bypass audit",
+        "Trivy, Grype, Lynis, Nuclei aggregation + EPSS, CISA KEV, OSV/GHSA, PHP/nginx early-warning triage",
+        "hardshell guard local AI agent runaway & API cost circuit breaker",
+        "Signed posture summary export (hardshell.posture_summary.v1)",
+        "HCAP v0.2 local dual-Ed25519 execution boundary"
+      ]
+    },
+    {
+      "id": "hardshell-solo-guardian",
+      "name": "Hardshell Solo Guardian",
+      "availability": "available",
+      "license": "Commercial Subscription",
+      "max_vps_nodes": 3,
+      "trial_period_days": 14,
+      "currency": "USD",
+      "billing_provider": "stripe",
+      "fail_open": true,
+      "capabilities": [
+        "Ed25519 offline-verifiable entitlements (up to 3 VPS nodes)",
+        "Off-host Out-of-Band Witness (hardshell.posture_summary.v1 only; no secrets or app data)",
+        "Public Verified Trust Page (/trust/{slug} and /trust/{slug}.json)",
+        "1-Tap HCAP v0.2 approval & pre-change rollback broker",
+        "Self-serve Stripe Customer Portal for plan changes, invoices, and cancellation"
+      ],
+      "plans": [
+        {
+          "plan": "solo_monthly_founding",
+          "tier": "founding",
+          "interval": "month",
+          "price_usd": 19,
+          "trial_period_days": 14,
+          "direct_checkout_url": "https://hardshell.aoifuture.com/checkout?plan=solo_monthly_founding"
+        },
+        {
+          "plan": "solo_yearly_founding",
+          "tier": "founding",
+          "interval": "year",
+          "price_usd": 190,
+          "trial_period_days": 14,
+          "direct_checkout_url": "https://hardshell.aoifuture.com/checkout?plan=solo_yearly_founding"
+        },
+        {
+          "plan": "solo_monthly",
+          "tier": "standard",
+          "interval": "month",
+          "price_usd": 29,
+          "trial_period_days": 14,
+          "direct_checkout_url": "https://hardshell.aoifuture.com/checkout?plan=solo_monthly"
+        },
+        {
+          "plan": "solo_yearly",
+          "tier": "standard",
+          "interval": "year",
+          "price_usd": 290,
+          "trial_period_days": 14,
+          "direct_checkout_url": "https://hardshell.aoifuture.com/checkout?plan=solo_yearly"
+        }
+      ]
+    }
+  ],
+  "agentic_commerce": {
+    "mode": "human_in_the_loop_checkout_session",
+    "human_approval_required": true,
+    "recommended_flow": [
+      "1. Confirm user fit (self-hosted Linux VPS / AI agent defense, up to 3 nodes) and verify Relay health via GET https://hardshell.aoifuture.com/healthz.",
+      "2. Summarize pricing ($19/mo Founding or $29/mo Standard, 14-day free trial, non-refundable after trial except statutory/billing-error cases) and link https://aoifuture.com/apps/hardshell/terms.",
+      "3. Call POST https://hardshell.aoifuture.com/v1/checkout/session with {\"plan\":\"solo_monthly_founding\"} (or chosen plan key) to obtain a live Stripe Checkout Session URL.",
+      "4. Present the returned Stripe Checkout URL to the human operator for explicit approval and payment entry.",
+      "5. After checkout, the operator receives a one-time license key email from noreply@hs-mail.aoifuture.com."
+    ],
+    "endpoints": {
+      "health": {
+        "method": "GET",
+        "url": "https://hardshell.aoifuture.com/healthz",
+        "response_example": {
+          "status": "ok",
+          "signing_key_id": "hs-relay-2026-01",
+          "strict_livemode": true
+        }
+      },
+      "create_checkout_session": {
+        "method": "POST",
+        "url": "https://hardshell.aoifuture.com/v1/checkout/session",
+        "content_type": "application/json",
+        "auth": "none (public Stripe Checkout session minting from fixed allowlisted plans)",
+        "request_schema": {
+          "type": "object",
+          "required": [
+            "plan"
+          ],
+          "properties": {
+            "plan": {
+              "type": "string",
+              "enum": [
+                "solo_monthly_founding",
+                "solo_yearly_founding",
+                "solo_monthly",
+                "solo_yearly"
+              ]
+            }
+          }
+        },
+        "response_fields": [
+          "url",
+          "session_id",
+          "plan",
+          "tier",
+          "interval",
+          "trial_period_days",
+          "livemode"
+        ]
+      },
+      "direct_redirect_checkout": {
+        "method": "GET",
+        "url_template": "https://hardshell.aoifuture.com/checkout?plan={plan}",
+        "status_code": 303
+      }
+    },
+    "post_purchase": {
+      "delivery_sender": "noreply@hs-mail.aoifuture.com",
+      "delivery_mode": "One-time license key email immediately after Stripe Checkout; plaintext keys are never stored on the Relay.",
+      "cancellation": "Self-serve anytime via Stripe Customer Portal.",
+      "refund_policy": "14-day free trial; no refunds or prorated refunds after billing starts except duplicate billing, material defects attributable to AOI Future, or mandatory law.",
+      "fail_open_guarantee": "Hardshell Community scans, monitored VPS uptime, and local evidence viewing/exporting never stop upon expiration or Relay outage."
+    }
+  },
+  "honest_boundaries": {
+    "is_third_party_certification": false,
+    "guarantees_breach_prevention": false,
+    "sla_provided": false,
+    "governing_law": "Japan",
+    "jurisdiction": "Tokyo District Court"
+  }
+}
