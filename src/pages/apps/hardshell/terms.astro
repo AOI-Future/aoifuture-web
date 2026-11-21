@@ -5,7 +5,7 @@ export const prerender = true;
 
 const title = 'Hardshell 利用規約・特定商取引法に基づく表記 | AOI Future';
 const description =
-  'Hardshell（Community / Solo Guardian）の利用条件、14日間無料試用・課金・解約・返金方針、ライセンス認証とデータ取扱い、および特定商取引法に基づく表記。';
+  'Hardshell（Community / Solo Guardian）の利用条件、OSS版と有料版の適用分離、14日間無料試用・課金・解約・返金方針、非保証・責任制限・補償、および特定商取引法に基づく表記。';
 ---
 
 <Layout title={title} description={description} canonical="https://aoifuture.com/apps/hardshell/terms" pageTransition={false}>
@@ -30,18 +30,26 @@ const description =
       <h1>利用規約・プライバシー・特定商取引法に基づく表記</h1>
       <p class="hst-meta">最終改定日: 2026年11月21日</p>
       <p class="hst-lead">
-        本ページは、AOI Future（以下「当社」）が提供する Hardshell Community（オープンソース版）および Hardshell Solo Guardian（商用サブスクリプション）の利用条件、データ取扱い、および特定商取引法に基づく表記を定めるものです。
+        本規約は、野崎 秀吾（屋号：AOI Future、個人事業、以下「当方」）が提供する商用サブスクリプションサービス「Hardshell Solo Guardian」および関連 Relay サービスの利用条件、オープンソース版「Hardshell Community」との適用関係の分離、データ取扱い、ならびに特定商取引法に基づく表記を定めるものです。
       </p>
     </header>
 
     <section class="hst-section">
-      <h2>1. ソフトウェア利用権</h2>
-      <p>
-        <strong>Hardshell Community</strong>（<code>github.com/0xshugo/hardshell</code>）は MIT ライセンスのもと、個人・法人を問わず無償で利用・改変・再配布できます。
-      </p>
-      <p>
-        <strong>Hardshell Solo Guardian</strong> の契約者は、有効な契約期間中、自身が管理する最大 3 台の VPS ノードに対して商用付加機能（Ed25519 オフライン検証ライセンス、Out-of-Band Witness、Public Verified Trust Page、1-Tap HCAP v0.2 承認ブローカー等）を利用する非独占的な権利を有します。ライセンス鍵の第三者への共有・転売・再配布は禁止します。
-      </p>
+      <h2>1. 適用範囲・OSS 版と有料版の分離</h2>
+      <ul>
+        <li>
+          <strong>契約主体および対象利用者</strong>: 本規約は、当方（野崎 秀吾／屋号：AOI Future、個人事業）と Hardshell Solo Guardian の契約者（以下「契約者」または「利用者」）との間の契約関係を定めます。Hardshell Solo Guardian は、主として法人、個人事業主、開発者・システム運営者等の事業者が自己の業務・開発・運用環境で利用することを想定したツールです。
+        </li>
+        <li>
+          <strong>Hardshell Community（OSS 版）との分離</strong>: <code>github.com/0xshugo/hardshell</code> にて公開される Hardshell Community 本体コードには、同リポジトリに同梱される <strong>MIT ライセンス</strong>が単独で適用されます。MIT ライセンス上の無保証（"AS IS"）および免責規定は、本規約とは独立して適用されます。
+        </li>
+        <li>
+          <strong>Hardshell Solo Guardian（有料版）の利用権</strong>: 契約者は、有効な契約期間中、自身が正当な管理権限を有する最大 3 台の VPS ノードに対して、商用付加機能（Ed25519 オフライン検証ライセンス、Out-of-Band Witness、Public Verified Trust Page、1-Tap HCAP v0.2 承認ブローカー、および <code>hardshell.aoifuture.com</code> 上の Relay 機能）を利用する非独占的・譲渡不能の権利を有します。ライセンス鍵の第三者への共有・転売・貸与・再配布、および権限のない第三者環境へのスキャン・適用は禁止します。
+        </li>
+        <li>
+          <strong>優先関係</strong>: Hardshell Community 本体コードの利用条件については MIT ライセンスが優先し、Solo Guardian 付加サービス、課金・解約、Relay 利用、およびこれらに関連する契約関係については本規約が優先します。
+        </li>
+      </ul>
     </section>
 
     <section class="hst-section">
@@ -51,7 +59,7 @@ const description =
         <li><strong>販売価格（Option A）</strong>: Founding プラン 月額 US$19 / 年額 US$190、Standard プラン 月額 US$29 / 年額 US$290。適用される税・決済通貨・総額は Stripe Checkout の確認画面に表示されます。</li>
         <li><strong>支払方法・自動更新</strong>: クレジットカード（Stripe 決済）。14 日間の無料試用終了時に初回課金が行われ、以後は選択した契約期間（月次または年次）ごとに自動更新されます。</li>
         <li><strong>解約</strong>: Stripe Customer Portal からいつでも次回更新前までに解約できます。解約後も支払い済みの現行契約期間の満了まで Solo Guardian 機能を利用できます。</li>
-        <li><strong>返金ポリシー</strong>: 14 日間の無料試用期間を設けているため、<strong>課金開始後の返金および日割り返金は原則として行いません</strong>。ただし、当社の重大な瑕疵、二重課金等のシステム不具合、または適用法令上返金が認められる場合は、<code>legal@aoifuture.com</code> までご連絡ください。</li>
+        <li><strong>返金ポリシー</strong>: 14 日間の無料試用期間を設けているため、<strong>課金開始後の返金および日割り返金は原則として行いません</strong>。ただし、当方の重大な瑕疵、二重課金等のシステム不具合、または適用法令上返金が認められる場合は、<code>legal@aoifuture.com</code> までご連絡ください。</li>
         <li><strong>解約・失効時の動作（Fail-Open 保証）</strong>: 契約終了・未払い失効時または Relay 障害時に停止するのは、新規の Witness 更新や 1-Tap HCAP 承認等の Solo Guardian 付加機能のみです。Hardshell Community（MIT）機能、監視対象 VPS の稼働、およびローカルに保存された既存証跡の閲覧・エクスポートは一切停止しません。</li>
       </ul>
     </section>
@@ -62,34 +70,80 @@ const description =
         決済完了後、<code>noreply@hs-mail.aoifuture.com</code> よりライセンス鍵と初期セットアップ案内を初回 1 回限りでメール送付します。Relay データベースには平文のライセンス鍵を保存せず、HMAC ハッシュのみを保持します。鍵を紛失された場合は <a href="/contact">/contact</a> より再発行をご相談ください。
       </p>
       <p>
-        ライセンス有効化・更新時には Ed25519 署名済みエンタイトルメントトークンを発行し、クライアント側でオフライン検証できます。Out-of-Band Witness 送信では、署名済みポスチャ要約（<code>hardshell.posture_summary.v1</code>）およびノード識別メタデータのみを受信し、VPS 上の秘密鍵、ソースコード、アプリケーションデータ本文は送信しません。Public Verified Trust Page を有効化した場合、指定されたスラグ配下にポスチャ要約・検証ステータスが公開されます。
+        ライセンス有効化・更新時には Ed25519 署名済みエンタイトルメントトークンを発行し、クライアント側でオフライン検証できます。Out-of-Band Witness 送信では、署名済みポスチャ要約（<code>hardshell.posture_summary.v1</code>）およびノード識別メタデータのみを受信し、VPS 上の秘密鍵、ソースコード、アプリケーションデータ本文は送信しません。Public Verified Trust Page を有効化した場合、利用者が指定したスラグ配下にポスチャ要約・検証ステータスが一般公開されます。
       </p>
       <p>
-        クレジットカード情報および決済処理は Stripe が管理し、当社サーバーではカード番号を保持しません。詳細は <a href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer">Stripe プライバシーポリシー</a> をご確認ください。
+        クレジットカード情報および決済処理は Stripe が管理し、当方サーバーではカード番号を保持しません。詳細は <a href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer">Stripe プライバシーポリシー</a> をご確認ください。
       </p>
     </section>
 
     <section class="hst-section">
-      <h2>4. 免責事項（非保証）</h2>
+      <h2>4. サービス仕様・利用者の責任および非保証</h2>
       <p>
-        Hardshell および Public Verified Trust Page は、VPS や AI エージェント環境の構成点検・監視・証跡保管を支援するツールであり、第三者認証機関による安全性認証、法令・監査基準への適合、または不正アクセス・脆弱性・障害の完全な防止を保証するものではありません。本ソフトウェアの利用または利用不能により生じた損害について、当社に故意または重過失がある場合を除き、当社の賠償責任は直近 12 ヶ月間に契約者が当社へ支払った利用料金の総額を上限とします。
+        Hardshell（Community および Solo Guardian）ならびに Public Verified Trust Page は、利用者が管理する VPS・AI エージェント環境の構成点検、監視、証跡整理、および変更承認ワークフローを支援する<strong>補助ツール</strong>であり、<strong>現状有姿（AS IS）かつ提供可能な範囲（AS AVAILABLE）</strong>で提供されます。当方は、明示または黙示を問わず、次の各号について一切保証しません。
+      </p>
+      <ul>
+        <li>不正アクセス、侵入、マルウェア感染、脆弱性悪用、情報漏洩、サービス停止その他のセキュリティ事故の完全な検知、防御または防止。</li>
+        <li><code>hardshell guard</code> 等による AI エージェントの誤動作・暴走、プロンプトインジェクション、または外部 API・クラウド利用料の課金超過の完全な遮断。</li>
+        <li>第三者認証機関による安全性認証、ならびに法令、業界基準または監査基準（SOC 2、ISO/IEC 27001、ISMS 等）への適合。</li>
+        <li>1-Tap HCAP 承認、変更前スナップショットまたはロールバック機能による完全な原状回復やデータ保全（本サービスはバックアップの代替ではありません）。</li>
+        <li>特定目的への適合性、商品性、検査結果や外部脆弱性情報（EPSS / KEV / OSV 等）の完全性・正確性・最新性、Relay サービスの無停止稼働（SLA 不付帯）、および将来のバージョンでの仕様維持。</li>
+      </ul>
+      <p>
+        対象環境の選定・管理権限の確認、ファイアウォール・認証設定、変更承認の実行可否判断、データバックアップ、インシデント対応、および Public Verified Trust Page を外部公開する場合の開示範囲・説明責任は、すべて利用者自身の責任において行うものとします。
       </p>
     </section>
 
+    <section class="hst-section">
+      <h2>5. 損害賠償責任の制限</h2>
+      <ul>
+        <li>
+          <strong>間接損害・逸失利益等の除外</strong>: 法令で許容される最大限の範囲において、当方は、本サービスまたは本ソフトウェアの利用、利用不能、誤検知、検知漏れ、変更承認・ロールバック操作、Relay サービスの停止・遅延・仕様変更、または第三者サービス（Stripe、Resend、クラウド基盤等）の障害に起因して生じた<strong>間接損害、特別損害、付随的損害、結果的損害、懲罰的損害、逸失利益、事業機会の喪失、信用毀損、データ消失・破損、AI・クラウド利用料の超過、およびセキュリティ侵害に伴う損害</strong>について、予見可能性の有無を問わず一切責任を負いません。
+        </li>
+        <li>
+          <strong>責任の対象範囲および累計上限</strong>: 当方が本規約（Hardshell Solo Guardian 契約）に関して、債務不履行責任、契約不適合責任、不法行為責任その他の法律上の請求原因に基づき契約者に対して損害賠償責任を負う場合であっても、賠償の対象は<strong>直接かつ現実に生じた通常の損害</strong>に限られ、その累計上限額は、<strong>当該損害の発生原因となった事由が生じた時点から遡る直近 12 ヶ月間に、契約者が本契約に基づき当方へ実際に支払った利用料金の総額</strong>とします。無料試用期間中または無償利用（Community 版を含む）等により直近 12 ヶ月間の支払総額が 0 円である場合、法令上許容される最大限の範囲で当方は賠償責任を負いません。
+        </li>
+        <li>
+          <strong>故意・重過失および強行法規の例外</strong>: 本条の規定は、<strong>当方の故意または重過失</strong>によって生じた損害に係る責任、および<strong>消費者契約法その他の強行法規</strong>により免除または制限できない責任を排除または制限するものではありません。契約者が消費者契約法上の「消費者」に該当し、本条の一部が同法により無効となる場合であっても、当方の軽過失による損害賠償責任は、法令上許容される最大限の範囲で上記上限額（直近 12 ヶ月間に本契約に基づき実際に支払われた利用料金の総額）に制限されるものとします。
+        </li>
+      </ul>
+    </section>
+
+    <section class="hst-section">
+      <h2>6. 第三者との紛争および補償</h2>
+      <p>
+        利用者による本ソフトウェアまたは本サービスの利用（設定・運用判断、権限のない第三者環境へのスキャン・適用、Public Verified Trust Page の公開内容、または法令・第三者規約違反を含みます）に起因または関連して、第三者から当方に対して請求、異議申立て、訴訟その他の紛争が生じた場合、利用者は自己の責任と費用負担においてこれを解決するものとし、当方に生じた損害および費用（合理的な弁護士費用を含みます）を補償するものとします。ただし、当該紛争が当方の故意または重過失のみに起因する場合はこの限りではありません。
+      </p>
+    </section>
+
+    <section class="hst-section">
+      <h2>7. 規約の変更・提供の終了・可分性・準拠法および裁判管轄</h2>
+      <ul>
+        <li><strong>規約の変更</strong>: 当方は、法令の改正、サービス内容の変更その他の必要に応じて本規約を変更することがあります。重要な変更を行う場合は、効力発生時期および変更内容を本ページへの掲載または登録メールアドレス宛の通知により周知します。変更の効力発生後に本サービスの利用を継続した場合、変更後の規約に同意したものとみなします。</li>
+        <li><strong>サービスの変更・終了</strong>: 当方は、事前通知の上で本サービスの仕様を変更し、または提供を終了することがあります。提供終了時においても、第 2 条の Fail-Open 原則に従い Hardshell Community（MIT）本体およびローカル証跡の利用は継続できます。</li>
+        <li><strong>可分性</strong>: 本規約のいずれかの条項またはその一部が、消費者契約法その他の強行法規により無効または執行不能と判断された場合であっても、本規約の残りの条項および一部が無効または執行不能と判断された条項の残余部分は、引き続き完全に効力を有するものとします。</li>
+        <li><strong>準拠法および専属的合意管轄</strong>: 本規約および本サービスに関する契約の解釈・適用は日本国法に準拠します。本規約または本サービスに起因または関連する一切の紛争については、<strong>東京地方裁判所</strong>を第一審の専属的合意管轄裁判所とします。</li>
+      </ul>
+    </section>
+
     <section class="hst-section" id="seller">
-      <h2>5. 特定商取引法に基づく表記</h2>
+      <h2>8. 特定商取引法に基づく表記</h2>
       <dl class="hst-table">
         <div>
           <dt>販売事業者</dt>
-          <dd>AOI Future</dd>
+          <dd>野崎 秀吾（屋号：AOI Future / 個人事業）</dd>
         </div>
         <div>
-          <dt>運営責任者</dt>
+          <dt>運営統括責任者</dt>
           <dd>野崎 秀吾</dd>
         </div>
         <div>
+          <dt>事業形態</dt>
+          <dd>個人事業（日本国内）</dd>
+        </div>
+        <div>
           <dt>所在地・電話番号</dt>
-          <dd>ご請求があった場合、遅滞なく開示いたします（<a href="mailto:legal@aoifuture.com">legal@aoifuture.com</a> 宛にご連絡ください）。</dd>
+          <dd>特定商取引法の規定に基づき、ご請求があった場合に遅滞なく開示いたします（<a href="mailto:legal@aoifuture.com">legal@aoifuture.com</a> 宛にご連絡ください）。</dd>
         </div>
         <div>
           <dt>お問い合わせ窓口</dt>
@@ -113,7 +167,7 @@ const description =
         </div>
         <div>
           <dt>解約・キャンセル・返金</dt>
-          <dd>試用期間中および契約期間中いつでも Stripe Customer Portal から次回更新前解約が可能です。14 日間無料試用を設けているため、課金開始後の返金・日割り返金は原則不可とします（二重課金や当社起因の重大な瑕疵を除く）。</dd>
+          <dd>試用期間中および契約期間中いつでも Stripe Customer Portal から次回更新前解約が可能です。14 日間無料試用を設けているため、課金開始後の返金・日割り返金は原則不可とします（二重課金、当方起因の重大な瑕疵、または適用法令上返金が認められる場合を除く）。</dd>
         </div>
         <div>
           <dt>動作環境</dt>
@@ -135,6 +189,7 @@ const description =
   .hst-shell h1 { font-size: clamp(24px, 3.6vw, 38px); line-height: 1.4; font-weight: 700; margin: 16px 0 12px; }
   .hst-shell h2 { font-size: var(--fs-h2); line-height: 1.5; margin: 0 0 16px; font-weight: 600; }
   .hst-shell p + p { margin-top: 14px; }
+  .hst-shell p + ul, .hst-shell ul + p { margin-top: 14px; }
   .hst-shell a { text-underline-offset: 4px; }
   .hst-shell a:hover { text-decoration: underline; }
   .hst-shell code { font-family: var(--font-mono); font-size: 0.92em; background: var(--aoi-brand-05); padding: 2px 6px; }
