@@ -52,7 +52,7 @@ const description =
           <strong>Hardshell Community (Open Source — MIT License)</strong>: The open-source codebase published at <a href="https://github.com/0xshugo/hardshell" target="_blank" rel="noopener noreferrer"><code>github.com/0xshugo/hardshell</code></a> is governed solely by the <strong>MIT License</strong> included in that repository. Its "AS IS" disclaimer and license terms apply independently of these Terms.
         </li>
         <li>
-          <strong>Hardshell Solo Guardian (Commercial Subscription)</strong>: While your subscription is active, we grant you a non-exclusive, non-transferable right to use the Solo Guardian commercial add-ons—including Ed25519 offline-verifiable entitlements for up to <strong>3 VPS nodes</strong> you are authorized to administer, Out-of-Band Witness, Public Verified Trust Page, and the 1-Tap HCAP v0.2 approval &amp; rollback broker via <code>hardshell.aoifuture.com</code>.
+          <strong>Hardshell Solo Guardian (Early Access — Best-Effort, No SLA)</strong>: While your subscription is active, we grant you a non-exclusive, non-transferable right to use the Solo Guardian commercial add-ons—including Ed25519 offline-verifiable entitlements for up to <strong>3 VPS nodes</strong> you are authorized to administer, off-host Out-of-Band Witness, a Public Posture Status / Trust Page (a cryptographically signed self-audit snapshot, not a third-party certification), and the 1-Tap HCAP v0.2 human-approval &amp; rollback broker via <code>hardshell.aoifuture.com</code>. Solo Guardian (including the Founding Supporter tier) is provided on a <strong>best-effort basis with no uptime or support-response SLA</strong>.
         </li>
         <li>
           <strong>Acceptable Use</strong>: You may not share, resell, sublicense, or redistribute your license key, nor use Hardshell to scan, probe, or modify servers, networks, or systems without explicit authorization from their owner.
@@ -91,7 +91,7 @@ const description =
     <section class="hst-section">
       <h2>4. Service Nature, Customer Responsibilities &amp; Disclaimer of Warranties</h2>
       <p>
-        Hardshell (Community and Solo Guardian) and Public Verified Trust Pages are <strong>assistive operational and security tooling</strong> designed to help you inspect configurations, monitor posture, record evidence, and gate risky actions.
+        Hardshell (Community and Solo Guardian) and its Public Posture / Trust Pages are <strong>assistive inspection, visibility, and human-approval workflow tools</strong>—not an autonomous security guarantee, managed security service, or third-party certification. All final operational, remediation, and disclosure decisions remain solely with the human operator.
       </p>
       <p class="hst-caps">
         TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE SOFTWARE AND SERVICES ARE PROVIDED "AS IS" AND "AS AVAILABLE", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, OR NON-INFRINGEMENT.
@@ -99,13 +99,19 @@ const description =
       <p>Without limiting the foregoing, we do not warrant or guarantee:</p>
       <ul>
         <li>Complete detection, prevention, or mitigation of unauthorized access, intrusions, malware, vulnerabilities, data breaches, or downtime.</li>
-        <li>Complete blocking of AI agent misbehavior, prompt injection, runaway loops, or third-party LLM/cloud API billing overruns via <code>hardshell guard</code>.</li>
+        <li>Infallible accuracy of heuristic, rule-based, or AI-assisted triage, prioritization, or <code>hardshell guard</code> local guardrails—automated checks and AI models can produce false positives, false negatives, or miss novel prompt injections, runaway loops, or third-party LLM/cloud API billing overruns.</li>
         <li>Third-party security certification or compliance with regulatory or audit frameworks (including SOC 2, ISO/IEC 27001, HIPAA, PCI-DSS, or ISMS).</li>
         <li>Complete system recovery or data preservation via 1-Tap HCAP approvals, pre-change snapshots, or rollback helpers (Hardshell is not a substitute for independent backups).</li>
         <li>Uninterrupted or error-free availability of the Relay service (no SLA is provided), or accuracy/completeness of external vulnerability feeds (EPSS, CISA KEV, OSV/GHSA, vendor advisories).</li>
       </ul>
       <p>
-        You remain solely responsible for verifying authorization over target hosts, configuring firewalls and credentials, reviewing and approving changes, maintaining independent backups, responding to security incidents, and deciding what information you disclose via a Public Verified Trust Page.
+        <strong>Best-Effort Support &amp; No SLA</strong>: The Relay service and email/web support are provided on a best-effort basis without any guaranteed uptime percentage, latency target, or support response-time SLA.
+      </p>
+      <p>
+        <strong>High-Risk &amp; Mission-Critical Use Exclusion</strong>: Hardshell is intended for indie developers, solo founders, and general self-hosted infrastructure inspection—it is <strong>not designed, tested, or authorized for high-risk, safety-critical, or heavily regulated environments</strong> (including medical or life-support systems, financial settlement/custody, critical infrastructure, or environments requiring formal SOC 2, ISO/IEC 27001, HIPAA, or PCI-DSS compliance guarantees). Do not rely on Hardshell as your sole security control or as a substitute for qualified security professionals or independent backups.
+      </p>
+      <p>
+        You remain solely responsible for verifying authorization over target hosts, configuring firewalls and credentials, reviewing and approving changes, maintaining independent backups, responding to security incidents, and deciding what information you disclose via a Public Posture / Trust Page.
       </p>
     </section>
 

@@ -217,6 +217,8 @@ const structuredData = {
     <meta property="og:url" content="https://aoifuture.com/apps/hardshell/" />
     <meta property="og:locale" content="en_US" />
     <link rel="alternate" type="application/json" href="/apps/hardshell/agent.json" title="Hardshell Agentic Commerce Manifest" />
+    <link rel="alternate" type="application/vnd.oai.openapi+json" href="/apps/hardshell/openapi.json" title="Hardshell Relay OpenAPI 3.1 Specification" />
+    <link rel="alternate" type="application/json" href="/.well-known/agent-card.json" title="AOI Future A2A Agent Discovery Card" />
     <link rel="alternate" type="application/json" href="/products.json" title="AOI Future Product Catalog" />
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </Fragment>
@@ -233,15 +235,15 @@ const structuredData = {
     </nav>
 
     <p class="hs-status-banner" id="hs-status-banner">
-      <strong>[LIVE / SOLO GUARDIAN]</strong> Open-source Community (MIT) available · Solo Guardian (14-day free trial · Founding $19 / Standard $29) live via Stripe · Agentic Commerce manifest at <code>/apps/hardshell/agent.json</code>
+      <strong>[EARLY ACCESS / BEST-EFFORT · NO SLA]</strong> Open-source Community (MIT) available · Solo Guardian Founding ($19/mo · 14-day free trial) live via Stripe · Agentic Commerce manifest at <code>/apps/hardshell/agent.json</code>
     </p>
     <div class="hs-checkout-notice" id="hs-checkout-notice" hidden></div>
 
     <header class="hs-hero">
       <p class="hs-label">HARDSHELL / COMMUNITY &amp; SOLO GUARDIAN</p>
-      <h1>Harden self-hosted VPS &amp; AI agents locally.<br />Prove your posture publicly.</h1>
+      <h1>Inspect self-hosted VPS &amp; AI agents locally.<br />Share signed posture snapshots.</h1>
       <p class="hs-lead">
-        Built for solo AI founders running Coolify, Docker, n8n, OpenClaw, or custom MCP agents on self-hosted Linux servers. Hardshell runs security audits and AI runaway circuit breakers locally—then pairs with Solo Guardian for off-host Out-of-Band Witness, a Public Verified Trust Page, and 1-Tap HCAP v0.2 approval.
+        An assistive security posture inspection, visibility, and human-approval workflow tool built for solo AI founders running Coolify, Docker, n8n, OpenClaw, or custom MCP agents on self-hosted Linux servers. Runs local configuration checks and operator-configured AI guardrails—then pairs with Solo Guardian (Early Access, best-effort, no SLA) for off-host Witness snapshots, a Public Posture Status Page, and 1-Tap HCAP v0.2 human approvals.
       </p>
       <div class="hs-actions">
         <a class="hs-button hs-primary" href={checkoutUrls.foundingMonthly} rel="noopener noreferrer">
@@ -253,21 +255,21 @@ const structuredData = {
         <a class="hs-button" href="#pricing">Compare Plans</a>
       </div>
       <p class="hs-caption">
-        Powered by Stripe Checkout (14-day free trial, cancel anytime in Customer Portal). Fail-open by design: expiration or Relay outages never stop Community scans, your VPS, or local evidence exports.
+        Early Access · Best-effort support · No SLA · Not for high-risk/mission-critical environments. Powered by Stripe Checkout (14-day free trial, cancel anytime). Fail-open by design: expiration or Relay outages never stop Community scans, your VPS, or local evidence exports.
       </p>
     </header>
 
     <section aria-labelledby="why-title" class="hs-section">
       <p class="hs-label">WHY HARDSHELL</p>
-      <h2 id="why-title">Stop catching surprises at 3 AM. Defend locally, prove externally.</h2>
+      <h2 id="why-title">Spot drift and misconfigurations early. Inspect locally, keep humans in control.</h2>
       <div class="hs-grid">
         <article>
           <h3>Local-first audits &amp; AI guardrails</h3>
-          <p>Combines Trivy, Grype, Lynis, Nuclei, and Docker-UFW bypass detection with EPSS/KEV/OSV/GHSA and PHP/nginx early warnings. <code>hardshell guard</code> stops runaway agent loops and API cost spikes on-host.</p>
+          <p>Combines Trivy, Grype, Lynis, Nuclei, and Docker-UFW bypass checks with EPSS/KEV/OSV/GHSA and PHP/nginx early warnings. <code>hardshell guard</code> adds operator-configured local rate/budget guardrails (heuristic assist, not infallible AI protection).</p>
         </article>
         <article>
           <h3>Off-host Witness &amp; Trust Page</h3>
-          <p>Solo Guardian anchors signed posture summaries (<code>hardshell.posture_summary.v1</code>) outside the monitored VPS and publishes a Public Verified Trust Page you can share with customers.</p>
+          <p>Solo Guardian anchors your cryptographically signed self-audit summaries (<code>hardshell.posture_summary.v1</code>) outside the monitored VPS and publishes a Public Posture / Trust Page (transparent self-inspection snapshot, not a third-party certification).</p>
         </article>
         <article>
           <h3>Honest visibility, never fake green</h3>
@@ -320,9 +322,9 @@ uv run hardshell status</code></pre>
         </article>
 
         <article class="hs-status hs-featured">
-          <p class="hs-label">SOLO GUARDIAN / 14-DAY FREE TRIAL</p>
+          <p class="hs-label">SOLO GUARDIAN / EARLY ACCESS · BEST-EFFORT · NO SLA</p>
           <h3>Founding $19/mo · Standard $29/mo</h3>
-          <p>Commercial add-on for solo AI founders running up to 3 self-hosted VPS nodes. Save 2 months with annual billing (Founding $190/yr · Standard $290/yr).</p>
+          <p>Early Access commercial add-on for solo AI founders running up to 3 self-hosted VPS nodes (best-effort support, no SLA, not for mission-critical/regulated systems). 14-day free trial; save 2 months annually (Founding $190/yr · Standard $290/yr).</p>
           <ul>
             <li>Ed25519 offline-verifiable license entitlements (up to 3 VPS nodes)</li>
             <li>Out-of-Band Witness outside your monitored VPS</li>

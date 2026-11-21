@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "name": "AOI Future — Hardshell Agentic Commerce Endpoint",
+  "description": "Official machine-readable discovery card for AOI Future and Hardshell (local-first Linux VPS & AI agent security posture inspection, visibility, and human-approval workflow tool under MIT + Solo Guardian Early Access off-host Witness, Public Posture Status Page, and 1-Tap HCAP v0.2 approval; best-effort, no SLA, not for high-risk/mission-critical systems).",
+  "url": "https://aoifuture.com/apps/hardshell/",
+  "provider": {
+    "organization": "AOI Future",
+    "url": "https://aoifuture.com/"
+  },
+  "version": "2026-11-22",
+  "documentationUrl": "https://aoifuture.com/apps/hardshell/",
+  "defaultInputModes": [
+    "application/json",
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "application/json",
+    "text/html"
+  ],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "stateTransitionHistory": false,
+    "agenticCommerce": {
+      "mode": "human_in_the_loop_checkout_session",
+      "humanApprovalRequired": true,
+      "billingProvider": "stripe",
+      "currency": "USD",
+      "manifestUrl": "https://aoifuture.com/apps/hardshell/agent.json",
+      "openapiUrl": "https://aoifuture.com/apps/hardshell/openapi.json",
+      "catalogUrl": "https://aoifuture.com/products.json",
+      "llmsTxtUrl": "https://aoifuture.com/llms.txt",
+      "termsUrl": "https://aoifuture.com/apps/hardshell/terms",
+      "checkoutSessionEndpoint": "https://hardshell.aoifuture.com/v1/checkout/session",
+      "healthEndpoint": "https://hardshell.aoifuture.com/healthz",
+      "releaseStage": "early_access",
+      "supportModel": "best_effort_no_sla",
+      "highRiskMissionCriticalExcluded": true
+    }
+  },
+  "skills": [
+    {
+      "id": "hardshell-product-evaluation",
+      "name": "Evaluate Hardshell fit for Linux VPS & AI agent security",
+      "description": "Read structured product capabilities, honest non-certification boundaries, MIT Community quickstart, and Solo Guardian plans from https://aoifuture.com/apps/hardshell/agent.json.",
+      "tags": [
+        "linux-security",
+        "vps-hardening",
+        "ai-agent-security",
+        "docker-ufw",
+        "circuit-breaker",
+        "trust-page",
+        "hcap"
+      ],
+      "examples": [
+        "Find a local-first Linux VPS & AI agent security tool with a runaway cost circuit breaker",
+        "Check pricing and 14-day free trial terms for Hardshell Solo Guardian"
+      ]
+    },
+    {
+      "id": "hardshell-checkout-session",
+      "name": "Create Hardshell Solo Guardian Stripe Checkout Session",
+      "description": "Call POST https://hardshell.aoifuture.com/v1/checkout/session with a plan key (solo_monthly_founding, solo_yearly_founding, solo_monthly, solo_yearly) to mint a live Stripe Checkout URL for human operator approval.",
+      "tags": [
+        "agentic-commerce",
+        "stripe-checkout",
+        "human-in-the-loop",
+        "saas-subscription"
+      ],
+      "examples": [
+        "Create a 14-day free trial checkout link for Hardshell Solo Guardian Founding ($19/mo)"
+      ]
+    }
+  ]
+}
