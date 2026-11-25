@@ -1,0 +1,28 @@
+[
+  {
+    "changed_signal_ids": [
+      "allenai-scientists-agent-line",
+      "aws-agentcore-govcloud",
+      "aws-devops-agent-access-profiles",
+      "aws-iam-trusted-identity-propagation",
+      "cisa-kev-two-vulnerabilities-nov23",
+      "cloudflare-search-for-agents",
+      "docker-agent-guardrails-proof",
+      "github-issue-status-boards",
+      "github-secret-scanning-slack-fp",
+      "microsoft-agents-non-rest-apis",
+      "ncsc-cornerstone-industry-feedback",
+      "openai-gpt6-protein-design"
+    ],
+    "edition_date": "2026-11-26",
+    "edition_id": "2026-11-26-0448",
+    "edition_url": "https://aoifuture.com/news/2026-11-26-0448/",
+    "event_id": "aoi-news-2026-11-26-0448-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-11-26T04:48:23+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "Allen AIが科学者のエージェント利用の線引きを整理した。Cloudflareはサイト検索をエージェント向けにワンクリック化し、OpenAIはGPT-6のタンパク質設計能力を報告した。Dockerのガードレール実証、AWSのID伝播とGovCloud AgentCore、GitHubのIssueステータスも重なる。",
+    "title": "科学の責任線とエージェント基盤――検索の自動化、タンパク質設計、ガードレール実証が並走"
+  }
+]

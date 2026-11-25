@@ -1,0 +1,413 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-11-26T04:48:23+09:00",
+  "dek": "Allen AIが科学者のエージェント利用の線引きを整理した。Cloudflareはサイト検索をエージェント向けにワンクリック化し、OpenAIはGPT-6のタンパク質設計能力を報告した。Dockerのガードレール実証、AWSのID伝播とGovCloud AgentCore、GitHubのIssueステータスも重なる。",
+  "edition_date": "2026-11-26",
+  "edition_id": "2026-11-26-0448",
+  "edition_note": "2026年11月23日〜26日（各発表元の日付）に公開された公式ブログ、What's New、規制アラートから選んだ。直近72時間を中心に、不足分は11月22日以降の一次資料で補っている。",
+  "generated_at": "2026-11-26T04:48:23+09:00",
+  "items": [
+    {
+      "aoi_note": "社内のエージェント利用規程は、タスク単位で残すべき監査ログと、論文・レポートへのAI利用開示要件をセットで書く必要がある。",
+      "caveat": "17名のサンプルと分野別の差は記事ベースで、日本の研究機関の規程との対応は未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "allenai-scientists-agent-line",
+      "language": "ja",
+      "observed_at": "2026-11-26T04:47:25+09:00",
+      "published_at": "2026-11-26T03:52:55+09:00",
+      "role": "lead",
+      "selection_reason": "エージェント導入の実務論が、製品機能より「誰が何を検証するか」の責任分担に移りつつある。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Allen AIは、自然科学・応用科学・社会科学の研究者17人へのインタビュー結果を公開した。文献レビュー、データ分析、実験プロトコル、ヒト参加者データの扱いなどで、エージェントに委ねても本人が検証・再現・安全制約の遵守に責任を持つべきだとする質問が中心だった。正確性だけでなく、分野の倫理規範や方法の透明性が議論の軸だとしている。",
+      "source_kind": "analysis",
+      "source_title": "Where scientists draw the line on AI agents",
+      "source_url": "https://huggingface.co/blog/allenai/where-scientists-draw-the-line-on-ai-agents",
+      "title": "科学者17人への聞き取り、AIエージェントに任せてよい作業と本人の責任の線引き",
+      "topics": [
+        "research",
+        "agents",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-11-26T04:47:25+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "自社サイトをエージェントに開く場合、インデックス対象パスと robots 方針を先に固定しないと、意図しない非公開URLが入るリスクがある。",
+      "caveat": "クロール対象の除外設定や料金上限の詳細は開発者ドキュメントベースで、本番トラフィックでの遅延は未検証。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cloudflare-search-for-agents",
+      "language": "ja",
+      "observed_at": "2026-11-26T04:47:25+09:00",
+      "published_at": "2026-11-25T23:00:00+09:00",
+      "role": "major",
+      "selection_reason": "エージェント向けRAGの土台が、自前構築からCDNのワンクリックへ移りつつある。",
+      "source_domain": "blog.cloudflare.com",
+      "source_fact": "Cloudflareは11月25日、Search for Agentsを発表した。ダッシュボードのゾーン設定で有効化すると、AI Searchインスタンスの作成、サイトのクロールとインデックス、自ドメインから利用できる検索APIの公開までをネットワーク側で行う。Markdown for Agentsと同様、エージェントが自サイトを検索するための発見可能なエンドポイントをゾーン単位で用意する設計だ。無料プランにも上限付きで提供する。",
+      "source_kind": "official",
+      "source_title": "Introducing Search for Agents",
+      "source_url": "https://blog.cloudflare.com/search-for-agents/",
+      "title": "Cloudflare、Search for Agentsを導入。ゾーンのトグルでAI Searchとドメイン内検索APIを自動構築",
+      "topics": [
+        "agents",
+        "infrastructure",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-26T04:47:25+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "臨床応用や安全審査の枠組みはプレプリント段階の記述に留まる。自社の創薬パイプラインへ転用する前に、再現実験と外部査読の有無を確認すべきだ。",
+      "caveat": "試験は限定的な標的とパートナー実施で、一般公開モデルの同等性能は未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-gpt6-protein-design",
+      "language": "ja",
+      "observed_at": "2026-11-26T04:47:27+09:00",
+      "published_at": "2026-11-25T07:00:00+09:00",
+      "role": "major",
+      "selection_reason": "汎用大規模モデルが生命科学の設計ループに直接入り込み始めた例として扱える。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIは11月24日、GPT-6系モデルが推論と汎用コーディングだけで新しいタンパク質の形状とアミノ酸配列を設計できると報告した。社内研究モデルは多くのタンパク質設計タスクで専用モデルと同等以上だった。Onavaとの実験室試験では、GPT-6.2由来の設計に基づくタンパク質が5つの標的で結合の兆候を示し、再設計した抗体も結合を維持したとしている。",
+      "source_kind": "official",
+      "source_title": "GPT‑6 models demonstrate intrinsic protein-design capabilities",
+      "source_url": "https://openai.com/index/gpt-6-models-demonstrate-intrinsic-protein-design-capabilities/",
+      "title": "OpenAI、GPT-6ファミリーが専用生物学モデルなしでタンパク質構造・配列を設計できると報告",
+      "topics": [
+        "models",
+        "research",
+        "enterprise"
+      ],
+      "verification": {
+        "checked_at": "2026-11-26T04:47:27+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "デモは銀行管理者想定の例で、エージェント製品ごとの挙動差は記事のみ。SOC2やGDPR文脈の記述は一般論で、自社規程への当てはめは別途必要。",
+      "caveat": "インシデント事例は報告ベースで、Docker製品単体の効果測定数値は未掲載。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "docker-agent-guardrails-proof",
+      "language": "ja",
+      "observed_at": "2026-11-26T04:47:25+09:00",
+      "published_at": "2026-11-26T01:57:00+09:00",
+      "role": "major",
+      "selection_reason": "「ポリシーを書いた」から「拒否ログで証明する」フェーズに入った。",
+      "source_domain": "www.docker.com",
+      "source_fact": "Dockerは11月25日、Coding Agentが広い権限を持つと意図しないホームディレクトリやクレデンシャルへ到達しうるという前提で、サンドボックス内でネットワークとファイルシステムの境界を検証する手順を公開した。単一ラップトップの検証を、組織のネットワークポリシー、ファイルシステムポリシー、管理クレデンシャル、MCPアクセスの4点に拡張する構成を説明している。",
+      "source_kind": "official",
+      "source_title": "Prove your AI agent guardrails work",
+      "source_url": "https://www.docker.com/blog/prove-your-ai-agent-guardrails-work/",
+      "title": "Docker、エージェントのガードレールを実証するワークフローを公開。サンドボックスと組織ガバナンスを接続",
+      "topics": [
+        "security",
+        "agents",
+        "enterprise"
+      ],
+      "verification": {
+        "checked_at": "2026-11-26T04:47:25+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "既存ロールの信頼ポリシーを整理しないとTIPの恩恵は限定的。マルチクラウドの外部JWT受け入れ側の検証実装は自前設計が要る。",
+      "caveat": "GovCloud以外の具体的な導入事例はWhat's Newのみ。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-iam-trusted-identity-propagation",
+      "language": "ja",
+      "observed_at": "2026-11-26T04:47:26+09:00",
+      "published_at": "2026-11-25T15:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "エージェントと人の呼び出し元をクラウド横断で追える基盤が厚くなった。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは11月25日、Trusted Identity Propagation（TIP）をIAMフェデレーションとIAM Roles Anywhereに拡張し、IAM Identity Centerでの運用を簡素化したと発表した。SAMLやOIDC、X.509証明書由来の人間・ワークロード識別子をロールセッションへ引き継ぎ、IAM outbound federationでAWS署名付きJWTを外部サービスへ渡せるようにした。全商用リージョン、GovCloud、欧州主権クラウドで利用可能。",
+      "source_kind": "official",
+      "source_title": "AWS IAM extends trusted identity propagation to IAM federation and IAM Roles Anywhere, and simplifies it in IAM Identity Center",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/aws-iam/",
+      "title": "AWS IAM、信頼されたアイデンティティ伝播をIAM連携とRoles Anywhereへ拡張。Outbound JWTも",
+      "topics": [
+        "infrastructure",
+        "security",
+        "enterprise"
+      ],
+      "verification": {
+        "checked_at": "2026-11-26T04:47:26+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "Projectとのステータス同期は名前一致に依存する。エージェント運用では誤った自動In progressが増えないよう、割当ルールの棚卸しが先決だ。",
+      "caveat": "プレビュー機能のSLAとエンタープライズでの有効化条件は未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-issue-status-boards",
+      "language": "ja",
+      "observed_at": "2026-11-26T04:47:26+09:00",
+      "published_at": "2026-11-24T05:37:11+09:00",
+      "role": "brief",
+      "selection_reason": "コーディングエージェントの作業状態を、人間と同じボード上で機械可読にする試み。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月23日、Issueのopen/closedだけでは足りない進捗共有のため、Issue statusesとリポジトリボードをパブリックプレビューした。Draft PRのリンク、レビュー準備、ユーザー割当、エージェント割当でステータスが自動更新される。GraphQL、REST、MCPサーバーから読み書きでき、Copilot automationのトリガーにもなる。",
+      "source_kind": "release",
+      "source_title": "Issue statuses and repository boards are in public preview",
+      "source_url": "https://github.blog/changelog/2026-11-23-issue-statuses-and-repository-boards-are-in-public-preview",
+      "title": "GitHub、Issueステータスとリポジトリボードをパブリックプレビュー。エージェント割当でIn progressへ",
+      "topics": [
+        "tools",
+        "agents",
+        "enterprise"
+      ],
+      "verification": {
+        "checked_at": "2026-11-26T04:47:26+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "社内レガシーRPCをエージェント化するなら、OpenAPIや例付きリファレンスを先に整備する方がスタイル変更より効く。",
+      "caveat": "実験は単一の架空APIで、本番の認証やレート制限は含まれない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "microsoft-agents-non-rest-apis",
+      "language": "ja",
+      "observed_at": "2026-11-26T04:47:27+09:00",
+      "published_at": "2026-11-23T19:25:28+09:00",
+      "role": "brief",
+      "selection_reason": "エージェント連携のボトルネックはHTTPスタイルより、機械可読なAPIドキュメントの有無に寄る。",
+      "source_domain": "developer.microsoft.com",
+      "source_fact": "Microsoftは11月23日、架空の在庫API「Binstock」をREST、POST-only、RPCスタイルの3形で提供し、2ベンダー6モデルで合計1,356回のエージェント実行を比較した結果を公開した。ドキュメントがある条件では、非RESTでも失敗率とトークンコストはRESTと統計的に差がなかった。ドキュメントがない場合のみRESTが大きく優位だった。",
+      "source_kind": "analysis",
+      "source_title": "Do AI coding agents struggle with non-REST APIs?",
+      "source_url": "https://developer.microsoft.com/blog/do-ai-coding-agents-struggle-with-non-rest-apis/",
+      "title": "Microsoft、1,356回の実行で非REST APIでもコーディングエージェントの成功率はRESTと同程度と報告",
+      "topics": [
+        "agents",
+        "tools",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-11-26T04:47:27+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "サーバレスruntimeとの使い分け基準と、EC2管理料込みの総コスト試算は事前に要る。",
+      "caveat": "日本や他リージョンでの提供時期は未発表。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-agentcore-govcloud",
+      "language": "ja",
+      "observed_at": "2026-11-26T04:47:26+09:00",
+      "published_at": "2026-11-24T11:21:00+09:00",
+      "role": "brief",
+      "selection_reason": "公共部門向けに、長時間エージェントとデータレジデンシーを同じ製品線で選べるようになった。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは11月24日、Amazon Bedrock AgentCore runtime instancesをAWS GovCloud（米国西部）で一般提供した。顧客アカウント内のEC2でエージェントを動かし、プロビジョニングとパッチ、スケールをAgentCoreが担う。GPU、メモリ、計算最適化インスタンスを選べ、セッションは最長14日。データはGovCloud内に留まる。",
+      "source_kind": "official",
+      "source_title": "AgentCore runtime instances are now generally available in the AWS GovCloud (US-West) Region",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/agentcore-runtime-instances-govcloud",
+      "title": "AWS、AgentCore runtime instancesをGovCloud（米国西部）でGA。最長14日セッション",
+      "topics": [
+        "agents",
+        "infrastructure",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-11-26T04:47:26+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "Agent Spaceごとの権限棚卸しをしないと、組織全体の自動整合が逆に広いアクセスを固定化しうる。",
+      "caveat": "日本リージョンでの提供有無はリリース履歴ページ要確認で、本文では未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-devops-agent-access-profiles",
+      "language": "ja",
+      "observed_at": "2026-11-26T04:47:27+09:00",
+      "published_at": "2026-11-23T17:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "運用エージェントの権限分離が、IAM IDCの既存モデルに乗った。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは11月23日、AWS DevOps AgentにAccess ProfilesとAWS Organizationsサポートを追加した。IAM Identity Centerユーザーを権限セットに結び、スキルやメモリの作成・更新を特定ユーザーに限定できる。OrganizationsとAgent SpaceのAWSアカウント権限を自動整合させる。",
+      "source_kind": "official",
+      "source_title": "AWS DevOps Agent adds Access Profiles and AWS Organizations",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/devops-agent-access-profiles-orgs/",
+      "title": "AWS DevOps AgentにAccess ProfilesとOrganizations連携。スキル作成権限をIDCユーザー単位で制限",
+      "topics": [
+        "agents",
+        "enterprise",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-26T04:47:27+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "CHECK利用組織は、供給者変更がテスト手法や証跡に与える影響を事前に読む必要がある。",
+      "caveat": "競争入札前のフェーズで、最終的なサービス範囲は未確定。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "ncsc-cornerstone-industry-feedback",
+      "language": "ja",
+      "observed_at": "2026-11-26T04:47:27+09:00",
+      "published_at": "2026-11-24T21:00:00+09:00",
+      "role": "watch",
+      "selection_reason": "公的サービスのスケールを、単純なアウトソースではなく役割分担の再設計として提示した。",
+      "source_domain": "www.ncsc.gov.uk",
+      "source_fact": "英国NCSCは2026年11月24日、外部向けサイバーサービスの設計・提供・開発を刷新する多年プロジェクトCORNERSTONEを紹介し、業界からの意見を求めた。CHECKペネトレーションテスト、Cyber Resilience Test Facilities、新しいProtective DNS保証などを産業パートナーが担う案を示し、NCSCは国家的技術当局としての独自洞察に注力する構想だ。",
+      "source_kind": "regulator",
+      "source_title": "Introducing CORNERSTONE: delivering external services for the NCSC",
+      "source_url": "https://www.ncsc.gov.uk/blogs/introducing-cornerstone-delivering-external-services-for-the-ncsc",
+      "title": "英国NCSC、外部サービス刷新プロジェクトCORNERSTONEで業界フィードバックを募集",
+      "topics": [
+        "policy",
+        "security",
+        "enterprise"
+      ],
+      "verification": {
+        "checked_at": "2026-11-26T04:47:27+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "MONAIスタックを使う研究・臨床系チームは、ラベリングサーバのパス制御を即時点検すべきだ。",
+      "caveat": "各CVEの自社影響とパッチ入手経路はアラート本文のみで、環境別検証は未実施。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-kev-two-vulnerabilities-nov23",
+      "language": "ja",
+      "observed_at": "2026-11-26T04:47:27+09:00",
+      "published_at": "2026-11-23T21:00:00+09:00",
+      "role": "watch",
+      "selection_reason": "医療画像AIラベリングとメールセキュリティ製品が同時にKEV入りした。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "米国CISAは2026年11月23日、実悪用の証拠に基づきKnown Exploited Vulnerabilities Catalogに2件を追加した。CVE-2026-133968（Project MONAI MONAI Labelのパストラバーサル）とCVE-2026-134624（N-able Mail AssureのSSRF）である。BOD 26-04に沿い、連邦機関は公開露出資産での高リスクCVEを優先して修正する必要がある。",
+      "source_kind": "regulator",
+      "source_title": "CISA Adds Two Known Exploited Vulnerabilities to Catalog",
+      "source_url": "https://www.cisa.gov/news-events/alerts/2026/11/23/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+      "title": "CISA、KEVカタログに2件追加。MONAI LabelのパストラバーサルとN-able SSRF",
+      "topics": [
+        "security",
+        "policy",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-26T04:47:27+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "検出器改善だけでは本物の漏えいが拾えなくなるわけではないが、ルール変更後のアラート件数トレンドは監視が必要。",
+      "caveat": "他のSlackトークン種別への同様改善は記載なし。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "github-secret-scanning-slack-fp",
+      "language": "ja",
+      "observed_at": "2026-11-26T04:47:27+09:00",
+      "published_at": "2026-11-24T03:32:00+09:00",
+      "role": "watch",
+      "selection_reason": "エージェントがSlack連携を増やす中、秘密情報検知のノイズ低減が運用コストを下げる。",
+      "source_domain": "github.blog",
+      "source_fact": "GitHubは11月23日、secret scanningがSlack関連シークレットの誤検知を減らすと発表した。slack_incoming_webhook_url検出器は、Slackのincoming-webhook URL形式でないURLを除外するよう改善した。",
+      "source_kind": "release",
+      "source_title": "Secret scanning reduces false positives for Slack",
+      "source_url": "https://github.blog/changelog/2026-11-23-secret-scanning-reduces-false-positives-for-slack/",
+      "title": "GitHub、Slack incoming webhook向けシークレットスキャンの誤検知を削減",
+      "topics": [
+        "security",
+        "tools",
+        "enterprise"
+      ],
+      "verification": {
+        "checked_at": "2026-11-26T04:47:27+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-11-26T04:48:23+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "科学の責任線とエージェント基盤――検索の自動化、タンパク質設計、ガードレール実証が並走",
+  "topics": [
+    {
+      "description": "モデルの提供、料金、技術報告",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "攻撃の手口、脆弱性の報告、検査の仕組み",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "エージェントの評価、管理、クラウドとの接続",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "開発者向けの道具",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "クラウド、権限、推論の基盤",
+      "id": "infrastructure",
+      "label_en": "Infrastructure",
+      "label_ja": "インフラ"
+    },
+    {
+      "description": "企業での運用、管理、経営層の判断",
+      "id": "enterprise",
+      "label_en": "Enterprise",
+      "label_ja": "企業導入"
+    },
+    {
+      "description": "技術的な設計と研究成果",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "安全面の判定と透明性の取り組み",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "方針"
+    }
+  ]
+}
