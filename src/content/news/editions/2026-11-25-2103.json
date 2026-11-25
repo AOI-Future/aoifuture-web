@@ -1,0 +1,418 @@
+{
+  "coverage_kind": "selection-snapshot",
+  "coverage_observed_at": "2026-11-25T21:03:23+09:00",
+  "dek": "英国NCSCがAI支援型攻撃フレームワークの急増を報告した。GoogleとAWSはエージェントの信頼境界を製品化し、Humanity's First ExamやHugging Faceの評価ガイドが信頼性の測り方を広げる。ShirudoとWAFのAIエンドポイント保護も並走した。",
+  "edition_date": "2026-11-25",
+  "edition_id": "2026-11-25-2103",
+  "edition_note": "2026年11月23日〜25日（各発表元の日付）に公開された規制注意喚起、クラウド製品、技術ブログ、顧客事例から選んだ。直近72時間を中心に、足りない側面は11月22日以降の一次資料で補っている。",
+  "generated_at": "2026-11-25T21:03:23+09:00",
+  "items": [
+    {
+      "aoi_note": "防御は新しいゼロデイ探しより、既知の露出面の修正と人の確認ゲートの維持が中心だ。エージェントを社内に広げる組織ほど、外向きの脆弱性管理を先に締める必要がある。",
+      "caveat": "NCSCが挙げる具体的事例数や影響範囲は記事ベースで、自社環境での類似攻撃の有無は独立に確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "ncsc-agentic-offensive-frameworks",
+      "language": "ja",
+      "observed_at": "2026-11-25T21:01:53+09:00",
+      "published_at": "2026-11-24T21:00:00+09:00",
+      "role": "lead",
+      "selection_reason": "エージェント導入の議論と並行して、攻撃側の自動化が現実のインシデントに結びつき始めた最初の公的整理の一つ。",
+      "source_domain": "www.ncsc.gov.uk",
+      "source_fact": "英国NCSCは2026年11月24日付のブログで、2026年9月以降AI支援型のサイバー攻撃が目立って増え、本来レッドチーム向けの「エージェント型攻撃フレームワーク」が防御目的を超えて使われていると述べた。複数部門でインターネット公開資産への自動自動識別と悪用試行が短時間に連続し、サービス停止や踏み台化が報告されている。弱点自体は新しくないが、安価なオープンモデルや違法APIリセラーと組み合わせると、攻撃の速度と持続性が変わるとしている。",
+      "source_kind": "regulator",
+      "source_title": "Familiar weaknesses, exploited faster: defending against agentic cyber attacks",
+      "source_url": "https://www.ncsc.gov.uk/blogs/familiar-weaknesses-exploited-faster-defending-against-agentic-cyber-attacks",
+      "title": "NCSC、エージェント型攻撃フレームワークの急増を警告。弱点は古くても自動化で速く突かれる",
+      "topics": [
+        "security",
+        "agents",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-11-25T21:01:53+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "「エージェントに権限を渡す」前に、どの操作に人の承認が要るかをAPIレイヤで固定できるかが要点だ。マルチクラウドでも同じ境界モデルを持ち込めるかが次の論点になる。",
+      "caveat": "Agent GatewayやMCPの具体的な課金、日本リージョンでの提供時期は記事からは確認していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-workspace-cloud-agent-trust",
+      "language": "ja",
+      "observed_at": "2026-11-25T21:01:53+09:00",
+      "published_at": "2026-11-25T02:00:00+09:00",
+      "role": "major",
+      "selection_reason": "エンタープライズのエージェント論が、APIゲートウェイとIDの話に着地した。",
+      "source_domain": "cloud.google.com",
+      "source_fact": "Googleは11月25日、WorkspaceとGoogle CloudにわたってAIエージェントを安全に展開する枠組みを説明した。Workspace APIは月2.8兆回超の呼び出しがあり、Drive APIの読み取りだけでも1日180億回をAPI経由で処理している。有効なOAuthトークンだけでは人の意図を保証できないとして、ポリシー検査、データ境界、人の確認をリクエスト経路上に置く必要があるとしている。Workspace MCPサーバーとWorkspace CLIの一般提供、Google Cloud Agent Gateway、統合保護を同時に発表した。",
+      "source_kind": "official",
+      "source_title": "Built for trust and control: Powering the next wave of AI agents across Google Workspace and Google Cloud",
+      "source_url": "https://cloud.google.com/blog/products/identity-security/deploying-agents-safely-in-your-enterprise/",
+      "title": "Google、WorkspaceとCloudでエージェントの信頼と制御を統合。MCPとAgent GatewayをGAに",
+      "topics": [
+        "agents",
+        "enterprise",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-25T21:01:53+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "自社でAnthropicと直接契約するかBedrock経由かの判断に、データレビュー場所と監視ポリシーの選択肢が追加される。監査担当は「誰がどのプログラムに登録できるか」をIAMで先に決めるべきだ。",
+      "caveat": "EFS/EDCの承認条件と日本法人の適格性は発表文のみで、実際の登録フローは未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-bedrock-trusted-access-api",
+      "language": "ja",
+      "observed_at": "2026-11-25T21:01:54+09:00",
+      "published_at": "2026-11-24T14:01:00+09:00",
+      "role": "major",
+      "selection_reason": "フロンティアモデルの企業向けガバナンスが、クラウドの単一APIに集約され始めた。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSはAmazon Bedrockで、モデルプロバイダの信頼アクセスプログラムを一覧・申請・登録できるTrusted Access APIの一般提供を発表した。Claudeモデル向けにEnterprise Frontier Safeguards（EFS）とEnterprise Data Controls（EDC）のパブリックプレビューも開始。Bedrock上のClaude Fable、Mythos、Opus 5.5、Sonnet 5.5（CVP経由含む）が対象。Frontierモデルには厳しい安全監視ポリシーが適用され、残データの保管場所やレビュー方法を企業が選べる枠組みだとしている。IAMとSCPで登録権限を制御する。",
+      "source_kind": "official",
+      "source_title": "Introducing the Amazon Bedrock Trusted Access API, with Enterprise Frontier Safeguards and Enterprise Data Controls for Claude models",
+      "source_url": "https://aws.amazon.com/blogs/machine-learning/introducing-the-amazon-bedrock-trusted-access-api-with-anthropics-enterprise-frontier-safeguards-and-enterprise-data-controls/",
+      "title": "AWS、Bedrock Trusted Access APIをGAに。Claude向けEFSとEDCをプレビュー",
+      "topics": [
+        "enterprise",
+        "policy",
+        "models"
+      ],
+      "verification": {
+        "checked_at": "2026-11-25T21:01:54+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "エージェント製品の採用判断で、リーダーボードスコアだけでなく信頼性ベンチの結果を並べて見る時代に入りつつある。社内評価設計にも544プロンプト規模の固定セットを用意する動きが参考になる。",
+      "caveat": "544プロンプトの内訳と採点基準の全文は本文で未確認。公開データセットのライセンスも未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-humanitys-first-exam",
+      "language": "ja",
+      "observed_at": "2026-11-25T21:01:55+09:00",
+      "published_at": "2026-11-24T19:30:00+09:00",
+      "role": "major",
+      "selection_reason": "性能ベンチマークではなく「信頼できるか」を測る公開試験が、大手から出た。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleは11月24日、大規模言語モデルの信頼性を試す取り組み「Humanity's First Exam」を始め、544のプロンプトでモデルを評価する計画だと発表した。あわせてKaggleハッカソンを開き、コミュニティが信頼性評価に参加できるようにするとしている。",
+      "source_kind": "official",
+      "source_title": "We’re launching Humanity’s First Exam and a Kaggle hackathon to test LLM reliability.",
+      "source_url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/humanitys-first-exam/",
+      "title": "Google、LLMの信頼性を測る「Humanity's First Exam」とKaggleハッカソンを開始",
+      "topics": [
+        "models",
+        "research",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-11-25T21:01:55+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "検出だけでは足りず、Content inspectionを有効にしたときのレイテンシと誤検知コストを計測すべきだ。エージェント基盤チームとセキュリティチームの共通言語になりうる。",
+      "caveat": "Guardrails呼び出しの料金と全リージョンでの提供状況は発表文ベースで、自アカウントでの試用はしていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "aws-waf-mcp-a2a-discovery",
+      "language": "ja",
+      "observed_at": "2026-11-25T21:01:55+09:00",
+      "published_at": "2026-11-24T03:47:00+09:00",
+      "role": "brief",
+      "selection_reason": "MCPとA2Aが本番に増えるほど、見えないエンドポイントを洗い出す仕組みが先に必要になる。",
+      "source_domain": "aws.amazon.com",
+      "source_fact": "AWSは11月24日、API Gateway、ALB、CloudFront配下のLLM、MCP、Agent2Agent（A2A）エンドポイントをAWS組織全体で自動検出し、AWS WAFで保護する機能の一般提供を発表した。API Gateway API Portalがトラフィックログと設定からAIエンドポイントを識別し、エージェント配置なしで行える。未文書化の公開MCPもシャドウAPIとして見える。WAF AI Securityマネージドルール群がMCP/A2Aのプロトコル検査とBedrock Guardrailsによるプロンプトインジェクション検知を担う。",
+      "source_kind": "release",
+      "source_title": "AWS WAF announces automated discovery and protection for LLM, MCP, and A2A endpoints using Amazon Bedrock Guardrails",
+      "source_url": "https://aws.amazon.com/about-aws/whats-new/2026/11/waf-ai-endpoint-discovery-protection/",
+      "title": "AWS WAF、組織横断でLLM・MCP・A2Aエンドポイントを自動検出しBedrock Guardrailsで保護",
+      "topics": [
+        "security",
+        "infrastructure",
+        "agents"
+      ],
+      "verification": {
+        "checked_at": "2026-11-25T21:01:55+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "パッチ生成より、標準タスクをAPIにしてキューイングする方が先に効く。自社も「1 Repoは簡単」の罠を避けるなら、タスクカタログとサンドボックスを先に共通化すべきだ。",
+      "caveat": "数値は顧客事例であり、再現性やベースラインの定義は独立に検証していない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-ifood-remote-agents-platform",
+      "language": "ja",
+      "observed_at": "2026-11-25T21:01:55+09:00",
+      "published_at": "2026-11-24T09:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "巨大モノレポではなく「数万Repo」のスケールでエージェントが機能した実例。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIの事例紹介によると、ブラジルのiFoodは1万5千以上のコードリポジトリに対しRemote Agents PlatformでエンジニアリングタスクをAPI呼び出しに変換している。リモートサンドボックスで実行し、結果をマージリクエストとして返す設計で、内部セキュリティ基盤では修正した脆弱性の数が2倍以上になったとしている。1リポジトリ単位の作業は容易だが、全リポジトリへの横展開が課題だった。",
+      "source_kind": "analysis",
+      "source_title": "How iFood scales coding agents across 15,000 repositories",
+      "source_url": "https://openai.com/business/customer-stories/ifood",
+      "title": "iFood、1.5万リポジトリへコーディングエージェントをAPI化。脆弱性修正が2倍超",
+      "topics": [
+        "agents",
+        "tools",
+        "enterprise"
+      ],
+      "verification": {
+        "checked_at": "2026-11-25T21:01:55+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "WAFやパッチと並び、実行時シールドをどの層に置くかが設計論点になる。Shirudoはコミュニティ開発を呼びかけており、導入前にポリシー生成の監査可能性を評価すべきだ。",
+      "caveat": "Java4Shellテストは限定環境の結果で、本番Elasticsearchへの適用効果は未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "openai-cisco-shirudo-runtime",
+      "language": "ja",
+      "observed_at": "2026-11-25T21:01:56+09:00",
+      "published_at": "2026-11-24T06:20:00+09:00",
+      "role": "brief",
+      "selection_reason": "Java4Shell直後の流れで、停止せずに守るランタイムという現実解が出た。",
+      "source_domain": "openai.com",
+      "source_fact": "OpenAIとCiscoは11月24日、Linux稼働中システムをパッチ適用待ちの間も保護するオープンソースランタイムShirudo（盾）を公開した。制御テストではCodex生成のシールドがJava4Shell攻撃試行を、Elasticsearchサービスを再起動せずに遮断したとしている。正当リクエストと悪用が同じLinux操作に依存するため、操作を全面ブロックするとサービスが落ちるトレードオフを緩和する設計だ。",
+      "source_kind": "official",
+      "source_title": "OpenAI and Cisco introduce Shirudo",
+      "source_url": "https://openai.com/index/introducing-shirudo",
+      "title": "OpenAIとCisco、パッチ待ちLinuxを守るオープンソース「Shirudo」を共同公開",
+      "topics": [
+        "security",
+        "open-source",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-25T21:01:56+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "全ファイル丸読みから部分読みへ移ると、監査ログで「どのスライスを見たか」が重要になる。社内エージェントのコスト試算モデルもトークン単位からスライス単位へ更新すべきだ。",
+      "caveat": "対応Office形式の一覧とスライス指定のAPI仕様はメタ情報ベースで、実装での挙動は未検証。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "google-gemini-api-file-slicing",
+      "language": "ja",
+      "observed_at": "2026-11-25T21:01:57+09:00",
+      "published_at": "2026-11-24T01:12:00+09:00",
+      "role": "brief",
+      "selection_reason": "長文投入コストを抑えるAPI設計が、エージェントの帳票・契約書ワークフローに直結する。",
+      "source_domain": "blog.google",
+      "source_fact": "Googleは11月23日、Gemini APIにファイルスライシング制御とネイティブOfficeファイル対応を追加したと発表した。エージェントが巨大ファイルの必要な部分だけを検査でき、Google AI StudioとVertex AIで検査したトークン分だけ課金するという。",
+      "source_kind": "official",
+      "source_title": "Introducing file slicing controls in the Gemini API",
+      "source_url": "https://blog.google/innovation-and-ai/technology/developers-tools/file-slicing-controls/",
+      "title": "Gemini APIにファイルスライシングとOfficeネイティブ対応。見たトークンだけ課金",
+      "topics": [
+        "tools",
+        "agents",
+        "infrastructure"
+      ],
+      "verification": {
+        "checked_at": "2026-11-25T21:01:57+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "製品チームは公開ガイドの4部構成（時代の変化、構築、 bitter lessons、運用）をそのまま社内eval RFCの骨子にできる。オープンソース化はレビュー可能性の担保になる。",
+      "caveat": "Hub上の統計はHF発表ベースで、自社エージェントへの当てはめは未検証。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "huggingface-agentic-evals-guide",
+      "language": "ja",
+      "observed_at": "2026-11-25T21:01:57+09:00",
+      "published_at": "2026-11-23T09:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "エージェントの品質保証が、単発ベンチから「維持される評価」へ移ろうとしている。",
+      "source_domain": "huggingface.co",
+      "source_fact": "Hugging Faceは11月23日、エージェント型評価の設計と維持についてガイドを公開した。タスク定義、信頼できる採点、主張を支える結果の作り方が要るとし、Hubには約3500の評価リーダーボードと1年で約16倍に増えた約1万7000の評価データセットがあるとしている。Traces、Benchmarks、Environmentsなどエージェント抽象のサポートも紹介する。",
+      "source_kind": "analysis",
+      "source_title": "How to build and maintain an agentic evaluation",
+      "source_url": "https://huggingface.co/blog/agentic-evals",
+      "title": "Hugging Face、エージェント向け評価の構築・維持ガイドを公開",
+      "topics": [
+        "research",
+        "agents",
+        "tools"
+      ],
+      "verification": {
+        "checked_at": "2026-11-25T21:01:57+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "ソフトウェア組織でも、エージェント出力に対する自動証明や仕様チェックをパイプラインに入れる発想の参考になる。",
+      "caveat": "量子回路の実機での性能は未検証。GitHub公開物の再利用条件は未確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "deepmind-quantum-agents-verification",
+      "language": "ja",
+      "observed_at": "2026-11-25T21:01:58+09:00",
+      "published_at": "2026-11-24T02:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "エージェント＋形式検証が、純粋なコード生成を超えた科学計算の使われ方を示した。",
+      "source_domain": "deepmind.google",
+      "source_fact": "Google DeepMindは11月24日、Gemini 4のエージェントチームと形式検証を使い既知の量子アルゴリズムを改良し、より効率的な量子回路を得たと報告した。融合エネルギー、化学、酵素設計などのシミュレーションに向け、大規模回路は古典計算や現行量子プロセッサでは検証できないため数学的証明が必要だとしている。Leanライブラリ、問題仕様、検証済み解答をGitHubで公開した。",
+      "source_kind": "official",
+      "source_title": "Finding faster quantum algorithms with agents and formal verification",
+      "source_url": "https://deepmind.google/blog/finding-faster-quantum-algorithms-with-agents-and-formal-verification/",
+      "title": "DeepMind、Gemini 4エージェントと形式検証で量子アルゴリズムを改良しGitHubで公開",
+      "topics": [
+        "research",
+        "models",
+        "open-source"
+      ],
+      "verification": {
+        "checked_at": "2026-11-25T21:01:58+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "社内APIドキュメントも「最新ページ1本」では足りず、矛盾検知をCI化する動機が強くなる。エージェント向けにcanonicalな参照を機械可読で1箇所に集約する価値が上がる。",
+      "caveat": "実験は特定製品の3矛盾に限定。使用モデル名と再現手順の全文は一部のみ確認。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "microsoft-docs-contradiction-agent-study",
+      "language": "ja",
+      "observed_at": "2026-11-25T21:01:59+09:00",
+      "published_at": "2026-11-25T20:46:00+09:00",
+      "role": "watch",
+      "selection_reason": "エージェント導入がドキュメント品質の負債を可視化する。",
+      "source_domain": "devblogs.microsoft.com",
+      "source_fact": "Microsoftは11月25日、製品ドキュメントの矛盾がAIコーディングエージェントに与える影響を調査したと公開した。エンドポイント改名や設定移動で、リファレンスは更新されてもハウツーが古い値のまま残る典型例を挙げ、実際にライブだった3種の矛盾について3モデルで約140エージェント実行を行った。エージェントは矛盾に気付きながらも誤ったページを先に従うことが多く、404などで失敗が見えれば復帰できるが、トークンが最大38%増えることがあった。",
+      "source_kind": "analysis",
+      "source_title": "Do inconsistent docs hurt AI coding agents?",
+      "source_url": "https://devblogs.microsoft.com/blog/do-inconsistent-docs-hurt-ai-coding-agents/",
+      "title": "Microsoft、ドキュメント矛盾がコーディングエージェントに与える影響を140回超の実行で検証",
+      "topics": [
+        "tools",
+        "agents",
+        "research"
+      ],
+      "verification": {
+        "checked_at": "2026-11-25T21:01:59+09:00",
+        "status": "verified"
+      }
+    },
+    {
+      "aoi_note": "DrupalとOptimizelyを社内で使うチームは、KEV追加日をパッチSLAの起点にすべきだ。エージェントが依存を書き換えるフローでも、このカタログを自動照合するのが安全側だ。",
+      "caveat": "各CVEの自社影響とパッチ入手可否はCISAの一次情報のみで、環境別の検証はしていない。",
+      "change": {
+        "kind": "new"
+      },
+      "context_ids": [],
+      "id": "cisa-kev-three-vulnerabilities-nov24",
+      "language": "ja",
+      "observed_at": "2026-11-25T21:01:59+09:00",
+      "published_at": "2026-11-24T21:00:00+09:00",
+      "role": "brief",
+      "selection_reason": "週次のKEV更新。CMSとA/Bテスト系の露出が混在。",
+      "source_domain": "www.cisa.gov",
+      "source_fact": "米国CISAは2026年11月24日、実悪用の証拠に基づきKnown Exploited Vulnerabilities Catalogに3件を追加した。CVE-2026-131914（Idunno AntiCsrfの信頼できないデータ逆シリアル化）、CVE-2026-132165（Drupal Coreリモートコード実行）、CVE-2026-132224（Optimizely Web Experimentationの重要状態データ外部制御）である。BOD 26-04に沿い、連邦機関は期限までに対策を求められる。",
+      "source_kind": "regulator",
+      "source_title": "CISA Adds Three Known Exploited Vulnerabilities to Catalog",
+      "source_url": "https://www.cisa.gov/news-events/alerts/2026/11/24/cisa-adds-three-known-exploited-vulnerabilities-catalog",
+      "title": "CISA、KEVカタログに3件追加。Idunno AntiCsrf、Drupal RCE、Optimizely問題",
+      "topics": [
+        "security",
+        "policy"
+      ],
+      "verification": {
+        "checked_at": "2026-11-25T21:01:59+09:00",
+        "status": "verified"
+      }
+    }
+  ],
+  "publication_status": "public",
+  "published_at": "2026-11-25T21:03:23+09:00",
+  "schema_version": "aoi.news.edition.v1",
+  "title": "エージェント型攻撃が現実化する中、信頼のゲートウェイと評価基準が揃い始める",
+  "topics": [
+    {
+      "description": "モデルの提供、料金、技術報告",
+      "id": "models",
+      "label_en": "Models",
+      "label_ja": "モデル"
+    },
+    {
+      "description": "攻撃の手口、脆弱性の報告、検査の仕組み",
+      "id": "security",
+      "label_en": "Security",
+      "label_ja": "セキュリティ"
+    },
+    {
+      "description": "エージェントの評価、管理、クラウドとの接続",
+      "id": "agents",
+      "label_en": "Agents",
+      "label_ja": "エージェント"
+    },
+    {
+      "description": "開発者向けの道具",
+      "id": "tools",
+      "label_en": "Tools",
+      "label_ja": "ツール"
+    },
+    {
+      "description": "クラウド、権限、推論の基盤",
+      "id": "infrastructure",
+      "label_en": "Infrastructure",
+      "label_ja": "インフラ"
+    },
+    {
+      "description": "企業での運用、管理、経営層の判断",
+      "id": "enterprise",
+      "label_en": "Enterprise",
+      "label_ja": "企業導入"
+    },
+    {
+      "description": "オープンなモデルとプロジェクト",
+      "id": "open-source",
+      "label_en": "Open Source",
+      "label_ja": "オープンソース"
+    },
+    {
+      "description": "技術的な設計と研究成果",
+      "id": "research",
+      "label_en": "Research",
+      "label_ja": "研究"
+    },
+    {
+      "description": "安全面の判定と透明性の取り組み",
+      "id": "policy",
+      "label_en": "Policy",
+      "label_ja": "方針"
+    }
+  ]
+}

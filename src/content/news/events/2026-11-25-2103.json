@@ -1,0 +1,28 @@
+[
+  {
+    "changed_signal_ids": [
+      "aws-bedrock-trusted-access-api",
+      "aws-waf-mcp-a2a-discovery",
+      "cisa-kev-three-vulnerabilities-nov24",
+      "deepmind-quantum-agents-verification",
+      "google-gemini-api-file-slicing",
+      "google-humanitys-first-exam",
+      "google-workspace-cloud-agent-trust",
+      "huggingface-agentic-evals-guide",
+      "microsoft-docs-contradiction-agent-study",
+      "ncsc-agentic-offensive-frameworks",
+      "openai-cisco-shirudo-runtime",
+      "openai-ifood-remote-agents-platform"
+    ],
+    "edition_date": "2026-11-25",
+    "edition_id": "2026-11-25-2103",
+    "edition_url": "https://aoifuture.com/news/2026-11-25-2103/",
+    "event_id": "aoi-news-2026-11-25-2103-r001",
+    "event_kind": "edition-published",
+    "published_at": "2026-11-25T21:03:23+09:00",
+    "revision": 1,
+    "schema_version": "aoi.news.edition-event.v1",
+    "summary": "英国NCSCがAI支援型攻撃フレームワークの急増を報告した。GoogleとAWSはエージェントの信頼境界を製品化し、Humanity's First ExamやHugging Faceの評価ガイドが信頼性の測り方を広げる。ShirudoとWAFのAIエンドポイント保護も並走した。",
+    "title": "エージェント型攻撃が現実化する中、信頼のゲートウェイと評価基準が揃い始める"
+  }
+]
