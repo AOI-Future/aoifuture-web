@@ -55,7 +55,7 @@ export const apps: AppEntry[] = [
   {
     id: '005',
     slug: 'osmos',
-    name: 'OSMOS CIRCUIT INSTRUMENT',
+    name: 'OSMOS CIRCUIT',
     desc: '電源電圧とコンデンサー容量を演奏できるMac用ソフトウェアシンセ',
     status: 'LIVE',
     repo: 'AOI-Future/osmos',
